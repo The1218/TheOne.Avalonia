@@ -29,6 +29,8 @@ public sealed class AuditModel : Observable
     private decimal? _number = 12; private double _range = 35; private DateTime? _date = new(2026, 10, 13);
     private DateTimeOffset? _offsetDate = new DateTimeOffset(2026, 10, 13, 0, 0, 0, TimeSpan.Zero); private TimeSpan? _time = new(9, 30, 0);
     private AuditRow? _choice; private AuditRow _page = new("First page");
+    private GaugeStyle _gaugeStyle;
+    public GaugeStyle GaugeStyle { get => _gaugeStyle; set => Set(ref _gaugeStyle, value); }
     private ChartKind _chartKind = ChartKind.Line; private int _chartSeriesIndex, _chartPointIndex = -1;
     private Rect _chartViewport = new(0, 0, 1, 1); private ChartNavigationAxes _chartAxes = ChartNavigationAxes.Both;
     private ChartSamplingMode _chartSamplingMode = ChartSamplingMode.MinMax; private int _chartSamplingBudget = 512;

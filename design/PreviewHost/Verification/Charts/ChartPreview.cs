@@ -148,6 +148,7 @@ internal static partial class ChartPreview
     {
         check ??= (condition, message) => { if (!condition) throw new InvalidOperationException("Failed: " + message); Console.WriteLine("PASS: " + message); };
         VerifyAxisLabels(check);
+        VerifyGaugeStyles(check);
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         {

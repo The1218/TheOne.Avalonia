@@ -21,6 +21,13 @@ internal static class ChartDemoPreview
             if (former.Kind != kind) check(!ReferenceEquals(former, demo.ChartSample) && former.GetVisualParent() is null, $"Chart/demo: switching to {kind} releases the previous control instance");
         }
         demo.Model.KindIndex = (int)ChartKind.Gauge; ControlPreview.Flush();
+        var gauge = demo.ChartSample;
+        foreach (var style in Enum.GetValues<GaugeStyle>())
+        {
+            demo.ChartGaugeStyle.SelectedItem = style; ControlPreview.Flush();
+            check(ReferenceEquals(gauge, demo.ChartSample) && ((GaugeChart)gauge).GaugeStyle == style && demo.Model.GaugeStyle == style,
+                $"Chart/demo: compiled enum selector switches {style} on the same gauge instance");
+        }
         demo.ChartGaugeSlider.Value = 86; ControlPreview.Flush();
         check(demo.ChartSample.Value == 86 && demo.Model.GaugeValue == 86, "Chart/demo: gauge slider updates the bound model and chart");
         demo.ChartGaugeNeedle.IsChecked = false; demo.ChartGaugeTicks.IsChecked = false; ControlPreview.Flush(); check(!demo.ChartSample.ShowGaugeNeedle && !demo.ChartSample.ShowGaugeTicks, "Chart/demo: gauge feature switches update compiled needle and tick bindings");

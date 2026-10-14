@@ -70,7 +70,14 @@
       <ComboBox Name="ConsumerSeriesAxis" ItemsSource="{Binding ChartAxisOptions}" SelectedItem="{Binding ChartSeries[1].YAxis, Mode=TwoWay}" />
       <ContentControl Name="ConsumerChartHost" Content="{Binding #AuditRoot.CurrentChart}" />
       <TextBlock Name="ConsumerHoverCount" Text="{Binding #AuditRoot.CurrentChart.HoveredPoints.Count, StringFormat='Hover models: {0}'}" />
-      <one:GaugeChart Name="ConsumerGauge" Height="140" Title="Compiled gauge" Value="{Binding Range}" Unit="%" ShowGaugeNeedle="{Binding ChartGaugeNeedle}" ShowGaugeTicks="{Binding ChartGaugeTicks}" />
+      <one:GaugeChart Name="ConsumerGauge" GaugeStyle="{Binding GaugeStyle}" Height="140" Title="Compiled gauge" Value="{Binding Range}" Unit="%" ShowGaugeNeedle="{Binding ChartGaugeNeedle}" ShowGaugeTicks="{Binding ChartGaugeTicks}" >
+        <one:GaugeChart.GaugeSegments>
+          <one:GaugeSegment Fraction="0.25" Brush="#FF6E76" Label="Grade D" />
+          <one:GaugeSegment Fraction="0.5" Brush="#FDDD60" Label="Grade C" />
+          <one:GaugeSegment Fraction="0.75" Brush="#58D9F9" Label="Grade B" />
+          <one:GaugeSegment Fraction="1" Brush="#7CFFB2" Label="Grade A" />
+        </one:GaugeChart.GaugeSegments>
+      </one:GaugeChart>
     </StackPanel>
   </Grid>
 </UserControl>

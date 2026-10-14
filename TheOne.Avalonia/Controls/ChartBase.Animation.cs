@@ -124,6 +124,7 @@ public partial class ChartBase
         return (Mix(from.Item1, start, progress), Mix(from.Item2, sweep, progress));
     }
     private protected double PresentGaugeValue(double target) => _animationActive ? Mix(_animationFromGauge, _animationToGauge, EasedAnimationProgress()) : target;
+    private protected bool IsGaugeValueAnimating => _animationActive;
 
     private void DrawAnimatedCartesianData(DrawingContext context, CartesianFrame target)
     {

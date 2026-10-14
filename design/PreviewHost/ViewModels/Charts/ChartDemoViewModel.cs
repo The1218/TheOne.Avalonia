@@ -118,6 +118,18 @@ public sealed class ChartDemoViewModel : ReactiveObject
     public bool LegendInteractive { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
     public bool Smooth { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     public bool AnimateUpdates { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
+    public GaugeStyle[] GaugeStyles { get; } = Enum.GetValues<GaugeStyle>();
+    public GaugeStyle GaugeStyle
+    {
+        get;
+        set
+        {
+            if (field == value) return;
+            this.RaiseAndSetIfChanged(ref field, value);
+            GaugeNeedle = value is not (GaugeStyle.Semicircle or GaugeStyle.Temperature);
+            GaugeTicks = value != GaugeStyle.Semicircle;
+        }
+    }
     public bool GaugeNeedle { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
     public bool GaugeTicks { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
 
@@ -217,6 +229,7 @@ public sealed class ChartDemoViewModel : ReactiveObject
         LegendInteractive = true;
         Smooth = false;
         AnimateUpdates = true;
+        GaugeStyle = GaugeStyle.Semicircle;
         GaugeNeedle = true;
         GaugeTicks = true;
         AnimationDurationIndex = 1;

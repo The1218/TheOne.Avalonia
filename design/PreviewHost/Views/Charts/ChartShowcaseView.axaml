@@ -8,7 +8,7 @@
   </UserControl.Styles>
   <StackPanel Spacing="16">
     <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold"/>
-    <TextBlock Text="同一图表的三种样式 · 可点击数据和图例 · 使用顶部工具栏切换主题、尺寸和动效"
+    <TextBlock Text="同一图表的多种样式 · 可点击数据和图例 · 使用顶部工具栏切换主题、尺寸和动效"
                Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
     <WrapPanel Name="Variants"/>
     <Expander Name="Editor" Header="交互与数据实验"/>

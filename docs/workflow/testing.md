@@ -37,6 +37,7 @@ dotnet run --no-build --project design/PreviewHost -- --verify-datagrid-binding
 | 输入对齐、日期时间弹层 | `--verify-text-alignment`、`--verify-pickers` |
 | 图表、渲染、选择、缩放与导出 | `--verify-charts` |
 | 小尺寸 X 轴月份、长标签、递减 X 和图例开关的实际像素 | `--verify-chart-axis-labels [输出目录]` |
+| 仪表枚举、属性覆盖、明暗三档尺寸、窄视口、连续拖动文字稳定性、等级标签遮挡与屏幕／PNG 像素一致性 | `--verify-gauge-styles [截图目录]` |
 | 窗口、登录、InfoCard | `--verify-onewindow`、`--verify-loginwindow`、`--verify-infocard` |
 | NavMenu 全部、搜索、动效、筛选 | `--verify-navmenu`、`--verify-navmenu-search`、`--verify-navmenu-motion`、`--verify-navmenu-filter` |
 | 轮播、刷新、展开、内容过渡 | `--verify-carousel`、`--verify-refresh`、`--verify-expander-motion`、`--verify-content-transition` |
@@ -65,6 +66,14 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 ```
 
 Windows / Linux 改用宿主 RID，省略 macOS 的 SDK 与 clang 参数，并在对应机器实跑。跨 RID 编译成功不表示该平台行为通过；边界见 [NativeAOT](../native-aot.md)。禁止 NoWarn、裁剪警告抑制、整程序集保留和 ReflectionBinding 绕过。
+
+仪表专项可以保存八种布局的明暗三档尺寸合成图：
+
+```sh
+dotnet run --no-build --project design/PreviewHost -- --verify-gauge-styles .preview/gauge/images
+```
+
+`NativeAotSmoke` 支持 `--require-aot --verify-gauge-styles`，在实际原生程序中执行相同绘制检查，并验证消费端 `GaugeStyle` 的编译绑定。使用前按上面的原生发布命令生成当前源码的产物。
 
 ## NuGet 双包专项
 

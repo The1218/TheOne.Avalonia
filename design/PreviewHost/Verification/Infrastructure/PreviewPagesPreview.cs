@@ -37,8 +37,9 @@ internal static class PreviewPagesPreview
                 {
                     var section=(ChartShowcaseView)gallery.GetControlView(id);
                     var title=PreviewPageCatalog.Controls.First(control=>control.Id==id).Title;
-                    check(section.Samples.Count==3 && section.Samples.All(sample=>sample.GetType().Name==title),$"PreviewHost/charts/{title}: three simultaneous variants retain the native control type");
-                    check(section.Samples.Select(sample=>sample.Title).Distinct().Count()==3 && !section.Samples.Any(sample=>sample.GetVisualDescendants().Any()),$"PreviewHost/charts/{title}: distinct presentations draw data without per-point controls");
+                    var variantCount = section.Kind == ChartKind.Gauge ? Enum.GetValues<GaugeStyle>().Length : 3;
+                    check(section.Samples.Count==variantCount && section.Samples.All(sample=>sample.GetType().Name==title),$"PreviewHost/charts/{title}: all simultaneous variants retain the native control type");
+                    check(section.Samples.Select(sample=>sample.Title).Distinct().Count()==variantCount && !section.Samples.Any(sample=>sample.GetVisualDescendants().Any()),$"PreviewHost/charts/{title}: distinct presentations draw data without per-point controls");
                     var editor=section.OpenEditor();ControlPreview.Flush();
                     editor.Model.Reset();ControlPreview.Flush();
                     check(editor.ChartSample.GetType().Name==title && editor.Model.IsFixedKind,$"PreviewHost/charts/{title}: the lazily opened editor keeps its fixed type after resetting data");

@@ -8,7 +8,7 @@ public partial class ChartBase
 {
     public static readonly StyledProperty<bool> ShowGaugeNeedleProperty = AvaloniaProperty.Register<ChartBase, bool>(nameof(ShowGaugeNeedle));
     public static readonly StyledProperty<bool> ShowGaugeTicksProperty = AvaloniaProperty.Register<ChartBase, bool>(nameof(ShowGaugeTicks));
-    public static readonly StyledProperty<int> GaugeMajorTickCountProperty = AvaloniaProperty.Register<ChartBase, int>(nameof(GaugeMajorTickCount), 5, validate: value => value >= 2 && value <= 12);
+    public static readonly StyledProperty<int> GaugeMajorTickCountProperty = AvaloniaProperty.Register<ChartBase, int>(nameof(GaugeMajorTickCount), 5, validate: value => value >= 2 && value <= 25);
     public static readonly StyledProperty<int> GaugeMinorTickCountProperty = AvaloniaProperty.Register<ChartBase, int>(nameof(GaugeMinorTickCount), 2, validate: value => value >= 0 && value <= 10);
     public bool ShowGaugeNeedle { get => GetValue(ShowGaugeNeedleProperty); set => SetValue(ShowGaugeNeedleProperty, value); }
     public bool ShowGaugeTicks { get => GetValue(ShowGaugeTicksProperty); set => SetValue(ShowGaugeTicksProperty, value); }

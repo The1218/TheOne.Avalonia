@@ -45,6 +45,7 @@
     <Compile Include="../../Verification/Fixtures/DataDisplay/DataGridStage1Fixture.cs" Link="DataGridStage1Fixture.cs" />
     <Compile Include="../../Verification/Fixtures/Views/DataDisplay/DataGridStage1View.cs" Link="DataGridStage1View.cs" />
     <Compile Include="../../Verification/DataDisplay/DataGridStage1Preview.cs" Link="DataGridStage1Preview.cs" />
+    <Compile Include="../../Infrastructure/Charts/ChartControlFactory.Gauge.cs" Link="ChartControlFactory.Gauge.cs" />
     <Compile Include="../../Infrastructure/Charts/ChartControlFactory.cs" Link="ChartControlFactory.cs" />
     <Compile Include="../../ViewModels/NavigationLayout/NavMenuDemoViewModel.cs" Link="NavMenuDemoViewModel.cs" />
     <Compile Include="../../Models/NavigationLayout/TransitionPage.cs" Link="TransitionPage.cs" />
@@ -56,6 +57,8 @@
     <AvaloniaResource Include="../../Views/Windows/LoginDemoView.axaml" Link="LoginDemoView.axaml" />
     <Compile Include="../../Views/Windows/LoginDemoView.axaml.cs" Link="LoginDemoView.axaml.cs" />
     <Compile Include="../../ViewModels/Windows/LoginDemoViewModel.cs" Link="LoginDemoViewModel.cs" />
+    <Compile Include="../../Verification/Charts/ChartPreview.GaugeLayout.cs" Link="ChartPreview.GaugeLayout.cs" />
+    <Compile Include="../../Verification/Charts/ChartPreview.GaugeStyles.cs" Link="ChartPreview.GaugeStyles.cs" />
     <Compile Include="../../Verification/Charts/ChartPreview.cs" Link="ChartPreview.cs" />
     <Compile Include="../../Verification/Charts/ChartPreview.AxisLabels.cs" Link="ChartPreview.AxisLabels.cs" />
     <Compile Include="../../Verification/NavigationLayout/NavMenuCollapsedPreview.cs" Link="NavMenuCollapsedPreview.cs" />

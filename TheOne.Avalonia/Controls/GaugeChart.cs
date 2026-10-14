@@ -3,7 +3,7 @@ using global::Avalonia.Media;
 
 namespace TheOne.Avalonia.Controls;
 
-/// <summary>A fixed Gauge chart control with its own theme and visual state.</summary>
+/// <summary>A directly drawn gauge with enum-selected layouts and property-based visual overrides.</summary>
 public sealed partial class GaugeChart : ChartBase
 {
     public override ChartKind Kind => ChartKind.Gauge;

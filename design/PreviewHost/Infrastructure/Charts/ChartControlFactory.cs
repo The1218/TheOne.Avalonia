@@ -1,6 +1,6 @@
 using TheOne.Avalonia.Controls;
 namespace TheOne.DesignPreview;
-internal static class ChartControlFactory
+internal static partial class ChartControlFactory
 {
     public static ChartBase CreateControl(ChartKind kind) => kind switch
     {

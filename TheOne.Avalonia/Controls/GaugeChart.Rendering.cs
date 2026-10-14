@@ -6,7 +6,7 @@ namespace TheOne.Avalonia.Controls;
 
 public sealed partial class GaugeChart
 {
-    private void DrawGauge(DrawingContext? context, Rect plot)
+    private void DrawLegacyGauge(DrawingContext? context, Rect plot)
     {
         if (context is null) return;
         using var clip = context.PushClip(plot);
@@ -76,26 +76,70 @@ public sealed partial class GaugeChart
             }
         }
     }
-    private void DrawGaugeCaption(DrawingContext context, Rect plot, double centerX, double top, double size, double value, double width)
+    private int _gaugeAnimatedPrecision;
+    private static readonly FontFeatureCollection GaugeNumberFeatures = FontFeatureCollection.Parse("tnum");
+    private FormattedText GaugeNumberText(string name, IBrush? brush, double size)
+    {
+        var text = Text(name, brush, size);
+        text.SetFontFeatures(GaugeNumberFeatures);
+        return text;
+    }
+    private string FormatGaugeNumber(double value)
+    {
+        // Interpolation must not invent fractional digits for an integer slider target.
+        // Optional decimals use a constant precision throughout an animated update.
+        if (IsGaugeValueAnimating && ValueFormat == "0.##")
+        {
+            if (Value != Math.Truncate(Value)) _gaugeAnimatedPrecision = 2;
+            return value.ToString(_gaugeAnimatedPrecision == 0 ? "F0" : "F2", CultureInfo.CurrentCulture);
+        }
+        return FormatValue(value);
+    }
+    private void DrawGaugeCaption(DrawingContext context, Rect plot, double centerX, double top, double size, double value, double width, IBrush? brush = null)
     {
         if (width <= 0) return;
-        var unit = Text(GaugeEllipsis(Unit ?? "", width * 0.4, size), MutedBrush, size);
-        var gap = unit.Width > 0 ? Math.Max(3, FontSize * 0.25) : 0;
-        var numberWidth = Math.Max(0, width - unit.Width - gap);
-        var name = FormatValue(value); var text = Text(name, size: size);
-        if (text.Width > numberWidth) { name = value.ToString("R", CultureInfo.CurrentCulture); text = Text(name, size: size); }
-        if (text.Width > numberWidth) { name = value.ToString("0.###E+0", CultureInfo.CurrentCulture); text = Text(name, size: size); }
-        if (text.Width > numberWidth && text.Width > 0)
+        var minimumSize = Math.Min(FontSize, size);
+        string FitName(double number)
         {
-            var fittedSize = Math.Max(FontSize, size * width / (text.Width + gap + unit.Width));
-            text = Text(name, size: fittedSize);
-            unit = Text(GaugeEllipsis(Unit ?? "", width * 0.4, fittedSize), MutedBrush, fittedSize);
+            var name = ValueFormat == "0.##" ? number.ToString("0.00", CultureInfo.CurrentCulture) : FormatValue(number);
+            return name.Length > 18 ? number.ToString("0.###E+0", CultureInfo.CurrentCulture) : name;
         }
-        var baseline = Math.Max(text.Baseline, unit.Baseline);
-        var left = centerX - (text.Width + gap + unit.Width) / 2;
+        var candidates = new[] { FitName(Minimum), FitName(Maximum), FitName(Value) };
+        var gap = string.IsNullOrEmpty(Unit) ? 0 : Math.Max(3, FontSize * 0.25);
+        double RequiredWidth(double fontSize)
+        {
+            var numberWidth = candidates.Max(name => GaugeNumberText(name, brush, fontSize).Width);
+            var unitWidth = Text(GaugeEllipsis(Unit ?? "", width * 0.4, fontSize), brush ?? MutedBrush, fontSize).Width;
+            return numberWidth + (unitWidth > 0 ? gap : 0) + unitWidth;
+        }
+        // Fit against the range and target, never the changing interpolated frame.
+        if (RequiredWidth(size) > width)
+        {
+            var low = minimumSize; var high = size;
+            for (var iteration = 0; iteration < 10; iteration++)
+            {
+                var middle = (low + high) / 2;
+                if (RequiredWidth(middle) <= width) low = middle; else high = middle;
+            }
+            size = low;
+        }
+        var unit = Text(GaugeEllipsis(Unit ?? "", width * 0.4, size), brush ?? MutedBrush, size);
+        gap = unit.Width > 0 ? gap : 0;
+        var numberSpace = Math.Max(0, width - unit.Width - gap);
+        var name = FormatGaugeNumber(value); var targetName = FormatGaugeNumber(Value);
+        if (GaugeNumberText(targetName, brush, size).Width > numberSpace)
+        {
+            name = value.ToString("0.###E+0", CultureInfo.CurrentCulture);
+            targetName = Value.ToString("0.###E+0", CultureInfo.CurrentCulture);
+        }
+        var text = GaugeNumberText(name, brush, size);
+        var reference = GaugeNumberText(targetName, brush, size);
+        var baseline = Math.Max(reference.Baseline, unit.Baseline);
+        var left = centerX - (reference.Width + gap + unit.Width) / 2;
+        var numberRight = left + reference.Width;
         using var clip = context.PushClip(new Rect(centerX - width / 2, plot.Top, width, plot.Height));
-        context.DrawText(text, new Point(left, top + baseline - text.Baseline));
-        if (unit.Width > 0) context.DrawText(unit, new Point(left + text.Width + gap, top + baseline - unit.Baseline));
+        context.DrawText(text, new Point(Math.Round(numberRight - text.Width), Math.Round(top + baseline - text.Baseline)));
+        if (unit.Width > 0) context.DrawText(unit, new Point(Math.Round(numberRight + gap), Math.Round(top + baseline - unit.Baseline)));
     }
     private string GaugeEllipsis(string value, double width, double? size = null)
     {

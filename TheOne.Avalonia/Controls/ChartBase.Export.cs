@@ -33,6 +33,7 @@ public partial class ChartBase
         var snapshot = CreateExportSnapshot();
         snapshot._isExportSnapshot = true; snapshot._skipExportBackground = transparentBackground; snapshot._legendPage = _legendPage;
         foreach (var property in ExportProperties) snapshot.SetValue(property, GetValue(property));
+        CopyExportProperties(snapshot);
         snapshot.IsAnimationEnabled = false; snapshot.IsLegendInteractive = false; snapshot.IsEnabled = IsEffectivelyEnabled;
         snapshot.Width = logical.Width; snapshot.Height = logical.Height;
         snapshot.Measure(logical); snapshot.Arrange(new Rect(logical));
@@ -40,6 +41,8 @@ public partial class ChartBase
         bitmap.Render(snapshot);
         bitmap.Save(stream, PngBitmapEncoderOptions.Default);
     }
+
+    private protected virtual void CopyExportProperties(ChartBase snapshot) { }
 
     public void ExportPng(string path, Size? size = null, double dpi = 96, bool transparentBackground = false)
     {

@@ -44,6 +44,7 @@
         </Style>
         <Style Selector="one|GaugeChart.demo-chart" x:DataType="local:ChartDemoViewModel">
             <Setter Property="Value" Value="{Binding GaugeValue, Mode=TwoWay}" />
+            <Setter Property="GaugeStyle" Value="{Binding GaugeStyle}" />
             <Setter Property="ShowGaugeNeedle" Value="{Binding GaugeNeedle}" />
             <Setter Property="ShowGaugeTicks" Value="{Binding GaugeTicks}" />
         </Style>
@@ -223,6 +224,9 @@
                 VerticalAlignment="Center" />
         </Grid>
         <WrapPanel IsVisible="{Binding IsGauge}">
+            <ComboBox Name="ChartGaugeStyle" ItemsSource="{Binding GaugeStyles}"
+                      SelectedItem="{Binding GaugeStyle, Mode=TwoWay}" MinWidth="160"
+                      AutomationProperties.Name="仪表样式" Margin="0,0,16,8" />
             <CheckBox
                 Content="仪表指针"
                 IsChecked="{Binding GaugeNeedle, Mode=TwoWay}"

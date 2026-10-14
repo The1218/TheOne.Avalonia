@@ -115,6 +115,21 @@ internal static class Program
             Console.WriteLine($"PASS: {_checks} DataGrid stage-one feasibility / compiled binding / native virtualization checks.");
             return;
         }
+        if (args.Contains("--verify-gauge-styles"))
+        {
+            TheOne.DesignPreview.ChartPreview.VerifyGaugeStyles(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            var model = new AuditModel(); var view = new AuditView { DataContext = model };
+            var window = new Window { Width = 900, Height = 800, Content = view }; window.Show(); Flush();
+            Check(view.FindControl<GaugeChart>("ConsumerGauge")!.GaugeSegments is { Count: 4 } bands && bands[0].Label == "Grade D",
+                "native consumer: XAML initializes typed gauge segments and grade labels");
+            foreach (var style in Enum.GetValues<GaugeStyle>())
+            {
+                model.GaugeStyle = style; Flush();
+                Check(view.FindControl<GaugeChart>("ConsumerGauge")!.GaugeStyle == style, $"native consumer: compiled GaugeStyle binding switches {style}");
+            }
+            window.Close(); Flush();
+            Console.WriteLine($"PASS: {_checks} gauge layout / export / compiled enum checks."); return;
+        }
         if (args.Contains("--verify-chart-axis-labels")) { TheOne.DesignPreview.ChartPreview.VerifyAxisLabels(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} chart axis-label pixel checks."); return; }
         if (args.Contains("--verify-charts"))
         {

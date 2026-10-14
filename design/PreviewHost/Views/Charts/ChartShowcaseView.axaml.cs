@@ -25,7 +25,7 @@ public partial class ChartShowcaseView : UserControl
         Kind = kind;
         DataContext = PreviewPageCatalog.Controls.First(control => control.Title == $"{kind}Chart");
         var samples = new List<ChartBase>();
-        for(var style = 0; style < 3; style++)
+        for(var style = 0; style < (kind == ChartKind.Gauge ? Enum.GetValues<GaugeStyle>().Length : 3); style++)
         {
             var chart = CreateSample(kind, style);
             samples.Add(chart);
@@ -56,10 +56,7 @@ public partial class ChartShowcaseView : UserControl
         chart.IsPanEnabled = true;
         if(kind == ChartKind.Gauge)
         {
-            chart.Value = style == 2 ? 38 : 72;
-            chart.Unit = "%";
-            chart.ShowGaugeNeedle = chart.ShowGaugeTicks = style == 1;
-            if(style == 2) chart.GaugeBandRatio = 0.08;
+            ChartControlFactory.ConfigureGauge((GaugeChart)chart, (GaugeStyle)style);
         }
         else if(kind is ChartKind.Pie or ChartKind.Doughnut)
         {
@@ -83,7 +80,7 @@ public partial class ChartShowcaseView : UserControl
 
     internal static string StyleTitle(ChartKind kind, int style) => kind switch
     {
-        ChartKind.Gauge => style switch { 0 => "简洁进度", 1 => "刻度与指针", _ => "细环进度" },
+        ChartKind.Gauge => ChartControlFactory.GaugeStyleTitle((GaugeStyle)style),
         ChartKind.Doughnut => style switch { 0 => "标准环形", 1 => "宽环与占比标签", _ => "细环与选中分区" },
         ChartKind.Pie => style switch { 0 => "图例样式", 1 => "占比标签", _ => "选中扇区" },
         ChartKind.Scatter => style switch { 0 => "标准散点", 1 => "大圆点与数值", _ => "单系列 · 简洁" },

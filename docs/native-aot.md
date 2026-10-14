@@ -67,3 +67,5 @@ dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r win-x64
 Windows 控件已由用户确认实跑完成；本次反馈没有细分 RID 或 NativeAOT 发布方式，因此不扩写为 Windows 原生专项证据。更新后的小尺寸轴标签和 GUI 启动产物需在 Windows 复核；本机跨 RID 产物检查不等于目标宿主执行。
 
 2026-10-14 源码验证：原生独立消费 1,206 项；DataGrid 编译绑定／排序／虚拟化 1,623 项，包含自动列实际编辑提交和只读列拒绝编辑；筛选／统计／冻结 1,104 项；Tag／Step 631 项。最终双包消费在托管及 NativeAOT 下均通过 Headless 152 项和桌面 140 项，隔离缓存的包哈希与新打包产物一致。运行时动态代码关闭，发布没有 DataGrid 裁剪或动态代码警告。这些结论属于当前源码，不能归于已发布的旧包。
+
+2026-10-14 合并验收：托管图表回归 3,868 项、预览页 362 项通过；macOS ARM64 原生仪表 957 项及轴标签像素 48 项通过，包含枚举编译绑定、分段 XAML 初始化、数值拖动与精度衔接、等级标签排布。原生运行时动态代码关闭，发布未出现裁剪或动态代码警告。Windows win-x64 的 Debug／Release 产物均完成编译并确认 GUI 子系统（PE Subsystem=2）；本次修复尚需在 Windows 宿主复核启动与绘制。
