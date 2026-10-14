@@ -2,6 +2,7 @@
 **/obj/
 .preview/
 /.agents/
+/AGENTS.md
 .DS_Store
 .idea/
 .vs/
