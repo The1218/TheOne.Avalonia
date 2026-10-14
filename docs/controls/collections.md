@@ -147,7 +147,7 @@ DocumentsTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
 
 项目启用默认编译绑定，列从强类型 Records 集合自动推断每行模型；无需逐个绑定写 DataType 或 CompiledBindingExtension。List<Record>、ObservableCollection<Record> 和 IEnumerable<Record> 均会推断行模型；需要筛选／分组视图时可用 DataGridCollectionView<Record>，同样无需列级 x:DataType。非泛型 DataGridCollectionView 仍需声明行类型。Records 的项提供 `Id`、`Name`、`Enabled`。编辑属性需可写并发出变化通知；业务验证使用 Avalonia 支持的数据验证机制。`IsReadOnly` 可作用于全表或单列。自定义单元格使用 DataGridTemplateColumn 的 CellTemplate / CellEditingTemplate。
 
-创建视图前调用 `DataGridAot.PreserveRowType<Record>()`，注册编辑、排序和分组元数据。路径排序设置 SortMemberPath；托管与原生契约见 [NativeAOT](../native-aot.md)。
+创建视图前调用 `DataGridAot.PreserveRowType<Record>()`，注册编辑、排序和分组元数据。路径排序设置 SortMemberPath；托管与原生契约见 [DataGrid NativeAOT](datagrid-binding.md#nativeaot)。
 
 默认 ColumnWidth 为 Auto、最小列宽 64 px；可用固定宽度、SizeToCells、SizeToHeader 或星号宽度。自动列宽基于已显示内容渐进计算，不预扫描整张表。RowHeight 保留 Auto，长内容可增高；三档密度沿用共同约定。
 
@@ -161,7 +161,7 @@ DataGrid 保留官方 DataGridRowsPresenter / DataGridCellsPresenter、冻结列
 
 ## 大数据验证
 
-PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节点、建议列表、标签和右键菜单，并显示实际容器数量。按[测试策略](../workflow/testing.md)选择覆盖远距离操作、回收、导航和选择的检查；DataGrid 有独立专项。维护集合模板时，应同时观察实际容器数量和远处项操作，不能仅检查 ItemsPanel 的类型。
+PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节点、建议列表、标签和右键菜单，并显示实际容器数量。按[预览专项入口](../../design/PreviewHost/Program.cs)选择覆盖远距离操作、回收、导航和选择的检查；DataGrid 有独立专项。维护集合模板时，应同时观察实际容器数量和远处项操作，不能仅检查 ItemsPanel 的类型。
 
 
 ## TabStrip 独立标签导航
@@ -188,7 +188,7 @@ PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节�
 PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器计数、目标定位、末项和启用切换。
 
 
-轮播与刷新见[Carousel／Refresh](collection-content.md)。验证范围与命令见[测试策略](../workflow/testing.md)。
+轮播与刷新见[Carousel／Refresh](collection-content.md)。验证范围与命令见[预览专项入口](../../design/PreviewHost/Program.cs)。
 
 ## 外观类
 

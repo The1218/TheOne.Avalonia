@@ -83,7 +83,7 @@ ShowContentAsync 也支持模型与显式 contentTemplate。Control 内容不能
 
 窗口关闭时清理活动和排队请求，防止等待悬空；关闭被取消时继续保留宿主。自定义 OneWindow / LoginWindow 模板必须保留 PART_VisualLayerManager、PART_ContentPresenter、PART_Notifications、PART_Toasts、PART_DialogShield 和 PART_DialogLayer，标题栏自定义继续遵循相应 PART_*。缺失消息部件时 API 报错。
 
-PreviewHost 的“消息与对话框”保留 Toast、Dialog、Notification 独立页面，支持类型、标题、正文、尺寸及动效配置。通知／Toast 支持位置、显示上限、停留秒数、自动／手动关闭和回调状态；Dialog 支持标题栏、关闭按钮、确认按钮组合、蒙层与 Esc 关闭及 VM 表单返回。OneWindow、LoginWindow、NotificationCard 不再作为目录展示页，控件和底层回归保留；ThemeButton 位于 Button 示例。编译绑定与 NativeAOT 检查见 [NativeAOT 文档](../native-aot.md)。
+PreviewHost 的“消息与对话框”保留 Toast、Dialog、Notification 独立页面，支持类型、标题、正文、尺寸及动效配置。通知／Toast 支持位置、显示上限、停留秒数、自动／手动关闭和回调状态；Dialog 支持标题栏、关闭按钮、确认按钮组合、蒙层与 Esc 关闭及 VM 表单返回。OneWindow、LoginWindow、NotificationCard 不再作为目录展示页，控件和底层回归保留；ThemeButton 位于 Button 示例。独立编译绑定与原生消费示例见 [NativeAotSmoke](../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
 
 ## 泛型 VM 对话框
 

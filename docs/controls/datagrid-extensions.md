@@ -69,7 +69,7 @@ DataGridFeatures.ShowColumnFilters 默认为 false。DataGridColumnOptions 的�
 
 自动识别只适用于面向当前实体的编译属性链；模板列包含多个字段时不猜测身份，可选 ValueAccessor 覆盖或关闭 FilterEnabled。数值支持 byte／sbyte／short／ushort／int／uint／long／ulong／float／double／decimal 及 Nullable；按原始类型与 CurrentCulture 解析，精确比较不增加浮点容差，null／NaN／Infinity 不匹配有效条件。
 
-筛选验证入口为 `--verify-datagrid-filters`，定向渲染为 DataGridFilters；执行方式见[测试策略](../workflow/testing.md)。原生布局与发布验收见[DataGrid 验收](../workflow/datagrid-acceptance.md)。
+筛选验证入口为 `--verify-datagrid-filters`，定向渲染为 DataGridFilters；执行方式见[预览专项入口](../../design/PreviewHost/Program.cs)。原生布局的包消费示例见 [DataGridPackageConsumer](../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs)。
 
 ## 原生右侧冻结
 
@@ -89,11 +89,11 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 实现需要原生布局扩展：类库引用 [12.1.2 源码项目](../../vendor/Avalonia.Controls.DataGrid/README.md)，保留官方程序集身份、类型、Presenter 和 PART_*，替代官方 DataGrid NuGet。消费项目不要同时再引入官方同名包；升级需维护该局部补丁。核心 Avalonia 保持 12.1.4。
 
-PreviewHost 的 DataGrid 页可调节“右侧冻结”数量，默认 0。专项为 `--verify-datagrid-right`，包含右区、已有筛选及左侧原生回归；定向渲染名称为 DataGridRightFrozen。命令与平台边界见[测试策略](../workflow/testing.md)。
+PreviewHost 的 DataGrid 页可调节“右侧冻结”数量，默认 0。专项为 `--verify-datagrid-right`，包含右区、已有筛选及左侧原生回归；定向渲染名称为 DataGridRightFrozen。命令与平台边界见[预览专项入口](../../design/PreviewHost/Program.cs)。
 
 ### 列拖动反馈
 
-列拖动保留原生落点及冻结区域限制：源表头淡出，拖影使用独立卡片并省略重复操作按钮，插入提示短缓动。拖影保持原始抓取位置；Esc、表头上下范围外释放或卸载取消拖动并清理捕获。`Motion.Enabled=False` 或 `One.Motion.Fast` 为零会关闭插入提示动效。集成／打包及平台边界见[验收说明](../workflow/datagrid-acceptance.md)。
+列拖动保留原生落点及冻结区域限制：源表头淡出，拖影使用独立卡片并省略重复操作按钮，插入提示短缓动。拖影保持原始抓取位置；Esc、表头上下范围外释放或卸载取消拖动并清理捕获。`Motion.Enabled=False` 或 `One.Motion.Fast` 为零会关闭插入提示动效。包消费示例见 [DataGridPackageConsumer](../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs)。
 
 ## 底部数值统计
 
@@ -131,4 +131,4 @@ PreviewHost 的 DataGrid 页可调节“右侧冻结”数量，默认 0。专�
 
 `DataGridFeatures.GetSummaryResult(grid, column)` 返回 Value、ValidCount、Error；订阅 SummaryUpdatedEvent 获取合并更新通知。过滤、编辑、未创建行的 PropertyChanged、集合增删／替换及嵌套对象变化都会更新结果。隐藏列暂停该列计算与监听，恢复后重算；统计行不参与选择、编辑、排序或 ItemsSource。列宽／重排／横向滚动与左右冻结共用原生布局描述，窄窗口沿用冻结区裁剪规则。
 
-首期只统计本地已加载源模型，不能代表服务端未加载数据。自定义完整 DataGrid 模板需嵌入 DataGridSummaryPresenter，默认 OneTheme 已包含。PreviewHost 可切换“显示统计”；专项 `--verify-datagrid-summary` 包含统计、自动筛选、冻结及原生回归；截图名称 DataGridSummary 和 DataGridFilters。执行方式见[测试策略](../workflow/testing.md)。
+首期只统计本地已加载源模型，不能代表服务端未加载数据。自定义完整 DataGrid 模板需嵌入 DataGridSummaryPresenter，默认 OneTheme 已包含。PreviewHost 可切换“显示统计”；专项 `--verify-datagrid-summary` 包含统计、自动筛选、冻结及原生回归；截图名称 DataGridSummary 和 DataGridFilters。执行方式见[预览专项入口](../../design/PreviewHost/Program.cs)。

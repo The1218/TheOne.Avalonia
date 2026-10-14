@@ -1,6 +1,6 @@
 # 主题配色维护
 
-OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid。[加载](../../README.md#快速开始) · [配色与变体](theme-colors.md) · [控件 API](../controls/README.md)。
+OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid。[加载](../../README.zh-cn.md#快速开始) · [配色与变体](theme-colors.md) · [控件 API](../controls/README.md)。
 
 ## 官方模板
 
@@ -64,7 +64,7 @@ Motion.Enabled 可在容器设置并继承；关闭或零时长立即完成当�
 
 模板使用 TemplateBinding／编译绑定，MultiBinding 子项显式 CompiledBindingExtension；不能以关闭编译绑定兼容旧示例。保留官方 PART_*、输入 Presenter、Popup、验证、Track、Spinner、手势及键盘行为。模板升级需比较官方部件与绑定变化。来源与许可见 [第三方声明](../../THIRD-PARTY-NOTICES.md)。
 
-集合保留有界视口、按需模板和专用面板；回收检查见[测试策略](../workflow/testing.md)。DataGrid 有限 MaxColumnWidth 在创建列前配置，AOT 要求见[NativeAOT](../native-aot.md)。
+集合保留有界视口、按需模板和专用面板；回收检查入口见 [PreviewHost](../../design/PreviewHost/Program.cs)。DataGrid 有限 MaxColumnWidth 在创建列前配置，AOT 要求见 [DataGrid 控件文档](../controls/datagrid-binding.md#nativeaot)。
 
 ## 对应控件文档
 
@@ -72,5 +72,3 @@ Motion.Enabled 可在容器设置并继承；关闭或零时长立即完成当�
 - [树、列表、Card 标签与表格](../controls/collections.md) · [轮播与刷新](../controls/collection-content.md)。
 - [菜单、浮层与布局](../controls/layout.md) · [内容过渡与通知](../controls/content-feedback.md)。
 - [窗口与消息](../controls/windows.md) · [图表](../controls/charts.md)。
-
-验证与截图命令统一维护于[测试策略](../workflow/testing.md)。

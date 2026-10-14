@@ -54,7 +54,7 @@ PreviewHost 的标题栏“☰”可切换真实主导航；扩展控件 → Nav
 
 专项鼠标验证：
 
-执行命令与测试范围见[测试策略](../workflow/testing.md)。
+执行命令与测试范围见[预览专项入口](../../design/PreviewHost/Program.cs)。
 
 `--verify-navmenu`、`--verify-controls` 和 NativeAOT 消费验证同样包含悬停与级联场景，覆盖三尺寸 × 明暗主题、跨层移动、延迟关闭取消、快速切换、逐级键盘返回、千项远距离选择、回收与卸载后的计时器清理。
 

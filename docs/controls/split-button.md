@@ -25,4 +25,4 @@
 
 大量选项使用 MenuFlyout.ItemsSource 和有类型的数据模板，让原生菜单按需创建容器；不要提前创建成千上万个 MenuItem。ItemContainerTheme 的 x:DataType 应是选项模型，并用编译绑定设置 Command / CommandParameter。Flyout 中需要不同 VM 时显式提供有类型的数据上下文，不能关闭编译绑定。
 
-预览在按钮组合页展示主操作、切换、禁用及大量菜单选项。`--verify-buttons-messages` 包含真实指针／键盘、命令次数、菜单选择与虚拟回收检查。原生执行及定向渲染见[测试策略](../workflow/testing.md)；菜单与弹层见[布局文档](layout.md)。
+预览在按钮组合页展示主操作、切换、禁用及大量菜单选项。`--verify-buttons-messages` 包含真实指针／键盘、命令次数、菜单选择与虚拟回收检查。原生执行及定向渲染见[预览专项入口](../../design/PreviewHost/Program.cs)；菜单与弹层见[布局文档](layout.md)。

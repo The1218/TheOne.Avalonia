@@ -65,7 +65,7 @@ bool selected = menu.SelectPath(0, 0, 999);
 
 PreviewHost 主侧栏已采用 NavMenu，分为基础控件、数据展示、导航与布局、图表控件、扩展控件、交互验证六区。扩展控件中的“导航菜单 NavMenu”演示每级 1,000 条、共 5,000 个模型，可跳到末尾根节点、二级及三级页面，实时查看实际容器数量。
 
-执行命令与测试范围见[测试策略](../workflow/testing.md)。
+执行命令与测试范围见[预览专项入口](../../design/PreviewHost/Program.cs)。
 
 专项覆盖明暗主题和三种尺寸、实际容器数量、远距离选择与键盘导航、回收后的展开状态、编译模板更新、动态子项、禁用状态、分组不导航、自定义模板操作、实时尺寸及主题切换。独立原生消费项目复用同一编译 XAML 和交互验证，不使用反射绑定、动态 XAML 或整程序集保留。
 
@@ -75,4 +75,4 @@ PreviewHost 主侧栏已采用 NavMenu，分为基础控件、数据展示、导
 - [多级搜索、高亮、键盘与顶部自动完成](nav-menu-search.md)。
 - [展开与收起动效](nav-menu-motion.md)。
 
-验证入口及原生专项选择见[测试策略](../workflow/testing.md)。
+验证入口及原生专项选择见[预览专项入口](../../design/PreviewHost/Program.cs)。

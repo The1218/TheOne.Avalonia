@@ -1,6 +1,6 @@
 # 控件使用文档
 
-TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口、消息、InfoCard 信息卡片与 Chart 图表扩展。先按[仓库 README](../../README.md#快速开始)引用类库并加载 `OneTheme`，再使用本目录的示例。无需把业务视图迁移成 TheOne 包装控件。
+TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口、消息、InfoCard 信息卡片与 Chart 图表扩展。先按[仓库 README](../../README.zh-cn.md#快速开始)引用类库并加载 `OneTheme`，再使用本目录的示例。无需把业务视图迁移成 TheOne 包装控件。
 
 ## 文档导航
 

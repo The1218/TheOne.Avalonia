@@ -92,6 +92,6 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 
 图表画笔默认对应 `One.Chart.Series1..6`，超过六个系列循环。类别较多时结合图例、标记及线型；颜色不承担唯一识别作用。`ChartSeries.Brush` 优先，`FifthBrush` / `SixthBrush` 与原有四个画笔一样可以显式覆盖并用于导出。
 
-外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[测试策略](../workflow/testing.md)。对比度报告见 [contrast-report.json](contrast-report.json)。
+外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[预览专项入口](../../design/PreviewHost/Program.cs)。对比度报告见 [contrast-report.json](contrast-report.json)。
 
 `underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger；`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。

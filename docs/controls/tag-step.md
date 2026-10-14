@@ -143,4 +143,4 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 Step 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
 
-默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[测试策略](../workflow/testing.md)。
+默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[预览专项入口](../../design/PreviewHost/Program.cs)。

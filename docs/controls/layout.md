@@ -160,4 +160,4 @@ Standard 模式聚焦内容，Transient 保留触发控件焦点；关闭可通�
 
 普通长内容会按默认 MaxHeight=480 滚动。大数据 Content 仍需使用有限 Height 的 ListBox 或有界 DataGrid；不能仅在弹层中放无限高度 ItemsControl。PreviewHost 使用 10,000 条数据，实际按视口创建与回收容器，并通过稳定的源绑定保留关闭后的选择。
 
-内容过渡与通知见[对应 API](content-feedback.md)。验证范围与命令见[测试策略](../workflow/testing.md)。
+内容过渡与通知见[对应 API](content-feedback.md)。验证范围与命令见[预览专项入口](../../design/PreviewHost/Program.cs)。

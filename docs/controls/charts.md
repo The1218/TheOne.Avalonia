@@ -135,4 +135,4 @@ public sealed class ChartViewModel : INotifyPropertyChanged
 | 标签、选择、十字准线、联动提示、图例、缩放／平移 | [交互](chart-interaction.md) |
 | 更新动画、PNG 导出、更新规则、主题与尺寸 | [渲染](chart-rendering.md) |
 
-专项为 `--verify-charts`，截图使用具体类型或场景名；命令统一见[测试策略](../workflow/testing.md)。
+专项为 `--verify-charts`，截图使用具体类型或场景名；命令统一见[预览专项入口](../../design/PreviewHost/Program.cs)。

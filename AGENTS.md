@@ -7,14 +7,14 @@
 - 主库：`TheOne.Avalonia/`；.NET 10、Avalonia 12.1.4。
 - DataGrid：`vendor/Avalonia.Controls.DataGrid/`，上游 12.1.2。保留程序集身份、许可、原生 Presenter 和 PART_*；局部补丁写入 vendor README。
 - 预览与验证：`design/PreviewHost/`；独立消费端在 `Consumers/`，验证代码在 `Verification/`。不要新增独立测试项目或根目录脚本。
-- 文档：`docs/controls/` 对应公开控件；验证命令以 `docs/workflow/testing.md` 和 Program.cs 为准。
+- 文档：`docs/controls/` 对应公开控件；验证命令以 PreviewHost 及 Consumers 的 Program.cs 为准。
 - 维护工作使用 `.agents/skills/theone-maintenance/SKILL.md`；按需读取其中的任务提示词，不把所有文档一次性加载。
 
 ## 实现约束
 
 - 保留原生控件行为和现有结构；主题通过共享 `One.*` 资源支持 Light / Dark 和 Small / Normal / Large。
 - XAML 保持编译绑定，声明正确 x:DataType。不得以 ReflectionBinding、关闭编译绑定、NoWarn、裁剪警告抑制或整程序集保留绕过问题。
-- DataGrid 在创建视图前显式注册具体行和嵌套类型；筛选／统计复用编译 getter。具体契约见 `docs/native-aot.md`。
+- DataGrid 在创建视图前显式注册具体行和嵌套类型；筛选／统计复用编译 getter。具体契约见 `docs/controls/datagrid-binding.md` 的 NativeAOT 节。
 - 图表继续直接绘制，不为每个点或轴标签创建 Control。文本布局依据实际文本尺寸，密度变更不能截断标签或改变数据坐标含义。
 - PreviewHost 是桌面 GUI 程序，Debug / Release 都使用 WinExe；消费验证程序保留 Exe。避免用隐藏控制台的 Win32 调用修补错误的输出类型。
 

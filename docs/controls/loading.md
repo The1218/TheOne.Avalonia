@@ -25,4 +25,4 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 `ControlSizing.Size` 支持 Small／Normal／Large，按钮指示图标为 14／16／20px，容器为 22／28／34px。使用 One.* 语义色，跟随 Light／Dark。`Motion.Enabled=False` 停止旋转、保留静态图标和文字；在加载中重新设置 true 恢复旋转，隐藏／卸载时取消动画。LoadingIndicator 也可独立使用，IsActive 控制运行状态，Foreground 控制颜色。
 
-PreviewHost 的 Button、IconButton 页面提供加载与动效交互，LoadingContainer 有独立扩展控件页。验证入口、定向截图与原生平台边界见[测试策略](../workflow/testing.md)与 [NativeAOT](../native-aot.md)。
+PreviewHost 的 Button、IconButton 页面提供加载与动效交互，LoadingContainer 有独立扩展控件页。验证与定向截图入口见 [PreviewHost](../../design/PreviewHost/Program.cs)，原生消费示例见 [NativeAotSmoke](../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。

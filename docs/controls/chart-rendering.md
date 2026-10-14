@@ -77,13 +77,13 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 | `SliceHoverScale` | 1.02 | 1.025 | 1.03 |
 | `GaugeBandRatio` | 0.14 | 0.18 | 0.22 |
 
-图表使用独立于标准表单控件的紧凑字号。仪表刻度字号为 9 / 10 / 11，中心数值为 20 / 22 / 24；标题在基础字号上增加 2，图例使用基础字号。PreviewHost 三种样式的可用宽度随尺寸为 240 / 300 / 360，不再固定为同一宽度。
+图表使用独立于标准表单控件的紧凑字号。仪表刻度字号为 9 / 10 / 11，中心数值为 20 / 22 / 24；标题在基础字号上增加 2，图例使用基础字号。PreviewHost 图表样式的可用宽度随尺寸为 240 / 300 / 360，不再固定为同一宽度。
 
 这些值可在单个图表上覆盖。`DefaultChartWidth` / `DefaultChartHeight` 只提供默认期望尺寸；明确设置 `Width` / `Height` 或由 Grid 拉伸时，以消费布局为准。固定相同宽高下，三档仍改变图表内部密度。径向图会为扇区抬起预留边缘空间；坐标图按字号与留白重新计算绘图区及可容纳的刻度、标签。
 
 ## 验证场景
 
-具体图表类型均有同名渲染入口，抽象基类没有。按改动选择必要场景，执行方式见[测试策略](../workflow/testing.md)：
+具体图表类型均有同名渲染入口，抽象基类没有。按改动选择必要场景，执行方式见[预览专项入口](../../design/PreviewHost/Program.cs)：
 
 | 需求 | 渲染名称 |
 | --- | --- |
@@ -92,4 +92,4 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 | 标签／平滑／动画 | LabeledLineChart、SmoothLineChart、AnimatedChart |
 | 悬停／仪表 | PieHoverChart、DoughnutHoverChart、BarHoverChart、NeedleGaugeChart、PrecisionGaugeChart |
 
-PNG 导出 API 单独验证，不依赖截图命令。NativeAOT 接入见[对应文档](../native-aot.md)。
+PNG 导出 API 单独验证，不依赖截图命令。图表模型无需额外元数据保留；SeriesSource、选择、Viewport 和仪表值使用编译绑定，动态切换创建具体控件，不修改只读 Kind。原生消费示例见 [NativeAotSmoke](../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。

@@ -27,4 +27,4 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 
 官方 Button 与 IconButton 共用 primary/accent、soft、gradient、outline、ghost、link、success、info、warning、danger 样式。默认样式用于次要操作；primary 推进主要流程，ghost 为轻操作，outline 强调边界，success/info/warning/danger 表达完成、提示、风险与危险操作。悬停、按下、焦点、禁用保留原生状态与 TheOne 语义色。每组按钮宜只保留一个主要操作，文字明确说明操作。
 
-编译绑定声明视图 x:DataType；数据 IconTemplate 声明图标数据类型。实现使用 StyledProperty、TemplateBinding 与编译模板，不反射创建图标。NativeAOT 验证边界与第三方包的验证见 [NativeAOT](../native-aot.md)。
+编译绑定声明视图 x:DataType；数据 IconTemplate 声明图标数据类型。实现使用 StyledProperty、TemplateBinding 与编译模板，不反射创建图标。独立编译绑定和原生消费示例见 [NativeAotSmoke](../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
