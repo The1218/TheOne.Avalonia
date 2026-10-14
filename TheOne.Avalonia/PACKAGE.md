@@ -14,6 +14,6 @@ TheOne.Avalonia and TheOne.Avalonia.DataGrid share one release version and chann
 
 Register each concrete row and nested property type with `DataGridAot.PreserveRowType<T>()` before creating a collection view or grid, for both managed and NativeAOT applications. Explicit columns use compiled bindings; automatic columns use registered public-property metadata and compiled accessors. Custom domain conversions require an explicit column converter.
 
-Source, control documentation, and theme documentation: [TheOne.Avalonia repository](https://github.com/The1218/TheOne.Avalonia).
+[Source](https://github.com/The1218/TheOne.Avalonia) · Controls: [English](https://github.com/The1218/TheOne.Avalonia/blob/main/docs/controls/en/README.md) / [简体中文](https://github.com/The1218/TheOne.Avalonia/blob/main/docs/controls/zh-cn/README.md) · Theme: [English](https://github.com/The1218/TheOne.Avalonia/blob/main/docs/theme/en/README.md) / [简体中文](https://github.com/The1218/TheOne.Avalonia/blob/main/docs/theme/zh-cn/README.md).
 
 MIT license. Third-party notices are included in THIRD-PARTY-NOTICES.md.

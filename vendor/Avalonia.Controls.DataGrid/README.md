@@ -23,8 +23,8 @@ NuGet 包版本与主库共用根目录 [PackageVersions.props](../../PackageVer
 - DataGridRow.cs：数据视图重置时避免选择状态的重复回写，保留槽位断言。
 - 单元格／表头 AutomationPeer：被完全裁剪的元素不作为屏内元素报告。
 
-右侧冻结为零时保留上游布局路径。升级时先比较上游变更，再运行 DataGrid 相关专项与实际 NativeAOT，不能只更换版本号。当前实现、窄窗口规则和配置示例见 [使用文档](../../docs/controls/datagrid-extensions.md)。
+右侧冻结为零时保留上游布局路径。升级时先比较上游变更，再运行 DataGrid 相关专项与实际 NativeAOT，不能只更换版本号。当前实现、窄窗口规则和配置示例见 [使用文档](../../docs/controls/zh-cn/datagrid-extensions.md)。
 
 自动取值使用 Avalonia 12.1.4 的 friend API；升级核心版本时必须检查编译路径元素与 IPropertyInfo 合约，并运行自动字段与原生专项。
 
-使用属性路径前调用 `DataGridAot.PreserveRowType<T>()`，只引用此包时使用 `DataGridRowMetadata.Register<T>()`。嵌套模型和自定义比较值逐个注册，自定义转换提供列 Converter。完整契约见 [DataGrid NativeAOT](../../docs/controls/datagrid-binding.md#nativeaot)。
+使用属性路径前调用 `DataGridAot.PreserveRowType<T>()`，只引用此包时使用 `DataGridRowMetadata.Register<T>()`。嵌套模型和自定义比较值逐个注册，自定义转换提供列 Converter。完整契约见 [DataGrid NativeAOT](../../docs/controls/zh-cn/datagrid-binding.md#nativeaot)。

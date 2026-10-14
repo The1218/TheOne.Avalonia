@@ -1,0 +1,30 @@
+# SplitButton and ToggleSplitButton
+
+[简体中文](../zh-cn/split-button.md) · **English**
+
+Both use native Avalonia controls. The primary area executes Command; the arrow opens Flyout without executing that command. ToggleSplitButton's primary area also toggles its bool IsChecked. The arrow and menu do not change the checked state. It does not provide ToggleButton's bool? three-state behavior.
+
+```xml
+<SplitButton Content="导出" Command="{Binding ExportCommand}"
+             CommandParameter="PDF" Classes="primary">
+  <SplitButton.Flyout>
+    <MenuFlyout>
+      <MenuItem Header="导出 PDF" Command="{Binding ExportCommand}" CommandParameter="PDF" />
+      <MenuItem Header="导出 CSV" Command="{Binding ExportCommand}" CommandParameter="CSV" />
+    </MenuFlyout>
+  </SplitButton.Flyout>
+</SplitButton>
+<ToggleSplitButton Content="自动同步" IsChecked="{Binding AutoSync, Mode=TwoWay}">
+  <SplitButton.Flyout>
+    <MenuFlyout><MenuItem Header="立即同步" Command="{Binding SyncCommand}" /></MenuFlyout>
+  </SplitButton.Flyout>
+</ToggleSplitButton>
+```
+
+Declare the ViewModel's x:DataType; the consumer supplies commands and AutoSync. Content / ContentTemplate, Command / CommandParameter, Flyout, and IsEnabled are native properties. Without a Flyout, the arrow has no content to open. CanExecute and disabled states retain native semantics; do not execute the same command again from Click.
+
+When focused, Enter / Space runs the primary action; F4 or Alt + ↓ opens the menu; Esc closes it and returns focus to the trigger. Each area has its own hover and pressed feedback within a continuous outline. Default, primary, and gradient appearances are supported. small / normal / large inherit minimum heights of 30 / 36 / 44 px; explicit Padding, CornerRadius, and BorderThickness take precedence.
+
+For many options, use MenuFlyout.ItemsSource and typed data templates so native menus create containers on demand instead of pre-creating thousands of MenuItem instances. ItemContainerTheme x:DataType should be the option model, with compiled Command / CommandParameter bindings. Provide an explicit typed data context if Flyout needs a different ViewModel; keep compiled bindings enabled.
+
+The combined button page demonstrates primary actions, toggling, disabled states, and large menus. `--verify-buttons-messages` checks real pointer / keyboard input, command counts, menu selection, and recycling. See the [preview entry points](../../../design/PreviewHost/Program.cs) for native execution and targeted rendering, and [layout documentation](layout.md) for menus and popups.

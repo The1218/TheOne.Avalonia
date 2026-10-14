@@ -1,0 +1,99 @@
+# 默认主题配色与控件外观
+
+**简体中文** · [English](../en/theme-colors.md)
+
+默认颜色按 [Eremex DeltaDesign 的 Nova 资源](https://github.com/Eremex/controlthemes/blob/5f6cb3ad8b904cead6bd432f62596648cc9a1039/Source/Eremex.Avalonia.Themes.DeltaDesign/PaletteResources/Nova.axaml)逐项映射，并与 `Eremex.Avalonia.Themes.DeltaDesign 1.5.53-preview3` 的运行时资源交叉核对。参考 Demo 使用的主题入口见 [App.axaml](https://github.com/Eremex/controls-demo/blob/2edf87b8eea9f58f935b0383bbf724abfd43122a/DemoCenter/DemoCenter/App.axaml)。不再根据旧截图取近似色，也不将强调色人为压暗或增艳。
+
+颜色直接写入类库 `Themes/Colors.axaml`；加载 OneTheme 即生效。公共 `One.*` 名称保留，按钮、输入、选择、列表、表格、导航、菜单、浮层、窗口与消息共用这些资源，无需宿主注入。保留 Avalonia 原生模板、行为与三档尺寸，不引入 Eremex 依赖或复制其模板实现。
+
+| One 语义 / Nova 角色 | Light | Dark |
+| --- | --- | --- |
+| Canvas、Surface / Primary Enabled | `#FFFFFF` | `#0F0F0F` |
+| Subtle、CardTabStrip / Secondary Enabled | `#EDEDED` | `#282929` |
+| NeutralHover / Secondary Hover | `#D6D7D7` | `#3F4141` |
+| NeutralPressed / Secondary Pressed | `#CECFCF` | `#494B4B` |
+| Text / Text Neutral Primary | `#212222` | `#F2F2F2` |
+| Muted / Text Neutral Secondary | `#474D4D` | `#CACECE` |
+| Line、InputLine / Neutral Light | `#D2D5D5` | `#3D4242` |
+| CardTabBorder / On Secondary Light | `#CACECE` | `#474D4D` |
+| Accent / Enabled | `#006061` | `#63D9DE` |
+| AccentHover / Hover | `#006A6B` | `#5DD2D5` |
+| AccentPressed / Pressed | `#007475` | `#55CBCE` |
+| AccentSoft / Item Enabled | `#C1DCDC` | `#284343` |
+| AccentSoftHover / Item Hover | `#B9D4D4` | `#324E4E` |
+| AccentSoftPressed / Item Pressed | `#B1CDCD` | `#3C5858` |
+| RowSelected / Row Enabled | `#DFF1F1` | `#162C2C` |
+| RowSelectedHover / Row Hover | `#D6EBEB` | `#1F3838` |
+| RowSelectedPressed / Row Pressed | `#CDE4E5` | `#264040` |
+| Focus / Outline Accent Focus | `#129190` | `#36AFB0` |
+| OnAccent / Text On Accent | `#F7F8F8` | `#181B1B` |
+| Success、Info / Outline Green、Blue | `#007A06`、`#395DC6` | `#57D15D`、`#9EB4FF` |
+| Warning、Danger / Outline Yellow、Error | `#855D00`、`#99000D` | `#DDB35F`、`#FFBDC2` |
+
+完整的 48 组 Light / Dark 映射、原资源名与来源提交在 [theme-reference-nova.json](../theme-reference-nova.json)。静态检查验证 96 个原值，运行时回归覆盖明暗主题与三档密度，防止默认主题仍落回旧色。普通按钮与编辑器默认采用 Secondary 填充，按钮文字为强调色；弹窗和内容区域采用 Primary。悬停、按下不再复用分割线颜色，列表与表格分别使用 Item、Row 高亮。
+
+默认几何参数按参考主题分角色设置，而非所有控件共用一个圆角：
+
+| 区域 | 圆角 / 描边 |
+| --- | --- |
+| 按钮、编辑器、列表外框 | 6 px；编辑器默认透明描边，焦点描边 1 px |
+| ListBoxItem、ComboBoxItem | Small 为 4 px，Normal / Large 为 6 px |
+| 菜单、Flyout、日期时间弹层、通知、对话框 | 8 px；弹层使用 OutlineStrong |
+| ToolTip、CheckBox 标记 | 分别 4 px、3 px |
+| DataGrid | 原生方形外框，OutlineMedium 分隔线 |
+| 自定义 InfoCard | 保留 12 px 及既有区域分割线 |
+
+CheckBox / RadioButton 的未选填充、选中图标和禁用状态分别映射 Secondary、IconOnAccent、DisabledSelection，开关轨道与滑块单独映射，避免复用文字色。通知色条使用 `SuccessFill / InfoFill / WarningFill / DangerFill`，图标仍用状态描边色。列表、菜单的未选悬停为中性底色。
+
+图表单独映射参考 `Variants/Light|Dark/ChartColors.axaml`：背景为白 / 黑，文字为 `#385252 / #DBE6E6`，网格为 `#CADADA / #707575`；不再复用普通内容表面的 Surface / Line。系列组合与渐变维持既有扩展。
+
+Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4 px，选中标题顶部为 6 px，靠正文一侧为内凹连接。四种标签方向均保留内容四角，圆角后方显示 Secondary 底色。
+
+原始 Nova 的中性边框对比度低于 3:1，浅色 ToggleButton 按下时 Accent / AccentSoftPressed 文字对比度约 4.39:1。为满足原色一致的要求，保留其值，在 [contrast-report.json](../contrast-report.json) 中单独记录实际比值和未达标项；不将报告表述为全面符合 WCAG。这些原始参考值作为明确例外记录，其余正文、焦点、状态文字和渐变文字继续检查可读性。需要高对比边界的宿主可覆盖 InputLine / CardTabBorder。
+
+## 渐变与扩展色
+
+渐变、状态浅底和图表系列组合为 TheOne 扩展，不宣称是 Eremex 原生效果：
+
+- `One.Gradient.Brand` 从 Nova Accent 过渡到相邻青蓝色，另有 Hover / Pressed，使用 OnAccent 文字。
+- `One.Gradient.Glow` 从 Primary Hover 过渡到 Row Enabled；适用于卡片标题，文字使用 Text / Muted。
+- `One.Gradient.Data` 从 Item Enabled 过渡到 Accent，仅用于数据填充。
+- 状态 `*Soft` 从 Primary 与对应原始状态色混合；InfoCard 正文为 Primary，Footer 为 Primary 向 Primary Hover 混合 20% 的派生色，保持细微差异。
+- 图表六色取自 Eremex Graphics 的 Blue Green、Blue、Yellow、Purple、Purple Red、Green 色阶；浅色使用 Highest、深色使用 Lowest，以保持饼图百分比文字可读。系列组合属于本库选择，不等同于参考图表默认顺序。
+
+渐变采用浅角度横向过渡（0%,0% → 100%,35%），缩小品牌渐变两端色相差，Hover / Pressed 保持独立明度层级。ToggleButton 空值态按参考使用 Primary 表面，并增加独立短横线，避免与未选态混淆。
+
+本轮审查了全部 65 个控件主题文件，默认颜色由共享语义资源提供；窗口遮罩、渐变和自定义控件为明确扩展。核对范围见 [reference-audit.json](../reference-audit.json)。颜色一致不表示 Eremex 自有控件模板、布局和交互完全相同；本库继续使用 Avalonia 原生结构。
+
+品牌渐变提供同名 `.StartColor` / `.EndColor` 资源。覆盖画刷时同时检查各状态及渐变中间色。模板使用 DynamicResource，支持实时主题切换。
+
+## 多样式取舍
+
+| 控件 | 新样式 | 理由 |
+| --- | --- | --- |
+| Button / IconButton / ToggleButton / RepeatButton | `soft`、`gradient` | 区分次要操作与重点操作；保留原有 primary / outline / ghost / link 和状态类 |
+| SplitButton / ToggleSplitButton | `gradient` | 双区操作共享视觉层级，保留原生 Flyout |
+| TextBox / ComboBox / NumericUpDown / AutoCompleteBox | `filled`、`underlined` | 填充或底线外观，保留原生输入、焦点与校验 |
+| CalendarDatePicker / DatePicker / TimePicker | `filled` | 填充输入，保留原生选择器与文字居中 |
+| TabControl | `pills` | 胶囊标题，保留原生虚拟化、键盘与内容 Presenter |
+| ProgressBar | `gradient`、`success`、`info`、`warning`、`danger` | 区分普通进度与任务状态 |
+| InfoCard | `glow`、`flat`、`outlined` | 分别用于重点信息与嵌入式布局；无展开折叠 |
+| ListBox / DataGrid | `borderless`；ListBox 另有 `cards` | 避免嵌入卡片后出现双重外框；保留原生虚拟化与选择 |
+
+导航、日期时间、菜单及表格选中态使用纯色，保证焦点、选中与禁用清楚。Tag 已有 Soft / Outline / Solid 及状态属性，无需再增加重复的样式类。图表使用独立六系列色，通过画笔属性和已有类型选项表达差异，不给每个图表添加相同的样式类。
+
+```xml
+<Button Classes="gradient" Content="创建工作区" Command="{Binding CreateCommand}" />
+<Button Classes="soft small" Content="稍后处理" />
+<TextBox Classes="filled" Text="{Binding Name, Mode=TwoWay}" />
+<ProgressBar Classes="success" Value="100" />
+<one:InfoCard Classes="glow" Header="概览" Content="内容" />
+```
+
+每个控件选择一种主要外观类，避免 `primary gradient danger` 等互斥组合。尺寸类可叠加；本地属性与自定义主题仍遵循 Avalonia 的优先级。
+
+图表画笔默认对应 `One.Chart.Series1..6`，超过六个系列循环。类别较多时结合图例、标记及线型；颜色不承担唯一识别作用。`ChartSeries.Brush` 优先，`FifthBrush` / `SixthBrush` 与原有四个画笔一样可以显式覆盖并用于导出。
+
+外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。对比度报告见 [contrast-report.json](../contrast-report.json)。
+
+`underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger；`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。

@@ -15,7 +15,7 @@
 | .NET SDK / TargetFramework | .NET 10 / `net10.0` |
 | Avalonia 核心、Skia、Fluent | 12.1.4 |
 | DataGrid | 基于 12.1.2，包名 `TheOne.Avalonia.DataGrid` |
-| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.1 |
+| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.2 |
 | PreviewHost MVVM | ReactiveUI.Avalonia 12.1.4 |
 
 ## 快速开始
@@ -31,10 +31,10 @@ dotnet run --project design/PreviewHost
 在消费项目中安装预览包，配套 DataGrid 包会自动还原：
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.1
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.2
 ```
 
-远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.1) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.1)。也可引用源码（路径按项目位置调整）：
+远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.2) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.2)。也可引用源码（路径按项目位置调整）：
 
 ```sh
 dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.csproj
@@ -69,8 +69,8 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 
 ## 文档
 
-- [控件文档](docs/controls/README.md)：控件属性、行为与接入示例。
-- [主题文档](docs/theme/README.md)：配色、样式、尺寸与动效。
+- [控件文档](docs/controls/zh-cn/README.md)：控件属性、行为与接入示例。
+- [主题文档](docs/theme/zh-cn/README.md)：配色、样式、尺寸与动效。
 
 ## 仓库结构
 
