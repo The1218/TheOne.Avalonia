@@ -64,4 +64,6 @@ dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r win-x64
 
 已实跑平台为 macOS ARM64、.NET 10、Avalonia 12.1.4／DataGrid 12.1.2，渲染使用 Skia Headless。其他 RID、真实 GPU、业务模型与外部依赖需在对应宿主验证。配置依据见 [Avalonia NativeAOT 指南](https://docs.avaloniaui.net/docs/deployment/native-aot)。验证结论以当前构建及原生可执行文件实跑日志为准。
 
+Windows 控件已由用户确认实跑完成；本次反馈没有细分 RID 或 NativeAOT 发布方式，因此不扩写为 Windows 原生专项证据。更新后的小尺寸轴标签和 GUI 启动产物需在 Windows 复核；本机跨 RID 产物检查不等于目标宿主执行。
+
 2026-10-14 源码验证：原生独立消费 1,206 项；DataGrid 编译绑定／排序／虚拟化 1,623 项，包含自动列实际编辑提交和只读列拒绝编辑；筛选／统计／冻结 1,104 项；Tag／Step 631 项。最终双包消费在托管及 NativeAOT 下均通过 Headless 152 项和桌面 140 项，隔离缓存的包哈希与新打包产物一致。运行时动态代码关闭，发布没有 DataGrid 裁剪或动态代码警告。这些结论属于当前源码，不能归于已发布的旧包。

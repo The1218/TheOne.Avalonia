@@ -1,6 +1,6 @@
 # 按改动范围验证
 
-验证代码集中在 PreviewHost 及其 Consumers 子目录；仓库不再维护 Agent 配置或辅助脚本。命令在仓库根目录执行，日志和截图放入忽略目录 `.preview/`。
+验证代码集中在 PreviewHost 及其 Consumers 子目录；项目 Agent 约定与维护 Skill 见根 AGENTS.md 和 `.agents/skills/theone-maintenance/`，不另建辅助脚本体系。命令在仓库根目录执行，日志和截图放入忽略目录 `.preview/`。
 
 ## 测试分级
 
@@ -36,6 +36,7 @@ dotnet run --no-build --project design/PreviewHost -- --verify-datagrid-binding
 | 标签拖动、取消、边缘滚动和回收 | `--verify-tab-drag` |
 | 输入对齐、日期时间弹层 | `--verify-text-alignment`、`--verify-pickers` |
 | 图表、渲染、选择、缩放与导出 | `--verify-charts` |
+| 小尺寸 X 轴月份、长标签、递减 X 和图例开关的实际像素 | `--verify-chart-axis-labels [输出目录]` |
 | 窗口、登录、InfoCard | `--verify-onewindow`、`--verify-loginwindow`、`--verify-infocard` |
 | NavMenu 全部、搜索、动效、筛选 | `--verify-navmenu`、`--verify-navmenu-search`、`--verify-navmenu-motion`、`--verify-navmenu-filter` |
 | 轮播、刷新、展开、内容过渡 | `--verify-carousel`、`--verify-refresh`、`--verify-expander-motion`、`--verify-content-transition` |
@@ -52,6 +53,7 @@ dotnet run --no-build --project design/PreviewHost -- --verify-datagrid-binding
 SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" -o .preview/native-consumer
 .preview/native-consumer/NativeAotSmoke --require-aot --verify-datagrid-binding
 .preview/native-consumer/NativeAotSmoke --require-aot --verify-datagrid-summary
+.preview/native-consumer/NativeAotSmoke --require-aot --verify-chart-axis-labels
 ```
 
 不传专项参数时执行独立消费回归。支持的参数见 [Program.cs](../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。原生程序必须带 `--require-aot`；普通 `dotnet run` 不构成原生证据。

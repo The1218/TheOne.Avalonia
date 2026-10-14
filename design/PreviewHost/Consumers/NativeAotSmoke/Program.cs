@@ -115,6 +115,7 @@ internal static class Program
             Console.WriteLine($"PASS: {_checks} DataGrid stage-one feasibility / compiled binding / native virtualization checks.");
             return;
         }
+        if (args.Contains("--verify-chart-axis-labels")) { TheOne.DesignPreview.ChartPreview.VerifyAxisLabels(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} chart axis-label pixel checks."); return; }
         if (args.Contains("--verify-charts"))
         {
             TheOne.DesignPreview.ChartPreview.Verify(Check);

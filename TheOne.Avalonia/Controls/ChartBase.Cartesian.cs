@@ -166,7 +166,9 @@ public partial class ChartBase
         var right = !horizontal && secondaryShown ? AxisMargin(bounds.Width, ranges[1], ChartYAxis.Secondary) : 12;
         var titleRow = (!string.IsNullOrEmpty(YAxisTitle) || secondaryShown && !string.IsNullOrEmpty(SecondaryYAxisTitle)) ? FontSize + 14 : 0;
         var top = 8 + titleRow + (horizontal && secondaryShown ? FontSize + 18 : 0);
-        var bottom = FontSize + 30 + (horizontal && !string.IsNullOrEmpty(YAxisTitle) ? FontSize + 14 : 0);
+        var axisTextHeight = source[visible[0]].ItemsSource!.Take(128)
+            .Max(point => Text(point.Label ?? FormatValue(point.X), MutedBrush).Height);
+        var bottom = Math.Max(FontSize + 30, axisTextHeight + 16) + (horizontal && !string.IsNullOrEmpty(YAxisTitle) ? FontSize + 14 : 0);
         var plot = _cartesianPlot = new Rect(bounds.Left + left, bounds.Top + top, Math.Max(0, bounds.Width - left - right), Math.Max(0, bounds.Height - top - bottom));
         if (plot.Width < 12 || plot.Height < 12) { SetSamplingDiagnostics(0, false); return; }
         var frame = _cartesianFrame = new CartesianFrame(viewport, count, categorical, horizontal, stacked);
@@ -461,7 +463,7 @@ public partial class ChartBase
         if (secondaryShown) frame.Lines.Add(new CartesianLine(frame.Horizontal ? plot.TopLeft : plot.TopRight, frame.Horizontal ? plot.TopRight : plot.BottomRight, 1));
         var categories = SeriesSource![firstSeries].ItemsSource!;
         var widestCategory = categories.Take(128).Max(point => Text(point.Label ?? FormatValue(point.X), MutedBrush).Width);
-        var capacity = Math.Max(2, (int)((frame.Horizontal ? plot.Height : plot.Width) / (frame.Horizontal ? FontSize + 8 : Math.Max(36, widestCategory + 14))));
+        var capacity = Math.Max(2, (int)((frame.Horizontal ? plot.Height : plot.Width) / (frame.Horizontal ? FontSize + 8 : Math.Max(FontSize + 8, widestCategory + 6))));
         var labels = new List<(double Fraction, string Text)>();
         if (frame.Categorical)
         {
@@ -494,7 +496,8 @@ public partial class ChartBase
                 { var fraction = label / (double)(capacity - 1); labels.Add((fraction, FormatValue(displayed.At(fraction)))); }
             }
         }
-        foreach (var label in labels)
+        var previousLabelRight = double.NegativeInfinity;
+        foreach (var label in labels.OrderBy(label => label.Fraction))
         {
             var text = Text(label.Text, MutedBrush);
             if (frame.Horizontal)
@@ -505,7 +508,11 @@ public partial class ChartBase
             else
             {
                 var x = plot.Left + label.Fraction * plot.Width;
-                Label(label.Text, new Point(Math.Clamp(x - text.Width / 2, bounds.Left, Math.Max(bounds.Left, bounds.Right - text.Width)), plot.Bottom + 8), clip: new Rect(Math.Max(bounds.Left, x - 40), plot.Bottom + 6, 80, FontSize + 12));
+                var labelLeft = Math.Clamp(x - text.Width / 2, bounds.Left, Math.Max(bounds.Left, bounds.Right - text.Width));
+                if (labelLeft < previousLabelRight + 6) continue;
+                previousLabelRight = labelLeft + text.Width;
+                Label(label.Text, new Point(labelLeft, plot.Bottom + 8),
+                    clip: new Rect(bounds.Left, plot.Bottom + 6, bounds.Width, Math.Max(0, bounds.Bottom - plot.Bottom - 6)));
             }
         }
     }

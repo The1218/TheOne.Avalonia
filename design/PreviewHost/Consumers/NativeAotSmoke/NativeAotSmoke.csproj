@@ -57,6 +57,7 @@
     <Compile Include="../../Views/Windows/LoginDemoView.axaml.cs" Link="LoginDemoView.axaml.cs" />
     <Compile Include="../../ViewModels/Windows/LoginDemoViewModel.cs" Link="LoginDemoViewModel.cs" />
     <Compile Include="../../Verification/Charts/ChartPreview.cs" Link="ChartPreview.cs" />
+    <Compile Include="../../Verification/Charts/ChartPreview.AxisLabels.cs" Link="ChartPreview.AxisLabels.cs" />
     <Compile Include="../../Verification/NavigationLayout/NavMenuCollapsedPreview.cs" Link="NavMenuCollapsedPreview.cs" />
     <Compile Include="../../Verification/NavigationLayout/NavMenuSearchInteractionPreview.cs" Link="NavMenuSearchInteractionPreview.cs" />
     <Compile Include="../../Verification/NavigationLayout/NavMenuFilterPreview.cs" Link="NavMenuFilterPreview.cs" />

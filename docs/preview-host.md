@@ -1,5 +1,7 @@
 # PreviewHost 结构与页面规范
 
+PreviewHost 使用 `OutputType=WinExe`，Debug / Release 均生成 Windows GUI 宿主，双击启动不创建控制台。消费者验证程序保留 Exe。Windows 上需要终端验证输出时可用 `dotnet PreviewHost.dll <专项>`；正常界面启动使用 PreviewHost.exe。该输出设置对应 [Microsoft 的 WinExe 说明](https://learn.microsoft.com/en-us/dotnet/core/compatibility/windows-forms/5.0/automatically-infer-winexe-output-type)，无需调用 Win32 隐藏或释放控制台。
+
 正式预览界面按基础控件、数据展示、导航与布局、图表控件、扩展控件、消息与窗口六类组织。同类控件集中展示，避免为每种按钮或列表单独设置菜单项：
 
 主题配色直接作用于整个预览宿主。按钮、输入、日期时间、进度条、列表、标签页和信息卡片的多样式在各自页面展示；没有独立的主题总览页。专项使用 Verification/Fixtures 下的消费夹具验证，不参与导航或正常页面创建。

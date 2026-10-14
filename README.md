@@ -72,6 +72,7 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 - [主题](docs/theme/README.md) · [NativeAOT](docs/native-aot.md) · [PreviewHost](docs/preview-host.md)。
 - [测试策略](docs/workflow/testing.md)：局部修改跑相关专项，公共基础设施／全面审查跑全量。
 - [NuGet 版本与发布](docs/workflow/releasing.md)：双包共同版本、渠道、打包验证与交付顺序。
+- 项目 Agent 约定见 [AGENTS.md](AGENTS.md)；维护 Skill 见 [SKILL.md](.agents/skills/theone-maintenance/SKILL.md)，可用 `$theone-maintenance` 调用，任务提示词见 [prompts.md](.agents/skills/theone-maintenance/references/prompts.md)。配置采用 [OpenAI 的仓库维护 Skill 结构](https://developers.openai.com/blog/skills-agents-sdk)。
 
 代码／XAML 修改后构建，并选择对应专项。例如列筛选：
 
@@ -93,4 +94,4 @@ dotnet run --project design/PreviewHost --no-build -- --verify-datagrid-filters
 
 ## 验证边界
 
-当前实跑环境为 macOS ARM64／Skia Headless。Windows／Linux、真实 GPU、屏幕阅读器、200% 字体缩放及系统高对比度尚未完成全面验证；动效开关尚未自动跟随系统减少动画偏好。未重写控件由 Fluent 支持层提供，历史设计示例不代表独立 API 已实现。UI 虚拟化减少容器创建，大数据仍需分页或懒加载。
+macOS ARM64／Skia Headless 已完成自动验证；Windows 控件已由用户确认实跑完成。本次小尺寸图表和无控制台启动修复仍需使用更新后的 Windows 产物复核，不据此追加未经提供的 Windows NativeAOT 或 RID 结论。Linux、屏幕阅读器、200% 字体缩放及系统高对比度仍未全面验证；动效开关尚未自动跟随系统减少动画偏好。大数据仍需分页或懒加载。

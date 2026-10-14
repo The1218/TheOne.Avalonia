@@ -16,7 +16,7 @@ using TheOne.Avalonia.Styling;
 namespace TheOne.DesignPreview;
 
 /// <summary>Runs the same rendering and input checks in managed PreviewHost and the native consumer.</summary>
-internal static class ChartPreview
+internal static partial class ChartPreview
 {
     public static ChartBase CreateControl(ChartKind kind) => ChartControlFactory.CreateControl(kind);
     private static ChartBase SwitchChart(Window window, ChartBase previous, ChartKind kind)
@@ -147,6 +147,7 @@ internal static class ChartPreview
     public static void Verify(Action<bool, string>? check = null)
     {
         check ??= (condition, message) => { if (!condition) throw new InvalidOperationException("Failed: " + message); Console.WriteLine("PASS: " + message); };
+        VerifyAxisLabels(check);
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         {

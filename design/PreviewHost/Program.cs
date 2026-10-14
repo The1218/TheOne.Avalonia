@@ -20,7 +20,7 @@ internal static class Program
                 --login [--trace-login] = desktop login demo
                 --datagrid-stage1 = desktop DataGrid experiment
                 --verify-controls | --verify-core-controls | --verify-preview-pages | --verify-buttons-messages
-                --verify-charts | --verify-compact-controls | --verify-text-alignment | --verify-pickers
+                --verify-chart-axis-labels [output] | --verify-charts | --verify-compact-controls | --verify-text-alignment | --verify-pickers
                 --verify-datagrid-binding | --verify-datagrid-stage1 | --verify-datagrid-right
                 --verify-datagrid-summary | --verify-datagrid-filters
                 --verify-loginwindow | --verify-onewindow | --verify-tag-step | --verify-infocard | --verify-control-variants
@@ -33,7 +33,7 @@ internal static class Program
                 """);
             return;
         }
-        if (args.Length > 0 && args[0] is not ("--login" or "--datagrid-stage1" or "--verify-datagrid-stage1" or "--verify-datagrid-binding" or "--verify-datagrid-summary" or "--verify-datagrid-right" or "--verify-datagrid-filters" or "--verify-loginwindow" or "--verify-login-lifetime" or "--verify-login-lifetime-close" or "--verify-controls" or "--verify-core-controls" or "--verify-compact-controls" or "--verify-charts" or "--verify-text-alignment" or "--verify-navigation-chrome" or "--verify-onewindow" or "--verify-expander-motion" or "--render-controls" or "--verify-pickers" or "--verify-tag-step" or "--verify-infocard" or "--verify-control-variants" or "--verify-tab-drag" or "--verify-navmenu" or "--verify-navmenu-hover" or "--verify-navmenu-edge" or "--verify-loading" or "--verify-buttons-messages" or "--verify-preview-pages" or "--verify-notifications" or "--verify-content-transition" or "--verify-carousel" or "--verify-refresh" or "--verify-flyout" or "--verify-navmenu-search" or "--verify-navmenu-motion" or "--verify-navmenu-filter"))
+        if (args.Length > 0 && args[0] is not ("--login" or "--datagrid-stage1" or "--verify-datagrid-stage1" or "--verify-datagrid-binding" or "--verify-datagrid-summary" or "--verify-datagrid-right" or "--verify-datagrid-filters" or "--verify-loginwindow" or "--verify-login-lifetime" or "--verify-login-lifetime-close" or "--verify-controls" or "--verify-core-controls" or "--verify-compact-controls" or "--verify-charts" or "--verify-chart-axis-labels" or "--verify-text-alignment" or "--verify-navigation-chrome" or "--verify-onewindow" or "--verify-expander-motion" or "--render-controls" or "--verify-pickers" or "--verify-tag-step" or "--verify-infocard" or "--verify-control-variants" or "--verify-tab-drag" or "--verify-navmenu" or "--verify-navmenu-hover" or "--verify-navmenu-edge" or "--verify-loading" or "--verify-buttons-messages" or "--verify-preview-pages" or "--verify-notifications" or "--verify-content-transition" or "--verify-carousel" or "--verify-refresh" or "--verify-flyout" or "--verify-navmenu-search" or "--verify-navmenu-motion" or "--verify-navmenu-filter"))
             throw new ArgumentException($"Unknown preview command: {args[0]}");
         if (args.Length == 0 || args[0] is "--login" or "--datagrid-stage1")
         {
@@ -73,6 +73,7 @@ internal static class Program
             ChartPreview.Verify(Check); LayoutControlsPreview.Verify(); NotificationPreview.Verify();
             ButtonsMessagesPreview.Verify(Check); PreviewPagesPreview.Verify(Check); return;
         }
+        if (args[0] == "--verify-chart-axis-labels") { ChartPreview.VerifyAxisLabels((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null); return; }
         if (args[0] == "--verify-charts") { ChartPreview.Verify(); ChartDemoPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-notifications") { NotificationPreview.Verify(); return; }
         if (args[0] == "--verify-content-transition") { ContentTransitionPreview.Verify(); return; }

@@ -1,0 +1,4 @@
+interface:
+  display_name: "TheOne 控件库维护"
+  short_description: "维护 TheOne 控件、主题、图表与 DataGrid，按改动范围验证和同步文档"
+  default_prompt: "使用 $theone-maintenance 完成当前 TheOne.Avalonia 维护任务，定位真实原因，实施最小修复并验证对应控件、编译绑定和平台产物。"

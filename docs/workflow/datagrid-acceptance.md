@@ -27,7 +27,7 @@ dotnet run --project design/PreviewHost --no-build -- --render-controls .preview
 | 本机 NativeAOT | 真正原生程序、裁剪后字段／编辑及包资源 | 其他 RID 的本地编译器与运行行为 |
 | 其他 RID 框架依赖发布 | NuGet 恢复、编译和目标平台应用及原生资源打包 | 目标运行时、桌面交互、GPU、字体与 NativeAOT |
 
-当前宿主为 macOS ARM64。Windows、Linux、macOS Intel 不能由跨 RID 发布声明为实跑通过；本机 Docker 服务不可用，也没有 Windows / Linux 运行环境。移动端、浏览器、安装器、代码签名和公证不属于此次桌面验收。
+自动验证宿主为 macOS ARM64；Windows 控件已由用户确认实跑完成，未额外提供 RID／NativeAOT 专项日志。Linux、macOS Intel 不能由跨 RID 发布声明为实跑通过；本机没有 Windows / Linux 运行环境。移动端、浏览器、安装器、代码签名和公证不属于此次桌面验收。
 
 阶段 5 基线完成 osx-arm64 的托管／NativeAOT Headless／桌面检查；其他五种 RID 仅检查发布及目标架构／资源／依赖，记录在 `.preview/datagrid-integration/verification.json`。后续仅改双包版本时按[包专项](testing.md#nuget-双包专项)重验，不能把旧发布目录当作新版本的跨 RID 证据。
 
