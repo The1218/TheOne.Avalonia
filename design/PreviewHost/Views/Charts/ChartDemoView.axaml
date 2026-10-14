@@ -1,6 +1,6 @@
 <UserControl
-    x:Class="TheOne.DesignPreview.ChartDemoView"
     Name="ChartDemoRoot"
+    x:Class="TheOne.DesignPreview.ChartDemoView"
     x:CompileBindings="True"
     x:DataType="local:ChartDemoViewModel"
     xmlns="https://github.com/avaloniaui"
@@ -204,7 +204,7 @@
             BorderThickness="1"
             CornerRadius="10"
             Padding="12">
-            <ContentControl Name="ChartHost" Content="{Binding #ChartDemoRoot.ChartSample}" />
+            <ContentControl Content="{Binding #ChartDemoRoot.ChartSample}" Name="ChartHost" />
         </Border>
         <Grid
             ColumnDefinitions="Auto,*,Auto"
@@ -224,9 +224,13 @@
                 VerticalAlignment="Center" />
         </Grid>
         <WrapPanel IsVisible="{Binding IsGauge}">
-            <ComboBox Name="ChartGaugeStyle" ItemsSource="{Binding GaugeStyles}"
-                      SelectedItem="{Binding GaugeStyle, Mode=TwoWay}" MinWidth="160"
-                      AutomationProperties.Name="仪表样式" Margin="0,0,16,8" />
+            <ComboBox
+                AutomationProperties.Name="仪表样式"
+                ItemsSource="{Binding GaugeStyles}"
+                Margin="0,0,16,8"
+                MinWidth="160"
+                Name="ChartGaugeStyle"
+                SelectedItem="{Binding GaugeStyle, Mode=TwoWay}" />
             <CheckBox
                 Content="仪表指针"
                 IsChecked="{Binding GaugeNeedle, Mode=TwoWay}"

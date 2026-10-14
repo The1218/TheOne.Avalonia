@@ -1,6 +1,6 @@
-# Tag 与 Step
+# Tag 与 VerificationStep
 
-**简体中文** · [English](../en/tag-step.md)
+**简体中文** · [English](../en/tag-verification-step.md)
 
 [返回控件索引](README.md)。加载 OneTheme 后可用，命名空间为 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
@@ -28,7 +28,9 @@
 
 Tag 用于显示状态，不承担按钮或切换选择行为。状态文字与图标由应用提供，不能只通过颜色表达含义。沿用 TheOne 语义色，支持 Light / Dark 与继承的 small / normal / large；默认最小高度分别为 24 / 28 / 32，字号为 11 / 12 / 15 px。可覆盖标准 Padding、CornerRadius、Foreground 等属性。
 
-## Step 验证步骤
+## VerificationStep 带验证的 Step
+
+`VerificationStep` 是带验证的 Step：当前步骤验证通过后才能向前导航。它替代原有 `Step` 控件，C# 类型引用和 XAML 标签需改为 `VerificationStep`。配套的 `StepItem`、`StepField`、`StepValidation` API 名称和行为保持不变。
 
 默认用法只需步骤模型、常见验证属性和 ItemsSource。`StepItem<T>` 自动创建属性验证器，并在没有自定义内容模板时生成表单、字段标签及输入下方的错误提示；无需声明 StepField 或逐步调用 StepValidation.For。T 使用模型的具体类型，公共属性的 NativeAOT 元数据由控件库保留。
 
@@ -58,7 +60,7 @@ public IReadOnlyList<StepItem> Steps { get; } = new StepItem[]
 
 ```xml
 <!-- 根视图声明 x:DataType，并使用编译绑定。 -->
-<one:Step ItemsSource="{Binding Steps}"
+<one:VerificationStep ItemsSource="{Binding Steps}"
           CompletedCommand="{Binding CompletedCommand}"
           Height="520" />
 ```
@@ -99,18 +101,18 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 ### 自定义内容与高级校验
 
-`Step.ContentTemplate` 优先，其次使用匹配的 DataTemplate；没有匹配模板才使用内置表单。`StepItem<T>` 在自定义布局下仍自动校验模型属性。自定义布局若要在指定输入下展示错误，可使用 StepField，其 MemberName 对应模型属性；整步、隐藏字段或找不到承载位置的错误保留在顶部有界列表中，避免错误丢失。
+`VerificationStep.ContentTemplate` 优先，其次使用匹配的 DataTemplate；没有匹配模板才使用内置表单。`StepItem<T>` 在自定义布局下仍自动校验模型属性。自定义布局若要在指定输入下展示错误，可使用 StepField，其 MemberName 对应模型属性；整步、隐藏字段或找不到承载位置的错误保留在顶部有界列表中，避免错误丢失。
 
 ```xml
-<one:Step ItemsSource="{Binding Steps}" CompletedCommand="{Binding CompletedCommand}">
-  <one:Step.DataTemplates>
+<one:VerificationStep ItemsSource="{Binding Steps}" CompletedCommand="{Binding CompletedCommand}">
+  <one:VerificationStep.DataTemplates>
     <DataTemplate DataType="{x:Type vm:AccountModel}" x:DataType="vm:AccountModel">
       <one:StepField MemberName="Name">
         <TextBox Text="{Binding Name, Mode=TwoWay}" />
       </one:StepField>
     </DataTemplate>
-  </one:Step.DataTemplates>
-</one:Step>
+  </one:VerificationStep.DataTemplates>
+</one:VerificationStep>
 ```
 
 原有非泛型 StepItem 保留，可承载开发者自有控件或模型。它不猜测 object 的运行时属性类型；需要属性校验时显式设置 `Validator = StepValidation.For(model)`。`StepValidation.For(model, nameof(AccountModel.Name))` 可限制当前步的属性范围；用具体模型类型调用，不以 object / 基类隐藏实际类型。泛型 StepItem 的 Validator 非空时覆盖默认属性验证器，适用于范围限制或自定义远程验证。
@@ -143,6 +145,8 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 圆点连线导航区分完成勾号、当前实心编号、未开始浅色编号和错误感叹号，沿用 TheOne 语义色。圆点 small / normal / large 直径为 30 / 36 / 42；标题视口高度 112、最大宽度 960，默认居中；每项默认宽度 200。设置 `HeaderHorizontalAlignment="Stretch"` 时均分视口，每项最小宽度 120；较窄窗口或长列表保持横向滚动，不压缩成不可读的圆点。调整窗口或切换对齐实时重算项宽，仍使用官方 ListBox / VirtualizingStackPanel。成功状态保存在 StepItem 上，不依赖已创建的标题容器。
 
-Step 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
+VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
 
-默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step / VerificationStep”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+
+专项验证运行 `dotnet run --project design/PreviewHost -- --verify-tag-verification-step`；渲染入口使用 `--render-controls .preview/verification-step VerificationStep`。发布后的 NativeAotSmoke 原生消费程序使用 `--require-aot --verify-tag-verification-step` 执行相同验证。

@@ -74,3 +74,13 @@ Motion.Enabled 可在容器设置并继承；关闭或零时长立即完成当�
 - [树、列表、Card 标签与表格](../../controls/zh-cn/collections.md) · [轮播与刷新](../../controls/zh-cn/collection-content.md)。
 - [菜单、浮层与布局](../../controls/zh-cn/layout.md) · [内容过渡与通知](../../controls/zh-cn/content-feedback.md)。
 - [窗口与消息](../../controls/zh-cn/windows.md) · [图表](../../controls/zh-cn/charts.md)。
+
+## RelationGraph
+
+`RelationGraph` 与 `RelationGraphNodePresenter` 使用共享语义颜色及可继承的 Small / Normal / Large 尺寸。根节点使用 `:root`；空区域可见性使用 `:has-icon`、`:has-title`、`:has-content`、`:icon-only`。通过基于默认节点主题的 `NodeTheme` 调整卡片。参见[控件契约与验证命令](../../controls/zh-cn/relation-graph.md)。
+
+## FlowStep 与 FlowNode
+
+FlowStep 主题包含不接收输入的连接线层 `PART_Connectors`、原生 `PART_ItemsPresenter` 与 `PART_ScrollViewer`。FlowNode 保留 `PART_ContentPresenter`，并通过 `PART_Indicator`、`PART_Ring`、`PART_Check`、`PART_Dot` 展示状态。状态伪类为 `:completed`、`:in-progress`、`:pending`、`:vertical`。默认内容资源键为 `One.FlowNode.DefaultContentTemplate`；共享语义画刷与继承尺寸支持明暗主题及三档尺寸。横向空间不足时滚动，纵向按内容真实高度布局；连接线层不拦截输入。模板优先级、尺寸与专项验证见 [FlowStep 与 FlowNode](../../controls/zh-cn/flow-step.md)。
+
+GanttChart 使用独立 `One.Gantt.*` 动态画刷、36／44／52 行高和固定表头；资源、模板 PART 与窄视口契约见 [甘特图](../../controls/zh-cn/gantt-chart.md)。

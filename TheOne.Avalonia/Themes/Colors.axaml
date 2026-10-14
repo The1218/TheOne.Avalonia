@@ -151,6 +151,17 @@
       <SolidColorBrush x:Key="One.Chart.Grid" Color="{StaticResource One.Chart.GridColor}" />
       <Color x:Key="One.PlaceholderColor">#626A6A</Color>
       <SolidColorBrush x:Key="One.Placeholder" Color="{StaticResource One.PlaceholderColor}" />
+
+      <SolidColorBrush x:Key="One.Gantt.Background" Color="{StaticResource One.SurfaceColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Text" Color="{StaticResource One.TextColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Grid" Color="{StaticResource One.LineColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Header" Color="{StaticResource One.SubtleColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Weekend" Color="{StaticResource One.SubtleColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Task" Color="{StaticResource One.AccentSoftColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Progress" Color="{StaticResource One.AccentColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Selection" Color="{StaticResource One.RowSelectedColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Muted" Color="{StaticResource One.MutedColor}" />
+      <SolidColorBrush x:Key="One.Gantt.OnTask" Color="{StaticResource One.OnAccentColor}" />
     </ResourceDictionary>
     <ResourceDictionary x:Key="Dark">
       <Color x:Key="One.CanvasColor">#0F0F0F</Color>
@@ -302,6 +313,17 @@
       <SolidColorBrush x:Key="One.Chart.Grid" Color="{StaticResource One.Chart.GridColor}" />
       <Color x:Key="One.PlaceholderColor">#B2B8B8</Color>
       <SolidColorBrush x:Key="One.Placeholder" Color="{StaticResource One.PlaceholderColor}" />
+
+      <SolidColorBrush x:Key="One.Gantt.Background" Color="{StaticResource One.SurfaceColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Text" Color="{StaticResource One.TextColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Grid" Color="{StaticResource One.LineColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Header" Color="{StaticResource One.SubtleColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Weekend" Color="{StaticResource One.SubtleColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Task" Color="{StaticResource One.AccentSoftColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Progress" Color="{StaticResource One.AccentColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Selection" Color="{StaticResource One.RowSelectedColor}" />
+      <SolidColorBrush x:Key="One.Gantt.Muted" Color="{StaticResource One.MutedColor}" />
+      <SolidColorBrush x:Key="One.Gantt.OnTask" Color="{StaticResource One.OnAccentColor}" />
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
   <SolidColorBrush x:Key="One.Transparent" Color="Transparent" />

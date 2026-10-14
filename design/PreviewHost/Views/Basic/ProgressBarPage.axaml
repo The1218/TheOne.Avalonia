@@ -1,16 +1,56 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ProgressBarPage" x:DataType="local:ProgressBarPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="ProgressBar" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="确定进度 / 完成 / 不确定进度 · 拖动滑块调整" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <ProgressBar Name="ControlSample" Value="{Binding Value, Mode=TwoWay}" Minimum="0" Maximum="100" MaxWidth="420" Height="10"/>
-    <ProgressBar Value="100" MaxWidth="420" Height="16"/>
-    <ProgressBar IsIndeterminate="True" MaxWidth="420" Height="10"/>
-    <Slider Value="{Binding Value, Mode=TwoWay}" MaxWidth="420"/>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><ProgressBar Classes="gradient" Value="{Binding Value}" MaxWidth="420" /><ProgressBar Classes="success" Value="100" MaxWidth="420" /><ProgressBar Classes="warning" Value="48" MaxWidth="420" /><ProgressBar Classes="danger" Value="24" MaxWidth="420" /></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ProgressBarPage"
+    x:DataType="local:ProgressBarPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ProgressBar" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="确定进度 / 完成 / 不确定进度 · 拖动滑块调整"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <ProgressBar
+                Height="10"
+                MaxWidth="420"
+                Maximum="100"
+                Minimum="0"
+                Name="ControlSample"
+                Value="{Binding Value, Mode=TwoWay}" />
+            <ProgressBar
+                Height="16"
+                MaxWidth="420"
+                Value="100" />
+            <ProgressBar
+                Height="10"
+                IsIndeterminate="True"
+                MaxWidth="420" />
+            <Slider MaxWidth="420" Value="{Binding Value, Mode=TwoWay}" />
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <ProgressBar
+                Classes="gradient"
+                MaxWidth="420"
+                Value="{Binding Value}" />
+            <ProgressBar
+                Classes="success"
+                MaxWidth="420"
+                Value="100" />
+            <ProgressBar
+                Classes="warning"
+                MaxWidth="420"
+                Value="48" />
+            <ProgressBar
+                Classes="danger"
+                MaxWidth="420"
+                Value="24" />
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

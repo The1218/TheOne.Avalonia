@@ -100,7 +100,7 @@ internal static class ControlPreview
         ChartPreview.Verify(Check);
         ControlVariantsPreview.Verify(Check);
         InfoCardPreview.Verify(Check);
-        TagStepPreview.Verify(Check);
+        TagVerificationStepPreview.Verify(Check);
         NavMenuPreview.Verify(Check);
         ChartDemoPreview.Verify(Check);
         DateTimePickerPreview.Verify(Check);

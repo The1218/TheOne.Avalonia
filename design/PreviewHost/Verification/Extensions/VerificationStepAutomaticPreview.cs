@@ -10,54 +10,54 @@ using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
 
-internal static partial class TagStepPreview
+internal static partial class TagVerificationStepPreview
 {
     private static void VerifyAutoForms(Action<bool, string> check)
     {
-        var demo = new StepDemoView(); var window = Open(demo, ThemeVariant.Light, ControlSize.Normal);
+        var demo = new VerificationStepDemoView(); var window = Open(demo, ThemeVariant.Light, ControlSize.Normal);
         check(demo.DataTemplates.Count == 0 && demo.Model.Steps.All(item => item.Validator is null) && Part<ListBox>(demo.Sample, "PART_FormFields").ItemCount == 3,
-            "Step/automatic: ItemsSource alone supplies the form and validation without consumer templates or validators");
-        check(Part<TextBox>(demo.Sample, "Name").PlaceholderText == "2–24 个字符", "Step/automatic: Display metadata configures generated labels and prompts");
+            "VerificationStep/automatic: ItemsSource alone supplies the form and validation without consumer templates or validators");
+        check(Part<TextBox>(demo.Sample, "Name").PlaceholderText == "2–24 个字符", "VerificationStep/automatic: Display metadata configures generated labels and prompts");
         var first = demo.Model.Steps[0]; var replacement = new StepAccountModel(); first.Content = replacement; Flush();
         check(ReferenceEquals(demo.Sample.CurrentContent, replacement) && !Next(demo.Sample) && demo.Sample.ValidationErrors.Count == 3,
-            "Step/automatic: replacing the typed model rebuilds its rules and form");
+            "VerificationStep/automatic: replacing the typed model rebuilds its rules and form");
         var rejected = false; try { first.Content = new StepProfileModel(); } catch (ArgumentException) { rejected = true; }
-        check(rejected && ReferenceEquals(first.Content, replacement), "Step/automatic: incompatible model types cannot silently disable attribute validation");
+        check(rejected && ReferenceEquals(first.Content, replacement), "VerificationStep/automatic: incompatible model types cannot silently disable attribute validation");
         rejected = false; try { first.Content = null; } catch (ArgumentNullException) { rejected = true; }
-        check(rejected, "Step/automatic: a missing typed model is rejected");
+        check(rejected, "VerificationStep/automatic: a missing typed model is rejected");
         demo.Sample.ContentTemplate = new FuncDataTemplate<StepAccountModel>((_, _) => new TextBlock { Text = "Custom step content" }); Flush();
         check(!demo.Sample.GetVisualDescendants().OfType<ListBox>().Any(list => list.Name == "PART_FormFields") && !Next(demo.Sample) && demo.Sample.ValidationErrors.Count == 3,
-            "Step/automatic: explicit content templates override the default editor while retaining automatic attribute validation");
+            "VerificationStep/automatic: explicit content templates override the default editor while retaining automatic attribute validation");
         window.Close(); Flush();
 
-        var options = new AutomaticOptions(); var step = new Step { ItemsSource = new[] { new StepItem<AutomaticOptions>(options) } };
+        var options = new AutomaticOptions(); var step = new VerificationStep { ItemsSource = new[] { new StepItem<AutomaticOptions>(options) } };
         window = Open(step, ThemeVariant.Dark, ControlSize.Large);
         check(Part<ListBox>(step, "PART_FormFields").ItemCount == 3 && Part<TextBox>(step, "Secret").PasswordChar == '●' && Part<TextBox>(step, "Locked").IsReadOnly,
-            "Step/automatic: Display, DataType and Editable stay library-owned and hidden properties create no input");
+            "VerificationStep/automatic: Display, DataType and Editable stay library-owned and hidden properties create no input");
         Part<TextBox>(step, "Secret").Text = "secret"; Flush();
-        check(options.Secret == "secret" && Next(step), "Step/automatic: generated compiled bindings write directly to a plain model without a validation interface");
+        check(options.Secret == "secret" && Next(step), "VerificationStep/automatic: generated compiled bindings write directly to a plain model without a validation interface");
         window.Close(); Flush();
 
         var model = new ManyFormFields { Field00 = 28 };
-        step = new Step { Height = 380, ItemsSource = new[] { new StepItem<ManyFormFields>(model) } };
+        step = new VerificationStep { Height = 380, ItemsSource = new[] { new StepItem<ManyFormFields>(model) } };
         window = Open(step, ThemeVariant.Light, ControlSize.Normal, 760, 540);
         var form = Part<ListBox>(step, "PART_FormFields");
         check(form.GetRealizedContainers().Count() is > 0 and < 20 && form.ItemCount == 64,
-            "Step/automatic: generated properties use a finite viewport with actual container virtualization");
+            "VerificationStep/automatic: generated properties use a finite viewport with actual container virtualization");
         Part<TextBox>(step, "Field00").Text = "invalid draft"; Flush();
-        check(model.Field00 == 28, "Step/automatic: invalid numeric text keeps the last valid model value");
+        check(model.Field00 == 28, "VerificationStep/automatic: invalid numeric text keeps the last valid model value");
         form.ScrollIntoView(63); Flush();
         check(form.ContainerFromIndex(63) is not null && form.ContainerFromIndex(0) is null && form.GetRealizedContainers().Count() < 20,
-            "Step/automatic: far generated inputs recycle actual field containers");
+            "VerificationStep/automatic: far generated inputs recycle actual field containers");
         check(!Next(step) && step.ValidationErrors.Any(error => error.MemberName == "Field00") && !step.HasUnmappedErrors,
-            "Step/automatic: offscreen invalid drafts still block completion and remain assigned to their own field");
+            "VerificationStep/automatic: offscreen invalid drafts still block completion and remain assigned to their own field");
         Flush(); form.ScrollIntoView(0); Flush();
-        check(Part<TextBox>(step, "Field00").Text == "invalid draft", "Step/automatic: recycled editors restore invalid user drafts");
+        check(Part<TextBox>(step, "Field00").Text == "invalid draft", "VerificationStep/automatic: recycled editors restore invalid user drafts");
         Part<TextBox>(step, "Field00").Text = "29"; Flush(); form.ScrollIntoView(63); Flush();
-        check(model.Field00 == 29 && Next(step), "Step/automatic: correcting a recycled input clears its conversion error and allows completion");
+        check(model.Field00 == 29 && Next(step), "VerificationStep/automatic: correcting a recycled input clears its conversion error and allows completion");
         step.Reset(); Flush(); form = Part<ListBox>(step, "PART_FormFields"); form.ScrollIntoView(0); Flush();
         Part<TextBox>(step, "Field00").Text = "another invalid draft"; Flush(); form.ScrollIntoView(63); Flush(); model.Field00 = 42; Flush();
-        check(Next(step), "Step/automatic: model notifications clear superseded offscreen drafts");
+        check(Next(step), "VerificationStep/automatic: model notifications clear superseded offscreen drafts");
         window.Close(); Flush();
     }
     public sealed class AutomaticOptions

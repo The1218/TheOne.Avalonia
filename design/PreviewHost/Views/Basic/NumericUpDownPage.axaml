@@ -1,13 +1,61 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.NumericUpDownPage" x:DataType="local:NumericUpDownPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="NumericUpDown" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="整数步进 / 小数步进 / 无微调按钮 / 禁用" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><NumericUpDown Name="ControlSample" Value="{Binding Number, Mode=TwoWay}" Minimum="0" Maximum="1000" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="12.5" Increment="0.5" FormatString="0.0" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="42" ShowButtonSpinner="False" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="28" IsEnabled="False" Width="220" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><WrapPanel><NumericUpDown Classes="filled" Value="{Binding Number, Mode=TwoWay}" Width="220" Margin="0,0,12,12" /><NumericUpDown Classes="underlined" Value="{Binding Number, Mode=TwoWay}" Width="220" Margin="0,0,12,12" /></WrapPanel></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.NumericUpDownPage"
+    x:DataType="local:NumericUpDownPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="NumericUpDown" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="整数步进 / 小数步进 / 无微调按钮 / 禁用"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <NumericUpDown
+                    Margin="0,0,12,12"
+                    Maximum="1000"
+                    Minimum="0"
+                    Name="ControlSample"
+                    Value="{Binding Number, Mode=TwoWay}"
+                    Width="220" />
+                <NumericUpDown
+                    FormatString="0.0"
+                    Increment="0.5"
+                    Margin="0,0,12,12"
+                    Value="12.5"
+                    Width="220" />
+                <NumericUpDown
+                    Margin="0,0,12,12"
+                    ShowButtonSpinner="False"
+                    Value="42"
+                    Width="220" />
+                <NumericUpDown
+                    IsEnabled="False"
+                    Margin="0,0,12,12"
+                    Value="28"
+                    Width="220" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <WrapPanel>
+                <NumericUpDown
+                    Classes="filled"
+                    Margin="0,0,12,12"
+                    Value="{Binding Number, Mode=TwoWay}"
+                    Width="220" />
+                <NumericUpDown
+                    Classes="underlined"
+                    Margin="0,0,12,12"
+                    Value="{Binding Number, Mode=TwoWay}"
+                    Width="220" />
+            </WrapPanel>
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

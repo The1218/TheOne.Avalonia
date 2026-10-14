@@ -8,77 +8,8 @@ namespace TheOne.DesignPreview;
 
 public sealed class ContentTransitionDemoViewModel : ReactiveObject
 {
-    public IReadOnlyList<TransitionPage> Pages { get; } = [new TransitionOverview(), new TransitionForm(), new TransitionRecords()];
-
     private DispatcherTimer? _rapid;
-    public int CompletedCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int AnimatedCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int ActionCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
-    public bool IsRapidSwitching => _rapid is not null;
-    public int PageIndex { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
 
-    public object? Content
-    {
-        get;
-        set
-        {
-            if (EqualityComparer<object?>.Default.Equals(field, value))
-                return;
-            this.RaiseAndSetIfChanged(ref field, value);
-            this.RaisePropertyChanged(nameof(Position));
-        }
-    }
-
-    public bool Enabled { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public bool Reverse { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public bool MotionEnabled { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public string Status { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "尚未执行页面操作";
-    public string Metrics { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "";
-    public string Position => $"{PageIndex + 1} / {Pages.Count} · {(Content as TransitionPage)?.Title ?? "空内容"}";
-
-    public int TransitionIndex
-    {
-        get;
-        set
-        {
-            if (field == value)
-                return;
-            this.RaiseAndSetIfChanged(ref field, value);
-            Transition = CreateTransition(value);
-        }
-    }
-
-    public IPageTransition? Transition { get; private set => this.RaiseAndSetIfChanged(ref field, value); } = CreateTransition(0);
-
-    private static IPageTransition? CreateTransition(int index) => index switch
-    {
-        1 => new PageSlide(TimeSpan.FromMilliseconds(200), PageSlide.SlideAxis.Horizontal)
-        {
-            SlideInEasing = new CubicEaseOut(),
-            SlideOutEasing = new CubicEaseOut()
-        },
-        2 => new PageSlide(TimeSpan.FromMilliseconds(200), PageSlide.SlideAxis.Vertical)
-        {
-            SlideInEasing = new CubicEaseOut(),
-            SlideOutEasing = new CubicEaseOut()
-        },
-        3 => null,
-        _ => new CrossFade(TimeSpan.FromMilliseconds(200))
-        {
-            FadeInEasing = new CubicEaseOut(),
-            FadeOutEasing = new CubicEaseOut()
-        }
-    };
-    public ICommand PreviousCommand { get; }
-    public ICommand NextCommand { get; }
-    public ICommand RapidCommand { get; }
-    public ICommand ClearCommand { get; }
-    public ICommand RestoreCommand { get; }
-    public ICommand LastRecordCommand { get; }
-    public ICommand PageActionCommand { get; }
-    public ICommand ResetCommand { get; }
-
-    public event EventHandler? ScrollRequested, ResetMotionRequested;
     public ContentTransitionDemoViewModel()
     {
         Content = Pages[0];
@@ -145,6 +76,131 @@ public sealed class ContentTransitionDemoViewModel : ReactiveObject
             ResetMotionRequested?.Invoke(this, EventArgs.Empty);
         });
     }
+
+    public IReadOnlyList<TransitionPage> Pages { get; } =
+        [new TransitionOverview(), new TransitionForm(), new TransitionRecords()];
+
+    public int CompletedCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int AnimatedCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int ActionCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public bool IsRapidSwitching => _rapid is not null;
+
+    public int PageIndex
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public object? Content
+    {
+        get;
+        set
+        {
+            if (EqualityComparer<object?>.Default.Equals(field, value))
+                return;
+            this.RaiseAndSetIfChanged(ref field, value);
+            this.RaisePropertyChanged(nameof(Position));
+        }
+    }
+
+    public bool Enabled
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public bool Reverse
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public bool MotionEnabled
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public string Status
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "尚未执行页面操作";
+
+    public string Metrics
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "";
+
+    public string Position => $"{PageIndex + 1} / {Pages.Count} · {(Content as TransitionPage)?.Title ?? "空内容"}";
+
+    public int TransitionIndex
+    {
+        get;
+        set
+        {
+            if (field == value)
+                return;
+            this.RaiseAndSetIfChanged(ref field, value);
+            Transition = CreateTransition(value);
+        }
+    }
+
+    public IPageTransition? Transition
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    } = CreateTransition(0);
+
+    public ICommand PreviousCommand { get; }
+    public ICommand NextCommand { get; }
+    public ICommand RapidCommand { get; }
+    public ICommand ClearCommand { get; }
+    public ICommand RestoreCommand { get; }
+    public ICommand LastRecordCommand { get; }
+    public ICommand PageActionCommand { get; }
+    public ICommand ResetCommand { get; }
+
+    private static IPageTransition? CreateTransition(int index)
+    {
+        return index switch
+        {
+            1 => new PageSlide(TimeSpan.FromMilliseconds(200))
+            {
+                SlideInEasing = new CubicEaseOut(),
+                SlideOutEasing = new CubicEaseOut()
+            },
+            2 => new PageSlide(TimeSpan.FromMilliseconds(200), PageSlide.SlideAxis.Vertical)
+            {
+                SlideInEasing = new CubicEaseOut(),
+                SlideOutEasing = new CubicEaseOut()
+            },
+            3 => null,
+            _ => new CrossFade(TimeSpan.FromMilliseconds(200))
+            {
+                FadeInEasing = new CubicEaseOut(),
+                FadeOutEasing = new CubicEaseOut()
+            }
+        };
+    }
+
+    public event EventHandler? ScrollRequested, ResetMotionRequested;
 
     public void SelectPage(int index)
     {

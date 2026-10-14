@@ -35,7 +35,7 @@
     <Setter Property="ItemContainerTheme" Value="{StaticResource One.StepFormField}" />
     <Setter Property="ItemsPanel"><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></Setter>
   </ControlTheme>
-  <ControlTheme x:Key="{x:Type one:Step}" TargetType="one:Step">
+  <ControlTheme x:Key="{x:Type one:VerificationStep}" TargetType="one:VerificationStep">
     <Setter Property="Background" Value="{DynamicResource One.Surface}" />
     <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
     <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />

@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
+             x:Class="TheOne.DesignPreview.GanttDemoView" x:DataType="local:GanttDemoViewModel" x:CompileBindings="True">
+  <StackPanel Spacing="16">
+    <TextBlock Text="GanttChart · 甘特图" Foreground="{DynamicResource One.Muted}" />
+    <Grid ColumnDefinitions="*,Auto">
+      <StackPanel Spacing="6"><TextBlock Text="控件库迭代计划" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock Text="2026年10月 · 任务与时间一览" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+      <Border Grid.Column="1" BorderBrush="{DynamicResource One.Accent}" BorderThickness="1" CornerRadius="6" Padding="12,4" VerticalAlignment="Center">
+        <TextBlock Text="只读" Foreground="{DynamicResource One.Accent}" /></Border>
+    </Grid>
+    <WrapPanel>
+      <TextBox Width="220" PlaceholderText="搜索任务…" Text="{Binding SearchText, Mode=TwoWay}" Margin="0,0,12,8" />
+      <ComboBox Width="145" ItemsSource="{Binding Owners}" SelectedItem="{Binding SelectedOwner, Mode=TwoWay}" Margin="0,0,12,8" />
+      <Button Content="今天" Click="TodayClick" Margin="0,0,8,8" /><Button Content="适应项目" Click="FitClick" Margin="0,0,12,8" />
+      <Button Content="日" Click="DayClick" Margin="0,0,4,8" /><Button Content="周" Click="WeekClick" Margin="0,0,4,8" />
+      <Button Content="月" Click="MonthClick" Margin="0,0,12,8" />
+      <Button Content="−" Click="ZoomOutClick" Margin="0,0,4,8" /><Button Content="＋" Click="ZoomInClick" Margin="0,0,8,8" />
+    </WrapPanel>
+    <one:GanttChart Name="Schedule" Height="520" ItemsSource="{Binding Items}" SelectedTask="{Binding SelectedTask, Mode=TwoWay}"
+                    ViewStart="{Binding ViewStart, Mode=TwoWay}" ViewEnd="{Binding ViewEnd, Mode=TwoWay}" Today="{Binding Today}"
+                    DayWidth="{Binding DayWidth, Mode=TwoWay}" TaskHeader="任务名称" OwnerHeader="负责人" ProgressHeader="进度" EmptyText="没有匹配的任务" />
+    <WrapPanel>
+      <TextBlock Text="● 已完成   ◐ 进行中   ○ 未开始   ◆ 里程碑" Foreground="{DynamicResource One.Muted}" Margin="0,0,20,8" />
+      <TextBlock Text="{Binding #Schedule.VisibleTaskCount, StringFormat='可见任务：{0}'}" Foreground="{DynamicResource One.Muted}" Margin="0,0,20,8" />
+      <TextBlock Text="滚轮滚动 · Shift + 滚轮横移 · Ctrl / ⌘ + 滚轮缩放" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+    </WrapPanel>
+    <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="0,1,0,0" Padding="0,16,0,0">
+      <WrapPanel>
+        <StackPanel Width="200" Spacing="6" Margin="0,0,16,8"><TextBlock Text="当前任务" Foreground="{DynamicResource One.Muted}" />
+          <TextBlock Text="{Binding SelectedTask.Title, TargetNullValue='请选择任务'}" FontWeight="SemiBold" /></StackPanel>
+        <StackPanel Width="100" Spacing="6" Margin="0,0,16,8"><TextBlock Text="负责人" Foreground="{DynamicResource One.Muted}" />
+          <TextBlock Text="{Binding SelectedTask.Owner, TargetNullValue='—'}" /></StackPanel>
+        <StackPanel Width="120" Spacing="6" Margin="0,0,16,8"><TextBlock Text="开始" Foreground="{DynamicResource One.Muted}" />
+          <TextBlock Text="{Binding #Schedule.Selection.Start, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" /></StackPanel>
+        <StackPanel Width="120" Spacing="6" Margin="0,0,16,8"><TextBlock Text="结束" Foreground="{DynamicResource One.Muted}" />
+          <TextBlock Text="{Binding #Schedule.Selection.DisplayEnd, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" /></StackPanel>
+        <StackPanel Width="80" Spacing="6" Margin="0,0,16,8"><TextBlock Text="进度" Foreground="{DynamicResource One.Muted}" />
+          <TextBlock Text="{Binding #Schedule.Selection.Progress, StringFormat='{}{0:P0}', TargetNullValue='—'}" /></StackPanel>
+        <TextBlock Text="{Binding #Schedule.ValidationError}" Foreground="{DynamicResource One.Danger}" TextWrapping="Wrap" />
+      </WrapPanel>
+    </Border>
+    <WrapPanel>
+      <Button Content="全部展开" Click="ExpandClick" Margin="0,0,8,8" /><Button Content="全部折叠" Click="CollapseClick" Margin="0,0,12,8" />
+      <CheckBox Content="1,500 条任务 · 虚拟滚动" IsChecked="{Binding LargeData, Mode=TwoWay}" Margin="0,0,12,8" />
+      <Button Content="定位最后任务" Click="LastClick" Margin="0,0,8,8" />
+    </WrapPanel>
+  </StackPanel>
+</UserControl>

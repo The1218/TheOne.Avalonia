@@ -1,14 +1,65 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.AutoCompleteBoxPage" x:DataType="local:AutoCompleteBoxPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="AutoCompleteBox" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="可编辑建议 / 占位提示 / 禁用 · 1,000 项建议" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><AutoCompleteBox Name="ControlSample" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /><AutoCompleteBox ItemsSource="{Binding Items}" PlaceholderText="输入工作区名称" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /><AutoCompleteBox Text="禁用自动完成" IsEnabled="False" Width="260" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
-  <Button Content="第 1,000 项" Command="{Binding LastCommand}" HorizontalAlignment="Left" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><WrapPanel><AutoCompleteBox Classes="filled" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /><AutoCompleteBox Classes="underlined" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /></WrapPanel></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.AutoCompleteBoxPage"
+    x:DataType="local:AutoCompleteBoxPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="AutoCompleteBox" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="可编辑建议 / 占位提示 / 禁用 · 1,000 项建议"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <AutoCompleteBox
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    MaxDropDownHeight="260"
+                    Name="ControlSample"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                    Text="{Binding Text, Mode=TwoWay}"
+                    Width="260" />
+                <AutoCompleteBox
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    MaxDropDownHeight="260"
+                    PlaceholderText="输入工作区名称"
+                    Width="260" />
+                <AutoCompleteBox
+                    IsEnabled="False"
+                    Margin="0,0,12,12"
+                    Text="禁用自动完成"
+                    Width="260" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <Button
+            Command="{Binding LastCommand}"
+            Content="第 1,000 项"
+            HorizontalAlignment="Left" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <WrapPanel>
+                <AutoCompleteBox
+                    Classes="filled"
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    MaxDropDownHeight="260"
+                    Text="{Binding Text, Mode=TwoWay}"
+                    Width="260" />
+                <AutoCompleteBox
+                    Classes="underlined"
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    MaxDropDownHeight="260"
+                    Text="{Binding Text, Mode=TwoWay}"
+                    Width="260" />
+            </WrapPanel>
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

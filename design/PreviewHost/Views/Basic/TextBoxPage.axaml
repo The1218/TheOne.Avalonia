@@ -1,17 +1,61 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TextBoxPage" x:DataType="local:TextBoxPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="TextBox" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="普通 / 占位提示 / 密码 / 只读 / 多行输入" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <TextBox Name="ControlSample" Text="{Binding Text, Mode=TwoWay}" PlaceholderText="普通输入" MaxWidth="420" HorizontalAlignment="Stretch"/>
-    <TextBox PlaceholderText="空输入与占位提示" MaxWidth="420" HorizontalAlignment="Stretch"/>
-    <TextBox Text="密码输入" PasswordChar="●" MaxWidth="420" HorizontalAlignment="Stretch"/>
-    <TextBox Text="只读内容，可选择复制" IsReadOnly="True" MaxWidth="420" HorizontalAlignment="Stretch"/>
-    <TextBox Text="多行内容&#10;回车继续编辑" AcceptsReturn="True" TextWrapping="Wrap" Height="100" MaxWidth="420" HorizontalAlignment="Stretch"/>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><TextBox Name="FilledInputSample" Classes="filled" Text="{Binding Text, Mode=TwoWay}" MaxWidth="420" /><TextBox Name="UnderlinedInputSample" Classes="underlined" Text="{Binding Text, Mode=TwoWay}" MaxWidth="420" /></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.TextBoxPage"
+    x:DataType="local:TextBoxPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="TextBox" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="普通 / 占位提示 / 密码 / 只读 / 多行输入"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <TextBox
+                HorizontalAlignment="Stretch"
+                MaxWidth="420"
+                Name="ControlSample"
+                PlaceholderText="普通输入"
+                Text="{Binding Text, Mode=TwoWay}" />
+            <TextBox
+                HorizontalAlignment="Stretch"
+                MaxWidth="420"
+                PlaceholderText="空输入与占位提示" />
+            <TextBox
+                HorizontalAlignment="Stretch"
+                MaxWidth="420"
+                PasswordChar="●"
+                Text="密码输入" />
+            <TextBox
+                HorizontalAlignment="Stretch"
+                IsReadOnly="True"
+                MaxWidth="420"
+                Text="只读内容，可选择复制" />
+            <TextBox
+                AcceptsReturn="True"
+                Height="100"
+                HorizontalAlignment="Stretch"
+                MaxWidth="420"
+                Text="多行内容&#10;回车继续编辑"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <TextBox
+                Classes="filled"
+                MaxWidth="420"
+                Name="FilledInputSample"
+                Text="{Binding Text, Mode=TwoWay}" />
+            <TextBox
+                Classes="underlined"
+                MaxWidth="420"
+                Name="UnderlinedInputSample"
+                Text="{Binding Text, Mode=TwoWay}" />
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

@@ -1,0 +1,151 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.RelationGraphDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:RelationGraphDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:media="using:Avalonia.Media"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <DataTemplate x:DataType="media:Geometry" x:Key="NodeIconTemplate">
+            <PathIcon Data="{Binding}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="RelationGraph · 树形关系图" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="单一根节点 · 横向 / 纵向布局 · 左侧图标与竖向居中的标题、内容 · 空区域自动释放空间"
+            TextWrapping="Wrap" />
+        <WrapPanel>
+            <ComboBox
+                ItemsSource="{Binding Orientations}"
+                Margin="0,0,16,8"
+                SelectedItem="{Binding Direction, Mode=TwoWay}"
+                Width="150" />
+            <CheckBox
+                Content="根节点图标"
+                IsChecked="{Binding ShowIcon, Mode=TwoWay}"
+                Margin="0,0,16,8" />
+            <CheckBox
+                Content="根节点标题"
+                IsChecked="{Binding ShowTitle, Mode=TwoWay}"
+                Margin="0,0,16,8" />
+            <CheckBox
+                Content="根节点内容"
+                IsChecked="{Binding ShowContent, Mode=TwoWay}"
+                Margin="0,0,16,8" />
+            <Button
+                Command="{Binding AddChildCommand}"
+                Content="新增节点"
+                Margin="0,0,8,8" />
+            <Button
+                Command="{Binding RemoveChildCommand}"
+                Content="移除新增节点"
+                Margin="0,0,8,8" />
+        </WrapPanel>
+        <WrapPanel>
+            <StackPanel Margin="0,0,20,8" Width="210">
+                <TextBlock Text="节点宽度" />
+                <Slider
+                    Maximum="340"
+                    Minimum="180"
+                    Value="{Binding CardWidth, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Margin="0,0,20,8" Width="210">
+                <TextBlock Text="子树间距" />
+                <Slider
+                    Maximum="80"
+                    Minimum="12"
+                    Value="{Binding SiblingSpacing, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Margin="0,0,20,8" Width="210">
+                <TextBlock Text="层级间距" />
+                <Slider
+                    Maximum="140"
+                    Minimum="24"
+                    Value="{Binding DepthSpacing, Mode=TwoWay}" />
+            </StackPanel>
+        </WrapPanel>
+        <Border
+            Background="{DynamicResource One.Canvas}"
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="1"
+            ClipToBounds="True"
+            CornerRadius="8">
+            <ScrollViewer
+                Height="540"
+                HorizontalScrollBarVisibility="Auto"
+                Name="TreeScroll"
+                VerticalScrollBarVisibility="Auto">
+                <one:RelationGraph
+                    IconTemplate="{StaticResource NodeIconTemplate}"
+                    LevelSpacing="{Binding DepthSpacing}"
+                    Name="RelationGraphSample"
+                    NodeSpacing="{Binding SiblingSpacing}"
+                    NodeWidth="{Binding CardWidth}"
+                    Orientation="{Binding Direction}"
+                    Padding="32"
+                    RootNode="{Binding Root}" />
+            </ScrollViewer>
+        </Border>
+        <TextBlock
+            FontSize="18"
+            FontWeight="SemiBold"
+            Text="自定义模型 · ChildrenSource" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="无需转换为内置模型。通过编译绑定选择 Branches、Symbol、Name、Description；属性替换和集合变化会自动更新。"
+            TextWrapping="Wrap" />
+        <ScrollViewer
+            Height="330"
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+            <one:RelationGraph
+                ChildrenSource="{CompiledBinding Branches,
+                                                 DataType={x:Type local:RelationUnit}}"
+                ContentSource="{CompiledBinding Description,
+                                                DataType={x:Type local:RelationUnit}}"
+                IconSource="{CompiledBinding Symbol,
+                                             DataType={x:Type local:RelationUnit}}"
+                IconTemplate="{StaticResource NodeIconTemplate}"
+                Name="CustomRelationGraph"
+                Orientation="{Binding Direction}"
+                RootNode="{Binding CustomRoot}"
+                TitleSource="{CompiledBinding Name,
+                                              DataType={x:Type local:RelationUnit}}" />
+        </ScrollViewer>
+        <TextBlock
+            FontSize="18"
+            FontWeight="SemiBold"
+            Text="节点空值布局" />
+        <ItemsControl ItemsSource="{Binding SlotSamples}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:RelationGraphSlotSample">
+                    <StackPanel Margin="0,0,16,16" Spacing="8">
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource One.Muted}"
+                            Text="{Binding Label}" />
+                        <one:RelationGraphNodePresenter
+                            Content="{Binding Node.Content}"
+                            Header="{Binding Node.Title}"
+                            Icon="{Binding Node.Icon}"
+                            IconTemplate="{StaticResource NodeIconTemplate}"
+                            MinHeight="88"
+                            Width="240" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

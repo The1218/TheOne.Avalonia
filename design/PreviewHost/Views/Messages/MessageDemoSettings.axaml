@@ -1,8 +1,44 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.MessageDemoSettings" x:DataType="local:MessagePageViewModel">
-  <StackPanel Spacing="14">
-    <Grid ColumnDefinitions="*,*" ColumnSpacing="16"><StackPanel Spacing="6"><TextBlock Text="状态 / 类型" /><ComboBox Name="MessageType" ItemsSource="{Binding Types}" SelectedItem="{Binding Type, Mode=TwoWay}" HorizontalAlignment="Stretch" /></StackPanel><StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="显示尺寸" /><ComboBox ItemsSource="{Binding Sizes}" SelectedItem="{Binding Size, Mode=TwoWay}" HorizontalAlignment="Stretch" /></StackPanel></Grid>
-    <TextBox Name="MessageTitle" Text="{Binding Title, Mode=TwoWay}" PlaceholderText="标题" />
-    <TextBox Name="MessageText" Text="{Binding Message, Mode=TwoWay}" PlaceholderText="正文" AcceptsReturn="True" MinHeight="76" TextWrapping="Wrap" />
-    <WrapPanel><CheckBox Content="显示标题" IsChecked="{Binding ShowTitle, Mode=TwoWay}" Margin="0,0,20,0" /><CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" /></WrapPanel>
-  </StackPanel>
+<UserControl
+    x:Class="TheOne.DesignPreview.MessageDemoSettings"
+    x:DataType="local:MessagePageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="14">
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+            <StackPanel Spacing="6">
+                <TextBlock Text="状态 / 类型" />
+                <ComboBox
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding Types}"
+                    Name="MessageType"
+                    SelectedItem="{Binding Type, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="6">
+                <TextBlock Text="显示尺寸" />
+                <ComboBox
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding Sizes}"
+                    SelectedItem="{Binding Size, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+        <TextBox
+            Name="MessageTitle"
+            PlaceholderText="标题"
+            Text="{Binding Title, Mode=TwoWay}" />
+        <TextBox
+            AcceptsReturn="True"
+            MinHeight="76"
+            Name="MessageText"
+            PlaceholderText="正文"
+            Text="{Binding Message, Mode=TwoWay}"
+            TextWrapping="Wrap" />
+        <WrapPanel>
+            <CheckBox
+                Content="显示标题"
+                IsChecked="{Binding ShowTitle, Mode=TwoWay}"
+                Margin="0,0,20,0" />
+            <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+        </WrapPanel>
+    </StackPanel>
 </UserControl>

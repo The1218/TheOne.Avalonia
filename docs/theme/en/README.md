@@ -74,3 +74,13 @@ Collections keep bounded viewports, on-demand templates, and dedicated panels. R
 - [Trees, lists, Card tabs, grids](../../controls/en/collections.md) · [Carousel and refresh](../../controls/en/collection-content.md).
 - [Menus, popups, layout](../../controls/en/layout.md) · [Content transitions and notifications](../../controls/en/content-feedback.md).
 - [Windows and messaging](../../controls/en/windows.md) · [Charts](../../controls/en/charts.md).
+
+## RelationGraph
+
+`RelationGraph` and `RelationGraphNodePresenter` use shared semantic colors and inherited Small / Normal / Large sizing. Root cards use `:root`; null-slot visibility uses `:has-icon`, `:has-title`, `:has-content`, and `:icon-only`. Customize cards through `NodeTheme` based on the default presenter theme. See the [control contract and validation commands](../../controls/en/relation-graph.md).
+
+## FlowStep and FlowNode
+
+The FlowStep theme supplies a non-interactive connector layer (`PART_Connectors`), native `PART_ItemsPresenter` and `PART_ScrollViewer`. FlowNode retains `PART_ContentPresenter` for content, with `PART_Indicator`, `PART_Ring`, `PART_Check` and `PART_Dot` for state markers. State pseudo-classes are `:completed`, `:in-progress`, `:pending` and `:vertical`. Default content uses `One.FlowNode.DefaultContentTemplate`; shared semantic brushes and inherited density support Light / Dark and Small / Normal / Large. Horizontal slots scroll when constrained; vertical rows follow real content height. The rail layer does not intercept input. See [FlowStep and FlowNode](../../controls/en/flow-step.md) for template priority, sizing and targeted verification.
+
+GanttChart uses dedicated `One.Gantt.*` dynamic brushes, 36 / 44 / 52 row heights and a frozen header. See [GanttChart](../../controls/en/gantt-chart.md) for resources, template parts and narrow viewport behavior.

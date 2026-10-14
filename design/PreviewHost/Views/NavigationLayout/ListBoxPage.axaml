@@ -71,7 +71,15 @@
             Command="{Binding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
-    <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><ListBox Name="CardsListSample" Classes="cards" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Height="200" MaxWidth="700" /></StackPanel>
-</StackPanel>
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <ListBox
+                Classes="cards"
+                Height="200"
+                ItemsSource="{Binding Items}"
+                MaxWidth="700"
+                Name="CardsListSample"
+                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

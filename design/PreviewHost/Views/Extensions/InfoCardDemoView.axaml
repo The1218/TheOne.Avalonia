@@ -1,95 +1,244 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:TheOne.DesignPreview"
-             xmlns:one="using:TheOne.Avalonia.Controls"
-             x:Class="TheOne.DesignPreview.InfoCardDemoView"
-             x:DataType="local:InfoCardDemoViewModel" x:CompileBindings="True">
-  <UserControl.Resources>
-    <DataTemplate x:Key="InfoCardIconTemplate" x:DataType="local:InfoCardDemoViewModel">
-      <PathIcon Name="InfoCardTypedIcon" Data="{Binding IconData}" Foreground="{DynamicResource One.Accent}"
-                Width="{Binding $parent[one:InfoCard].HeaderIconSize}" Height="{Binding $parent[one:InfoCard].HeaderIconSize}" />
-    </DataTemplate>
-    <DataTemplate x:Key="InfoCardActionsTemplate" x:DataType="local:InfoCardDemoViewModel">
-      <Button Name="InfoCardTypedHeaderAction" Content="{Binding DetailsLabel}" Command="{Binding DetailsCommand}" />
-    </DataTemplate>
-    <DataTemplate x:Key="InfoCardFooterTemplate" x:DataType="local:InfoCardDemoViewModel">
-      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-        <TextBlock Name="InfoCardTypedFooterStatus" Text="{Binding FooterStatus}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" VerticalAlignment="Center" />
-        <Button Name="InfoCardFooterAction" Grid.Column="1" Content="同步" Command="{Binding SyncCommand}" />
-      </Grid>
-    </DataTemplate>
-  </UserControl.Resources>
-  <UserControl.Styles>
-    <Style Selector="TextBlock.helper">
-      <Setter Property="FontSize" Value="12" />
-      <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
-      <Setter Property="TextWrapping" Value="Wrap" />
-    </Style>
-  </UserControl.Styles>
-  <StackPanel Spacing="18">
-    <StackPanel Spacing="6">
-      <TextBlock Text="InfoCard · 信息卡片" FontSize="22" FontWeight="SemiBold" />
-      <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 TheOne 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
+<UserControl
+    x:Class="TheOne.DesignPreview.InfoCardDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:InfoCardDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardIconTemplate">
+            <PathIcon
+                Data="{Binding IconData}"
+                Foreground="{DynamicResource One.Accent}"
+                Height="{Binding $parent[one:InfoCard].HeaderIconSize}"
+                Name="InfoCardTypedIcon"
+                Width="{Binding $parent[one:InfoCard].HeaderIconSize}" />
+        </DataTemplate>
+        <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardActionsTemplate">
+            <Button
+                Command="{Binding DetailsCommand}"
+                Content="{Binding DetailsLabel}"
+                Name="InfoCardTypedHeaderAction" />
+        </DataTemplate>
+        <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardFooterTemplate">
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Name="InfoCardTypedFooterStatus"
+                    Text="{Binding FooterStatus}"
+                    TextWrapping="Wrap"
+                    VerticalAlignment="Center" />
+                <Button
+                    Command="{Binding SyncCommand}"
+                    Content="同步"
+                    Grid.Column="1"
+                    Name="InfoCardFooterAction" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="TextBlock.helper">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="18">
+        <StackPanel Spacing="6">
+            <TextBlock
+                FontSize="22"
+                FontWeight="SemiBold"
+                Text="InfoCard · 信息卡片" />
+            <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 TheOne 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
+        </StackPanel>
+        <WrapPanel>
+            <CheckBox
+                Content="显示标题"
+                IsChecked="{Binding ShowHeader, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowHeader" />
+            <CheckBox
+                Content="显示图标"
+                IsChecked="{Binding ShowIcon, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowIcon" />
+            <CheckBox
+                Content="显示操作区"
+                IsChecked="{Binding ShowHeaderActions, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowHeaderActions" />
+            <CheckBox
+                Content="显示页脚"
+                IsChecked="{Binding ShowFooter, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowFooter" />
+            <CheckBox
+                Content="标题分割线"
+                IsChecked="{Binding ShowHeaderSeparator, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowHeaderSeparator" />
+            <CheckBox
+                Content="页脚分割线"
+                IsChecked="{Binding ShowFooterSeparator, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardShowFooterSeparator" />
+            <CheckBox
+                Content="启用卡片"
+                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="InfoCardEnabled" />
+            <Button
+                Command="{Binding UpdateCommand}"
+                Content="更新绑定内容"
+                Margin="0,0,8,8"
+                Name="InfoCardUpdate" />
+            <Button
+                Command="{Binding ResetCommand}"
+                Content="重置"
+                Margin="0,0,8,8"
+                Name="InfoCardReset" />
+        </WrapPanel>
+        <one:InfoCard
+            Content="{Binding Description}"
+            Header="{Binding VisibleTitle}"
+            IsEnabled="{Binding Enabled}"
+            Name="InfoCardSample"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+        <one:InfoCard
+            Content="{Binding Description}"
+            Footer="{Binding VisibleFooter}"
+            FooterTemplate="{Binding ShowFooter, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardFooterTemplate}}"
+            Header="{Binding VisibleTitle}"
+            HeaderActions="{Binding VisibleHeaderActions}"
+            HeaderActionsTemplate="{Binding ShowHeaderActions, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardActionsTemplate}}"
+            HeaderIcon="{Binding VisibleHeaderIcon}"
+            HeaderIconTemplate="{Binding ShowIcon, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardIconTemplate}}"
+            IsEnabled="{Binding Enabled}"
+            Name="InfoCardSlots"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+        <one:InfoCard
+            IsEnabled="{Binding Enabled}"
+            Name="InfoCardForm"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            <one:InfoCard.Header>
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        Text="工作区设置"
+                        VerticalAlignment="Center" />
+                    <Button
+                        Classes="primary"
+                        Command="{Binding SaveCommand}"
+                        Content="保存"
+                        Grid.Column="1"
+                        Name="InfoCardHeaderAction" />
+                </Grid>
+            </one:InfoCard.Header>
+            <StackPanel Spacing="12">
+                <Label Content="工作区名称" Target="{Binding #InfoCardName}" />
+                <TextBox
+                    AutomationProperties.Name="工作区名称"
+                    Name="InfoCardName"
+                    PlaceholderText="输入名称"
+                    Text="{Binding WorkspaceName, Mode=TwoWay}" />
+                <TextBlock
+                    AutomationProperties.LiveSetting="Polite"
+                    Name="InfoCardSaveStatus"
+                    Text="{Binding SaveStatus}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard
+            Content="{Binding}"
+            Header="{Binding}"
+            IsEnabled="{Binding Enabled}"
+            Name="InfoCardTemplated"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            <one:InfoCard.HeaderTemplate>
+                <DataTemplate x:DataType="local:InfoCardDemoViewModel">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Name="InfoCardTypedTitle"
+                            Text="{Binding Title}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource One.Muted}"
+                            Grid.Column="1"
+                            Text="{Binding Revision, StringFormat='{}版本 {0}'}"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                </DataTemplate>
+            </one:InfoCard.HeaderTemplate>
+            <one:InfoCard.ContentTemplate>
+                <DataTemplate x:DataType="local:InfoCardDemoViewModel">
+                    <StackPanel Spacing="8">
+                        <TextBlock
+                            Name="InfoCardTypedDescription"
+                            Text="{Binding Description}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            FontSize="12"
+                            Foreground="{DynamicResource One.Muted}"
+                            Text="HeaderTemplate 与 ContentTemplate 使用独立、明确的编译绑定类型。"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </DataTemplate>
+            </one:InfoCard.ContentTemplate>
+        </one:InfoCard>
+        <one:InfoCard
+            Content="不提供 Header 时，内容从卡片内边距起始处布局，不保留标题间隙。"
+            Name="InfoCardHeaderless"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+        <one:InfoCard
+            Header="成员 · 1,000 条数据"
+            Name="InfoCardList"
+            ShowFooterSeparator="{Binding ShowFooterSeparator}"
+            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            <StackPanel Spacing="12">
+                <ListBox
+                    AutomationProperties.Name="卡片内的一千条成员列表"
+                    Height="180"
+                    ItemsSource="{Binding Members}"
+                    Name="InfoCardMembers"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectionChanged="OnMemberChanged" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <TextBlock
+                        Classes="helper"
+                        Name="InfoCardListMetrics"
+                        Text="固定高度视口，容器按需创建。"
+                        VerticalAlignment="Center" />
+                    <Button
+                        Click="OnJumpLast"
+                        Content="跳到第 1,000 项"
+                        Grid.Column="1"
+                        Name="InfoCardJumpLast" />
+                </Grid>
+            </StackPanel>
+        </one:InfoCard>
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <one:InfoCard
+                Classes="glow"
+                Content="与全库配色同步的渐变标题。"
+                Footer="正文和页脚保留细微色差"
+                Header="柔光标题" />
+            <one:InfoCard
+                Classes="outlined"
+                Content="适合需要强调的信息。"
+                Header="强调描边" />
+            <one:InfoCard
+                Classes="flat"
+                Content="无边框、无分割线的展示。"
+                Header="嵌入布局" />
+        </StackPanel>
     </StackPanel>
-    <WrapPanel>
-      <CheckBox Name="InfoCardShowHeader" Content="显示标题" IsChecked="{Binding ShowHeader, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardShowIcon" Content="显示图标" IsChecked="{Binding ShowIcon, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardShowHeaderActions" Content="显示操作区" IsChecked="{Binding ShowHeaderActions, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardShowFooter" Content="显示页脚" IsChecked="{Binding ShowFooter, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardShowHeaderSeparator" Content="标题分割线" IsChecked="{Binding ShowHeaderSeparator, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardShowFooterSeparator" Content="页脚分割线" IsChecked="{Binding ShowFooterSeparator, Mode=TwoWay}" Margin="0,0,16,8" />
-      <CheckBox Name="InfoCardEnabled" Content="启用卡片" IsChecked="{Binding Enabled, Mode=TwoWay}" Margin="0,0,16,8" />
-      <Button Name="InfoCardUpdate" Content="更新绑定内容" Command="{Binding UpdateCommand}" Margin="0,0,8,8" />
-      <Button Name="InfoCardReset" Content="重置" Command="{Binding ResetCommand}" Margin="0,0,8,8" />
-    </WrapPanel>
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardSample" Header="{Binding VisibleTitle}" Content="{Binding Description}" IsEnabled="{Binding Enabled}" />
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardSlots" Header="{Binding VisibleTitle}" Content="{Binding Description}" IsEnabled="{Binding Enabled}"
-                  HeaderIcon="{Binding VisibleHeaderIcon}" HeaderActions="{Binding VisibleHeaderActions}" Footer="{Binding VisibleFooter}"
-                  HeaderIconTemplate="{Binding ShowIcon, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardIconTemplate}}"
-                  HeaderActionsTemplate="{Binding ShowHeaderActions, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardActionsTemplate}}"
-                  FooterTemplate="{Binding ShowFooter, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardFooterTemplate}}" />
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardForm" IsEnabled="{Binding Enabled}">
-      <one:InfoCard.Header>
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-          <TextBlock Text="工作区设置" FontWeight="SemiBold" VerticalAlignment="Center" />
-          <Button Name="InfoCardHeaderAction" Grid.Column="1" Content="保存" Classes="primary" Command="{Binding SaveCommand}" />
-        </Grid>
-      </one:InfoCard.Header>
-      <StackPanel Spacing="12">
-        <Label Content="工作区名称" Target="{Binding #InfoCardName}" />
-        <TextBox Name="InfoCardName" Text="{Binding WorkspaceName, Mode=TwoWay}" PlaceholderText="输入名称" AutomationProperties.Name="工作区名称" />
-        <TextBlock Name="InfoCardSaveStatus" Text="{Binding SaveStatus}" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
-      </StackPanel>
-    </one:InfoCard>
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardTemplated" Header="{Binding}" Content="{Binding}" IsEnabled="{Binding Enabled}">
-      <one:InfoCard.HeaderTemplate>
-        <DataTemplate x:DataType="local:InfoCardDemoViewModel">
-          <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-            <TextBlock Name="InfoCardTypedTitle" Text="{Binding Title}" FontWeight="SemiBold" TextWrapping="Wrap" />
-            <TextBlock Grid.Column="1" Text="{Binding Revision, StringFormat='{}版本 {0}'}" FontSize="12" Foreground="{DynamicResource One.Muted}" VerticalAlignment="Center" />
-          </Grid>
-        </DataTemplate>
-      </one:InfoCard.HeaderTemplate>
-      <one:InfoCard.ContentTemplate>
-        <DataTemplate x:DataType="local:InfoCardDemoViewModel">
-          <StackPanel Spacing="8">
-            <TextBlock Name="InfoCardTypedDescription" Text="{Binding Description}" TextWrapping="Wrap" />
-            <TextBlock Text="HeaderTemplate 与 ContentTemplate 使用独立、明确的编译绑定类型。" FontSize="12" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-          </StackPanel>
-        </DataTemplate>
-      </one:InfoCard.ContentTemplate>
-    </one:InfoCard>
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardHeaderless" Content="不提供 Header 时，内容从卡片内边距起始处布局，不保留标题间隙。" />
-    <one:InfoCard ShowHeaderSeparator="{Binding ShowHeaderSeparator}" ShowFooterSeparator="{Binding ShowFooterSeparator}" Name="InfoCardList" Header="成员 · 1,000 条数据">
-      <StackPanel Spacing="12">
-        <ListBox Name="InfoCardMembers" Height="180" ItemsSource="{Binding Members}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" SelectionChanged="OnMemberChanged" AutomationProperties.Name="卡片内的一千条成员列表" />
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-          <TextBlock Name="InfoCardListMetrics" Classes="helper" VerticalAlignment="Center" Text="固定高度视口，容器按需创建。" />
-          <Button Name="InfoCardJumpLast" Grid.Column="1" Content="跳到第 1,000 项" Click="OnJumpLast" />
-        </Grid>
-      </StackPanel>
-    </one:InfoCard>
-  <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><one:InfoCard Classes="glow" Header="柔光标题" Content="与全库配色同步的渐变标题。" Footer="正文和页脚保留细微色差" /><one:InfoCard Classes="outlined" Header="强调描边" Content="适合需要强调的信息。" /><one:InfoCard Classes="flat" Header="嵌入布局" Content="无边框、无分割线的展示。" /></StackPanel>
-</StackPanel>
 </UserControl>

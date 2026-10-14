@@ -1,0 +1,184 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.FlowStepDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:FlowStepDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="20">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="FlowStep · 流程步骤" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="横向 / 纵向 · 已完成 / 进行中 / 未完成 · 默认四字段与自定义内容模板"
+            TextWrapping="Wrap" />
+        <WrapPanel>
+            <Button
+                Classes="primary"
+                Command="{Binding AdvanceCommand}"
+                Content="推进流程"
+                Margin="0,0,8,8" />
+            <Button
+                Command="{Binding ResetCommand}"
+                Content="重置"
+                Margin="0,0,8,8" />
+            <Button
+                Command="{Binding ToggleTextCommand}"
+                Content="切换长文本"
+                Margin="0,0,8,8" />
+            <Button
+                Command="{Binding AddCommand}"
+                Content="添加节点"
+                Margin="0,0,8,8" />
+            <Button
+                Command="{Binding RemoveCommand}"
+                Content="移除末节点"
+                Margin="0,0,8,8" />
+        </WrapPanel>
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="{Binding Status}"
+            TextWrapping="Wrap" />
+        <TextBlock
+            FontSize="18"
+            FontWeight="SemiBold"
+            Text="横向布局" />
+        <one:FlowStep ItemsSource="{Binding Nodes}" Name="HorizontalFlow" />
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="24"
+            Name="LowerExamples"
+            RowSpacing="24">
+            <StackPanel Spacing="16">
+                <TextBlock
+                    FontWeight="SemiBold"
+                    Text="纵向布局 · 默认 ContentTemplate"
+                    TextWrapping="Wrap" />
+                <one:FlowStep
+                    ItemsSource="{Binding Nodes}"
+                    Name="VerticalFlow"
+                    Orientation="Vertical" />
+            </StackPanel>
+            <StackPanel
+                Grid.Column="1"
+                Name="CustomExamples"
+                Spacing="16">
+                <TextBlock FontWeight="SemiBold" Text="自定义 ContentTemplate" />
+                <one:FlowStep Name="CustomFlow" Orientation="Vertical">
+                    <one:FlowNode Status="Completed">
+                        <one:FlowNode.Content>
+                            <one:FlowNodeContent
+                                Text="申请资料已提交"
+                                Time="10-14 09:20"
+                                Title="提交申请" />
+                        </one:FlowNode.Content>
+                    </one:FlowNode>
+                    <one:FlowNode Content="{Binding Approval}" Status="InProgress">
+                        <one:FlowNode.ContentTemplate>
+                            <DataTemplate x:DataType="local:FlowApprovalContent">
+                                <Border
+                                    Background="{DynamicResource One.AccentSoft}"
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    BorderThickness="1"
+                                    CornerRadius="8"
+                                    Padding="16">
+                                    <StackPanel Spacing="10">
+                                        <one:FlowNodeHeaderPanel>
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Margin="0,0,12,0"
+                                                Text="{Binding Title}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock Foreground="{DynamicResource One.Accent}" Text="进行中" />
+                                        </one:FlowNodeHeaderPanel>
+                                        <TextBlock Foreground="{DynamicResource One.Muted}" Text="{Binding Time}" />
+                                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                            <Border
+                                                Background="{DynamicResource One.Surface}"
+                                                CornerRadius="18"
+                                                Height="36"
+                                                Width="36">
+                                                <TextBlock
+                                                    FontWeight="SemiBold"
+                                                    HorizontalAlignment="Center"
+                                                    Text="陈"
+                                                    VerticalAlignment="Center" />
+                                            </Border>
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Text="{Binding Approver}"
+                                                TextWrapping="Wrap"
+                                                VerticalAlignment="Center" />
+                                        </Grid>
+                                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                                        <Border
+                                            BorderBrush="{DynamicResource One.Line}"
+                                            BorderThickness="1"
+                                            CornerRadius="6"
+                                            Padding="10,8">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                                <Path
+                                                    Data="M 3,1 L 11,1 L 17,7 L 17,21 L 3,21 Z M 11,1 L 11,7 L 17,7 M 6,11 L 14,11 M 6,15 L 14,15"
+                                                    Height="20"
+                                                    Stretch="Uniform"
+                                                    Stroke="{DynamicResource One.Muted}"
+                                                    StrokeThickness="1.5"
+                                                    VerticalAlignment="Center"
+                                                    Width="16" />
+                                                <TextBlock
+                                                    Foreground="{DynamicResource One.Muted}"
+                                                    Grid.Column="1"
+                                                    Text="{Binding FileName}"
+                                                    TextWrapping="Wrap"
+                                                    VerticalAlignment="Center" />
+                                            </Grid>
+                                        </Border>
+                                        <Button
+                                            Classes="primary"
+                                            Command="{Binding DetailsCommand}"
+                                            Content="查看详情"
+                                            HorizontalAlignment="Left"
+                                            Name="DetailsButton" />
+                                        <TextBlock
+                                            IsVisible="{Binding HasDetails}"
+                                            Text="{Binding Details}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </one:FlowNode.ContentTemplate>
+                    </one:FlowNode>
+                    <one:FlowNode>
+                        <one:FlowNode.Content>
+                            <one:FlowNodeContent Text="审批通过后自动结束" Title="流程结束" />
+                        </one:FlowNode.Content>
+                    </one:FlowNode>
+                </one:FlowStep>
+            </StackPanel>
+        </Grid>
+        <TextBlock
+            FontWeight="SemiBold"
+            Text="共享 ContentTemplate · 所有节点复用一份模板"
+            TextWrapping="Wrap" />
+        <one:FlowStep
+            ItemsSource="{Binding Nodes}"
+            Name="SharedTemplateFlow"
+            NodeSpacing="12"
+            Orientation="Vertical">
+            <one:FlowStep.ContentTemplate>
+                <DataTemplate x:DataType="one:FlowNodeContent">
+                    <StackPanel Spacing="4">
+                        <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
+                        <TextBlock
+                            Foreground="{DynamicResource One.Muted}"
+                            Text="{Binding Text}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </DataTemplate>
+            </one:FlowStep.ContentTemplate>
+        </one:FlowStep>
+    </StackPanel>
+</UserControl>

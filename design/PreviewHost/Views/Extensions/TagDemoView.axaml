@@ -1,36 +1,332 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:styling="using:TheOne.Avalonia.Styling" x:Class="TheOne.DesignPreview.TagDemoView" x:DataType="local:TagDemoViewModel" x:CompileBindings="True">
-  <StackPanel Spacing="18">
-    <TextBlock Text="Tag · 状态标签" FontSize="22" FontWeight="SemiBold" />
-    <TextBlock Text="图标 + 文字 · 六种语义状态 · 浅底 / 描边 / 实心 · 三档尺寸与禁用" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-    <WrapPanel><TextBox Text="{Binding Text, Mode=TwoWay}" Width="180" Margin="0,0,8,8" /><ComboBox ItemsSource="{Binding Statuses}" SelectedItem="{Binding Status, Mode=TwoWay}" Width="150" Margin="0,0,8,8" /><ComboBox ItemsSource="{Binding Variants}" SelectedItem="{Binding Variant, Mode=TwoWay}" Width="130" Margin="0,0,8,8" /><CheckBox Content="启用" IsChecked="{Binding Enabled, Mode=TwoWay}" /></WrapPanel>
-    <one:Tag Name="TagSample" Content="{Binding Text}" Status="{Binding Status}" Variant="{Binding Variant}" IsEnabled="{Binding Enabled}"><one:Tag.Icon><PathIcon Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-    <Grid ColumnDefinitions="Auto,*,*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnSpacing="20" RowSpacing="16">
-      <TextBlock Grid.Column="1" Text="浅底 Soft" /><TextBlock Grid.Column="2" Text="描边 Outline" /><TextBlock Grid.Column="3" Text="实心 Solid" />
-      <TextBlock Grid.Row="1" Text="普通" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="1" Grid.Column="1" Content="普通" Status="Default" Variant="Soft"><one:Tag.Icon><PathIcon Data="M2,2 L12,2 L12,12 L2,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="1" Grid.Column="2" Content="普通" Status="Default" Variant="Outline"><one:Tag.Icon><PathIcon Data="M2,2 L12,2 L12,12 L2,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="1" Grid.Column="3" Content="普通" Status="Default" Variant="Solid"><one:Tag.Icon><PathIcon Data="M2,2 L12,2 L12,12 L2,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <TextBlock Grid.Row="2" Text="信息" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="2" Grid.Column="1" Content="信息" Status="Information" Variant="Soft"><one:Tag.Icon><PathIcon Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="2" Grid.Column="2" Content="信息" Status="Information" Variant="Outline"><one:Tag.Icon><PathIcon Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="2" Grid.Column="3" Content="信息" Status="Information" Variant="Solid"><one:Tag.Icon><PathIcon Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <TextBlock Grid.Row="3" Text="成功" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="3" Grid.Column="1" Content="成功" Status="Success" Variant="Soft"><one:Tag.Icon><PathIcon Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="3" Grid.Column="2" Content="成功" Status="Success" Variant="Outline"><one:Tag.Icon><PathIcon Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="3" Grid.Column="3" Content="成功" Status="Success" Variant="Solid"><one:Tag.Icon><PathIcon Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <TextBlock Grid.Row="4" Text="警告" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="4" Grid.Column="1" Content="警告" Status="Warning" Variant="Soft"><one:Tag.Icon><PathIcon Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="4" Grid.Column="2" Content="警告" Status="Warning" Variant="Outline"><one:Tag.Icon><PathIcon Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="4" Grid.Column="3" Content="警告" Status="Warning" Variant="Solid"><one:Tag.Icon><PathIcon Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <TextBlock Grid.Row="5" Text="错误" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="5" Grid.Column="1" Content="错误" Status="Error" Variant="Soft"><one:Tag.Icon><PathIcon Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="5" Grid.Column="2" Content="错误" Status="Error" Variant="Outline"><one:Tag.Icon><PathIcon Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="5" Grid.Column="3" Content="错误" Status="Error" Variant="Solid"><one:Tag.Icon><PathIcon Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <TextBlock Grid.Row="6" Text="处理中" VerticalAlignment="Center" />
-      <one:Tag Grid.Row="6" Grid.Column="1" Content="处理中" Status="Processing" Variant="Soft"><one:Tag.Icon><PathIcon Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="6" Grid.Column="2" Content="处理中" Status="Processing" Variant="Outline"><one:Tag.Icon><PathIcon Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-      <one:Tag Grid.Row="6" Grid.Column="3" Content="处理中" Status="Processing" Variant="Solid"><one:Tag.Icon><PathIcon Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z" Width="14" Height="14" /></one:Tag.Icon></one:Tag>
-    </Grid>
-    <WrapPanel><one:Tag Content="Small" styling:ControlSizing.Size="Small" Margin="0,0,12,8" /><one:Tag Content="Normal" Margin="0,0,12,8" /><one:Tag Content="Large" styling:ControlSizing.Size="Large" Margin="0,0,12,8" /><one:Tag Content="禁用" Status="Success" IsEnabled="False" /></WrapPanel>
-  </StackPanel>
+<UserControl
+    x:Class="TheOne.DesignPreview.TagDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:TagDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="Tag · 状态标签" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="图标 + 文字 · 六种语义状态 · 浅底 / 描边 / 实心 · 三档尺寸与禁用"
+            TextWrapping="Wrap" />
+        <WrapPanel>
+            <TextBox
+                Margin="0,0,8,8"
+                Text="{Binding Text, Mode=TwoWay}"
+                Width="180" />
+            <ComboBox
+                ItemsSource="{Binding Statuses}"
+                Margin="0,0,8,8"
+                SelectedItem="{Binding Status, Mode=TwoWay}"
+                Width="150" />
+            <ComboBox
+                ItemsSource="{Binding Variants}"
+                Margin="0,0,8,8"
+                SelectedItem="{Binding Variant, Mode=TwoWay}"
+                Width="130" />
+            <CheckBox Content="启用" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        </WrapPanel>
+        <one:Tag
+            Content="{Binding Text}"
+            IsEnabled="{Binding Enabled}"
+            Name="TagSample"
+            Status="{Binding Status}"
+            Variant="{Binding Variant}">
+            <one:Tag.Icon>
+                <PathIcon
+                    Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z"
+                    Height="14"
+                    Width="14" />
+            </one:Tag.Icon>
+        </one:Tag>
+        <Grid
+            ColumnDefinitions="Auto,*,*,*"
+            ColumnSpacing="20"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            RowSpacing="16">
+            <TextBlock Grid.Column="1" Text="浅底 Soft" />
+            <TextBlock Grid.Column="2" Text="描边 Outline" />
+            <TextBlock Grid.Column="3" Text="实心 Solid" />
+            <TextBlock
+                Grid.Row="1"
+                Text="普通"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="普通"
+                Grid.Column="1"
+                Grid.Row="1"
+                Status="Default"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M2,2 L12,2 L12,12 L2,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="普通"
+                Grid.Column="2"
+                Grid.Row="1"
+                Status="Default"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M2,2 L12,2 L12,12 L2,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="普通"
+                Grid.Column="3"
+                Grid.Row="1"
+                Status="Default"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M2,2 L12,2 L12,12 L2,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <TextBlock
+                Grid.Row="2"
+                Text="信息"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="信息"
+                Grid.Column="1"
+                Grid.Row="2"
+                Status="Information"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="信息"
+                Grid.Column="2"
+                Grid.Row="2"
+                Status="Information"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="信息"
+                Grid.Column="3"
+                Grid.Row="2"
+                Status="Information"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M6,1 L8,1 L8,3 L6,3 Z M6,5 L8,5 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <TextBlock
+                Grid.Row="3"
+                Text="成功"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="成功"
+                Grid.Column="1"
+                Grid.Row="3"
+                Status="Success"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="成功"
+                Grid.Column="2"
+                Grid.Row="3"
+                Status="Success"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="成功"
+                Grid.Column="3"
+                Grid.Row="3"
+                Status="Success"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <TextBlock
+                Grid.Row="4"
+                Text="警告"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="警告"
+                Grid.Column="1"
+                Grid.Row="4"
+                Status="Warning"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="警告"
+                Grid.Column="2"
+                Grid.Row="4"
+                Status="Warning"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="警告"
+                Grid.Column="3"
+                Grid.Row="4"
+                Status="Warning"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M7,1 L14,13 L0,13 Z M6,5 L8,5 L8,9 L6,9 Z M6,10 L8,10 L8,12 L6,12 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <TextBlock
+                Grid.Row="5"
+                Text="错误"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="错误"
+                Grid.Column="1"
+                Grid.Row="5"
+                Status="Error"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="错误"
+                Grid.Column="2"
+                Grid.Row="5"
+                Status="Error"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="错误"
+                Grid.Column="3"
+                Grid.Row="5"
+                Status="Error"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M1,3 L3,1 L7,5 L11,1 L13,3 L9,7 L13,11 L11,13 L7,9 L3,13 L1,11 L5,7 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <TextBlock
+                Grid.Row="6"
+                Text="处理中"
+                VerticalAlignment="Center" />
+            <one:Tag
+                Content="处理中"
+                Grid.Column="1"
+                Grid.Row="6"
+                Status="Processing"
+                Variant="Soft">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="处理中"
+                Grid.Column="2"
+                Grid.Row="6"
+                Status="Processing"
+                Variant="Outline">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+            <one:Tag
+                Content="处理中"
+                Grid.Column="3"
+                Grid.Row="6"
+                Status="Processing"
+                Variant="Solid">
+                <one:Tag.Icon>
+                    <PathIcon
+                        Data="M12,7 A5,5 0 1 1 7,2 L7,4 A3,3 0 1 0 10,7 Z M7,0 L12,3 L7,6 Z"
+                        Height="14"
+                        Width="14" />
+                </one:Tag.Icon>
+            </one:Tag>
+        </Grid>
+        <WrapPanel>
+            <one:Tag
+                Content="Small"
+                Margin="0,0,12,8"
+                styling:ControlSizing.Size="Small" />
+            <one:Tag Content="Normal" Margin="0,0,12,8" />
+            <one:Tag
+                Content="Large"
+                Margin="0,0,12,8"
+                styling:ControlSizing.Size="Large" />
+            <one:Tag
+                Content="禁用"
+                IsEnabled="False"
+                Status="Success" />
+        </WrapPanel>
+    </StackPanel>
 </UserControl>

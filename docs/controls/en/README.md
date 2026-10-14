@@ -26,7 +26,10 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [Windows and messaging](windows.md) | OneWindow, ThemeButton, LeftContent, RightContent, static notification / Toast / dialog APIs |
 | [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, compiled templates, three sizes |
-| [Tag and Step](tag-step.md) | Icon status tags, automatic forms from model properties, navigation with per-step validation |
+| [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
+| [RelationGraph](relation-graph.md) | Single-root relation trees, horizontal/vertical layout, default/custom models, compiled ChildrenSource and null regions |
+| [FlowStep and FlowNode](flow-step.md) | Horizontal / vertical flow, three states, default and custom content templates |
+| [Tag and VerificationStep](tag-verification-step.md) | Icon status tags, automatic forms from model properties, navigation with per-step validation |
 
 ComboBoxItem, ListBoxItem, TreeViewItem, TabItem, MenuItem, calendar cells, and internal DataGrid presenters receive their styles from the theme. Bind models for dynamic collections and let templates create containers on demand.
 

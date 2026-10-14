@@ -4,20 +4,86 @@ namespace TheOne.DesignPreview;
 
 public sealed class FlyoutDemoViewModel : ReactiveObject
 {
-    public IReadOnlyList<string> Rows { get; } = Enumerable.Range(1, 10000).Select(index => $"成员 {index:D5} · TheOne workspace").ToArray();
-    public int Placement { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int Size { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int ShowMode { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int SelectedIndex { get; set => this.RaiseAndSetIfChanged(ref field, value); } = -1;
-    public bool PreventDismiss { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public bool Notify { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public string Name { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "TheOne workspace";
-    public string AppliedName { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "TheOne workspace";
-    public string Status { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "尚未应用更改";
-    public string Metrics { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "打开弹层以查看当前主题与尺寸。";
-    public string ListMetrics { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "等待列表打开";
-    public string MemberStatus { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "尚未选择成员";
-    public int ApplyCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
+    public IReadOnlyList<string> Rows { get; } =
+        Enumerable.Range(1, 10000).Select(index => $"成员 {index:D5} · TheOne workspace").ToArray();
+
+    public int Placement
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int Size
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int ShowMode
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int SelectedIndex
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = -1;
+
+    public bool PreventDismiss
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public bool Notify
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public string Name
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "TheOne workspace";
+
+    public string AppliedName
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "TheOne workspace";
+
+    public string Status
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "尚未应用更改";
+
+    public string Metrics
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "打开弹层以查看当前主题与尺寸。";
+
+    public string ListMetrics
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "等待列表打开";
+
+    public string MemberStatus
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "尚未选择成员";
+
+    public int ApplyCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
 
     public bool Apply()
     {

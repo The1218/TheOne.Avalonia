@@ -5,7 +5,7 @@
 A cross-platform theme and control library built on Avalonia's native controls. It includes light and dark themes, three control sizes, multiple control styles, and gradient palettes. PreviewHost provides interactive examples.
 
 - Consistent themes for buttons, inputs, selectors, date and time pickers, lists, trees, menus, and layout controls.
-- Fourteen chart types, plus NavMenu, InfoCard, Tag, Step, window, and messaging extensions.
+- Fourteen chart types, plus NavMenu, InfoCard, Tag, VerificationStep, window, and messaging extensions.
 - DataGrid with compiled bindings, automatic entity-property filters, frozen columns on both sides, and numeric summaries.
 
 ## Requirements and versions

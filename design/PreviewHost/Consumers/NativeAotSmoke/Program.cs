@@ -72,6 +72,8 @@ internal static class Program
         _ = DataGridAot.PreserveRowType<AuditRow>();
         AppBuilder.Configure<AuditApp>().WithInterFont().UseReactiveUI(static _ => { }).UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
         if (args.Contains("--verify-control-variants")) { TheOne.DesignPreview.ControlVariantsPreview.Verify(Check); Console.WriteLine($"PASS: {_checks} Theme theme checks."); return; }
+        if (args.Contains("--verify-gantt")) { TheOne.DesignPreview.GanttPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} Gantt native hierarchy / scrolling / pixel checks."); return; }
+        if (args.Contains("--verify-relation-graph")) { TheOne.DesignPreview.RelationGraphPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} RelationGraph native layout / compiled binding / pixel checks."); return; }
         if (args.Contains("--verify-loginwindow"))
         {
             TheOne.DesignPreview.LoginWindowChecks.Verify(Check);
@@ -159,10 +161,15 @@ internal static class Program
             Console.WriteLine($"PASS: {_checks} NavMenu compiled binding / theme / virtualization checks.");
             return;
         }
-        if (args.Contains("--verify-tag-step"))
+        if (args.Contains("--verify-flow-step"))
         {
-            TheOne.DesignPreview.TagStepPreview.Verify(Check);
-            Console.WriteLine($"PASS: Tag / Step compiled validation, interaction and virtualization ({_checks} checks)."); return;
+            TheOne.DesignPreview.FlowStepPreview.Verify(Check);
+            Console.WriteLine($"PASS: {_checks} FlowStep compiled binding / layout / interaction checks."); return;
+        }
+        if (args.Contains("--verify-tag-verification-step"))
+        {
+            TheOne.DesignPreview.TagVerificationStepPreview.Verify(Check);
+            Console.WriteLine($"PASS: Tag / VerificationStep compiled validation, interaction and virtualization ({_checks} checks)."); return;
         }
         if (args.Contains("--verify-infocard"))
         {

@@ -1,13 +1,59 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ToggleSplitButtonPage" x:DataType="local:ToggleSplitButtonPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="ToggleSplitButton" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="默认 / 主要 / 禁用 · 主按钮与下拉菜单分别交互" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><ToggleSplitButton Name="ControlSample" Content="默认操作" IsChecked="{Binding Checked, Mode=TwoWay}" Margin="0,0,12,12"><ToggleSplitButton.Flyout><MenuFlyout><MenuItem Header="保存草稿" Command="{Binding InvokeCommand}"/><MenuItem Header="发布工作区" Command="{Binding InvokeCommand}"/></MenuFlyout></ToggleSplitButton.Flyout></ToggleSplitButton>
-      <ToggleSplitButton Content="主要操作" IsChecked="{Binding Checked, Mode=TwoWay}" Classes="primary" Margin="0,0,12,12"><ToggleSplitButton.Flyout><MenuFlyout><MenuItem Header="保存草稿" Command="{Binding InvokeCommand}"/><MenuItem Header="发布工作区" Command="{Binding InvokeCommand}"/></MenuFlyout></ToggleSplitButton.Flyout></ToggleSplitButton>
-      <ToggleSplitButton Content="禁用操作" IsChecked="{Binding Checked, Mode=TwoWay}" IsEnabled="False" Margin="0,0,12,12"><ToggleSplitButton.Flyout><MenuFlyout><MenuItem Header="保存草稿" Command="{Binding InvokeCommand}"/><MenuItem Header="发布工作区" Command="{Binding InvokeCommand}"/></MenuFlyout></ToggleSplitButton.Flyout></ToggleSplitButton></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ToggleSplitButtonPage"
+    x:DataType="local:ToggleSplitButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ToggleSplitButton" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="默认 / 主要 / 禁用 · 主按钮与下拉菜单分别交互"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <ToggleSplitButton
+                    Content="默认操作"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    Margin="0,0,12,12"
+                    Name="ControlSample">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+                <ToggleSplitButton
+                    Classes="primary"
+                    Content="主要操作"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    Margin="0,0,12,12">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+                <ToggleSplitButton
+                    Content="禁用操作"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    IsEnabled="False"
+                    Margin="0,0,12,12">
+                    <ToggleSplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </ToggleSplitButton.Flyout>
+                </ToggleSplitButton>
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 </local:BasicControlPage>

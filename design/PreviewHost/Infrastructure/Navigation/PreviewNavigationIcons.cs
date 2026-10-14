@@ -41,7 +41,7 @@ internal static class PreviewNavigationIcons
         24 => MaterialIconKind.CardTextOutline,
         25 => MaterialIconKind.NavigationVariantOutline,
         26 => MaterialIconKind.TagOutline,
-        27 => MaterialIconKind.FormatListNumbered,
+        415 or 27 or 307 => MaterialIconKind.FormatListNumbered,
         300 => MaterialIconKind.MessageBadgeOutline,
         301 => MaterialIconKind.WindowRestore,
         302 => MaterialIconKind.MessageAlertOutline,

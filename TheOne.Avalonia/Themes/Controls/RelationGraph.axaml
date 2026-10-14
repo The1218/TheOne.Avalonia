@@ -1,0 +1,85 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:RelationGraph}" TargetType="one:RelationGraph">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="16" />
+    <Setter Property="NodeWidth" Value="260" />
+    <Setter Property="NodeMinHeight" Value="88" />
+    <Setter Property="NodeSpacing" Value="36" />
+    <Setter Property="LevelSpacing" Value="80" />
+    <Setter Property="ConnectorBrush" Value="{DynamicResource One.Accent}" />
+    <Setter Property="ConnectorThickness" Value="1.5" />
+    <Setter Property="ConnectorCornerRadius" Value="8" />
+    <Setter Property="PortRadius" Value="3" />
+    <Setter Property="Focusable" Value="False" />
+    <Style Selector="^.one-small">
+      <Setter Property="NodeWidth" Value="220" /><Setter Property="NodeMinHeight" Value="72" />
+      <Setter Property="NodeSpacing" Value="28" /><Setter Property="LevelSpacing" Value="60" />
+    </Style>
+    <Style Selector="^.one-large">
+      <Setter Property="NodeWidth" Value="300" /><Setter Property="NodeMinHeight" Value="104" />
+      <Setter Property="NodeSpacing" Value="44" /><Setter Property="LevelSpacing" Value="100" />
+    </Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:RelationGraphNodePresenter}" TargetType="one:RelationGraphNodePresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="ContentForeground" Value="{DynamicResource One.Muted}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="Padding" Value="16,14" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="HeaderFontSize" Value="16" />
+    <Setter Property="IconSize" Value="24" />
+    <Setter Property="IconTileSize" Value="44" />
+    <Setter Property="IconSpacing" Value="14" />
+    <Setter Property="TextSpacing" Value="6" />
+    <Setter Property="IconBackground" Value="{DynamicResource One.AccentSoft}" />
+    <Setter Property="IconForeground" Value="{DynamicResource One.Accent}" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+          <Grid Name="PART_Layout" ColumnDefinitions="Auto,Auto,*">
+            <Border Name="PART_IconHost" IsVisible="False" Width="{TemplateBinding IconTileSize}" Height="{TemplateBinding IconTileSize}"
+                    Background="{TemplateBinding IconBackground}" CornerRadius="6" VerticalAlignment="Center">
+              <ContentPresenter Name="PART_IconPresenter" Content="{TemplateBinding Icon}" ContentTemplate="{TemplateBinding IconTemplate}"
+                                Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Foreground="{TemplateBinding IconForeground}" FontSize="{TemplateBinding IconSize}"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            </Border>
+            <Border Name="PART_IconGap" Grid.Column="1" IsVisible="False" Width="{TemplateBinding IconSpacing}" />
+            <StackPanel Name="PART_TextHost" Grid.Column="2" VerticalAlignment="Center">
+              <ContentPresenter Name="PART_HeaderPresenter" IsVisible="False" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding HeaderFontSize}" FontWeight="SemiBold"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TextBlock.TextWrapping="Wrap" />
+              <Border Name="PART_TextGap" IsVisible="False" Height="{TemplateBinding TextSpacing}" />
+              <ContentPresenter Name="PART_ContentPresenter" IsVisible="False" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Foreground="{TemplateBinding ContentForeground}" FontSize="{TemplateBinding FontSize}"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TextBlock.TextWrapping="Wrap" />
+            </StackPanel>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:root"><Setter Property="Background" Value="{DynamicResource One.RowSelected}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:has-icon /template/ Border#PART_IconHost"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-title /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-content /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-icon:has-title /template/ Border#PART_IconGap, ^:has-icon:has-content /template/ Border#PART_IconGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-title:has-content /template/ Border#PART_TextGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:icon-only /template/ Border#PART_IconHost"><Setter Property="Grid.ColumnSpan" Value="3" /><Setter Property="HorizontalAlignment" Value="Center" /></Style>
+    <Style Selector="^:icon-only /template/ StackPanel#PART_TextHost"><Setter Property="IsVisible" Value="False" /></Style>
+    <Style Selector="^.one-small">
+      <Setter Property="Padding" Value="12,10" /><Setter Property="FontSize" Value="12" /><Setter Property="HeaderFontSize" Value="14" />
+      <Setter Property="IconSize" Value="20" /><Setter Property="IconTileSize" Value="36" /><Setter Property="IconSpacing" Value="10" /><Setter Property="TextSpacing" Value="4" />
+    </Style>
+    <Style Selector="^.one-large">
+      <Setter Property="Padding" Value="20,18" /><Setter Property="FontSize" Value="16" /><Setter Property="HeaderFontSize" Value="18" />
+      <Setter Property="IconSize" Value="28" /><Setter Property="IconTileSize" Value="52" /><Setter Property="IconSpacing" Value="18" /><Setter Property="TextSpacing" Value="8" />
+    </Style>
+    <Style Selector="^:disabled"><Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /><Setter Property="ContentForeground" Value="{DynamicResource One.DisabledText}" /><Setter Property="IconForeground" Value="{DynamicResource One.DisabledText}" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

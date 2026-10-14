@@ -5,16 +5,16 @@ using TheOne.Avalonia.Controls;
 
 namespace TheOne.DesignPreview;
 
-public partial class StepDemoView : UserControl
+public partial class VerificationStepDemoView : UserControl
 {
-    public StepDemoView()
+    public VerificationStepDemoView()
     {
         DataContext = Model;
         AvaloniaXamlLoader.Load(this);
     }
 
-    public StepDemoViewModel Model { get; } = new();
-    public Step Sample => this.FindControl<Step>("StepSample")!;
+    public VerificationStepDemoViewModel Model { get; } = new();
+    public VerificationStep Sample => this.FindControl<VerificationStep>("StepSample")!;
 
     private void ResetClicked(object? sender, RoutedEventArgs args)
     {

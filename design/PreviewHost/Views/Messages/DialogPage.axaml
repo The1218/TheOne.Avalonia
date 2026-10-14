@@ -1,16 +1,59 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.DialogPage" x:DataType="local:MessagePageViewModel">
-  <StackPanel Spacing="18" MaxWidth="760" HorizontalAlignment="Stretch">
-    <TextBlock Text="Dialog · 确认与表单" FontSize="22" FontWeight="SemiBold" />
-    <TextBlock Text="配置对话框外观和关闭行为。表单通过独立 VM 的命令返回结果。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-    <local:MessageDemoSettings />
-    <StackPanel Spacing="6"><TextBlock Text="确认按钮组合" /><ComboBox ItemsSource="{Binding ButtonSets}" SelectedItem="{Binding Buttons, Mode=TwoWay}" HorizontalAlignment="Stretch" /></StackPanel>
-    <WrapPanel>
-      <CheckBox Content="显示关闭按钮" IsChecked="{Binding ShowClose, Mode=TwoWay}" Margin="0,0,20,8" />
-      <CheckBox Content="显示确认按钮" IsChecked="{Binding ShowButtons, Mode=TwoWay}" Margin="0,0,20,8" />
-      <CheckBox Content="点击蒙层关闭" IsChecked="{Binding OverlayClose, Mode=TwoWay}" Margin="0,0,20,8" />
-      <CheckBox Content="Esc 关闭" IsChecked="{Binding EscapeClose, Mode=TwoWay}" />
-    </WrapPanel>
-    <WrapPanel><Button Name="ShowDialog" Classes="primary" Content="显示确认对话框" Command="{Binding DialogCommand}" Margin="0,0,12,0" /><Button Classes="outline" Content="打开 VM 表单" Command="{Binding FormDialogCommand}" /></WrapPanel>
-    <TextBlock Text="{Binding Status}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  </StackPanel>
+<UserControl
+    x:Class="TheOne.DesignPreview.DialogPage"
+    x:DataType="local:MessagePageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel
+        HorizontalAlignment="Stretch"
+        MaxWidth="760"
+        Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="Dialog · 确认与表单" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="配置对话框外观和关闭行为。表单通过独立 VM 的命令返回结果。"
+            TextWrapping="Wrap" />
+        <local:MessageDemoSettings />
+        <StackPanel Spacing="6">
+            <TextBlock Text="确认按钮组合" />
+            <ComboBox
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding ButtonSets}"
+                SelectedItem="{Binding Buttons, Mode=TwoWay}" />
+        </StackPanel>
+        <WrapPanel>
+            <CheckBox
+                Content="显示关闭按钮"
+                IsChecked="{Binding ShowClose, Mode=TwoWay}"
+                Margin="0,0,20,8" />
+            <CheckBox
+                Content="显示确认按钮"
+                IsChecked="{Binding ShowButtons, Mode=TwoWay}"
+                Margin="0,0,20,8" />
+            <CheckBox
+                Content="点击蒙层关闭"
+                IsChecked="{Binding OverlayClose, Mode=TwoWay}"
+                Margin="0,0,20,8" />
+            <CheckBox Content="Esc 关闭" IsChecked="{Binding EscapeClose, Mode=TwoWay}" />
+        </WrapPanel>
+        <WrapPanel>
+            <Button
+                Classes="primary"
+                Command="{Binding DialogCommand}"
+                Content="显示确认对话框"
+                Margin="0,0,12,0"
+                Name="ShowDialog" />
+            <Button
+                Classes="outline"
+                Command="{Binding FormDialogCommand}"
+                Content="打开 VM 表单" />
+        </WrapPanel>
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="{Binding Status}"
+            TextWrapping="Wrap" />
+    </StackPanel>
 </UserControl>

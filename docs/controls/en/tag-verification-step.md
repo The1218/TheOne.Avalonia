@@ -1,6 +1,6 @@
-# Tag and Step
+# Tag and VerificationStep
 
-[简体中文](../zh-cn/tag-step.md) · **English**
+[简体中文](../zh-cn/tag-verification-step.md) · **English**
 
 [Back to controls](README.md). Load OneTheme and use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
@@ -28,7 +28,9 @@
 
 Tag displays status rather than button / toggle selection behavior. Applications supply labels and icons; color must not be the only cue. TheOne semantic colors support Light / Dark and inherited small / normal / large. Minimum heights are 24 / 28 / 32, fonts 11 / 12 / 15 px. Override standard Padding, CornerRadius, Foreground, and related properties.
 
-## Step validation
+## VerificationStep validation
+
+`VerificationStep` is a step control with validation: forward navigation requires the current step to pass validation. It replaces the former `Step` control; update C# references and XAML tags to `VerificationStep`. The supporting `StepItem`, `StepField`, and `StepValidation` APIs retain their names and behavior.
 
 Default usage needs models, standard validation attributes, and ItemsSource only. `StepItem<T>` creates property validators and, without custom templates, generates forms, labels, and errors below inputs. No StepField declarations or per-step StepValidation.For calls are needed. T is the concrete model type; the library preserves its public-property metadata for NativeAOT.
 
@@ -58,7 +60,7 @@ public IReadOnlyList<StepItem> Steps { get; } = new StepItem[]
 
 ```xml
 <!-- 根视图声明 x:DataType，并使用编译绑定。 -->
-<one:Step ItemsSource="{Binding Steps}"
+<one:VerificationStep ItemsSource="{Binding Steps}"
           CompletedCommand="{Binding CompletedCommand}"
           Height="520" />
 ```
@@ -99,18 +101,18 @@ StepCompare reads latest values through concrete-model accessors. Standard Compa
 
 ### Custom content and advanced validation
 
-`Step.ContentTemplate` wins, then matching DataTemplate; otherwise the built-in form is used. `StepItem<T>` still validates attributes under custom layouts. Use StepField with a model-property MemberName to place errors below particular inputs. Whole-step, hidden-field, and unmapped errors stay in the bounded top list rather than disappearing.
+`VerificationStep.ContentTemplate` wins, then matching DataTemplate; otherwise the built-in form is used. `StepItem<T>` still validates attributes under custom layouts. Use StepField with a model-property MemberName to place errors below particular inputs. Whole-step, hidden-field, and unmapped errors stay in the bounded top list rather than disappearing.
 
 ```xml
-<one:Step ItemsSource="{Binding Steps}" CompletedCommand="{Binding CompletedCommand}">
-  <one:Step.DataTemplates>
+<one:VerificationStep ItemsSource="{Binding Steps}" CompletedCommand="{Binding CompletedCommand}">
+  <one:VerificationStep.DataTemplates>
     <DataTemplate DataType="{x:Type vm:AccountModel}" x:DataType="vm:AccountModel">
       <one:StepField MemberName="Name">
         <TextBox Text="{Binding Name, Mode=TwoWay}" />
       </one:StepField>
     </DataTemplate>
-  </one:Step.DataTemplates>
-</one:Step>
+  </one:VerificationStep.DataTemplates>
+</one:VerificationStep>
 ```
 
 Non-generic StepItem remains available for developer controls / models. It does not infer runtime property types from object. Explicitly assign `Validator = StepValidation.For(model)` for property validation. `StepValidation.For(model, nameof(AccountModel.Name))` limits fields to the current step. Call with concrete types instead of hiding them as object / base classes. A non-null generic StepItem Validator overrides automatic validation for scoped or remote checks.
@@ -143,6 +145,8 @@ Navigation and UI model changes run on the UI thread. Repeated forward input doe
 
 Connected dots distinguish completed checks, filled current numbers, pale future numbers, and error exclamation marks using semantic colors. small / normal / large diameters are 30 / 36 / 42. Header viewport height is 112, maximum width 960, centered by default; item width defaults to 200. `HeaderHorizontalAlignment="Stretch"` divides the viewport with 120 minimum item width. Narrow windows / long lists scroll horizontally rather than shrinking dots unreadably. Resizing / alignment changes recompute widths using native ListBox / VirtualizingStackPanel. StepItem stores success independently of realized headers.
 
-Step defaults to maximum height 720; built-in forms max at width 640 within finite content height. Headers and forms share horizontal centers. Set `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"` for equal width. Preview switches among four alignments. Custom long forms can use ScrollViewer; collections keep their own bounded viewports. Field errors max at height 96 and top step errors at 120.
+VerificationStep defaults to maximum height 720; built-in forms max at width 640 within finite content height. Headers and forms share horizontal centers. Set `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"` for equal width. Preview switches among four alignments. Custom long forms can use ScrollViewer; collections keep their own bounded viewports. Field errors max at height 96 and top step errors at 120.
 
-Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_NextButton, PART_ValidationErrors, with PART_FormFields for built-in forms. Extensions / Step demonstrates auto forms, attribute validation, completion commands, reset, and thousand-step recycling. Commands: [preview entry points](../../../design/PreviewHost/Program.cs).
+Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_NextButton, PART_ValidationErrors, with PART_FormFields for built-in forms. Extensions / Step / VerificationStep demonstrates auto forms, attribute validation, completion commands, reset, and thousand-step recycling. Commands: [preview entry points](../../../design/PreviewHost/Program.cs).
+
+Run `dotnet run --project design/PreviewHost -- --verify-tag-verification-step` for the targeted checks, or use `--render-controls .preview/verification-step VerificationStep` to render this control. The published NativeAotSmoke consumer runs the same checks with `--require-aot --verify-tag-verification-step`.

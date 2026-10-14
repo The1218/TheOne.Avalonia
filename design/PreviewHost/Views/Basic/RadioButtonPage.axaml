@@ -1,11 +1,37 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.RadioButtonPage" x:DataType="local:RadioButtonPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="RadioButton" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="同组互斥选择 / 禁用状态" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><RadioButton Name="ControlSample" Content="本地工作区" IsChecked="{Binding Checked, Mode=TwoWay}" GroupName="Workspace" Margin="0,0,12,12" /><RadioButton Content="云端工作区" GroupName="Workspace" Margin="0,0,12,12" /><RadioButton Content="禁用选项" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.RadioButtonPage"
+    x:DataType="local:RadioButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="RadioButton" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="同组互斥选择 / 禁用状态"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <RadioButton
+                    Content="本地工作区"
+                    GroupName="Workspace"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    Margin="0,0,12,12"
+                    Name="ControlSample" />
+                <RadioButton
+                    Content="云端工作区"
+                    GroupName="Workspace"
+                    Margin="0,0,12,12" />
+                <RadioButton
+                    Content="禁用选项"
+                    IsEnabled="False"
+                    Margin="0,0,12,12" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 </local:BasicControlPage>

@@ -110,7 +110,7 @@ internal static class PreviewViewModelContracts
         check(!split.MainActionCommand.CanExecute(null) && commandChanges == 1, "PreviewHost/notifications: split button availability changes exactly once");
         var tag = new TagDemoViewModel();
         Change(tag, () => tag.Text = "正在处理", nameof(tag.Text));
-        var steps = new StepDemoViewModel();
+        var steps = new VerificationStepDemoViewModel();
         Change(steps.Account, () => steps.Account.Email = "user@example.com", nameof(steps.Account.Email));
         var legacy = new LegacyGalleryViewModel();
         Change(legacy, () => legacy.Email = "invalid", nameof(legacy.Email), nameof(legacy.EmailError), nameof(legacy.HasErrors));

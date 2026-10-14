@@ -1,14 +1,61 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ComboBoxPage" x:DataType="local:ComboBoxPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="ComboBox" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="已选值 / 占位提示 / 禁用 · 1,000 项按需生成" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><ComboBox Name="ControlSample" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Width="260" Margin="0,0,12,12" /><ComboBox ItemsSource="{Binding Items}" PlaceholderText="请选择工作区" Width="260" Margin="0,0,12,12" /><ComboBox ItemsSource="{Binding Items}" SelectedIndex="1" IsEnabled="False" Width="260" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
-  <Button Content="第 1,000 项" Command="{Binding LastCommand}" HorizontalAlignment="Left" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><WrapPanel><ComboBox Classes="filled" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Width="260" Margin="0,0,12,12" /><ComboBox Classes="underlined" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Width="260" Margin="0,0,12,12" /></WrapPanel></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ComboBoxPage"
+    x:DataType="local:ComboBoxPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ComboBox" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="已选值 / 占位提示 / 禁用 · 1,000 项按需生成"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <ComboBox
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    Name="ControlSample"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    Width="260" />
+                <ComboBox
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    PlaceholderText="请选择工作区"
+                    Width="260" />
+                <ComboBox
+                    IsEnabled="False"
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    SelectedIndex="1"
+                    Width="260" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <Button
+            Command="{Binding LastCommand}"
+            Content="第 1,000 项"
+            HorizontalAlignment="Left" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <WrapPanel>
+                <ComboBox
+                    Classes="filled"
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    Width="260" />
+                <ComboBox
+                    Classes="underlined"
+                    ItemsSource="{Binding Items}"
+                    Margin="0,0,12,12"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    Width="260" />
+            </WrapPanel>
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

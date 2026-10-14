@@ -2,7 +2,7 @@
   "reference": "https://github.com/Eremex/controlthemes",
   "commit": "5f6cb3ad8b904cead6bd432f62596648cc9a1039",
   "palette_pairs": 48,
-  "control_theme_files": 65,
+  "control_theme_files": 68,
   "checked_roles": [
     "neutral surfaces and interaction states",
     "accent and selection states",
@@ -12,11 +12,12 @@
     "window, notification and chart surfaces"
   ],
   "intentional_extensions": [
-    "Tag and Step",
+    "Tag and VerificationStep",
     "LoadingContainer and button loading",
     "brand, glow and data gradients",
     "three size densities",
-    "indeterminate ToggleButton dash"
+    "indeterminate ToggleButton dash",
+    "RelationGraph single-root trees and native node cards"
   ],
   "limitations": [
     "Eremex uses its own controls and templates; TheOne preserves Avalonia native templates and behavior.",

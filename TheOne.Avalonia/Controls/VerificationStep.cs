@@ -15,30 +15,30 @@ using global::Avalonia.VisualTree;
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>A sequential form with virtualized headers and validation before every forward transition.</summary>
-public class Step : TemplatedControl
+public class VerificationStep : TemplatedControl
 {
-    public static readonly StyledProperty<IEnumerable<StepItem>?> ItemsSourceProperty = AvaloniaProperty.Register<Step, IEnumerable<StepItem>?>(nameof(ItemsSource));
-    public static readonly StyledProperty<IDataTemplate?> ContentTemplateProperty = AvaloniaProperty.Register<Step, IDataTemplate?>(nameof(ContentTemplate));
-    public static readonly StyledProperty<double> HeaderMaxWidthProperty = AvaloniaProperty.Register<Step, double>(nameof(HeaderMaxWidth), 960, validate: value => double.IsFinite(value) && value > 0);
-    public static readonly StyledProperty<HorizontalAlignment> HeaderHorizontalAlignmentProperty = AvaloniaProperty.Register<Step, HorizontalAlignment>(nameof(HeaderHorizontalAlignment), HorizontalAlignment.Center, validate: Enum.IsDefined);
-    public static readonly StyledProperty<string> NextTextProperty = AvaloniaProperty.Register<Step, string>(nameof(NextText), "下一步");
-    public static readonly StyledProperty<string> CompleteTextProperty = AvaloniaProperty.Register<Step, string>(nameof(CompleteText), "完成");
-    public static readonly StyledProperty<string> PreviousTextProperty = AvaloniaProperty.Register<Step, string>(nameof(PreviousText), "上一步");
-    public static readonly DirectProperty<Step, int> SelectedIndexProperty = AvaloniaProperty.RegisterDirect<Step, int>(nameof(SelectedIndex), control => control.SelectedIndex);
-    public static readonly DirectProperty<Step, IDataTemplate?> CurrentContentTemplateProperty = AvaloniaProperty.RegisterDirect<Step, IDataTemplate?>(nameof(CurrentContentTemplate), control => control.CurrentContentTemplate);
-    public static readonly DirectProperty<Step, object?> CurrentContentProperty = AvaloniaProperty.RegisterDirect<Step, object?>(nameof(CurrentContent), control => control.CurrentContent);
-    public static readonly DirectProperty<Step, bool> IsBusyProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(IsBusy), control => control.IsBusy);
-    public static readonly DirectProperty<Step, bool> IsCompletedProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(IsCompleted), control => control.IsCompleted);
-    public static readonly DirectProperty<Step, bool> CanGoBackProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(CanGoBack), control => control.CanGoBack);
-    public static readonly DirectProperty<Step, bool> CanGoNextProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(CanGoNext), control => control.CanGoNext);
-    public static readonly DirectProperty<Step, string> ForwardTextProperty = AvaloniaProperty.RegisterDirect<Step, string>(nameof(ForwardText), control => control.ForwardText);
-    public static readonly DirectProperty<Step, IReadOnlyList<StepValidationError>> ValidationErrorsProperty = AvaloniaProperty.RegisterDirect<Step, IReadOnlyList<StepValidationError>>(nameof(ValidationErrors), control => control.ValidationErrors);
-    public static readonly DirectProperty<Step, bool> HasErrorsProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(HasErrors), control => control.HasErrors);
-    public static readonly StyledProperty<ICommand?> CompletedCommandProperty = AvaloniaProperty.Register<Step, ICommand?>(nameof(CompletedCommand));
-    public static readonly StyledProperty<object?> CompletedCommandParameterProperty = AvaloniaProperty.Register<Step, object?>(nameof(CompletedCommandParameter));
-    public static readonly DirectProperty<Step, IReadOnlyList<StepValidationError>> UnmappedErrorsProperty = AvaloniaProperty.RegisterDirect<Step, IReadOnlyList<StepValidationError>>(nameof(UnmappedErrors), control => control.UnmappedErrors);
-    public static readonly DirectProperty<Step, bool> HasUnmappedErrorsProperty = AvaloniaProperty.RegisterDirect<Step, bool>(nameof(HasUnmappedErrors), control => control.HasUnmappedErrors);
-    public static readonly RoutedEvent<RoutedEventArgs> ValidationFailedEvent = RoutedEvent.Register<Step, RoutedEventArgs>(nameof(ValidationFailed), RoutingStrategies.Bubble);
+    public static readonly StyledProperty<IEnumerable<StepItem>?> ItemsSourceProperty = AvaloniaProperty.Register<VerificationStep, IEnumerable<StepItem>?>(nameof(ItemsSource));
+    public static readonly StyledProperty<IDataTemplate?> ContentTemplateProperty = AvaloniaProperty.Register<VerificationStep, IDataTemplate?>(nameof(ContentTemplate));
+    public static readonly StyledProperty<double> HeaderMaxWidthProperty = AvaloniaProperty.Register<VerificationStep, double>(nameof(HeaderMaxWidth), 960, validate: value => double.IsFinite(value) && value > 0);
+    public static readonly StyledProperty<HorizontalAlignment> HeaderHorizontalAlignmentProperty = AvaloniaProperty.Register<VerificationStep, HorizontalAlignment>(nameof(HeaderHorizontalAlignment), HorizontalAlignment.Center, validate: Enum.IsDefined);
+    public static readonly StyledProperty<string> NextTextProperty = AvaloniaProperty.Register<VerificationStep, string>(nameof(NextText), "下一步");
+    public static readonly StyledProperty<string> CompleteTextProperty = AvaloniaProperty.Register<VerificationStep, string>(nameof(CompleteText), "完成");
+    public static readonly StyledProperty<string> PreviousTextProperty = AvaloniaProperty.Register<VerificationStep, string>(nameof(PreviousText), "上一步");
+    public static readonly DirectProperty<VerificationStep, int> SelectedIndexProperty = AvaloniaProperty.RegisterDirect<VerificationStep, int>(nameof(SelectedIndex), control => control.SelectedIndex);
+    public static readonly DirectProperty<VerificationStep, IDataTemplate?> CurrentContentTemplateProperty = AvaloniaProperty.RegisterDirect<VerificationStep, IDataTemplate?>(nameof(CurrentContentTemplate), control => control.CurrentContentTemplate);
+    public static readonly DirectProperty<VerificationStep, object?> CurrentContentProperty = AvaloniaProperty.RegisterDirect<VerificationStep, object?>(nameof(CurrentContent), control => control.CurrentContent);
+    public static readonly DirectProperty<VerificationStep, bool> IsBusyProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(IsBusy), control => control.IsBusy);
+    public static readonly DirectProperty<VerificationStep, bool> IsCompletedProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(IsCompleted), control => control.IsCompleted);
+    public static readonly DirectProperty<VerificationStep, bool> CanGoBackProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(CanGoBack), control => control.CanGoBack);
+    public static readonly DirectProperty<VerificationStep, bool> CanGoNextProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(CanGoNext), control => control.CanGoNext);
+    public static readonly DirectProperty<VerificationStep, string> ForwardTextProperty = AvaloniaProperty.RegisterDirect<VerificationStep, string>(nameof(ForwardText), control => control.ForwardText);
+    public static readonly DirectProperty<VerificationStep, IReadOnlyList<StepValidationError>> ValidationErrorsProperty = AvaloniaProperty.RegisterDirect<VerificationStep, IReadOnlyList<StepValidationError>>(nameof(ValidationErrors), control => control.ValidationErrors);
+    public static readonly DirectProperty<VerificationStep, bool> HasErrorsProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(HasErrors), control => control.HasErrors);
+    public static readonly StyledProperty<ICommand?> CompletedCommandProperty = AvaloniaProperty.Register<VerificationStep, ICommand?>(nameof(CompletedCommand));
+    public static readonly StyledProperty<object?> CompletedCommandParameterProperty = AvaloniaProperty.Register<VerificationStep, object?>(nameof(CompletedCommandParameter));
+    public static readonly DirectProperty<VerificationStep, IReadOnlyList<StepValidationError>> UnmappedErrorsProperty = AvaloniaProperty.RegisterDirect<VerificationStep, IReadOnlyList<StepValidationError>>(nameof(UnmappedErrors), control => control.UnmappedErrors);
+    public static readonly DirectProperty<VerificationStep, bool> HasUnmappedErrorsProperty = AvaloniaProperty.RegisterDirect<VerificationStep, bool>(nameof(HasUnmappedErrors), control => control.HasUnmappedErrors);
+    public static readonly RoutedEvent<RoutedEventArgs> ValidationFailedEvent = RoutedEvent.Register<VerificationStep, RoutedEventArgs>(nameof(ValidationFailed), RoutingStrategies.Bubble);
     private readonly List<StepItem> _items = [];
     private readonly HashSet<StepItem> _validated = [];
     private readonly List<(INotifyPropertyChanged Source, PropertyChangedEventHandler Handler)> _subscriptions = [];
@@ -80,7 +80,7 @@ public class Step : TemplatedControl
     public IReadOnlyList<StepValidationError> UnmappedErrors => _unmappedErrors;
     public bool HasUnmappedErrors => _hasUnmappedErrors;
     public event EventHandler<RoutedEventArgs>? ValidationFailed { add => AddHandler(ValidationFailedEvent, value); remove => RemoveHandler(ValidationFailedEvent, value); }
-    protected override Type StyleKeyOverride => typeof(Step);
+    protected override Type StyleKeyOverride => typeof(VerificationStep);
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs args)
     {
@@ -179,7 +179,7 @@ public class Step : TemplatedControl
         _items.Clear();
         if (ItemsSource is { } source) _items.AddRange(source);
         if (_items.Any(item => item is null) || _items.Distinct().Count() != _items.Count)
-            throw new ArgumentException("Step items must be non-null and have distinct identities.", nameof(ItemsSource));
+            throw new ArgumentException("VerificationStep items must be non-null and have distinct identities.", nameof(ItemsSource));
         _validated.Clear(); SetAndRaise(IsCompletedProperty, ref _completed, false);
         SetErrors([]); Select(_items.Count == 0 ? -1 : 0);
         if (this.IsAttachedToVisualTree()) Subscribe();
@@ -291,7 +291,7 @@ public class Step : TemplatedControl
     }
     internal void RefreshFieldErrors() => SetErrors(_errors);
     private IEnumerable<Control> Inputs() => _contentPresenter?.GetVisualDescendants().OfType<Control>()
-        .Where(control => ReferenceEquals(control.GetVisualAncestors().OfType<Step>().FirstOrDefault(), this)) ?? [];
+        .Where(control => ReferenceEquals(control.GetVisualAncestors().OfType<VerificationStep>().FirstOrDefault(), this)) ?? [];
     private void CancelValidation()
     {
         _generation++; var validation = _validation; _validation = null;

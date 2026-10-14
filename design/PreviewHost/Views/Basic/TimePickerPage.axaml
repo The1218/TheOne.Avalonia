@@ -1,13 +1,45 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TimePickerPage" x:DataType="local:TimePickerPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="TimePicker" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><TimePicker Name="ControlSample" SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="24HourClock" UseSeconds="True" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="12HourClock" UseSeconds="False" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time}" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- <TextBlock Text="外观样式" FontWeight="SemiBold" />
-<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><TimePicker Name="FilledTimeSample" Classes="filled" SelectedTime="{Binding Time, Mode=TwoWay}" /></StackPanel>
-</StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.TimePickerPage"
+    x:DataType="local:TimePickerPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="TimePicker" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <TimePicker
+                    ClockIdentifier="24HourClock"
+                    Margin="0,0,12,12"
+                    Name="ControlSample"
+                    SelectedTime="{Binding Time, Mode=TwoWay}"
+                    UseSeconds="True" />
+                <TimePicker
+                    ClockIdentifier="12HourClock"
+                    Margin="0,0,12,12"
+                    SelectedTime="{Binding Time, Mode=TwoWay}"
+                    UseSeconds="False" />
+                <TimePicker
+                    IsEnabled="False"
+                    Margin="0,0,12,12"
+                    SelectedTime="{Binding Time}" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock FontWeight="SemiBold" Text="外观样式" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+            <TimePicker
+                Classes="filled"
+                Name="FilledTimeSample"
+                SelectedTime="{Binding Time, Mode=TwoWay}" />
+        </StackPanel>
+    </StackPanel>
 </local:BasicControlPage>

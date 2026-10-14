@@ -1,11 +1,42 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.CheckBoxPage" x:DataType="local:CheckBoxPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="CheckBox" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="未选中 / 选中 / 不确定 / 禁用" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><CheckBox Name="ControlSample" Content="点击选择" IsChecked="{Binding Checked, Mode=TwoWay}" Margin="0,0,12,12" /><CheckBox Content="已选中" IsChecked="True" Margin="0,0,12,12" /><CheckBox Content="不确定" IsThreeState="True" IsChecked="{x:Null}" Margin="0,0,12,12" /><CheckBox Content="禁用" IsChecked="True" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.CheckBoxPage"
+    x:DataType="local:CheckBoxPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="CheckBox" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="未选中 / 选中 / 不确定 / 禁用"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <CheckBox
+                    Content="点击选择"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    Margin="0,0,12,12"
+                    Name="ControlSample" />
+                <CheckBox
+                    Content="已选中"
+                    IsChecked="True"
+                    Margin="0,0,12,12" />
+                <CheckBox
+                    Content="不确定"
+                    IsChecked="{x:Null}"
+                    IsThreeState="True"
+                    Margin="0,0,12,12" />
+                <CheckBox
+                    Content="禁用"
+                    IsChecked="True"
+                    IsEnabled="False"
+                    Margin="0,0,12,12" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 </local:BasicControlPage>

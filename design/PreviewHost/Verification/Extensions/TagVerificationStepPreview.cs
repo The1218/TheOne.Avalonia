@@ -16,7 +16,7 @@ using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
 
-internal static partial class TagStepPreview
+internal static partial class TagVerificationStepPreview
 {
     private static void Flush() { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); Dispatcher.UIThread.RunJobs(); }
     private static T Part<T>(Control owner, string name) where T : Control => owner.GetVisualDescendants().OfType<T>().Single(control => control.Name == name);
@@ -28,10 +28,10 @@ internal static partial class TagStepPreview
             var frame = new DispatcherFrame(); var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
             timer.Tick += (_, _) => { timer.Stop(); frame.Continue = false; }; timer.Start(); Dispatcher.UIThread.PushFrame(frame); Flush();
         }
-        if (!task.IsCompleted) throw new InvalidOperationException("Step operation did not finish.");
+        if (!task.IsCompleted) throw new InvalidOperationException("VerificationStep operation did not finish.");
         task.GetAwaiter().GetResult(); Flush();
     }
-    private static bool Next(Step step) { var task = step.GoNextAsync(); Wait(task); return task.Result; }
+    private static bool Next(VerificationStep step) { var task = step.GoNextAsync(); Wait(task); return task.Result; }
     private static void Click(Control control)
     {
         var top = TopLevel.GetTopLevel(control)!; var point = control.TranslatePoint(new Point(control.Bounds.Width / 2, control.Bounds.Height / 2), top)!.Value;
@@ -88,8 +88,8 @@ internal static partial class TagStepPreview
     }
     private static void VerifyStep(ThemeVariant theme, ControlSize size, Action<bool, string> check)
     {
-        var view = new StepDemoView(); var window = Open(view, theme, size); var step = view.Sample; var model = view.Model;
-        var prefix = $"Step/{theme.Key}/{size}";
+        var view = new VerificationStepDemoView(); var window = Open(view, theme, size); var step = view.Sample; var model = view.Model;
+        var prefix = $"VerificationStep/{theme.Key}/{size}";
         VerifyHeaderLayout(view, window, prefix, check);
         check(step.SelectedIndex == 0 && step.CurrentContent == model.Account && step.GetVisualDescendants().OfType<TextBox>().Count() == 3,
             $"{prefix}: compiled templates create only current step inputs");
@@ -147,7 +147,7 @@ internal static partial class TagStepPreview
             $"{prefix}: replacing ItemsSource resets workflow and templates without retaining old errors");
         window.Close(); Flush();
     }
-    private static void VerifyHeaderLayout(StepDemoView view, Window window, string prefix, Action<bool, string> check)
+    private static void VerifyHeaderLayout(VerificationStepDemoView view, Window window, string prefix, Action<bool, string> check)
     {
         var step = view.Sample; var headers = Part<ListBox>(step, "PART_Steps");
         double Center(Control control) => control.TranslatePoint(new Point(control.Bounds.Width / 2, 0), step)!.Value.X;
@@ -199,42 +199,42 @@ internal static partial class TagStepPreview
     {
         var deferred = new DeferredValidator(); var model = new StepNoteModel();
         var items = new[] { new StepItem { Title = "Async", Content = model, Validator = deferred }, new StepItem { Title = "Next" } };
-        var step = new Step { ItemsSource = items }; var window = Open(step, ThemeVariant.Light, ControlSize.Normal);
+        var step = new VerificationStep { ItemsSource = items }; var window = Open(step, ThemeVariant.Light, ControlSize.Normal);
         var pending = step.GoNextAsync(); Flush(); var repeated = step.GoNextAsync(); Wait(repeated);
         check(step.IsBusy && !repeated.Result && deferred.Calls == 1 && !Part<Button>(step, "PART_NextButton").IsEffectivelyEnabled,
-            "Step/async: repeated clicks share no second validation or forward transition");
+            "VerificationStep/async: repeated clicks share no second validation or forward transition");
         model.Note = "changed while waiting"; Wait(pending); deferred.Completion.SetResult([]); Flush();
         check(!pending.Result && step.SelectedIndex == 0 && !step.IsBusy && !step.IsCompleted,
-            "Step/async: model edits invalidate a late successful validation even when validator ignores cancellation");
+            "VerificationStep/async: model edits invalidate a late successful validation even when validator ignores cancellation");
         deferred = new DeferredValidator(); items[0].Validator = deferred; Flush(); pending = step.GoNextAsync(); window.Close(); Flush();
         Wait(pending); deferred.Completion.SetResult([]); Flush();
-        check(!pending.Result && step.SelectedIndex == 0 && !step.IsBusy, "Step/async: detached controls cannot advance from delayed validation callbacks");
-        var failing = new FailingValidator(); step = new Step { ItemsSource = new[] { new StepItem { Validator = failing } } }; window = Open(step, ThemeVariant.Light, ControlSize.Normal);
-        check(!Next(step) && step.HasErrors && !step.IsCompleted && !step.IsBusy, "Step/async: service validation exceptions retain current step and allow retry");
+        check(!pending.Result && step.SelectedIndex == 0 && !step.IsBusy, "VerificationStep/async: detached controls cannot advance from delayed validation callbacks");
+        var failing = new FailingValidator(); step = new VerificationStep { ItemsSource = new[] { new StepItem { Validator = failing } } }; window = Open(step, ThemeVariant.Light, ControlSize.Normal);
+        check(!Next(step) && step.HasErrors && !step.IsCompleted && !step.IsBusy, "VerificationStep/async: service validation exceptions retain current step and allow retry");
         window.Close(); Flush();
     }
     private static void VerifyCommands(Action<bool, string> check)
     {
         var command = new CompletionCommand(); var parameter = new object();
-        var step = new Step { ItemsSource = new[] { new StepItem { Title = "Finish" } }, CompletedCommand = command, CompletedCommandParameter = parameter };
+        var step = new VerificationStep { ItemsSource = new[] { new StepItem { Title = "Finish" } }, CompletedCommand = command, CompletedCommandParameter = parameter };
         var window = Open(step, ThemeVariant.Light, ControlSize.Normal);
-        check(command.SubscriberCount == 1, "Step/command: attachment observes command availability once");
-        check(!step.CanGoNext && !Next(step) && !step.IsCompleted && command.Calls == 0, "Step/command: CanExecute=false blocks final completion");
+        check(command.SubscriberCount == 1, "VerificationStep/command: attachment observes command availability once");
+        check(!step.CanGoNext && !Next(step) && !step.IsCompleted && command.Calls == 0, "VerificationStep/command: CanExecute=false blocks final completion");
         command.Enabled = true; command.Refresh(); Flush();
         Click(Part<Button>(step, "PART_NextButton"));
         check(step.IsCompleted && command.Calls == 1 && ReferenceEquals(command.Parameter, parameter) && Next(step) && command.Calls == 1,
-            "Step/command: real completion click passes the command parameter exactly once");
+            "VerificationStep/command: real completion click passes the command parameter exactly once");
         window.Close(); Flush();
-        check(command.SubscriberCount == 0, "Step/command: detached steps release the command availability subscription");
+        check(command.SubscriberCount == 0, "VerificationStep/command: detached steps release the command availability subscription");
         var deferred = new DeferredValidator(); command = new CompletionCommand { Enabled = true };
-        step = new Step { ItemsSource = new[] { new StepItem { Validator = deferred } }, CompletedCommand = command };
+        step = new VerificationStep { ItemsSource = new[] { new StepItem { Validator = deferred } }, CompletedCommand = command };
         window = Open(step, ThemeVariant.Light, ControlSize.Normal); var pending = step.GoNextAsync(); Flush();
-        check(!Next(step) && command.Calls == 0, "Step/command: repeated final clicks cannot execute the command during validation");
+        check(!Next(step) && command.Calls == 0, "VerificationStep/command: repeated final clicks cannot execute the command during validation");
         command.Enabled = false; command.Refresh(); deferred.Completion.SetResult([]); Wait(pending);
-        check(!pending.Result && !step.IsCompleted && command.Calls == 0, "Step/command: CanExecute is rechecked after asynchronous validation");
+        check(!pending.Result && !step.IsCompleted && command.Calls == 0, "VerificationStep/command: CanExecute is rechecked after asynchronous validation");
         deferred = new DeferredValidator(); step.ItemsSource = new[] { new StepItem { Validator = deferred } }; command.Enabled = true; command.Refresh();
         pending = step.GoNextAsync(); window.Close(); Wait(pending); deferred.Completion.SetResult([]); Flush();
-        check(!pending.Result && command.Calls == 0 && !step.IsCompleted, "Step/command: detached final validation cannot execute a late completion command");
+        check(!pending.Result && command.Calls == 0 && !step.IsCompleted, "VerificationStep/command: detached final validation cannot execute a late completion command");
     }
     private sealed class CompletionCommand : ICommand
     {
@@ -249,47 +249,47 @@ internal static partial class TagStepPreview
     }
     private static void VerifyVirtualization(Action<bool, string> check)
     {
-        var view = new StepDemoView(); view.Model.LoadThousand(); view.Model.HeaderAlignment = HorizontalAlignment.Stretch; var window = Open(view, ThemeVariant.Dark, ControlSize.Normal);
+        var view = new VerificationStepDemoView(); view.Model.LoadThousand(); view.Model.HeaderAlignment = HorizontalAlignment.Stretch; var window = Open(view, ThemeVariant.Dark, ControlSize.Normal);
         var step = view.Sample; var headers = Part<ListBox>(step, "PART_Steps");
         check(headers.GetRealizedContainers().Count() is > 0 and < 20 && step.GetVisualDescendants().OfType<TextBox>().Count() == 1,
-            "Step/1000: bounded horizontal headers realize fewer than 20 containers and one content view");
+            "VerificationStep/1000: bounded horizontal headers realize fewer than 20 containers and one content view");
         var jump = step.GoToAsync(999); Wait(jump);
-        check(!jump.Result && step.SelectedIndex == 0, "Step/1000: far navigation cannot bypass unvalidated intermediate steps");
+        check(!jump.Result && step.SelectedIndex == 0, "VerificationStep/1000: far navigation cannot bypass unvalidated intermediate steps");
         for (var index = 0; index < 999; index++)
-            if (!Next(step)) throw new InvalidOperationException($"Step {index} should validate.");
+            if (!Next(step)) throw new InvalidOperationException($"VerificationStep {index} should validate.");
         Flush();
         check(step.SelectedIndex == 999 && headers.ContainerFromIndex(999) is not null && headers.ContainerFromIndex(0) is null && headers.GetRealizedContainers().Count() < 20,
-            "Step/1000: sequential validation reaches far item while actual header containers recycle");
+            "VerificationStep/1000: sequential validation reaches far item while actual header containers recycle");
         view.Model.HeaderAlignment = HorizontalAlignment.Center; Flush();
         check(step.SelectedIndex == 999 && headers.ContainerFromIndex(999) is not null && headers.GetRealizedContainers().Count() < 20,
-            "Step/1000: switching to centered layout retains the far selected step and bounded realization");
+            "VerificationStep/1000: switching to centered layout retains the far selected step and bounded realization");
         view.Model.HeaderAlignment = HorizontalAlignment.Stretch; window.Width = 660; Flush();
         check(step.SelectedIndex == 999 && headers.ContainerFromIndex(999) is not null && headers.GetRealizedContainers().Count() < 20,
-            "Step/1000: resizing a stretched header retains the far selected step and bounded realization");
+            "VerificationStep/1000: resizing a stretched header retains the far selected step and bounded realization");
         check(view.Model.Steps[0].State == StepState.Success && view.Model.Steps[998].State == StepState.Success && view.Model.Steps[999].State == StepState.Current,
-            "Step/1000: success and current states belong to independent models after recycling");
+            "VerificationStep/1000: success and current states belong to independent models after recycling");
         headers.ContainerFromIndex(999)!.Focus(); window.KeyPress(Key.Left, RawInputModifiers.None, PhysicalKey.ArrowLeft, null); window.KeyRelease(Key.Left, RawInputModifiers.None, PhysicalKey.ArrowLeft, null); Flush();
-        check(step.SelectedIndex == 998 && headers.GetRealizedContainers().Count() < 20, "Step/1000: real keyboard navigation works on remotely realized headers");
+        check(step.SelectedIndex == 998 && headers.GetRealizedContainers().Count() < 20, "VerificationStep/1000: real keyboard navigation works on remotely realized headers");
         view.Model.Steps.RemoveAt(0); Flush();
         check(step.SelectedIndex == 0 && headers.ItemCount == 999 && headers.GetRealizedContainers().Count() < 20,
-            "Step/1000: observable collection edits reset selection and preserve bounded realization"); window.Close(); Flush();
-        var unbounded = new Step { ItemsSource = Enumerable.Range(1, 1000).Select(index => new StepItem { Title = $"Step {index}" }).ToArray() };
+            "VerificationStep/1000: observable collection edits reset selection and preserve bounded realization"); window.Close(); Flush();
+        var unbounded = new VerificationStep { ItemsSource = Enumerable.Range(1, 1000).Select(index => new StepItem { Title = $"VerificationStep {index}" }).ToArray() };
         window = Open(new StackPanel { Orientation = global::Avalonia.Layout.Orientation.Horizontal, Children = { unbounded } }, ThemeVariant.Light, ControlSize.Normal);
         var finite = Part<ListBox>(unbounded, "PART_Steps");
         check(finite.Bounds.Width <= unbounded.HeaderMaxWidth && finite.GetRealizedContainers().Count() is > 0 and < 20,
-            "Step/1000: default header viewport stays finite even inside a horizontally unbounded parent"); window.Close(); Flush();
+            "VerificationStep/1000: default header viewport stays finite even inside a horizontally unbounded parent"); window.Close(); Flush();
     }
     private static void VerifyErrorVirtualization(Action<bool, string> check)
     {
-        var step = new Step { ItemsSource = new[] { new StepItem { Title = "Many errors", Validator = new ManyErrorsValidator() } } };
+        var step = new VerificationStep { ItemsSource = new[] { new StepItem { Title = "Many errors", Validator = new ManyErrorsValidator() } } };
         var window = Open(step, ThemeVariant.Light, ControlSize.Normal);
-        check(!Next(step) && step.ValidationErrors.Count == 1000, "Step/errors: all 1,000 validation results remain in the model");
+        check(!Next(step) && step.ValidationErrors.Count == 1000, "VerificationStep/errors: all 1,000 validation results remain in the model");
         var errors = Part<ListBox>(step, "PART_ValidationErrors");
         check(errors.GetRealizedContainers().Count() is > 0 and < 20 && errors.Bounds.Height <= 120,
-            "Step/errors: bounded error viewport realizes fewer than 20 native containers");
+            "VerificationStep/errors: bounded error viewport realizes fewer than 20 native containers");
         errors.ScrollIntoView(999); Flush();
         check(errors.ContainerFromIndex(999) is not null && errors.ContainerFromIndex(0) is null && errors.GetRealizedContainers().Count() < 20,
-            "Step/errors: far error navigation recycles actual containers"); window.Close(); Flush();
+            "VerificationStep/errors: far error navigation recycles actual containers"); window.Close(); Flush();
     }
     private sealed class ManyErrorsValidator(string? memberName = null) : IStepValidator
     {
@@ -300,44 +300,44 @@ internal static partial class TagStepPreview
     {
         var alpha = new TextBox { Name = "UnrelatedA" }; var beta = new TextBox { Name = "UnrelatedB" };
         var first = new StepField { MemberName = "Alpha", Content = alpha }; var second = new StepField { MemberName = "Beta", Content = beta };
-        var step = new Step { ItemsSource = new[] { new StepItem { Content = new StackPanel { Children = { first, second } } } } };
+        var step = new VerificationStep { ItemsSource = new[] { new StepItem { Content = new StackPanel { Children = { first, second } } } } };
         var window = Open(step, ThemeVariant.Dark, ControlSize.Normal);
         DataValidationErrors.SetErrors(alpha, new object[] { "Same conversion message" });
         DataValidationErrors.SetErrors(beta, new object[] { "Same conversion message" });
         check(!Next(step) && first.Errors.Count == 1 && second.Errors.Count == 1 && !step.HasUnmappedErrors,
-            "Step/fields: identical native messages map independently by explicit member, regardless of input Name");
-        check(DataValidationErrors.GetHasErrors(alpha) && DataValidationErrors.GetHasErrors(beta), "Step/fields: step validation preserves native binding errors");
+            "VerificationStep/fields: identical native messages map independently by explicit member, regardless of input Name");
+        check(DataValidationErrors.GetHasErrors(alpha) && DataValidationErrors.GetHasErrors(beta), "VerificationStep/fields: step validation preserves native binding errors");
         DataValidationErrors.SetErrors(alpha, null); DataValidationErrors.SetErrors(beta, null);
-        check(Next(step) && !first.HasErrors && !second.HasErrors, "Step/fields: corrected inputs clear their inline errors and permit retry");
+        check(Next(step) && !first.HasErrors && !second.HasErrors, "VerificationStep/fields: corrected inputs clear their inline errors and permit retry");
         window.Close(); Flush();
         var field = new StepField { MemberName = "Alpha", Content = new TextBox() };
-        step = new Step { ItemsSource = new[] { new StepItem { Content = field, Validator = new ManyErrorsValidator("Alpha") } } };
+        step = new VerificationStep { ItemsSource = new[] { new StepItem { Content = field, Validator = new ManyErrorsValidator("Alpha") } } };
         window = Open(step, ThemeVariant.Light, ControlSize.Normal);
-        check(!Next(step) && field.Errors.Count == 1000 && !step.HasUnmappedErrors, "Step/fields: all 1,000 member errors are routed below the matching input");
+        check(!Next(step) && field.Errors.Count == 1000 && !step.HasUnmappedErrors, "VerificationStep/fields: all 1,000 member errors are routed below the matching input");
         Flush(); var list = Part<ListBox>(field, "PART_FieldErrors");
-        check(list.Bounds.Height <= 96 && list.GetRealizedContainers().Count() is > 0 and < 20, "Step/fields: inline error viewport also bounds actual native container realization");
+        check(list.Bounds.Height <= 96 && list.GetRealizedContainers().Count() is > 0 and < 20, "VerificationStep/fields: inline error viewport also bounds actual native container realization");
         list.ScrollIntoView(999); Flush();
         check(list.ContainerFromIndex(999) is not null && list.ContainerFromIndex(0) is null && list.GetRealizedContainers().Count() < 20,
-            "Step/fields: remote inline messages recycle containers");
+            "VerificationStep/fields: remote inline messages recycle containers");
         window.Close(); Flush();
     }
     private static void VerifyRules(Action<bool, string> check)
     {
         var model = new StepAccountModel { Name = "有效姓名" };
         var scope = StepValidation.For(model, nameof(StepAccountModel.Name)).ValidateAsync(default); Wait(scope);
-        check(scope.Result.Count == 0, "Step/rules: explicit member scope validates only attributes belonging to that step");
+        check(scope.Result.Count == 0, "VerificationStep/rules: explicit member scope validates only attributes belonging to that step");
         var cross = StepValidation.For(new CrossFieldModel()).ValidateAsync(default); Wait(cross);
-        check(cross.Result.Single().MemberName == nameof(CrossFieldModel.Value), "Step/rules: IValidatableObject supplies cross-field errors without dynamic bindings");
+        check(cross.Result.Single().MemberName == nameof(CrossFieldModel.Value), "VerificationStep/rules: IValidatableObject supplies cross-field errors without dynamic bindings");
         var bound = new StepAccountModel { Name = "Bound model" };
         var content = new TextBox { DataContext = bound };
-        var step = new Step { ItemsSource = new[] { new StepItem { Content = content, Validator = StepValidation.For(bound, nameof(StepAccountModel.Name)) },
+        var step = new VerificationStep { ItemsSource = new[] { new StepItem { Content = content, Validator = StepValidation.For(bound, nameof(StepAccountModel.Name)) },
             new StepItem { Content = bound, Validator = StepValidation.For(bound, nameof(StepAccountModel.Email)) } } };
         var window = Open(step, ThemeVariant.Light, ControlSize.Normal);
-        check(Next(step) && step.SelectedIndex == 1, "Step/rules: caller-owned control content uses its explicitly registered bound model");
+        check(Next(step) && step.SelectedIndex == 1, "VerificationStep/rules: caller-owned control content uses its explicitly registered bound model");
         bound.Email = "new@example.com"; Flush();
-        check(step.SelectedIndex == 1, "Step/rules: unrelated shared-model members do not invalidate earlier scoped steps");
+        check(step.SelectedIndex == 1, "VerificationStep/rules: unrelated shared-model members do not invalidate earlier scoped steps");
         bound.Name = ""; Flush();
-        check(step.SelectedIndex == 0 && !Next(step), "Step/rules: editing a registered model behind control content invalidates dependent steps");
+        check(step.SelectedIndex == 0 && !Next(step), "VerificationStep/rules: editing a registered model behind control content invalidates dependent steps");
         window.Close(); Flush();
     }
     public sealed class CrossFieldModel : IValidatableObject
@@ -377,12 +377,12 @@ internal static partial class TagStepPreview
             if (tags) Save(new TagDemoView(), "tag", 980, 760);
             if (steps)
             {
-                var view = new StepDemoView(); Save(view, "step", 980, 820);
-                var window = Open(view, theme, size); Next(view.Sample); SaveFrame(view, "step-errors");
+                var view = new VerificationStepDemoView(); Save(view, "verification-step", 980, 820);
+                var window = Open(view, theme, size); Next(view.Sample); SaveFrame(view, "verification-step-errors");
                 view.Model.Account.Name = "张三";
                 view.Model.Account.Email = view.Model.Account.ConfirmEmail = "one@example.com";
-                Flush(); Next(view.Sample); SaveFrame(view, "step-progress");
-                view.Model.HeaderAlignment = HorizontalAlignment.Stretch; Flush(); SaveFrame(view, "step-stretch"); window.Close(); Flush();
+                Flush(); Next(view.Sample); SaveFrame(view, "verification-step-progress");
+                view.Model.HeaderAlignment = HorizontalAlignment.Stretch; Flush(); SaveFrame(view, "verification-step-stretch"); window.Close(); Flush();
             }
             void Save(Control view, string stem, int width, int height)
             {

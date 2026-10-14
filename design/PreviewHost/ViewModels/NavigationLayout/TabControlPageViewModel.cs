@@ -1,15 +1,12 @@
-using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ReactiveUI;
 
 namespace TheOne.DesignPreview;
 
 public sealed class TabControlPageViewModel : BasicControlViewModel
 {
     private int _nextId = 1001;
-    public ObservableCollection<string> Tabs { get; } = new(Enumerable.Range(1, 1000).Select(index => $"工作区 {index:0000}"));
-    public ICommand AddTabCommand { get; }
-    public ICommand LastTabCommand { get; }
 
     public TabControlPageViewModel()
     {
@@ -25,4 +22,10 @@ public sealed class TabControlPageViewModel : BasicControlViewModel
             RequestScroll(SelectedIndex);
         });
     }
+
+    public ObservableCollection<string> Tabs { get; } =
+        new(Enumerable.Range(1, 1000).Select(index => $"工作区 {index:0000}"));
+
+    public ICommand AddTabCommand { get; }
+    public ICommand LastTabCommand { get; }
 }

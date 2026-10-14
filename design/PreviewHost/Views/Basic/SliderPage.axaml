@@ -1,13 +1,37 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.SliderPage" x:DataType="local:SliderPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="Slider" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="连续值 / 刻度吸附 / 禁用" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <Slider Name="ControlSample" Value="{Binding Value, Mode=TwoWay}" Minimum="0" Maximum="100" MaxWidth="420"/>
-    <Slider Value="{Binding Value, Mode=TwoWay}" TickFrequency="20" TickPlacement="BottomRight" IsSnapToTickEnabled="True" MaxWidth="420"/>
-    <Slider Value="64" IsEnabled="False" MaxWidth="420"/>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.SliderPage"
+    x:DataType="local:SliderPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="Slider" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="连续值 / 刻度吸附 / 禁用"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <Slider
+                MaxWidth="420"
+                Maximum="100"
+                Minimum="0"
+                Name="ControlSample"
+                Value="{Binding Value, Mode=TwoWay}" />
+            <Slider
+                IsSnapToTickEnabled="True"
+                MaxWidth="420"
+                TickFrequency="20"
+                TickPlacement="BottomRight"
+                Value="{Binding Value, Mode=TwoWay}" />
+            <Slider
+                IsEnabled="False"
+                MaxWidth="420"
+                Value="64" />
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 </local:BasicControlPage>

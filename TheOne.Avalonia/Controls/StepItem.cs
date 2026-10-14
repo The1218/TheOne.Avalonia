@@ -6,7 +6,7 @@ namespace TheOne.Avalonia.Controls;
 
 public enum StepState { Waiting, Current, Success, Error }
 
-/// <summary>Stable step identity; content is a model resolved lazily by the Step's data templates.</summary>
+/// <summary>Stable step identity; content is a model resolved lazily by the VerificationStep's data templates.</summary>
 public class StepItem : INotifyPropertyChanged
 {
     private string _title = "", _description = "";

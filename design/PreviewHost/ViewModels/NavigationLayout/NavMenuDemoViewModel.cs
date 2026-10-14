@@ -1,9 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Threading;
-using TheOne.Avalonia.Controls;
 using ReactiveUI;
 
 namespace TheOne.DesignPreview;
@@ -17,38 +13,11 @@ public enum NavMenuDemoAction
 }
 
 public sealed record NavMenuDemoRequest(NavMenuDemoAction Action, int[] Path);
+
 public sealed class NavMenuDemoViewModel : ReactiveObject
 {
-    public bool ShowFilter { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public string Search { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "";
-    public ICommand ToggleBranchCommand { get; }
-    public ICommand ToggleNestedBranchCommand { get; }
-    public ICommand ReverseSidebarCommand { get; }
-    public ICommand ClearSearchCommand { get; }
-    public ICommand SearchDeepCommand { get; }
-    public ICommand SearchAllChildrenCommand { get; }
-
     private int _reverseVersion;
-    public bool OpenOnHover { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public bool IsCollapsed { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public ObservableCollection<NavEntry> Roots { get; } = [];
-    public int Invocations { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public NavEntry? Selected { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public string Metrics { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "按视口创建容器";
-    public string InvocationStatus { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "点击菜单或使用 Enter 调用";
-    public decimal? EdgeWidth { get; set => this.RaiseAndSetIfChanged(ref field, value); } = 420;
-    public bool EdgeRight { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
-    public ICommand OpenCommand { get; }
-    public ICommand CloseCommand { get; }
-    public ICommand JumpRootCommand { get; }
-    public ICommand JumpChildCommand { get; }
-    public ICommand JumpDeepCommand { get; }
-    public ICommand CollapseCommand { get; }
-    public ICommand InvokeCommand { get; }
-    public ICommand EdgeCommand { get; }
 
-    public event EventHandler<NavMenuDemoRequest>? Requested;
-    private void Request(NavMenuDemoAction action, params int[] path) => Requested?.Invoke(this, new(action, path));
     public NavMenuDemoViewModel()
     {
         ToggleBranchCommand = ReactiveCommand.Create<object?>(_ => Roots[0].IsExpanded = !Roots[0].IsExpanded);
@@ -106,5 +75,90 @@ public sealed class NavMenuDemoViewModel : ReactiveObject
             Roots[0].Entries[1].Entries.Add(new NavEntry($"标签页面 {i + 1:0000}"));
         Roots[0].IsExpanded = true;
         Roots[0].Entries[8].IsEnabled = false;
+    }
+
+    public bool ShowFilter
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public string Search
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "";
+
+    public ICommand ToggleBranchCommand { get; }
+    public ICommand ToggleNestedBranchCommand { get; }
+    public ICommand ReverseSidebarCommand { get; }
+    public ICommand ClearSearchCommand { get; }
+    public ICommand SearchDeepCommand { get; }
+    public ICommand SearchAllChildrenCommand { get; }
+
+    public bool OpenOnHover
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public bool IsCollapsed
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public ObservableCollection<NavEntry> Roots { get; } = [];
+
+    public int Invocations
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public NavEntry? Selected
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public string Metrics
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "按视口创建容器";
+
+    public string InvocationStatus
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "点击菜单或使用 Enter 调用";
+
+    public decimal? EdgeWidth
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = 420;
+
+    public bool EdgeRight
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public ICommand OpenCommand { get; }
+    public ICommand CloseCommand { get; }
+    public ICommand JumpRootCommand { get; }
+    public ICommand JumpChildCommand { get; }
+    public ICommand JumpDeepCommand { get; }
+    public ICommand CollapseCommand { get; }
+    public ICommand InvokeCommand { get; }
+    public ICommand EdgeCommand { get; }
+
+    public event EventHandler<NavMenuDemoRequest>? Requested;
+
+    private void Request(NavMenuDemoAction action, params int[] path)
+    {
+        Requested?.Invoke(this, new NavMenuDemoRequest(action, path));
     }
 }

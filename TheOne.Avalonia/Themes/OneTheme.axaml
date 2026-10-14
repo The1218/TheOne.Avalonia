@@ -48,8 +48,11 @@
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/ThemeButton.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Chart.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/InfoCard.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/FlowStep.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/RelationGraph.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/GanttChart.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Tag.axaml" />
-        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Step.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/VerificationStep.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/OneDialogPresenter.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/OneWindow.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/LoginWindow.axaml" />

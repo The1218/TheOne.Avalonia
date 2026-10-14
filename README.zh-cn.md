@@ -5,7 +5,7 @@
 基于 Avalonia 官方控件的跨平台主题与控件库，内置明暗主题、三档尺寸、多种控件外观与渐变配色。PreviewHost 提供可交互的控件示例。
 
 - 为按钮、输入、选择、日期时间、列表、树、菜单和布局控件提供统一主题。
-- 提供 14 种图表，以及 NavMenu、InfoCard、Tag、Step、窗口与消息扩展。
+- 提供 14 种图表，以及 NavMenu、InfoCard、Tag、VerificationStep、窗口与消息扩展。
 - DataGrid 支持编译绑定、自动实体属性筛选、左右冻结列与底部数值统计。
 
 ## 环境与版本

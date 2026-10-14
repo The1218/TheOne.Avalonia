@@ -1,36 +1,79 @@
-<UserControl x:Class="TheOne.DesignPreview.LoadingContainerPage" x:DataType="local:LoadingContainerPageViewModel"
- xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview"
- xmlns:kinds="clr-namespace:Material.Icons;assembly=Material.Icons" xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
- xmlns:one="using:TheOne.Avalonia.Controls" xmlns:styling="using:TheOne.Avalonia.Styling" styling:Motion.Enabled="{Binding MotionEnabled}">
- <UserControl.DataTemplates>
-  <DataTemplate DataType="{x:Type kinds:MaterialIconKind}" x:DataType="kinds:MaterialIconKind"><material:MaterialIcon Kind="{Binding}" /></DataTemplate>
- </UserControl.DataTemplates>
- <StackPanel Spacing="18" MaxWidth="760">
-  <TextBlock Text="LoadingContainer · 内容加载" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="加载时保留内容布局并阻止操作；关闭动效后保留静态指示与状态文字。顶部工具栏可切换三种尺寸与主题。" TextWrapping="Wrap" />
-  <StackPanel Orientation="Horizontal" Spacing="16">
-   <CheckBox Name="LoadingToggle" Content="手动加载" IsChecked="{Binding IsLoading, Mode=TwoWay}" />
-   <CheckBox Name="MotionToggle" Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
-  </StackPanel>
-  <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-   <TextBlock Text="遮罩不透明度" VerticalAlignment="Center" />
-   <Slider Name="OverlayOpacitySlider" Grid.Column="1" Minimum="0" Maximum="1" Value="{Binding OverlayOpacity, Mode=TwoWay}" />
-   <TextBlock Grid.Column="2" Text="{Binding OverlayOpacity, StringFormat={}{0:P0}}" VerticalAlignment="Center" />
-  </Grid>
-  <StackPanel Orientation="Horizontal" Spacing="16">
-   <CheckBox Content="自定义图标" IsChecked="{Binding UseCustomIcon, Mode=TwoWay}" />
-   <CheckBox Content="Material 图标" IsChecked="{Binding UseMaterialIcon, Mode=TwoWay}" IsEnabled="{Binding UseCustomIcon}" />
-  </StackPanel>
-  <TextBox PlaceholderText="加载提示文字" Text="{Binding LoadingText, Mode=TwoWay}" />
-  <Button Name="LoadAction" Content="模拟三秒加载" Classes="primary" Command="{Binding LoadCommand}" one:ButtonLoading.IsLoading="{Binding IsLoading}" />
-  <one:LoadingContainer Name="LoadingSample" IsLoading="{Binding IsLoading}" LoadingText="{Binding LoadingText}" LoadingIcon="{Binding LoadingIcon}" OverlayOpacity="{Binding OverlayOpacity}" Height="240">
-   <one:InfoCard Header="工作区设置" Footer="加载完成后可继续编辑，输入内容保留。">
-    <StackPanel Spacing="12">
-     <TextBox Name="ContentInput" Text="{Binding Text, Mode=TwoWay}" />
-     <Button Name="ContentAction" Content="内容区操作" Command="{Binding InvokeCommand}" />
+<UserControl
+    styling:Motion.Enabled="{Binding MotionEnabled}"
+    x:Class="TheOne.DesignPreview.LoadingContainerPage"
+    x:DataType="local:LoadingContainerPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:kinds="clr-namespace:Material.Icons;assembly=Material.Icons"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="{x:Type kinds:MaterialIconKind}" x:DataType="kinds:MaterialIconKind">
+            <material:MaterialIcon Kind="{Binding}" />
+        </DataTemplate>
+    </UserControl.DataTemplates>
+    <StackPanel MaxWidth="760" Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="LoadingContainer · 内容加载" />
+        <TextBlock Text="加载时保留内容布局并阻止操作；关闭动效后保留静态指示与状态文字。顶部工具栏可切换三种尺寸与主题。" TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <CheckBox
+                Content="手动加载"
+                IsChecked="{Binding IsLoading, Mode=TwoWay}"
+                Name="LoadingToggle" />
+            <CheckBox
+                Content="启用动效"
+                IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                Name="MotionToggle" />
+        </StackPanel>
+        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+            <TextBlock Text="遮罩不透明度" VerticalAlignment="Center" />
+            <Slider
+                Grid.Column="1"
+                Maximum="1"
+                Minimum="0"
+                Name="OverlayOpacitySlider"
+                Value="{Binding OverlayOpacity, Mode=TwoWay}" />
+            <TextBlock
+                Grid.Column="2"
+                Text="{Binding OverlayOpacity, StringFormat={}{0:P0}}"
+                VerticalAlignment="Center" />
+        </Grid>
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <CheckBox Content="自定义图标" IsChecked="{Binding UseCustomIcon, Mode=TwoWay}" />
+            <CheckBox
+                Content="Material 图标"
+                IsChecked="{Binding UseMaterialIcon, Mode=TwoWay}"
+                IsEnabled="{Binding UseCustomIcon}" />
+        </StackPanel>
+        <TextBox PlaceholderText="加载提示文字" Text="{Binding LoadingText, Mode=TwoWay}" />
+        <Button
+            Classes="primary"
+            Command="{Binding LoadCommand}"
+            Content="模拟三秒加载"
+            Name="LoadAction"
+            one:ButtonLoading.IsLoading="{Binding IsLoading}" />
+        <one:LoadingContainer
+            Height="240"
+            IsLoading="{Binding IsLoading}"
+            LoadingIcon="{Binding LoadingIcon}"
+            LoadingText="{Binding LoadingText}"
+            Name="LoadingSample"
+            OverlayOpacity="{Binding OverlayOpacity}">
+            <one:InfoCard Footer="加载完成后可继续编辑，输入内容保留。" Header="工作区设置">
+                <StackPanel Spacing="12">
+                    <TextBox Name="ContentInput" Text="{Binding Text, Mode=TwoWay}" />
+                    <Button
+                        Command="{Binding InvokeCommand}"
+                        Content="内容区操作"
+                        Name="ContentAction" />
+                </StackPanel>
+            </one:InfoCard>
+        </one:LoadingContainer>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
-   </one:InfoCard>
-  </one:LoadingContainer>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
 </UserControl>

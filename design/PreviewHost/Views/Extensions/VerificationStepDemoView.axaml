@@ -1,7 +1,7 @@
 <UserControl
-    x:Class="TheOne.DesignPreview.StepDemoView"
+    x:Class="TheOne.DesignPreview.VerificationStepDemoView"
     x:CompileBindings="True"
-    x:DataType="local:StepDemoViewModel"
+    x:DataType="local:VerificationStepDemoViewModel"
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:TheOne.DesignPreview"
     xmlns:one="using:TheOne.Avalonia.Controls"
@@ -11,14 +11,21 @@
         <TextBlock
             FontSize="22"
             FontWeight="SemiBold"
-            Text="Step · 验证步骤" />
+            Text="VerificationStep · 带验证的 Step" />
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
             Text="模型属性声明验证规则 · 输入与错误提示由控件库生成 · 验证通过才能前进"
             TextWrapping="Wrap" />
         <WrapPanel>
-            <TextBlock Text="步骤条对齐" VerticalAlignment="Center" Margin="0,0,8,8" />
-            <ComboBox ItemsSource="{Binding HeaderAlignments}" SelectedItem="{Binding HeaderAlignment, Mode=TwoWay}" MinWidth="120" Margin="0,0,12,8" />
+            <TextBlock
+                Margin="0,0,8,8"
+                Text="步骤条对齐"
+                VerticalAlignment="Center" />
+            <ComboBox
+                ItemsSource="{Binding HeaderAlignments}"
+                Margin="0,0,12,8"
+                MinWidth="120"
+                SelectedItem="{Binding HeaderAlignment, Mode=TwoWay}" />
             <Button
                 Click="ResetClicked"
                 Content="重置三步表单"
@@ -32,10 +39,10 @@
                 Content="尝试跳到末步"
                 Margin="0,0,8,8" />
         </WrapPanel>
-        <one:Step
+        <one:VerificationStep
             CompletedCommand="{Binding CompletedCommand}"
-            Height="590"
             HeaderHorizontalAlignment="{Binding HeaderAlignment}"
+            Height="590"
             ItemsSource="{Binding Steps}"
             Name="StepSample" />
         <TextBlock

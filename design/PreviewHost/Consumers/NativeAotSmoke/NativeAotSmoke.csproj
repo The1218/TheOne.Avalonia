@@ -10,6 +10,14 @@
     <AvaloniaVersion>12.1.4</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../ViewModels/DataDisplay/GanttDemoViewModel.cs" Link="GanttDemoViewModel.cs" />
+    <Compile Include="../../Views/DataDisplay/GanttDemoView.axaml.cs" Link="GanttDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/DataDisplay/GanttDemoView.axaml" Link="GanttDemoView.axaml" />
+    <Compile Include="../../Verification/DataDisplay/GanttPreview.cs" Link="GanttPreview.cs" />
+    <Compile Include="../../ViewModels/DataDisplay/RelationGraphDemoViewModel.cs" Link="RelationGraphDemoViewModel.cs" />
+    <Compile Include="../../Views/DataDisplay/RelationGraphDemoView.axaml.cs" Link="RelationGraphDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/DataDisplay/RelationGraphDemoView.axaml" Link="RelationGraphDemoView.axaml" />
+    <Compile Include="../../Verification/DataDisplay/RelationGraphPreview.cs" Link="RelationGraphPreview.cs" />
     <Compile Include="../../Verification/Fixtures/Theme/ControlVariantsFixtureModel.cs" Link="ControlVariantsFixtureModel.cs" />
     <Compile Include="../../Verification/Fixtures/Theme/ControlVariantsFixture.axaml.cs" Link="ControlVariantsFixture.axaml.cs" />
     <AvaloniaResource Include="../../Verification/Fixtures/Theme/ControlVariantsFixture.axaml" Link="ControlVariantsFixture.axaml" />
@@ -17,13 +25,19 @@
     <Compile Include="../../Verification/Theme/NovaPalettePreview.cs" Link="NovaPalettePreview.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="../../ViewModels/Extensions/TagStepDemoViewModel.cs" Link="TagStepDemoViewModel.cs" />
+    <Compile Include="../../ViewModels/Extensions/FlowStepDemoViewModel.cs" Link="FlowStepDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/FlowStepDemoView.axaml.cs" Link="FlowStepDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/FlowStepDemoView.axaml" Link="FlowStepDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/FlowStepPreview.cs" Link="FlowStepPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../ViewModels/Extensions/TagVerificationStepDemoViewModel.cs" Link="TagVerificationStepDemoViewModel.cs" />
     <Compile Include="../../Views/Extensions/TagDemoView.axaml.cs" Link="TagDemoView.axaml.cs" />
-    <Compile Include="../../Views/Extensions/StepDemoView.axaml.cs" Link="StepDemoView.axaml.cs" />
+    <Compile Include="../../Views/Extensions/VerificationStepDemoView.axaml.cs" Link="VerificationStepDemoView.axaml.cs" />
     <AvaloniaResource Include="../../Views/Extensions/TagDemoView.axaml" Link="TagDemoView.axaml" />
-    <AvaloniaResource Include="../../Views/Extensions/StepDemoView.axaml" Link="StepDemoView.axaml" />
-    <Compile Include="../../Verification/Extensions/StepAutomaticPreview.cs" Link="StepAutomaticPreview.cs" />
-    <Compile Include="../../Verification/Extensions/TagStepPreview.cs" Link="TagStepPreview.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/VerificationStepDemoView.axaml" Link="VerificationStepDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/VerificationStepAutomaticPreview.cs" Link="VerificationStepAutomaticPreview.cs" />
+    <Compile Include="../../Verification/Extensions/TagVerificationStepPreview.cs" Link="TagVerificationStepPreview.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="../../ViewModels/DataDisplay/DataGridBindingDemoViewModel.cs" Link="DataGridBindingDemoViewModel.cs" />

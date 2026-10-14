@@ -32,7 +32,7 @@ internal static class StepForm
                 && property.GetIndexParameters().Length == 0 && property.GetCustomAttribute<DisplayAttribute>()?.GetAutoGenerateField() != false)
             .Select(property => new StepFormProperty(model, property)).OrderBy(field => field.Display?.GetOrder() ?? 10000).ToArray();
 
-    public static Control Build(Step owner, IReadOnlyList<StepFormProperty> properties)
+    public static Control Build(VerificationStep owner, IReadOnlyList<StepFormProperty> properties)
     {
         var form = new ListBox { Name = "PART_FormFields", ItemsSource = properties };
         if (owner.TryFindResource("One.StepForm", owner.ActualThemeVariant, out var theme)) form.Theme = (ControlTheme?)theme;

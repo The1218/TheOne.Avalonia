@@ -1,11 +1,42 @@
-<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ToggleButtonPage" x:DataType="local:ToggleButtonPageViewModel">
- <StackPanel Spacing="18">
-  <TextBlock Text="ToggleButton" FontSize="22" FontWeight="SemiBold" />
-  <TextBlock Text="未选中 / 选中 / 不确定 / 禁用 · 可点击对比切换状态" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
-    <WrapPanel><ToggleButton Name="ControlSample" Content="点击切换" IsChecked="{Binding Checked, Mode=TwoWay}" Margin="0,0,12,12" /><ToggleButton Content="已选中" IsChecked="True" Margin="0,0,12,12" /><ToggleButton Content="三态切换" IsThreeState="True" IsChecked="{x:Null}" Margin="0,0,12,12" /><ToggleButton Content="禁用选中" IsChecked="True" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
-  </StackPanel>
-  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ToggleButtonPage"
+    x:DataType="local:ToggleButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ToggleButton" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="未选中 / 选中 / 不确定 / 禁用 · 可点击对比切换状态"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <ToggleButton
+                    Content="点击切换"
+                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    Margin="0,0,12,12"
+                    Name="ControlSample" />
+                <ToggleButton
+                    Content="已选中"
+                    IsChecked="True"
+                    Margin="0,0,12,12" />
+                <ToggleButton
+                    Content="三态切换"
+                    IsChecked="{x:Null}"
+                    IsThreeState="True"
+                    Margin="0,0,12,12" />
+                <ToggleButton
+                    Content="禁用选中"
+                    IsChecked="True"
+                    IsEnabled="False"
+                    Margin="0,0,12,12" />
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
 </local:BasicControlPage>

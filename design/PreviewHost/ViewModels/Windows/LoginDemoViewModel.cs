@@ -1,28 +1,44 @@
 using System.Windows.Input;
-using ReactiveUI.Primitives;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace TheOne.DesignPreview;
+
 /// <summary>Local preview validation only; applications provide their own authentication.</summary>
 public sealed class LoginDemoViewModel : ReactiveObject
 {
     private readonly Func<Task<bool>> _completeLogin;
-    private readonly Action<string>? _showError;
     private readonly CancellationTokenSource _lifetime = new();
+    private readonly Action<string>? _showError;
     private bool _isClosed;
+
     public LoginDemoViewModel(Func<Task<bool>> completeLogin, Action cancel, Action<string>? showError = null)
     {
         _completeLogin = completeLogin;
         _showError = showError;
-        var canExecute = this.Changed.Where(change => change.PropertyName == nameof(CanEdit))
+        var canExecute = Changed.Where(change => change.PropertyName == nameof(CanEdit))
             .Select(_ => CanEdit).StartWith(new[] { CanEdit }).DistinctUntilChanged();
         LoginCommand = ReactiveCommand.CreateFromTask<object?>(_ => LoginAsync(), canExecute);
         CancelCommand = ReactiveCommand.Create<object?>(_ => cancel());
     }
 
-    public string Account { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "";
-    public string Password { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "";
-    public string Status { get; private set => this.RaiseAndSetIfChanged(ref field, value); } = "输入账号和密码后登录。";
+    public string Account
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "";
+
+    public string Password
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "";
+
+    public string Status
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "输入账号和密码后登录。";
 
     public bool IsBusy
     {
@@ -88,5 +104,4 @@ public sealed class LoginDemoViewModel : ReactiveObject
         Password = "";
         this.RaisePropertyChanged(nameof(CanEdit));
     }
-
 }
