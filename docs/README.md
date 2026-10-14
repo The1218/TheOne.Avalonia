@@ -9,6 +9,7 @@
 | 颜色、尺寸、动效、模板维护 | [主题](theme/README.md) |
 | 选择测试范围与命令 | [测试策略](workflow/testing.md) |
 | NuGet 双包版本与发布 | [发布策略](workflow/releasing.md) |
+| 1.0.0-preview.1 功能与平台边界 | [发布说明](releases/1.0.0-preview.1.md) |
 | 编译绑定、裁剪、原生消费 | [NativeAOT](native-aot.md) |
 | 演示页面与 ViewModel 组织 | [PreviewHost](preview-host.md) |
 | DataGrid 后续实现 | [当前计划](plans/datagrid.md) |

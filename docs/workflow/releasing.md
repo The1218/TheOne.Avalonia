@@ -50,3 +50,5 @@ dotnet nuget push <feed>/TheOne.Avalonia.<版本>.nupkg --source <目标源> --a
 `1.0.0-preview.1` 已于 2026-10-14 按 [vendor](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.1)、[主库](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.1) 顺序发布至 NuGet.org，并通过远程专项：只启用公共源、禁用 SDK 隐式离线源、使用隔离缓存，实际还原两包；除 NuGet.org 新增仓库签名外，所有包内容与已验收产物相同。独立消费端构建零警告／零错误，osx-arm64 托管 Headless 152 项、真实桌面 140 项通过。
 
 发布与下载哈希、来源、日志和页面截图保存在 `.preview/nuget-publish-1.0.0-preview.1/`。本次未重复 NativeAOT 或其他 RID 验证；先前本机原生基线与其他平台的未验证边界仍见[集成验收](datagrid-acceptance.md)，不能将远程还原成功视为其他平台实跑通过。
+
+对外发布内容维护在 [1.0.0-preview.1 发布说明](../releases/1.0.0-preview.1.md)，GitHub Release 使用同一份正文；精简验收 JSON 随版本提交，原始日志与包缓存保留在忽略目录。

@@ -36,6 +36,8 @@ dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-previe
 dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.csproj
 ```
 
+本版功能、兼容条件与平台验证边界见 [1.0.0-preview.1 发布说明](docs/releases/1.0.0-preview.1.md)。
+
 消费项目使用 `net10.0`，Avalonia 核心包版本统一为 12.1.4。在 `App.axaml` 中加载主题，替换 `YourApp.App` 为实际应用类：
 
 ```xml
