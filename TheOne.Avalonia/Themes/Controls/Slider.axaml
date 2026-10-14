@@ -314,7 +314,7 @@
                 <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
             </Style>
             <Style Selector="^ /template/ RepeatButton#PART_IncreaseButton">
-                <Setter Property="Background" Value="{DynamicResource One.Line}" />
+                <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             </Style>
 
             <Style Selector="^ /template/ Thumb">

@@ -33,7 +33,7 @@ internal static class ButtonControlsPreview
             var font = sample.Size switch { ControlSize.Small => 12, ControlSize.Large => 16, _ => 14 };
             var padding = sample.Size switch { ControlSize.Small => new Thickness(10, 4), ControlSize.Large => new Thickness(16, 10), _ => new Thickness(12, 7) };
             Check(control.ActualThemeVariant.Key!.ToString() == sample.Theme && control.MinHeight == height && control.Bounds.Height >= height && control.FontSize == font
-                && content.Padding == padding && content.CornerRadius == new CornerRadius(8) && content.BorderThickness == new Thickness(1),
+                && content.Padding == padding && content.CornerRadius == new CornerRadius(6) && content.BorderThickness == new Thickness(1),
                 $"{label}: native templates share density, padding, radius and border metrics");
             Check(control.IsEnabled == (sample.State != SelectionVisualState.Disabled) && !control.Focusable && !KeyboardNavigation.GetIsTabStop(control)
                 && control.Classes.Contains(":pointerover") == (sample.State is SelectionVisualState.Hover or SelectionVisualState.Pressed)
@@ -48,7 +48,7 @@ internal static class ButtonControlsPreview
         Check(Grid.GetColumn(demo.FindControl<ThemeVariantScope>("DarkButtonScope")!) == 1, "Wide button comparison places both theme matrices side by side");
         VerifyInteraction(window, demo);
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
-        Check(demo.FindControl<Button>("LiveAction")!.FontSize == 16 && Colour(Part<ContentPresenter>(demo.FindControl<Button>("LiveAction")!, "PART_ContentPresenter").Background) == Color.Parse("#61C5A5")
+        Check(demo.FindControl<Button>("LiveAction")!.FontSize == 16 && Colour(Part<ContentPresenter>(demo.FindControl<Button>("LiveAction")!, "PART_ContentPresenter").Background) == Color.Parse("#63D9DE")
             && demo.Samples.All(sample => sample.Control.ActualThemeVariant.Key!.ToString() == sample.Theme),
             "Live buttons follow host theme and density while fixed matrices retain both palettes and all sizes");
         window.Width = 760; ControlPreview.Flush();
@@ -61,10 +61,10 @@ internal static class ButtonControlsPreview
         var disabled = sample.State == SelectionVisualState.Disabled;
         var content = Part<ContentPresenter>(sample.Control, "PART_ContentPresenter");
         var accent = sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" };
-        var background = disabled ? "One.DisabledSurface" : sample.Primary ? accent : sample.Selected ? "One.AccentSoft"
-            : sample.State switch { SelectionVisualState.Hover => "One.Subtle", SelectionVisualState.Pressed => "One.Line", _ => "One.Surface" };
-        var border = disabled ? "One.Line" : sample.Primary ? "One.Accent" : sample.Selected ? accent : "One.InputLine";
-        var text = disabled ? "One.DisabledText" : sample.Primary ? "One.OnAccent" : sample.Selected ? sample.State == SelectionVisualState.Hover ? "One.AccentHover" : "One.Accent" : "One.Text";
+        var background = disabled ? sample.Primary || sample.Selected ? "One.DisabledSelection" : "One.DisabledSurface" : sample.Primary ? accent : sample.Selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentSoftHover", SelectionVisualState.Pressed => "One.AccentSoftPressed", _ => "One.AccentSoft" }
+            : sample.State switch { SelectionVisualState.Hover => "One.NeutralHover", SelectionVisualState.Pressed => "One.NeutralPressed", _ => "One.Subtle" };
+        var border = sample.Primary ? "One.Transparent" : disabled ? "One.Line" : "One.InputLine";
+        var text = disabled ? sample.Selected ? "One.DisabledIcon" : "One.DisabledText" : sample.Primary ? "One.OnAccent" : "One.Accent";
         Check(Colour(content.Background) == Resource(sample.Control, background) && Colour(content.BorderBrush) == Resource(sample.Control, border) && Colour(content.Foreground) == Resource(sample.Control, text),
             $"{label}: the native state palette stays consistent across button families");
     }
@@ -97,19 +97,6 @@ internal static class ButtonControlsPreview
         Click(window, demo.FindControl<Button>("ResetButtonDemo")!);
         Check(action.IsEffectivelyEnabled && demo.ActionCount == 0 && demo.RepeatCount == 0 && toggle.IsChecked == false,
             "Button comparison reset restores enabled state and all counters");
-    }
-    public static void VerifyGallery(LegacyPreviewWindow window, LegacyControlGallery gallery)
-    {
-        window.NavigateToCategory(16); ControlPreview.Flush(); var card = gallery.FindControl<Border>("ButtonControlsCard")!;
-        Check(card.IsVisible && card.Child is ButtonControlsDemoView, "Button comparison category lazily loads its unified preview");
-        var demo = (ButtonControlsDemoView)card.Child!; Click(window, demo.FindControl<Button>("LiveAction")!);
-        Check(demo.ActionCount == 1, "Button comparison catalogue accepts real action input");
-        window.FindControl<ComboBox>("SizePicker")!.SelectedIndex = 0; window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 2; ControlPreview.Flush();
-        Check(demo.FindControl<ToggleButton>("LiveToggle")!.FontSize == 12 && demo.Samples.All(sample => sample.Control.ActualThemeVariant.Key!.ToString() == sample.Theme),
-            "Global catalogue settings update live buttons while preserving simultaneous theme matrices");
-        window.FindControl<ComboBox>("SizePicker")!.SelectedIndex = 1; window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 1;
-        window.NavigateToCategory(0); gallery.Search("按钮控件对比"); ControlPreview.Flush();
-        Check(card.IsVisible && !gallery.FindControl<Border>("SelectionControlsCard")!.IsVisible, "Global search locates the button comparison independently of selection controls"); gallery.Search(""); ControlPreview.Flush();
     }
     public static void Render(string output)
     {

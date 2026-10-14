@@ -84,8 +84,8 @@
                             x:Name="PART_OnContentPresenter" />
 
                         <Border
-                            Background="{DynamicResource One.Surface}"
-                            BorderBrush="{DynamicResource One.InputLine}"
+                            Background="{DynamicResource One.Line}"
+                            BorderBrush="{DynamicResource One.Transparent}"
                             BorderThickness="{DynamicResource ToggleSwitchOuterBorderStrokeThickness}"
                             CornerRadius="10"
                             Grid.Row="1"
@@ -95,7 +95,7 @@
 
                         <Border
                             Background="{DynamicResource One.Accent}"
-                            BorderBrush="{DynamicResource One.Accent}"
+                            BorderBrush="{DynamicResource One.Transparent}"
                             BorderThickness="{DynamicResource ToggleSwitchOnStrokeThickness}"
                             CornerRadius="10"
                             Grid.Row="1"
@@ -115,12 +115,12 @@
                                 Width="20"
                                 x:Name="PART_MovingKnobs">
                                 <Ellipse
-                                    Fill="{DynamicResource One.OnAccent}"
+                                    Fill="{DynamicResource One.Surface}"
                                     Height="10"
                                     Width="10"
                                     x:Name="SwitchKnobOn" />
                                 <Ellipse
-                                    Fill="{DynamicResource One.Muted}"
+                                    Fill="{DynamicResource One.Surface}"
                                     Height="10"
                                     Width="10"
                                     x:Name="SwitchKnobOff" />
@@ -141,40 +141,40 @@
 
         <!--  PointerOverState  -->
         <Style Selector="^:pointerover /template/ Border#OuterBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+            <Setter Property="Background" Value="{DynamicResource One.Line}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#SwitchKnobOff">
-            <Setter Property="Fill" Value="{DynamicResource One.Muted}" />
+            <Setter Property="Fill" Value="{DynamicResource One.SurfaceHover}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#SwitchKnobOn">
-            <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Fill" Value="{DynamicResource One.SurfaceHover}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Border#SwitchKnobBounds">
-            <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <!--  PressedState  -->
         <Style Selector="^:pressed /template/ Border#OuterBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
             <Setter Property="Background" Value="{DynamicResource One.Line}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Border#SwitchKnobBounds">
-            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Ellipse#SwitchKnobOff">
-            <Setter Property="Fill" Value="{DynamicResource One.Muted}" />
+            <Setter Property="Fill" Value="{DynamicResource One.SurfacePressed}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Ellipse#SwitchKnobOn">
-            <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Fill" Value="{DynamicResource One.SurfacePressed}" />
         </Style>
 
         <!--  DisabledState  -->
@@ -183,21 +183,21 @@
         </Style>
 
         <Style Selector="^:disabled /template/ Border#OuterBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledText}" />
-            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#SwitchKnobOff">
-            <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Fill" Value="{DynamicResource One.PrimaryDisabled}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#SwitchKnobOn">
-            <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Fill" Value="{DynamicResource One.PrimaryDisabled}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Border#SwitchKnobBounds">
-            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
             <Setter Property="BorderThickness" Value="{DynamicResource ToggleSwitchOuterBorderStrokeThickness}" />
         </Style>
 

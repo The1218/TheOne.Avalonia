@@ -16,7 +16,7 @@ public sealed partial class GaugeChart
             return;
         }
         var displayedValue = PresentGaugeValue(Value);
-        var valueSize = Math.Max(FontSize, Math.Min(36, FontSize * 2.2));
+        var valueSize = Math.Max(FontSize, Math.Min(30, FontSize * 2));
         var footer = ShowGaugeNeedle ? valueSize + ChartPadding + 10 : FontSize + ChartPadding + 6;
         var topSpace = ShowGaugeTicks ? FontSize * 1.75 + ChartPadding : ChartPadding / 2;
         var sideSpace = ShowGaugeTicks ? Math.Max(topSpace, Math.Max(GaugeTickText(Minimum).Width, GaugeTickText(Maximum).Width) + FontSize * 0.65 + 6) : topSpace;
@@ -35,7 +35,7 @@ public sealed partial class GaugeChart
         var ratio = double.IsFinite(span) ? (clamped - Minimum) / span : (clamped / scale - Minimum / scale) / (Maximum / scale - Minimum / scale);
         ratio = Math.Clamp(ratio, 0, 1);
         context.DrawGeometry(GridBrush ?? MutedBrush ?? Brushes.LightGray, null, AnnularSector(center, radius, inner, Math.PI, Math.PI));
-        if (ratio > 0) context.DrawGeometry(AccentBrush ?? Brushes.SeaGreen, null, AnnularSector(center, radius, inner, Math.PI, Math.PI * ratio));
+        if (ratio > 0) context.DrawGeometry(AccentBrush ?? DefaultAccentBrush, null, AnnularSector(center, radius, inner, Math.PI, Math.PI * ratio));
         if (ShowGaugeTicks) DrawGaugeTickMarks(context, center, radius);
         if (ShowGaugeNeedle)
         {
@@ -155,8 +155,11 @@ public sealed partial class GaugeChart
     }
     private FormattedText GaugeTickText(double value)
     {
-        var name = FormatValue(value);
-        if (name.Length > 10) name = value.ToString("0.##E+0", CultureInfo.CurrentCulture);
-        return Text(name, MutedBrush);
+        var name = TickText(value, (Maximum - Minimum) / (GaugeMajorTickCount - 1), ValueFormat);
+        // The adaptive format already abbreviates large ranges. Keep its precision for
+        // narrow ranges at a high magnitude; layout can omit labels that do not fit.
+        if (name.Length > 10 && ValueFormat is not (null or "0.##"))
+            name = value.ToString("0.##E+0", CultureInfo.CurrentCulture);
+        return Text(name, MutedBrush, Math.Max(8, FontSize - 1));
     }
 }

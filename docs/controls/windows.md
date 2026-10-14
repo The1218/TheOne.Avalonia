@@ -30,7 +30,7 @@ OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 C
 
 ShowTitleBar 和 ShowThemeButton 默认为 True；TitleBarHeight 可覆盖。默认 small / normal / large 高度为 42 / 48 / 56，正文及对话框字号为 12 / 14 / 16。使用 Classes 或 ControlSizing.Size，沿用窗口主题与动效继承。
 
-空白标题栏可拖动，双击最大化／还原；右侧按钮使用原生 WindowState、CanMinimize、CanMaximize 和 Close，关闭可由原生 Closing 取消。窗口默认使用 BorderOnly 与扩展客户区，保留平台边框；标题栏元素声明 Avalonia 12 的原生装饰角色。真实平台的拖动、缩放、贴靠和 DPI 行为需在对应桌面验证。
+空白标题栏可拖动，双击最大化／还原；右侧按钮使用原生 WindowState、CanMinimize、CanMaximize 和 Close，关闭可由原生 Closing 取消。窗口默认使用 BorderOnly 与扩展客户区，保留平台边框；标题栏主体声明 User 角色，由 OneWindow 统一处理拖动与双击，避免 macOS 原生标题栏命中测试和托管事件同时切换状态；系统按钮继续使用原生装饰角色。真实平台的拖动、缩放、贴靠和 DPI 行为需在对应桌面验证。
 
 ThemeButton 默认切换最近窗口的有效 Light / Dark 主题，图标、提示及辅助名称随有效主题更新。OneWindow.ThemeButtonScope="Application" 切换应用全局主题；有显式局部主题的窗口仍遵循自己的设置。独立按钮也可以放在其他界面：
 
@@ -53,7 +53,7 @@ OneToast.Show("更新完成", NotificationType.Success);
 var result = await OneDialog.ShowAsync("确认", "是否继续？", OneDialogButtons.YesNoCancel);
 ```
 
-通知使用窗口内部的原生 WindowNotificationManager，默认右上方、最多 4 条活动通知、4 秒自动关闭；Toast 使用独立管理器，顶部居中、最多 3 条、2.5 秒自动关闭。TimeSpan.Zero 保留到手动关闭。两者沿用 NotificationCard 的语义类型、三档尺寸与 Motion.Enabled 动画；CloseAll 可清空指定类别。
+通知使用窗口内部的原生 WindowNotificationManager，默认右上方、最多 4 条活动通知、4 秒自动关闭；Toast 使用独立管理器，顶部居中、最多 3 条、2.5 秒自动关闭。TimeSpan.Zero 保留到手动关闭。两者使用紧凑的 NotificationCard：三档宽度 280 / 320 / 360，字号 11 / 12 / 13、内边距 8 / 10 / 12，沿用语义类型与 Motion.Enabled 动画；CloseAll 可清空指定类别。
 
 未传 owner 时使用各服务的 Owner；默认 Owner 随 OneWindow / LoginWindow 打开或激活自动更新，也可在 UI 线程设置。隐藏、关闭或尚未打开的默认 owner 会回退到最近激活的可见主题窗口。多窗口时可显式传 owner；不可用的显式 owner 报错，不静默转到其他窗口。OneWindow.Current 提供 UI 线程上的最近可见 OneWindow，仅使用弱引用登记，关闭时自动移除。
 

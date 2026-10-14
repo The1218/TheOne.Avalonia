@@ -77,13 +77,25 @@ Expander 不替内部业务列表实现无限视口：大列表仍需设置 Heig
            DisplayMode="CompactInline" PanePlacement="Left"
            OpenPaneLength="248" CompactPaneLength="56">
   <SplitView.Pane>
-    <ListBox ItemsSource="{Binding NavigationItems}" />
+    <ListBox ItemsSource="{Binding NavigationItems}"
+             Background="Transparent" BorderThickness="0" CornerRadius="0" />
   </SplitView.Pane>
   <TextBlock Text="页面内容" />
 </SplitView>
 ```
 
-通过 IsPaneOpen 控制侧栏，DisplayMode 使用官方 Inline / Overlay / CompactInline / CompactOverlay 模式，PanePlacement 支持 Left / Right / Top / Bottom。主题默认左右侧栏展开宽度 248 px、紧凑宽度 56 px；上下方向按高度布局。Overlay 模式保留原生轻触关闭行为。
+通过 IsPaneOpen 控制侧栏，DisplayMode 使用官方 Inline / Overlay / CompactInline / CompactOverlay 模式，PanePlacement 支持 Left / Right / Top / Bottom。上下方向按高度布局；OpenPaneLength / CompactPaneLength 可绑定并优先于尺寸主题。主题会同步保留主内容的布局空间，侧栏内容保持展开尺寸，在收起时裁切，避免子控件被挤压变形。不会自动把业务侧栏变成图标菜单：Compact 模式下需要为标签绑定 IsPaneOpen，或使用 NavMenu 的折叠功能。
+
+| 模式 | 展开占位 | 收起占位 | 轻触关闭 |
+| --- | --- | --- | --- |
+| Inline | OpenPaneLength | 0 | 否 |
+| Overlay | 0（覆盖主内容） | 0 | 是 |
+| CompactInline | OpenPaneLength | CompactPaneLength | 否 |
+| CompactOverlay | CompactPaneLength（其余覆盖主内容） | CompactPaneLength | 是 |
+
+Overlay 的 LightDismissLayer 仅在展开时启用；UseLightDismissOverlayMode=True 时显示遮罩色。该状态布局直接同步原生 IsPaneOpen / TemplateSettings，不引入延迟占位。small / normal / large 的展开长度为 220 / 248 / 280，紧凑长度为 48 / 56 / 64，可通过 Metrics.axaml 的 One.SplitView.* 资源覆盖。
+
+侧栏大数据必须给 SplitView 有限高度，内部 ListBox 保留原生虚拟化面板。内嵌列表使用透明背景和零边框，让 PaneBackground 与 SplitView 外框保持连贯；业务需要独立列表表面时可自行覆盖。PreviewHost 独立页面提供 1,000 项、定位末项、四种模式及四个方向；收起时显示图标，展开恢复标签。
 
 ## GridSplitter
 
@@ -117,7 +129,7 @@ ScrollViewer 适用于普通内容，内部 ScrollBar 自动使用主题。独�
 
 ## Flyout 与 FlyoutPresenter
 
-Flyout 是弹出行为对象，FlyoutPresenter 是由它创建的内容容器。加载 OneTheme 即会应用 Still 模板，无需替换官方控件。
+Flyout 是弹出行为对象，FlyoutPresenter 是由它创建的内容容器。加载 OneTheme 即会应用 TheOne 模板，无需替换官方控件。
 
 ```xml
 <Button Content="编辑工作区" Classes="small">

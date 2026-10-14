@@ -31,7 +31,7 @@ public partial class ChartShowcaseView : UserControl
             samples.Add(chart);
             Variants.Children.Add(new StackPanel
             {
-                Width = 280, Margin = new Thickness(0, 0, 16, 16), Spacing = 8,
+                Classes = { "chart-variant" }, Margin = new Thickness(0, 0, 16, 16), Spacing = 8,
                 Children =
                 {
                     chart

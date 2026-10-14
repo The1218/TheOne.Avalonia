@@ -34,11 +34,11 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
         </Style>
 
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
@@ -50,8 +50,8 @@
     <ControlTheme TargetType="ButtonSpinner" x:Key="{x:Type ButtonSpinner}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Padding" Value="0" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />

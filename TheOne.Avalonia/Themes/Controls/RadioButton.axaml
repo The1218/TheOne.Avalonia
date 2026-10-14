@@ -10,7 +10,7 @@
         <!--  The label row stays transparent; interaction feedback belongs to the circle.  -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineMedium}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="Padding" Value="8,0,0,0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -29,10 +29,10 @@
                         <Grid Height="{TemplateBinding MinHeight}" VerticalAlignment="Top">
 
                             <Ellipse
-                                Fill="{DynamicResource One.Surface}"
+                                Fill="{DynamicResource One.Subtle}"
                                 Height="20"
                                 Name="OuterEllipse"
-                                Stroke="{DynamicResource One.InputLine}"
+                                Stroke="{DynamicResource One.OutlineMedium}"
                                 StrokeThickness="{DynamicResource RadioButtonBorderThemeThickness}"
                                 UseLayoutRounding="False"
                                 Width="20" />
@@ -42,17 +42,17 @@
                                 Height="20"
                                 Name="CheckOuterEllipse"
                                 Opacity="0"
-                                Stroke="{DynamicResource One.Accent}"
+                                Stroke="Transparent"
                                 StrokeThickness="{DynamicResource RadioButtonBorderThemeThickness}"
                                 UseLayoutRounding="False"
                                 Width="20" />
 
                             <Ellipse
-                                Fill="{DynamicResource One.OnAccent}"
+                                Fill="{DynamicResource One.IconOnAccent}"
                                 Height="8"
                                 Name="CheckGlyph"
                                 Opacity="0"
-                                Stroke="{DynamicResource One.OnAccent}"
+                                Stroke="{DynamicResource One.IconOnAccent}"
                                 UseLayoutRounding="False"
                                 Width="8" />
                         </Grid>
@@ -81,22 +81,22 @@
         </Style>
 
         <Style Selector="^:pointerover /template/ Border#RootBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineMedium}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.AccentHover}" />
-            <Setter Property="Fill" Value="{DynamicResource One.Surface}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.OutlineMedium}" />
+            <Setter Property="Fill" Value="{DynamicResource One.NeutralHover}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#CheckOuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.AccentHover}" />
+            <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Fill" Value="{DynamicResource One.AccentHover}" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#CheckGlyph">
-            <Setter Property="Stroke" Value="{DynamicResource One.OnAccent}" />
-            <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.IconOnAccent}" />
+            <Setter Property="Fill" Value="{DynamicResource One.IconOnAccent}" />
         </Style>
 
 
@@ -106,22 +106,22 @@
         </Style>
 
         <Style Selector="^:pressed /template/ Border#RootBorder">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineMedium}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.AccentPressed}" />
-            <Setter Property="Fill" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.OutlineMedium}" />
+            <Setter Property="Fill" Value="{DynamicResource One.NeutralPressed}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Ellipse#CheckOuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="Stroke" Value="Transparent" />
             <Setter Property="Fill" Value="{DynamicResource One.AccentPressed}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Ellipse#CheckGlyph">
-            <Setter Property="Stroke" Value="{DynamicResource One.OnAccent}" />
-            <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.IconOnAccent}" />
+            <Setter Property="Fill" Value="{DynamicResource One.IconOnAccent}" />
         </Style>
 
 
@@ -135,18 +135,18 @@
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#OuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.OutlineMedium}" />
             <Setter Property="Fill" Value="{DynamicResource One.DisabledSurface}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#CheckOuterEllipse">
-            <Setter Property="Stroke" Value="{DynamicResource One.DisabledText}" />
-            <Setter Property="Fill" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Stroke" Value="Transparent" />
+            <Setter Property="Fill" Value="{DynamicResource One.DisabledSelection}" />
         </Style>
 
         <Style Selector="^:disabled /template/ Ellipse#CheckGlyph">
-            <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
-            <Setter Property="Stroke" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Fill" Value="{DynamicResource One.IconOnAccent}" />
+            <Setter Property="Stroke" Value="{DynamicResource One.IconOnAccent}" />
         </Style>
 
 

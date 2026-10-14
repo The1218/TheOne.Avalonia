@@ -54,7 +54,7 @@
                             HorizontalAlignment="Stretch"
                             IsHitTestVisible="False"
                             IsVisible="False"
-                            Stroke="{DynamicResource One.Line}"
+                            Stroke="{DynamicResource One.OutlineMedium}"
                             StrokeThickness="1"
                             VerticalAlignment="Stretch"
                             x:Name="CurrencyVisual" />
@@ -134,7 +134,7 @@
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="SeparatorBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="SeparatorBrush" Value="{DynamicResource One.OutlineMedium}" />
         <Setter Property="Padding" Value="6,0" />
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="FontSize" Value="14" />
@@ -202,11 +202,11 @@
         </Style>
 
         <Style Selector="^:pointerover /template/ Grid#PART_ColumnHeaderRoot">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.RowSelectedHover}" />
         </Style>
 
         <Style Selector="^:pressed /template/ Grid#PART_ColumnHeaderRoot">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.RowSelectedPressed}" />
         </Style>
 
         <Style Selector="^:dragIndicator">
@@ -235,11 +235,11 @@
             <ControlTemplate>
                 <Grid RowDefinitions="*,*,Auto" x:Name="TopLeftHeaderRoot">
                     <Border
-                        BorderBrush="{DynamicResource One.Line}"
+                        BorderBrush="{DynamicResource One.OutlineMedium}"
                         BorderThickness="0,0,1,0"
                         Grid.RowSpan="2" />
                     <Rectangle
-                        Fill="{DynamicResource One.Line}"
+                        Fill="{DynamicResource One.OutlineMedium}"
                         Grid.Row="0"
                         Grid.RowSpan="2"
                         Height="1"
@@ -251,7 +251,7 @@
     </ControlTheme>
 
     <ControlTheme TargetType="DataGridRowHeader" x:Key="{x:Type DataGridRowHeader}">
-        <Setter Property="SeparatorBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="SeparatorBrush" Value="{DynamicResource One.OutlineMedium}" />
         <Setter Property="AreSeparatorsVisible" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -359,24 +359,24 @@
         </Style>
 
         <Style Selector="^:pointerover /template/ Rectangle#BackgroundRectangle">
-            <Setter Property="Fill" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Fill" Value="{DynamicResource One.NeutralHover}" />
         </Style>
 
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Rectangle#BackgroundRectangle">
-                <Setter Property="Fill" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Fill" Value="{DynamicResource One.RowSelected}" />
                 <Setter Property="Opacity" Value="1" />
             </Style>
             <Style Selector="^:pointerover /template/ Rectangle#BackgroundRectangle">
-                <Setter Property="Fill" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Fill" Value="{DynamicResource One.RowSelectedHover}" />
                 <Setter Property="Opacity" Value="1" />
             </Style>
             <Style Selector="^:focus /template/ Rectangle#BackgroundRectangle">
-                <Setter Property="Fill" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Fill" Value="{DynamicResource One.RowSelected}" />
                 <Setter Property="Opacity" Value="1" />
             </Style>
             <Style Selector="^:pointerover:focus /template/ Rectangle#BackgroundRectangle">
-                <Setter Property="Fill" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Fill" Value="{DynamicResource One.RowSelectedHover}" />
                 <Setter Property="Opacity" Value="1" />
             </Style>
         </Style>
@@ -461,7 +461,7 @@
                         HorizontalAlignment="Stretch"
                         IsHitTestVisible="False"
                         IsVisible="False"
-                        Stroke="{DynamicResource One.Line}"
+                        Stroke="{DynamicResource One.OutlineMedium}"
                         StrokeThickness="1"
                         VerticalAlignment="Stretch"
                         x:Name="CurrencyVisual" />
@@ -505,9 +505,9 @@
     <ControlTheme TargetType="DataGrid" x:Key="{x:Type DataGrid}">
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineMedium}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="CornerRadius" Value="0" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="RowBackground" Value="{DynamicResource One.Surface}" />
         <Setter Property="ColumnWidth" Value="Auto" />
@@ -517,8 +517,8 @@
         <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="SelectionMode" Value="Extended" />
         <Setter Property="GridLinesVisibility" Value="Horizontal" />
-        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource One.Line}" />
-        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource One.OutlineMedium}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource One.OutlineMedium}" />
         <Setter Property="FocusAdorner" Value="{x:Null}" />
         <Setter Property="DropLocationIndicatorTemplate">
             <Template>
@@ -546,7 +546,7 @@
                                 Grid.Row="0"
                                 Name="PART_ColumnHeadersPresenter" />
                             <Rectangle
-                                Fill="{DynamicResource One.Line}"
+                                Fill="{DynamicResource One.OutlineMedium}"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 Grid.Row="0"

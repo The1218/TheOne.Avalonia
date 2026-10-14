@@ -4,7 +4,7 @@ namespace TheOne.DesignPreview;
 
 public sealed class FlyoutDemoViewModel : ReactiveObject
 {
-    public IReadOnlyList<string> Rows { get; } = Enumerable.Range(1, 10000).Select(index => $"成员 {index:D5} · Still workspace").ToArray();
+    public IReadOnlyList<string> Rows { get; } = Enumerable.Range(1, 10000).Select(index => $"成员 {index:D5} · TheOne workspace").ToArray();
     public int Placement { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     public int Size { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     public int ShowMode { get; set => this.RaiseAndSetIfChanged(ref field, value); }

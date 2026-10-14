@@ -62,6 +62,7 @@ internal static class CardTabPreview
         var label = $"Card/{variant.Key}/{size}";
         var height = size switch { ControlSize.Small => 30, ControlSize.Large => 44, _ => 36 };
         Check(Math.Abs(selected.Bounds.Height - height) < 0.5 && header.Bounds.Height == selected.Bounds.Height, $"{label}: header strip retains its density with no extra inset (item {selected.Bounds.Height}, strip {header.Bounds.Height})");
+        Check(frame.CornerRadius == new CornerRadius(4), $"{label}: content keeps all four reference corners including the header edge");
         Check(chrome.IsSelected && Colour(chrome.Background) == Colour(frame.Background) && Colour(chrome.BorderBrush) == Colour(frame.BorderBrush), $"{label}: selected outline uses the content surface and frame border");
         var others = tabs.GetRealizedContainers().OfType<TabItem>().Skip(1).ToArray();
         Check(others.All(item => item.Margin == default && Colour(Part<CardTabChrome>(item, "PART_LayoutRoot").Background)?.A == 0), $"{label}: inactive headers are flat and contiguous");
@@ -79,8 +80,12 @@ internal static class CardTabPreview
             var surface = Part<Border>(tabs, "HeaderSurface");
             var top = surface.TranslatePoint(default, window)!.Value;
             var line = Colour(frame.BorderBrush);
-            Check(Near(Pixel(bitmap, 0, y), line) && Near(Pixel(bitmap, 779, y), line) && Pixel(bitmap, 0, (int)(top.Y + surface.Bounds.Height / 2)) == line && Pixel(bitmap, 779, (int)(top.Y + surface.Bounds.Height / 2)) == line, $"{label}: header and content side borders meet without a missing corner or gap");
-            Check(Pixel(bitmap, 400, (int)top.Y) == line, $"{label}: gray header has a complete outer top border");
+            var fill = Colour(surface.Background);
+            Check(surface.BorderThickness == default && header.BorderThickness == default && !tabs.GetVisualDescendants().OfType<Control>().Any(control => control.Name == "CardOuterOutline"), $"{label}: header background has no border or surrounding outline");
+            // Probe the straight content sides, away from the antialiased seam corners.
+            Check(frame.BorderThickness == new Thickness(1) && Near(Pixel(bitmap, 0, y + 12), line) && Near(Pixel(bitmap, 779, y + 12), line) && Pixel(bitmap, 0, (int)(top.Y + surface.Bounds.Height / 2)) == fill && Pixel(bitmap, 779, (int)(top.Y + surface.Bounds.Height / 2)) == fill, $"{label}: content keeps its frame while header sides use only background fill");
+            Check(Pixel(bitmap, 0, y) == fill && Pixel(bitmap, 3, y + 3) == Colour(frame.Background), $"{label}: content top corner reveals the header background and curves into the surface");
+            Check(Pixel(bitmap, 400, (int)top.Y) == fill && fill == Color.Parse(variant == ThemeVariant.Dark ? "#282929" : "#EDEDED"), $"{label}: header uses the darker solid background without a top border");
             var inactive = Part<CardTabChrome>(others[0], "PART_LayoutRoot");
             var inactiveOrigin = inactive.TranslatePoint(default, window)!.Value;
             Check(Pixel(bitmap, (int)(inactiveOrigin.X + inactive.Bounds.Width / 2), y) == Colour(frame.BorderBrush), $"{label}: inactive seam retains the continuous frame line");
@@ -100,10 +105,14 @@ internal static class CardTabPreview
     private static void VerifyPlacements()
     {
         foreach (var placement in new[] { Dock.Top, Dock.Bottom, Dock.Left, Dock.Right })
+        foreach (var variant in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>())
         {
             var tabs = CreateTabs(); AddTabs(tabs); tabs.TabStripPlacement = placement;
-            var window = new Window { Width = 780, Height = 300, Content = tabs, WindowDecorations = WindowDecorations.None };
+            var window = new Window { Width = 780, Height = 300, Content = tabs, RequestedThemeVariant = variant, WindowDecorations = WindowDecorations.None };
+            ControlSizing.SetSize(window, size);
             Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush();
+            Check(Part<Border>(tabs, "CardContentFrame").CornerRadius == new CornerRadius(4), $"Card/{placement}/{variant}/{size}: placement preserves all four content corners");
             var vertical = placement is Dock.Left or Dock.Right;
             var scroll = Part<ScrollViewer>(tabs, "PART_HeaderScroll");
             Check(Part<CardTabChrome>((TabItem)tabs.ContainerFromIndex(0)!, "PART_LayoutRoot").Placement == placement && Part<CardTabStrip>(tabs, "CardStrip").HasOverflow, $"Card/{placement}: placement rotates the joined outline and retains overflow");
@@ -113,7 +122,7 @@ internal static class CardTabPreview
         }
     }
 
-    public static void Render(string output, bool dark)
+    public static void Render(string output, bool dark, ControlSize? size = null)
     {
         var tabs = CreateTabs();
         foreach (var title in Titles)
@@ -130,8 +139,9 @@ internal static class CardTabPreview
             tabs.Items.Add(new TabItem { Header = title, Content = form });
         }
         var window = new Window { Width = 1280, Height = 400, Content = new Border { Padding = new Thickness(12), Child = tabs }, RequestedThemeVariant = dark ? ThemeVariant.Dark : ThemeVariant.Light, WindowDecorations = WindowDecorations.None };
+        ControlSizing.SetSize(window, size ?? ControlSize.Normal);
         Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush();
-        var theme = dark ? "dark" : "light";
+        var theme = (dark ? "dark" : "light") + (size is { } density ? "-" + density.ToString().ToLowerInvariant() : "");
         Save(window, Path.Combine(output, $"card-tabs-{theme}.png"));
         tabs.SelectedIndex = 2; ControlPreview.Flush(); Save(window, Path.Combine(output, $"card-tabs-{theme}-middle.png"));
         tabs.SelectedIndex = 11; ControlPreview.Flush(); Save(window, Path.Combine(output, $"card-tabs-{theme}-overflow.png"));

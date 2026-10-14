@@ -9,6 +9,7 @@ internal static class PreviewPageCatalog
     [
         new(1,"Button","基础控件"),
         new(305,"IconButton","基础控件"),
+        new(306,"LoadingContainer","扩展控件"),
         new(101,"ToggleButton","基础控件"),
         new(16,"RepeatButton","基础控件"),
         new(2,"TextBox","基础控件"),
@@ -41,7 +42,6 @@ internal static class PreviewPageCatalog
         new(130,"ToggleSplitButton","导航与布局"),
         new(11,"SplitView","导航与布局"),
         new(132,"GridSplitter","导航与布局"),
-        new(133,"RefreshVisualizer","扩展控件"),
         new(10,"DataGrid","数据展示"),
         new(14,"FlyoutPresenter","扩展控件"),
         new(17,"TabStrip","导航与布局"),
@@ -107,6 +107,7 @@ internal static class PreviewPageCatalog
     {
         1 => new ButtonPage(),
         305 => new IconButtonPage(),
+        306 => new LoadingContainerPage(),
         101 => new ToggleButtonPage(),
         16 => new RepeatButtonPage(),
         2 => new TextBoxPage(),
@@ -139,7 +140,6 @@ internal static class PreviewPageCatalog
         130 => new ToggleSplitButtonPage(),
         11 => new SplitViewPage(),
         132 => new GridSplitterPage(),
-        133 => new RefreshVisualizerPage(),
         10 => new DataGridDemoView { Height = 660 },
         14 => new FlyoutDemoView(),
         17 => new TabStripDemoView(),

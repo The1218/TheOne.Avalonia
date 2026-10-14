@@ -2,6 +2,8 @@
 
 [返回控件文档](README.md)。以下绑定属性与命令由业务 ViewModel 提供，根视图需声明 `x:DataType`。
 
+外观扩展包括 `soft` / `gradient` 按钮、`filled` / `underlined` 输入、日期时间的 `filled` 及状态进度条。适用控件、渐变资源及选型见 [主题配色与样式](../theme/theme-colors.md)；每个控件选择一种主要外观，尺寸类可叠加。
+
 ## Button、RepeatButton、ToggleButton
 
 ```xml
@@ -27,7 +29,10 @@ RepeatButton 长按重复触发；`segment` 只提供分段外观。互斥选择
 
 三个按钮的内容默认水平、垂直居中，small／normal／large 均使用实际内容尺寸布局。需要靠左或靠上时，显式设置 `HorizontalContentAlignment`／`VerticalContentAlignment`。
 
+设置 `ToggleButton.IsThreeState="True"` 后，点击或 Space 按 false → true → null → false 循环。空值态使用 Primary 表面，并在按钮底部显示独立短横线；soft、gradient、primary、outline、ghost 等外观均保留该标记。标记跟随实际文字色，渐变和禁用状态仍保持可辨识。部分选中无需只靠背景色辨认。
+
 ## TextBox
+
 
 ```xml
 <TextBox Classes="clearButton" PlaceholderText="邮箱"
@@ -89,6 +94,8 @@ CheckBox 默认不绘制文字行背景，勾选框自身保留填色与状态�
 `OnSpin` 是视图中的事件处理方法，接收 `SpinEventArgs` 并按 `SpinDirection` 更新状态。可运行的输入示例见 [ControlGallery.axaml](../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml)。
 
 ## Slider、ProgressBar、ToolTip
+
+Slider 和 ScrollBar 的 Thumb 由原生模板管理拖动、捕获与位置；主题只修改外观。调整业务值使用父控件的 Value，替换模板时保留原生 Track / Thumb 结构。
 
 ```xml
 <Slider Minimum="0" Maximum="100" TickFrequency="5"

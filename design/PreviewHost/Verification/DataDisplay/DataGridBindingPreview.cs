@@ -20,6 +20,7 @@ internal static class DataGridBindingPreview
 {
     public static void Verify(Action<bool, string> check)
     {
+        VerifyMetadata(check);
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         {
@@ -49,6 +50,56 @@ internal static class DataGridBindingPreview
             window.Close(); Flush();
             VerifyPreview(theme, size, check);
         }
+    }
+    public sealed class ComparableValue : IComparable<ComparableValue>
+    {
+        public int Value { get; set; }
+        public int CompareTo(ComparableValue? other) => other is null ? 1 : Value.CompareTo(other.Value);
+    }
+    public sealed class MetadataRow
+    {
+        public int Number { get; set; }
+        public int ReadOnly => Number;
+        public decimal? Amount { get; set; }
+        public ComparableValue Rank { get; set; } = new();
+    }
+    private static void VerifyMetadata(Action<bool, string> check)
+    {
+        DataGridAot.PreserveRowType<MetadataRow>();
+        DataGridAot.PreserveRowType<ComparableValue>();
+        var source = new List<MetadataRow>();
+        var view = new DataGridCollectionView<MetadataRow>(source);
+        check(view.CanAddNew && view.AddNew() is MetadataRow, "DataGrid metadata: empty registered collection retains its row constructor");
+        view.CommitNew();
+        source[0].Number = 2; source[0].Rank.Value = 3;
+        source.Add(new MetadataRow { Number = 1, Amount = 2.5m, Rank = new ComparableValue { Value = 1 } }); view.Refresh();
+        view.SortDescriptions.Add(DataGridSortDescription.FromPath(nameof(MetadataRow.Rank)));
+        check(((MetadataRow)view[0]).Number == 1, "DataGrid metadata: registered IComparable<T> values sort without dynamic generic construction");
+        view.SortDescriptions.Clear(); view.SortDescriptions.Add(DataGridSortDescription.FromPath(nameof(MetadataRow.Amount)));
+        check(((MetadataRow)view[0]).Amount == null, "DataGrid metadata: nullable scalar sorting places null first");
+        var grid = new DataGrid { ItemsSource = view, AutoGenerateColumns = true, MaxColumnWidth = 320 };
+        var window = Open(grid, ThemeVariant.Light, ControlSize.Normal, 320);
+        check(grid.Columns.Count == 4 && grid.Columns.OfType<DataGridBoundColumn>().All(column => column.Binding is CompiledBinding),
+            "DataGrid metadata: generated columns use compiled property accessors");
+        var number = grid.Columns.OfType<DataGridBoundColumn>().Single(column => Equals(column.Header, nameof(MetadataRow.Number)));
+        var converter = ((CompiledBinding)number.Binding).Converter!;
+        var culture = System.Globalization.CultureInfo.GetCultureInfo("fr-FR");
+        check(Equals(converter.ConvertBack("12", typeof(int), null, culture), 12)
+            && Equals(converter.ConvertBack("2,5", typeof(decimal?), null, culture), 2.5m)
+            && converter.ConvertBack("", typeof(decimal?), null, culture) == null,
+            "DataGrid metadata: scalar editing preserves nullable and culture-aware numeric conversion");
+        check(converter.ConvertBack("invalid", typeof(int), null, culture) is BindingNotification { Error: not null }
+            && converter.ConvertBack("999999999999", typeof(int), null, culture) is BindingNotification { Error: not null },
+            "DataGrid metadata: invalid and overflowing edits produce binding errors");
+        grid.SelectedItem = source[0]; grid.CurrentColumn = number;
+        check(grid.BeginEdit(), "DataGrid metadata: automatic compiled numeric column enters native editing"); Flush();
+        var editor = grid.GetVisualDescendants().OfType<TextBox>().Single();
+        editor.Text = "42"; Flush();
+        check(grid.CommitEdit(DataGridEditingUnit.Row, exitEditingMode: true) && source[0].Number == 42,
+            "DataGrid metadata: automatic compiled editor commits to the registered row property"); Flush();
+        grid.CurrentColumn = grid.Columns.Single(column => Equals(column.Header, nameof(MetadataRow.ReadOnly)));
+        check(!grid.BeginEdit(), "DataGrid metadata: generated getter-only column refuses editing");
+        window.Close(); Flush();
     }
     private static void VerifySorting(Window window, DataGrid grid, string label, Action<bool, string> check)
     {

@@ -1,0 +1,199 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls">
+  <!-- Appearance variants keep native templates, focus, selection and item panels. -->
+  <Style Selector=":is(Button).soft /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector=":is(Button).soft:checked /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(Button).soft:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector=":is(Button).soft:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector=":is(Button).gradient /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.Brand}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector=":is(Button).gradient:checked /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+  </Style>
+  <Style Selector=":is(Button).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandHover}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(Button).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(Button).soft:disabled /template/ ContentPresenter#PART_ContentPresenter, :is(Button).gradient:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.Brand}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient /template/ Button /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.Brand}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandHover}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).gradient:pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient:checked /template/ Button /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).gradient:flyout-open /template/ Button#PART_SecondaryButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient:disabled">
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient:disabled /template/ Button /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient /template/ Border#SeparatorBorder">
+    <Setter Property="Background" Value="{DynamicResource One.OnAccent}" />
+    <Setter Property="Opacity" Value="0.35" />
+  </Style>
+  <Style Selector=":is(SplitButton).gradient:disabled /template/ Border#SeparatorBorder">
+    <Setter Property="Background" Value="{DynamicResource One.Line}" />
+    <Setter Property="Opacity" Value="1" />
+  </Style>
+  <Style Selector="TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+  </Style>
+  <Style Selector="ComboBox.filled /template/ Border#HighlightBackground">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+  </Style>
+  <Style Selector="ProgressBar.gradient">
+    <Setter Property="Foreground" Value="{DynamicResource One.Gradient.Brand}" />
+  </Style>
+  <Style Selector="ProgressBar.success">
+    <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+  </Style>
+  <Style Selector="ProgressBar.info">
+    <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+  </Style>
+  <Style Selector="ProgressBar.warning">
+    <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+  </Style>
+  <Style Selector="ProgressBar.danger">
+    <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+  </Style>
+  <Style Selector="ProgressBar.gradient:disabled, ProgressBar.success:disabled, ProgressBar.info:disabled, ProgressBar.warning:disabled, ProgressBar.danger:disabled">
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+  </Style>
+  <Style Selector="one|InfoCard.glow">
+    <Setter Property="HeaderBackground" Value="{DynamicResource One.Gradient.Glow}" />
+  </Style>
+  <Style Selector="one|InfoCard.flat">
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="HeaderBackground" Value="Transparent" />
+    <Setter Property="FooterBackground" Value="Transparent" />
+    <Setter Property="ShowHeaderSeparator" Value="False" />
+    <Setter Property="ShowFooterSeparator" Value="False" />
+  </Style>
+  <Style Selector="one|InfoCard.glow:disabled, one|InfoCard.flat:disabled">
+    <Setter Property="HeaderBackground" Value="{DynamicResource One.DisabledSurface}" />
+    <Setter Property="FooterBackground" Value="{DynamicResource One.DisabledSurface}" />
+  </Style>
+  <Style Selector="ListBox.borderless, DataGrid.borderless">
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
+
+  <!-- Underlined input chrome leaves official text, spinner and popup presenters intact. -->
+  <Style Selector="TextBox.underlined, ComboBox.underlined, NumericUpDown.underlined, AutoCompleteBox.underlined">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="BorderThickness" Value="0,0,0,1" />
+    <Setter Property="CornerRadius" Value="0" />
+  </Style>
+  <Style Selector="TextBox.underlined:focus /template/ Border#PART_BorderElement, AutoCompleteBox.underlined /template/ TextBox#PART_TextBox:focus /template/ Border#PART_BorderElement">
+    <Setter Property="BorderThickness" Value="0,0,0,2" />
+    <Setter Property="CornerRadius" Value="0" />
+  </Style>
+  <Style Selector="ComboBox.underlined:focus-within, NumericUpDown.underlined:focus-within, AutoCompleteBox.underlined:focus-within">
+    <Setter Property="BorderThickness" Value="0,0,0,2" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem">
+    <Setter Property="CornerRadius" Value="999" />
+    <Setter Property="Margin" Value="0,0,8,0" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem /template/ Border#PART_SelectedPipe">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:selected /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:selected:pointerover /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:selected:pressed /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:disabled /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+  </Style>
+  <Style Selector="TabControl.pills > TabItem:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+  </Style>
+  <Style Selector="ListBox.cards">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="8" />
+  </Style>
+  <Style Selector="ListBox.cards > ListBoxItem">
+    <Setter Property="Margin" Value="0,3" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+  </Style>
+  <Style Selector="ListBox.cards > ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+  </Style>
+  <Style Selector="ListBox.cards > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+  </Style>
+  <Style Selector="ListBox.cards > ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+  </Style>
+  <Style Selector="ListBox.cards > ListBoxItem:disabled /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+  </Style>
+  <Style Selector="one|InfoCard.outlined">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+    <Setter Property="HeaderBackground" Value="{DynamicResource One.AccentSoft}" />
+  </Style>
+  <Style Selector="one|InfoCard.outlined:disabled">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="HeaderBackground" Value="{DynamicResource One.DisabledSurface}" />
+  </Style>
+</Styles>

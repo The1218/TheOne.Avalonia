@@ -12,8 +12,8 @@
     </ControlTemplate></Setter>
     <Style Selector="^:dark /template/ PathIcon#PART_Moon"><Setter Property="IsVisible" Value="False" /></Style>
     <Style Selector="^:dark /template/ PathIcon#PART_Sun"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:pointerover /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /></Style>
-    <Style Selector="^:pressed /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.Line}" /></Style>
+    <Style Selector="^:pointerover /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
+    <Style Selector="^:pressed /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" /></Style>
     <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
     <Style Selector="^:focus-visible /template/ Border#PART_Surface"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /><Setter Property="BorderThickness" Value="1" /></Style>
   </ControlTheme>

@@ -6,7 +6,7 @@
       <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" />
       <Border Name="PART_HeaderFocus" BorderBrush="Transparent" BorderThickness="1" CornerRadius="6" IsHitTestVisible="False" />
     </Grid></ControlTemplate></Setter>
-    <Style Selector="^:focus-visible /template/ Border#PART_HeaderFocus"><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_HeaderFocus"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /></Style>
   </ControlTheme>
   <ControlTheme x:Key="{x:Type one:StepField}" TargetType="one:StepField">
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />

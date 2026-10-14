@@ -1,6 +1,6 @@
 # NavMenu 多级导航
 
-`NavMenu` 继承官方 `TreeView`，使用 `NavMenuItem` 容器和 Still 主题。支持多级菜单、独立图标与文字模板、页面选择、分组标题、原生键盘导航，以及所有层级的虚拟化和容器回收。加载 `OneTheme` 后自动支持 Light / Dark 和三种尺寸。
+`NavMenu` 继承官方 `TreeView`，使用 `NavMenuItem` 容器和 TheOne 主题。支持多级菜单、独立图标与文字模板、页面选择、分组标题、原生键盘导航，以及所有层级的虚拟化和容器回收。加载 `OneTheme` 后自动支持 Light / Dark 和三种尺寸。
 
 ## 指定子级属性与模板
 

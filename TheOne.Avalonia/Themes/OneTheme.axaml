@@ -13,6 +13,8 @@
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/TreeViewItem.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/NavMenu.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/AutoCompleteBox.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/LoadingIndicator.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Button.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/IconButton.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/CalendarCells.axaml" />
@@ -73,8 +75,8 @@
   <!-- Supplies platform flyouts and less common controls not yet rewritten. -->
   <FluentTheme>
     <FluentTheme.Palettes>
-      <ColorPaletteResources x:Key="Light" Accent="#13745C" RegionColor="#FFFFFF" />
-      <ColorPaletteResources x:Key="Dark" Accent="#61C5A5" RegionColor="#19211E" />
+      <ColorPaletteResources x:Key="Light" Accent="#006061" RegionColor="#FFFFFF" />
+      <ColorPaletteResources x:Key="Dark" Accent="#63D9DE" RegionColor="#0F0F0F" />
     </FluentTheme.Palettes>
   </FluentTheme>
   <StyleInclude Source="avares://TheOne.Avalonia/Themes/Styles.axaml" />

@@ -1,4 +1,4 @@
-﻿// (c) Copyright Microsoft Corporation.
+// (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
@@ -8,6 +8,7 @@
 using Avalonia.Controls.Utils;
 using Avalonia.Utilities;
 using System;
+using Avalonia.Controls;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -2782,7 +2783,7 @@ namespace Avalonia.Collections
                 Type itemType = ItemType;
                 if (itemType != null)
                 {
-                    _itemConstructor = itemType.GetConstructor(Type.EmptyTypes);
+                    _itemConstructor = DataGridRowMetadata.GetConstructor(itemType);
                     _itemConstructorIsValid = true;
                 }
             }
@@ -2821,26 +2822,8 @@ namespace Avalonia.Collections
         /// <returns>The type of the items in the collection</returns>
         private Type GetItemType(bool useRepresentativeItem)
         {
-            Type collectionType = SourceCollection.GetType();
-            Type[] interfaces = collectionType.GetInterfaces();
-
-            // Look for IEnumerable<T>.  All generic collections should implement
-            //   We loop through the interface list, rather than call
-            // GetInterface(IEnumerableT), so that we handle an ambiguous match
-            // (by using the first match) without an exception.
-            for (int i = 0; i < interfaces.Length; ++i)
-            {
-                Type interfaceType = interfaces[i];
-                if (interfaceType.Name == typeof(IEnumerable<>).Name)
-                {
-                    // found IEnumerable<>, extract T
-                    Type[] typeParameters = interfaceType.GetGenericArguments();
-                    if (typeParameters.Length == 1)
-                    {
-                        return typeParameters[0];
-                    }
-                }
-            }
+            var registeredType = DataGridRowMetadata.GetItemType(SourceCollection.GetType());
+            if (registeredType != null) return registeredType;
 
             // No generic information found.  Use a representative item instead.
             if (useRepresentativeItem)

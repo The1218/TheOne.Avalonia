@@ -33,7 +33,7 @@ internal static class NavigationPreview
         Check(ReferenceEquals(model.SelectedTreeNode, model.TreeRoots[0].Children[0]), "Arrow navigation updates tree selection");
         var selected = Item(tree, model.SelectedTreeNode!);
         var selectedBorder = LayoutRoot(selected);
-        Check(ColorOf(selectedBorder.Background) == Color.Parse("#E6F3EC"), "Tree selection uses Still highlight");
+        Check(ColorOf(selectedBorder.Background) == Color.Parse("#C1DCDC"), "Tree selection uses TheOne highlight");
         Check(!Item(tree, model.TreeRoots[0].Children[2]).IsEffectivelyEnabled, "Disabled tree node remains disabled");
 
         model.CollapseTreeCommand.Execute(null);
@@ -124,9 +124,9 @@ internal static class NavigationPreview
         {
             window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = theme;
             ControlPreview.Flush();
-            Check(ColorOf(((Border)popup.Child!).Background) == Color.Parse(theme == 2 ? "#19211E" : "#FFFFFF"),
+            Check(ColorOf(((Border)popup.Child!).Background) == Color.Parse(theme == 2 ? "#0F0F0F" : "#FFFFFF"),
                 "Open menu popup follows live theme switch");
-            Check(ColorOf(selectedBorder.Background) == Color.Parse(theme == 2 ? "#203B32" : "#E6F3EC"),
+            Check(ColorOf(selectedBorder.Background) == Color.Parse(theme == 2 ? "#284343" : "#C1DCDC"),
                 "Existing tree row follows theme switch");
         }
         menu.Close();
@@ -137,7 +137,7 @@ internal static class NavigationPreview
         {
             window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = theme;
             ControlPreview.Flush();
-            Check(ColorOf(context.Background) == Color.Parse(theme == 2 ? "#19211E" : "#FFFFFF"),
+            Check(ColorOf(context.Background) == Color.Parse(theme == 2 ? "#0F0F0F" : "#FFFFFF"),
                 "Open ContextMenu follows live theme switch");
         }
         var first = gallery.FindControl<MenuItem>("ContextInspectItem")!;

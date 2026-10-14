@@ -22,7 +22,7 @@ internal static class PreviewPagesPreview
         var window=new MainWindow {Width=1280,Height=920,WindowDecorations=WindowDecorations.None};
         Motion.SetEnabled(window,false);window.Show();ControlPreview.Flush();
         var gallery=window.FindControl<ControlGallery>("Gallery")!;
-        check(window.Model.NavigationRoots.Count==6 && window.Model.NavigationRoots.Sum(group=>group.Entries.Count)==PreviewPageCatalog.Pages.Count,"PreviewHost/pages: grouped pages have one navigation entry in six categories");
+        check(window.Model.NavigationRoots.Count==PreviewPageCatalog.Pages.Select(page=>page.Group).Distinct().Count() && window.Model.NavigationRoots.Sum(group=>group.Entries.Count)==PreviewPageCatalog.Pages.Count,"PreviewHost/pages: grouped pages have one navigation entry in each catalog category");
         check(gallery.CreatedPageCount==1,"PreviewHost/pages: opening shell creates only the active page");
         foreach(var page in PreviewPageCatalog.Pages)
         {
@@ -73,7 +73,7 @@ internal static class PreviewPagesPreview
         check(PreviewPageCatalog.Pages.Count < PreviewPageCatalog.Controls.Count * 0.65,"PreviewHost/groups: related controls reduce navigation destinations");
         check(PreviewPageCatalog.Find(1)==PreviewPageCatalog.Find(130) && PreviewPageCatalog.Find(1).Title=="按钮","PreviewHost/groups: all five button controls share one destination");
         check(PreviewPageCatalog.Find(13)==PreviewPageCatalog.Find(24) && PreviewPageCatalog.Find(10).ControlIds is null,"PreviewHost/groups: data display is combined and DataGrid remains independent");
-        foreach(var id in new[]{118,9,7,18})
+        foreach(var id in new[]{118,9,7,18,11})
         {
             window.NavigateToCategory(id);ControlPreview.Flush();
             var view=gallery.GetControlView(id);
@@ -93,6 +93,18 @@ internal static class PreviewPagesPreview
                 }
             }
         }
+        window.NavigateToCategory(11); ControlPreview.Flush();
+        var splitPage = (SplitViewPage)gallery.GetControlView(11);
+        var paneList = splitPage.FindControl<ListBox>("DetailedSample")!;
+        splitPage.Model.Expanded = false; ControlPreview.Flush();
+        check(paneList.SelectedIndex == 999 && paneList.GetRealizedContainers().Count() is > 0 and < 80
+            && !paneList.GetVisualDescendants().OfType<TextBlock>().Any(text => text.IsEffectivelyVisible),
+            "PreviewHost/SplitView: compact pane hides labels and preserves distant selection and bounded recycling");
+        splitPage.Model.Expanded = true; ControlPreview.Flush();
+        check(paneList.ContainerFromIndex(999) is not null && paneList.GetVisualDescendants().OfType<TextBlock>().Any(text => text.IsEffectivelyVisible),
+            "PreviewHost/SplitView: reopening restores labels and the selected thousandth row");
+        check(!PreviewPageCatalog.Controls.Any(control => control.Title == "RefreshVisualizer"),
+            "PreviewHost: RefreshVisualizer has no standalone catalogue page");
         window.NavigateToCategory(1);ControlPreview.Flush();
         var cachedButton=gallery.GetControlView(1);
         var pageCount=gallery.CreatedPageCount;
@@ -111,6 +123,11 @@ internal static class PreviewPagesPreview
         {
             window.Model.Theme=theme;window.Model.Size=size;window.NavigateToCategory(descriptor.Id);ControlPreview.Flush();
             var section=(ChartShowcaseView)gallery.GetControlView(descriptor.Id);
+            if (section.Kind == ChartKind.Gauge)
+                check(section.Samples.All(sample => sample.Bounds.Width == (size == ControlSize.Small ? 240 : size == ControlSize.Large ? 360 : 300)
+                    && sample.Bounds.Height == (size == ControlSize.Small ? 224 : size == ControlSize.Large ? 336 : 280)
+                    && sample.FontSize == (size == ControlSize.Small ? 10 : size == ControlSize.Large ? 12 : 11)),
+                    $"PreviewHost/Gauge/{theme.Key}/{size}: actual viewport and typography change with inherited density");
             check(section.Samples.All(sample=>sample.ActualThemeVariant==theme && ControlSizing.GetSize(sample)==size && sample.Bounds.Width>0 && sample.Bounds.Height>0),$"PreviewHost/charts/{descriptor.Title}/{theme.Key}/{size}: every variant inherits live theme and density with a measured viewport");
         }
         window.NavigateToCategory(23);ControlPreview.Flush();

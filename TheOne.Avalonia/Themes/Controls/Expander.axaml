@@ -97,14 +97,14 @@
 
         <!--  PointerOver  -->
         <Style Selector="^:pointerover /template/ Border#ToggleButtonBackground">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
         <Style Selector="^:pointerover /template/ Border#ExpandCollapseChevronBorder">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
         <Style Selector="^:pointerover /template/ Path#ExpandCollapseChevron">
@@ -113,14 +113,14 @@
 
         <!--  Pressed  -->
         <Style Selector="^:pressed /template/ Border#ToggleButtonBackground">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
         <Style Selector="^:pressed /template/ Border#ExpandCollapseChevronBorder">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
         <Style Selector="^:pressed /template/ Path#ExpandCollapseChevron">

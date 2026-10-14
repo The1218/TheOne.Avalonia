@@ -26,10 +26,10 @@ internal static class EnhancementsPreview
         var border = Part<Border>(text, "PART_BorderElement");
         text.Focus(NavigationMethod.Tab);
         ControlPreview.Flush();
-        Check(border.BorderThickness == new Thickness(2) && Colour(border.BorderBrush) == Color.Parse("#13745C"), "TextBox focus retains an accent border on all four sides");
+        Check(border.BorderThickness == new Thickness(1) && Colour(border.BorderBrush) == Color.Parse("#129190"), "TextBox focus retains an accent border on all four sides");
         gallery.FindControl<Button>("ScopedButton")!.Focus();
         ControlPreview.Flush();
-        Check(border.BorderThickness == new Thickness(1) && Colour(border.BorderBrush) == Color.Parse("#809389"), "TextBox blur restores normal border");
+        Check(border.BorderThickness == new Thickness(1) && Colour(border.BorderBrush)?.A == 0, "TextBox blur restores normal border");
         foreach (var (prefix, height) in new[] { ("Small", 30), ("Normal", 36), ("Large", 44) })
         {
             var editor = gallery.FindControl<TextBox>(prefix + "Text")!;
@@ -61,7 +61,7 @@ internal static class EnhancementsPreview
         var filled = Part<RepeatButton>(slider, "PART_DecreaseButton");
         var thumbPoint = Centre(thumb, window);
         window.MouseMove(thumbPoint); ControlPreview.Flush();
-        Check(Colour(container.Background)?.A == 0 && Colour(filled.Background) == Color.Parse("#0D624D"), "Slider hover keeps canvas transparent and filled track accented");
+        Check(Colour(container.Background)?.A == 0 && Colour(filled.Background) == Color.Parse("#006A6B"), "Slider hover keeps canvas transparent and filled track accented");
         window.MouseDown(thumbPoint, MouseButton.Left); ControlPreview.Flush();
         Check(Colour(container.Background)?.A == 0, "Slider press does not paint a rectangular background");
         window.MouseUp(thumbPoint, MouseButton.Left); window.MouseMove(new Point(1, 1)); ControlPreview.Flush();
@@ -155,7 +155,7 @@ internal static class EnhancementsPreview
         text.SelectAll(); window.KeyTextInput("2026-10-12"); PressKey(window, Key.Enter, PhysicalKey.Enter);
         picker.IsDropDownOpen = true; ControlPreview.Flush();
         window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 2; ControlPreview.Flush();
-        Check(Colour(calendar.Background) == Color.Parse("#19211E"), "Open calendar follows a live dark-theme switch");
+        Check(Colour(calendar.Background) == Color.Parse("#0F0F0F"), "Open calendar follows a live dark-theme switch");
         window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 1; picker.IsDropDownOpen = false; ControlPreview.Flush();
     }
 
@@ -170,9 +170,9 @@ internal static class EnhancementsPreview
         var beforeHover = Colour(thumb.Background);
         window.MouseMove(Centre(thumb, window)); ControlPreview.Flush();
         AdvanceUntil(() => Colour(thumb.Background) != beforeHover, 1500);
-        Check(Colour(thumb.Background) != beforeHover && Colour(thumb.Background) != Color.Parse("#0D624D"), "Hover brush transition renders a real intermediate colour");
-        AdvanceUntil(() => Colour(thumb.Background) == Color.Parse("#0D624D"), 1500);
-        Check(Colour(thumb.Background) == Color.Parse("#0D624D"), "Hover transition settles on the semantic hover colour");
+        Check(Colour(thumb.Background) != beforeHover && Colour(thumb.Background) != Color.Parse("#006A6B"), "Hover brush transition renders a real intermediate colour");
+        AdvanceUntil(() => Colour(thumb.Background) == Color.Parse("#006A6B"), 1500);
+        Check(Colour(thumb.Background) == Color.Parse("#006A6B"), "Hover transition settles on the semantic hover colour");
         window.MouseMove(new Point(1, 1));
         expander.IsExpanded = false;
         ControlPreview.Flush();
@@ -364,7 +364,7 @@ internal static class EnhancementsPreview
         foreach (var direction in Enum.GetValues<ExpandDirection>())
         {
             var body = new StackPanel { Spacing = 8, Width = 160 };
-            body.Children.Add(new TextBlock { Text = "Still · OneTheme", FontWeight = FontWeight.SemiBold });
+            body.Children.Add(new TextBlock { Text = "TheOne · OneTheme", FontWeight = FontWeight.SemiBold });
             body.Children.Add(new TextBlock { Text = "完整内容保持布局，边框连续连接。", TextWrapping = TextWrapping.Wrap });
             body.Children.Add(new Button { Content = "主题控件", HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left });
             var expander = new Expander { Header = direction.ToString(), Content = body, ExpandDirection = direction, HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left };

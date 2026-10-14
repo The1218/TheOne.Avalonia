@@ -1,4 +1,4 @@
-﻿// (c) Copyright Microsoft Corporation.
+// (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
@@ -409,7 +409,7 @@ namespace Avalonia.Controls
                         }
                         propertyType = propertyInfo.PropertyType.GetNonNullableType();
                     }
-                    return propertyInfo == null || !propertyInfo.CanWrite || !AllowEdit || !CanEdit(propertyType);
+                    return propertyInfo == null || propertyInfo.SetMethod is not { IsPublic: true } || !AllowEdit || !CanEdit(propertyType);
                 }
                 else if (DataType.GetIsReadOnly())
                 {
@@ -699,7 +699,7 @@ namespace Avalonia.Controls
 
             if (DataSource != null && dataType != null && !DataTypeIsPrimitive(dataType))
             {
-                _dataProperties = dataType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                _dataProperties = DataGridRowMetadata.GetProperties(dataType);
                 Debug.Assert(_dataProperties != null);
             }
             else

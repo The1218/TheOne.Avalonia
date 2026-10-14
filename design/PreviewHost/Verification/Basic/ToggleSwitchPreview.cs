@@ -70,13 +70,12 @@ internal static class ToggleSwitchPreview
         var disabled = state == "disabled"; var isOn = toggle.IsChecked == true;
         var track = Part<Border>(toggle, isOn ? "SwitchKnobBounds" : "OuterBorder");
         var thumb = Part<Ellipse>(toggle, isOn ? "SwitchKnobOn" : "SwitchKnobOff");
-        var fill = disabled ? "One.DisabledSurface" : isOn ? state switch { "hover" => "One.AccentHover", "pressed" => "One.AccentPressed", _ => "One.Accent" }
-            : state switch { "hover" => "One.Subtle", "pressed" => "One.Line", _ => "One.Surface" };
-        var stroke = disabled ? "One.DisabledText" : isOn ? "One.Accent" : "One.InputLine";
+        var fill = disabled ? "One.DisabledSelection" : isOn ? "One.Accent" : "One.Line";
+        var stroke = "One.Transparent";
         Check(Colour(Part<Grid>(toggle, "RootGrid").Background)?.A == 0 && Colour(Part<Grid>(toggle, "SwitchAreaGrid").Background)?.A == 0 && track.Opacity == 1 && thumb.Opacity == 1,
             $"{label}/{state}: both row surfaces remain transparent while track and thumb stay visible");
         Check(Colour(track.Background) == Resource(toggle, fill) && Colour(track.BorderBrush) == Resource(toggle, stroke)
-              && Colour(thumb.Fill) == Resource(toggle, disabled ? "One.DisabledText" : isOn ? "One.OnAccent" : "One.Muted")
+              && Colour(thumb.Fill) == Resource(toggle, disabled ? "One.PrimaryDisabled" : state switch { "hover" => "One.SurfaceHover", "pressed" => "One.SurfacePressed", _ => "One.Surface" })
               && Colour(toggle.Foreground) == Resource(toggle, disabled ? "One.DisabledText" : "One.Text"),
             $"{label}/{state}: track, thumb and label use the correct semantic state palette");
         Check(Canvas.GetLeft(Part<Panel>(toggle, "PART_MovingKnobs")) == (isOn ? 20 : 0)

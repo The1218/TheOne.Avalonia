@@ -7,8 +7,8 @@
     <ControlTheme TargetType="RepeatButton" x:Key="{x:Type RepeatButton}">
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
         <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -35,15 +35,15 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">

@@ -24,8 +24,8 @@
         <Setter Property="FocusAdorner" Value="{x:Null}" />
         <Setter Property="MaxDropDownHeight" Value="504" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
@@ -35,7 +35,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Muted}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <DataValidationErrors>
@@ -52,8 +52,8 @@
                                     MinWidth="{DynamicResource ComboBoxThemeMinWidth}"
                                     x:Name="Background" />
                                 <Border
-                                    Background="{DynamicResource One.Surface}"
-                                    BorderBrush="{DynamicResource One.InputLine}"
+                                    Background="{DynamicResource One.Subtle}"
+                                    BorderBrush="{DynamicResource One.Transparent}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding CornerRadius}"
                                     Grid.Column="0"
@@ -144,7 +144,7 @@
                                     WindowManagerAddShadowHint="False">
                                     <Border
                                         Background="{DynamicResource One.Surface}"
-                                        BorderBrush="{DynamicResource One.InputLine}"
+                                        BorderBrush="{DynamicResource One.OutlineStrong}"
                                         BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
                                         CornerRadius="{DynamicResource OverlayCornerRadius}"
                                         HorizontalAlignment="Stretch"
@@ -177,14 +177,14 @@
 
         <!--  PointerOver State  -->
         <Style Selector="^:pointerover /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <!--  Pressed State  -->
         <Style Selector="^:pressed /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <!--  Error State  -->
@@ -198,7 +198,7 @@
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
             <Style Selector="^ /template/ TextBlock#PlaceholderTextBlock">
-                <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Placeholder}" />
             </Style>
             <Style Selector="^ /template/ PathIcon#DropDownGlyph">
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
@@ -209,7 +209,7 @@
         <Style Selector="^:focus-visible">
             <Style Selector="^ /template/ Border#HighlightBackground">
                 <Setter Property="IsVisible" Value="True" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
             </Style>
             <Style Selector="^ /template/ ContentControl#ContentPresenter">
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />

@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Notifications;
 using Avalonia.Controls.Presenters;
 using Avalonia.Headless;
@@ -26,12 +27,21 @@ internal static class ButtonsMessagesPreview
             var buttonPage = new ButtonPage(); var iconPage = new IconButtonPage();
             var window = Open(new StackPanel { Spacing = 12, Children = { buttonPage, iconPage } }, theme, size);
             var label = $"Buttons/{theme.Key}/{size}";
+            VerifyThreeState(theme, size, check);
             var icon = iconPage.FindControl<IconButton>("GeometryIcon")!;
             var presenter = Part<ContentPresenter>(icon, "PART_IconPresenter");
-            check(icon.Bounds.Height >= (size == ControlSize.Small ? 30 : size == ControlSize.Large ? 44 : 36) && icon.IconSize == (size == ControlSize.Small ? 14 : size == ControlSize.Large ? 20 : 16), label + ": native button and icon follow density");
+            check(icon.Bounds.Height >= (size == ControlSize.Small ? 30 : size == ControlSize.Large ? 44 : 36) && icon.IconSize == (size == ControlSize.Small ? 13 : size == ControlSize.Large ? 19 : 15), label + ": native button and icon follow density");
             check(presenter.GetVisualDescendants().OfType<PathIcon>().Any(path => ReferenceEquals(path.Data, icon.Icon)), label + ": bound geometry uses a PathIcon in the separate icon region");
             var material = iconPage.FindControl<IconButton>("MaterialIcon")!;
             check(material.GetVisualDescendants().OfType<MaterialIcon>().Single().Kind == MaterialIconKind.Home, label + ": compiled Material enum template renders the requested icon");
+            foreach (var sample in new[] { icon, material, iconPage.FindControl<IconButton>("PathIconControl")! })
+            {
+                var glyph = Part<ContentPresenter>(sample, "PART_IconPresenter").Child!;
+                var first = glyph.TranslatePoint(default, sample)!.Value;
+                var last = glyph.TranslatePoint(new Point(glyph.Bounds.Width, glyph.Bounds.Height), sample)!.Value;
+                check(last.X - first.X <= sample.IconSize + 0.1 && last.Y - first.Y <= sample.IconSize + 0.1,
+                    label + ": geometry, material and caller-owned icons are actually scaled to the icon size");
+            }
             var model = (IconButtonPageViewModel)iconPage.DataContext!;
             model.MaterialIcon = MaterialIconKind.Check; ControlPreview.Flush();
             check(material.GetVisualDescendants().OfType<MaterialIcon>().Single().Kind == MaterialIconKind.Check, label + ": Material kind binding updates at runtime");
@@ -53,6 +63,26 @@ internal static class ButtonsMessagesPreview
         }
         SplitButtonPreview.Verify();
     }
+    private static void VerifyThreeState(ThemeVariant theme, ControlSize size, Action<bool, string> check)
+    {
+        foreach (var appearance in new[] { "", "soft", "gradient", "primary", "outline", "ghost" })
+        {
+            var toggle = new ToggleButton { Content = "三态", IsThreeState = true };
+            if (appearance.Length > 0) toggle.Classes.Add(appearance);
+            var window = Open(toggle, theme, size);
+            var marker = Part<Border>(toggle, "PART_IndeterminateIndicator");
+            Click(toggle); check(toggle.IsChecked == true && !marker.IsVisible, $"Toggle/{theme.Key}/{size}/{appearance}: pointer selects without mixed marker");
+            Click(toggle); check(toggle.IsChecked is null && marker.IsVisible && marker.Bounds.Width == 12
+                && marker.Background is ISolidColorBrush markerInk && Part<ContentPresenter>(toggle, "PART_ContentPresenter").Foreground is ISolidColorBrush contentInk && markerInk.Color == contentInk.Color,
+                $"Toggle/{theme.Key}/{size}/{appearance}: mixed state has a visible independent dash");
+            toggle.Focus(); window.KeyPress(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null);
+            window.KeyRelease(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null); ControlPreview.Flush();
+            check(toggle.IsChecked == false && !marker.IsVisible, $"Toggle/{theme.Key}/{size}/{appearance}: Space completes native three-state cycle");
+            toggle.IsChecked = null; toggle.IsEnabled = false; ControlPreview.Flush(); Click(toggle);
+            check(toggle.IsChecked is null && marker.IsVisible, $"Toggle/{theme.Key}/{size}/{appearance}: disabled mixed state retains its marker and rejects input");
+            window.Close(); ControlPreview.Flush();
+        }
+    }
     private static void VerifyMessages(ThemeVariant theme, ControlSize size, Action<bool, string> check)
     {
         var page = new ToastPage(); var window = Open(page, theme, size); var model = page.Model;
@@ -62,6 +92,10 @@ internal static class ButtonsMessagesPreview
         var host = Part<WindowNotificationManager>(window, "PART_Toasts");
         var card = host.GetVisualDescendants().OfType<NotificationCard>().Single();
         check(host.Position == NotificationPosition.BottomRight && host.MaxItems == 2 && ControlSizing.GetSize(card) == size && !Motion.GetEnabled(card), $"Messages/{theme.Key}/{size}: toast position, limit, density and motion reach the real host");
+        check(card.Bounds.Width == (size == ControlSize.Small ? 280 : size == ControlSize.Large ? 360 : 320)
+            && card.FontSize == (size == ControlSize.Small ? 11 : size == ControlSize.Large ? 13 : 12)
+            && Part<Border>(card, "PART_StatusBadge").Bounds.Width == (size == ControlSize.Small ? 20 : size == ControlSize.Large ? 28 : 24),
+            $"Messages/{theme.Key}/{size}: actual toast card uses compact width, text and icon density");
         check(card.Content is INotification { Title: "Custom title", Message: "Configured toast", Type: NotificationType.Error, Expiration: var expiration } && expiration == TimeSpan.Zero,
             $"Messages/{theme.Key}/{size}: title, type, content and persistent duration reach the native notification");
         model.CloseToastCommand.Execute(null); ControlPreview.Flush();
@@ -115,7 +149,11 @@ internal static class ButtonsMessagesPreview
         ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush(); return window;
     }
     private static T Part<T>(Control control, string name) where T : Control => control.GetVisualDescendants().OfType<T>().Single(part => part.Name == name);
-    private static Point Position(Control control) => control.TranslatePoint(new Point(control.Bounds.Width / 2, control.Bounds.Height / 2), TopLevel.GetTopLevel(control)!)!.Value;
+    private static Point Position(Control control)
+    {
+        control.BringIntoView(); ControlPreview.Flush();
+        return control.TranslatePoint(new Point(control.Bounds.Width / 2, control.Bounds.Height / 2), TopLevel.GetTopLevel(control)!)!.Value;
+    }
     private static void Hover(Control control) { TopLevel.GetTopLevel(control)!.MouseMove(Position(control)); ControlPreview.Flush(); }
     private static void Press(Control control) { TopLevel.GetTopLevel(control)!.MouseDown(Position(control), MouseButton.Left); ControlPreview.Flush(); }
     private static void Release(Control control) { TopLevel.GetTopLevel(control)!.MouseUp(Position(control), MouseButton.Left); ControlPreview.Flush(); }

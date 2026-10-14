@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <IsAotCompatible>true</IsAotCompatible>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+    <AvaloniaVersion>12.1.4</AvaloniaVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../Verification/Fixtures/Theme/ControlVariantsFixtureModel.cs" Link="ControlVariantsFixtureModel.cs" />
+    <Compile Include="../../Verification/Fixtures/Theme/ControlVariantsFixture.axaml.cs" Link="ControlVariantsFixture.axaml.cs" />
+    <AvaloniaResource Include="../../Verification/Fixtures/Theme/ControlVariantsFixture.axaml" Link="ControlVariantsFixture.axaml" />
+    <Compile Include="../../Verification/Theme/ControlVariantsPreview.cs" Link="ControlVariantsPreview.cs" />
+    <Compile Include="../../Verification/Theme/NovaPalettePreview.cs" Link="NovaPalettePreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../ViewModels/Extensions/TagStepDemoViewModel.cs" Link="TagStepDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/TagDemoView.axaml.cs" Link="TagDemoView.axaml.cs" />
+    <Compile Include="../../Views/Extensions/StepDemoView.axaml.cs" Link="StepDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/TagDemoView.axaml" Link="TagDemoView.axaml" />
+    <AvaloniaResource Include="../../Views/Extensions/StepDemoView.axaml" Link="StepDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/StepAutomaticPreview.cs" Link="StepAutomaticPreview.cs" />
+    <Compile Include="../../Verification/Extensions/TagStepPreview.cs" Link="TagStepPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../ViewModels/DataDisplay/DataGridBindingDemoViewModel.cs" Link="DataGridBindingDemoViewModel.cs" />
+    <Compile Include="../../Views/DataDisplay/DataGridBindingDemoView.axaml.cs" Link="DataGridBindingDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/DataDisplay/DataGridBindingDemoView.axaml" Link="DataGridBindingDemoView.axaml" />
+    <Compile Include="../../Verification/Fixtures/DataGridCollectionsFixture.axaml.cs" Link="DataGridCollectionsFixture.axaml.cs" />
+    <AvaloniaResource Include="../../Verification/Fixtures/DataGridCollectionsFixture.axaml" Link="DataGridCollectionsFixture.axaml" />
+    <Compile Include="../../Verification/DataDisplay/DataGridBindingPreview.cs" Link="DataGridBindingPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../Models/DataDisplay/GridFilterFields.cs" Link="GridFilterFields.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridSummaryPreview.cs" Link="DataGridSummaryPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridSummaryPreview.Values.cs" Link="DataGridSummaryPreview.Values.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridSummaryPreview.Drag.cs" Link="DataGridSummaryPreview.Drag.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridRightFrozenPreview.cs" Link="DataGridRightFrozenPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridFilterPreview.cs" Link="DataGridFilterPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridFilterPreview.State.cs" Link="DataGridFilterPreview.State.cs" />
+    <Compile Include="../../Models/DataDisplay/GridRecord.cs" Link="GridRecord.cs" />
+    <Compile Include="../../Verification/Fixtures/DataDisplay/DataGridStage1Fixture.cs" Link="DataGridStage1Fixture.cs" />
+    <Compile Include="../../Verification/Fixtures/Views/DataDisplay/DataGridStage1View.cs" Link="DataGridStage1View.cs" />
+    <Compile Include="../../Verification/DataDisplay/DataGridStage1Preview.cs" Link="DataGridStage1Preview.cs" />
+    <Compile Include="../../Infrastructure/Charts/ChartControlFactory.cs" Link="ChartControlFactory.cs" />
+    <Compile Include="../../ViewModels/NavigationLayout/NavMenuDemoViewModel.cs" Link="NavMenuDemoViewModel.cs" />
+    <Compile Include="../../Models/NavigationLayout/TransitionPage.cs" Link="TransitionPage.cs" />
+    <Compile Include="../../ViewModels/Extensions/InfoCardDemoViewModel.cs" Link="InfoCardDemoViewModel.cs" />
+    <Compile Include="../../ViewModels/Messages/DialogEditorViewModel.cs" Link="DialogEditorViewModel.cs" />
+    <AvaloniaResource Include="../../Views/Messages/DialogEditorView.axaml" Link="DialogEditorView.axaml" />
+    <Compile Include="../../Views/Messages/DialogEditorView.axaml.cs" Link="DialogEditorView.axaml.cs" />
+    <Compile Include="../../Verification/Windows/LoginWindowChecks.cs" Link="LoginWindowChecks.cs" />
+    <AvaloniaResource Include="../../Views/Windows/LoginDemoView.axaml" Link="LoginDemoView.axaml" />
+    <Compile Include="../../Views/Windows/LoginDemoView.axaml.cs" Link="LoginDemoView.axaml.cs" />
+    <Compile Include="../../ViewModels/Windows/LoginDemoViewModel.cs" Link="LoginDemoViewModel.cs" />
+    <Compile Include="../../Verification/Charts/ChartPreview.cs" Link="ChartPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuCollapsedPreview.cs" Link="NavMenuCollapsedPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuSearchInteractionPreview.cs" Link="NavMenuSearchInteractionPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuFilterPreview.cs" Link="NavMenuFilterPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuMotionPreview.cs" Link="NavMenuMotionPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuSearchPreview.cs" Link="NavMenuSearchPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuEdgePreview.cs" Link="NavMenuEdgePreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuCascadePreview.cs" Link="NavMenuCascadePreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/NavMenuPreview.cs" Link="NavMenuPreview.cs" />
+    <Compile Include="../../Models/NavigationLayout/PreviewNavigation.cs" Link="PreviewNavigation.cs" />
+    <AvaloniaResource Include="../../Views/NavigationLayout/NavMenuDemoView.axaml" Link="NavMenuDemoView.axaml" />
+    <Compile Include="../../Views/NavigationLayout/NavMenuDemoView.axaml.cs" Link="NavMenuDemoView.axaml.cs" />
+    <Compile Include="../../Verification/Extensions/InfoCardPreview.cs" Link="InfoCardPreview.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/InfoCardDemoView.axaml" Link="InfoCardDemoView.axaml" />
+    <Compile Include="../../Views/Extensions/InfoCardDemoView.axaml.cs" Link="InfoCardDemoView.axaml.cs" />
+    <ProjectReference Include="../../../../TheOne.Avalonia/TheOne.Avalonia.csproj" />
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Headless" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.4" />
+  </ItemGroup>
+</Project>

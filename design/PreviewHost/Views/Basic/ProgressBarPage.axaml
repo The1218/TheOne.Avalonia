@@ -10,5 +10,7 @@
     <Slider Value="{Binding Value, Mode=TwoWay}" MaxWidth="420"/>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><ProgressBar Classes="gradient" Value="{Binding Value}" MaxWidth="420" /><ProgressBar Classes="success" Value="100" MaxWidth="420" /><ProgressBar Classes="warning" Value="48" MaxWidth="420" /><ProgressBar Classes="danger" Value="24" MaxWidth="420" /></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:LoadingContainer}" TargetType="one:LoadingContainer">
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+    <Setter Property="OverlayBrush" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+          <Border Name="PART_LoadingOverlay" IsVisible="{TemplateBinding IsLoading}" Background="Transparent" CornerRadius="{TemplateBinding CornerRadius}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1">
+            <Grid>
+              <Border Name="PART_OverlayBackground" Background="{TemplateBinding OverlayBrush}" Opacity="{TemplateBinding OverlayOpacity}" CornerRadius="{TemplateBinding CornerRadius}" />
+              <Border Name="PART_LoadingStatus" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="{TemplateBinding CornerRadius}" Padding="16" Margin="12" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Spacing="12">
+                <one:LoadingIndicator Name="PART_LoadingIndicator" IsActive="{TemplateBinding ShowDefaultLoadingIndicator}" IsVisible="{TemplateBinding ShowDefaultLoadingIndicator}" Foreground="{DynamicResource One.Accent}" Width="{Binding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}" Height="{Binding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}" />
+                <ContentPresenter Name="PART_LoadingIconPresenter" Content="{TemplateBinding LoadingIcon}" ContentTemplate="{TemplateBinding LoadingIconTemplate}" IsVisible="{TemplateBinding HasCustomLoadingIcon}" Width="{TemplateBinding LoadingIconSize}" Height="{TemplateBinding LoadingIconSize}" Foreground="{DynamicResource One.Accent}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                  <ContentPresenter.DataTemplates>
+                    <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry"><PathIcon Data="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" /></DataTemplate>
+                  </ContentPresenter.DataTemplates>
+                </ContentPresenter>
+                <Border IsVisible="{TemplateBinding HasLoadingText}">
+                  <TextBlock Name="PART_LoadingText" Text="{TemplateBinding LoadingText}" Foreground="{DynamicResource One.Text}" TextWrapping="Wrap" HorizontalAlignment="Center" AutomationProperties.LiveSetting="Polite" />
+                </Border>
+              </StackPanel>
+              </Border>
+            </Grid>
+          </Border>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:loading /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="IsEnabled" Value="False" /><Setter Property="IsHitTestVisible" Value="False" /></Style>
+    <Style Selector="^.one-small"><Setter Property="LoadingIconSize" Value="22" /></Style>
+    <Style Selector="^.one-large"><Setter Property="LoadingIconSize" Value="34" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

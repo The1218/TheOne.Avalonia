@@ -37,11 +37,11 @@ internal static class NotificationPreview
             var surface = Part<Panel>(card, "PART_AnimationHost"); EnhancementsPreview.Advance(35);
             Check(card.GetType() == typeof(NotificationCard) && card.NotificationType == type && ReferenceEquals(card.Content, model), $"{label}/{type}: manager creates the native card and preserves notification content/type");
             Check(surface.Opacity is > 0 and < 1 && !card.IsClosing && !card.IsClosed, $"{label}/{type}: native display lifecycle has a real intermediate opacity");
-            var padding = size switch { ControlSize.Small => 12, ControlSize.Large => 20, _ => 16 };
-            var badge = size switch { ControlSize.Small => 24, ControlSize.Large => 32, _ => 28 };
-            Check(card.Padding == new Thickness(padding) && card.FontSize == (size switch { ControlSize.Small => 12, ControlSize.Large => 16, _ => 14 }) && Part<Border>(card, "PART_StatusBadge").Bounds.Width == badge && Part<Button>(card, "PART_CloseButton").Bounds.Width == badge, $"{label}/{type}: inherited density controls padding, typography, icon badge and close button");
-            var key = type switch { NotificationType.Success => "One.Success", NotificationType.Warning => "One.Warning", NotificationType.Error => "One.Danger", _ => "One.Accent" };
-            Check(Colour(Part<Panel>(card, "PART_HeaderBar").Background) == Resource(card, key) && Colour(Part<PathIcon>(card, "PART_StatusIcon").Foreground) == Resource(card, key) && Colour(card.Background) == Resource(card, "One.Surface") && Colour(card.Foreground) == Resource(card, "One.Text"), $"{label}/{type}: semantic type accents and common Still surface/text");
+            var padding = size switch { ControlSize.Small => 8, ControlSize.Large => 12, _ => 10 };
+            var badge = size switch { ControlSize.Small => 20, ControlSize.Large => 28, _ => 24 };
+            Check(card.Padding == new Thickness(padding) && card.FontSize == (size switch { ControlSize.Small => 11, ControlSize.Large => 13, _ => 12 }) && Part<Border>(card, "PART_StatusBadge").Bounds.Width == badge && Part<Button>(card, "PART_CloseButton").Bounds.Width == badge, $"{label}/{type}: inherited density controls padding, typography, icon badge and close button");
+            var key = type switch { NotificationType.Success => "One.Success", NotificationType.Warning => "One.Warning", NotificationType.Error => "One.Danger", _ => "One.Info" };
+            Check(Colour(Part<Panel>(card, "PART_HeaderBar").Background) == Resource(card, key + "Fill") && Colour(Part<PathIcon>(card, "PART_StatusIcon").Foreground) == Resource(card, key) && Colour(card.Background) == Resource(card, "One.Surface") && Colour(card.Foreground) == Resource(card, "One.Text"), $"{label}/{type}: semantic type accents and common TheOne surface/text");
             var title = card.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Name == "PART_NotificationTitle");
             var message = card.GetVisualDescendants().OfType<TextBlock>().Single(text => text.Name == "PART_NotificationMessage");
             Check(title.Text == model.Title && message.Text == model.Message && title.FontSize == card.FontSize && message.FontSize == card.FontSize && Colour(message.Foreground) == Resource(card, "One.Text"), $"{label}/{type}: card-owned notification template renders title and message with inherited typography and foreground");
@@ -91,14 +91,14 @@ internal static class NotificationPreview
         Check(demo.Cards.Length == 0 && demo.ClosedCount == before + 4, $"{label}: no-motion CloseAll safely removes native items after collection enumeration");
         demo.ShowNotification(NotificationType.Information); ControlPreview.Flush(); var visible = demo.Cards.Single();
         window.RequestedThemeVariant = theme == ThemeVariant.Light ? ThemeVariant.Dark : ThemeVariant.Light; ControlSizing.SetSize(window, size == ControlSize.Large ? ControlSize.Small : ControlSize.Large); ControlPreview.Flush();
-        Check(visible.Padding.Left == (size == ControlSize.Large ? 12 : 20) && Colour(visible.Background) == Resource(visible, "One.Surface") && Colour(Part<PathIcon>(visible, "PART_StatusIcon").Foreground) == Resource(visible, "One.Accent"), $"{label}: live theme and density update an existing notification");
+        Check(visible.Padding.Left == (size == ControlSize.Large ? 8 : 12) && Colour(visible.Background) == Resource(visible, "One.Surface") && Colour(Part<PathIcon>(visible, "PART_StatusIcon").Foreground) == Resource(visible, "One.Info"), $"{label}: live theme and density update an existing notification");
         demo.Manager.ClearValue(Motion.EnabledProperty); Motion.SetEnabled(window, false); ControlPreview.Flush();
         Check(toggle.IsChecked == false && !Motion.GetEnabled(visible), $"{label}: preview switch follows inherited global motion settings");
         Click(window, demo.FindControl<Button>("ResetNotifications")!); ControlPreview.Flush();
         Check(demo.Cards.Length == 0 && !demo.Manager.IsSet(Motion.EnabledProperty) && !Motion.GetEnabled(demo.Manager) && demo.ShownCount == 0 && demo.ClosedCount == 0, $"{label}: reset removes notifications and restores global preference without stale callbacks");
         Motion.SetEnabled(window, true); window.Width = 680; ControlPreview.Flush();
         demo.ShowNotification(NotificationType.Success); ControlPreview.Flush(); var compact = demo.Cards.Single();
-        Check(compact.Bounds.Width == 360 && demo.FindControl<Border>("NotificationPreviewArea")!.Bounds.Width <= 632, $"{label}: compact viewport fits the native notification card");
+        Check(compact.Bounds.Width == (size == ControlSize.Large ? 280 : 360) && demo.FindControl<Border>("NotificationPreviewArea")!.Bounds.Width <= 632, $"{label}: compact viewport fits the native notification card");
         Motion.SetEnabled(demo.Manager, false); demo.Manager.CloseAll(); ControlPreview.Flush(); window.Close();
     }
     private static void VerifyConsumer()
@@ -120,8 +120,8 @@ internal static class NotificationPreview
         var window = new Window { Width = 720, Height = 540, Content = new TextBlock { Text = "宿主窗口" } }; ControlSizing.SetSize(window, ControlSize.Small); Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush();
         var manager = new WindowNotificationManager(window) { MaxItems = 2 }; ControlPreview.Flush(); manager.Show(new Notification("窗口通知", "使用原生 AdornerLayer", NotificationType.Success, TimeSpan.Zero)); ControlPreview.Flush();
         var card = manager.GetVisualDescendants().OfType<NotificationCard>().Single();
-        Check(card.FontSize == 12 && !Motion.GetEnabled(card) && Part<Panel>(card, "PART_AnimationHost").Opacity == 1, "Notification: native window-overlay manager inherits window density and motion settings");
-        foreach (var position in Enum.GetValues<NotificationPosition>()) { manager.Position = position; ControlPreview.Flush(); Check(card.Bounds.Width == 360 && card.IsEffectivelyVisible, $"Notification/{position}: native positional layout keeps the card visible"); }
+        Check(card.FontSize == 11 && !Motion.GetEnabled(card) && Part<Panel>(card, "PART_AnimationHost").Opacity == 1, "Notification: native window-overlay manager inherits window density and motion settings");
+        foreach (var position in Enum.GetValues<NotificationPosition>()) { manager.Position = position; ControlPreview.Flush(); Check(card.Bounds.Width == 280 && card.IsEffectivelyVisible, $"Notification/{position}: native positional layout keeps the card visible"); }
         manager.Close(card.Content!); ControlPreview.Flush(); Check(card.IsClosed && !manager.GetVisualDescendants().OfType<NotificationCard>().Any(), "Notification: native Close(content) safely removes overlay content with motion disabled"); window.Close();
     }
     private static void VerifyBoundedDelivery()
@@ -149,7 +149,7 @@ internal static class NotificationPreview
         var demo = (NotificationDemoView)card.Child!; Click(window, demo.FindControl<Button>("ShowSuccessNotification")!);
         Check(demo.Cards.Length == 1 && demo.Cards[0].NotificationType == NotificationType.Success, "Notification catalogue supports native notification delivery");
         window.FindControl<ComboBox>("SizePicker")!.SelectedIndex = 0; window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 2; ControlPreview.Flush();
-        Check(demo.Cards[0].FontSize == 12 && demo.Cards[0].ActualThemeVariant == ThemeVariant.Dark, "Notification catalogue follows global theme and density");
+        Check(demo.Cards[0].FontSize == 11 && demo.Cards[0].ActualThemeVariant == ThemeVariant.Dark, "Notification catalogue follows global theme and density");
         Motion.SetEnabled(demo.Manager, false); demo.Manager.CloseAll(); ControlPreview.Flush();
         window.NavigateToCategory(0); gallery.Search("NotificationCard"); ControlPreview.Flush();
         Check(card.IsVisible && !gallery.FindControl<Border>("ContentTransitionCard")!.IsVisible, "Notification search opens the interaction page without a comparison matrix"); gallery.Search("");

@@ -1,4 +1,4 @@
-﻿// (c) Copyright Microsoft Corporation.
+// (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
@@ -21,30 +21,6 @@ namespace Avalonia.Controls.Utils
         internal const char RightIndexerToken = ']';
         internal const char LeftParenthesisToken  = '(';
         internal const char RightParenthesisToken = ')';
-
-        private static Type? FindGenericType(Type definition, Type? type)
-        {
-            while ((type != null) && (type != typeof(object)))
-            {
-                if (type.IsGenericType && (type.GetGenericTypeDefinition() == definition))
-                {
-                    return type;
-                }
-                if (definition.IsInterface)
-                {
-                    foreach (Type type2 in type.GetInterfaces())
-                    {
-                        Type? type3 = FindGenericType(definition, type2);
-                        if (type3 != null)
-                        {
-                            return type3;
-                        }
-                    }
-                }
-                type = type.BaseType;
-            }
-            return null;
-        }
 
         /// <summary>
         /// Finds an int or string indexer in the specified collection of members, where int indexers take priority
@@ -143,12 +119,7 @@ namespace Avalonia.Controls.Utils
 
         internal static Type GetEnumerableItemType(this Type enumerableType)
         {
-            Type? type = FindGenericType(typeof(IEnumerable<>), enumerableType);
-            if (type != null)
-            {
-                return type.GetGenericArguments()[0];
-            }
-            return enumerableType;
+            return DataGridRowMetadata.GetItemType(enumerableType) ?? enumerableType;
         }
 
         /// <summary>
@@ -351,25 +322,9 @@ namespace Avalonia.Controls.Utils
             // Return the default value of GetProperty if the first character is not an indexer token.
             if (propertyPath![0] != LeftIndexerToken)
             {
-                var property = type.GetProperty(propertyPath);
-                if (property != null)
-                {
-                    return property;
-                }
-
-                // GetProperty does not return inherited interface properties,
-                // so we need to enumerate them manually.
-                if (type.IsInterface)
-                {
-                    foreach (var typeInterface in type.GetInterfaces())
-                    {
-                        property = type.GetProperty(propertyPath);
-                        if (property != null)
-                        {
-                            return property;
-                        }
-                    }
-                }
+                foreach (var property in DataGridRowMetadata.GetProperties(type))
+                    if (property.Name == propertyPath && property.GetIndexParameters().Length == 0)
+                        return property;
 
                 return null;
             }
@@ -381,44 +336,18 @@ namespace Avalonia.Controls.Utils
             }
 
             string stringIndex = propertyPath.Substring(1, propertyPath.Length - 2);
-            var indexer = FindIndexerInMembers(type.GetDefaultMembers(), stringIndex, out index);
-            if (indexer != null)
-            {
-                // We found the indexer, so return it.
-                return indexer;
-            }
-
-            var elementType = type.GetElementType();
-            if (elementType == null)
-            {
-                var genericArguments = type.GetGenericArguments();
-                if (genericArguments.Length == 1)
-                {
-                    elementType = genericArguments[0];
-                }
-            }
-
-            if (elementType != null)
-            {
-                // If the object is of type IList, try to use its default indexer.
-                if (typeof(IList<>).MakeGenericType(elementType) is Type genericList
-                    && genericList.IsAssignableFrom(type))
-                {
-                    indexer = FindIndexerInMembers(genericList.GetDefaultMembers(), stringIndex, out index);
-                }
-                if (typeof(IReadOnlyList<>).MakeGenericType(elementType) is Type genericReadOnlyList
-                   && genericReadOnlyList.IsAssignableFrom(type))
-                {
-                    indexer = FindIndexerInMembers(genericReadOnlyList.GetDefaultMembers(), stringIndex, out index);
-                }
-            }
+            var properties = DataGridRowMetadata.GetProperties(type);
+            var members = new List<MemberInfo>();
+            foreach (var property in properties)
+                if (property.GetIndexParameters().Length == 1) members.Add(property);
+            var indexer = FindIndexerInMembers(members.ToArray(), stringIndex, out index);
 
             return indexer;
         }
 
         internal static bool IsEnumerableType(this Type enumerableType)
         {
-            return (FindGenericType(typeof(IEnumerable<>), enumerableType) != null);
+            return DataGridRowMetadata.GetItemType(enumerableType) != null;
         }
 
         internal static bool IsNullableType(this Type type)

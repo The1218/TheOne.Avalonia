@@ -59,7 +59,7 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
         <Style Selector="^:pressed">

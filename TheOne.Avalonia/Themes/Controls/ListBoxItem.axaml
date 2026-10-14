@@ -26,6 +26,7 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^.one-small"><Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Item.Small}" /></Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
         </Style>
@@ -38,7 +39,7 @@
 
         <!--  Pressed State  -->
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
@@ -58,15 +59,16 @@
 
             <!--  Selected PointerOver State  -->
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
 
             <!--  Selected Pressed State  -->
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
         </Style>
+        <Style Selector="^:selected:disabled /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /></Style>
     </ControlTheme>
 </ResourceDictionary>

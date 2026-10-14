@@ -512,7 +512,8 @@
     </Style>
     <!--  Carousel density affects content spacing; its viewport remains layout-driven.  -->
     <Style Selector="n|NotificationCard.one-small">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Small.Width}" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="Padding" Value="{DynamicResource One.Notification.Small.Padding}" />
     </Style>
     <Style Selector="n|NotificationCard.one-small /template/ Border#PART_StatusBadge">
@@ -528,11 +529,13 @@
         <Setter Property="Height" Value="{DynamicResource One.Notification.Small.CloseSize}" />
     </Style>
     <Style Selector="n|NotificationCard.one-normal">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Width}" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Padding" Value="{DynamicResource One.Notification.Padding}" />
     </Style>
     <Style Selector="n|NotificationCard.one-large">
-        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Large.Width}" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="Padding" Value="{DynamicResource One.Notification.Large.Padding}" />
     </Style>
     <Style Selector="n|NotificationCard.one-large /template/ Border#PART_StatusBadge">

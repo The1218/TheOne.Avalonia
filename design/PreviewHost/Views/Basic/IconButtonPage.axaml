@@ -5,6 +5,8 @@
     xmlns:kinds="clr-namespace:Material.Icons;assembly=Material.Icons"
     xmlns:local="using:TheOne.DesignPreview"
     xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    styling:Motion.Enabled="{Binding MotionEnabled}"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Spacing="18">
@@ -45,6 +47,17 @@
                 Icon="{Binding Icon}"
                 IsEnabled="False"
                 Margin="0,0,12,8" />
+        </WrapPanel>
+        <TextBlock Text="加载状态 · 运行三秒，可在过程中关闭／开启动效" FontWeight="SemiBold" />
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <CheckBox Content="手动加载" IsChecked="{Binding IsLoading, Mode=TwoWay}" />
+            <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+        </StackPanel>
+        <WrapPanel>
+            <one:IconButton Name="PlacementLeft" IconPlacement="Left" Icon="{Binding Icon}" Content="左侧" IsLoading="{Binding IsLoading}" Command="{Binding LoadCommand}" Margin="0,0,16,8" />
+            <one:IconButton Name="PlacementRight" IconPlacement="Right" Icon="{Binding Icon}" Content="右侧" IsLoading="{Binding IsLoading}" Command="{Binding LoadCommand}" Margin="0,0,16,8" />
+            <one:IconButton Name="PlacementTop" IconPlacement="Top" Icon="{Binding Icon}" Content="上方" IsLoading="{Binding IsLoading}" Command="{Binding LoadCommand}" Margin="0,0,16,8" />
+            <one:IconButton Name="PlacementBottom" IconPlacement="Bottom" Icon="{Binding Icon}" Content="下方" IsLoading="{Binding IsLoading}" Command="{Binding LoadCommand}" Margin="0,0,16,8" />
         </WrapPanel>
         <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>

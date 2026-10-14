@@ -44,10 +44,10 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
         <Style Selector="^:pressed">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
         </Style>
         <Style Selector="^:selected">
             <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />

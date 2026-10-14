@@ -14,7 +14,7 @@ public partial class ChartBase
         TitleProperty, SeriesSourceProperty, ShowLegendProperty, ShowGridProperty, ShowMarkersProperty, ShowDataLabelsProperty,
         StrokeThicknessProperty, InnerRadiusProperty, YMinimumProperty, YMaximumProperty, MinimumProperty, MaximumProperty, ValueProperty,
         ValueFormatProperty, UnitProperty, EmptyTextProperty, BackgroundProperty, ForegroundProperty, GridBrushProperty, MutedBrushProperty,
-        AccentBrushProperty, SecondaryBrushProperty, TertiaryBrushProperty, QuaternaryBrushProperty, FontFamilyProperty, FontSizeProperty,
+        AccentBrushProperty, SecondaryBrushProperty, TertiaryBrushProperty, QuaternaryBrushProperty, FifthBrushProperty, SixthBrushProperty, FontFamilyProperty, FontSizeProperty,
         FlowDirectionProperty, ViewportProperty, SecondaryYMinimumProperty, SecondaryYMaximumProperty, YAxisTitleProperty, SecondaryYAxisTitleProperty,
         SecondaryValueFormatProperty, SecondaryUnitProperty, ShowSecondaryAxisProperty, SamplingModeProperty, SamplingThresholdProperty,
         SamplingPointBudgetProperty, IsSmoothProperty, DefaultChartWidthProperty, DefaultChartHeightProperty, ChartPaddingProperty,

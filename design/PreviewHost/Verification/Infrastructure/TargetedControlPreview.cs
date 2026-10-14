@@ -42,6 +42,12 @@ internal static class TargetedControlPreview
         ["DoughnutHoverChart"] = () => ChartPreview.CreateShapeHoverSample(ChartKind.Doughnut),
         ["BarHoverChart"] = () => ChartPreview.CreateShapeHoverSample(ChartKind.Bar),
         ["NeedleGaugeChart"] = ChartPreview.CreateNeedleGaugeSample,
+        ["PrecisionGaugeChart"] = () => new GaugeChart
+        {
+            Title = "小数刻度 · 0–1", Minimum = 0, Maximum = 1, Value = 0.71,
+            ShowGaugeNeedle = true, ShowGaugeTicks = true,
+            HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left
+        },
         ["ZoomedLineChart"] = () => new LineChart
         {
             Height = 300, Title = "缩放后仍显示穿过视口的线段", Viewport = new Rect(0.25, 0.25, 0.5, 0.5),
@@ -69,7 +75,7 @@ internal static class TargetedControlPreview
         [nameof(TreeView)] = () => new TreeView { Width = 280, Height = 200, Items = { new TreeViewItem { Header = "工作区", IsExpanded = true, Items = { new TreeViewItem { Header = "主题" }, new TreeViewItem { Header = "控件" } } } } },
         [nameof(TabControl)] = () => new TabControl { Width = 340, Height = 160, Items = { new TabItem { Header = "概览", Content = "当前标签内容" }, new TabItem { Header = "设置" } } },
         [nameof(Expander)] = () => new Expander { Header = "更多信息", Content = "展开内容", IsExpanded = true, Width = 280 },
-        [nameof(SplitView)] = () => new SplitView { Pane = new TextBlock { Text = "导航" }, Content = new TextBlock { Text = "内容区域" }, IsPaneOpen = true, OpenPaneLength = 100, Width = 340, Height = 180 },
+        [nameof(SplitView)] = () => new SplitViewPage(),
         [nameof(GridSplitter)] = () => new GridSplitter { Width = 6, Height = 160 },
         [nameof(SplitButton)] = () => new SplitButton { Content = "保存", Flyout = new Flyout { Content = "更多操作" } },
         [nameof(ToggleSplitButton)] = () => new ToggleSplitButton { Content = "启用", IsChecked = true, Flyout = new Flyout { Content = "更多操作" } },
@@ -93,9 +99,11 @@ internal static class TargetedControlPreview
     {
         var controls = requested.Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
         foreach (var name in controls)
-            if (!Samples.ContainsKey(name) && !new[] { "IconButton", "ButtonVariants", "Toast", "Dialog", "Notification" }.Contains(name, StringComparer.OrdinalIgnoreCase) && !name.Equals("Tag", StringComparison.OrdinalIgnoreCase) && !name.Equals("Step", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridBinding", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridSummary", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridRightFrozen", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridFilters", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridStage1", StringComparison.OrdinalIgnoreCase) && !name.Equals("DatePicker", StringComparison.OrdinalIgnoreCase) && !name.Equals("TimePicker", StringComparison.OrdinalIgnoreCase) && !name.Equals("ChartGallery", StringComparison.OrdinalIgnoreCase) && !name.Equals("PreviewHost", StringComparison.OrdinalIgnoreCase) && !name.Equals("NavMenu", StringComparison.OrdinalIgnoreCase) && !name.Equals("InfoCard", StringComparison.OrdinalIgnoreCase) && !name.Equals("LoginWindow", StringComparison.OrdinalIgnoreCase))
+            if (!name.Equals("PreviewNavigation", StringComparison.OrdinalIgnoreCase) && !new[] { "LoadingContainer", "ButtonLoading", "IconButtonLoading" }.Contains(name, StringComparer.OrdinalIgnoreCase) && !name.Equals("TabDrag", StringComparison.OrdinalIgnoreCase) && !name.Equals("CardTabs", StringComparison.OrdinalIgnoreCase) && !Samples.ContainsKey(name) && !new[] { "IconButton", "ButtonVariants", "Toast", "Dialog", "Notification" }.Contains(name, StringComparer.OrdinalIgnoreCase) && !name.Equals("Tag", StringComparison.OrdinalIgnoreCase) && !name.Equals("Step", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridBinding", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridSummary", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridRightFrozen", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridFilters", StringComparison.OrdinalIgnoreCase) && !name.Equals("DataGridStage1", StringComparison.OrdinalIgnoreCase) && !name.Equals("DatePicker", StringComparison.OrdinalIgnoreCase) && !name.Equals("TimePicker", StringComparison.OrdinalIgnoreCase) && !name.Equals("ChartGallery", StringComparison.OrdinalIgnoreCase) && !name.Equals("PreviewHost", StringComparison.OrdinalIgnoreCase) && !name.Equals("NavMenu", StringComparison.OrdinalIgnoreCase) && !name.Equals("ReferenceChrome", StringComparison.OrdinalIgnoreCase) && !name.Equals("ControlVariants", StringComparison.OrdinalIgnoreCase) && !name.Equals("InfoCard", StringComparison.OrdinalIgnoreCase) && !name.Equals("LoginWindow", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException($"No isolated renderer is registered for '{name}'. Register its factory rather than exporting all controls.");
         Directory.CreateDirectory(output);
+        if (controls.Contains("PreviewNavigation", StringComparer.OrdinalIgnoreCase)) NavigationChromePreview.Render(output);
+        foreach (var name in controls.Where(name => new[] { "LoadingContainer", "ButtonLoading", "IconButtonLoading" }.Contains(name, StringComparer.OrdinalIgnoreCase))) LoadingPreview.Render(output, name);
         foreach (var name in controls.Where(name => new[] { "IconButton", "ButtonVariants", "Toast", "Dialog", "Notification" }.Contains(name, StringComparer.OrdinalIgnoreCase))) ButtonsMessagesPreview.Render(output, name);
         if (controls.Contains("DataGridBinding", StringComparer.OrdinalIgnoreCase)) DataGridBindingPreview.Render(output);
         if (controls.Contains("DataGridSummary", StringComparer.OrdinalIgnoreCase)) DataGridSummaryPreview.Render(output);
@@ -106,6 +114,12 @@ internal static class TargetedControlPreview
         if (controls.Contains("PreviewHost", StringComparer.OrdinalIgnoreCase)) PreviewPagesPreview.Render(output);
         if (controls.Contains("NavMenu", StringComparer.OrdinalIgnoreCase)) { NavMenuPreview.Render(output); NavMenuEdgePreview.Render(output); NavMenuSearchPreview.Render(output); NavMenuMotionPreview.Render(output); NavMenuFilterPreview.Render(output); }
         TagStepPreview.Render(output, controls.Contains("Tag", StringComparer.OrdinalIgnoreCase), controls.Contains("Step", StringComparer.OrdinalIgnoreCase));
+        if (controls.Contains("TabDrag", StringComparer.OrdinalIgnoreCase)) TabDragPreview.Render(output);
+        if (controls.Contains("CardTabs", StringComparer.OrdinalIgnoreCase))
+            foreach (var dark in new[] { false, true })
+            foreach (var size in Enum.GetValues<ControlSize>()) CardTabPreview.Render(output, dark, size);
+        if (controls.Contains("ReferenceChrome", StringComparer.OrdinalIgnoreCase)) ReferenceChromePreview.Render(output);
+        if (controls.Contains("ControlVariants", StringComparer.OrdinalIgnoreCase)) ControlVariantsPreview.Render(output);
         if (controls.Contains("InfoCard", StringComparer.OrdinalIgnoreCase)) InfoCardPreview.Render(output);
         if (controls.Contains("LoginWindow", StringComparer.OrdinalIgnoreCase)) LoginWindowChecks.Render(output);
         DateTimePickerPreview.Render(output, controls.Where(name => name.Equals("DatePicker", StringComparison.OrdinalIgnoreCase) || name.Equals("TimePicker", StringComparison.OrdinalIgnoreCase)).Select(name => name.Equals("DatePicker", StringComparison.OrdinalIgnoreCase) ? "DatePicker" : "TimePicker").ToArray());
@@ -114,7 +128,9 @@ internal static class TargetedControlPreview
         foreach (var size in Enum.GetValues<ControlSize>())
         {
             var sample = Samples[name]();
-            var window = new Window { Width = sample is ChartBase ? 600 : 480, Height = sample is ChartBase ? 440 : 360, RequestedThemeVariant = theme, Content = new StackPanel { Margin = new Thickness(28), Spacing = 24, Children = { new TextBlock { Text = name, FontSize = 22 }, sample } } };
+            var window = new Window { Width = sample is ChartBase ? 600 : 480, Height = sample is SplitViewPage ? 880 : sample is ChartBase ? 440 : 360, RequestedThemeVariant = theme,
+                Content = sample is SplitViewPage ? new Border { Margin = new Thickness(28), Child = sample }
+                    : new StackPanel { Margin = new Thickness(28), Spacing = 24, Children = { new TextBlock { Text = name, FontSize = 22 }, sample } } };
             ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush();
             if (sample is ChartBase natural && double.IsNaN(natural.Height)) { window.Height = natural.Bounds.Height + 120; ControlPreview.Flush(); }
             if (sample is ChartBase animated && name.Equals("AnimatedChart", StringComparison.OrdinalIgnoreCase))
@@ -133,7 +149,14 @@ internal static class TargetedControlPreview
             }
             using var bitmap = window.CaptureRenderedFrame()!;
             var path = Path.Combine(output, $"{name.ToLowerInvariant()}-{theme.Key}-{size}.png"); bitmap.Save(path, PngBitmapEncoderOptions.Default);
-            Console.WriteLine($"Rendered {path}"); window.Close(); ControlPreview.Flush();
+            Console.WriteLine($"Rendered {path}");
+            if (sample is SplitViewPage splitPage)
+            {
+                splitPage.Model.Expanded = false; ControlPreview.Flush();
+                using var closed = window.CaptureRenderedFrame()!;
+                closed.Save(Path.Combine(output, $"splitview-{theme.Key}-{size}-closed.png"), PngBitmapEncoderOptions.Default);
+            }
+            window.Close(); ControlPreview.Flush();
         }
     }
 }

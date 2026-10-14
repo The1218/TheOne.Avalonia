@@ -49,11 +49,11 @@ internal static class SplitButtonPreview
             Check(split.Bounds.Height == height && second.Bounds.Width == width && split.FontSize == font && first.FontSize == font, $"{label}: native split parts have the expected density and font");
             Check(first.MinHeight == 0 && second.MinHeight == 0 && first.Padding == split.Padding && second.Padding == new Thickness(0), $"{label}: global button sizing cannot offset the primary content or inflate the arrow region");
             Check(split.Focusable && !first.Focusable && !second.Focusable && split.FocusAdorner is not null, $"{label}: the split button remains one keyboard focus stop with the shared focus adorner");
-            Check(Part<Border>(split, "SplitButtonSurface").ClipToBounds && Part<Border>(split, "SplitButtonOutline").CornerRadius.TopLeft == 8 && !Part<Border>(split, "SplitButtonOutline").IsHitTestVisible, $"{label}: a clipped surface and final rounded stroke protect both edge buttons");
-            var background = accent ? isChecked ? "One.AccentPressed" : "One.Accent" : isChecked ? "One.AccentSoft" : "One.Surface";
-            Check(Colour(Part<Border>(split, "SplitButtonSurface").Background) == Resource(split, background) && Colour(Chrome(first).Background) == Resource(split, background), $"{label}: default and checked surfaces use Still semantic colors");
+            Check(Part<Border>(split, "SplitButtonSurface").ClipToBounds && Part<Border>(split, "SplitButtonOutline").CornerRadius.TopLeft == 6 && !Part<Border>(split, "SplitButtonOutline").IsHitTestVisible, $"{label}: a clipped surface and final rounded stroke protect both edge buttons");
+            var background = accent ? isChecked ? "One.AccentPressed" : "One.Accent" : isChecked ? "One.AccentSoft" : "One.Subtle";
+            Check(Colour(Part<Border>(split, "SplitButtonSurface").Background) == Resource(split, background) && Colour(Chrome(first).Background) == Resource(split, background), $"{label}: default and checked surfaces use TheOne semantic colors");
             Hover(window, second);
-            Check(Colour(Chrome(second).Background) == Resource(split, accent ? "One.AccentHover" : isChecked ? "One.AccentSoft" : "One.Subtle") && Colour(Chrome(first).Background) == Resource(split, background), $"{label}: actual arrow hover changes only its own region");
+            Check(Colour(Chrome(second).Background) == Resource(split, accent ? "One.AccentHover" : isChecked ? "One.AccentSoftHover" : "One.NeutralHover") && Colour(Chrome(first).Background) == Resource(split, background), $"{label}: actual arrow hover changes only its own region");
             using (var bitmap = new RenderTargetBitmap(new PixelSize((int)Math.Ceiling(split.Bounds.Width), height), new Vector(96, 96)))
             {
                 bitmap.Render(split);
@@ -61,9 +61,9 @@ internal static class SplitButtonPreview
                     $"{label}: actual Skia pixels retain the edge stroke and transparent rounded corner during arrow hover");
             }
             window.MouseMove(new Point(1, 1)); Hover(window, first);
-            Check(Colour(Chrome(first).Background) == Resource(split, accent ? "One.AccentHover" : isChecked ? "One.AccentSoft" : "One.Subtle") && Colour(Chrome(second).Background) == Resource(split, background), $"{label}: actual primary hover changes only its own region");
+            Check(Colour(Chrome(first).Background) == Resource(split, accent ? "One.AccentHover" : isChecked ? "One.AccentSoftHover" : "One.NeutralHover") && Colour(Chrome(second).Background) == Resource(split, background), $"{label}: actual primary hover changes only its own region");
             var point = Centre(second, window); window.MouseMove(point); window.MouseDown(point, MouseButton.Left); ControlPreview.Flush();
-            Check(Colour(Chrome(second).Background) == Resource(split, accent ? "One.AccentPressed" : isChecked ? "One.AccentSoft" : "One.Line"), $"{label}: pointer press retains the correct primary or checked palette");
+            Check(Colour(Chrome(second).Background) == Resource(split, accent ? "One.AccentPressed" : isChecked ? "One.AccentSoftPressed" : "One.NeutralPressed"), $"{label}: pointer press retains the correct primary or checked palette");
             window.MouseUp(point, MouseButton.Left); ControlPreview.Flush();
             Check(split.Flyout!.IsOpen && demo.Model.MainCount == 0 && (split is not ToggleSplitButton toggle || toggle.IsChecked == isChecked), $"{label}: arrow click opens the native flyout without executing or toggling the main action");
             Check(Colour(Chrome(second).Background) == Resource(split, accent ? "One.AccentPressed" : "One.AccentSoft"), $"{label}: open flyout has a persistent arrow-region highlight");
@@ -107,7 +107,7 @@ internal static class SplitButtonPreview
         Check(!toggle.IsEffectivelyEnabled && !toggle.IsChecked && demo.Model.MainCount == 0, "Explicitly disabled ToggleSplitButton cannot change the bound checked state");
         demo.Model.IsEnabled = true; ControlPreview.Flush();
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
-        Check(split.Bounds.Height == 44 && Secondary(split).Bounds.Width == 40 && Colour(Part<Border>(split, "SplitButtonSurface").Background) == Color.Parse("#19211E"), "Live size and theme updates reach both native parts");
+        Check(split.Bounds.Height == 44 && Secondary(split).Bounds.Width == 40 && Colour(Part<Border>(split, "SplitButtonSurface").Background) == Color.Parse("#282929"), "Live size and theme updates reach both native parts");
         Motion.SetEnabled(window, true); Hover(window, Secondary(split)); EnhancementsPreview.Advance(150);
         Check(Chrome(Secondary(split)).Transitions?.Count > 0, "Split-button part hover uses the shared brush transitions");
         Motion.SetEnabled(window, false); ControlPreview.Flush(); Check(Chrome(Secondary(split)).Transitions is null, "Reduced-motion inheritance disables split-button part transitions");

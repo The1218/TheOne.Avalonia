@@ -2,14 +2,15 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
     <ControlTheme TargetType="Button" x:Key="{x:Type Button}">
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
         <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ButtonBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -26,13 +27,16 @@
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
-                    Content="{TemplateBinding Content}"
-                    ContentTemplate="{TemplateBinding ContentTemplate}"
                     CornerRadius="{TemplateBinding CornerRadius}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     Padding="{TemplateBinding Padding}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                    x:Name="PART_ContentPresenter" />
+                    x:Name="PART_ContentPresenter">
+                    <Grid ColumnDefinitions="Auto,*">
+                        <one:LoadingIndicator Name="PART_LoadingIndicator" Margin="0,0,8,0" VerticalAlignment="Center" IsVisible="{Binding #PART_ContentPresenter.((Button)TemplatedParent).(one:ButtonLoading.IsLoading)}" />
+                        <ContentPresenter Name="PART_LabelPresenter" Grid.Column="1" Content="{Binding #PART_ContentPresenter.((Button)TemplatedParent).Content}" ContentTemplate="{Binding #PART_ContentPresenter.((Button)TemplatedParent).ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center" />
+                    </Grid>
+                </ContentPresenter>
             </ControlTemplate>
         </Setter>
 
@@ -41,15 +45,15 @@
         </Style>
 
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:pressed  /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
@@ -61,19 +65,19 @@
         <Style Selector="^.primary, ^.accent">
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource One.Accent}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="Transparent" />
                 <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
             </Style>
 
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="Transparent" />
                 <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
             </Style>
 
             <Style Selector="^:pressed  /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="Transparent" />
                 <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
             </Style>
 

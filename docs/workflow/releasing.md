@@ -28,9 +28,9 @@ NU5104 表示稳定包依赖了预发布包；同版本预发布或同版本正�
 
 ## 本地验证与产物
 
-默认预发布与正式渠道模拟的命令统一见[测试策略](testing.md#nuget-双包专项)。脚本默认读取共享版本；设置 `THEONE_PACKAGE_VERSION` 会统一覆盖两包及消费端。正式渠道模拟只生成本地包，不代表发布正式版。
+默认打包命令见[测试策略](testing.md#nuget-双包专项)，读取共享版本。模拟其他渠道时，对两个 pack 命令和消费项目统一传入 `-p:TheOnePackageVersion=<版本>`。模拟只生成本地产物，不代表发布正式版。
 
-脚本对打包、恢复、消费构建和原生发布统一传递版本。它检查两包号、vendor 依赖、README、许可、releaseNotes、上游来源，以及隔离缓存实际恢复的版本和字节哈希；消费端运行时检查程序集版本与 vendor 强名称。UI 行为没有改动时不重复全控件、截图或六 RID 发布；目标平台边界见[集成验收](datagrid-acceptance.md)。
+打包、恢复、消费构建和原生发布统一传递版本。核对两包号、vendor 依赖、README、许可、releaseNotes、上游来源，以及隔离缓存恢复的版本和包内容；消费端运行时检查程序集版本与 vendor 强名称。UI 行为没有改动时不重复全控件、截图或六 RID 发布；平台边界见[集成验收](datagrid-acceptance.md)。
 
 每个 nupkg 都包含自述与许可；主库另含 THIRD-PARTY-NOTICES.md，vendor 另含 UPSTREAM.json。`PackageReleaseNotes` 位于各自项目文件，描述本次内容和兼容条件；发布前按实际变更替换，不能长期保留旧版本说明。
 

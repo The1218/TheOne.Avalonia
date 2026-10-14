@@ -15,7 +15,7 @@
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
         <Setter Property="Focusable" Value="True" />

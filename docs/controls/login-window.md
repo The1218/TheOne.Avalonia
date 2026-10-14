@@ -57,7 +57,7 @@ ShowErrorToast / ShowErrorNotification 使用 NotificationType.Error，在 UI �
 
 LoginWindow 不管理依赖注入容器或 .NET Generic Host。Generic Host 及应用共享服务应与应用生命周期关联，在桌面 lifetime 的 Exit / Shutdown 路径停止、释放；不要把 Host.StopAsync / Dispose 注册到登录窗口 Closed。登录验证的局部取消与清理仍由登录表单负责。
 
-运行 `dotnet run --project design/PreviewHost -- --login` 可验证完整启动和交接流程：示例表单使用编译绑定，账号和密码非空即通过本地演示校验，空输入显示错误 Toast，提供三个错误提示按钮；关闭时取消等待并清空密码。它不连接认证服务。已有主窗体侧栏“窗口 OneWindow”的“自定义登录内容”按钮只展示独立登录内容，不替换当前应用 MainWindow。
+运行 `dotnet run --project design/PreviewHost -- --login` 可验证完整启动和交接流程：示例表单使用编译绑定，账号和密码非空即通过本地演示校验，空输入显示错误 Toast，提供三个错误提示按钮；关闭时取消等待并清空密码。它不连接认证服务。主窗体目录不再提供 OneWindow / LoginWindow 展示页；完整登录流程使用该独立启动入口。
 
 定向交互验证使用 `--verify-loginwindow`；`--verify-login-lifetime <ShutdownMode>` 在真实桌面主循环中验证退出策略，`--verify-login-lifetime-close <ShutdownMode>` 验证登录 Closed 回调立即关闭新主窗体。两个入口分别传入 OnMainWindowClose、OnLastWindowClose、OnExplicitShutdown，并在独立进程中运行。截图只导出当前控件：`--render-controls .preview/loginwindow LoginWindow`。
 

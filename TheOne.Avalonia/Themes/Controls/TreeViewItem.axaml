@@ -130,7 +130,7 @@
 
         <!--  Pressed state  -->
         <Style Selector="^:pressed /template/ Border#PART_LayoutRoot:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
         <Style Selector="^:pressed /template/ Border#PART_LayoutRoot:pointerover ContentPresenter#PART_HeaderPresenter">
@@ -157,7 +157,7 @@
 
         <!--  Selected PointerOver state  -->
         <Style Selector="^:selected /template/ Border#PART_LayoutRoot:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
         <Style Selector="^:selected /template/ Border#PART_LayoutRoot:pointerover ContentPresenter#PART_HeaderPresenter">
@@ -166,7 +166,7 @@
 
         <!--  Selected Pressed state  -->
         <Style Selector="^:pressed:selected /template/ Border#PART_LayoutRoot:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
         <Style Selector="^:pressed:selected /template/ Border#PART_LayoutRoot:pointerover ContentPresenter#PART_HeaderPresenter">

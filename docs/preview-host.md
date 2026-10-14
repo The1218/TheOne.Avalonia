@@ -2,6 +2,8 @@
 
 正式预览界面按基础控件、数据展示、导航与布局、图表控件、扩展控件、消息与窗口六类组织。同类控件集中展示，避免为每种按钮或列表单独设置菜单项：
 
+主题配色直接作用于整个预览宿主。按钮、输入、日期时间、进度条、列表、标签页和信息卡片的多样式在各自页面展示；没有独立的主题总览页。专项使用 Verification/Fixtures 下的消费夹具验证，不参与导航或正常页面创建。
+
 - 基础控件：按钮（Button、ToggleButton、RepeatButton、SplitButton、ToggleSplitButton）、文本与输入、选择与开关、数值与进度、日期与时间。
 - 数据展示：Label、SelectableTextBlock、ListBox、ItemsControl、TreeView、Carousel、InfoCard 在同一页展示，DataGrid 保留独立页面。
 - 导航与布局：标签与内容切换、菜单与浮层、滚动与分隔分别归组；Expander、SplitView 保留独立页面。
@@ -19,8 +21,10 @@
 - `Infrastructure/`：共享 ViewModel／命令基类、显式页面目录与控件工厂、窗口流程。
 - `Verification/<分类>/`：Headless 交互与 Skia 验证。
 - `Verification/Fixtures/`：仍被回归调用的旧 Gallery、状态对比视图、DataGrid 实验及其 ViewModel／布局支持代码；App 与登录后主窗口使用正式组合页与专用页面。
+- `Consumers/NativeAotSmoke/`：独立模型和编译 XAML 的原生消费验证；默认只执行自身消费场景，避免重复 PreviewHost 全控件套件，专项入口按需复用。
+- `Consumers/DataGridPackageConsumer/`：仅引用本地打包产物的表格消费预览，覆盖托管和原生的 Headless／桌面模式。
 
-未被引用的单图表 Page 和早期 A/B/C 设计场景已删除；当前图表由 ChartShowcaseView 与按需创建的 ChartDemoView 展示。历史方案仅保留静态截图，参见[设计依据](design/README.md)。
+未被引用的单图表 Page 和早期 A/B/C 设计场景已删除；当前图表由 ChartShowcaseView 与按需创建的 ChartDemoView 展示。历史设计场景、静态截图及计划文档已移除；当前截图仅按受影响控件导出。
 
 入口和项目文件保留在项目根目录。所有类型仍使用 TheOne.DesignPreview 命名空间，便于原生消费项目链接共享的编译 XAML 与专项验证。
 
@@ -59,7 +63,7 @@ DataTemplate 内部声明行模型的 x:DataType；重新赋值 DataContext 的�
 </StackPanel>
 ```
 
-若消费端必须引用 DataContext，可在绑定路径中明确转换 VM 类型，例如 `#Root.((vm:MembersViewModel)DataContext).Rows`，不要关闭编译绑定。静态合约检查会拒绝预览中丢失类型的 object 上下文桥接；页面专项检查 ReactiveObject 通知、ReactiveCommand 参数与控件／VM 双向同步。依赖接入参照 [ReactiveUI 官方 Avalonia 文档](https://www.reactiveui.net/documentation/reactiveui/handbook/data-binding/avalonia/)。
+若消费端必须引用 DataContext，可在绑定路径中明确转换 VM 类型，例如 `#Root.((vm:MembersViewModel)DataContext).Rows`，不要关闭编译绑定。预览应保留各作用域的类型，避免 object 上下文桥接；页面专项检查 ReactiveObject 通知、ReactiveCommand 参数与控件／VM 双向同步。依赖接入参照 [ReactiveUI 官方 Avalonia 文档](https://www.reactiveui.net/documentation/reactiveui/handbook/data-binding/avalonia/)。
 
 PreviewHost、主题与消费示例启用 `AvaloniaUseCompiledBindingsByDefault=true`，所以 `{Binding Property}` 本身就是编译绑定。视图根节点声明一次 VM 类型：
 

@@ -44,7 +44,7 @@ internal static class CarouselPreview
         var minimum = size switch { ControlSize.Small => 180, ControlSize.Large => 260, _ => 220 };
         Check(carousel.GetType() == typeof(Carousel) && carousel.ItemsPanelRoot is VirtualizingCarouselPanel, $"{label}: retains the official virtualizing carousel panel");
         Check(carousel.ItemCount == 1000 && carousel.FontSize == font && carousel.Padding.Left == padding && carousel.MinHeight == minimum, $"{label}: thousand-model source and inherited three-size metrics");
-        Check(Colour(carousel.Background) == Resource(carousel, "One.Surface") && Colour(carousel.Foreground) == Resource(carousel, "One.Text") && carousel.CornerRadius.TopLeft == 12, $"{label}: Still surface, text and rounded border");
+        Check(Colour(carousel.Background) == Resource(carousel, "One.Surface") && Colour(carousel.Foreground) == Resource(carousel, "One.Text") && carousel.CornerRadius.TopLeft == 12, $"{label}: TheOne surface, text and rounded border");
         Check(carousel.PageTransition is null && carousel.SelectedIndex == 0 && carousel.ContainerFromIndex(999) is null, $"{label}: reduced motion and AlwaysSelected avoid eagerly creating the final page");
         VerifyCurrent(carousel, demo.Slides[0], label); Bounded(carousel, label);
         var original = carousel.ContainerFromIndex(0)!;

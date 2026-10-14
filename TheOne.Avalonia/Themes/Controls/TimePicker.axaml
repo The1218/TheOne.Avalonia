@@ -41,7 +41,7 @@
         </Setter>
 
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
@@ -54,8 +54,8 @@
 
     <ControlTheme TargetType="TimePicker" x:Key="{x:Type TimePicker}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         <Setter Property="BorderThickness" Value="{DynamicResource One.TimePickerBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -191,9 +191,9 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Popup}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>

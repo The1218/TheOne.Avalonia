@@ -65,10 +65,10 @@ notifications.CloseAll();
 Motion.SetEnabled(notifications, false);
 ```
 
-加载 OneTheme 后，管理器创建的原生 NotificationCard 自动使用 Still 主题：共同的 Surface / Text / Line，四种类型分别使用对应的语义图标与侧边标记。关闭按钮、点击正文、Expiration 自动关闭、Close(content)、CloseAll 与原生 NotificationClosed 回调均保留。
+加载 OneTheme 后，管理器创建的原生 NotificationCard 自动使用 TheOne 主题：共同的 Surface / Text / Line，四种类型分别使用对应的语义图标与侧边标记。关闭按钮、点击正文、Expiration 自动关闭、Close(content)、CloseAll 与原生 NotificationClosed 回调均保留。
 
-small / normal / large 的字号为 12 / 14 / 16，内边距为 12 / 16 / 20，图标底座及关闭按钮为 24 / 28 / 32。通过父窗口的 Classes 或 ControlSizing.Size 继承，也可为单张卡片设置尺寸。默认宽度 360；Width、Padding、Foreground、Background、BorderBrush、BorderThickness、CornerRadius 与 ContentTemplate 可覆盖。自定义 Control 内容仍由原生 ContentPresenter 承载。
+small / normal / large 使用比标准表单更紧凑的消息密度：字号 11 / 12 / 13，内边距 8 / 10 / 12，图标底座及关闭按钮 20 / 24 / 28，图标 12 / 14 / 16。通过父窗口的 Classes 或 ControlSizing.Size 继承，也可为单张卡片设置尺寸。默认 normal 宽度 320，small / large 为 280 / 360；Width、Padding、Foreground、Background、BorderBrush、BorderThickness、CornerRadius 与 ContentTemplate 可覆盖。自定义 Control 内容仍由原生 ContentPresenter 承载。
 
 Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离场 140 ms，只动画透明度与位移。播放中关闭动效会复位显示状态，正在关闭的通知则直接完成移除；自动关闭计时和手动关闭继续工作。重新开启后，后续通知及关闭操作恢复动画，不重复播放已显示卡片的入场。可通过 One.Motion.Notification.Enter / Exit 动态资源，或 NotificationMotion.EnterDuration / ExitDuration 覆盖时长。
 
-通知是短时消息，不是历史列表。使用有限 MaxItems 控制活动卡片数量；离场动画期间可能短暂保留正在关闭的卡片。PreviewHost 连续投递 1,000 条通知，验证最多 4 条活动卡片和关闭后的释放；需要长期通知历史时，另用绑定模型的有界虚拟化 ListBox。侧栏“通知 NotificationCard”提供四种类型、自动关闭延迟、手动关闭、六种位置、动效切换、回调计数与重置，沿用全局主题和三档尺寸。
+通知是短时消息，不是历史列表。使用有限 MaxItems 控制活动卡片数量；离场动画期间可能短暂保留正在关闭的卡片。PreviewHost 连续投递 1,000 条通知，验证最多 4 条活动卡片和关闭后的释放；需要长期通知历史时，另用绑定模型的有界虚拟化 ListBox。侧栏“Notification”提供四种类型、自动关闭延迟、手动关闭、六种位置、动效切换、回调计数与重置，沿用全局主题和三档尺寸。

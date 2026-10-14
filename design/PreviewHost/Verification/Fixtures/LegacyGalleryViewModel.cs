@@ -143,7 +143,7 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
         _tabCount = 0;
     }
 
-    public string[] Suggestions { get; } = ["Avalonia", "TheOne", "Still", "Skia", "Windows", "macOS", "Linux"];
+    public string[] Suggestions { get; } = ["Avalonia", "TheOne", "TheOne", "Skia", "Windows", "macOS", "Linux"];
     public ICommand SaveCommand { get; }
     public ICommand ResetCommand { get; }
     public ICommand HelpCommand { get; }

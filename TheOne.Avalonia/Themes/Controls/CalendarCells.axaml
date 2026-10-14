@@ -31,10 +31,10 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
         <Style Selector="^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
         </Style>
         <Style Selector="^:inactive">
             <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />

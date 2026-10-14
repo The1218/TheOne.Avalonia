@@ -83,7 +83,7 @@ internal static class LoginWindowChecks
             var label = $"LoginWindow/{theme.Key}/{size}";
             check(login is Window && login.WindowDecorations == WindowDecorations.Full && !login.ExtendClientAreaToDecorationsHint, $"{label}: preserves native Window chrome and desktop behavior");
             check(ReferenceEquals(Part<ContentPresenter>(login, "PART_ContentPresenter").Child, input) && input.Bounds.Width > 0 && Part<VisualLayerManager>(login, "PART_VisualLayerManager").Bounds.Height > 0, $"{label}: native visual layers and content presenter retain developer-owned controls");
-            check(login.FontSize == (size == ControlSize.Small ? 12 : size == ControlSize.Large ? 16 : 14) && login.TryFindResource("One.Canvas", theme, out var canvas) && login.Background is ISolidColorBrush actual && canvas is ISolidColorBrush expected && actual.Color == expected.Color, $"{label}: Still semantic background and inherited density follow light/dark");
+            check(login.FontSize == (size == ControlSize.Small ? 12 : size == ControlSize.Large ? 16 : 14) && login.TryFindResource("One.Canvas", theme, out var canvas) && login.Background is ISolidColorBrush actual && canvas is ISolidColorBrush expected && actual.Color == expected.Color, $"{label}: TheOne semantic background and inherited density follow light/dark");
             input.Focus(); check(login.FocusManager!.GetFocusedElement() == input, $"{label}: caller-owned controls retain native keyboard focus");
             check(OneToast.Owner == login && OneNotification.Owner == login && OneDialog.Owner == login, $"{label}: automatically registers all three message owners");
             login.ShowErrorToast("Invalid credentials", TimeSpan.Zero);
@@ -282,7 +282,14 @@ internal static class LoginWindowChecks
     private static void VerifyDemo(IClassicDesktopStyleApplicationLifetime desktop, Action<bool, string> check)
     {
         var login = new LoginWindow(); var calls = 0;
-        var model = new LoginDemoViewModel(() => login.CompleteLoginAsync(() => { calls++; return new OneWindow { Width = 640, Height = 420 }; }), login.Close);
+        // Keep validation pending until the busy bindings are observed, even if a
+        // concurrent native build takes longer than the demo's short delay.
+        var validationGate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var model = new LoginDemoViewModel(async () =>
+        {
+            await validationGate.Task;
+            return await login.CompleteLoginAsync(() => { calls++; return new OneWindow { Width = 640, Height = 420 }; });
+        }, login.Close);
         var view = new LoginDemoView { DataContext = model }; login.Content = view; login.Closed += (_, _) => model.Stop(); desktop.MainWindow = login; login.Show(); Flush();
         var account = view.FindControl<TextBox>("LoginAccount")!; var password = view.FindControl<TextBox>("LoginPassword")!;
         check(ReferenceEquals(view.FindControl<Button>("LoginSubmit")!.Command, model.LoginCommand) && account.Text == model.Account && password.Text == model.Password && view.FindControl<TextBlock>("LoginStatus")!.Text == model.Status, "LoginWindow: the consumer login form resolves compiled input, status, and command bindings");
@@ -292,6 +299,7 @@ internal static class LoginWindowChecks
         check(model.Account == account.Text && model.Password == password.Text, "LoginWindow: compiled account and password edits reach the caller-owned model");
         var completion = model.LoginAsync(); Flush();
         check(model.IsBusy && !account.IsEffectivelyEnabled && !view.FindControl<Button>("LoginSubmit")!.IsEffectivelyEnabled, "LoginWindow: consumer busy bindings disable duplicate validation and editing");
+        validationGate.SetResult();
         Wait(completion);
         check(calls == 1 && !login.IsVisible && desktop.MainWindow is OneWindow { IsVisible: true } && !model.CanEdit && model.Password == "", "LoginWindow: the compiled consumer validates then opens main and clears closed login state"); CloseAll(desktop);
         login = new LoginWindow(); calls = 0;

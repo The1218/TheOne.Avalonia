@@ -3,7 +3,7 @@ using global::Avalonia.Styling;
 
 namespace TheOne.Avalonia.Themes;
 
-/// <summary>Still theme for Avalonia's built-in controls, including light and dark resources.</summary>
+/// <summary>TheOne theme for Avalonia's built-in controls, including light and dark resources.</summary>
 public partial class OneTheme : Styles
 {
     public OneTheme()

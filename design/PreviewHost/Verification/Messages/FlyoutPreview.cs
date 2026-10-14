@@ -43,9 +43,9 @@ internal static class FlyoutPreview
         var name = $"Flyout/{theme.Key}/{size}";
         Check(flyout.IsOpen && presenter.Bounds.Height > 0 && presenter.Bounds.Height < presenter.MaxHeight, $"{name}: actual native Flyout opens with content-driven height");
         Check(presenter.FontSize == font && presenter.Padding == new Thickness(padding) && ControlSizing.GetSize(Find<TextBox>(demo, "WorkspaceName")) == size, $"{name}: native popup presenter and its form inherit the three density sizes");
-        Check(Colour(presenter.Background) == Resource(presenter, "One.Surface") && Colour(presenter.Foreground) == Resource(presenter, "One.Text") && Colour(presenter.BorderBrush) == Resource(presenter, "One.Line"), $"{name}: native popup uses Still semantic surface, text and border colors");
+        Check(Colour(presenter.Background) == Resource(presenter, "One.Surface") && Colour(presenter.Foreground) == Resource(presenter, "One.Text") && Colour(presenter.BorderBrush) == Resource(presenter, "One.OutlineStrong"), $"{name}: native popup uses TheOne semantic surface, text and border colors");
         Check(Part<ContentPresenter>(presenter, "PART_ContentPresenter").Content == flyout.Content && Part<Border>(presenter, "LayoutRoot").ClipToBounds && !Part<Border>(presenter, "PART_Outline").IsHitTestVisible, $"{name}: native content contract, rounded clipping and overlay outline are retained");
-        Check(presenter.CornerRadius == new CornerRadius(12) && presenter.MaxWidth == 640 && presenter.MaxHeight == 480, $"{name}: floating content uses bounded theme dimensions and the common card radius");
+        Check(presenter.CornerRadius == new CornerRadius(8) && presenter.MaxWidth == 640 && presenter.MaxHeight == 480, $"{name}: floating content uses bounded theme dimensions and the common popup radius");
         Check(Find<TextBox>(demo, "WorkspaceName").IsFocused, $"{name}: Standard mode focuses the first native input");
         flyout.Hide(); Click(window, Find<Button>(demo, "OpenEditor"));
         Check(presenter.FontSize == font && presenter.Padding == new Thickness(padding), $"{name}: reopening preserves inherited presenter density");
@@ -63,13 +63,13 @@ internal static class FlyoutPreview
         var (window, demo) = Open(ThemeVariant.Light, ControlSize.Normal); var flyout = Flyout(demo, "OpenEditor");
         var open = Find<Button>(demo, "OpenEditor"); Click(window, open);
         var presenter = Presenter(flyout); var popupHost = TopLevel.GetTopLevel(presenter)!; var input = Find<TextBox>(demo, "WorkspaceName");
-        input.SelectAll(); popupHost.KeyTextInput("Still design"); ControlPreview.Flush();
+        input.SelectAll(); popupHost.KeyTextInput("TheOne design"); ControlPreview.Flush();
         Click(popupHost, Find<Button>(demo, "ApplyEdit"));
-        Check(!flyout.IsOpen && demo.ApplyCount == 1 && demo.AppliedName == "Still design", "Real popup text input and apply button commit the form and close native Flyout");
-        Click(window, open); Check(ReferenceEquals(presenter, Presenter(flyout)) && input.Text == "Still design", "Reopening reuses the native presenter and restores the applied form state");
+        Check(!flyout.IsOpen && demo.ApplyCount == 1 && demo.AppliedName == "TheOne design", "Real popup text input and apply button commit the form and close native Flyout");
+        Click(window, open); Check(ReferenceEquals(presenter, Presenter(flyout)) && input.Text == "TheOne design", "Reopening reuses the native presenter and restores the applied form state");
         popupHost = TopLevel.GetTopLevel(presenter)!; input.SelectAll(); popupHost.KeyTextInput("Discard me"); ControlPreview.Flush();
         Click(popupHost, Find<Button>(demo, "CancelEdit")); Click(window, open);
-        Check(input.Text == "Still design" && demo.ApplyCount == 1, "Cancel leaves committed state unchanged when the popup reopens");
+        Check(input.Text == "TheOne design" && demo.ApplyCount == 1, "Cancel leaves committed state unchanged when the popup reopens");
         input.SelectAll(); popupHost.KeyTextInput("   "); ControlPreview.Flush(); Click(popupHost, Find<Button>(demo, "ApplyEdit"));
         Check(flyout.IsOpen && input.IsFocused && demo.ApplyCount == 1, "Empty popup form validation keeps the flyout open and focuses its input");
         popupHost.KeyPress(Key.Escape, RawInputModifiers.None, PhysicalKey.Escape, null); popupHost.KeyRelease(Key.Escape, RawInputModifiers.None, PhysicalKey.Escape, null); ControlPreview.Flush();
@@ -91,7 +91,7 @@ internal static class FlyoutPreview
         flyout.Hide(); Find<ComboBox>(demo, "FlyoutSizePicker").SelectedIndex = 0; Click(window, open);
         Check(presenter.FontSize == 14 && input.MinHeight == 36, "Reopening removes the earlier explicit presenter size and restores inherited normal density");
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Small); ControlPreview.Flush();
-        Check(flyout.IsOpen && presenter.FontSize == 12 && input.MinHeight == 30 && Colour(presenter.Background) == Color.Parse("#19211E"), "An open native popup updates its theme and inherited density without recreating the presenter");
+        Check(flyout.IsOpen && presenter.FontSize == 12 && input.MinHeight == 30 && Colour(presenter.Background) == Color.Parse("#0F0F0F"), "An open native popup updates its theme and inherited density without recreating the presenter");
         flyout.Hide(); Find<ComboBox>(demo, "ShowModePicker").SelectedIndex = 1; Click(window, open);
         Check(flyout.ShowMode == FlyoutShowMode.Transient && open.IsFocused && !input.IsFocused, "Transient display preserves trigger focus using native Flyout behavior");
         flyout.Hide(); Find<ComboBox>(demo, "ShowModePicker").SelectedIndex = 0;
@@ -130,7 +130,7 @@ internal static class FlyoutPreview
         var nativeFlyout = new Flyout { Content = new TextBlock { Text = "Custom native flyout theme" }, FlyoutPresenterTheme = flyoutTheme };
         var trigger = new Button { Content = "Custom theme", Flyout = nativeFlyout }; window = new Window { Width = 420, Height = 260, Content = trigger }; window.Show(); ControlPreview.Flush();
         Click(window, trigger);
-        Check(ReferenceEquals(Presenter(nativeFlyout).Theme, flyoutTheme) && Presenter(nativeFlyout).BorderBrush == Brushes.Red && Presenter(nativeFlyout).CornerRadius.TopLeft == 4, "Native FlyoutPresenterTheme overrides can derive from the public Still control theme");
+        Check(ReferenceEquals(Presenter(nativeFlyout).Theme, flyoutTheme) && Presenter(nativeFlyout).BorderBrush == Brushes.Red && Presenter(nativeFlyout).CornerRadius.TopLeft == 4, "Native FlyoutPresenterTheme overrides can derive from the public TheOne control theme");
         nativeFlyout.Hide(); window.Close();
         var longText = new TextBlock { Text = string.Join('\n', Enumerable.Repeat("Bounded native content scrolling", 100)) };
         presenter = new FlyoutPresenter { Content = longText, HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left, VerticalAlignment = global::Avalonia.Layout.VerticalAlignment.Top, MaxHeight = 180 };

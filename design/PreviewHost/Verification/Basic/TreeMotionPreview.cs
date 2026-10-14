@@ -69,6 +69,8 @@ internal static class TreeMotionPreview
         ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false); window.Show(); ControlPreview.Flush();
         var viewport = Part<RevealHost>(root, "TreeContent");
         var nestedViewport = Part<RevealHost>(nested, "TreeContent");
+        // Leave enough real-clock time for several frames even under a busy native suite.
+        viewport.Duration = nestedViewport.Duration = TimeSpan.FromMilliseconds(800);
         var header = Part<Border>(root, "PART_LayoutRoot");
         var fullHeight = viewport.Bounds.Height;
         var nestedHeight = nestedViewport.Bounds.Height;
@@ -78,16 +80,39 @@ internal static class TreeMotionPreview
         tree.SelectedItem = leaf; Motion.SetEnabled(window, true); ControlPreview.Flush();
         Check(Math.Abs(viewport.Bounds.Height - fullHeight) < 0.5 && Math.Abs(nestedViewport.Bounds.Height - nestedHeight) < 0.5, $"{label}: enabling motion does not replay either tree level");
         var measureCount = probe.MeasureCount;
-        root.IsExpanded = false; ControlPreview.Flush();
-        Check(viewport.IsVisible && !viewport.IsHitTestVisible && viewport.Bounds.Height > fullHeight * 0.85, $"{label}: collapse starts at the current extent and blocks child pointer input");
+        var progressProperty = AvaloniaPropertyRegistry.Instance.FindRegistered(viewport, "Progress")!;
+        double? firstCollapseValue = null;
+        void ObserveCollapse(object? sender, AvaloniaPropertyChangedEventArgs change)
+        {
+            if (change.Property == progressProperty && change.Priority == global::Avalonia.Data.BindingPriority.Animation)
+                firstCollapseValue ??= (double)change.NewValue!;
+        }
+        viewport.PropertyChanged += ObserveCollapse;
+        root.IsExpanded = false;
+        var inputBlockedAtStart = viewport.IsVisible && !viewport.IsHitTestVisible;
+        ControlPreview.Flush(); viewport.PropertyChanged -= ObserveCollapse;
+        Check(inputBlockedAtStart && firstCollapseValue.HasValue && Math.Abs(firstCollapseValue.Value - 1d) < 0.000001,
+            $"{label}: collapse starts at the current extent and immediately blocks child pointer input");
         var frames = new List<(double Height, double SiblingTop)>();
         for (var i = 0; i < 4; i++) { Advance(20); frames.Add((viewport.Bounds.Height, SiblingTop())); }
         Check(frames.Select(frame => frame.Height).Distinct().Count() >= 3 && frames[0].Height < fullHeight && frames[^1].Height > 0 && frames.Zip(frames.Skip(1)).All(pair => pair.First.Height >= pair.Second.Height), $"{label}: collapse produces multiple monotonically shrinking frames");
         Check(frames[0].SiblingTop < siblingStart && frames[^1].SiblingTop > header.Bounds.Height && frames.Zip(frames.Skip(1)).All(pair => pair.First.SiblingTop >= pair.Second.SiblingTop), $"{label}: following root node moves throughout collapse");
         Check(probe.MeasureCount - measureCount <= 1 && viewport.Opacity == 1 && viewport.RenderTransform == null && Math.Abs(probe.Bounds.Height - probe.DesiredSize.Height) < 0.5, $"{label}: full child layout is reused without fading, translating or reflowing text");
         var reversedAt = viewport.Bounds.Height;
+        var progressAtReversal = (double)viewport.GetValue(progressProperty)!;
+        double? firstAnimatedValue = null;
+        void ObserveReversal(object? sender, AvaloniaPropertyChangedEventArgs change)
+        {
+            if (change.Property == progressProperty && change.Priority == global::Avalonia.Data.BindingPriority.Animation)
+                firstAnimatedValue ??= (double)change.NewValue!;
+        }
+        viewport.PropertyChanged += ObserveReversal;
         root.IsExpanded = true; ControlPreview.Flush();
-        Check(Math.Abs(viewport.Bounds.Height - reversedAt) < fullHeight * 0.15, $"{label}: reverse animation begins at the current visible extent");
+        viewport.PropertyChanged -= ObserveReversal;
+        Check(firstAnimatedValue.HasValue && Math.Abs(firstAnimatedValue.Value - progressAtReversal) < 0.000001,
+            $"{label}: reverse animation starts at the exact current progress before the next render tick");
+        Check(viewport.Bounds.Height >= reversedAt - 0.5 && viewport.Bounds.Height <= fullHeight + 0.5,
+            $"{label}: subsequent reversal frames progress toward the expanded extent");
         AdvanceUntil(() => Math.Abs(viewport.Bounds.Height - fullHeight) < 0.5, 1500);
         Check(viewport.IsVisible && viewport.IsHitTestVisible && Math.Abs(SiblingTop() - siblingStart) < 0.5 && ReferenceEquals(tree.SelectedItem, leaf), $"{label}: reversal restores layout and preserves the selected descendant");
 

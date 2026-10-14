@@ -12,7 +12,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="MinHeight" Value="36" />
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
     </ControlTheme>
     <ControlTheme TargetType="CalendarItem" x:Key="{x:Type CalendarItem}">

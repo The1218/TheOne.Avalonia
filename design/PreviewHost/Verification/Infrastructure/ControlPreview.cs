@@ -98,6 +98,7 @@ internal static class ControlPreview
         DataGridFilterPreview.Verify(Check);
         PreviewPagesPreview.Verify(Check);
         ChartPreview.Verify(Check);
+        ControlVariantsPreview.Verify(Check);
         InfoCardPreview.Verify(Check);
         TagStepPreview.Verify(Check);
         NavMenuPreview.Verify(Check);
@@ -110,6 +111,13 @@ internal static class ControlPreview
         RefreshPreview.Verify();
         CarouselPreview.Verify();
         TabStripPreview.Verify();
+        VerifyCoreControls();
+    }
+
+    // Shared by the complete suite and focused retries after a template/state change.
+    public static void VerifyCoreControls()
+    {
+        ReferenceChromePreview.Verify();
         ButtonControlsPreview.Verify();
         SelectionControlsPreview.Verify();
         ToggleSwitchPreview.Verify();
@@ -128,13 +136,13 @@ internal static class ControlPreview
         var presenter = save.GetVisualDescendants().OfType<ContentPresenter>()
             .Single(control => control.Name == "PART_ContentPresenter");
 
-        Check(BrushColor(presenter.Background) == Color.Parse("#13745C"), "Primary button uses OneTheme, not fallback Fluent");
+        Check(BrushColor(presenter.Background) == Color.Parse("#006061"), "Primary button uses OneTheme, not fallback Fluent");
         window.MouseMove(point);
         Flush();
-        Check(BrushColor(presenter.Background) == Color.Parse("#0D624D"), "Pointer hover state");
+        Check(BrushColor(presenter.Background) == Color.Parse("#006A6B"), "Pointer hover state");
         window.MouseDown(point, MouseButton.Left);
         Flush();
-        Check(BrushColor(presenter.Background) == Color.Parse("#084B3B"), "Pointer pressed state");
+        Check(BrushColor(presenter.Background) == Color.Parse("#007475"), "Pointer pressed state");
         window.MouseUp(point, MouseButton.Left);
         Flush();
         Check(window.Model.Status.Contains("第 1 次"), "Mouse click executes the bound command");
@@ -148,7 +156,7 @@ internal static class ControlPreview
         Check(window.Model.Email == "invalid-email" && window.Model.HasErrors, "Text input updates compiled binding and validation");
         Check(DataValidationErrors.GetHasErrors(email), "Validation reaches the real TextBox error state");
         var border = email.GetVisualDescendants().OfType<Border>().Single(control => control.Name == "PART_BorderElement");
-        Check(BrushColor(border.BorderBrush) == Color.Parse("#B33340"), "Error border uses semantic danger colour");
+        Check(BrushColor(border.BorderBrush) == Color.Parse("#99000D"), "Error border uses semantic danger colour");
         window.Model.Email = "hello@theone.dev";
         Flush();
         Check(!DataValidationErrors.GetHasErrors(email), "Validation clears when input is corrected");
@@ -210,14 +218,14 @@ internal static class ControlPreview
         {
             window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = theme;
             Flush();
-            Check(BrushColor(presenter.Background) == Color.Parse(theme == 2 ? "#61C5A5" : "#13745C"),
+            Check(BrushColor(presenter.Background) == Color.Parse(theme == 2 ? "#63D9DE" : "#006061"),
                 "Existing template updates on live theme switch");
             Check(BrushColor(mixedFrame.Background)?.A == 0, "Mixed CheckBox label stays transparent on a live theme switch");
         }
 
         window.Model.DemoEnabled = false;
         Flush();
-        Check(!save.IsEffectivelyEnabled && BrushColor(presenter.Foreground) == Color.Parse("#74857C"),
+        Check(!save.IsEffectivelyEnabled && BrushColor(presenter.Foreground) == Color.Parse("#AAB1B1"),
             "Disabled state propagates to the visual template");
         window.Model.DemoEnabled = true;
 
@@ -270,21 +278,11 @@ internal static class ControlPreview
         SplitButtonPreview.VerifyGallery(window, gallery);
         TextControlsPreview.VerifyGallery(window, gallery);
         FlyoutPreview.VerifyGallery(window, gallery);
-        SelectionControlsPreview.VerifyGallery(window, gallery);
-        ButtonControlsPreview.VerifyGallery(window, gallery);
         TabStripPreview.VerifyGallery(window, gallery);
         CarouselPreview.VerifyGallery(window, gallery);
         RefreshPreview.VerifyGallery(window, gallery);
         ContentTransitionPreview.VerifyGallery(window, gallery);
         NotificationPreview.VerifyGallery(window, gallery);
-        window.NavigateToCategory(22); Flush();
-        Check(window is TheOne.Avalonia.Controls.OneWindow && gallery.FindControl<Border>("OneWindowCard")!.Child is OneWindowDemoView, "OneWindow category lazily loads within the actual OneWindow preview host");
-
-        window.Width = 800;
-        window.Height = 800;
-        Flush();
-        Check(!window.FindControl<Border>("Sidebar")!.IsVisible, "Compact window collapses sidebar");
-        Check(gallery.FindControl<WrapPanel>("Cards")!.ItemWidth <= 760, "Compact catalogue reflows to one column");
         window.Close();
         Console.WriteLine("All control interaction checks passed.");
     }

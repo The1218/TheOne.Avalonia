@@ -556,8 +556,8 @@
                                     <MenuItem Command="{Binding HelpCommand}" Header="键盘操作提示" />
                                     <MenuItem
                                         Command="{Binding MenuCommand}"
-                                        CommandParameter="Still · 浅色与深色主题"
-                                        Header="关于 Still" />
+                                        CommandParameter="TheOne · 浅色与深色主题"
+                                        Header="关于 TheOne" />
                                 </MenuItem>
                             </Menu>
                         </Border>

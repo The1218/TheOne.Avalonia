@@ -45,7 +45,7 @@ internal static class TextControlsPreview
         Check(Part<ContentPresenter>(label, "PART_ContentPresenter").RecognizesAccessKey && label.Target == input && !KeyboardNavigation.GetIsTabStop(label), $"{name}: native Label target and access-key presenter are retained without another tab stop");
         Check(Colour(label.Foreground) == Resource(label, "One.Text") && Colour(demo.FindControl<Label>("RoleLabel")!.Foreground) == Resource(label, "One.Muted"), $"{name}: default and muted labels use semantic theme colors");
         Check(text.FontSize == font && text.LineHeight == lineHeight && double.IsNaN(text.Height) && text.TextLayout.TextLines.Count >= 3 && text.Bounds.Height >= lineHeight * 3, $"{name}: selectable paragraphs size from their native multiline layout and line-height tokens");
-        Check(Colour(text.Foreground) == Resource(text, "One.Text") && Colour(text.SelectionBrush) == Resource(text, "One.AccentSoft") && text.SelectionForegroundBrush is null, $"{name}: selection uses a Still highlight while retaining native text formatting");
+        Check(Colour(text.Foreground) == Resource(text, "One.Text") && Colour(text.SelectionBrush) == Resource(text, "One.TextSelection") && text.SelectionForegroundBrush is null, $"{name}: selection uses a Theme highlight while retaining native text formatting");
         Check(text.Focusable && text.FocusAdorner is not null && text.ContextFlyout is MenuFlyout && string.Equals(text.Cursor?.ToString(), "IBeam", StringComparison.OrdinalIgnoreCase), $"{name}: native selectable text retains focus, pointer selection and themed context menu");
         Click(window, label); Check(input.IsFocused, $"{name}: real label pointer activation focuses its associated input");
         text.Focus(); text.SelectAll(); ControlPreview.Flush();
@@ -72,7 +72,7 @@ internal static class TextControlsPreview
         Check(role.IsFocused, "Alt + R activates a different native Label target");
         var from = TextPoint(text, 0, window); var to = TextPoint(text, 5, window);
         window.MouseMove(from); window.MouseDown(from, MouseButton.Left); window.MouseMove(to, RawInputModifiers.LeftMouseButton); window.MouseUp(to, MouseButton.Left); ControlPreview.Flush();
-        Check(text.IsFocused && text.SelectedText == "Still" && text.CanCopy, "Real pointer dragging selects exactly the native text range");
+        Check(text.IsFocused && text.SelectedText == "Theme" && text.CanCopy, "Real pointer dragging selects exactly the native text range");
         var word = TextPoint(text, 8, window); ClickAt(window, word); ClickAt(window, word);
         Check(text.SelectedText.Trim() == "makes", "Native double-click selects a word using text-layout hit testing");
         ClickAt(window, word); Check(text.SelectedText == demo.SampleText, "Native triple-click selects the complete paragraph");
@@ -88,11 +88,11 @@ internal static class TextControlsPreview
         text.SelectionStart = 0; text.SelectionEnd = 5; ControlPreview.Flush();
         var point = TextPoint(text, 2, window); window.MouseMove(point); window.MouseDown(point, MouseButton.Right); window.MouseUp(point, MouseButton.Right); ControlPreview.Flush();
         var flyout = (PopupFlyoutBase)text.ContextFlyout!; var menu = (MenuFlyoutPresenter)flyout.Popup.Child!;
-        Check(flyout.IsOpen && text.SelectedText == "Still" && menu.GetRealizedContainers().Count() == 1, "Native text context menu preserves the selected range and uses the themed menu presenter");
+        Check(flyout.IsOpen && text.SelectedText == "Theme" && menu.GetRealizedContainers().Count() == 1, "Native text context menu preserves the selected range and uses the themed menu presenter");
         var copy = menu.GetRealizedContainers().OfType<MenuItem>().Single();
         Check(copy.IsEffectivelyEnabled && ControlSizing.GetSize(copy) == ControlSize.Normal && copy.Header is not null, "Context copy command follows native CanCopy and localized header resources");
         Click(TopLevel.GetTopLevel(menu)!, copy);
-        Check(demo.CopyCount == 3 && demo.LastCopiedText == "Still" && ReadClipboard(window) == "Still" && !flyout.IsOpen, "Real context-copy click copies the selected range and closes the native flyout");
+        Check(demo.CopyCount == 3 && demo.LastCopiedText == "Theme" && ReadClipboard(window) == "Theme" && !flyout.IsOpen, "Real context-copy click copies the selected range and closes the native flyout");
         text.Focus(); text.ClearSelection(); point = TextPoint(text, 25, window); window.MouseDown(point, MouseButton.Right); window.MouseUp(point, MouseButton.Right); ControlPreview.Flush();
         Check(!menu.GetRealizedContainers().OfType<MenuItem>().Single().IsEffectivelyEnabled, "Native context copy command is disabled when there is no selection");
         flyout.Hide(); text.Focus(); text.SelectAll(); nameInput.Focus(); ControlPreview.Flush();
@@ -101,7 +101,7 @@ internal static class TextControlsPreview
         Check(text.SelectedText == demo.SampleText, "Actual preview all-selection button focuses and selects the paragraph");
         var rangeStart = text.SelectionStart; var rangeEnd = text.SelectionEnd;
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
-        Check(text.SelectionStart == rangeStart && text.SelectionEnd == rangeEnd && text.FontSize == 16 && text.LineHeight == 24 && Colour(text.Foreground) == Color.Parse("#EAF2ED"), "Live theme and density changes preserve a valid native selected range");
+        Check(text.SelectionStart == rangeStart && text.SelectionEnd == rangeEnd && text.FontSize == 16 && text.LineHeight == 24 && Colour(text.Foreground) == Color.Parse("#F2F2F2"), "Live theme and density changes preserve a valid native selected range");
         Click(window, demo.FindControl<CheckBox>("WrapText")!); ControlPreview.Flush();
         Check(text.TextWrapping == TextWrapping.NoWrap, "Actual wrapping checkbox changes native paragraph wrapping");
         Click(window, demo.FindControl<CheckBox>("TextDemoEnabled")!);

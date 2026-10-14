@@ -7,7 +7,7 @@
 
 ## 使用列筛选
 
-实体属性直接由列的编译绑定自动识别，开启表格筛选即可。NativeAOT 消费方仍需调用 `DataGridAot.PreserveRowType<StockRecord>()`；显示／编辑绑定继续使用 CompiledBinding。
+实体属性直接由列的编译绑定自动识别，开启表格筛选即可。消费方在创建表格或集合视图前调用 `DataGridAot.PreserveRowType<StockRecord>()`；显示／编辑绑定继续使用 CompiledBinding。
 
 ```xml
 <DataGrid ItemsSource="{Binding Records}" AutoGenerateColumns="False"
@@ -69,7 +69,7 @@ DataGridFeatures.ShowColumnFilters 默认为 false。DataGridColumnOptions 的�
 
 自动识别只适用于面向当前实体的编译属性链；模板列包含多个字段时不猜测身份，可选 ValueAccessor 覆盖或关闭 FilterEnabled。数值支持 byte／sbyte／short／ushort／int／uint／long／ulong／float／double／decimal 及 Nullable；按原始类型与 CurrentCulture 解析，精确比较不增加浮点容差，null／NaN／Infinity 不匹配有效条件。
 
-筛选验证入口为 `--verify-datagrid-filters`，定向渲染为 DataGridFilters；执行方式见[测试策略](../workflow/testing.md)。当前阶段与后续验收见[DataGrid 计划](../plans/datagrid.md)。
+筛选验证入口为 `--verify-datagrid-filters`，定向渲染为 DataGridFilters；执行方式见[测试策略](../workflow/testing.md)。原生布局与发布验收见[DataGrid 验收](../workflow/datagrid-acceptance.md)。
 
 ## 原生右侧冻结
 

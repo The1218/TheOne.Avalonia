@@ -342,12 +342,12 @@ public partial class ChartBase
 
     private double AxisMargin(double width, AxisRange range, ChartYAxis axis)
     {
-        // Actual tick counts vary with density. Include fractional labels while keeping zoom margins stable.
-        var labelWidth = Enumerable.Range(2, 4)
-            .SelectMany(divisions => Enumerable.Range(0, divisions + 1).Select(i => i / (double)divisions))
-            .Append(1 / 7d)
-            .Max(fraction => Text(CartesianAxisText(range.At(fraction), axis)).Width);
-        return Math.Min(width * 0.24, Math.Max(58, labelWidth + 12));
+        // Reserve the widest readable tick across supported densities; zoom keeps margins stable.
+        var format = axis == ChartYAxis.Primary ? ValueFormat : SecondaryValueFormat;
+        var unit = axis == ChartYAxis.Primary ? Unit : SecondaryUnit;
+        var labelWidth = Enumerable.Range(2, 4).SelectMany(divisions => AxisTicks(range, divisions))
+            .Max(tick => Text(IsPercentCartesian ? CartesianAxisText(tick.Value, axis) : TickText(tick.Value, tick.Step, format) + unit).Width);
+        return Math.Min(width * 0.24, Math.Max(36, labelWidth + 12));
     }
     private string CartesianAxisText(double value, ChartYAxis axis)
     {
@@ -421,10 +421,13 @@ public partial class ChartBase
         {
             if (!valid[axis] || axis == 1 && !secondaryShown) continue;
             var displayed = ranges[axis].Slice(frame.Horizontal ? viewport.Left : viewport.Top, frame.Horizontal ? viewport.Right : viewport.Bottom);
-            for (var tick = 0; tick <= tickCount; tick++)
+            foreach (var tick in AxisTicks(displayed, tickCount))
             {
-                var fraction = tick / (double)tickCount;
-                var value = CartesianAxisText(displayed.At(fraction), (ChartYAxis)axis); var text = Text(value, MutedBrush);
+                var fraction = displayed.Ratio(tick.Value);
+                var format = axis == 0 ? ValueFormat : SecondaryValueFormat;
+                var value = IsPercentCartesian ? CartesianAxisText(tick.Value, (ChartYAxis)axis)
+                    : TickText(tick.Value, tick.Step, format) + (axis == 0 ? Unit : SecondaryUnit);
+                var text = Text(value, MutedBrush);
                 if (frame.Horizontal)
                 {
                     var x = plot.Left + fraction * plot.Width;
@@ -457,7 +460,8 @@ public partial class ChartBase
         frame.Lines.Add(new CartesianLine(plot.TopLeft, plot.BottomLeft, 1));
         if (secondaryShown) frame.Lines.Add(new CartesianLine(frame.Horizontal ? plot.TopLeft : plot.TopRight, frame.Horizontal ? plot.TopRight : plot.BottomRight, 1));
         var categories = SeriesSource![firstSeries].ItemsSource!;
-        var capacity = Math.Max(2, (int)((frame.Horizontal ? plot.Height : plot.Width) / (frame.Horizontal ? FontSize + 8 : 72)));
+        var widestCategory = categories.Take(128).Max(point => Text(point.Label ?? FormatValue(point.X), MutedBrush).Width);
+        var capacity = Math.Max(2, (int)((frame.Horizontal ? plot.Height : plot.Width) / (frame.Horizontal ? FontSize + 8 : Math.Max(36, widestCategory + 14))));
         var labels = new List<(double Fraction, string Text)>();
         if (frame.Categorical)
         {

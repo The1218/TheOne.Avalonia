@@ -7,5 +7,7 @@
     <WrapPanel><TimePicker Name="ControlSample" SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="24HourClock" UseSeconds="True" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="12HourClock" UseSeconds="False" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time}" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><TimePicker Name="FilledTimeSample" Classes="filled" SelectedTime="{Binding Time, Mode=TwoWay}" /></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

@@ -8,6 +8,6 @@ Adds native right frozen columns, compiled entity value readers, shared column g
 
 Normally install TheOne.Avalonia, which brings this dependency and the themes. Both packages must be available in the source; upgrade them together. Do not simultaneously reference the official Avalonia.Controls.DataGrid package.
 
-This is a coordinated preview. NativeAOT still requires typed row preservation and compiled bindings; upstream reflection/conversion warnings remain and are not suppressed. Cross-RID publishing does not prove execution on the target operating system.
+This is a coordinated preview. Register row and nested property metadata with `DataGridRowMetadata.Register<T>()` before creating collection views or grids. Sorting uses registered typed comparers, automatic columns use compiled property accessors, and scalar editing uses explicit conversion APIs. The DataGrid IL2026 / IL2070 / IL2075 / IL3050 warnings have been eliminated without warning suppression or whole-assembly preservation. Custom conversions require an explicit column converter. Cross-RID publishing does not prove execution on the target operating system.
 
 Source provenance is included in UPSTREAM.json; license in LICENSE.md. Documentation and platform boundaries: [TheOne.Avalonia repository](https://github.com/The1218/TheOne.Avalonia).

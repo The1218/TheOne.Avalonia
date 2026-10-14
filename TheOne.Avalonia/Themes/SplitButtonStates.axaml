@@ -1,16 +1,18 @@
 <Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--  Cross-template states belong to Styles; ControlTheme permits a single template selector.  -->
     <Style Selector=":is(SplitButton):checked /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
     </Style>
     <Style Selector=":is(SplitButton):checked /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
     </Style>
     <Style Selector=":is(SplitButton):pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.Line}" />
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
     </Style>
     <Style Selector=":is(SplitButton):checked:pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
     </Style>
     <Style Selector=":is(SplitButton):flyout-open /template/ Button#PART_SecondaryButton /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />

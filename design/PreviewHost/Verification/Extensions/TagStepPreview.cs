@@ -57,6 +57,9 @@ internal static partial class TagStepPreview
     {
         var view = new TagDemoView(); var window = Open(view, theme, size); var sample = view.FindControl<Tag>("TagSample")!;
         var prefix = $"Tag/{theme.Key}/{size}";
+        var expectedSize = size == ControlSize.Small ? 11 : size == ControlSize.Large ? 15 : 12;
+        check(sample.FontSize == expectedSize && sample.IconSize == 13,
+            $"{prefix}: compact typography and scaled caller icon inherit all three densities");
         foreach (var status in Enum.GetValues<TagStatus>())
         foreach (var variant in Enum.GetValues<TagVariant>())
         {
@@ -79,7 +82,7 @@ internal static partial class TagStepPreview
         check(ReferenceEquals(Part<ContentPresenter>(sample, "PART_IconPresenter").Child, iconControl), $"{prefix}: replacing and restoring caller-owned icons preserves the native logical tree");
         view.Model.Text = ""; Flush();
         var iconOnly = Part<ContentPresenter>(sample, "PART_IconPresenter");
-        check(Math.Abs(iconOnly.TranslatePoint(default, sample)!.Value.X + iconOnly.Bounds.Width / 2 - sample.Bounds.Width / 2) < 1.1,
+        check(Math.Abs(iconOnly.TranslatePoint(new Point(iconOnly.Bounds.Width / 2, iconOnly.Bounds.Height / 2), sample)!.Value.X - sample.Bounds.Width / 2) < 1.1,
             $"{prefix}: icon-only tag removes trailing content spacing and stays centered");
         window.Close(); Flush();
     }

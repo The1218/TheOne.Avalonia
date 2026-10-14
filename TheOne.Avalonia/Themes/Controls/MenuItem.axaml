@@ -96,9 +96,9 @@
                         WindowManagerAddShadowHint="False">
                         <Border
                             Background="{DynamicResource One.Surface}"
-                            BorderBrush="{DynamicResource One.Line}"
+                            BorderBrush="{DynamicResource One.OutlineStrong}"
                             BorderThickness="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}"
-                            CornerRadius="{DynamicResource One.Radius.Card}"
+                            CornerRadius="{DynamicResource One.Radius.Popup}"
                             HorizontalAlignment="Stretch"
                             MaxHeight="{DynamicResource One.DataFlyoutMaxHeight}"
                             MaxWidth="{DynamicResource FlyoutThemeMaxWidth}"
@@ -126,7 +126,7 @@
         </Style>
         <Style Selector="^:selected">
             <Style Selector="^ /template/ Border#PART_LayoutRoot">
-                <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+                <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             </Style>
             <Style Selector="^ /template/ ContentPresenter#PART_HeaderPresenter">
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
@@ -141,12 +141,12 @@
 
         <!--  Listen for PART_LayoutRoot:pointerover, so it will not be triggered when subitem is pressed  -->
         <Style Selector="^:pressed /template/ Border#PART_LayoutRoot:pointerover">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Style Selector="^ ContentPresenter#PART_HeaderPresenter">
-                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
             <Style Selector="^ TextBlock#PART_InputGestureText">
-                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
             <Style Selector="^ Path#PART_ChevronPath">
                 <Setter Property="Fill" Value="{DynamicResource One.Accent}" />

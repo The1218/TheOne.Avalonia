@@ -15,7 +15,7 @@ public sealed class TabClosingEventArgs(object item) : CancelRoutedEventArgs(Tab
 }
 
 /// <summary>Optional close and reorder behaviour for standard TabControl/TabItem.</summary>
-public sealed class TabFeatures : AvaloniaObject
+public sealed partial class TabFeatures : AvaloniaObject
 {
     public static readonly AttachedProperty<bool> CanCloseProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("CanClose");
     public static readonly AttachedProperty<bool> CanReorderProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("CanReorder");
@@ -37,7 +37,7 @@ public sealed class TabFeatures : AvaloniaObject
 
     static TabFeatures()
     {
-        CanReorderProperty.Changed.AddClassHandler<TabControl>((tabs, _) => Attach(tabs));
+        CanReorderProperty.Changed.AddClassHandler<TabControl>((tabs, _) => { Attach(tabs); if (!GetCanReorder(tabs)) tabs.GetValue(StateProperty)?.Clear(); });
         CanCloseProperty.Changed.AddClassHandler<TabControl>((tabs, _) =>
         {
             Attach(tabs);
@@ -63,9 +63,12 @@ public sealed class TabFeatures : AvaloniaObject
         tabs.AddHandler(InputElement.PointerMovedEvent, state.Moved, RoutingStrategies.Tunnel, true);
         tabs.AddHandler(InputElement.PointerReleasedEvent, state.Released, RoutingStrategies.Tunnel, true);
         tabs.AddHandler(InputElement.KeyDownEvent, state.KeyDown, RoutingStrategies.Tunnel);
-        tabs.PointerCaptureLost += (_, args) => { if (ReferenceEquals(args.Source, tabs)) state.Clear(); };
+        tabs.PointerCaptureLost += state.CaptureLost;
         tabs.DetachedFromVisualTree += (_, _) => state.Clear();
-        tabs.ContainerPrepared += (_, args) => { if (args.Container is TabItem item) { item.SetValue(OwnerProperty, new WeakReference<TabControl>(tabs)); UpdateCloseVisibility(item, tabs); } };
+        tabs.PropertyChanged += state.OwnerChanged;
+        tabs.Items.CollectionChanged += state.ItemsChanged;
+        tabs.ContainerClearing += (_, args) => { if (args.Container is TabItem item) state.Recycle(item); };
+        tabs.ContainerPrepared += (_, args) => { if (args.Container is TabItem item) { item.SetValue(OwnerProperty, new WeakReference<TabControl>(tabs)); UpdateCloseVisibility(item, tabs); state.Prepare(item); } };
         tabs.AttachedToVisualTree += (_, _) => QueueCommandRefresh();
     }
     private static TabControl? Owner(TabItem item) => item.GetVisualAncestors().OfType<TabControl>().FirstOrDefault() ?? item.Parent as TabControl
@@ -134,61 +137,5 @@ public sealed class TabFeatures : AvaloniaObject
         public void Refresh() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         public bool CanExecute(object? parameter) => parameter is TabItem item && CanClose(item);
         public void Execute(object? parameter) { if (parameter is TabItem item) Close(item); }
-    }
-    private sealed class DragState(TabControl tabs)
-    {
-        private TabItem? _item, _target;
-        private Point _start;
-        private IPointer? _pointer;
-        private bool _dragging;
-        public void Pressed(object? sender, PointerPressedEventArgs args)
-        {
-            if (!GetCanReorder(tabs) || MutableItems(tabs) == null || !args.GetCurrentPoint(tabs).Properties.IsLeftButtonPressed || args.Source is not Control source) return;
-            var chain = source.GetVisualAncestors().Prepend(source).ToArray();
-            if (chain.OfType<Button>().Any()) return;
-            var item = chain.OfType<TabItem>().FirstOrDefault();
-            if (item == null || Owner(item) != tabs || !item.IsEffectivelyEnabled) return;
-            _item = item; _start = args.GetPosition(tabs); _pointer = args.Pointer;
-        }
-        public void Moved(object? sender, PointerEventArgs args)
-        {
-            if (_item == null || !args.GetCurrentPoint(tabs).Properties.IsLeftButtonPressed) return;
-            if (!_dragging && Math.Sqrt(Math.Pow(args.GetPosition(tabs).X - _start.X, 2) + Math.Pow(args.GetPosition(tabs).Y - _start.Y, 2)) < 6) return;
-            _dragging = true;
-            args.Pointer.Capture(tabs);
-            _item.Classes.Add("dragging");
-            _target?.Classes.Remove("drop-target");
-            _target = tabs.GetRealizedContainers().OfType<TabItem>().FirstOrDefault(item =>
-            {
-                var point = tabs.TranslatePoint(args.GetPosition(tabs), item);
-                return item != _item && item.IsEffectivelyEnabled && point.HasValue && new Rect(item.Bounds.Size).Contains(point.Value);
-            });
-            _target?.Classes.Add("drop-target");
-            args.Handled = true;
-        }
-        public void Released(object? sender, PointerReleasedEventArgs args)
-        {
-            if (!_dragging) { Clear(); return; }
-            if (_item != null && _target != null) Move(tabs, tabs.IndexFromContainer(_item), tabs.IndexFromContainer(_target));
-            args.Handled = true;
-            Clear();
-            args.Pointer.Capture(null);
-        }
-        public void KeyDown(object? sender, KeyEventArgs args)
-        {
-            if (args.Key == Key.Escape && _dragging) { Clear(); args.Handled = true; return; }
-            if ((args.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) == 0) return;
-            if (args.Key == Key.W && tabs.ContainerFromIndex(tabs.SelectedIndex) is TabItem item) args.Handled = Close(item);
-            if ((args.KeyModifiers & KeyModifiers.Shift) != 0 && args.Key is Key.Left or Key.Right)
-                args.Handled = Move(tabs, tabs.SelectedIndex, tabs.SelectedIndex + (args.Key == Key.Left ? -1 : 1));
-        }
-        public void Clear()
-        {
-            var pointer = _pointer;
-            _pointer = null;
-            _item?.Classes.Remove("dragging"); _target?.Classes.Remove("drop-target");
-            _item = _target = null; _dragging = false;
-            if (pointer?.Captured == tabs) pointer.Capture(null);
-        }
     }
 }

@@ -8,7 +8,7 @@ namespace TheOne.DesignPreview;
 
 public partial class TextControlsDemoView : UserControl
 {
-    public string SampleText => "Still makes readable interfaces. Select a word, a line, or the whole paragraph.\n拖动鼠标选择这段文字；双击可选词，三击可全选。复制快捷键遵循当前操作系统。\n文本按可用宽度自动换行，切换字号与主题会保留仍有效的选区。";
+    public string SampleText => "Theme makes readable interfaces. Select a word, a line, or the whole paragraph.\n拖动鼠标选择这段文字；双击可选词，三击可全选。复制快捷键遵循当前操作系统。\n文本按可用宽度自动换行，切换字号与主题会保留仍有效的选区。";
     public int CopyCount { get; private set; }
     public string LastCopiedText { get; private set; } = "";
     public TextControlsDemoView()

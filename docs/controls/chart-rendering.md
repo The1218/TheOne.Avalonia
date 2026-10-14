@@ -57,18 +57,18 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 });
 ```
 
-普通 `List<ChartPoint>` 也可作为数据源；修改其内容后需调用 `RevenueChartBase.RefreshData()`，点属性通知仍自动生效。大量数据批量加载时，可一次替换 `ItemsSource`，或修改普通列表后统一刷新，避免逐项集合通知重复建立订阅。
+普通 `List<ChartPoint>` 也可作为数据源；修改其内容后需调用 `RevenueChart.RefreshData()`，点属性通知仍自动生效。大量数据批量加载时，可一次替换 `ItemsSource`，或修改普通列表后统一刷新，避免逐项集合通知重复建立订阅。
 
 该控件没有逐点 UI 容器，因此集合控件的容器回收面板不适用。数据准备、原始点定位索引与模型内存仍随数据量增长；采样减少绘制顶点，不代替分页或远程数据虚拟化。业务层应控制数据量，并为图表提供有限宽高。
 
 ## 主题与三档尺寸
 
-`OneTheme` 设置背景、文字、网格及四色系列画笔；可通过 `Background`、`Foreground`、`GridBrush`、`MutedBrush`、`AccentBrush`、`SecondaryBrush`、`TertiaryBrush`、`QuaternaryBrush` 覆盖。`Classes="small"` / `normal` / `large` 或可继承的 `ControlSizing.Size` 同时改变期望宽高、字号、留白、线条、标记及仪表弧带，不只改变文字。
+`OneTheme` 设置背景、文字、网格及六色系列画笔；可通过 `Background`、`Foreground`、`GridBrush`、`MutedBrush`、`AccentBrush`、`SecondaryBrush`、`TertiaryBrush`、`QuaternaryBrush`、`FifthBrush`、`SixthBrush` 覆盖。默认系列色来自 `One.Chart.Series1` 至 `One.Chart.Series6`，按六色循环，随主题动态变化；`ChartSeries.Brush` 优先，导出保留六个画笔属性。`Classes="small"` / `normal` / `large` 或可继承的 `ControlSizing.Size` 同时改变期望宽高、字号、留白、线条、标记及仪表弧带，不只改变文字。
 
 | 属性 | Small | Normal | Large |
 | --- | --- | --- | --- |
 | `DefaultChartWidth` / `DefaultChartHeight` | 320 / 224 | 400 / 280 | 480 / 336 |
-| `FontSize` | 12 | 14 | 16 |
+| `FontSize` | 10 | 11 | 12 |
 | `ChartPadding` | 8 | 12 | 16 |
 | `StrokeThickness` | 2 | 2.5 | 3 |
 | `MarkerRadius` | 3 | 3.5 | 4.25 |
@@ -76,6 +76,8 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 | `SliceHoverOffset` | 4 | 6 | 8 |
 | `SliceHoverScale` | 1.02 | 1.025 | 1.03 |
 | `GaugeBandRatio` | 0.14 | 0.18 | 0.22 |
+
+图表使用独立于标准表单控件的紧凑字号。仪表刻度字号为 9 / 10 / 11，中心数值为 20 / 22 / 24；标题在基础字号上增加 2，图例使用基础字号。PreviewHost 三种样式的可用宽度随尺寸为 240 / 300 / 360，不再固定为同一宽度。
 
 这些值可在单个图表上覆盖。`DefaultChartWidth` / `DefaultChartHeight` 只提供默认期望尺寸；明确设置 `Width` / `Height` 或由 Grid 拉伸时，以消费布局为准。固定相同宽高下，三档仍改变图表内部密度。径向图会为扇区抬起预留边缘空间；坐标图按字号与留白重新计算绘图区及可容纳的刻度、标签。
 
@@ -88,6 +90,6 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 | 视口／双轴／采样 | ZoomedLineChart、PannedBarChart、DualYAxisChart、LargeSamplingChart |
 | 准线／提示／图例 | CrosshairChart、SharedTooltipChart、InteractiveLegendChart |
 | 标签／平滑／动画 | LabeledLineChart、SmoothLineChart、AnimatedChart |
-| 悬停／仪表 | PieHoverChart、DoughnutHoverChart、BarHoverChart、NeedleGaugeChart |
+| 悬停／仪表 | PieHoverChart、DoughnutHoverChart、BarHoverChart、NeedleGaugeChart、PrecisionGaugeChart |
 
 PNG 导出 API 单独验证，不依赖截图命令。NativeAOT 接入见[对应文档](../native-aot.md)。

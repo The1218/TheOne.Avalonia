@@ -23,7 +23,7 @@
 | `PercentStackedHorizontalBarChart` | 百分比堆叠横向条形图 | 与百分比堆叠柱状图相同，数值轴水平排列 |
 | `PercentStackedAreaChart` | 百分比堆叠面积图 | 同轴、同索引且 X 对齐的百分比分层填充 |
 
-`ChartPoint.X` / `Y` 为 `double`，`Label` 为可选文本。`ChartSeries.Name` 为图例名称，`ItemsSource` 为 `IList<ChartPoint>`，`IsVisible=False` 隐藏系列，`Brush` 可覆盖该系列的默认颜色。`YAxis` 指定主轴或次轴；可选 `Unit` / `ValueFormat` 覆盖该系列的原始值显示，`null` 时继承所属坐标轴的配置。默认系列颜色来自 Still 主题，随 Light / Dark 切换。
+`ChartPoint.X` / `Y` 为 `double`，`Label` 为可选文本。`ChartSeries.Name` 为图例名称，`ItemsSource` 为 `IList<ChartPoint>`，`IsVisible=False` 隐藏系列，`Brush` 可覆盖该系列的默认颜色。`YAxis` 指定主轴或次轴；可选 `Unit` / `ValueFormat` 覆盖该系列的原始值显示，`null` 时继承所属坐标轴的配置。默认系列颜色来自 TheOne 主题，随 Light / Dark 切换。
 
 ## 编译绑定示例
 

@@ -7,5 +7,7 @@
     <WrapPanel><CalendarDatePicker Name="ControlSample" SelectedDate="{Binding CalendarDate, Mode=TwoWay}" Margin="0,0,12,12" /><CalendarDatePicker SelectedDate="{Binding CalendarDate, Mode=TwoWay}" PlaceholderText="选择日期" Margin="0,0,12,12" /><CalendarDatePicker SelectedDate="{Binding CalendarDate}" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><CalendarDatePicker Name="FilledCalendarSample" Classes="filled" SelectedDate="{Binding CalendarDate, Mode=TwoWay}" Width="300" /></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

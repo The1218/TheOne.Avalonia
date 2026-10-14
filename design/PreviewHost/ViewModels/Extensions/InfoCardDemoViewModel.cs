@@ -15,7 +15,7 @@ public sealed class InfoCardDemoViewModel : ReactiveObject
     public InfoCardDemoViewModel? VisibleFooter => ShowFooter ? this : null;
     public Geometry IconData => Revision % 2 == 0 ? UpdatedGeometry : InfoGeometry;
     public string DetailsLabel => DetailsCount == 0 ? "详情" : $"详情 {DetailsCount}";
-    public string Description => $"Still 主题 · 当前版本 {Revision}。信息卡片使用统一的表面、细边框与圆角；正文自动换行，标题和正文可替换为自定义控件或数据模板。";
+    public string Description => $"TheOne 主题 · 当前版本 {Revision}。信息卡片使用统一的表面、细边框与圆角；正文自动换行，标题和正文可替换为自定义控件或数据模板。";
     public int Revision { get; private set => this.RaiseAndSetIfChanged(ref field, value); } = 1;
     public int SaveCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
     public int DetailsCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
@@ -76,10 +76,10 @@ public sealed class InfoCardDemoViewModel : ReactiveObject
         }
     } = true;
 
-    public string WorkspaceName { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "Still workspace";
+    public string WorkspaceName { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "TheOne workspace";
     public string SaveStatus { get; private set => this.RaiseAndSetIfChanged(ref field, value); } = "修改工作区名称，然后点击标题中的保存按钮。";
     public string FooterStatus { get; private set => this.RaiseAndSetIfChanged(ref field, value); } = "尚未同步 · 使用标题操作或页脚按钮更新状态。";
-    public IReadOnlyList<string> Members { get; } = Enumerable.Range(1, 1_000).Select(index => $"成员 {index:D4} · Still workspace").ToArray();
+    public IReadOnlyList<string> Members { get; } = Enumerable.Range(1, 1_000).Select(index => $"成员 {index:D4} · TheOne workspace").ToArray();
     public ICommand UpdateCommand { get; }
     public ICommand SaveCommand { get; }
     public ICommand ResetCommand { get; }
@@ -120,7 +120,7 @@ public sealed class InfoCardDemoViewModel : ReactiveObject
         {
             ShowHeader = ShowIcon = ShowHeaderActions = ShowFooter = Enabled = true;
             ShowHeaderSeparator = ShowFooterSeparator = true;
-            WorkspaceName = "Still workspace";
+            WorkspaceName = "TheOne workspace";
             SaveCount = 0;
             DetailsCount = SyncCount = 0;
             SaveStatus = "修改工作区名称，然后点击标题中的保存按钮。";

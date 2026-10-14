@@ -67,3 +67,5 @@ private async void OnRefreshRequested(object? sender, RefreshRequestedEventArgs 
 RefreshOptions.UseThemeVisualizerSizing 默认启用，处理官方容器创建的 Visualizer 固定局部尺寸；可设为 False 使用原生尺寸。用户显式提供的 Visualizer 不受此默认尺寸管理。RefreshVisualizer 的合成动画遵循可继承的 `Motion.Enabled`，设为 False 保留下拉位移和状态提示，停止旋转、脉冲与过渡；刷新中重新开启会恢复动画，不重复请求。自定义 Content 同样支持；`RefreshMotion.UseMotionSettings=False` 可退出适配。
 
 PreviewHost 的“下拉刷新 Refresh”页提供千条虚拟数据、真实下拉、手动／自动完成、失败重试、远距离定位与容器数。“刷新动效”开关支持在刷新中反复关闭与恢复；全局工具栏切换明暗主题和三档尺寸，重置恢复全局动效继承。
+
+PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内置指示器参与下拉、刷新和 Motion 切换验证，仍提供公共主题与自定义 Visualizer API。

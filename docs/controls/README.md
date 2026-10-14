@@ -7,10 +7,14 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | 文档 | 控件 / 能力 |
 | --- | --- |
 | [IconButton 与按钮层次](icon-button.md) | 属性图标、Geometry／PathIcon／Material 模板、主次操作与语义状态 |
+| [分裂按钮](split-button.md) | SplitButton、ToggleSplitButton、主操作、菜单、键盘和虚拟回收 |
+| [文本展示](text-display.md) | TextBlock、Label、SelectableTextBlock、选择复制和字段关联 |
 | [按钮、输入、选择与反馈](basic.md) | Button、RepeatButton、ToggleButton、TextBox、CheckBox、RadioButton、ToggleSwitch、ComboBox、AutoCompleteBox、NumericUpDown、ButtonSpinner、Slider、ProgressBar、ToolTip |
 | [日期与时间](date-time.md) | Calendar、CalendarDatePicker、DatePicker、TimePicker、格式、日期时间 / 月份 / 年份输入 |
 | [列表、树、标签与表格](collections.md) | ItemsControl、ListBox、TreeView、TabControl、TabStrip、Card 标签、DataGrid、回收与远距离定位 |
 | [DataGrid 扩展](datagrid-extensions.md) | 自动实体属性筛选、多列组合、右侧冻结、底部数值统计 |
+| [DataGrid 绑定与排序](datagrid-binding.md) | 类型推断、注册元数据、编译编辑、排序按钮和虚拟化 |
+| [加载控件](loading.md) | LoadingIndicator、按钮加载和 LoadingContainer |
 | [菜单与布局](layout.md) | Menu、ContextMenu、MenuFlyout、Flyout、FlyoutPresenter、Expander、SplitView、GridSplitter、ScrollViewer、ScrollBar、Separator |
 | [轮播与刷新](collection-content.md) | Carousel、RefreshContainer、RefreshVisualizer |
 | [内容过渡与通知](content-feedback.md) | TransitioningContentControl、NotificationCard |
@@ -19,7 +23,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [主题实现说明](../theme/README.md) | 资源、模板、动画、验证范围与实现约束 |
 | [窗口与消息](windows.md) | OneWindow、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
-| [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、折叠动效、编译模板与三档尺寸 |
+| [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、编译模板与三档尺寸 |
 | [Tag 与 Step](tag-step.md) | 图标状态标签、模型属性自动表单与单步验证导航 |
 
 ComboBoxItem、ListBoxItem、TreeViewItem、TabItem、MenuItem、日历单元格和表格内部 Presenter 的样式由主题提供。动态集合优先绑定模型，由模板按需创建容器。
@@ -76,3 +80,5 @@ Application.Current!.RequestedThemeVariant = ThemeVariant.Dark;
 - 用 `styling:Motion.Enabled="False"` 关闭某个控件子树的主题动画，或用 `Motion.SetEnabled(control, false)` 在代码中设置。
 
 可运行的完整示例见 [PreviewHost](../../design/PreviewHost)，大数据入口包含容器计数与远距离操作。
+
+- [加载状态与 LoadingContainer](loading.md)：Button／IconButton 加载、内容覆盖与 Motion 开关。

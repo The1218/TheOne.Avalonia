@@ -56,11 +56,11 @@ internal static class DataGridPreview
         var longRow = Rows(grid).FirstOrDefault(row => (row.DataContext as GridRecord)?.Id == 6);
         Check(longRow is not null && longRow.Bounds.Height > height && grid.Columns[6].ActualWidth <= 320.5, $"{label}: long content wraps at maximum column width and grows its row without truncation");
         var frame = Part<Border>(grid, "DataGridBorder");
-        Check(frame.ClipToBounds && frame.CornerRadius == new CornerRadius(8) && frame.BorderThickness == new Thickness(1) && Colour(frame.Background) == (variant == ThemeVariant.Light ? Color.Parse("#FFFFFF") : Color.Parse("#19211E")), $"{label}: rounded Still surface clips rows beneath the outer frame");
+        Check(frame.ClipToBounds && frame.CornerRadius == new CornerRadius(0) && frame.BorderThickness == new Thickness(1) && Colour(frame.Background) == (variant == ThemeVariant.Light ? Color.Parse("#FFFFFF") : Color.Parse("#0F0F0F")), $"{label}: reference grid surface clips rows beneath the outer frame");
         Hover(window, cell);
-        Check(Colour(Part<Rectangle>(first, "BackgroundRectangle").Fill) == Resource(grid, "One.Subtle"), $"{label}: actual pointer hover uses the semantic row background");
+        Check(Colour(Part<Rectangle>(first, "BackgroundRectangle").Fill) == Resource(grid, "One.NeutralHover"), $"{label}: actual pointer hover uses the semantic row background");
         Click(window, cell);
-        Check(first.IsSelected && demo.Model.Selected == first.DataContext && Colour(Part<Rectangle>(first, "BackgroundRectangle").Fill) == Resource(grid, "One.AccentSoft"), $"{label}: clicking a cell binds selection with a semantic selection surface");
+        Check(first.IsSelected && demo.Model.Selected == first.DataContext && Colour(Part<Rectangle>(first, "BackgroundRectangle").Fill) == Resource(grid, "One.RowSelectedHover"), $"{label}: clicking a cell binds selection with a semantic selection surface");
         demo.Model.FrozenRightCount = 1; ControlPreview.Flush();
         Check(TheOne.Avalonia.Controls.DataGridFeatures.GetFrozenRightColumnCount(grid) == 1 && grid.Columns[6].IsFrozen,
             $"{label}: compiled preview binding enables right freezing");
@@ -136,7 +136,7 @@ internal static class DataGridPreview
         ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
         Check(Header(grid, "编号").FontSize == 16 && Rows(grid).First(row => row.Index == 0).Bounds.Height >= 44, "Runtime density changes update existing headers and recycled rows");
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlPreview.Flush();
-        Check(Colour(Part<Border>(grid, "DataGridBorder").Background) == Color.Parse("#19211E"), "Open DataGrid changes its actual surface with the live theme");
+        Check(Colour(Part<Border>(grid, "DataGridBorder").Background) == Color.Parse("#0F0F0F"), "Open DataGrid changes its actual surface with the live theme");
         demo.UpdateMetrics(); Check(demo.Model.Metrics.Contains("/ 10,000"), "Preview exposes actual row and cell container metrics"); window.Close();
     }
     private static void VerifyGroupsAndDefaults()

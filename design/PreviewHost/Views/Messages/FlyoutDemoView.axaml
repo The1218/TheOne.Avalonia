@@ -196,7 +196,7 @@
                 <TextBlock FontWeight="SemiBold" Text="静态外观 / 继承当前主题与尺寸" />
                 <FlyoutPresenter HorizontalAlignment="Left" Name="InlinePresenter">
                     <StackPanel Spacing="8">
-                        <TextBlock FontWeight="SemiBold" Text="Still · 内容弹层" />
+                        <TextBlock FontWeight="SemiBold" Text="TheOne · 内容弹层" />
                         <TextBlock Text="轻量表面、细边框、统一圆角。" />
                     </StackPanel>
                 </FlyoutPresenter>

@@ -69,6 +69,9 @@ internal static class InteractionRepairsPreview
     }
     private static void VerifyOutline(Window window, Control owner, Border frame, string label)
     {
+        // Idle Nova editors have a transparent outline. Exercise a visible stroke as a
+        // consumer template would, so this pixel regression still detects edge-button overpainting.
+        if (frame.BorderBrush is ISolidColorBrush { Color.A: 0 }) { frame.BorderBrush = Brushes.Red; ControlPreview.Flush(); }
         var outline = owner.GetVisualDescendants().OfType<Border>().Single(control => control.Name == "InputOutline" && control.TemplatedParent == owner);
         Check(!outline.IsHitTestVisible && outline.BorderBrush == frame.BorderBrush && outline.BorderThickness == frame.BorderThickness, $"{label}: outer stroke is redrawn above edge-button backgrounds");
         using var bitmap = new RenderTargetBitmap(new PixelSize(320, 300), new Vector(96, 96)); bitmap.Render(window);

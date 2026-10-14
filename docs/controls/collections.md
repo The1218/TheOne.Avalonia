@@ -97,7 +97,11 @@ if (container is not null)
 
 `Document` 提供 `Title`、`Description`、`CanClose`。ItemsSource 建议使用 `ObservableCollection<Document>`，ItemTemplate 定义标题，ContentTemplate 定义当前页内容。移除 `card` 类名即可使用普通标签外观。
 
-Card 样式默认开启关闭与重排。标题单行排列并按视口创建，溢出显示滚动箭头；内容按当前选择创建。`TabStripPlacement` 支持 Top / Bottom / Left / Right。
+Card 支持关闭与重排。标题仅有背景色，正文保留边框；溢出显示滚动箭头，按需创建标题和选中内容。`TabStripPlacement` 支持 Top / Bottom / Left / Right。
+
+拖动超过 6 px 后，标题跟手，邻项平滑让位；松手仅提交一次排序，保留选择。边缘自动滚动，预览不受容器回收影响。Esc、捕获丢失、禁用／关闭重排、外部集合变化或卸载会取消并清理，不会迟到提交。
+
+让位／落位使用 `One.Motion.Fast`（120 ms）与 CubicEaseOut；`Motion.Enabled=False` 或零时长立即完成。普通／pills 标签设置 `TabFeatures.CanReorder=True` 即可使用。保留原生虚拟面板，只生成当前拖动的标题预览。
 
 | 接口 | 用途 |
 | --- | --- |
@@ -143,7 +147,7 @@ DocumentsTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
 
 项目启用默认编译绑定，列从强类型 Records 集合自动推断每行模型；无需逐个绑定写 DataType 或 CompiledBindingExtension。List<Record>、ObservableCollection<Record> 和 IEnumerable<Record> 均会推断行模型；需要筛选／分组视图时可用 DataGridCollectionView<Record>，同样无需列级 x:DataType。非泛型 DataGridCollectionView 仍需声明行类型。Records 的项提供 `Id`、`Name`、`Enabled`。编辑属性需可写并发出变化通知；业务验证使用 Avalonia 支持的数据验证机制。`IsReadOnly` 可作用于全表或单列。自定义单元格使用 DataGridTemplateColumn 的 CellTemplate / CellEditingTemplate。
 
-NativeAOT / 裁剪发布需在启动时调用 `DataGridAot.PreserveRowType<Record>()`，保留原生表格检查编辑、排序与分组所需的公共属性。路径排序使用显式 SortMemberPath；配置与原生验证见 [NativeAOT 文档](../native-aot.md)。
+创建视图前调用 `DataGridAot.PreserveRowType<Record>()`，注册编辑、排序和分组元数据。路径排序设置 SortMemberPath；托管与原生契约见 [NativeAOT](../native-aot.md)。
 
 默认 ColumnWidth 为 Auto、最小列宽 64 px；可用固定宽度、SizeToCells、SizeToHeader 或星号宽度。自动列宽基于已显示内容渐进计算，不预扫描整张表。RowHeight 保留 Auto，长内容可增高；三档密度沿用共同约定。
 
@@ -185,3 +189,7 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 
 
 轮播与刷新见[Carousel／Refresh](collection-content.md)。验证范围与命令见[测试策略](../workflow/testing.md)。
+
+## 外观类
+
+`ListBox Classes="cards"` 使用独立圆角条目与选中边框，`borderless` 用于嵌入布局。`TabControl Classes="pills"` 使用胶囊式标题，现有 `card` 仍提供连续外框。均保留原生面板及有界视口，集合使用 ItemsSource 与编译模板；每个控件选择一种外观类。

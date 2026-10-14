@@ -1,7 +1,7 @@
 <UserControl
+    VerticalContentAlignment="Top"
     x:Class="TheOne.DesignPreview.DataGridDemoView"
     x:DataType="local:DataGridDemoViewModel"
-    VerticalContentAlignment="Top"
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:TheOne.DesignPreview"
     xmlns:one="using:TheOne.Avalonia.Controls"
@@ -86,7 +86,7 @@
                     Minimum="0"
                     Name="GridFrozenRightCount"
                     Value="{Binding FrozenRightCount, Mode=TwoWay}"
-                    Width="90" />
+                    Width="130" />
             </StackPanel>
             <CheckBox
                 Content="显示统计"
@@ -112,8 +112,8 @@
             IsReadOnly="{Binding IsReadOnly}"
             ItemsSource="{Binding View}"
             MaxColumnWidth="320"
-            MinHeight="300"
             MaxHeight="520"
+            MinHeight="300"
             Name="InventoryGrid"
             SelectedItem="{Binding Selected, Mode=TwoWay}"
             one:DataGridFeatures.FrozenRightColumnCount="{Binding FrozenRightCount}"
@@ -124,13 +124,8 @@
                     Binding="{Binding Id}"
                     Header="编号"
                     IsReadOnly="True" />
-                <DataGridTextColumn
-                    Binding="{Binding Name,
-                                              Mode=TwoWay}"
-                    Header="设备名称" />
-                <DataGridTextColumn
-                    Binding="{Binding Warehouse, Mode=TwoWay}"
-                    Header="仓库" />
+                <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay}" Header="设备名称" />
+                <DataGridTextColumn Binding="{Binding Warehouse, Mode=TwoWay}" Header="仓库" />
                 <DataGridTextColumn
                     Binding="{Binding Quantity, Mode=TwoWay}"
                     Header="数量"
@@ -143,12 +138,8 @@
                     one:DataGridColumnOptions.SummaryEnabled="True"
                     one:DataGridColumnOptions.SummaryFormat="0.00"
                     one:DataGridColumnOptions.SummaryKind="Average" />
-                <DataGridCheckBoxColumn
-                    Binding="{Binding Enabled, Mode=TwoWay}"
-                    Header="启用" />
-                <DataGridTextColumn
-                    Binding="{Binding Notes, Mode=TwoWay}"
-                    Header="备注" />
+                <DataGridCheckBoxColumn Binding="{Binding Enabled, Mode=TwoWay}" Header="启用" />
+                <DataGridTextColumn Binding="{Binding Notes, Mode=TwoWay}" Header="备注" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="3" Spacing="5">
@@ -169,7 +160,10 @@
                 Text="点击漏斗设置列条件，列之间为 AND；单击表头排序；拖动表头或列边界；F2 编辑，Enter 提交，Esc 撤销；名称不能为空。"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <Expander Grid.Row="4" Header="集合绑定与单元格操作 / 千条数据" IsExpanded="False">
+        <Expander
+            Grid.Row="4"
+            Header="集合绑定与单元格操作 / 千条数据"
+            IsExpanded="False">
             <local:DataGridBindingDemoView />
         </Expander>
     </Grid>

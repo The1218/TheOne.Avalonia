@@ -16,7 +16,7 @@
         <Setter Property="FontSize" Value="{DynamicResource One.Type.Body}" />
         <Setter Property="LineHeight" Value="{DynamicResource One.Text.LineHeight}" />
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource One.TextSelection}" />
         <!--  Preserve per-run foreground and font size; consumers may explicitly override selection foreground.  -->
         <Style Selector="^[IsEnabled=True]">
             <Setter Property="Cursor" Value="IBeam" />

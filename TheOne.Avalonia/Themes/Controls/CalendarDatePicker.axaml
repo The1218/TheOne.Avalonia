@@ -32,16 +32,16 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ Border">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
     </ControlTheme>
 
     <ControlTheme TargetType="CalendarDatePicker" x:Key="{x:Type CalendarDatePicker}">
         <Setter Property="one:CalendarInput.OpenOnClick" Value="True" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Muted}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
@@ -138,14 +138,14 @@
 
         <!--  Pressed State  -->
         <Style Selector="^:pressed /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <!--  Pointer-over State  -->
         <Style Selector="^:pointerover /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         </Style>
 
         <!--  Disabled State  -->
@@ -162,8 +162,8 @@
 
         <!--  Focused State  -->
         <Style Selector="^:focus-within /template/ Border#Background">
-            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
             <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
         </Style>
 

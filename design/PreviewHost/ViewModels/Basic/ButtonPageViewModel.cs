@@ -1,2 +1,2 @@
 namespace TheOne.DesignPreview;
-public sealed class ButtonPageViewModel : BasicControlViewModel { }
+public sealed class ButtonPageViewModel : LoadingDemoViewModel { }

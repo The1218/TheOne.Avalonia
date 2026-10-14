@@ -21,9 +21,10 @@
 | `Status` | `Default`、`Information`、`Success`、`Warning`、`Error`、`Processing` |
 | `Variant` | `Soft` 浅底、`Outline` 描边、`Solid` 实心 |
 | `Spacing` | 图标与内容间距，默认 6；没有图标或文字时不保留空隙 |
+| `IconSize` | 图标缩放边长，默认 13 px，比原 14 px 基准减小一号；三档密度共用，可覆盖，不修改调用方图标尺寸 |
 | `IsEnabled` | 禁用时统一使用 DisabledSurface / DisabledText |
 
-Tag 用于显示状态，不承担按钮或切换选择行为。状态文字与图标由应用提供，不能只通过颜色表达含义。沿用 Still 语义色，支持 Light / Dark 与继承的 small / normal / large；默认最小高度分别为 24 / 28 / 32。可覆盖标准 Padding、CornerRadius、Foreground 等属性。
+Tag 用于显示状态，不承担按钮或切换选择行为。状态文字与图标由应用提供，不能只通过颜色表达含义。沿用 TheOne 语义色，支持 Light / Dark 与继承的 small / normal / large；默认最小高度分别为 24 / 28 / 32，字号为 11 / 12 / 15 px。可覆盖标准 Padding、CornerRadius、Foreground 等属性。
 
 ## Step 验证步骤
 
@@ -138,7 +139,7 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 ### 布局与预览
 
-圆点连线导航区分完成勾号、当前实心编号、未开始浅色编号和错误感叹号，沿用 Still 语义色。圆点 small / normal / large 直径为 30 / 36 / 42；标题视口高度 112、最大宽度 960，默认居中；每项默认宽度 200。设置 `HeaderHorizontalAlignment="Stretch"` 时均分视口，每项最小宽度 120；较窄窗口或长列表保持横向滚动，不压缩成不可读的圆点。调整窗口或切换对齐实时重算项宽，仍使用官方 ListBox / VirtualizingStackPanel。成功状态保存在 StepItem 上，不依赖已创建的标题容器。
+圆点连线导航区分完成勾号、当前实心编号、未开始浅色编号和错误感叹号，沿用 TheOne 语义色。圆点 small / normal / large 直径为 30 / 36 / 42；标题视口高度 112、最大宽度 960，默认居中；每项默认宽度 200。设置 `HeaderHorizontalAlignment="Stretch"` 时均分视口，每项最小宽度 120；较窄窗口或长列表保持横向滚动，不压缩成不可读的圆点。调整窗口或切换对齐实时重算项宽，仍使用官方 ListBox / VirtualizingStackPanel。成功状态保存在 StepItem 上，不依赖已创建的标题容器。
 
 Step 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
 

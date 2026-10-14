@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
   <ControlTheme x:Key="{x:Type one:OneDialogPresenter}" TargetType="one:OneDialogPresenter">
-    <Setter Property="Background" Value="{DynamicResource One.Surface}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="BorderThickness" Value="1" />
-    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" /><Setter Property="Padding" Value="24" /><Setter Property="FontSize" Value="14" />
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" /><Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Popup}" /><Setter Property="Padding" Value="24" /><Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalAlignment" Value="Center" /><Setter Property="VerticalAlignment" Value="Center" /><Setter Property="Margin" Value="24" /><Setter Property="MinWidth" Value="280" /><Setter Property="MaxWidth" Value="640" /><Setter Property="Focusable" Value="True" />
     <Setter Property="Template"><ControlTemplate>
       <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">

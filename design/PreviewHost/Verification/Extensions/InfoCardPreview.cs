@@ -25,7 +25,7 @@ internal static class InfoCardPreview
     public static InfoCard CreateSample() => new()
     {
         Header = "工作区概览",
-        Content = "Still 主题 · 标题与正文可自由组合。\n分区背景、细边框和圆角，内容按可用宽度自动换行。",
+        Content = "TheOne 主题 · 标题与正文可自由组合。\n分区背景、细边框和圆角，内容按可用宽度自动换行。",
         HorizontalAlignment = HorizontalAlignment.Stretch
     };
 
@@ -72,7 +72,7 @@ internal static class InfoCardPreview
         var body = Part<ContentPresenter>(card, "PART_ContentPresenter");
         var host = Part<Control>(card, "PART_HeaderHost");
         check(card.FontSize == font && card.HeaderFontSize == font + 2 && card.Padding == new Thickness(padding) && card.HeaderSpacing == gap, $"{label}: inherited density controls text, header, padding and spacing");
-        check(Colour(surface.Background) == Resource(card, "One.Surface") && Colour(surface.BorderBrush) == Resource(card, "One.Line") && Colour(card.Foreground) == Resource(card, "One.Text"), $"{label}: template uses Still semantic surface, outline and text");
+        check(Colour(surface.Background) == Resource(card, "One.Surface") && Colour(surface.BorderBrush) == Resource(card, "One.Line") && Colour(card.Foreground) == Resource(card, "One.Text"), $"{label}: template uses TheOne semantic surface, outline and text");
         check(!card.Focusable && card.Bounds.Width > 500 && card.Bounds.Height < 220 && double.IsNaN(card.Height), $"{label}: presentation card sizes to content without adding a tab stop");
         check(header.Content == card.Header && body.Content == card.Content && host.IsVisible && Math.Abs(body.TranslatePoint(default, window)!.Value.Y - header.TranslatePoint(new Point(0, header.Bounds.Height), window)!.Value.Y - gap - padding - 1) < 1, $"{label}: header and content retain independent presenters and density-aware section padding and a divider");
         var title = header.GetVisualDescendants().OfType<TextBlock>().First();
@@ -484,7 +484,7 @@ internal static class InfoCardPreview
             cards.Children.Add(new InfoCard
             {
                 Header = "工作区设置", HeaderIcon = CreateIcon(), HeaderActions = new Button { Content = "详情" },
-                Content = new StackPanel { Spacing = 12, Children = { new Label { Content = "工作区名称" }, new TextBox { Text = "Still workspace" } } },
+                Content = new StackPanel { Spacing = 12, Children = { new Label { Content = "工作区名称" }, new TextBox { Text = "TheOne workspace" } } },
                 Footer = new Grid
                 {
                     ColumnDefinitions = ColumnDefinitions.Parse("*,Auto"), ColumnSpacing = 12,

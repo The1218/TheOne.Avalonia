@@ -11,5 +11,7 @@
     <TextBox Text="多行内容&#10;回车继续编辑" AcceptsReturn="True" TextWrapping="Wrap" Height="100" MaxWidth="420" HorizontalAlignment="Stretch"/>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><TextBox Name="FilledInputSample" Classes="filled" Text="{Binding Text, Mode=TwoWay}" MaxWidth="420" /><TextBox Name="UnderlinedInputSample" Classes="underlined" Text="{Binding Text, Mode=TwoWay}" MaxWidth="420" /></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

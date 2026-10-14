@@ -9,9 +9,9 @@
     <ControlTheme TargetType="AutoCompleteBox" x:Key="{x:Type AutoCompleteBox}">
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Muted}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
@@ -48,7 +48,7 @@
                         WindowManagerAddShadowHint="False">
                         <Border
                             Background="{DynamicResource One.Surface}"
-                            BorderBrush="{DynamicResource One.InputLine}"
+                            BorderBrush="{DynamicResource One.OutlineStrong}"
                             BorderThickness="{DynamicResource AutoCompleteListBorderThemeThickness}"
                             CornerRadius="{DynamicResource OverlayCornerRadius}"
                             Name="PART_SuggestionsContainer"

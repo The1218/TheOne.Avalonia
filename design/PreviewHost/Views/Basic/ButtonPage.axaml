@@ -3,6 +3,8 @@
     x:DataType="local:ButtonPageViewModel"
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:TheOne.DesignPreview"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    styling:Motion.Enabled="{Binding MotionEnabled}"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Spacing="20">
@@ -86,5 +88,13 @@
             Foreground="{DynamicResource One.Muted}"
             Text="{Binding Status}"
             TextWrapping="Wrap" />
-    </StackPanel>
+        <TextBlock Text="加载状态 · 运行三秒，可在过程中关闭／开启动效" FontWeight="SemiBold" />
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <CheckBox Content="手动加载" IsChecked="{Binding IsLoading, Mode=TwoWay}" />
+            <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+        </StackPanel>
+        <Button Name="LoadingSample" Content="保存并加载" Classes="primary" Command="{Binding LoadCommand}" one:ButtonLoading.IsLoading="{Binding IsLoading}" IsEnabled="{Binding Enabled, Mode=TwoWay}" />
+    <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><WrapPanel><Button Name="SoftActionSample" Classes="soft" Content="柔和操作" Command="{Binding InvokeCommand}" Margin="0,0,12,8" /><Button Name="GradientActionSample" Classes="gradient" Content="渐变操作" Command="{Binding InvokeCommand}" Margin="0,0,12,8" /></WrapPanel></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

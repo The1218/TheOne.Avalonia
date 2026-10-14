@@ -8,7 +8,7 @@
     <converters:StringFormatConverter x:Key="One.StringFormatConverter" />
 
     <ControlTheme TargetType="ProgressBar" x:Key="{x:Type ProgressBar}">
-        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.AccentPressed}" />
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ProgressBarBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />

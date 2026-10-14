@@ -5,9 +5,24 @@
     <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}"/>
     <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
       <ToggleButton Content="展开侧栏" IsChecked="{Binding Expanded, Mode=TwoWay}" HorizontalAlignment="Left"/>
-      <SplitView Name="ControlSample" Height="320" IsPaneOpen="{Binding Expanded, Mode=TwoWay}" DisplayMode="CompactInline" OpenPaneLength="220" CompactPaneLength="48">
+      <WrapPanel>
+        <ComboBox ItemsSource="{Binding Modes}" SelectedItem="{Binding DisplayMode, Mode=TwoWay}" Width="180" Margin="0,0,12,8" />
+        <ComboBox ItemsSource="{Binding Placements}" SelectedItem="{Binding PanePlacement, Mode=TwoWay}" Width="140" Margin="0,0,12,8" />
+        <Button Content="定位第 1000 项" Command="{Binding LastCommand}" Margin="0,0,0,8" />
+      </WrapPanel>
+      <SplitView Name="ControlSample" Height="420" IsPaneOpen="{Binding Expanded, Mode=TwoWay}" DisplayMode="{Binding DisplayMode}" PanePlacement="{Binding PanePlacement}">
         <SplitView.Pane>
-          <ListBox Height="300" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"/>
+          <ListBox Name="DetailedSample" Background="Transparent" BorderThickness="0" CornerRadius="0"
+                   ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+              <DataTemplate x:DataType="x:String">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                  <PathIcon Width="16" Height="16" Data="M3,3 H9 V9 H3 Z M12,3 H18 V9 H12 Z M3,12 H9 V18 H3 Z M12,12 H18 V18 H12 Z" />
+                  <TextBlock Text="{Binding}" IsVisible="{CompiledBinding $parent[SplitView].IsPaneOpen}" VerticalAlignment="Center" />
+                </StackPanel>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
         </SplitView.Pane>
         <TextBlock Text="{Binding Text}" Margin="24"/>
       </SplitView>

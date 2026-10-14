@@ -7,9 +7,9 @@
         <Setter Property="one:CalendarOptions.WheelNavigation" Value="True" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Popup}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="MinWidth" Value="310" />
         <Setter Property="Template">

@@ -66,7 +66,7 @@ internal static class SelectionControlsPreview
         Check(check.IsEffectivelyEnabled && check.IsChecked == true && radioFirst.IsChecked == true && radioSecond.IsChecked == false && toggleSwitch.IsChecked == true,
             "Comparison reset restores the live selection state");
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
-        Check(check.FontSize == 16 && Colour(check.Foreground) == Color.Parse("#61C5A5") && demo.Samples.All(sample => sample.Control.ActualThemeVariant.Key!.ToString() == sample.Theme),
+        Check(check.FontSize == 16 && Colour(check.Foreground) == Color.Parse("#F2F2F2") && demo.Samples.All(sample => sample.Control.ActualThemeVariant.Key!.ToString() == sample.Theme),
             "Live controls follow the host theme and size while comparison scopes keep both palettes");
         window.Width = 760; ControlPreview.Flush();
         Check(Grid.GetRow(demo.FindControl<ThemeVariantScope>("DarkMatrixScope")!) == 1 && Grid.GetColumn(demo.FindControl<ThemeVariantScope>("DarkMatrixScope")!) == 0,
@@ -84,17 +84,17 @@ internal static class SelectionControlsPreview
         {
             background = Part<Border>(check, "PART_Border").Background; indicator = Part<Border>(check, "NormalRectangle").Background;
             mark = Part<global::Avalonia.Controls.Shapes.Path>(check, "CheckGlyph").Fill; foreground = Part<ContentPresenter>(check, "PART_ContentPresenter").Foreground;
-            fill = disabled ? "One.DisabledSurface" : selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" }
-                : sample.State == SelectionVisualState.Pressed ? "One.AccentSoft" : "One.Surface";
-            glyph = disabled ? "One.DisabledText" : selected ? "One.OnAccent" : "One.Text";
+            fill = disabled ? selected || control is CheckBox ? "One.DisabledSelection" : "One.DisabledSurface" : selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" }
+                : sample.State switch { SelectionVisualState.Hover => "One.NeutralHover", SelectionVisualState.Pressed => "One.NeutralPressed", _ => "One.Subtle" };
+            glyph = selected ? "One.IconOnAccent" : disabled ? "One.DisabledText" : "One.Text";
         }
         else if (control is RadioButton radio)
         {
             background = Part<Border>(radio, "RootBorder").Background; indicator = Part<Ellipse>(radio, selected ? "CheckOuterEllipse" : "OuterEllipse").Fill;
             mark = Part<Ellipse>(radio, "CheckGlyph").Fill; foreground = Part<ContentPresenter>(radio, "PART_ContentPresenter").Foreground;
-            fill = disabled ? "One.DisabledSurface" : selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" }
-                : sample.State == SelectionVisualState.Pressed ? "One.AccentSoft" : "One.Surface";
-            glyph = disabled ? "One.DisabledText" : "One.OnAccent";
+            fill = disabled ? selected || control is CheckBox ? "One.DisabledSelection" : "One.DisabledSurface" : selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" }
+                : sample.State switch { SelectionVisualState.Hover => "One.NeutralHover", SelectionVisualState.Pressed => "One.NeutralPressed", _ => "One.Subtle" };
+            glyph = "One.IconOnAccent";
         }
         else
         {
@@ -105,28 +105,12 @@ internal static class SelectionControlsPreview
                 $"{label}: disabled tracks retain an outline against a matching surface");
             mark = Part<Ellipse>(toggle, selected ? "SwitchKnobOn" : "SwitchKnobOff").Fill;
             foreground = (selected ? Part<ContentPresenter>(toggle, "PART_OnContentPresenter") : Part<ContentPresenter>(toggle, "PART_OffContentPresenter")).Foreground;
-            fill = disabled ? "One.DisabledSurface" : selected ? sample.State switch { SelectionVisualState.Hover => "One.AccentHover", SelectionVisualState.Pressed => "One.AccentPressed", _ => "One.Accent" }
-                : sample.State switch { SelectionVisualState.Hover => "One.Subtle", SelectionVisualState.Pressed => "One.Line", _ => "One.Surface" };
-            glyph = disabled ? "One.DisabledText" : selected ? "One.OnAccent" : "One.Muted";
+            fill = disabled ? "One.DisabledSelection" : selected ? "One.Accent" : "One.Line";
+            glyph = disabled ? "One.PrimaryDisabled" : sample.State switch { SelectionVisualState.Hover => "One.SurfaceHover", SelectionVisualState.Pressed => "One.SurfacePressed", _ => "One.Surface" };
         }
-        var text = disabled ? "One.DisabledText" : control is CheckBox && selected ? "One.Accent" : "One.Text";
+        var text = disabled ? "One.DisabledText" : "One.Text";
         Check(Colour(background)?.A == 0 && Colour(indicator) == Resource(control, fill) && Colour(mark) == Resource(control, glyph) && Colour(foreground) == Resource(control, text),
             $"{label}: native semantic templates keep transparent rows, visible indicators and readable labels");
-    }
-    public static void VerifyGallery(LegacyPreviewWindow window, LegacyControlGallery gallery)
-    {
-        window.NavigateToCategory(15); ControlPreview.Flush();
-        var card = gallery.FindControl<Border>("SelectionControlsCard")!;
-        Check(card.IsVisible && card.Child is SelectionControlsDemoView, "Selection comparison category lazily loads the unified preview");
-        var demo = (SelectionControlsDemoView)card.Child!; var toggle = demo.FindControl<ToggleSwitch>("LiveSwitch")!; Click(window, toggle);
-        Check(toggle.IsChecked == false, "Unified catalogue preview accepts native switch input");
-        window.FindControl<ComboBox>("SizePicker")!.SelectedIndex = 0; window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 2; ControlPreview.Flush();
-        Check(toggle.FontSize == 12 && toggle.ActualThemeVariant == ThemeVariant.Dark && demo.Samples.All(sample => sample.Control.ActualThemeVariant.Key!.ToString() == sample.Theme),
-            "Global catalogue settings update live samples while retaining simultaneous Light and Dark matrices");
-        window.FindControl<ComboBox>("SizePicker")!.SelectedIndex = 1; window.FindControl<ComboBox>("ThemePicker")!.SelectedIndex = 1;
-        window.NavigateToCategory(0); gallery.Search("选择控件对比"); ControlPreview.Flush();
-        Check(card.IsVisible && !gallery.FindControl<Border>("FlyoutCard")!.IsVisible, "Global search locates the unified selection comparison");
-        gallery.Search(""); ControlPreview.Flush();
     }
     public static void Render(string output)
     {

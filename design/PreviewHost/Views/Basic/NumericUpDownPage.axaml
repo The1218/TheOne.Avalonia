@@ -7,5 +7,7 @@
     <WrapPanel><NumericUpDown Name="ControlSample" Value="{Binding Number, Mode=TwoWay}" Minimum="0" Maximum="1000" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="12.5" Increment="0.5" FormatString="0.0" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="42" ShowButtonSpinner="False" Width="220" Margin="0,0,12,12" /><NumericUpDown Value="28" IsEnabled="False" Width="220" Margin="0,0,12,12" /></WrapPanel>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><WrapPanel><NumericUpDown Classes="filled" Value="{Binding Number, Mode=TwoWay}" Width="220" Margin="0,0,12,12" /><NumericUpDown Classes="underlined" Value="{Binding Number, Mode=TwoWay}" Width="220" Margin="0,0,12,12" /></WrapPanel></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

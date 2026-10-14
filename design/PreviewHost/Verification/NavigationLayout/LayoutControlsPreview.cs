@@ -39,9 +39,9 @@ internal static class LayoutControlsPreview
         Check(split.OpenPaneLength == opened && split.CompactPaneLength == compact && Near(split.Bounds.Height, 320) && split.Padding == new Thickness(size switch { ControlSize.Small => 12, ControlSize.Large => 20, _ => 16 }) && split.FontSize == (size switch { ControlSize.Small => 12, ControlSize.Large => 16, _ => 14 }), $"{label}: pane density preserves the consumer's container height");
         Check(Near(column.Bounds.Width, thickness) && Near(row.Bounds.Height, thickness) && column.Focusable && row.Focusable, $"{label}: both splitter directions have the expected keyboard-focusable hit targets");
         Check(Colour(Part<Border>(split, "SplitViewSurface").Background) == Resource(split, "One.Surface") && Colour(Part<Panel>(split, "PART_PaneRoot").Background) == Resource(split, "One.Subtle"), $"{label}: content and pane use live semantic surfaces");
-        Check(Part<Border>(split, "SplitViewSurface").ClipToBounds && !Part<Border>(split, "SplitViewOutline").IsHitTestVisible && Part<Border>(split, "SplitViewOutline").CornerRadius.TopLeft == 8, $"{label}: rounded outside frame is painted over clipped pane and content");
+        Check(Part<Border>(split, "SplitViewSurface").ClipToBounds && !Part<Border>(split, "SplitViewOutline").IsHitTestVisible && Part<Border>(split, "SplitViewOutline").CornerRadius.TopLeft == 6, $"{label}: rounded outside frame is painted over clipped pane and content");
         Hover(window, column);
-        Check(Colour(Part<Border>(column, "SplitterSurface").Background) == Resource(column, "One.AccentSoft") && Colour(column.Foreground) == Resource(column, "One.Accent"), $"{label}: actual splitter hover uses the shared accent feedback");
+        Check(Colour(Part<Border>(column, "SplitterSurface").Background) == Resource(column, "One.AccentSoftHover") && Colour(column.Foreground) == Resource(column, "One.Accent"), $"{label}: actual splitter hover uses the shared accent feedback");
         var point = Centre(column, window); window.MouseDown(point, MouseButton.Left); ControlPreview.Flush();
         Check(Colour(column.Background) == Resource(column, "One.Accent") && Colour(column.Foreground) == Resource(column, "One.OnAccent"), $"{label}: actual pointer press highlights the grip");
         window.MouseUp(point, MouseButton.Left); row.Focus(); column.Focus(NavigationMethod.Tab); window.MouseMove(new Point(1, 1)); ControlPreview.Flush();
@@ -140,7 +140,7 @@ internal static class LayoutControlsPreview
         Motion.SetEnabled(window, false); ControlPreview.Flush();
         Check(Part<Border>(column, "SplitterSurface").Transitions is null, "Inherited reduced-motion setting removes splitter brush transitions");
         window.RequestedThemeVariant = ThemeVariant.Dark; ControlSizing.SetSize(window, ControlSize.Large); ControlPreview.Flush();
-        Check(column.Bounds.Width == 12 && row.Bounds.Height == 12 && Colour(Part<Border>(demo.FindControl<SplitView>("PaneSample")!, "SplitViewSurface").Background) == Color.Parse("#19211E"), "Live density and theme changes update existing layout controls");
+        Check(column.Bounds.Width == 12 && row.Bounds.Height == 12 && Colour(Part<Border>(demo.FindControl<SplitView>("PaneSample")!, "SplitViewSurface").Background) == Color.Parse("#0F0F0F"), "Live density and theme changes update existing layout controls");
         window.Close();
     }
     private static void VerifyConsumer()

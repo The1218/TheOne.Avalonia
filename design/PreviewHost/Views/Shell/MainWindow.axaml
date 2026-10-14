@@ -47,12 +47,11 @@
                     SelectedItem="{Binding SelectedNavigation, Mode=TwoWay}"
                     ShowFilter="True">
                     <one:NavMenu.IconTemplate>
-                        <DataTemplate>
-                            <Path
+                        <DataTemplate x:DataType="local:NavEntry">
+                            <PathIcon
                                 Data="{Binding Icon}"
-                                Stretch="Uniform"
-                                Stroke="{Binding $parent[ContentPresenter].Foreground}"
-                                StrokeThickness="1.3" />
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch" />
                         </DataTemplate>
                     </one:NavMenu.IconTemplate>
                     <one:NavMenu.ContentTemplate>
@@ -69,15 +68,6 @@
                 BorderThickness="0,0,0,1"
                 Padding="24,16">
                 <Grid ColumnDefinitions="*,Auto">
-                    <StackPanel Spacing="8">
-                        <TextBlock FontWeight="SemiBold" Text="{Binding NavigationTitle}" />
-                        <TextBox
-                            HorizontalAlignment="Left"
-                            MaxWidth="360"
-                            Name="Search"
-                            PlaceholderText="搜索控件名称或分类"
-                            Text="{Binding Search, Mode=TwoWay}" />
-                    </StackPanel>
                     <StackPanel
                         Grid.Column="1"
                         Orientation="Horizontal"
@@ -86,13 +76,18 @@
                             ItemsSource="{Binding Sizes}"
                             Name="DensityPicker"
                             SelectedItem="{Binding Size, Mode=TwoWay}"
+                            VerticalAlignment="Center"
                             Width="110" />
                         <ComboBox
                             ItemsSource="{Binding Themes}"
                             Name="ThemePicker"
                             SelectedItem="{Binding Theme, Mode=TwoWay}"
+                            VerticalAlignment="Center"
                             Width="110" />
-                        <CheckBox Content="动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+                        <CheckBox
+                            Content="动效"
+                            IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                            VerticalAlignment="Center" />
                     </StackPanel>
                 </Grid>
             </Border>

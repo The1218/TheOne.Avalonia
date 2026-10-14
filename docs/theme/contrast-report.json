@@ -3,348 +3,784 @@
     "theme": "Light",
     "pair": "Text/Canvas",
     "minimum": 4.5,
-    "ratio": 14.0
+    "ratio": 15.95
   },
   {
     "theme": "Light",
     "pair": "Text/Surface",
     "minimum": 4.5,
-    "ratio": 15.04
+    "ratio": 15.95
   },
   {
     "theme": "Light",
     "pair": "Text/Subtle",
     "minimum": 4.5,
-    "ratio": 13.31
+    "ratio": 13.62
   },
   {
     "theme": "Light",
     "pair": "Text/AccentSoft",
     "minimum": 4.5,
-    "ratio": 13.18
+    "ratio": 11.04
   },
   {
     "theme": "Light",
     "pair": "Muted/Surface",
     "minimum": 4.5,
-    "ratio": 5.98
+    "ratio": 8.62
   },
   {
     "theme": "Light",
     "pair": "Muted/Subtle",
     "minimum": 4.5,
-    "ratio": 5.29
+    "ratio": 7.36
   },
   {
     "theme": "Light",
     "pair": "Accent/AccentSoft",
     "minimum": 4.5,
-    "ratio": 5.0
+    "ratio": 5.11
   },
   {
     "theme": "Light",
-    "pair": "AccentHover/AccentSoft",
+    "pair": "Accent/AccentSoftHover",
     "minimum": 4.5,
-    "ratio": 6.41
+    "ratio": 4.72
   },
   {
     "theme": "Light",
-    "pair": "AccentPressed/AccentSoft",
-    "minimum": 3,
-    "ratio": 8.84
+    "pair": "Text/AccentSoftPressed",
+    "minimum": 4.5,
+    "ratio": 9.48
   },
   {
     "theme": "Light",
     "pair": "Success/SuccessSoft",
+    "minimum": 4.5,
+    "ratio": 4.93
+  },
+  {
+    "theme": "Light",
+    "pair": "Danger/Surface",
+    "minimum": 4.5,
+    "ratio": 8.9
+  },
+  {
+    "theme": "Light",
+    "pair": "Focus/Surface",
+    "minimum": 3,
+    "ratio": 3.83
+  },
+  {
+    "theme": "Light",
+    "pair": "Chart.Text/Chart.Background",
+    "minimum": 4.5,
+    "ratio": 8.41
+  },
+  {
+    "theme": "Light",
+    "pair": "Placeholder/Subtle",
+    "minimum": 4.5,
+    "ratio": 4.73
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 7.36
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/CardTabHover",
+    "minimum": 4.5,
+    "ratio": 11.06
+  },
+  {
+    "theme": "Light",
+    "pair": "Warning/Subtle",
+    "minimum": 3,
+    "ratio": 5.03
+  },
+  {
+    "theme": "Light",
+    "pair": "Danger/DangerSoft",
+    "minimum": 3,
+    "ratio": 7.65
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 15.55
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 8.4
+  },
+  {
+    "theme": "Light",
+    "pair": "Info/InfoSoft",
+    "minimum": 4.5,
+    "ratio": 5.27
+  },
+  {
+    "theme": "Light",
+    "pair": "Info/Subtle",
+    "minimum": 4.5,
+    "ratio": 5.05
+  },
+  {
+    "theme": "Light",
+    "pair": "Warning/WarningSoft",
+    "minimum": 4.5,
+    "ratio": 5.27
+  },
+  {
+    "theme": "Light",
+    "pair": "Danger/DangerSoft",
+    "minimum": 4.5,
+    "ratio": 7.65
+  },
+  {
+    "theme": "Light",
+    "pair": "Focus/Subtle",
+    "minimum": 3,
+    "ratio": 3.27
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/NeutralHover",
+    "minimum": 4.5,
+    "ratio": 11.06
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/NeutralPressed",
+    "minimum": 4.5,
+    "ratio": 10.22
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/RowSelected",
+    "minimum": 4.5,
+    "ratio": 13.66
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/RowSelectedHover",
+    "minimum": 4.5,
+    "ratio": 12.87
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/RowSelectedPressed",
+    "minimum": 4.5,
+    "ratio": 12.02
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Info",
+    "minimum": 4.5,
+    "ratio": 5.55
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Success",
     "minimum": 4.5,
     "ratio": 5.21
   },
   {
     "theme": "Light",
-    "pair": "Danger/Surface",
+    "pair": "OnAccent/Warning",
     "minimum": 4.5,
-    "ratio": 6.06
+    "ratio": 5.54
   },
   {
     "theme": "Light",
-    "pair": "InputLine/Surface",
-    "minimum": 3,
-    "ratio": 3.25
+    "pair": "Surface/Chart.Series1",
+    "minimum": 4.5,
+    "ratio": 5.46
   },
   {
     "theme": "Light",
-    "pair": "Focus/Surface",
-    "minimum": 3,
-    "ratio": 5.71
+    "pair": "Surface/Chart.Series2",
+    "minimum": 4.5,
+    "ratio": 6.64
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Chart.Series3",
+    "minimum": 4.5,
+    "ratio": 5.14
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Chart.Series4",
+    "minimum": 4.5,
+    "ratio": 8.03
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Chart.Series5",
+    "minimum": 4.5,
+    "ratio": 7.95
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Chart.Series6",
+    "minimum": 4.5,
+    "ratio": 5.64
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 13.62
   },
   {
     "theme": "Light",
     "pair": "Muted/CardTabStrip",
     "minimum": 4.5,
-    "ratio": 5.15
-  },
-  {
-    "theme": "Light",
-    "pair": "Text/CardTabHover",
-    "minimum": 4.5,
-    "ratio": 11.93
-  },
-  {
-    "theme": "Light",
-    "pair": "Warning/Subtle",
-    "minimum": 3,
-    "ratio": 5.37
-  },
-  {
-    "theme": "Light",
-    "pair": "Danger/DangerSoft",
-    "minimum": 3,
-    "ratio": 5.37
-  },
-  {
-    "theme": "Light",
-    "pair": "Text/InfoCard.Footer",
-    "minimum": 4.5,
-    "ratio": 14.75
-  },
-  {
-    "theme": "Light",
-    "pair": "Muted/InfoCard.Footer",
-    "minimum": 4.5,
-    "ratio": 5.86
+    "ratio": 7.36
   },
   {
     "theme": "Light",
     "pair": "Surface/Accent",
     "minimum": 4.5,
-    "ratio": 5.71
+    "ratio": 7.38
   },
   {
     "theme": "Light",
     "pair": "Surface/Muted",
     "minimum": 4.5,
-    "ratio": 5.98
+    "ratio": 8.62
   },
   {
     "theme": "Light",
     "pair": "Surface/Warning",
     "minimum": 4.5,
-    "ratio": 6.07
+    "ratio": 5.89
   },
   {
     "theme": "Light",
     "pair": "Surface/Danger",
     "minimum": 4.5,
-    "ratio": 6.06
+    "ratio": 8.9
   },
   {
     "theme": "Light",
     "pair": "OnAccent/Accent",
     "minimum": 4.5,
-    "ratio": 5.71
+    "ratio": 6.94
   },
   {
     "theme": "Light",
     "pair": "OnAccent/AccentHover",
     "minimum": 4.5,
-    "ratio": 7.31
+    "ratio": 6.03
   },
   {
     "theme": "Light",
     "pair": "OnAccent/AccentPressed",
     "minimum": 4.5,
-    "ratio": 10.1
+    "ratio": 5.26
   },
   {
     "theme": "Light",
     "pair": "OnAccent/Danger",
     "minimum": 4.5,
-    "ratio": 6.06
+    "ratio": 8.36
   },
   {
     "theme": "Light",
     "pair": "OnAccent/DangerHover",
     "minimum": 4.5,
-    "ratio": 7.75
+    "ratio": 7.24
   },
   {
     "theme": "Light",
     "pair": "OnAccent/DangerPressed",
     "minimum": 4.5,
-    "ratio": 9.47
+    "ratio": 6.28
+  },
+  {
+    "theme": "Light",
+    "pair": "InputLine/Surface",
+    "minimum": 3,
+    "ratio": 1.48,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "InputLine/Subtle",
+    "minimum": 3,
+    "ratio": 1.26,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "CardTabBorder/Surface",
+    "minimum": 3,
+    "ratio": 1.59,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "OutlineMedium/Surface",
+    "minimum": 3,
+    "ratio": 1.59,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "OutlineMedium/Subtle",
+    "minimum": 3,
+    "ratio": 1.36,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "OutlineStrong/Surface",
+    "minimum": 3,
+    "ratio": 1.71,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "Accent/AccentSoftPressed",
+    "minimum": 4.5,
+    "ratio": 4.39,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Gradient.Brand",
+    "minimum": 4.5,
+    "ratio": 6.24
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Gradient.BrandHover",
+    "minimum": 4.5,
+    "ratio": 5.33
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Gradient.BrandPressed",
+    "minimum": 4.5,
+    "ratio": 4.84
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/Gradient.Glow",
+    "minimum": 4.5,
+    "ratio": 13.66
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/Gradient.Glow",
+    "minimum": 4.5,
+    "ratio": 7.38
   },
   {
     "theme": "Dark",
     "pair": "Text/Canvas",
     "minimum": 4.5,
-    "ratio": 15.92
+    "ratio": 17.12
   },
   {
     "theme": "Dark",
     "pair": "Text/Surface",
     "minimum": 4.5,
-    "ratio": 14.42
+    "ratio": 17.12
   },
   {
     "theme": "Dark",
     "pair": "Text/Subtle",
     "minimum": 4.5,
-    "ratio": 12.37
+    "ratio": 13.03
   },
   {
     "theme": "Dark",
     "pair": "Text/AccentSoft",
     "minimum": 4.5,
-    "ratio": 10.63
+    "ratio": 9.5
   },
   {
     "theme": "Dark",
     "pair": "Muted/Surface",
     "minimum": 4.5,
-    "ratio": 7.96
+    "ratio": 12.08
   },
   {
     "theme": "Dark",
     "pair": "Muted/Subtle",
     "minimum": 4.5,
-    "ratio": 6.83
+    "ratio": 9.19
   },
   {
     "theme": "Dark",
     "pair": "Accent/AccentSoft",
     "minimum": 4.5,
-    "ratio": 5.79
+    "ratio": 6.34
   },
   {
     "theme": "Dark",
-    "pair": "AccentHover/AccentSoft",
+    "pair": "Accent/AccentSoftHover",
     "minimum": 4.5,
-    "ratio": 6.75
+    "ratio": 5.36
   },
   {
     "theme": "Dark",
-    "pair": "AccentPressed/AccentSoft",
-    "minimum": 3,
-    "ratio": 4.48
+    "pair": "Text/AccentSoftPressed",
+    "minimum": 4.5,
+    "ratio": 6.87
   },
   {
     "theme": "Dark",
     "pair": "Success/SuccessSoft",
     "minimum": 4.5,
-    "ratio": 7.36
+    "ratio": 7.7
   },
   {
     "theme": "Dark",
     "pair": "Danger/Surface",
     "minimum": 4.5,
-    "ratio": 9.16
-  },
-  {
-    "theme": "Dark",
-    "pair": "InputLine/Surface",
-    "minimum": 3,
-    "ratio": 4.29
+    "ratio": 12.15
   },
   {
     "theme": "Dark",
     "pair": "Focus/Surface",
     "minimum": 3,
-    "ratio": 7.86
+    "ratio": 7.23
+  },
+  {
+    "theme": "Dark",
+    "pair": "Chart.Text/Chart.Background",
+    "minimum": 4.5,
+    "ratio": 16.47
+  },
+  {
+    "theme": "Dark",
+    "pair": "Placeholder/Subtle",
+    "minimum": 4.5,
+    "ratio": 7.25
   },
   {
     "theme": "Dark",
     "pair": "Muted/CardTabStrip",
     "minimum": 4.5,
-    "ratio": 6.85
+    "ratio": 9.19
   },
   {
     "theme": "Dark",
     "pair": "Text/CardTabHover",
     "minimum": 4.5,
-    "ratio": 9.61
+    "ratio": 9.18
   },
   {
     "theme": "Dark",
     "pair": "Warning/Subtle",
     "minimum": 3,
-    "ratio": 8.78
+    "ratio": 7.43
   },
   {
     "theme": "Dark",
     "pair": "Danger/DangerSoft",
     "minimum": 3,
-    "ratio": 7.19
+    "ratio": 9.17
   },
   {
     "theme": "Dark",
     "pair": "Text/InfoCard.Footer",
     "minimum": 4.5,
-    "ratio": 13.92
+    "ratio": 16.6
   },
   {
     "theme": "Dark",
     "pair": "Muted/InfoCard.Footer",
     "minimum": 4.5,
-    "ratio": 7.68
+    "ratio": 11.71
+  },
+  {
+    "theme": "Dark",
+    "pair": "Info/InfoSoft",
+    "minimum": 4.5,
+    "ratio": 7.48
+  },
+  {
+    "theme": "Dark",
+    "pair": "Info/Subtle",
+    "minimum": 4.5,
+    "ratio": 7.24
+  },
+  {
+    "theme": "Dark",
+    "pair": "Warning/WarningSoft",
+    "minimum": 4.5,
+    "ratio": 7.64
+  },
+  {
+    "theme": "Dark",
+    "pair": "Danger/DangerSoft",
+    "minimum": 4.5,
+    "ratio": 9.17
+  },
+  {
+    "theme": "Dark",
+    "pair": "Focus/Subtle",
+    "minimum": 3,
+    "ratio": 5.5
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/NeutralHover",
+    "minimum": 4.5,
+    "ratio": 9.18
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/NeutralPressed",
+    "minimum": 4.5,
+    "ratio": 7.84
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/RowSelected",
+    "minimum": 4.5,
+    "ratio": 13.11
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/RowSelectedHover",
+    "minimum": 4.5,
+    "ratio": 11.16
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/RowSelectedPressed",
+    "minimum": 4.5,
+    "ratio": 9.93
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Info",
+    "minimum": 4.5,
+    "ratio": 8.61
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Success",
+    "minimum": 4.5,
+    "ratio": 8.82
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Warning",
+    "minimum": 4.5,
+    "ratio": 8.82
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series1",
+    "minimum": 4.5,
+    "ratio": 10.41
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series2",
+    "minimum": 4.5,
+    "ratio": 10.76
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series3",
+    "minimum": 4.5,
+    "ratio": 11.07
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series4",
+    "minimum": 4.5,
+    "ratio": 7.83
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series5",
+    "minimum": 4.5,
+    "ratio": 7.93
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Chart.Series6",
+    "minimum": 4.5,
+    "ratio": 10.15
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 13.03
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 9.19
   },
   {
     "theme": "Dark",
     "pair": "Surface/Accent",
     "minimum": 4.5,
-    "ratio": 7.86
+    "ratio": 11.42
   },
   {
     "theme": "Dark",
     "pair": "Surface/Muted",
     "minimum": 4.5,
-    "ratio": 7.96
+    "ratio": 12.08
   },
   {
     "theme": "Dark",
     "pair": "Surface/Warning",
     "minimum": 4.5,
-    "ratio": 10.23
+    "ratio": 9.76
   },
   {
     "theme": "Dark",
     "pair": "Surface/Danger",
     "minimum": 4.5,
-    "ratio": 9.16
+    "ratio": 12.15
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/Accent",
     "minimum": 4.5,
-    "ratio": 7.62
+    "ratio": 10.33
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/AccentHover",
     "minimum": 4.5,
-    "ratio": 8.88
+    "ratio": 9.61
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/AccentPressed",
     "minimum": 4.5,
-    "ratio": 5.9
+    "ratio": 8.93
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/Danger",
     "minimum": 4.5,
-    "ratio": 8.88
+    "ratio": 10.99
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/DangerHover",
     "minimum": 4.5,
-    "ratio": 10.31
+    "ratio": 10.24
   },
   {
     "theme": "Dark",
     "pair": "OnAccent/DangerPressed",
     "minimum": 4.5,
-    "ratio": 6.91
+    "ratio": 9.48
+  },
+  {
+    "theme": "Dark",
+    "pair": "InputLine/Surface",
+    "minimum": 3,
+    "ratio": 1.88,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "InputLine/Subtle",
+    "minimum": 3,
+    "ratio": 1.43,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "CardTabBorder/Surface",
+    "minimum": 3,
+    "ratio": 2.22,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "OutlineMedium/Surface",
+    "minimum": 3,
+    "ratio": 2.22,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "OutlineMedium/Subtle",
+    "minimum": 3,
+    "ratio": 1.69,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "OutlineStrong/Surface",
+    "minimum": 3,
+    "ratio": 2.61,
+    "passes": false,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "Accent/AccentSoftPressed",
+    "minimum": 4.5,
+    "ratio": 4.58,
+    "passes": true,
+    "reference": "Eremex Nova original outline or pressed toggle text; exact resource values checked separately"
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Gradient.Brand",
+    "minimum": 4.5,
+    "ratio": 9.7
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Gradient.BrandHover",
+    "minimum": 4.5,
+    "ratio": 9.06
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Gradient.BrandPressed",
+    "minimum": 4.5,
+    "ratio": 8.42
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/Gradient.Glow",
+    "minimum": 4.5,
+    "ratio": 13.09
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/Gradient.Glow",
+    "minimum": 4.5,
+    "ratio": 9.23
   }
 ]

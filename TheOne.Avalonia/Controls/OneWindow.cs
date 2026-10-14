@@ -82,7 +82,7 @@ public class OneWindow : Window
     {
         if (!args.GetCurrentPoint(this).Properties.IsLeftButtonPressed || args.Source is not Visual source) return;
         if (source.GetVisualAncestors().Prepend(source).TakeWhile(visual => visual != _titleBar).Any(visual => visual is Button || visual is Control { Name: "PART_LeftContent" or "PART_RightContent" })) return;
-        if (args.ClickCount == 2) ToggleMaximize(); else BeginMoveDrag(args);
+        if (args.ClickCount >= 2 && args.ClickCount % 2 == 0) ToggleMaximize(); else BeginMoveDrag(args);
         args.Handled = true;
     }
     internal WindowNotificationManager MessageHost(bool toast)

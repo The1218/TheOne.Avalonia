@@ -4,9 +4,9 @@
     <ControlTheme TargetType="FlyoutPresenter" x:Key="{x:Type FlyoutPresenter}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Popup}" />
         <Setter Property="Padding" Value="{DynamicResource One.Flyout.Padding}" />
         <Setter Property="FontSize" Value="{DynamicResource One.Type.Body}" />
         <Setter Property="MinWidth" Value="160" />

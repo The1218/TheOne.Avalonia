@@ -68,13 +68,13 @@ internal static class RadioButtonPreview
         var disabled = state == "disabled"; var isChecked = radio.IsChecked == true;
         var ring = Part<Ellipse>(radio, isChecked ? "CheckOuterEllipse" : "OuterEllipse");
         var glyph = Part<Ellipse>(radio, "CheckGlyph");
-        var fill = disabled ? "One.DisabledSurface" : isChecked ? state switch { "hover" => "One.AccentHover", "pressed" => "One.AccentPressed", _ => "One.Accent" }
-            : state == "pressed" ? "One.AccentSoft" : "One.Surface";
-        var stroke = disabled ? "One.DisabledText" : isChecked ? fill : state switch { "hover" => "One.AccentHover", "pressed" => "One.AccentPressed", _ => "One.InputLine" };
+        var fill = disabled ? isChecked ? "One.DisabledSelection" : "One.DisabledSurface" : isChecked ? state switch { "hover" => "One.AccentHover", "pressed" => "One.AccentPressed", _ => "One.Accent" }
+            : state switch { "hover" => "One.NeutralHover", "pressed" => "One.NeutralPressed", _ => "One.Subtle" };
+        var stroke = isChecked ? "One.Transparent" : "One.OutlineMedium";
         Check(Colour(Part<Border>(radio, "RootBorder").Background)?.A == 0 && ring.Opacity == 1 && glyph.Opacity == (isChecked ? 1 : 0),
             $"{label}/{state}: the row remains transparent while the circular selection mark retains its native visibility");
         Check(Colour(ring.Fill) == Resource(radio, fill) && Colour(ring.Stroke) == Resource(radio, stroke)
-              && Colour(glyph.Fill) == Resource(radio, disabled ? "One.DisabledText" : "One.OnAccent")
+              && Colour(glyph.Fill) == Resource(radio, "One.IconOnAccent")
               && Colour(Part<ContentPresenter>(radio, "PART_ContentPresenter").Foreground) == Resource(radio, disabled ? "One.DisabledText" : "One.Text"),
             $"{label}/{state}: circle, mark and label use the correct semantic state palette");
     }

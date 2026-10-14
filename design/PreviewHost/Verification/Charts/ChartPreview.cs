@@ -126,7 +126,7 @@ internal static class ChartPreview
     }
     public static ChartBase CreateNeedleGaugeSample()
     {
-        var chart = CreateSample(ChartKind.Gauge); chart.Height = double.NaN; chart.Value = 71.06; chart.ShowGaugeNeedle = true; chart.ShowGaugeTicks = true; return chart;
+        var chart = CreateSample(ChartKind.Gauge); chart.Height = double.NaN; chart.HorizontalAlignment = global::Avalonia.Layout.HorizontalAlignment.Left; chart.Value = 71.06; chart.ShowGaugeNeedle = true; chart.ShowGaugeTicks = true; return chart;
     }
     public static ChartBase CreateShapeHoverSample(ChartKind kind) { var chart = CreateSample(kind); chart.Height = double.NaN; if (kind == ChartKind.Bar) chart.ShowDataLabels = true; return chart; }
     internal static void AdvanceAnimation(int milliseconds)
@@ -175,8 +175,8 @@ internal static class ChartPreview
         var chart = CreateSample(kind); var window = Open(chart, theme, size); var label = $"Chart/{theme.Key}/{size}/{kind}";
         check(chart.GetType().Name == kind + "Chart", $"{label}: independent concrete chart type and fixed profile");
         check(chart.Bounds.Width > 500 && chart.Bounds.Height == 340 && !chart.GetVisualDescendants().Any(), $"{label}: bounded viewport draws data without item controls");
-        check(chart.FontSize == (size == ControlSize.Small ? 12 : size == ControlSize.Large ? 16 : 14), $"{label}: inherited three-size typography");
-        check(Colour(chart.Background) == Resource(chart, "One.Surface") && Colour(chart.Foreground) == Resource(chart, "One.Text") && Colour(chart.GridBrush) == Resource(chart, "One.Line") && Colour(chart.AccentBrush) == Resource(chart, "One.Accent"), $"{label}: Still semantic surface, labels, grid and series");
+        check(chart.FontSize == (size == ControlSize.Small ? 10 : size == ControlSize.Large ? 12 : 11), $"{label}: inherited three-size typography");
+        check(Colour(chart.Background) == Resource(chart, "One.Chart.Background") && Colour(chart.Foreground) == Resource(chart, "One.Chart.Text") && Colour(chart.GridBrush) == Resource(chart, "One.Chart.Grid") && Colour(chart.AccentBrush) == Resource(chart, "One.Chart.Series1"), $"{label}: TheOne semantic surface, labels, grid and series");
         var before = Frame(window);
         check(before.Length > 0, $"{label}: Skia renders the chart");
         if (kind == ChartKind.Gauge)

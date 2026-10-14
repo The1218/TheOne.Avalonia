@@ -71,13 +71,13 @@
         </Setter>
 
         <Style Selector="^:pointerover /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
@@ -112,11 +112,11 @@
 
     <ControlTheme TargetType="TextBox" x:Key="{x:Type TextBox}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="CaretBrush" Value="{DynamicResource One.Text}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource One.AccentSoft}" />
-        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Muted}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource One.TextSelection}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
@@ -258,23 +258,23 @@
         </Style>
 
         <!--  PointerOver State  -->
-        <Style Selector="^:pointerover">
+        <Style Selector="^:pointerover[IsReadOnly=False]">
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
 
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-                <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             </Style>
 
         </Style>
 
         <!--  Focused State  -->
-        <Style Selector="^:focus">
+        <Style Selector="^:focus[IsReadOnly=False]">
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
 
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
                 <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
             </Style>
         </Style>

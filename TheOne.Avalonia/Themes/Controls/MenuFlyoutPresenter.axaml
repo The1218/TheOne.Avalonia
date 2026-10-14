@@ -11,7 +11,7 @@
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="{DynamicResource MenuFlyoutPresenterBorderThemeThickness}" />
         <Setter Property="Padding" Value="{DynamicResource MenuFlyoutPresenterThemePadding}" />
         <Setter Property="MaxHeight" Value="{DynamicResource One.DataFlyoutMaxHeight}" />

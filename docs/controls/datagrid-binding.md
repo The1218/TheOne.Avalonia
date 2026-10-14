@@ -1,12 +1,16 @@
 # DataGrid 绑定、排序与单元格密度
 
+DataGridColumnHeader、DataGridRowHeader、DataGridRowGroupHeader 是表头、行头和分组模板的原生结构，OneTheme 已提供主题。优先使用 HeaderTemplate 等公开扩展点；替换完整模板时保留 PART_*、列身份和原生布局合约，不单独创建这些容器。
+
 视图根节点声明 ViewModel 的 x:DataType，并启用默认编译绑定。ItemsSource 绑定 List<Record>、ObservableCollection<Record> 或 IEnumerable<Record> 时，官方 Binding／CellTemplate／CellEditingTemplate 元数据自动推断 Record；列和单元格模板无需重复 x:DataType。只设置运行时 DataContext 无法提供静态类型；声明为 object 或非泛型 IEnumerable 的数据源也无法自动推断。
 
 需要原生筛选、排序、分组时使用泛型集合视图：
 
 ```csharp
 using Avalonia.Collections;
-public DataGridCollectionView<Record> View { get; } = new(records);
+// 在创建视图前注册；托管和原生使用同一元数据路径。
+_ = DataGridAot.PreserveRowType<Record>();
+var view = new DataGridCollectionView<Record>(records);
 ```
 
 ```xml
@@ -18,7 +22,7 @@ public DataGridCollectionView<Record> View { get; } = new(records);
 </DataGrid>
 ```
 
-DataGridCollectionView<T> 使用原生实现及枚举顺序；T 仅补充行类型，不复制数据、不预建控件。ObservableCollection<T> 的增删继续通知原生视图；普通 List<T> 不具备变更通知，动态增删应改用 ObservableCollection<T> 或显式刷新视图。NativeAOT 仍调用 DataGridAot.PreserveRowType<Record>()。
+DataGridCollectionView<T> 使用原生实现及枚举顺序；T 仅补充行类型，不复制数据、不预建控件。ObservableCollection<T> 的增删继续通知原生视图；普通 List<T> 不具备变更通知，动态增删应改用 ObservableCollection<T> 或显式刷新视图。托管与 NativeAOT 均在创建视图前调用 DataGridAot.PreserveRowType<Record>()；嵌套模型与自定义比较值分别注册。空的自定义集合需 RegisterCollection<TCollection, Record>()，见 [NativeAOT](../native-aot.md#datagrid)。
 
 每列表头包含 DataGridSortButton：未排序显示上下对称双箭头，升／降序显示强调色方向标记。点击、Enter 或 Space 按「未排序 → 升序 → 降序 → 未排序」循环，沿用原生编辑提交与 Sorting 事件。Shift 保留已有排序并追加列，降序后再次激活只移除当前列；多列排序在按钮内显示从 1 开始的优先级，改变方向保持顺序，移除后自动重新编号。平台 Ctrl／⌘ 清除全部排序，配合 Shift 则只清除当前列。
 

@@ -28,7 +28,7 @@
                             Padding="{TemplateBinding BorderThickness}">
                             <Grid Name="Container">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.PaneColumnGridLength}" />
+                                    <ColumnDefinition Width="{CompiledBinding #Container.((SplitView)TemplatedParent).TemplateSettings.PaneColumnGridLength}" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
@@ -137,7 +137,7 @@
                             <Grid Name="Container">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.PaneColumnGridLength}" />
+                                    <ColumnDefinition Width="{CompiledBinding #Container.((SplitView)TemplatedParent).TemplateSettings.PaneColumnGridLength}" />
                                 </Grid.ColumnDefinitions>
 
                                 <Panel
@@ -245,7 +245,7 @@
                             Padding="{TemplateBinding BorderThickness}">
                             <Grid Name="Container">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.PaneRowGridLength}" />
+                                    <RowDefinition Height="{CompiledBinding #Container.((SplitView)TemplatedParent).TemplateSettings.PaneRowGridLength}" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
@@ -355,7 +355,7 @@
                             <Grid Name="Container">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
-                                    <RowDefinition Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.PaneRowGridLength}" />
+                                    <RowDefinition Height="{CompiledBinding #Container.((SplitView)TemplatedParent).TemplateSettings.PaneRowGridLength}" />
                                 </Grid.RowDefinitions>
 
                                 <Panel

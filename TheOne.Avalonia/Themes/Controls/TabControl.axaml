@@ -27,6 +27,7 @@
                     VerticalAlignment="{TemplateBinding VerticalAlignment}">
                     <DockPanel>
                         <ScrollViewer
+                            Background="{DynamicResource One.CardTabStrip}"
                             DockPanel.Dock="{TemplateBinding TabStripPlacement}"
                             HorizontalScrollBarVisibility="Hidden"
                             Name="PART_StandardHeaderScroll"
@@ -74,7 +75,7 @@
         x:Key="One.CardTabControl">
         <Setter Property="BorderBrush" Value="{DynamicResource One.CardTabBorder}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.TabContent}" />
         <Setter Property="Padding" Value="16" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource One.CardTabItem}" />
         <Setter Property="ItemsPanel">
@@ -84,7 +85,7 @@
         </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <Panel>
+                <Border Background="{DynamicResource One.CardTabStrip}" CornerRadius="{TemplateBinding CornerRadius}">
                     <DockPanel>
                         <Border
                             CornerRadius="{TemplateBinding CornerRadius,
@@ -96,8 +97,6 @@
                             <Panel>
                                 <Border
                                     Background="{DynamicResource One.CardTabStrip}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1,1,1,0"
                                     CornerRadius="{TemplateBinding CornerRadius,
                                                                    Converter={StaticResource TopCornerRadiusFilterConverter}}"
                                     Margin="0,0,0,1"
@@ -159,8 +158,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             ClipToBounds="True"
-                            CornerRadius="{TemplateBinding CornerRadius,
-                                                           Converter={StaticResource BottomCornerRadiusFilterConverter}}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
                             Name="CardContentFrame">
                             <Panel ClipToBounds="True">
                                 <ContentPresenter
@@ -177,13 +175,7 @@
                             </Panel>
                         </Border>
                     </DockPanel>
-                    <Border
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        IsHitTestVisible="False"
-                        Name="CardOuterOutline" />
-                </Panel>
+                </Border>
             </ControlTemplate>
         </Setter>
         <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
@@ -204,27 +196,15 @@
             <Setter Property="Margin" Value="-1,0,0,0" />
             <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource RightCornerRadiusFilterConverter}}" />
         </Style>
-        <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#CardContentFrame">
-            <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource TopCornerRadiusFilterConverter}}" />
-        </Style>
-        <Style Selector="^[TabStripPlacement=Left] /template/ Border#CardContentFrame">
-            <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource RightCornerRadiusFilterConverter}}" />
-        </Style>
-        <Style Selector="^[TabStripPlacement=Right] /template/ Border#CardContentFrame">
-            <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
-        </Style>
         <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#HeaderSurface">
-            <Setter Property="BorderThickness" Value="1,0,1,1" />
             <Setter Property="Margin" Value="0,1,0,0" />
             <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
         </Style>
         <Style Selector="^[TabStripPlacement=Left] /template/ Border#HeaderSurface">
-            <Setter Property="BorderThickness" Value="1,1,0,1" />
             <Setter Property="Margin" Value="0,0,1,0" />
             <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
         </Style>
         <Style Selector="^[TabStripPlacement=Right] /template/ Border#HeaderSurface">
-            <Setter Property="BorderThickness" Value="0,1,1,1" />
             <Setter Property="Margin" Value="1,0,0,0" />
             <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource RightCornerRadiusFilterConverter}}" />
         </Style>

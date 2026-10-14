@@ -21,10 +21,10 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
         </Style>
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
         </Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
@@ -33,8 +33,8 @@
     </ControlTheme>
     <ControlTheme TargetType="SplitButton" x:Key="{x:Type SplitButton}">
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />

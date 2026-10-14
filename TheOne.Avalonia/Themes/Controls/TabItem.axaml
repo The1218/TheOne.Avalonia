@@ -61,26 +61,26 @@
 
         <!--  PointerOver state  -->
         <Style Selector="^:pointerover /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
         <!--  Selected PointerOver state  -->
         <Style Selector="^:selected:pointerover /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
             <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <!--  Pressed state  -->
         <Style Selector="^:pressed /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
         <!--  Selected Pressed state  -->
         <Style Selector="^:selected:pressed /template/ Border#PART_LayoutRoot">
-            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-            <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+            <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Text}" />
         </Style>
 
         <!--  Disabled state  -->
@@ -148,7 +148,7 @@
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
         <Style Selector="^:pressed">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
         </Style>
         <Style Selector="^:disabled">
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
@@ -159,7 +159,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Padding" Value="16,0,12,0" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.TabItem}" />
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Template">
@@ -240,12 +240,6 @@
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Bottom" />
-        </Style>
-        <Style Selector="^.drop-target /template/ one|CardTabChrome#PART_LayoutRoot">
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
-        </Style>
-        <Style Selector="^.dragging">
-            <Setter Property="Opacity" Value="0.55" />
         </Style>
         <Style Selector="^:disabled">
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />

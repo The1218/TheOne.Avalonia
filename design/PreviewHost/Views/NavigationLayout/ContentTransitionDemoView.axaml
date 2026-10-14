@@ -30,7 +30,7 @@
                     CornerRadius="8"
                     Padding="16">
                     <StackPanel Spacing="8">
-                        <TextBlock FontWeight="SemiBold" Text="Still · 专注每一次切换" />
+                        <TextBlock FontWeight="SemiBold" Text="TheOne · 专注每一次切换" />
                         <TextBlock Text="内容平滑变化，外框和布局保持稳定。关闭动效后立即显示最新内容。" TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>

@@ -9,6 +9,11 @@
     <AvaloniaVersion>12.1.4</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Consumers/**/*.cs" />
+    <AvaloniaResource Remove="Consumers/**/*.axaml" />
+    <AvaloniaXaml Remove="Consumers/**/*.axaml" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../../TheOne.Avalonia/TheOne.Avalonia.csproj" />
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Headless" Version="$(AvaloniaVersion)" />

@@ -44,7 +44,7 @@
                                     Height="{TemplateBinding TitleBarHeight}"
                                     IsVisible="{TemplateBinding ShowTitleBar}"
                                     Name="PART_TitleBar"
-                                    chrome:WindowDecorationProperties.ElementRole="TitleBar">
+                                    chrome:WindowDecorationProperties.ElementRole="User">
                                     <Grid
                                         ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto"
                                         ColumnSpacing="12"

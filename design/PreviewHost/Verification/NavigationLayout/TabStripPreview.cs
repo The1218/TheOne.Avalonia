@@ -50,7 +50,7 @@ internal static class TabStripPreview
         Check(Colour(Part<Border>(first, "PART_SelectedPipe").Background) == Resource(first, "One.AccentPressed"), $"{label}: actual pressed indicator");
         window.MouseUp(point, MouseButton.Left); ControlPreview.Flush(); window.MouseMove(new Point(1, 1)); ControlPreview.Flush();
         var second = (TabStripItem)strip.ContainerFromIndex(1)!;
-        Hover(window, second); Check(Colour(second.Background) == Resource(second, "One.Subtle"), $"{label}: unselected hover surface");
+        Hover(window, second); Check(Colour(second.Background) == Resource(second, "One.NeutralHover"), $"{label}: unselected hover surface");
         Click(window, second); Check(strip.SelectedIndex == 1 && second.IsSelected && !first.IsSelected, $"{label}: real pointer selection");
         var workflow = demo.FindControl<TabStrip>("WorkflowStrip")!;
         Click(window, (TabStripItem)workflow.ContainerFromIndex(1)!);

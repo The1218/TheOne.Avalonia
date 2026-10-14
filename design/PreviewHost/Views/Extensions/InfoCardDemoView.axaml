@@ -29,7 +29,7 @@
   <StackPanel Spacing="18">
     <StackPanel Spacing="6">
       <TextBlock Text="InfoCard · 信息卡片" FontSize="22" FontWeight="SemiBold" />
-      <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 Still 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
+      <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 TheOne 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
     </StackPanel>
     <WrapPanel>
       <CheckBox Name="InfoCardShowHeader" Content="显示标题" IsChecked="{Binding ShowHeader, Mode=TwoWay}" Margin="0,0,16,8" />
@@ -89,5 +89,7 @@
         </Grid>
       </StackPanel>
     </one:InfoCard>
-  </StackPanel>
+  <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><one:InfoCard Classes="glow" Header="柔光标题" Content="与全库配色同步的渐变标题。" Footer="正文和页脚保留细微色差" /><one:InfoCard Classes="outlined" Header="强调描边" Content="适合需要强调的信息。" /><one:InfoCard Classes="flat" Header="嵌入布局" Content="无边框、无分割线的展示。" /></StackPanel>
+</StackPanel>
 </UserControl>

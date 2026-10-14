@@ -7,8 +7,8 @@ internal static partial class PreviewNavigation
         var groups=new ObservableCollection<NavEntry>();
         foreach(var name in new[]{"基础控件","数据展示","导航与布局","图表控件","扩展控件","消息与对话框"})
         {
-            var group=new NavEntry(name,isGroup:true);
-            foreach(var page in PreviewPageCatalog.Pages.Where(page=>page.Group==name)) group.Entries.Add(new(page.Title,page.Id));
+            var group=new NavEntry(name,isGroup:true) { Icon = PreviewNavigationIcons.Group(name) };
+            foreach(var page in PreviewPageCatalog.Pages.Where(page=>page.Group==name)) group.Entries.Add(new(page.Title,page.Id) { Icon = PreviewNavigationIcons.Page(page.Id) });
             groups.Add(group);
         }
         return groups;

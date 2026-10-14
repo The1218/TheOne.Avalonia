@@ -8,13 +8,13 @@
     <ControlTheme TargetType="n:NotificationCard" x:Key="{x:Type n:NotificationCard}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Popup}" />
         <Setter Property="Padding" Value="{DynamicResource One.Notification.Padding}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Width" Value="{DynamicResource One.Notification.Width}" />
-        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="Margin" Value="0,0,0,8" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="one:NotificationMotion.UseMotionSettings" Value="True" />
@@ -32,16 +32,16 @@
                                 Name="PART_LayoutRoot">
                                 <Grid Margin="{TemplateBinding BorderThickness}">
                                     <Panel
-                                        Background="{DynamicResource One.Accent}"
+                                        Background="{DynamicResource One.InfoFill}"
                                         HorizontalAlignment="Left"
                                         Name="PART_HeaderBar"
                                         Width="3" />
                                     <Grid
                                         ColumnDefinitions="Auto,*,Auto"
-                                        ColumnSpacing="12"
+                                        ColumnSpacing="8"
                                         Margin="{TemplateBinding Padding}">
                                         <Border
-                                            Background="{DynamicResource One.AccentSoft}"
+                                            Background="{DynamicResource One.InfoSoft}"
                                             CornerRadius="24"
                                             Height="{DynamicResource One.Notification.BadgeSize}"
                                             Name="PART_StatusBadge"
@@ -49,7 +49,7 @@
                                             Width="{DynamicResource One.Notification.BadgeSize}">
                                             <PathIcon
                                                 Data="M 9 3 L 11 3 L 11 6 L 9 6 Z M 9 8 L 11 8 L 11 17 L 9 17 Z"
-                                                Foreground="{DynamicResource One.Accent}"
+                                                Foreground="{DynamicResource One.Info}"
                                                 Height="{DynamicResource One.Notification.IconSize}"
                                                 Name="PART_StatusIcon"
                                                 Width="{DynamicResource One.Notification.IconSize}" />
@@ -63,7 +63,7 @@
                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                                             <ContentPresenter.DataTemplates>
                                                 <DataTemplate DataType="{x:Type n:INotification}" x:DataType="n:INotification">
-                                                    <StackPanel Spacing="6">
+                                                    <StackPanel Spacing="4">
                                                         <TextBlock
                                                             FontWeight="SemiBold"
                                                             IsVisible="{Binding Title, Converter={x:Static converters:StringConverters.IsNotNullOrEmpty}}"
@@ -71,7 +71,7 @@
                                                             Text="{Binding Title}"
                                                             TextWrapping="Wrap" />
                                                         <TextBlock
-                                                            MaxHeight="96"
+                                                            MaxHeight="80"
                                                             Name="PART_NotificationMessage"
                                                             Text="{Binding Message}"
                                                             TextTrimming="CharacterEllipsis"
@@ -114,7 +114,7 @@
             </ControlTemplate>
         </Setter>
         <Style Selector="^:success /template/ Panel#PART_HeaderBar">
-            <Setter Property="Background" Value="{DynamicResource One.Success}" />
+            <Setter Property="Background" Value="{DynamicResource One.SuccessFill}" />
         </Style>
         <Style Selector="^:success /template/ PathIcon#PART_StatusIcon">
             <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
@@ -126,7 +126,7 @@
             <Setter Property="Data" Value="M 2 10 L 7 15 L 17 4 L 19 6 L 7 19 L 0 12 Z" />
         </Style>
         <Style Selector="^:warning /template/ Panel#PART_HeaderBar">
-            <Setter Property="Background" Value="{DynamicResource One.Warning}" />
+            <Setter Property="Background" Value="{DynamicResource One.WarningFill}" />
         </Style>
         <Style Selector="^:warning /template/ PathIcon#PART_StatusIcon">
             <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
@@ -138,7 +138,7 @@
             <Setter Property="Data" Value="M 9 3 L 11 3 L 11 12 L 9 12 Z M 9 14 L 11 14 L 11 17 L 9 17 Z" />
         </Style>
         <Style Selector="^:error /template/ Panel#PART_HeaderBar">
-            <Setter Property="Background" Value="{DynamicResource One.Danger}" />
+            <Setter Property="Background" Value="{DynamicResource One.DangerFill}" />
         </Style>
         <Style Selector="^:error /template/ PathIcon#PART_StatusIcon">
             <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />

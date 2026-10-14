@@ -7,8 +7,8 @@
     <ControlTheme TargetType="ToggleButton" x:Key="{x:Type ToggleButton}">
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
         <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToggleButtonBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -21,6 +21,7 @@
 
         <Setter Property="Template">
             <ControlTemplate>
+              <Grid>
                 <ContentPresenter
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
@@ -32,6 +33,10 @@
                     Padding="{TemplateBinding Padding}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                     x:Name="PART_ContentPresenter" />
+                <Border x:Name="PART_IndeterminateIndicator" Width="12" Height="3" CornerRadius="1.5"
+                        Background="{Binding #PART_ContentPresenter.Foreground}" IsVisible="False" IsHitTestVisible="False"
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3" />
+              </Grid>
             </ControlTemplate>
         </Setter>
 
@@ -40,15 +45,15 @@
         </Style>
 
         <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
-            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         </Style>
 
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
@@ -57,28 +62,31 @@
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
         </Style>
 
+        <Style Selector="^:indeterminate /template/ Border#PART_IndeterminateIndicator">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
         <Style Selector="^:indeterminate">
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentHover}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.AccentHover}" />
+                <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+                <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+                <Setter Property="Background" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
             </Style>
         </Style>
@@ -86,26 +94,26 @@
         <Style Selector="^:checked">
             <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentHover}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.AccentHover}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
             </Style>
 
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+                <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.DisabledIcon}" />
             </Style>
         </Style>
     </ControlTheme>

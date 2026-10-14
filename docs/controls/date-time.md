@@ -1,5 +1,7 @@
 # 日期与时间
 
+CalendarItem、CalendarButton、CalendarDayButton 属于日历模板；DatePickerPresenter、TimePickerPresenter 属于选择器弹层。它们随父控件提供主题，不单独创建。替换模板时保留原生 PART_* 与绑定合约。
+
 [返回控件文档](README.md)。扩展属性使用 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
 ## CalendarDatePicker

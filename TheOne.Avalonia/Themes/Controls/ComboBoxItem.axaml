@@ -29,6 +29,10 @@
             </ControlTemplate>
         </Setter>
 
+        <Style Selector="^.one-small">
+            <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Item.Small}" />
+        </Style>
+
         <!--  PointerOver state  -->
         <Style Selector="^:pointerover /template/ ContentPresenter">
             <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
@@ -38,14 +42,14 @@
 
         <!--  Disabled state  -->
         <Style Selector="^:disabled /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Subtle}" />
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
         </Style>
 
         <!--  Pressed state  -->
         <Style Selector="^:pressed /template/ ContentPresenter">
-            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         </Style>
@@ -54,26 +58,26 @@
         <Style Selector="^:selected">
             <Style Selector="^ /template/ ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
             <!--  Selected Disabled state  -->
             <Style Selector="^:disabled /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledSurface}" />
+                <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Subtle}" />
                 <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
             </Style>
             <!--  Selected PointerOver state  -->
             <Style Selector="^:pointerover /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftHover}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
             <!--  Selected Pressed state  -->
             <Style Selector="^:pressed /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
-                <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
         </Style>
     </ControlTheme>

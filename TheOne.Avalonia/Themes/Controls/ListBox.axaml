@@ -14,6 +14,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.Text}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ListBoxBorderThemeThickness}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />

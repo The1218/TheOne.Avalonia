@@ -13,6 +13,13 @@ namespace TheOne.Avalonia.Controls;
 /// <summary>A native, AOT-safe chart. Data is drawn directly without creating item controls.</summary>
 public abstract partial class ChartBase : Control
 {
+    private static readonly IBrush[] FallbackSeriesBrushes =
+    [
+        Brush.Parse("#187576"), Brush.Parse("#295694"), Brush.Parse("#836B1A"),
+        Brush.Parse("#74387F"), Brush.Parse("#7E3D46"), Brush.Parse("#187648")
+    ];
+    private protected static IBrush DefaultAccentBrush => FallbackSeriesBrushes[0];
+
     public static readonly StyledProperty<IList<ChartSeries>?> SeriesSourceProperty = AvaloniaProperty.Register<ChartBase, IList<ChartSeries>?>(nameof(SeriesSource));
     public static readonly StyledProperty<string?> TitleProperty = AvaloniaProperty.Register<ChartBase, string?>(nameof(Title));
     public static readonly StyledProperty<bool> ShowLegendProperty = AvaloniaProperty.Register<ChartBase, bool>(nameof(ShowLegend), true);
@@ -39,6 +46,8 @@ public abstract partial class ChartBase : Control
     public static readonly StyledProperty<IBrush?> SecondaryBrushProperty = AvaloniaProperty.Register<ChartBase, IBrush?>(nameof(SecondaryBrush));
     public static readonly StyledProperty<IBrush?> TertiaryBrushProperty = AvaloniaProperty.Register<ChartBase, IBrush?>(nameof(TertiaryBrush));
     public static readonly StyledProperty<IBrush?> QuaternaryBrushProperty = AvaloniaProperty.Register<ChartBase, IBrush?>(nameof(QuaternaryBrush));
+    public static readonly StyledProperty<IBrush?> FifthBrushProperty = AvaloniaProperty.Register<ChartBase, IBrush?>(nameof(FifthBrush));
+    public static readonly StyledProperty<IBrush?> SixthBrushProperty = AvaloniaProperty.Register<ChartBase, IBrush?>(nameof(SixthBrush));
     public static readonly StyledProperty<FontFamily> FontFamilyProperty = TextBlock.FontFamilyProperty.AddOwner<ChartBase>();
     public static readonly StyledProperty<double> FontSizeProperty = TextBlock.FontSizeProperty.AddOwner<ChartBase>();
     public static readonly DirectProperty<ChartBase, ChartSelection?> SelectionProperty = AvaloniaProperty.RegisterDirect<ChartBase, ChartSelection?>(nameof(Selection), chart => chart.Selection);
@@ -70,6 +79,8 @@ public abstract partial class ChartBase : Control
     public IBrush? SecondaryBrush { get => GetValue(SecondaryBrushProperty); set => SetValue(SecondaryBrushProperty, value); }
     public IBrush? TertiaryBrush { get => GetValue(TertiaryBrushProperty); set => SetValue(TertiaryBrushProperty, value); }
     public IBrush? QuaternaryBrush { get => GetValue(QuaternaryBrushProperty); set => SetValue(QuaternaryBrushProperty, value); }
+    public IBrush? FifthBrush { get => GetValue(FifthBrushProperty); set => SetValue(FifthBrushProperty, value); }
+    public IBrush? SixthBrush { get => GetValue(SixthBrushProperty); set => SetValue(SixthBrushProperty, value); }
     public FontFamily FontFamily { get => GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
     public double FontSize { get => GetValue(FontSizeProperty); set => SetValue(FontSizeProperty, value); }
     public ChartSelection? Selection => _selection;
@@ -110,7 +121,7 @@ public abstract partial class ChartBase : Control
             ShowDataLabelsProperty, StrokeThicknessProperty, InnerRadiusProperty, YMinimumProperty, YMaximumProperty,
             MinimumProperty, MaximumProperty, ValueProperty, ValueFormatProperty, UnitProperty, EmptyTextProperty,
             SelectedSeriesIndexProperty, SelectedIndexProperty, BackgroundProperty, ForegroundProperty, GridBrushProperty,
-            MutedBrushProperty, AccentBrushProperty, SecondaryBrushProperty, TertiaryBrushProperty, QuaternaryBrushProperty,
+            MutedBrushProperty, AccentBrushProperty, SecondaryBrushProperty, TertiaryBrushProperty, QuaternaryBrushProperty, FifthBrushProperty, SixthBrushProperty,
             FontFamilyProperty, FontSizeProperty, ShowCrosshairProperty, TooltipModeProperty, IsLegendInteractiveProperty);
     }
     protected ChartBase()
@@ -272,12 +283,14 @@ public abstract partial class ChartBase : Control
     private IBrush SeriesBrush(int series, int point = -1)
     {
         if (SeriesSource is { } source && series >= 0 && series < source.Count && source[series].Brush is { } brush) return brush;
-        return (Math.Abs(point >= 0 ? point : series) % 4) switch
+        return (Math.Abs(point >= 0 ? point : series) % 6) switch
         {
-            1 => SecondaryBrush ?? Brushes.SteelBlue,
-            2 => TertiaryBrush ?? Brushes.DarkGoldenrod,
-            3 => QuaternaryBrush ?? Brushes.IndianRed,
-            _ => AccentBrush ?? Brushes.SeaGreen
+            1 => SecondaryBrush ?? FallbackSeriesBrushes[1],
+            2 => TertiaryBrush ?? FallbackSeriesBrushes[2],
+            3 => QuaternaryBrush ?? FallbackSeriesBrushes[3],
+            4 => FifthBrush ?? AccentBrush ?? FallbackSeriesBrushes[4],
+            5 => SixthBrush ?? SecondaryBrush ?? FallbackSeriesBrushes[5],
+            _ => AccentBrush ?? DefaultAccentBrush
         };
     }
     private protected FormattedText Text(string value, IBrush? brush = null, double? size = null) =>
@@ -330,7 +343,7 @@ public abstract partial class ChartBase : Control
         property == MinimumProperty || property == MaximumProperty || property == ValueProperty || property == ValueFormatProperty || property == UnitProperty ||
         property == SelectedSeriesIndexProperty || property == SelectedIndexProperty || property == BackgroundProperty || property == ForegroundProperty ||
         property == GridBrushProperty || property == MutedBrushProperty || property == AccentBrushProperty || property == SecondaryBrushProperty ||
-        property == TertiaryBrushProperty || property == QuaternaryBrushProperty || property == FontFamilyProperty || property == FontSizeProperty ||
+        property == TertiaryBrushProperty || property == QuaternaryBrushProperty || property == FifthBrushProperty || property == SixthBrushProperty || property == FontFamilyProperty || property == FontSizeProperty ||
         property == FlowDirectionProperty || property == ViewportProperty || property == SecondaryYMinimumProperty || property == SecondaryYMaximumProperty ||
         property == YAxisTitleProperty || property == SecondaryYAxisTitleProperty || property == SecondaryValueFormatProperty || property == SecondaryUnitProperty ||
         property == ShowSecondaryAxisProperty || property == SamplingModeProperty || property == SamplingThresholdProperty || property == SamplingPointBudgetProperty ||

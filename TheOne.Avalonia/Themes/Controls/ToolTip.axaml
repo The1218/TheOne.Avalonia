@@ -7,14 +7,14 @@
     <sys:Double x:Key="One.ToolTipContentMaxWidth">320</sys:Double>
 
     <ControlTheme TargetType="ToolTip" x:Key="{x:Type ToolTip}">
-        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
         <Setter Property="FontSize" Value="{DynamicResource ToolTipContentThemeFontSize}" />
         <Setter Property="Padding" Value="{DynamicResource ToolTipBorderThemePadding}" />
         <Setter Property="MaxWidth" Value="{DynamicResource One.ToolTipContentMaxWidth}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.ToolTip}" />
         <Setter Property="Opacity" Value="0" />
         <Setter Property="Template">
             <ControlTemplate>

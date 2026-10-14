@@ -42,7 +42,7 @@ internal static class RefreshPreview
         Check(refresh.FontSize == (size switch { ControlSize.Small => 12, ControlSize.Large => 16, _ => 14 }) && Math.Abs(visualizer.Bounds.Height - height) < 0.5, $"{label}: inherited density overrides the native fixed default dimension");
         var icon = visualizer.GetVisualDescendants().OfType<PathIcon>().Single(control => control.Name == "PART_Icon");
         Check(icon.Bounds.Width == iconSize && icon.Bounds.Height == iconSize && !visualizer.IsHitTestVisible && !visualizer.IsTabStop, $"{label}: three-size native animated icon does not intercept input or keyboard focus");
-        Check(Colour(refresh.Background) == Resource(refresh, "One.Surface") && Colour(visualizer.Background) == Resource(visualizer, "One.AccentSoft") && Colour(visualizer.Foreground) == Resource(visualizer, "One.Accent"), $"{label}: Still surface, refresh band and semantic accent");
+        Check(Colour(refresh.Background) == Resource(refresh, "One.Surface") && Colour(visualizer.Background) == Resource(visualizer, "One.AccentSoft") && Colour(visualizer.Foreground) == Resource(visualizer, "One.Accent"), $"{label}: TheOne surface, refresh band and semantic accent");
         Check(State(visualizer) == RefreshVisualizerState.Idle && Part<Grid>(refresh, "PART_RefreshVisualizerPresenter").Children.Contains(visualizer), $"{label}: official template host starts in Idle");
         Bounded(list, label);
         var firstRow = list.GetRealizedContainers().First();
@@ -134,8 +134,8 @@ internal static class RefreshPreview
         Click(window, toggle); // Complete with motion disabled, then start another pull.
         window.RequestedThemeVariant = theme == ThemeVariant.Light ? ThemeVariant.Dark : ThemeVariant.Light;
         ControlSizing.SetSize(window, size == ControlSize.Large ? ControlSize.Small : ControlSize.Large); ControlPreview.Flush();
-        var changedStill = IndicatorPixels(window, refresh); EnhancementsPreview.Advance(100);
-        Check(changedStill.SequenceEqual(IndicatorPixels(window, refresh)) && ElementComposition.GetElementVisual(visualizer)!.Offset.Y == visualizer.Bounds.Height && demo.IsRefreshing && demo.RequestCount == 1 && !Motion.GetEnabled(visualizer) && Colour(visualizer.Foreground) == Resource(visualizer, "One.Accent"), $"{label}: live theme and density changes preserve the visible static indicator and current request");
+        var changedTheOne = IndicatorPixels(window, refresh); EnhancementsPreview.Advance(100);
+        Check(changedTheOne.SequenceEqual(IndicatorPixels(window, refresh)) && ElementComposition.GetElementVisual(visualizer)!.Offset.Y == visualizer.Bounds.Height && demo.IsRefreshing && demo.RequestCount == 1 && !Motion.GetEnabled(visualizer) && Colour(visualizer.Foreground) == Resource(visualizer, "One.Accent"), $"{label}: live theme and density changes preserve the visible static indicator and current request");
         Click(window, demo.FindControl<Button>("CompleteRefresh")!); ControlPreview.Flush();
         Check(demo.Revision == 1 && !demo.IsRefreshing && State(visualizer) == RefreshVisualizerState.Idle && ElementComposition.GetElementVisual(visualizer)!.Offset.Y == 0, $"{label}: static completion restores Idle and the list position");
         held = Hold(window, refresh, visualizer.Bounds.Height * 1.2); Release(window, held);

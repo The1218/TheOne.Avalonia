@@ -1,0 +1,250 @@
+{
+  "source": "https://github.com/Eremex/controlthemes",
+  "commit": "5f6cb3ad8b904cead6bd432f62596648cc9a1039",
+  "palette": "Nova",
+  "tokens": {
+    "Canvas": {
+      "source": "Fill/Neutral/Primary/Enabled",
+      "Light": "#FFFFFF",
+      "Dark": "#0F0F0F"
+    },
+    "Surface": {
+      "source": "Fill/Neutral/Primary/Enabled",
+      "Light": "#FFFFFF",
+      "Dark": "#0F0F0F"
+    },
+    "Subtle": {
+      "source": "Fill/Neutral/Secondary/Enabled",
+      "Light": "#EDEDED",
+      "Dark": "#282929"
+    },
+    "Text": {
+      "source": "Text/Neutral/Primary",
+      "Light": "#212222",
+      "Dark": "#F2F2F2"
+    },
+    "Muted": {
+      "source": "Text/Neutral/Secondary",
+      "Light": "#474D4D",
+      "Dark": "#CACECE"
+    },
+    "Line": {
+      "source": "Outline/Neutral/On Primary/Light",
+      "Light": "#D2D5D5",
+      "Dark": "#3D4242"
+    },
+    "InputLine": {
+      "source": "Outline/Neutral/Transparent/Light",
+      "Light": "#D2D5D5",
+      "Dark": "#3D4242"
+    },
+    "Accent": {
+      "source": "Fill/Accent/Primary/Enabled",
+      "Light": "#006061",
+      "Dark": "#63D9DE"
+    },
+    "AccentHover": {
+      "source": "Fill/Accent/Primary/Hover",
+      "Light": "#006A6B",
+      "Dark": "#5DD2D5"
+    },
+    "AccentPressed": {
+      "source": "Fill/Accent/Primary/Pressed",
+      "Light": "#007475",
+      "Dark": "#55CBCE"
+    },
+    "AccentSoft": {
+      "source": "Fill/Accent/Highlighting/Item/Enabled",
+      "Light": "#C1DCDC",
+      "Dark": "#284343"
+    },
+    "OnAccent": {
+      "source": "Text/On Accent/Primary",
+      "Light": "#F7F8F8",
+      "Dark": "#181B1B"
+    },
+    "Success": {
+      "source": "Icons/Outline/Green",
+      "Light": "#007A06",
+      "Dark": "#57D15D"
+    },
+    "Info": {
+      "source": "Icons/Outline/Blue",
+      "Light": "#395DC6",
+      "Dark": "#9EB4FF"
+    },
+    "Warning": {
+      "source": "Icons/Outline/Yellow",
+      "Light": "#855D00",
+      "Dark": "#DDB35F"
+    },
+    "Danger": {
+      "source": "Fill/Accent/Error/Enabled",
+      "Light": "#99000D",
+      "Dark": "#FFBDC2"
+    },
+    "DangerHover": {
+      "source": "Fill/Accent/Error/Hover",
+      "Light": "#A80B18",
+      "Dark": "#FFB3B9"
+    },
+    "DangerPressed": {
+      "source": "Fill/Accent/Error/Pressed",
+      "Light": "#B71523",
+      "Dark": "#FFA8B0"
+    },
+    "DisabledText": {
+      "source": "Text/Neutral/Disabled",
+      "Light": "#AAB1B1",
+      "Dark": "#6C7575"
+    },
+    "DisabledSurface": {
+      "source": "Fill/Neutral/Secondary/Disabled",
+      "Light": "#F2F2F2",
+      "Dark": "#212222"
+    },
+    "CardTabStrip": {
+      "source": "Fill/Neutral/Secondary/Enabled",
+      "Light": "#EDEDED",
+      "Dark": "#282929"
+    },
+    "CardTabBorder": {
+      "source": "Outline/Neutral/On Secondary/Light",
+      "Light": "#CACECE",
+      "Dark": "#474D4D"
+    },
+    "CardTabHover": {
+      "source": "Fill/Neutral/Secondary/Hover",
+      "Light": "#D6D7D7",
+      "Dark": "#3F4141"
+    },
+    "Focus": {
+      "source": "Outline/Accent/Focus",
+      "Light": "#129190",
+      "Dark": "#36AFB0"
+    },
+    "NeutralHover": {
+      "source": "Fill/Neutral/Secondary/Hover",
+      "Light": "#D6D7D7",
+      "Dark": "#3F4141"
+    },
+    "NeutralPressed": {
+      "source": "Fill/Neutral/Secondary/Pressed",
+      "Light": "#CECFCF",
+      "Dark": "#494B4B"
+    },
+    "SurfaceHover": {
+      "source": "Fill/Neutral/Primary/Hover",
+      "Light": "#F2F2F2",
+      "Dark": "#212222"
+    },
+    "SurfacePressed": {
+      "source": "Fill/Neutral/Primary/Pressed",
+      "Light": "#EDEDED",
+      "Dark": "#282929"
+    },
+    "AccentSoftHover": {
+      "source": "Fill/Accent/Highlighting/Item/Hover",
+      "Light": "#B9D4D4",
+      "Dark": "#324E4E"
+    },
+    "AccentSoftPressed": {
+      "source": "Fill/Accent/Highlighting/Item/Pressed",
+      "Light": "#B1CDCD",
+      "Dark": "#3C5858"
+    },
+    "RowSelected": {
+      "source": "Fill/Accent/Highlighting/Row/Enabled",
+      "Light": "#DFF1F1",
+      "Dark": "#162C2C"
+    },
+    "RowSelectedHover": {
+      "source": "Fill/Accent/Highlighting/Row/Hover",
+      "Light": "#D6EBEB",
+      "Dark": "#1F3838"
+    },
+    "RowSelectedPressed": {
+      "source": "Fill/Accent/Highlighting/Row/Pressed",
+      "Light": "#CDE4E5",
+      "Dark": "#264040"
+    },
+    "TextSelection": {
+      "source": "Fill/Accent/Highlighting/Text",
+      "Light": "#6AE2E7",
+      "Dark": "#005557"
+    },
+    "OutlineMedium": {
+      "source": "Outline/Neutral/Transparent/Medium",
+      "Light": "#CACECE",
+      "Dark": "#474D4D"
+    },
+    "OutlineStrong": {
+      "source": "Outline/Neutral/Transparent/Strong",
+      "Light": "#C2C7C7",
+      "Dark": "#515758"
+    },
+    "DisabledSelection": {
+      "source": "Fill/Accent/Highlighting/Item/Disabled",
+      "Light": "#DDDEDE",
+      "Dark": "#3A3B3B"
+    },
+    "DisabledIcon": {
+      "source": "Icons/Outline/Disabled",
+      "Light": "#B2B8B8",
+      "Dark": "#626A6A"
+    },
+    "IconOnAccent": {
+      "source": "Icons/Outline/On Accent",
+      "Light": "#FFFFFF",
+      "Dark": "#0F0F0F"
+    },
+    "PrimaryDisabled": {
+      "source": "Fill/Neutral/Primary/Disabled",
+      "Light": "#F7F7F7",
+      "Dark": "#191A1A"
+    },
+    "SuccessFill": {
+      "source": "Icons/Fill/Green",
+      "Light": "#85DB89",
+      "Dark": "#09620D"
+    },
+    "InfoFill": {
+      "source": "Icons/Fill/Turquoise",
+      "Light": "#88D5DD",
+      "Dark": "#095C62"
+    },
+    "WarningFill": {
+      "source": "Icons/Fill/Yellow",
+      "Light": "#E1C689",
+      "Dark": "#684F0D"
+    },
+    "DangerFill": {
+      "source": "Icons/Fill/Red",
+      "Light": "#FFB3B3",
+      "Dark": "#8A3838"
+    },
+    "Chart.Background": {
+      "source": "Background/Chart/Color",
+      "dictionary": "Variants/{Light|Dark}/ChartColors.axaml",
+      "Light": "#FFFFFF",
+      "Dark": "#000000"
+    },
+    "Chart.Text": {
+      "source": "Stroke/Strong/Color",
+      "dictionary": "Variants/{Light|Dark}/ChartColors.axaml",
+      "Light": "#385252",
+      "Dark": "#DBE6E6"
+    },
+    "Chart.Grid": {
+      "source": "Stroke/Medium/Color",
+      "dictionary": "Variants/{Light|Dark}/ChartColors.axaml",
+      "Light": "#CADADA",
+      "Dark": "#707575"
+    },
+    "Placeholder": {
+      "source": "Text/Neutral/Tertiary",
+      "Light": "#626A6A",
+      "Dark": "#B2B8B8"
+    }
+  }
+}

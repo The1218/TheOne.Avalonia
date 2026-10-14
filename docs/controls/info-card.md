@@ -1,6 +1,6 @@
 # InfoCard 信息卡片
 
-`InfoCard` 继承官方 `HeaderedContentControl`，用于展示标题与内容，并提供标题图标、标题操作区、页脚区域。加载 `OneTheme` 后自动使用 Still 表面、细边框和圆角，并继承明暗主题及三种尺寸。卡片固定展示存在的区域；放入其中的按钮、输入框和列表保留原生交互。
+`InfoCard` 继承官方 `HeaderedContentControl`，用于展示标题与内容，并提供标题图标、标题操作区、页脚区域。加载 `OneTheme` 后自动使用 TheOne 表面、细边框和圆角，并继承明暗主题及三种尺寸。卡片固定展示存在的区域；放入其中的按钮、输入框和列表保留原生交互。
 
 ```xml
 <one:InfoCard Header="工作区概览"
@@ -96,7 +96,7 @@
 
 ## 区域背景与内边距
 
-Header 保留较明显的背景区别，Content 与 Footer 只有细微色差。三者默认分别采用 `One.Subtle`、`One.Surface`、`One.InfoCard.Footer`，随 Light / Dark 主题切换，铺满各自区域并裁切到卡片圆角。Footer 浅色为 `#FCFDFC`（正文 `#FFFFFF`），深色为 `#1C2421`（正文 `#19211E`），每个 RGB 通道的差值不超过 4。
+Header 保留较明显的背景区别，Content 与 Footer 只有细微色差。三者默认分别采用 `One.Subtle`、`One.Surface`、`One.InfoCard.Footer`，随 Light / Dark 主题切换，铺满各自区域并裁切到卡片圆角。Footer 浅色为 `#FCFDFD`（正文 `#FFFFFF`），深色为 `#262929`（正文 `#232626`），每个 RGB 通道的差值不超过 4。
 
 | 属性 | 用途 |
 | --- | --- |
@@ -117,6 +117,8 @@ Header 保留较明显的背景区别，Content 与 Footer 只有细微色差。
 ```
 
 ## 尺寸与样式
+
+`Classes="outlined"` 使用主色边框与柔和标题背景；`Classes="glow"` 使用柔光渐变标题背景；`Classes="flat"` 去除外框与分割线，标题和页脚透明，适合嵌入布局。两者保留内容槽与模板接口，无展开折叠行为。
 
 通过 `ControlSizing.Size` 继承父级尺寸，或使用 `Classes="small"` / `normal` / `large` 在单张卡片上指定尺寸。以下属性也可通过 Style setter 或实例属性覆盖。
 

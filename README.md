@@ -1,6 +1,6 @@
 # TheOne.Avalonia
 
-基于 Avalonia 官方控件的跨平台主题库，采用 Still 语义色，支持明暗主题与三档尺寸。公共主题／行为位于类库，PreviewHost 提供交互示例与验证。扩展包括 14 种独立图表、NavMenu、InfoCard、窗口与消息；DataGrid 支持自动实体属性筛选、原生右侧冻结与底部数值统计。
+基于 Avalonia 官方控件的跨平台主题库，默认使用青蓝与中性灰配色，内置多种控件外观与渐变，支持明暗主题与三档尺寸。公共主题／行为位于类库，PreviewHost 提供交互示例与验证。扩展包括 14 种独立图表、NavMenu、InfoCard、窗口与消息；DataGrid 支持自动实体属性筛选、原生右侧冻结与底部数值统计。配色与样式见 [主题配色](docs/theme/theme-colors.md)。
 
 ## 环境与版本
 
@@ -72,7 +72,6 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 - [主题](docs/theme/README.md) · [NativeAOT](docs/native-aot.md) · [PreviewHost](docs/preview-host.md)。
 - [测试策略](docs/workflow/testing.md)：局部修改跑相关专项，公共基础设施／全面审查跑全量。
 - [NuGet 版本与发布](docs/workflow/releasing.md)：双包共同版本、渠道、打包验证与交付顺序。
-- [DataGrid 当前计划](docs/plans/datagrid.md)。
 
 代码／XAML 修改后构建，并选择对应专项。例如列筛选：
 
@@ -81,7 +80,7 @@ dotnet build TheOne.Avalonia.slnx
 dotnet run --project design/PreviewHost --no-build -- --verify-datagrid-filters
 ```
 
-纯文档运行 `python3 scripts/check-docs.py`。截图仅导出当前控件，命令与测试升级条件统一见测试策略。
+纯文档核对链接、示例和当前接口。截图仅导出受影响控件，命令与测试升级条件统一见测试策略。
 
 ## 仓库结构
 
@@ -89,10 +88,8 @@ dotnet run --project design/PreviewHost --no-build -- --verify-datagrid-filters
 | --- | --- |
 | `TheOne.Avalonia/` | 公共主题、控件与行为 |
 | `design/PreviewHost/` | 演示、Headless 交互与定向渲染 |
-| `tests/NativeAotSmoke/` | 独立原生消费验证 |
-| `docs/` | 当前接口、计划及按需归档 |
-| `.agents/skills/theone-maintenance/` | 项目维护 skill |
-| `scripts/` | 文档、对比度、AOT 和渲染工具 |
+| `design/PreviewHost/Consumers/` | 独立原生及 NuGet 包消费预览 |
+| `docs/` | 当前控件接口、主题、消费和发布说明 |
 
 ## 验证边界
 

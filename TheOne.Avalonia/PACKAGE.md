@@ -1,6 +1,6 @@
 # TheOne.Avalonia
 
-Still themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows and DataGrid entity filters, left/right frozen columns and numeric summaries.
+TheOne themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows and DataGrid entity filters, left/right frozen columns and numeric summaries.
 
 ```xml
 <Application.Styles>
@@ -12,7 +12,7 @@ Declare `xmlns:one="using:TheOne.Avalonia.Themes"` on the application. OneTheme 
 
 TheOne.Avalonia and TheOne.Avalonia.DataGrid share one release version and channel. Both packages must be available in your package source. The DataGrid dependency uses NuGet's normal inclusive minimum version; upgrade the pair together. Do not add the official Avalonia.Controls.DataGrid package alongside this fork.
 
-The current release is a preview, not a declaration that all target platforms have been tested. NativeAOT consumers must use compiled column bindings, disable auto-generated columns and call `DataGridAot.PreserveRowType<T>()` from TheOne.Avalonia.Controls.
+This is a preview; target-platform execution must be verified on each host. Register each concrete row and nested property type with `DataGridAot.PreserveRowType<T>()` before creating a collection view or grid, for both managed and NativeAOT applications. Explicit columns use compiled bindings; automatic columns use registered public-property metadata and compiled accessors. Custom domain conversions require an explicit column converter. DataGrid trimming warnings are addressed in source without warning suppression or whole-assembly preservation.
 
 Source, API documentation, release policy and platform limitations: [TheOne.Avalonia repository](https://github.com/The1218/TheOne.Avalonia).
 

@@ -74,7 +74,7 @@ internal static class NavMenuSearchPreview
             Virtualization.SelectAll(menu);
             check(menu.SelectedItems.Count == 3000 && menu.SelectedItems.Contains(model.Roots[0].Entries[999]) && menu.SelectedItems.Contains(model.Roots[0].Entries[1].Entries[999]), $"{label}: restored expansion cache traverses full uncreated child collections (count={menu.SelectedItems.Count}, bound={BindingOperations.GetBindingExpressionBase(menu, TreeView.SelectedItemProperty) is not null}, mode={menu.SelectionMode}, child={menu.SelectedItems.Contains(model.Roots[0].Entries[999])}, grand={menu.SelectedItems.Contains(model.Roots[0].Entries[1].Entries[999])})");
             menu.SelectionMode = SelectionMode.Single; Flush();
-            model.Roots[999].Title = "Still Terminal"; model.Search = "still TERMINAL"; Flush();
+            model.Roots[999].Title = "TheOne Terminal"; model.Search = "theone TERMINAL"; Flush();
             check(menu.SearchMatchCount == 1 && ReferenceEquals(menu.Items[0], model.Roots[999]), label + ": ordinal case-insensitive matching supports distant root data");
             model.Search = "no match"; Flush();
             model.Roots.Add(new NavEntry("no match added")); Flush(); check(menu.ItemCount == 1, label + ": root collection changes refresh an active query");

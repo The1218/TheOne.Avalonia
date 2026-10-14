@@ -7,5 +7,7 @@
     <WrapPanel><DatePicker Name="ControlSample" SelectedDate="{Binding Date, Mode=TwoWay}" Margin="0,0,12,12" /><DatePicker SelectedDate="{Binding Date, Mode=TwoWay}" DayVisible="False" Margin="0,0,12,12" /><DatePicker SelectedDate="{Binding Date}" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
   </StackPanel>
   <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
- </StackPanel>
+ <TextBlock Text="外观样式" FontWeight="SemiBold" />
+<StackPanel Spacing="12" IsEnabled="{Binding Enabled}"><DatePicker Name="FilledDateSample" Classes="filled" SelectedDate="{Binding Date, Mode=TwoWay}" /></StackPanel>
+</StackPanel>
 </local:BasicControlPage>

@@ -17,6 +17,8 @@ public class Tag : ContentControl
     public static readonly StyledProperty<IDataTemplate?> IconTemplateProperty = AvaloniaProperty.Register<Tag, IDataTemplate?>(nameof(IconTemplate));
     public static readonly StyledProperty<TagStatus> StatusProperty = AvaloniaProperty.Register<Tag, TagStatus>(nameof(Status), validate: Enum.IsDefined);
     public static readonly StyledProperty<TagVariant> VariantProperty = AvaloniaProperty.Register<Tag, TagVariant>(nameof(Variant), validate: Enum.IsDefined);
+    public static readonly StyledProperty<double> IconSizeProperty = AvaloniaProperty.Register<Tag, double>(nameof(IconSize), 13, validate: value => double.IsFinite(value) && value > 0);
+    public double IconSize { get => GetValue(IconSizeProperty); set => SetValue(IconSizeProperty, value); }
     public static readonly StyledProperty<double> SpacingProperty = AvaloniaProperty.Register<Tag, double>(nameof(Spacing), 6, validate: value => double.IsFinite(value) && value >= 0);
     public object? Icon { get => GetValue(IconProperty); set => SetValue(IconProperty, value); }
     public IDataTemplate? IconTemplate { get => GetValue(IconTemplateProperty); set => SetValue(IconTemplateProperty, value); }
