@@ -1,0 +1,63 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="TransitioningContentControl" x:Key="{x:Type TransitioningContentControl}">
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="Padding" Value="{DynamicResource One.ContentTransition.Padding}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="PageTransition">
+            <CrossFade
+                Duration="{StaticResource One.Motion.ContentTransition}"
+                FadeInEasing="CubicEaseOut"
+                FadeOutEasing="CubicEaseOut" />
+        </Setter>
+        <Setter Property="one:ContentTransitionOptions.UseMotionSettings" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        ClipToBounds="True"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Name="PART_LayoutRoot">
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <ContentPresenter
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Name="PART_ContentPresenter"
+                                Padding="{TemplateBinding Padding}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Name="PART_ContentPresenter2"
+                                Padding="{TemplateBinding Padding}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        IsHitTestVisible="False"
+                        Name="PART_Outline" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:focus-within /template/ Border#PART_Outline">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

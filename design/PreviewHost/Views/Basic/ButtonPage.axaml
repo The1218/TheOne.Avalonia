@@ -1,0 +1,90 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ButtonPage"
+    x:DataType="local:ButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="20">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="Button · 操作层次" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="主操作推进任务，次要操作补充流程，状态色说明结果与风险。使用顶部工具栏调整尺寸和主题。"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用交互" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <TextBlock FontWeight="SemiBold" Text="主次与轻操作" />
+            <WrapPanel>
+                <Button
+                    Classes="primary"
+                    Command="{Binding InvokeCommand}"
+                    CommandParameter="保存"
+                    Content="保存修改"
+                    Margin="0,0,12,8"
+                    Name="ControlSample" />
+                <Button
+                    Command="{Binding InvokeCommand}"
+                    CommandParameter="取消"
+                    Content="取消"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="outline"
+                    Command="{Binding InvokeCommand}"
+                    Content="查看详情"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="ghost"
+                    Command="{Binding InvokeCommand}"
+                    Content="稍后处理"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="link"
+                    Command="{Binding InvokeCommand}"
+                    Content="了解更多"
+                    Margin="0,0,12,8" />
+            </WrapPanel>
+            <TextBlock FontWeight="SemiBold" Text="语义状态" />
+            <WrapPanel>
+                <Button
+                    Classes="success"
+                    Command="{Binding InvokeCommand}"
+                    Content="确认完成"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="info"
+                    Command="{Binding InvokeCommand}"
+                    Content="查看提示"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="warning"
+                    Command="{Binding InvokeCommand}"
+                    Content="检查风险"
+                    Margin="0,0,12,8" />
+                <Button
+                    Classes="danger"
+                    Command="{Binding InvokeCommand}"
+                    Content="删除记录"
+                    Margin="0,0,12,8" />
+                <Button
+                    Content="暂无权限"
+                    IsEnabled="False"
+                    Margin="0,0,12,8" />
+            </WrapPanel>
+            <TextBlock FontWeight="SemiBold" Text="ThemeButton · 快捷主题切换" />
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <one:ThemeButton Name="ThemeSample" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="点击在浅色与深色间切换"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+        </StackPanel>
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="{Binding Status}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</local:BasicControlPage>

@@ -1,0 +1,11 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.ChartShowcaseView"
+             x:DataType="local:PreviewPageDescriptor">
+  <StackPanel Spacing="16">
+    <TextBlock Text="{Binding Title}" FontSize="22" FontWeight="SemiBold"/>
+    <TextBlock Text="同一图表的三种样式 · 可点击数据和图例 · 使用顶部工具栏切换主题、尺寸和动效"
+               Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
+    <WrapPanel Name="Variants"/>
+    <Expander Name="Editor" Header="交互与数据实验"/>
+  </StackPanel>
+</UserControl>

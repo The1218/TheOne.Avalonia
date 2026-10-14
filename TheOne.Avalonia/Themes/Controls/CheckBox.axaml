@@ -1,0 +1,290 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <StreamGeometry x:Key="One.CheckMarkPathData">M5.5 10.586 1.707 6.793A1 1 0 0 0 .293 8.207l4.5 4.5a1 1 0 0 0 1.414 0l11-11A1 1 0 0 0 15.793.293L5.5 10.586Z</StreamGeometry>
+    <x:Double x:Key="One.CheckBoxMinHeight">32</x:Double>
+
+    <ControlTheme TargetType="CheckBox" x:Key="{x:Type CheckBox}">
+        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.CheckBoxMinHeight}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="20,*" x:Name="RootGrid">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Grid.ColumnSpan="2"
+                        x:Name="PART_Border" />
+
+                    <Grid Height="{TemplateBinding MinHeight}" VerticalAlignment="Top">
+                        <Border
+                            Background="{DynamicResource One.Surface}"
+                            BorderBrush="{DynamicResource One.InputLine}"
+                            BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            Height="20"
+                            UseLayoutRounding="False"
+                            Width="20"
+                            x:Name="NormalRectangle" />
+
+                        <Viewbox UseLayoutRounding="False">
+                            <Panel>
+                                <Panel Height="16" Width="16" />
+                                <Path
+                                    Fill="{DynamicResource One.Text}"
+                                    FlowDirection="LeftToRight"
+                                    Opacity="0"
+                                    Stretch="Uniform"
+                                    VerticalAlignment="Center"
+                                    x:Name="CheckGlyph" />
+                            </Panel>
+                        </Viewbox>
+                    </Grid>
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Grid.Column="1"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        TextWrapping="Wrap"
+                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        x:Name="PART_ContentPresenter" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="RecognizesAccessKey" Value="True" />
+        </Style>
+
+        <!--  Unchecked PointerOver State  -->
+        <Style Selector="^:pointerover">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#NormalRectangle">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentHover}" />
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            </Style>
+
+            <Style Selector="^ /template/ Path#CheckGlyph">
+                <Setter Property="Fill" Value="{DynamicResource One.Text}" />
+            </Style>
+        </Style>
+
+        <!--  Unchecked Pressed State  -->
+        <Style Selector="^:pressed">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#NormalRectangle">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            </Style>
+
+            <Style Selector="^ /template/ Path#CheckGlyph">
+                <Setter Property="Fill" Value="{DynamicResource One.Text}" />
+            </Style>
+        </Style>
+
+        <!--  Unchecked Disabled state  -->
+        <Style Selector="^:disabled">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#PART_Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledSurface}" />
+            </Style>
+
+            <Style Selector="^ /template/ Border#NormalRectangle">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledText}" />
+                <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            </Style>
+
+            <Style Selector="^ /template/ Path#CheckGlyph">
+                <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
+            </Style>
+        </Style>
+
+        <Style Selector="^:checked">
+            <!--  Checked Normal State  -->
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+
+            <Style Selector="^ /template/ Border#NormalRectangle">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            </Style>
+
+            <Style Selector="^ /template/ Path#CheckGlyph">
+                <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                <Setter Property="Data" Value="{StaticResource One.CheckMarkPathData}" />
+                <Setter Property="Width" Value="9" />
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <!--  Checked PointerOver State  -->
+            <Style Selector="^:pointerover">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.AccentHover}" />
+                    <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                </Style>
+            </Style>
+
+            <!--  Checked Pressed State  -->
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+                    <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                </Style>
+            </Style>
+
+            <!--  Checked Disabled State  -->
+            <Style Selector="^:disabled">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledSurface}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledText}" />
+                    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
+                </Style>
+            </Style>
+        </Style>
+
+        <Style Selector="^:indeterminate">
+            <!--  Indeterminate Normal State  -->
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+
+            <Style Selector="^ /template/ Border#NormalRectangle">
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            </Style>
+
+            <Style Selector="^ /template/ Path#CheckGlyph">
+                <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                <Setter Property="Data" Value="M1536 1536v-1024h-1024v1024h1024z" />
+                <Setter Property="Width" Value="7" />
+                <Setter Property="Opacity" Value="1" />
+            </Style>
+
+            <!--  Indeterminate PointerOver State  -->
+            <Style Selector="^:pointerover">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.AccentHover}" />
+                    <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                </Style>
+            </Style>
+
+            <!--  Indeterminate Pressed State  -->
+            <Style Selector="^:pressed">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+                    <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.OnAccent}" />
+                </Style>
+            </Style>
+
+            <!--  Indeterminate Disabled State  -->
+            <Style Selector="^:disabled">
+                <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                    <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#PART_Border">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledSurface}" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="BorderBrush" Value="{DynamicResource One.DisabledText}" />
+                    <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+                </Style>
+
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="{DynamicResource One.DisabledText}" />
+                </Style>
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

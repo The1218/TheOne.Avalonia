@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../PackageVersions.props" />
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AssemblyName>Avalonia.Controls.DataGrid</AssemblyName>
+    <RootNamespace>Avalonia.Controls</RootNamespace>
+    <PackageId>TheOne.Avalonia.DataGrid</PackageId>
+    <Version>$(TheOnePackageVersion)</Version>
+    <PackageVersion>$(TheOnePackageVersion)</PackageVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageDescription>TheOne source extension of Avalonia.Controls.DataGrid 12.1.2 for Avalonia 12.1.4. Preserves the native assembly identity, presenters and keyboard behavior.</PackageDescription>
+    <PackageReleaseNotes>Coordinated preview release with TheOne.Avalonia. Based on upstream DataGrid 12.1.2: native right frozen columns, compiled entity getters, shared column geometry and column drag fixes. AssemblyVersion remains 12.1.2.0.</PackageReleaseNotes>
+    <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
+    <AssemblyVersion>12.1.2.0</AssemblyVersion>
+    <FileVersion>12.1.2.0</FileVersion>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign>true</PublicSign>
+    <AssemblyOriginatorKeyFile>avalonia.snk</AssemblyOriginatorKeyFile>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+    <AvaloniaXaml Include="Themes/**/*.xaml" />
+    <None Include="LICENSE.md" Pack="true" PackagePath="" />
+    <None Update="PACKAGE.md" Pack="true" PackagePath="README.md" />
+    <None Update="UPSTREAM.json" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>

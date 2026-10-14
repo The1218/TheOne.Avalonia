@@ -1,0 +1,37 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ContextMenuPage"
+    x:DataType="local:ContextMenuPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ContextMenu" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <Border
+                Background="{DynamicResource One.Subtle}"
+                Height="180"
+                Name="ControlSample"
+                Padding="28">
+                <Border.ContextMenu>
+                    <ContextMenu ItemsSource="{Binding Items}" MaxHeight="300">
+                        <ContextMenu.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <TextBlock Text="{Binding}" />
+                            </DataTemplate>
+                        </ContextMenu.ItemTemplate>
+                    </ContextMenu>
+                </Border.ContextMenu>
+                <TextBlock Text="右键打开千条数据菜单" />
+            </Border>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
+</local:BasicControlPage>

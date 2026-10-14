@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:ChartBase}" TargetType="one:ChartBase">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="MutedBrush" Value="{DynamicResource One.Muted}" />
+    <Setter Property="GridBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="AccentBrush" Value="{DynamicResource One.Accent}" />
+    <Setter Property="SecondaryBrush" Value="{DynamicResource One.Muted}" />
+    <Setter Property="TertiaryBrush" Value="{DynamicResource One.Warning}" />
+    <Setter Property="QuaternaryBrush" Value="{DynamicResource One.Danger}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="DefaultChartWidth" Value="400" /><Setter Property="DefaultChartHeight" Value="280" />
+    <Setter Property="ChartPadding" Value="12" /><Setter Property="StrokeThickness" Value="2.5" />
+    <Setter Property="MarkerRadius" Value="3.5" /><Setter Property="SelectionThickness" Value="2" />
+    <Setter Property="SliceHoverOffset" Value="6" /><Setter Property="SliceHoverScale" Value="1.025" />
+    <Setter Property="GaugeBandRatio" Value="0.18" />
+    <Style Selector="^.one-small">
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="DefaultChartWidth" Value="320" /><Setter Property="DefaultChartHeight" Value="224" />
+      <Setter Property="ChartPadding" Value="8" /><Setter Property="StrokeThickness" Value="2" />
+      <Setter Property="MarkerRadius" Value="3" /><Setter Property="SelectionThickness" Value="1.5" />
+      <Setter Property="SliceHoverOffset" Value="4" /><Setter Property="SliceHoverScale" Value="1.02" />
+      <Setter Property="GaugeBandRatio" Value="0.14" />
+    </Style>
+    <Style Selector="^.one-large">
+      <Setter Property="FontSize" Value="16" />
+      <Setter Property="DefaultChartWidth" Value="480" /><Setter Property="DefaultChartHeight" Value="336" />
+      <Setter Property="ChartPadding" Value="16" /><Setter Property="StrokeThickness" Value="3" />
+      <Setter Property="MarkerRadius" Value="4.25" /><Setter Property="SelectionThickness" Value="2.5" />
+      <Setter Property="SliceHoverOffset" Value="8" /><Setter Property="SliceHoverScale" Value="1.03" />
+      <Setter Property="GaugeBandRatio" Value="0.22" />
+    </Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:LineChart}" TargetType="one:LineChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:AreaChart}" TargetType="one:AreaChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:BarChart}" TargetType="one:BarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:HorizontalBarChart}" TargetType="one:HorizontalBarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:ScatterChart}" TargetType="one:ScatterChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:PieChart}" TargetType="one:PieChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:DoughnutChart}" TargetType="one:DoughnutChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:GaugeChart}" TargetType="one:GaugeChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:StackedBarChart}" TargetType="one:StackedBarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:StackedHorizontalBarChart}" TargetType="one:StackedHorizontalBarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:StackedAreaChart}" TargetType="one:StackedAreaChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:PercentStackedBarChart}" TargetType="one:PercentStackedBarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:PercentStackedHorizontalBarChart}" TargetType="one:PercentStackedHorizontalBarChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+  <ControlTheme x:Key="{x:Type one:PercentStackedAreaChart}" TargetType="one:PercentStackedAreaChart" BasedOn="{StaticResource {x:Type one:ChartBase}}" />
+</ResourceDictionary>

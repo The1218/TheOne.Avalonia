@@ -1,0 +1,79 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:converters="using:Avalonia.Controls.Converters"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <ControlTheme TargetType="ScrollViewer" x:Key="One.MenuScrollViewer">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="IsScrollChainingEnabled" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel>
+                    <RepeatButton
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}"
+                        DockPanel.Dock="Top"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        RenderTransform="{x:Null}">
+                        <RepeatButton.IsVisible>
+                            <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="0">
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height"  />
+                            </MultiBinding>
+                        </RepeatButton.IsVisible>
+                        <Viewbox Height="{DynamicResource ScrollBarButtonArrowIconFontSize}" Width="{DynamicResource ScrollBarButtonArrowIconFontSize}">
+                            <Path
+                                Data="M 19.091797 14.970703 L 10 5.888672 L 0.908203 14.970703 L 0.029297 14.091797 L 10 4.111328 L 19.970703 14.091797 Z"
+                                Fill="{DynamicResource One.Text}"
+                                Height="20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="20" />
+                        </Viewbox>
+                    </RepeatButton>
+                    <RepeatButton
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
+                        DockPanel.Dock="Bottom"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        RenderTransform="{x:Null}">
+                        <RepeatButton.IsVisible>
+                            <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="100">
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height"  />
+                            </MultiBinding>
+                        </RepeatButton.IsVisible>
+                        <Viewbox Height="{DynamicResource ScrollBarButtonArrowIconFontSize}" Width="{DynamicResource ScrollBarButtonArrowIconFontSize}">
+                            <Path
+                                Data="M 18.935547 4.560547 L 19.814453 5.439453 L 10 15.253906 L 0.185547 5.439453 L 1.064453 4.560547 L 10 13.496094 Z"
+                                Fill="{DynamicResource One.Text}"
+                                Height="20"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="20" />
+                        </Viewbox>
+                    </RepeatButton>
+                    <ScrollContentPresenter Name="PART_ContentPresenter">
+                        <ScrollContentPresenter.GestureRecognizers>
+                            <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}" CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}" />
+                        </ScrollContentPresenter.GestureRecognizers>
+                    </ScrollContentPresenter>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^ /template/ RepeatButton:pointerover &gt; Viewbox &gt; Path">
+            <Setter Property="Fill" Value="{DynamicResource One.Text}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

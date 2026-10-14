@@ -1,0 +1,79 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.DataGridBindingDemoView"
+    x:DataType="local:DataGridBindingDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="8">
+        <TextBlock FontWeight="SemiBold" Text="集合绑定与单元格操作 / 千条数据" />
+        <WrapPanel>
+            <Button
+                Command="{Binding UseListCommand}"
+                Content="List 源"
+                Margin="0,0,8,4"
+                Name="UseList" />
+            <Button
+                Command="{Binding UseObservableCommand}"
+                Content="ObservableCollection 源"
+                Margin="0,0,8,4"
+                Name="UseObservable" />
+            <Button
+                Command="{Binding AddCommand}"
+                Content="新增一项"
+                IsEnabled="{Binding CanAdd}"
+                Margin="0,0,0,4"
+                Name="AddRow" />
+        </WrapPanel>
+        <TextBlock
+            FontSize="12"
+            Foreground="{DynamicResource One.Muted}"
+            Text="{Binding SourceLabel}"
+            TextWrapping="Wrap" />
+        <DataGrid
+            AutoGenerateColumns="False"
+            Height="240"
+            ItemsSource="{Binding Rows}"
+            MaxColumnWidth="280"
+            Name="CollectionGrid"
+            SelectedItem="{Binding Selected, Mode=TwoWay}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Id}"
+                    Header="编号"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Name, Mode=TwoWay}"
+                    Header="设备"
+                    Width="*" />
+                <DataGridCheckBoxColumn Binding="{Binding Enabled, Mode=TwoWay}" Header="启用" />
+
+                <DataGridTemplateColumn CanUserSort="False" Header="操作">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button
+                                Command="{Binding $parent[local:DataGridBindingDemoView].Model.InspectCommand}"
+                                CommandParameter="{Binding}"
+                                Content="查看" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn CanUserSort="False" Header="标记">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ToggleButton Content="标记" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock
+            FontSize="12"
+            Foreground="{DynamicResource One.Accent}"
+            Text="{Binding ActionLabel}" />
+        <TextBlock
+            FontSize="12"
+            Foreground="{DynamicResource One.Muted}"
+            Text="列头按钮：未排序 → 升序 → 降序 → 未排序；Shift 多列排序并显示优先级，Ctrl／⌘ 清除。三种尺寸下操作按钮和复选框均应完整显示。"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</UserControl>

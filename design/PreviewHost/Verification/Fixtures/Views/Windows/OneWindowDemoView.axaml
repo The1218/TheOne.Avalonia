@@ -1,0 +1,92 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.OneWindowDemoView"
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="20">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="OneWindow · 窗口与消息" />
+        <TextBlock Text="当前 PreviewHost 已使用 OneWindow。标题栏包含自定义左右内容与主题快捷按钮，通知、Toast、对话框均由窗口自动承载。" TextWrapping="Wrap" />
+        <WrapPanel>
+            <Button
+                Classes="primary"
+                Click="OnNotification"
+                Content="显示通知"
+                Margin="0,0,8,8"
+                Name="WindowNotification" />
+            <Button
+                Click="OnToast"
+                Content="显示 Toast"
+                Margin="0,0,8,8"
+                Name="WindowToast" />
+            <Button
+                Click="OnDialog"
+                Content="确认对话框"
+                Margin="0,0,8,8"
+                Name="WindowDialog" />
+            <Button
+                Click="OnFormDialog"
+                Content="自定义表单"
+                Margin="0,0,8,8"
+                Name="WindowFormDialog" />
+            <Button
+                Click="OnQueue"
+                Content="连续两个对话框"
+                Margin="0,0,8,8"
+                Name="WindowQueuedDialogs" />
+            <Button
+                Click="OnCancelDialog"
+                Content="三秒后取消"
+                Margin="0,0,8,8"
+                Name="WindowCancellableDialog" />
+            <Button
+                Click="OnSecondWindow"
+                Content="打开第二窗口"
+                Margin="0,0,8,8"
+                Name="WindowSecond" />
+            <Button
+                Click="OnLoginWindow"
+                Content="自定义登录内容"
+                Margin="0,0,8,8"
+                Name="WindowLogin" />
+        </WrapPanel>
+        <TextBlock Text="登录按钮打开独立 LoginWindow 内容示例。运行 PreviewHost --login 可验证完整启动流程：登录通过后交接 MainWindow，关闭登录窗口并显示 OneWindow 主窗体。" TextWrapping="Wrap" />
+        <StackPanel Spacing="8">
+            <TextBlock FontWeight="SemiBold" Text="自定义表单选项（点击上方自定义表单验证）" />
+            <CheckBox Name="DialogTitleVisible" Content="显示对话框标题" IsChecked="True" />
+            <CheckBox Name="DialogCloseVisible" Content="显示关闭按钮" IsChecked="True" />
+            <CheckBox Name="DialogOverlayClose" Content="点击蒙层关闭" IsChecked="False" />
+            <CheckBox Name="DialogEscapeClose" Content="Escape 关闭" IsChecked="True" />
+            <TextBlock Text="Toast 默认顶部居中；表单默认不显示通用底部按钮，使用内部 VM 的保存和取消命令。" TextWrapping="Wrap" />
+        </StackPanel>
+        <Border
+            Background="{DynamicResource One.Subtle}"
+            CornerRadius="12"
+            Padding="20">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="标题栏自定义" />
+                <CheckBox
+                    Content="显示主题按钮"
+                    IsChecked="True"
+                    IsCheckedChanged="OnTitleOptions"
+                    Name="WindowThemeVisible" />
+                <CheckBox
+                    Content="显示标题栏"
+                    IsChecked="True"
+                    IsCheckedChanged="OnTitleOptions"
+                    Name="WindowTitleVisible" />
+                <Button Click="OnResetTitle" Content="恢复默认标题栏" />
+                <TextBlock Text="标题栏的 PREVIEW 位于 LeftContent；右侧通知／对话框按钮位于 RightContent。交互控件保持点击与键盘输入，空白区域可拖动，双击可最大化／还原。" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+        <TextBlock
+            Name="WindowStatus"
+            Text="尚未调用消息 API"
+            TextWrapping="Wrap" />
+        <SelectableTextBlock Text="OneNotification.Show(&quot;标题&quot;, &quot;内容&quot;);&#10;OneToast.Show(&quot;保存成功&quot;);&#10;var result = await OneDialog.ShowAsync(&quot;确认&quot;, &quot;是否继续？&quot;, OneDialogButtons.YesNo);&#10;var result = await OneDialog.ShowAsync&lt;DialogEditorView, DialogEditorViewModel&gt;(vm, new DialogOptions { Title = &quot;编辑&quot; });" />
+        <TextBlock Text="多个窗口时，未指定 owner 的调用使用最近激活的可见 OneWindow；可显式传入 owner。异步 API 支持后台调用，对话框支持取消令牌，并在宿主关闭时完成等待。" TextWrapping="Wrap" />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TheOne.DesignPreview.TabStripDemoView" x:CompileBindings="True" xmlns:local="using:TheOne.DesignPreview" x:DataType="local:TabStripDemoViewModel">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.helper"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="20">
+    <StackPanel Spacing="6">
+      <TextBlock Text="TabStrip · 独立标签导航" FontSize="22" FontWeight="SemiBold" />
+      <TextBlock Classes="helper" Text="原生选择与方向键导航。使用顶部主题和尺寸设置检查外观，标签标题按需创建与回收。" />
+    </StackPanel>
+    <StackPanel Spacing="10">
+      <TextBlock Text="工作流" FontWeight="SemiBold" />
+      <TabStrip Name="WorkflowStrip" SelectedIndex="{Binding Workflow, Mode=TwoWay}" AutomationProperties.Name="工作流导航">
+        <TabStripItem Content="_Overview / 概览" />
+        <TabStripItem Content="_Activity / 动态" />
+        <TabStripItem Content="归档（禁用）" IsEnabled="False" />
+      </TabStrip>
+      <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="16">
+        <TextBlock Name="WorkflowStatus" Text="{Binding WorkflowStatus}" TextWrapping="Wrap" />
+      </Border>
+    </StackPanel>
+    <Separator />
+    <StackPanel Spacing="10">
+      <TextBlock Text="10,000 个标签" FontWeight="SemiBold" />
+      <TextBlock Classes="helper" Text="滚动查看或跳转至远处标签；聚焦标题后使用 ← / →、Home / End。选中项在视口中保持可见。" />
+      <WrapPanel>
+        <NumericUpDown Name="TargetIndex" Minimum="1" Maximum="10000" Value="{Binding Target, Mode=TwoWay}" Width="156" Margin="0,0,8,8" AutomationProperties.Name="目标标签序号" />
+        <Button Name="JumpTarget" Content="跳转" Command="{Binding JumpCommand}" Margin="0,0,8,8" />
+        <Button Name="JumpLast" Content="最后一项" Command="{Binding LastCommand}" Margin="0,0,8,8" />
+        <Button Name="ResetTabs" Content="回到首项" Command="{Binding ResetCommand}" Margin="0,0,8,8" />
+        <CheckBox Name="EnableStrip" Content="启用标签" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+      </WrapPanel>
+      <TabStrip Name="HugeStrip" Height="80" ItemsSource="{Binding Rows}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" IsEnabled="{Binding Enabled}" AutomationProperties.Name="一万项标签导航">
+        <TabStrip.ItemTemplate><DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" VerticalAlignment="Center" /></DataTemplate></TabStrip.ItemTemplate>
+      </TabStrip>
+      <TextBlock Name="TabMetrics" Text="{Binding Metrics}" Classes="helper" />
+      <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="20">
+        <StackPanel Spacing="8">
+          <TextBlock Name="SelectedTitle" Text="{Binding SelectedTitle}" FontSize="18" FontWeight="SemiBold" />
+          <TextBlock Classes="helper" Text="此内容区域由消费项目绑定 SelectedItem；TabStrip 本身只负责导航，不创建每个标签的内容页面。" />
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </StackPanel>
+</UserControl>

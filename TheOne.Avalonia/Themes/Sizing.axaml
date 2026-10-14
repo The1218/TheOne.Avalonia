@@ -1,0 +1,629 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:n="using:Avalonia.Controls.Notifications"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style Selector="one|OneWindow.one-small"><Setter Property="TitleBarHeight" Value="42" /><Setter Property="FontSize" Value="12" /></Style>
+    <Style Selector="one|OneWindow.one-normal"><Setter Property="TitleBarHeight" Value="48" /><Setter Property="FontSize" Value="14" /></Style>
+    <Style Selector="one|OneWindow.one-large"><Setter Property="TitleBarHeight" Value="56" /><Setter Property="FontSize" Value="16" /></Style>
+    <Style Selector="one|LoginWindow.one-small"><Setter Property="FontSize" Value="12" /></Style>
+    <Style Selector="one|LoginWindow.one-normal"><Setter Property="FontSize" Value="14" /></Style>
+    <Style Selector="one|LoginWindow.one-large"><Setter Property="FontSize" Value="16" /></Style>
+    <Style Selector="one|ThemeButton.one-small"><Setter Property="Width" Value="30" /><Setter Property="Height" Value="30" /></Style>
+    <Style Selector="one|ThemeButton.one-normal"><Setter Property="Width" Value="36" /><Setter Property="Height" Value="36" /></Style>
+    <Style Selector="one|ThemeButton.one-large"><Setter Property="Width" Value="44" /><Setter Property="Height" Value="44" /></Style>
+    <Style Selector="one|NavMenu.one-small"><Setter Property="CollapsedWidth" Value="44" /><Setter Property="SubmenuWidth" Value="240" /><Setter Property="SubmenuMaxHeight" Value="240" /><Setter Property="FontSize" Value="12" /><Setter Property="IconSize" Value="16" /><Setter Property="IconSpacing" Value="8" /><Setter Property="ItemHeight" Value="30" /><Setter Property="Indent" Value="12" /></Style>
+    <Style Selector="one|NavMenu.one-normal"><Setter Property="CollapsedWidth" Value="52" /><Setter Property="SubmenuWidth" Value="280" /><Setter Property="SubmenuMaxHeight" Value="320" /><Setter Property="FontSize" Value="14" /><Setter Property="IconSize" Value="18" /><Setter Property="IconSpacing" Value="10" /><Setter Property="ItemHeight" Value="36" /><Setter Property="Indent" Value="16" /></Style>
+    <Style Selector="one|NavMenu.one-large"><Setter Property="CollapsedWidth" Value="60" /><Setter Property="SubmenuWidth" Value="320" /><Setter Property="SubmenuMaxHeight" Value="400" /><Setter Property="FontSize" Value="16" /><Setter Property="IconSize" Value="20" /><Setter Property="IconSpacing" Value="12" /><Setter Property="ItemHeight" Value="44" /><Setter Property="Indent" Value="20" /></Style>
+    <Style Selector="one|InfoCard.one-small"><Setter Property="Padding" Value="16" /><Setter Property="FontSize" Value="12" /><Setter Property="HeaderFontSize" Value="14" /><Setter Property="HeaderSpacing" Value="8" /><Setter Property="HeaderIconSize" Value="16" /><Setter Property="HeaderContentSpacing" Value="8" /><Setter Property="FooterSpacing" Value="8" /></Style>
+    <Style Selector="one|InfoCard.one-normal"><Setter Property="Padding" Value="20" /><Setter Property="FontSize" Value="14" /><Setter Property="HeaderFontSize" Value="16" /><Setter Property="HeaderSpacing" Value="12" /><Setter Property="HeaderIconSize" Value="18" /><Setter Property="HeaderContentSpacing" Value="10" /><Setter Property="FooterSpacing" Value="12" /></Style>
+    <Style Selector="one|InfoCard.one-large"><Setter Property="Padding" Value="24" /><Setter Property="FontSize" Value="16" /><Setter Property="HeaderFontSize" Value="18" /><Setter Property="HeaderSpacing" Value="16" /><Setter Property="HeaderIconSize" Value="20" /><Setter Property="HeaderContentSpacing" Value="12" /><Setter Property="FooterSpacing" Value="16" /></Style>
+    <Style Selector="one|OneDialogPresenter.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="16" /></Style>
+    <Style Selector="one|OneDialogPresenter.one-normal"><Setter Property="FontSize" Value="14" /><Setter Property="Padding" Value="24" /></Style>
+    <Style Selector="one|OneDialogPresenter.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="32" /></Style>
+    <Style Selector=":is(Control).small">
+        <Setter Property="styling:ControlSizing.Size" Value="Small" />
+    </Style>
+    <Style Selector=":is(Control).normal">
+        <Setter Property="styling:ControlSizing.Size" Value="Normal" />
+    </Style>
+    <Style Selector=":is(Control).large">
+        <Setter Property="styling:ControlSizing.Size" Value="Large" />
+    </Style>
+    <Style Selector=":is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Small.Height}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector=":is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, CalendarDatePicker.one-small, ListBoxItem.one-small, MenuItem.one-small">
+        <Setter Property="Padding" Value="10,4" />
+    </Style>
+    <Style Selector="TreeViewItem.one-small">
+        <Setter Property="Padding" Value="0,4,10,4" />
+    </Style>
+    <Style Selector="TabItem.one-small">
+        <Setter Property="Padding" Value="10,2,6,2" />
+    </Style>
+    <Style Selector="TreeViewItem.one-small /template/ ToggleButton#PART_ExpandCollapseChevron">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+    </Style>
+    <Style Selector="ButtonSpinner.one-small /template/ RepeatButton">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="24" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="CalendarDatePicker.one-small /template/ Button#PART_Button">
+        <Setter Property="Width" Value="30" />
+    </Style>
+    <Style Selector="CalendarDayButton.one-small">
+        <Setter Property="MinWidth" Value="34" />
+        <Setter Property="MinHeight" Value="34" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="CalendarButton.one-small">
+        <Setter Property="MinWidth" Value="34" />
+        <Setter Property="MinHeight" Value="34" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="Slider.one-small:horizontal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Small.Height}" />
+    </Style>
+    <Style Selector="Slider.one-small:vertical">
+        <Setter Property="MinWidth" Value="30" />
+    </Style>
+    <Style Selector="Slider.one-small /template/ Thumb">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+    </Style>
+    <Style Selector="ProgressBar.one-small:horizontal">
+        <Setter Property="MinHeight" Value="4" />
+    </Style>
+    <Style Selector="ProgressBar.one-small:vertical">
+        <Setter Property="MinWidth" Value="4" />
+    </Style>
+    <Style Selector=":is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector=":is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, CalendarDatePicker.one-normal, ListBoxItem.one-normal, MenuItem.one-normal">
+        <Setter Property="Padding" Value="12,7" />
+    </Style>
+    <Style Selector="TreeViewItem.one-normal">
+        <Setter Property="Padding" Value="0,4,10,4" />
+    </Style>
+    <Style Selector="TabItem.one-normal">
+        <Setter Property="Padding" Value="14,4,6,4" />
+    </Style>
+    <Style Selector="TreeViewItem.one-normal /template/ ToggleButton#PART_ExpandCollapseChevron">
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+    </Style>
+    <Style Selector="ButtonSpinner.one-normal /template/ RepeatButton">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="30" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="CalendarDatePicker.one-normal /template/ Button#PART_Button">
+        <Setter Property="Width" Value="36" />
+    </Style>
+    <Style Selector="CalendarDayButton.one-normal">
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="CalendarButton.one-normal">
+        <Setter Property="MinWidth" Value="40" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="Slider.one-normal:horizontal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+    </Style>
+    <Style Selector="Slider.one-normal:vertical">
+        <Setter Property="MinWidth" Value="36" />
+    </Style>
+    <Style Selector="Slider.one-normal /template/ Thumb">
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
+    </Style>
+    <Style Selector="ProgressBar.one-normal:horizontal">
+        <Setter Property="MinHeight" Value="6" />
+    </Style>
+    <Style Selector="ProgressBar.one-normal:vertical">
+        <Setter Property="MinWidth" Value="6" />
+    </Style>
+    <Style Selector=":is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Large.Height}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector=":is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, CalendarDatePicker.one-large, ListBoxItem.one-large, MenuItem.one-large">
+        <Setter Property="Padding" Value="16,10" />
+    </Style>
+    <Style Selector="TreeViewItem.one-large">
+        <Setter Property="Padding" Value="0,4,14,4" />
+    </Style>
+    <Style Selector="TabItem.one-large">
+        <Setter Property="Padding" Value="14,4,6,4" />
+    </Style>
+    <Style Selector="TreeViewItem.one-large /template/ ToggleButton#PART_ExpandCollapseChevron">
+        <Setter Property="Width" Value="44" />
+        <Setter Property="Height" Value="44" />
+    </Style>
+    <Style Selector="ButtonSpinner.one-large /template/ RepeatButton">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="38" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="CalendarDatePicker.one-large /template/ Button#PART_Button">
+        <Setter Property="Width" Value="44" />
+    </Style>
+    <Style Selector="CalendarDayButton.one-large">
+        <Setter Property="MinWidth" Value="48" />
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="CalendarButton.one-large">
+        <Setter Property="MinWidth" Value="48" />
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="Slider.one-large:horizontal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Large.Height}" />
+    </Style>
+    <Style Selector="Slider.one-large:vertical">
+        <Setter Property="MinWidth" Value="44" />
+    </Style>
+    <Style Selector="Slider.one-large /template/ Thumb">
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+    <Style Selector="ProgressBar.one-large:horizontal">
+        <Setter Property="MinHeight" Value="8" />
+    </Style>
+    <Style Selector="ProgressBar.one-large:vertical">
+        <Setter Property="MinWidth" Value="8" />
+    </Style>
+    <Style Selector="NumericUpDown /template/ TextBox#PART_TextBox, CalendarDatePicker /template/ TextBox#PART_TextBox, AutoCompleteBox /template/ TextBox#PART_TextBox">
+        <Setter Property="MinHeight" Value="0" />
+    </Style>
+    <Style Selector="TabItem /template/ Button#PART_CloseButton">
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector="TreeViewItem /template/ ToggleButton#PART_ExpandCollapseChevron">
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="TextBox.one-embedded">
+        <Setter Property="MinHeight" Value="0" />
+    </Style>
+    <Style Selector="TextBox.one-borderless /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+    <Style Selector="ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="ContextMenu.one-small">
+        <Setter Property="Padding" Value="4" />
+    </Style>
+    <Style Selector="ToolTip.one-small">
+        <Setter Property="Padding" Value="8,4" />
+    </Style>
+    <Style Selector="ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="ContextMenu.one-normal">
+        <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector="ToolTip.one-normal">
+        <Setter Property="Padding" Value="10,6" />
+    </Style>
+    <Style Selector="ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="ContextMenu.one-large">
+        <Setter Property="Padding" Value="8" />
+    </Style>
+    <Style Selector="ToolTip.one-large">
+        <Setter Property="Padding" Value="14,8" />
+    </Style>
+    <Style Selector=":is(Button).one-picker-button">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="Expander.one-small /template/ ToggleButton /template/ Border#ExpandCollapseChevronBorder">
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="24" />
+    </Style>
+    <Style Selector="Expander.one-normal /template/ ToggleButton /template/ Border#ExpandCollapseChevronBorder">
+        <Setter Property="Width" Value="28" />
+        <Setter Property="Height" Value="28" />
+    </Style>
+    <Style Selector="Expander.one-large /template/ ToggleButton /template/ Border#ExpandCollapseChevronBorder">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+    </Style>
+    <Style Selector="RepeatButton.one-spin">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector=":is(Button).one-close">
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector=":is(Button).one-editor-button, ToggleButton.one-editor-button">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="24" />
+        <Setter Property="Padding" Value="6" />
+    </Style>
+    <Style Selector="TextBox.one-borderless">
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+    </Style>
+    <Style Selector="TabItem.card-tab.one-small">
+        <Setter Property="Padding" Value="12,2,12,2" />
+    </Style>
+    <Style Selector="TabItem.card-tab.one-normal">
+        <Setter Property="Padding" Value="16,4,12,4" />
+    </Style>
+    <Style Selector="TabItem.card-tab.one-large">
+        <Setter Property="Padding" Value="20,4,16,4" />
+    </Style>
+    <Style Selector=":is(Button).one-card-arrow">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+    <Style Selector="DataGrid.one-small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-small, DataGridRowGroupHeader.one-small">
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-small">
+        <Setter Property="Padding" Value="6,0" />
+    </Style>
+    <Style Selector="DataGridCell.one-small">
+        <Setter Property="Padding" Value="10,2" />
+    </Style>
+    <Style Selector="DataGridRow.one-small /template/ DataGridFrozenGrid#PART_Root">
+        <Setter Property="MinHeight" Value="30" />
+    </Style>
+    <Style Selector="DataGrid.one-normal">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-normal, DataGridRowGroupHeader.one-normal">
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-normal">
+        <Setter Property="Padding" Value="6,0" />
+    </Style>
+    <Style Selector="DataGridCell.one-normal">
+        <Setter Property="Padding" Value="12,4" />
+    </Style>
+    <Style Selector="DataGridRow.one-normal /template/ DataGridFrozenGrid#PART_Root">
+        <Setter Property="MinHeight" Value="36" />
+    </Style>
+    <Style Selector="DataGrid.one-large">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-large, DataGridRowGroupHeader.one-large">
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="DataGridColumnHeader.one-large">
+        <Setter Property="Padding" Value="6,0" />
+    </Style>
+    <Style Selector="DataGridCell.one-large">
+        <Setter Property="Padding" Value="16,6" />
+    </Style>
+    <Style Selector="DataGridRow.one-large /template/ DataGridFrozenGrid#PART_Root">
+        <Setter Property="MinHeight" Value="44" />
+    </Style>
+    <Style Selector="DataGridCell TextBox#CellTextBox.one-small, DataGridCell TextBox#CellTextBox.one-normal, DataGridCell TextBox#CellTextBox.one-large">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Padding" Value="6,2" />
+    </Style>
+    <Style Selector="DataGridCell CheckBox.one-small">
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="DataGridCell CheckBox.one-normal">
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="DataGridCell CheckBox.one-large">
+        <Setter Property="MinHeight" Value="24" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector="DataGridCell :is(Button).one-small">
+        <Setter Property="MinHeight" Value="22" />
+        <Setter Property="Padding" Value="8,2" />
+    </Style>
+    <Style Selector="DataGridCell :is(Button).one-normal">
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="10,2" />
+    </Style>
+    <Style Selector="DataGridCell :is(Button).one-large">
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Padding" Value="12,2" />
+    </Style>
+    <Style Selector="DataGridRowGroupHeader /template/ ToggleButton#PART_ExpanderButton">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!--  Layout density changes pane defaults and splitter hit targets, not container height.  -->
+    <Style Selector="SplitView.one-small">
+        <Setter Property="OpenPaneLength" Value="{DynamicResource One.SplitView.Small.OpenPaneLength}" />
+        <Setter Property="CompactPaneLength" Value="{DynamicResource One.SplitView.Small.CompactPaneLength}" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="GridSplitter.one-small">
+        <Setter Property="MinWidth" Value="{DynamicResource One.GridSplitter.Small.Thickness}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.GridSplitter.Small.Thickness}" />
+    </Style>
+    <Style Selector="SplitView.one-normal">
+        <Setter Property="OpenPaneLength" Value="{DynamicResource One.SplitView.OpenPaneLength}" />
+        <Setter Property="CompactPaneLength" Value="{DynamicResource One.SplitView.CompactPaneLength}" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="GridSplitter.one-normal">
+        <Setter Property="MinWidth" Value="{DynamicResource One.GridSplitter.Thickness}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.GridSplitter.Thickness}" />
+    </Style>
+    <Style Selector="SplitView.one-large">
+        <Setter Property="OpenPaneLength" Value="{DynamicResource One.SplitView.Large.OpenPaneLength}" />
+        <Setter Property="CompactPaneLength" Value="{DynamicResource One.SplitView.Large.CompactPaneLength}" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="GridSplitter.one-large">
+        <Setter Property="MinWidth" Value="{DynamicResource One.GridSplitter.Large.Thickness}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.GridSplitter.Large.Thickness}" />
+    </Style>
+
+    <!--  Native ToggleSplitButton shares SplitButton's StyleKey and density selectors.  -->
+    <Style Selector=":is(SplitButton).one-small">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Small.Height}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="10,4" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-small /template/ Button#PART_SecondaryButton">
+        <Setter Property="Width" Value="{DynamicResource One.SplitButton.Small.SecondaryWidth}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-normal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="12,7" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-normal /template/ Button#PART_SecondaryButton">
+        <Setter Property="Width" Value="{DynamicResource One.SplitButton.SecondaryWidth}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-large">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Large.Height}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="16,6" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-large /template/ Button#PART_SecondaryButton">
+        <Setter Property="Width" Value="{DynamicResource One.SplitButton.Large.SecondaryWidth}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-small /template/ Button#PART_PrimaryButton.one-small">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-small /template/ Button#PART_SecondaryButton.one-small">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-normal /template/ Button#PART_PrimaryButton.one-normal">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-normal /template/ Button#PART_SecondaryButton.one-normal">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-large /template/ Button#PART_PrimaryButton.one-large">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+    </Style>
+    <Style Selector=":is(SplitButton).one-large /template/ Button#PART_SecondaryButton.one-large">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <!--  Labels align with form fields; selectable paragraphs retain content-driven height.  -->
+    <Style Selector="Label.one-small">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Small.Height}" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="SelectableTextBlock.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="LineHeight" Value="{DynamicResource One.Text.Small.LineHeight}" />
+    </Style>
+    <Style Selector="Label.one-normal">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="SelectableTextBlock.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineHeight" Value="{DynamicResource One.Text.LineHeight}" />
+    </Style>
+    <Style Selector="Label.one-large">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Large.Height}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="SelectableTextBlock.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="LineHeight" Value="{DynamicResource One.Text.Large.LineHeight}" />
+    </Style>
+    <Style Selector="FlyoutPresenter.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="{DynamicResource One.Flyout.Small.Padding}" />
+    </Style>
+    <Style Selector="FlyoutPresenter.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="{DynamicResource One.Flyout.Padding}" />
+    </Style>
+    <Style Selector="FlyoutPresenter.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="{DynamicResource One.Flyout.Large.Padding}" />
+    </Style>
+
+    <Style Selector="TabStrip.one-small, TabStripItem.one-small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="TabStripItem.one-small">
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Padding" Value="10,0" />
+    </Style>
+    <Style Selector="TabStrip.one-normal, TabStripItem.one-normal">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="TabStripItem.one-normal">
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Padding" Value="14,0" />
+    </Style>
+    <Style Selector="TabStrip.one-large, TabStripItem.one-large">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="TabStripItem.one-large">
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="Padding" Value="18,0" />
+    </Style>
+    <!--  Internal scroll buttons retain the track thickness at every inherited density.  -->
+    <Style Selector="RepeatButton.one-scroll-button">
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <!--  Carousel density affects content spacing; its viewport remains layout-driven.  -->
+    <Style Selector="n|NotificationCard.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="{DynamicResource One.Notification.Small.Padding}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-small /template/ Border#PART_StatusBadge">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Small.BadgeSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Small.BadgeSize}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-small /template/ PathIcon#PART_StatusIcon">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Small.IconSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Small.IconSize}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-small /template/ Button#PART_CloseButton">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Small.CloseSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Small.CloseSize}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="{DynamicResource One.Notification.Padding}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="{DynamicResource One.Notification.Large.Padding}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-large /template/ Border#PART_StatusBadge">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Large.BadgeSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Large.BadgeSize}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-large /template/ PathIcon#PART_StatusIcon">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Large.IconSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Large.IconSize}" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-large /template/ Button#PART_CloseButton">
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Large.CloseSize}" />
+        <Setter Property="Height" Value="{DynamicResource One.Notification.Large.CloseSize}" />
+    </Style>
+    <Style Selector="TransitioningContentControl.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="{DynamicResource One.ContentTransition.Small.Padding}" />
+    </Style>
+    <Style Selector="TransitioningContentControl.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="{DynamicResource One.ContentTransition.Padding}" />
+    </Style>
+    <Style Selector="TransitioningContentControl.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="{DynamicResource One.ContentTransition.Large.Padding}" />
+    </Style>
+    <Style Selector="Carousel.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="{DynamicResource One.Carousel.Small.Padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.Carousel.Small.MinHeight}" />
+    </Style>
+    <Style Selector="Carousel.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="{DynamicResource One.Carousel.Padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.Carousel.MinHeight}" />
+    </Style>
+    <Style Selector="Carousel.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="{DynamicResource One.Carousel.Large.Padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.Carousel.Large.MinHeight}" />
+    </Style>
+
+    <Style Selector="RefreshContainer.one-small, RefreshVisualizer.one-small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-small">
+        <Setter Property="Height" Value="{DynamicResource One.Refresh.Small.Height}" />
+        <Setter Property="one:RefreshOptions.IndicatorSize" Value="{DynamicResource One.Refresh.Small.IndicatorSize}" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-small.one-refresh-horizontal">
+        <Setter Property="Height" Value="NaN" />
+        <Setter Property="Width" Value="{DynamicResource One.Refresh.Small.Height}" />
+    </Style>
+    <Style Selector="RefreshContainer.one-normal, RefreshVisualizer.one-normal">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-normal">
+        <Setter Property="Height" Value="{DynamicResource One.Refresh.Height}" />
+        <Setter Property="one:RefreshOptions.IndicatorSize" Value="{DynamicResource One.Refresh.IndicatorSize}" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-normal.one-refresh-horizontal">
+        <Setter Property="Height" Value="NaN" />
+        <Setter Property="Width" Value="{DynamicResource One.Refresh.Height}" />
+    </Style>
+    <Style Selector="RefreshContainer.one-large, RefreshVisualizer.one-large">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-large">
+        <Setter Property="Height" Value="{DynamicResource One.Refresh.Large.Height}" />
+        <Setter Property="one:RefreshOptions.IndicatorSize" Value="{DynamicResource One.Refresh.Large.IndicatorSize}" />
+    </Style>
+    <Style Selector="RefreshVisualizer.one-large.one-refresh-horizontal">
+        <Setter Property="Height" Value="NaN" />
+        <Setter Property="Width" Value="{DynamicResource One.Refresh.Large.Height}" />
+    </Style>
+    <Style Selector="DatePickerPresenter.one-small, TimePickerPresenter.one-small">
+        <Setter Property="styling:PickerSizing.ItemHeight" Value="32" />
+        <Setter Property="styling:PickerSizing.ViewportHeight" Value="160" />
+        <Setter Property="styling:PickerSizing.PopupHeight" Value="288" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="DatePickerPresenter.one-normal, TimePickerPresenter.one-normal">
+        <Setter Property="styling:PickerSizing.ItemHeight" Value="40" />
+        <Setter Property="styling:PickerSizing.ViewportHeight" Value="200" />
+        <Setter Property="styling:PickerSizing.PopupHeight" Value="340" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="DatePickerPresenter.one-large, TimePickerPresenter.one-large">
+        <Setter Property="styling:PickerSizing.ItemHeight" Value="48" />
+        <Setter Property="styling:PickerSizing.ViewportHeight" Value="240" />
+        <Setter Property="styling:PickerSizing.PopupHeight" Value="400" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+</Styles>

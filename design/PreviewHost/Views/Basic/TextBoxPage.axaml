@@ -1,0 +1,15 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TextBoxPage" x:DataType="local:TextBoxPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="TextBox" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="普通 / 占位提示 / 密码 / 只读 / 多行输入" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <TextBox Name="ControlSample" Text="{Binding Text, Mode=TwoWay}" PlaceholderText="普通输入" MaxWidth="420" HorizontalAlignment="Stretch"/>
+    <TextBox PlaceholderText="空输入与占位提示" MaxWidth="420" HorizontalAlignment="Stretch"/>
+    <TextBox Text="密码输入" PasswordChar="●" MaxWidth="420" HorizontalAlignment="Stretch"/>
+    <TextBox Text="只读内容，可选择复制" IsReadOnly="True" MaxWidth="420" HorizontalAlignment="Stretch"/>
+    <TextBox Text="多行内容&#10;回车继续编辑" AcceptsReturn="True" TextWrapping="Wrap" Height="100" MaxWidth="420" HorizontalAlignment="Stretch"/>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

@@ -1,0 +1,163 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StreamGeometry x:Key="One.SplitButton.Chevron">M0,0 L5,5 L10,0 L9,0 L5,4 L1,0 Z</StreamGeometry>
+    <ControlTheme TargetType="Button" x:Key="One.SplitButton.Part">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter
+                    Background="{TemplateBinding Background}"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    Foreground="{TemplateBinding Foreground}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    Name="PART_ContentPresenter"
+                    Padding="{TemplateBinding Padding}"
+                    RecognizesAccessKey="True"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        </Style>
+        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme TargetType="SplitButton" x:Key="{x:Type SplitButton}">
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Padding" Value="{DynamicResource One.Padding.Control}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        ClipToBounds="True"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Name="SplitButtonSurface"
+                        Padding="{TemplateBinding BorderThickness}">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <Button
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0"
+                                Command="{TemplateBinding Command}"
+                                CommandParameter="{TemplateBinding CommandParameter}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Focusable="False"
+                                FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                KeyboardNavigation.IsTabStop="False"
+                                MinHeight="0"
+                                MinWidth="0"
+                                Name="PART_PrimaryButton"
+                                Padding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding}"
+                                Theme="{StaticResource One.SplitButton.Part}"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Border
+                                Background="{DynamicResource One.InputLine}"
+                                Grid.Column="1"
+                                IsHitTestVisible="False"
+                                Margin="0,6"
+                                Name="SeparatorBorder"
+                                Width="1" />
+                            <Button
+                                AutomationProperties.Name="更多操作"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="0"
+                                Focusable="False"
+                                Foreground="{TemplateBinding Foreground}"
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                KeyboardNavigation.IsTabStop="False"
+                                MinHeight="0"
+                                MinWidth="0"
+                                Name="PART_SecondaryButton"
+                                Padding="0"
+                                Theme="{StaticResource One.SplitButton.Part}"
+                                VerticalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
+                                Width="{DynamicResource One.SplitButton.SecondaryWidth}">
+                                <PathIcon
+                                    Data="{StaticResource One.SplitButton.Chevron}"
+                                    Height="6"
+                                    Name="SplitButtonChevron"
+                                    Width="10" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <!--  Paint last: pressed/hovered edge buttons cannot cover the rounded stroke.  -->
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        IsHitTestVisible="False"
+                        Name="SplitButtonOutline" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:checked">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^.primary">
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^.primary:checked">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+        </Style>
+        <Style Selector="^.primary /template/ Border#SeparatorBorder">
+            <Setter Property="Background" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Opacity" Value="0.35" />
+        </Style>
+        <Style Selector="^.accent">
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^.accent:checked">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.AccentPressed}" />
+        </Style>
+        <Style Selector="^.accent /template/ Border#SeparatorBorder">
+            <Setter Property="Background" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="Opacity" Value="0.35" />
+        </Style>
+        <Style Selector="^:focus-visible">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+        </Style>
+        <Style Selector="^:disabled, ^:checked:disabled, ^.primary:disabled, ^.accent:disabled, ^.primary:checked:disabled, ^.accent:checked:disabled">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

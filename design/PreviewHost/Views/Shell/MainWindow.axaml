@@ -1,0 +1,126 @@
+<one:OneWindow
+    Height="900"
+    MinHeight="500"
+    MinWidth="640"
+    ThemeButtonScope="Application"
+    Title="TheOne · 控件库预览"
+    Width="1280"
+    styling:ControlSizing.Size="{Binding Size, Mode=TwoWay}"
+    styling:Motion.Enabled="{Binding MotionEnabled, Mode=TwoWay}"
+    x:Class="TheOne.DesignPreview.MainWindow"
+    x:DataType="local:GalleryViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <one:OneWindow.LeftContent>
+        <Button
+            AutomationProperties.Name="展开或折叠导航"
+            Classes="ghost small"
+            Command="{Binding ToggleNavigationCommand}"
+            Content="☰"
+            Name="NavigationToggle" />
+    </one:OneWindow.LeftContent>
+    <Grid ColumnDefinitions="256,*" Name="Shell">
+        <Border
+            Background="{DynamicResource One.Surface}"
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="0,0,1,0"
+            Name="Sidebar"
+            Padding="12,20">
+            <Grid RowDefinitions="Auto,*">
+                <TextBlock
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Margin="12,0,0,20"
+                    Text="THE ONE" />
+                <one:NavMenu
+                    ChildrenBinding="{Binding Entries}"
+                    ExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                    Grid.Row="1"
+                    IsCollapsed="{Binding EffectiveNavigationCollapsed}"
+                    IsGroupBinding="{Binding IsGroup}"
+                    ItemsSource="{Binding NavigationRoots}"
+                    Name="Navigation"
+                    SearchTextBinding="{Binding Title}"
+                    SelectedItem="{Binding SelectedNavigation, Mode=TwoWay}"
+                    ShowFilter="True">
+                    <one:NavMenu.IconTemplate>
+                        <DataTemplate>
+                            <Path
+                                Data="{Binding Icon}"
+                                Stretch="Uniform"
+                                Stroke="{Binding $parent[ContentPresenter].Foreground}"
+                                StrokeThickness="1.3" />
+                        </DataTemplate>
+                    </one:NavMenu.IconTemplate>
+                    <one:NavMenu.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                    </one:NavMenu.ContentTemplate>
+                </one:NavMenu>
+            </Grid>
+        </Border>
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+            <Border
+                BorderBrush="{DynamicResource One.Line}"
+                BorderThickness="0,0,0,1"
+                Padding="24,16">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="8">
+                        <TextBlock FontWeight="SemiBold" Text="{Binding NavigationTitle}" />
+                        <TextBox
+                            HorizontalAlignment="Left"
+                            MaxWidth="360"
+                            Name="Search"
+                            PlaceholderText="搜索控件名称或分类"
+                            Text="{Binding Search, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <ComboBox
+                            ItemsSource="{Binding Sizes}"
+                            Name="DensityPicker"
+                            SelectedItem="{Binding Size, Mode=TwoWay}"
+                            Width="110" />
+                        <ComboBox
+                            ItemsSource="{Binding Themes}"
+                            Name="ThemePicker"
+                            SelectedItem="{Binding Theme, Mode=TwoWay}"
+                            Width="110" />
+                        <CheckBox Content="动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <local:ControlGallery Grid.Row="1" Name="Gallery" />
+            <Border
+                Background="{DynamicResource One.Surface}"
+                BorderBrush="{DynamicResource One.Line}"
+                BorderThickness="1"
+                CornerRadius="12"
+                Grid.Row="1"
+                IsVisible="False"
+                Margin="24"
+                Name="SearchOverlay"
+                Padding="16">
+                <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedSearchResult, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:PreviewPageDescriptor">
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="{Binding Title}" />
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="{DynamicResource One.Muted}"
+                                    Text="{Binding Group}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+        </Grid>
+    </Grid>
+</one:OneWindow>

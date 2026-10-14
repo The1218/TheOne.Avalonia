@@ -1,0 +1,206 @@
+<UserControl
+    Name="FlyoutRoot"
+    x:Class="TheOne.DesignPreview.FlyoutDemoView"
+    x:DataType="local:FlyoutDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.note">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="Border.demo-region">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="18">
+        <StackPanel Spacing="6">
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="23  内容弹层 / FlyoutPresenter"
+                TextWrapping="Wrap" />
+            <TextBlock Classes="note" Text="内容自适应 · 三档密度 · 原生定位与焦点 · Esc 和点击外部关闭 · 长内容滚动" />
+        </StackPanel>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="编辑工作区 / 原生 Flyout" />
+                <WrapPanel>
+                    <StackPanel
+                        Margin="0,0,12,12"
+                        Spacing="6"
+                        Width="160">
+                        <TextBlock Text="弹出方向" />
+                        <ComboBox
+                            HorizontalAlignment="Stretch"
+                            Name="PlacementPicker"
+                            SelectedIndex="{Binding Placement, Mode=TwoWay}"
+                            SelectionChanged="OnOptionsChanged">
+                            <ComboBoxItem Content="下方 Bottom" />
+                            <ComboBoxItem Content="右侧 Right" />
+                            <ComboBoxItem Content="上方 Top" />
+                            <ComboBoxItem Content="左侧 Left" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel
+                        Margin="0,0,12,12"
+                        Spacing="6"
+                        Width="160">
+                        <TextBlock Text="弹层尺寸" />
+                        <ComboBox
+                            HorizontalAlignment="Stretch"
+                            Name="FlyoutSizePicker"
+                            SelectedIndex="{Binding Size, Mode=TwoWay}"
+                            SelectionChanged="OnOptionsChanged">
+                            <ComboBoxItem Content="继承全局" />
+                            <ComboBoxItem Content="small" />
+                            <ComboBoxItem Content="normal" />
+                            <ComboBoxItem Content="large" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel
+                        Margin="0,0,0,12"
+                        Spacing="6"
+                        Width="220">
+                        <TextBlock Text="显示方式" />
+                        <ComboBox
+                            HorizontalAlignment="Stretch"
+                            Name="ShowModePicker"
+                            SelectedIndex="{Binding ShowMode, Mode=TwoWay}"
+                            SelectionChanged="OnOptionsChanged">
+                            <ComboBoxItem Content="Standard / 聚焦内容" />
+                            <ComboBoxItem Content="Transient / 保留焦点" />
+                        </ComboBox>
+                    </StackPanel>
+                </WrapPanel>
+                <CheckBox
+                    Content="阻止外部关闭（仍可应用或取消）"
+                    IsChecked="{Binding PreventDismiss, Mode=TwoWay}"
+                    Name="PreventDismiss" />
+                <WrapPanel>
+                    <Button
+                        Classes="primary"
+                        Content="编辑工作区"
+                        Margin="0,0,12,8"
+                        Name="OpenEditor">
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel
+                                    DataContext="{Binding #FlyoutRoot.Model}"
+                                    Spacing="12"
+                                    Width="300"
+                                    x:DataType="local:FlyoutDemoViewModel">
+                                    <TextBlock FontWeight="SemiBold" Text="工作区设置" />
+                                    <TextBlock
+                                        Foreground="{DynamicResource One.Muted}"
+                                        Text="修改名称后应用，或取消本次编辑。"
+                                        TextWrapping="Wrap" />
+                                    <TextBox
+                                        AutomationProperties.Name="工作区名称"
+                                        Name="WorkspaceName"
+                                        PlaceholderText="工作区名称"
+                                        Text="{Binding Name, Mode=TwoWay}" />
+                                    <CheckBox
+                                        Content="通知工作区成员"
+                                        IsChecked="{Binding Notify, Mode=TwoWay}"
+                                        Name="NotifyMembers" />
+                                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                        <Button
+                                            Click="OnCancel"
+                                            Content="取消"
+                                            Grid.Column="1"
+                                            Name="CancelEdit" />
+                                        <Button
+                                            Classes="primary"
+                                            Click="OnApply"
+                                            Content="应用"
+                                            Grid.Column="2"
+                                            Name="ApplyEdit" />
+                                    </Grid>
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button
+                        Classes="ghost"
+                        Click="OnReset"
+                        Content="重置"
+                        Name="ResetFlyoutDemo" />
+                </WrapPanel>
+                <TextBlock
+                    Name="FlyoutStatus"
+                    Text="{Binding Status}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Classes="note"
+                    Name="FlyoutMetrics"
+                    Text="{Binding Metrics}" />
+            </StackPanel>
+        </Border>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="长列表 / 10,000 项" />
+                <TextBlock Classes="note" Text="列表使用固定高度的虚拟化视口。可滚动或跳到最后一项，实际容器数量会实时显示。" />
+                <Button
+                    Content="选择工作区成员"
+                    HorizontalAlignment="Left"
+                    Name="OpenList">
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel
+                                DataContext="{Binding #FlyoutRoot.Model}"
+                                Spacing="10"
+                                Width="300"
+                                x:DataType="local:FlyoutDemoViewModel">
+                                <TextBlock FontWeight="SemiBold" Text="工作区成员" />
+                                <ListBox
+                                    AutomationProperties.Name="一万条成员列表"
+                                    Height="248"
+                                    ItemsSource="{Binding Rows}"
+                                    Name="MemberList"
+                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    SelectionChanged="OnMemberChanged" />
+                                <TextBlock
+                                    Foreground="{DynamicResource One.Muted}"
+                                    Name="ListMetrics"
+                                    Text="{Binding ListMetrics}"
+                                    TextWrapping="Wrap" />
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Button
+                                        Click="OnJumpLast"
+                                        Content="跳到第 10,000 项"
+                                        Name="JumpLast" />
+                                    <Button
+                                        Classes="primary"
+                                        Click="OnConfirmMember"
+                                        Content="确定"
+                                        Grid.Column="1"
+                                        Name="ConfirmMember" />
+                                </Grid>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                <TextBlock
+                    Name="MemberStatus"
+                    Text="{Binding MemberStatus}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="静态外观 / 继承当前主题与尺寸" />
+                <FlyoutPresenter HorizontalAlignment="Left" Name="InlinePresenter">
+                    <StackPanel Spacing="8">
+                        <TextBlock FontWeight="SemiBold" Text="Still · 内容弹层" />
+                        <TextBlock Text="轻量表面、细边框、统一圆角。" />
+                    </StackPanel>
+                </FlyoutPresenter>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

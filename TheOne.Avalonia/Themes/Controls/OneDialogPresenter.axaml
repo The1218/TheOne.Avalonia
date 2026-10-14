@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:OneDialogPresenter}" TargetType="one:OneDialogPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" /><Setter Property="Padding" Value="24" /><Setter Property="FontSize" Value="14" />
+    <Setter Property="HorizontalAlignment" Value="Center" /><Setter Property="VerticalAlignment" Value="Center" /><Setter Property="Margin" Value="24" /><Setter Property="MinWidth" Value="280" /><Setter Property="MaxWidth" Value="640" /><Setter Property="Focusable" Value="True" />
+    <Setter Property="Template"><ControlTemplate>
+      <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+        <Grid RowDefinitions="Auto,*,Auto" RowSpacing="0">
+          <Grid Name="PART_Header" ColumnDefinitions="*,Auto" ColumnSpacing="12" Margin="0,0,0,20" IsVisible="False">
+            <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center" IsVisible="{TemplateBinding ShowTitle}" />
+            <Button Name="PART_CloseButton" Grid.Column="1" Classes="ghost" Padding="8" MinWidth="0" MinHeight="0" IsVisible="{TemplateBinding ShowCloseButton}" AutomationProperties.Name="关闭对话框" ToolTip.Tip="关闭对话框">
+              <PathIcon Width="12" Height="12" Data="M1,0 L6,5 L11,0 L12,1 L7,6 L12,11 L11,12 L6,7 L1,12 L0,11 L5,6 L0,1 Z" />
+            </Button>
+          </Grid>
+          <ScrollViewer Grid.Row="1" MaxHeight="480" HorizontalScrollBarVisibility="Disabled">
+            <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextBlock.TextWrapping="Wrap" />
+          </ScrollViewer>
+          <StackPanel Name="PART_Buttons" Grid.Row="2" IsVisible="{TemplateBinding ShowButtons}" Margin="0,20,0,0" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
+            <Button Name="PART_CancelButton" Content="取消" IsVisible="False" />
+            <Button Name="PART_NoButton" Content="否" IsVisible="False" />
+            <Button Name="PART_PrimaryButton" Content="确定" Classes="primary" />
+          </StackPanel>
+        </Grid>
+      </Border>
+    </ControlTemplate></Setter>
+    <Style Selector="^:header /template/ Grid#PART_Header"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:yesno /template/ Button#PART_NoButton"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:yesno /template/ Button#PART_PrimaryButton"><Setter Property="Content" Value="是" /></Style>
+    <Style Selector="^:cancel /template/ Button#PART_CancelButton"><Setter Property="IsVisible" Value="True" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

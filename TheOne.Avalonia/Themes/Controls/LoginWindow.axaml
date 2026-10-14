@@ -1,0 +1,54 @@
+<!-- Native Window content and visual-layer contract; authentication content belongs to the caller. -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls"
+                    xmlns:n="using:Avalonia.Controls.Notifications"
+                    x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:LoginWindow}" TargetType="one:LoginWindow">
+    <Setter Property="Title" Value="登录" />
+    <Setter Property="Width" Value="440" />
+    <Setter Property="Height" Value="540" />
+    <Setter Property="MinWidth" Value="320" />
+    <Setter Property="MinHeight" Value="240" />
+    <Setter Property="CanResize" Value="False" />
+    <Setter Property="CanMaximize" Value="False" />
+    <Setter Property="WindowStartupLocation" Value="CenterScreen" />
+    <Setter Property="Background" Value="{DynamicResource One.Canvas}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Padding" Value="24" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
+          <Border Background="{TemplateBinding Background}" IsHitTestVisible="False" />
+          <VisualLayerManager Name="PART_VisualLayerManager">
+            <Border BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+              <Grid>
+                <ContentPresenter Name="PART_ContentPresenter"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                <n:WindowNotificationManager Name="PART_Notifications" Margin="16" MaxItems="4" Position="TopRight" />
+                <n:WindowNotificationManager Name="PART_Toasts" Margin="16" MaxItems="3" Position="TopCenter" />
+                <Panel Name="PART_DialogShield" Background="#66000000" IsVisible="False" />
+                <Panel Name="PART_DialogLayer" IsVisible="False" />
+              </Grid>
+            </Border>
+          </VisualLayerManager>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:dialog-open /template/ Panel#PART_DialogShield, ^:dialog-open /template/ Panel#PART_DialogLayer">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:dialog-open /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="IsEnabled" Value="False" />
+    </Style>
+  </ControlTheme>
+</ResourceDictionary>

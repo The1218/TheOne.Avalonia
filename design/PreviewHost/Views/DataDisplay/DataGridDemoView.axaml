@@ -1,0 +1,176 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.DataGridDemoView"
+    x:DataType="local:DataGridDemoViewModel"
+    VerticalContentAlignment="Top"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid
+        MinHeight="540"
+        RowDefinitions="Auto,Auto,*,Auto,Auto"
+        RowSpacing="14">
+        <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="5">
+                <TextBlock FontWeight="SemiBold" Text="19  数据表格 / 一万条库存" />
+                <TextBlock
+                    FontSize="12"
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="表头与内容居中 · 列宽自适应 · 原生按需显示与回收" />
+            </StackPanel>
+            <Border
+                Background="{DynamicResource One.AccentSoft}"
+                CornerRadius="8"
+                Grid.Column="1"
+                Padding="12,6"
+                VerticalAlignment="Top">
+                <TextBlock
+                    FontSize="12"
+                    Foreground="{DynamicResource One.Accent}"
+                    Text="{Binding CountLabel}" />
+            </Border>
+        </Grid>
+
+        <WrapPanel Grid.Row="1">
+            <TextBox
+                Margin="0,0,8,8"
+                Name="GridFilter"
+                PlaceholderText="搜索设备、仓库或编号"
+                Text="{Binding FilterText}"
+                Width="210" />
+            <Button
+                Command="{Binding FilterCommand}"
+                Content="筛选"
+                IsEnabled="{Binding View.CanFilter}"
+                Margin="0,0,8,8"
+                Name="GridApplyFilter" />
+            <Button
+                Classes="ghost"
+                Command="{Binding ResetCommand}"
+                Content="重置"
+                IsEnabled="{Binding View.CanFilter}"
+                Margin="0,0,16,8" />
+            <Button
+                Classes="ghost"
+                Click="ClearColumnFilters"
+                Content="清除列筛选"
+                Margin="0,0,8,8"
+                Name="GridClearColumnFilters" />
+            <Button
+                Classes="ghost"
+                Command="{Binding FirstCommand}"
+                Content="首行"
+                Margin="0,0,8,8"
+                Name="GridFirst" />
+            <Button
+                Classes="ghost"
+                Command="{Binding MiddleCommand}"
+                Content="中间"
+                Margin="0,0,8,8"
+                Name="GridMiddle" />
+            <Button
+                Classes="ghost"
+                Command="{Binding LastCommand}"
+                Content="末行"
+                Margin="0,0,16,8"
+                Name="GridLast" />
+            <StackPanel
+                Margin="0,0,12,8"
+                Orientation="Horizontal"
+                Spacing="6">
+                <TextBlock Text="右侧冻结" VerticalAlignment="Center" />
+                <NumericUpDown
+                    FormatString="0"
+                    Increment="1"
+                    Maximum="3"
+                    Minimum="0"
+                    Name="GridFrozenRightCount"
+                    Value="{Binding FrozenRightCount, Mode=TwoWay}"
+                    Width="90" />
+            </StackPanel>
+            <CheckBox
+                Content="显示统计"
+                IsChecked="{Binding ShowSummary, Mode=TwoWay}"
+                Margin="0,0,12,8" />
+            <CheckBox
+                Content="只读"
+                IsChecked="{Binding IsReadOnly}"
+                Margin="0,0,12,8" />
+            <CheckBox
+                Content="启用"
+                IsChecked="{Binding IsInteractive}"
+                Margin="0,0,0,8" />
+        </WrapPanel>
+        <DataGrid
+            AutoGenerateColumns="False"
+            CanUserReorderColumns="True"
+            CanUserResizeColumns="True"
+            CanUserSortColumns="True"
+            FrozenColumnCount="1"
+            Grid.Row="2"
+            IsEnabled="{Binding IsInteractive}"
+            IsReadOnly="{Binding IsReadOnly}"
+            ItemsSource="{Binding View}"
+            MaxColumnWidth="320"
+            MinHeight="300"
+            MaxHeight="520"
+            Name="InventoryGrid"
+            SelectedItem="{Binding Selected, Mode=TwoWay}"
+            one:DataGridFeatures.FrozenRightColumnCount="{Binding FrozenRightCount}"
+            one:DataGridFeatures.ShowColumnFilters="True"
+            one:DataGridFeatures.ShowSummaryRow="{Binding ShowSummary}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Binding="{Binding Id}"
+                    Header="编号"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding Name,
+                                              Mode=TwoWay}"
+                    Header="设备名称" />
+                <DataGridTextColumn
+                    Binding="{Binding Warehouse, Mode=TwoWay}"
+                    Header="仓库" />
+                <DataGridTextColumn
+                    Binding="{Binding Quantity, Mode=TwoWay}"
+                    Header="数量"
+                    one:DataGridColumnOptions.SummaryEnabled="True"
+                    one:DataGridColumnOptions.SummaryFormat="N0"
+                    one:DataGridColumnOptions.SummaryKind="Sum" />
+                <DataGridTextColumn
+                    Binding="{Binding Price, Mode=TwoWay, StringFormat='{}{0:N2}'}"
+                    Header="单价 / 元"
+                    one:DataGridColumnOptions.SummaryEnabled="True"
+                    one:DataGridColumnOptions.SummaryFormat="0.00"
+                    one:DataGridColumnOptions.SummaryKind="Average" />
+                <DataGridCheckBoxColumn
+                    Binding="{Binding Enabled, Mode=TwoWay}"
+                    Header="启用" />
+                <DataGridTextColumn
+                    Binding="{Binding Notes, Mode=TwoWay}"
+                    Header="备注" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Spacing="5">
+            <TextBlock
+                FontSize="12"
+                Foreground="{DynamicResource One.Accent}"
+                Name="GridMetrics"
+                Text="{Binding Metrics}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                FontSize="12"
+                Foreground="{DynamicResource One.Muted}"
+                Text="{Binding SelectedLabel}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                FontSize="12"
+                Foreground="{DynamicResource One.Muted}"
+                Text="点击漏斗设置列条件，列之间为 AND；单击表头排序；拖动表头或列边界；F2 编辑，Enter 提交，Esc 撤销；名称不能为空。"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <Expander Grid.Row="4" Header="集合绑定与单元格操作 / 千条数据" IsExpanded="False">
+            <local:DataGridBindingDemoView />
+        </Expander>
+    </Grid>
+</UserControl>

@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DataGridPackageConsumer" xmlns:one="using:TheOne.Avalonia.Controls"
+             x:Class="TheOne.DataGridPackageConsumer.ConsumerView" x:DataType="local:Inventory">
+  <DataGrid Name="Grid" ItemsSource="{Binding View}" AutoGenerateColumns="False" MaxColumnWidth="320" CanUserReorderColumns="True" CanUserResizeColumns="True"
+            FrozenColumnCount="1" one:DataGridFeatures.FrozenRightColumnCount="2"
+            one:DataGridFeatures.ShowColumnFilters="True" one:DataGridFeatures.ShowSummaryRow="True">
+    <DataGrid.Columns>
+      <DataGridTextColumn Header="编号" Binding="{Binding Id}" Width="80" IsReadOnly="True" />
+      <DataGridTextColumn Header="名称" Binding="{Binding Name}" SortMemberPath="Name" Width="190" />
+      <DataGridTextColumn Header="分类" Binding="{Binding Category}" SortMemberPath="Category" Width="140" />
+      <DataGridTextColumn Header="数量" Binding="{Binding Quantity, Mode=TwoWay}" SortMemberPath="Quantity" Width="120"
+                          one:DataGridColumnOptions.SummaryEnabled="True" one:DataGridColumnOptions.SummaryKind="Sum" />
+      <DataGridTextColumn Header="单价" Binding="{Binding Price}" SortMemberPath="Price" Width="120"
+                          one:DataGridColumnOptions.SummaryEnabled="True" one:DataGridColumnOptions.SummaryKind="Average" />
+      <DataGridTextColumn Header="最大单价" Binding="{Binding Price}" Width="120"
+                          one:DataGridColumnOptions.SummaryEnabled="True" one:DataGridColumnOptions.SummaryKind="Max" />
+      <DataGridTextColumn Header="有效数量" Binding="{Binding Quantity}" Width="120"
+                          one:DataGridColumnOptions.SummaryEnabled="True" one:DataGridColumnOptions.SummaryKind="Count" />
+    </DataGrid.Columns>
+  </DataGrid>
+</UserControl>

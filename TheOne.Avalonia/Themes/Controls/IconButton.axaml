@@ -1,0 +1,23 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:IconButton}" TargetType="one:IconButton" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter Name="PART_ContentPresenter" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+          <StackPanel Orientation="Horizontal" Spacing="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSpacing}">
+            <ContentPresenter Name="PART_IconPresenter" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasIcon}" Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Icon}" ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconTemplate}" Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" VerticalAlignment="Center">
+              <ContentPresenter.DataTemplates>
+                <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry"><PathIcon Data="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" /></DataTemplate>
+              </ContentPresenter.DataTemplates>
+            </ContentPresenter>
+            <ContentPresenter Name="PART_LabelPresenter" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasLabel}" Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Content}" ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center" />
+          </StackPanel>
+        </ContentPresenter>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:icon-only"><Setter Property="Padding" Value="0" /><Setter Property="MinWidth" Value="36" /></Style>
+    <Style Selector="^.one-small:icon-only"><Setter Property="MinWidth" Value="30" /></Style>
+    <Style Selector="^.one-large:icon-only"><Setter Property="MinWidth" Value="44" /></Style>
+    <Style Selector="^.one-small"><Setter Property="IconSize" Value="14" /><Setter Property="IconSpacing" Value="6" /></Style>
+    <Style Selector="^.one-large"><Setter Property="IconSize" Value="20" /><Setter Property="IconSpacing" Value="10" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

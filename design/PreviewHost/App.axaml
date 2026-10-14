@@ -1,0 +1,10 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             xmlns:one="using:TheOne.Avalonia.Themes"
+             x:Class="TheOne.DesignPreview.App">
+  <Application.Styles>
+    <one:OneTheme />
+    <material:MaterialIconStyles />
+  </Application.Styles>
+</Application>

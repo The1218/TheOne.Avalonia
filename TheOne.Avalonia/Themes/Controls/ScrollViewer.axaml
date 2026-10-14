@@ -1,0 +1,65 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <ControlTheme TargetType="ScrollViewer" x:Key="{x:Type ScrollViewer}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+                    <ScrollContentPresenter
+                        Background="{TemplateBinding Background}"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        HorizontalSnapPointsAlignment="{TemplateBinding HorizontalSnapPointsAlignment}"
+                        HorizontalSnapPointsType="{TemplateBinding HorizontalSnapPointsType}"
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        ScrollViewer.IsScrollInertiaEnabled="{TemplateBinding IsScrollInertiaEnabled}"
+                        VerticalSnapPointsAlignment="{TemplateBinding VerticalSnapPointsAlignment}"
+                        VerticalSnapPointsType="{TemplateBinding VerticalSnapPointsType}">
+                        <ScrollContentPresenter.GestureRecognizers>
+                            <ScrollGestureRecognizer
+                                CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}"
+                                CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}"
+                                Extent="{Binding Extent, ElementName=PART_ContentPresenter}"
+                                IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_ContentPresenter}"
+                                Offset="{Binding Offset, ElementName=PART_ContentPresenter}"
+                                Viewport="{Binding Viewport, ElementName=PART_ContentPresenter}" />
+                        </ScrollContentPresenter.GestureRecognizers>
+                    </ScrollContentPresenter>
+                    <ScrollBar
+                        Grid.Row="1"
+                        Name="PART_HorizontalScrollBar"
+                        Orientation="Horizontal" />
+                    <ScrollBar
+                        Grid.Column="1"
+                        Name="PART_VerticalScrollBar"
+                        Orientation="Vertical" />
+                    <Panel
+                        Background="{DynamicResource One.Surface}"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Opacity="0"
+                        x:Name="PART_ScrollBarsSeparator">
+                        <Panel.Transitions>
+                            <Transitions>
+                                <DoubleTransition Duration="0:0:0.1" Property="Opacity" />
+                            </Transitions>
+                        </Panel.Transitions>
+                    </Panel>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[IsExpanded=true] /template/ Panel#PART_ScrollBarsSeparator">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+        <Style Selector="^[AllowAutoHide=True] /template/ ScrollContentPresenter#PART_ContentPresenter">
+            <Setter Property="Grid.ColumnSpan" Value="2" />
+            <Setter Property="Grid.RowSpan" Value="2" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

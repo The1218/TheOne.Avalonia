@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.RefreshDemoView" x:CompileBindings="True" x:DataType="local:RefreshDemoViewModel">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.helper"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
+    <Style Selector="ListBox#RefreshList ListBoxItem"><Setter Property="HorizontalContentAlignment" Value="Stretch" /></Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="6">
+      <TextBlock Text="Refresh · 下拉刷新" FontSize="22" FontWeight="SemiBold" />
+      <TextBlock Classes="helper" Text="在列表顶部向下拖动，释放后刷新。1,000 条数据按需显示，支持手动刷新、完成与失败重试。" />
+    </StackPanel>
+    <WrapPanel>
+      <CheckBox Name="MousePull" IsChecked="{Binding MousePull, Mode=TwoWay}" Content="鼠标下拉"  Margin="0,0,16,8" />
+      <CheckBox Name="ManualComplete" IsChecked="{Binding Manual, Mode=TwoWay}" Content="手动完成" Margin="0,0,16,8" />
+      <CheckBox Name="FailNextRefresh" IsChecked="{Binding Fail, Mode=TwoWay}" Content="下次模拟失败" Margin="0,0,16,8" />
+      <CheckBox Name="EnableRefresh" IsChecked="{Binding Enabled, Mode=TwoWay}" Content="启用刷新区域"  Margin="0,0,16,8" />
+      <CheckBox Name="RefreshMotionEnabled" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" Content="刷新动效" Margin="0,0,16,8" />
+    </WrapPanel>
+    <Grid ColumnDefinitions="Auto,*,Auto">
+      <Button Name="RequestRefresh" Content="刷新数据" Classes="primary" Click="OnRequestRefresh" />
+      <TextBlock Name="RefreshStateLabel" Text="{Binding State}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" />
+      <Button Name="CompleteRefresh" Content="完成刷新" Grid.Column="2" Click="OnCompleteRefresh" IsEnabled="False" />
+    </Grid>
+    <RefreshContainer Name="RefreshSample" IsEnabled="{Binding Enabled}" IsMouseEnabled="{Binding MousePull}" Height="400" RefreshRequested="OnRefreshRequested" AutomationProperties.Name="千条数据下拉刷新区域">
+      <ListBox Name="RefreshList" ItemsSource="{Binding Rows}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" BorderThickness="0" CornerRadius="0" ScrollViewer.IsScrollChainingEnabled="False" AutomationProperties.Name="刷新数据列表">
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="local:RefreshRow">
+            <Grid ColumnDefinitions="60,*,Auto" ColumnSpacing="12">
+              <TextBlock Text="{Binding Number, StringFormat='{}{0:0000}'}" Foreground="{DynamicResource One.Muted}" VerticalAlignment="Center" />
+              <TextBlock Grid.Column="1" Name="RefreshRowTitle" Text="{Binding Title}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+              <TextBlock Grid.Column="2" Text="{Binding Revision, StringFormat='第 {0} 次更新'}" Foreground="{DynamicResource One.Muted}" VerticalAlignment="Center" />
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </RefreshContainer>
+    <WrapPanel>
+      <Button Name="FirstRefreshRow" Content="回到顶部" Click="OnFirstRow" Margin="0,0,8,8" />
+      <Button Name="LastRefreshRow" Content="第 1,000 条" Click="OnLastRow" Margin="0,0,8,8" />
+      <Button Name="ResetRefreshDemo" Content="重置" Click="OnReset" Margin="0,0,8,8" />
+    </WrapPanel>
+    <TextBlock Name="RefreshMetrics" Text="{Binding Metrics}" Classes="helper" />
+    <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="16">
+      <StackPanel Spacing="6">
+        <TextBlock Name="RefreshStatus" Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock Classes="helper" Text="自动刷新约 1 秒完成。开启手动完成，在刷新中反复切换刷新动效；关闭后保留下拉和状态提示，重新开启恢复旋转。通过全局工具栏切换尺寸、明暗主题和动效；重置恢复全局动效设置。" />
+      </StackPanel>
+    </Border>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,9 @@
+**/bin/
+**/obj/
+.preview/
+.DS_Store
+.idea/
+.vs/
+**/__pycache__/
+*.user
+*.suo

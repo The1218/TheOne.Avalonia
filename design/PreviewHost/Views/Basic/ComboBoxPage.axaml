@@ -1,0 +1,12 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ComboBoxPage" x:DataType="local:ComboBoxPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="ComboBox" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="已选值 / 占位提示 / 禁用 · 1,000 项按需生成" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><ComboBox Name="ControlSample" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Width="260" Margin="0,0,12,12" /><ComboBox ItemsSource="{Binding Items}" PlaceholderText="请选择工作区" Width="260" Margin="0,0,12,12" /><ComboBox ItemsSource="{Binding Items}" SelectedIndex="1" IsEnabled="False" Width="260" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+  <Button Content="第 1,000 项" Command="{Binding LastCommand}" HorizontalAlignment="Left" />
+ </StackPanel>
+</local:BasicControlPage>

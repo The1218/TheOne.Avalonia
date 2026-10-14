@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.NativeAotSmoke" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:styling="using:TheOne.Avalonia.Styling"
+             x:Class="TheOne.NativeAotSmoke.AuditView" Name="AuditRoot" x:DataType="local:AuditModel" x:CompileBindings="True"
+   >
+  <UserControl.Styles>
+    <Style Selector=":is(one|ChartBase).consumer-chart" x:DataType="local:AuditModel">
+      <Setter Property="Height" Value="220" />
+      <Setter Property="Title" Value="Compiled consumer chart" />
+      <Setter Property="SeriesSource" Value="{Binding ChartSeries}" />
+      <Setter Property="SelectedSeriesIndex" Value="{Binding ChartSeriesIndex, Mode=TwoWay}" />
+      <Setter Property="SelectedIndex" Value="{Binding ChartPointIndex, Mode=TwoWay}" />
+      <Setter Property="Viewport" Value="{Binding ChartViewport, Mode=TwoWay}" />
+      <Setter Property="NavigationAxes" Value="{Binding ChartAxes}" />
+      <Setter Property="IsZoomEnabled" Value="True" />
+      <Setter Property="IsPanEnabled" Value="True" />
+      <Setter Property="SamplingMode" Value="{Binding ChartSamplingMode}" />
+      <Setter Property="SamplingPointBudget" Value="{Binding ChartSamplingBudget}" />
+      <Setter Property="SecondaryUnit" Value="人" />
+      <Setter Property="SecondaryValueFormat" Value="0" />
+      <Setter Property="SecondaryYAxisTitle" Value="{Binding ChartSecondaryTitle}" />
+      <Setter Property="ShowCrosshair" Value="{Binding ChartCrosshair}" />
+      <Setter Property="TooltipMode" Value="{Binding ChartTooltipMode}" />
+      <Setter Property="IsLegendInteractive" Value="{Binding ChartLegendInteractive}" />
+      <Setter Property="IsSmooth" Value="{Binding ChartSmooth}" />
+      <Setter Property="IsAnimationEnabled" Value="{Binding ChartAnimateUpdates}" />
+      <Setter Property="AnimationDuration" Value="{Binding ChartAnimationDuration}" />
+    </Style>
+  </UserControl.Styles>
+  <Grid ColumnDefinitions="*,*" ColumnSpacing="16" Margin="16">
+    <StackPanel Spacing="8">
+      <TextBox Name="Editor" Text="{Binding Draft, Mode=TwoWay}" Classes="clearButton" />
+      <WrapPanel>
+        <Button Name="Action" Content="Apply" Command="{Binding ApplyCommand}" />
+        <RepeatButton Content="Repeat" Command="{Binding ApplyCommand}" />
+        <ToggleButton Content="Toggle" IsChecked="{Binding Selected, Mode=TwoWay}" />
+        <SplitButton Name="Split" Content="Split" Command="{Binding ApplyCommand}"><SplitButton.Flyout><Flyout><TextBlock Text="{Binding Draft}" /></Flyout></SplitButton.Flyout></SplitButton>
+        <ToggleSplitButton Content="Toggle split" IsChecked="{Binding Selected, Mode=TwoWay}" />
+      </WrapPanel>
+      <WrapPanel><CheckBox Name="Check" Content="Checked" IsChecked="{Binding Selected, Mode=TwoWay}" /><RadioButton Content="Radio" IsChecked="{Binding Selected}" /><ToggleSwitch Content="Switch" IsChecked="{Binding Selected, Mode=TwoWay}" /></WrapPanel>
+      <NumericUpDown Name="Number" Value="{Binding Number, Mode=TwoWay}" />
+      <Slider Name="Range" Value="{Binding Range, Mode=TwoWay}" />
+      <ProgressBar Name="Progress" Value="{Binding Range}" ShowProgressText="True" />
+      <ComboBox Name="Choices" ItemsSource="{Binding Rows}" SelectedItem="{Binding Choice, Mode=TwoWay}"><ComboBox.ItemTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+      <AutoCompleteBox Name="Suggestions" ItemsSource="{Binding Suggestions}" Text="{Binding Draft, Mode=TwoWay}" />
+      <CalendarDatePicker Name="Date" SelectedDate="{Binding Date, Mode=TwoWay}" one:CalendarOptions.Format="yyyy-MM-dd HH:mm" one:CalendarOptions.DisplayStyle="DateTime" one:CalendarOptions.Time="{Binding Time, Mode=TwoWay}" />
+      <DatePicker Name="DateParts" SelectedDate="{Binding OffsetDate, Mode=TwoWay}" />
+      <TimePicker Name="TimeParts" SelectedTime="{Binding Time, Mode=TwoWay}" />
+      <Label Content="Editor" Target="{Binding #Editor}" />
+      <SelectableTextBlock Name="Selectable" Text="{Binding Draft}" />
+      <Separator />
+      <Expander Name="Reveal" Header="Expand" IsExpanded="{Binding Expanded, Mode=TwoWay}"><TextBlock Text="{Binding Draft}" /></Expander>
+      <SplitView Name="Pane" IsPaneOpen="{Binding Expanded, Mode=TwoWay}" DisplayMode="Inline" OpenPaneLength="100" Height="80"><SplitView.Pane><TextBlock Text="Pane" /></SplitView.Pane><TextBlock Text="Content" /></SplitView>
+      <Grid Height="50" ColumnDefinitions="*,6,*"><Border Background="{DynamicResource One.Subtle}" /><GridSplitter Grid.Column="1" ResizeDirection="Columns" /><Border Grid.Column="2" Background="{DynamicResource One.AccentSoft}" /></Grid>
+      <TransitioningContentControl Name="Transition" Content="{Binding Page}" Height="60"><TransitioningContentControl.ContentTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></TransitioningContentControl.ContentTemplate></TransitioningContentControl>
+      <Button Name="FlyoutButton" Content="Flyout"><Button.Flyout><Flyout><TextBlock Text="{Binding Draft}" /></Flyout></Button.Flyout></Button>
+    </StackPanel>
+    <StackPanel Grid.Column="1" Spacing="8">
+      <Menu Name="Commands"><MenuItem Header="File"><MenuItem Header="Apply" Command="{Binding ApplyCommand}" /><MenuItem Header="Selected" ToggleType="CheckBox" IsChecked="{Binding Selected, Mode=TwoWay}" /></MenuItem></Menu>
+      <ListBox Name="Records" ItemsSource="{Binding Rows}" SelectedItem="{Binding Choice, Mode=TwoWay}" Height="120"><ListBox.ItemTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></ListBox.ItemTemplate><ListBox.ContextMenu><ContextMenu><MenuItem Header="Apply" Command="{Binding ApplyCommand}" /></ContextMenu></ListBox.ContextMenu></ListBox>
+      <TreeView Name="Tree" ItemsSource="{Binding Roots}" Height="120"><TreeView.ItemTemplate><TreeDataTemplate x:DataType="local:AuditRow" ItemsSource="{Binding Children}"><TextBlock Text="{Binding Caption}" /></TreeDataTemplate></TreeView.ItemTemplate><TreeView.Styles><Style Selector="TreeViewItem" x:DataType="local:AuditRow"><Setter Property="IsExpanded" Value="{Binding Expanded, Mode=TwoWay}" /></Style></TreeView.Styles></TreeView>
+      <TabControl Name="Tabs" Classes="card" ItemsSource="{Binding Rows}" Height="110" one:TabFeatures.CanClose="True" one:TabFeatures.CanReorder="True"><TabControl.ItemTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></TabControl.ItemTemplate><TabControl.ContentTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></TabControl.ContentTemplate></TabControl>
+      <TabStrip Name="Strip" ItemsSource="{Binding Suggestions}" Height="44" />
+      <Carousel Name="Carousel" ItemsSource="{Binding Rows}" Height="60"><Carousel.ItemTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></Carousel.ItemTemplate></Carousel>
+      <RefreshContainer Name="Refresh" Height="100"><ListBox ItemsSource="{Binding Rows}" /></RefreshContainer>
+      <ItemsControl Name="Items" ItemsSource="{Binding Rows}" Height="60"><ItemsControl.ItemTemplate><DataTemplate x:DataType="local:AuditRow"><TextBlock Text="{Binding Caption}" /></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+      <DataGrid Name="Table" ItemsSource="{Binding Rows}" AutoGenerateColumns="False" Height="180" MaxColumnWidth="240"><DataGrid.Columns>
+        <DataGridTextColumn Header="Caption" Binding="{Binding Caption, Mode=TwoWay}" />
+        <DataGridCheckBoxColumn Header="Expanded" Binding="{Binding Expanded, Mode=TwoWay}" />
+      </DataGrid.Columns></DataGrid>
+      <ComboBox Name="ConsumerSeriesAxis" ItemsSource="{Binding ChartAxisOptions}" SelectedItem="{Binding ChartSeries[1].YAxis, Mode=TwoWay}" />
+      <ContentControl Name="ConsumerChartHost" Content="{Binding #AuditRoot.CurrentChart}" />
+      <TextBlock Name="ConsumerHoverCount" Text="{Binding #AuditRoot.CurrentChart.HoveredPoints.Count, StringFormat='Hover models: {0}'}" />
+      <one:GaugeChart Name="ConsumerGauge" Height="140" Title="Compiled gauge" Value="{Binding Range}" Unit="%" ShowGaugeNeedle="{Binding ChartGaugeNeedle}" ShowGaugeTicks="{Binding ChartGaugeTicks}" />
+    </StackPanel>
+  </Grid>
+</UserControl>

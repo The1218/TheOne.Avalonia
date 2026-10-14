@@ -1,0 +1,12 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.AutoCompleteBoxPage" x:DataType="local:AutoCompleteBoxPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="AutoCompleteBox" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="可编辑建议 / 占位提示 / 禁用 · 1,000 项建议" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><AutoCompleteBox Name="ControlSample" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /><AutoCompleteBox ItemsSource="{Binding Items}" PlaceholderText="输入工作区名称" MaxDropDownHeight="260" Width="260" Margin="0,0,12,12" /><AutoCompleteBox Text="禁用自动完成" IsEnabled="False" Width="260" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+  <Button Content="第 1,000 项" Command="{Binding LastCommand}" HorizontalAlignment="Left" />
+ </StackPanel>
+</local:BasicControlPage>

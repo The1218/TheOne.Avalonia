@@ -1,0 +1,9 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ToolTipPage" x:DataType="local:ToolTipPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="ToolTip" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}"><Button Name="ControlSample" Content="悬停查看提示" ToolTip.Tip="{Binding Text}" HorizontalAlignment="Left" /></StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

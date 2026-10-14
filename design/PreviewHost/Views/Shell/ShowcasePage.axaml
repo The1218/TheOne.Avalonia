@@ -1,0 +1,30 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.ShowcasePage"
+    x:DataType="local:PreviewPageDescriptor"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="Border.section">
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="24">
+        <StackPanel Spacing="8">
+            <TextBlock
+                FontSize="28"
+                FontWeight="SemiBold"
+                Text="{Binding Title}" />
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                Text="同类控件集中对比 · 点击名称跳到对应示例 · 顶部可切换主题、尺寸和动效"
+                TextWrapping="Wrap" />
+            <WrapPanel Name="SectionLinks" />
+        </StackPanel>
+        <StackPanel Name="Sections" Spacing="24" />
+    </StackPanel>
+</UserControl>

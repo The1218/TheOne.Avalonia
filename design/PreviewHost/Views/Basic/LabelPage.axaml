@@ -1,0 +1,14 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.LabelPage" x:DataType="local:LabelPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="Label" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="字段标题 / 辅助说明 / 禁用 · 点击字段标题聚焦输入框" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <Label Name="ControlSample" Content="工作区名称" Target="{Binding #LabelInput}"/>
+    <TextBox Name="LabelInput" Text="{Binding Text, Mode=TwoWay}" MaxWidth="420"/>
+    <Label Content="字段说明 · 可使用内容模板" Foreground="{DynamicResource One.Muted}"/>
+    <Label IsEnabled="False" Content="禁用标签"/>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

@@ -1,0 +1,11 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ToggleSwitchPage" x:DataType="local:ToggleSwitchPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="ToggleSwitch" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="关闭 / 开启 / 禁用" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><ToggleSwitch Name="ControlSample" Content="自动同步" IsChecked="{Binding Checked, Mode=TwoWay}" Margin="0,0,12,12" /><ToggleSwitch Content="已开启" IsChecked="True" Margin="0,0,12,12" /><ToggleSwitch Content="禁用开关" IsChecked="True" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

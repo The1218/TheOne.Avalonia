@@ -1,0 +1,89 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:InfoCard}" TargetType="one:InfoCard">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="HeaderBackground" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="FooterBackground" Value="{DynamicResource One.InfoCard.Footer}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+    <Setter Property="Padding" Value="20" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="HeaderFontSize" Value="16" />
+    <Setter Property="HeaderSpacing" Value="12" />
+    <Setter Property="HeaderIconSize" Value="18" />
+    <Setter Property="HeaderContentSpacing" Value="10" />
+    <Setter Property="FooterSpacing" Value="12" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                  ClipToBounds="True">
+            <Grid Name="PART_Layout" RowDefinitions="Auto,*" RowSpacing="0">
+              <Border Name="PART_HeaderHost" IsVisible="False" Background="{TemplateBinding HeaderBackground}" Padding="{TemplateBinding HeaderPadding}">
+                <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto">
+                  <ContentPresenter Name="PART_HeaderIconPresenter" IsVisible="False"
+                                    Width="{TemplateBinding HeaderIconSize}" Height="{TemplateBinding HeaderIconSize}" VerticalAlignment="Center"
+                                    Content="{TemplateBinding HeaderIcon}" ContentTemplate="{TemplateBinding HeaderIconTemplate}"
+                                    Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding HeaderIconSize}"
+                                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+                  <Border Name="PART_HeaderIconGap" Grid.Column="1" IsVisible="False" Width="{TemplateBinding HeaderContentSpacing}" />
+                  <ContentPresenter Name="PART_HeaderPresenter" Grid.Column="2" IsVisible="False"
+                                    Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding HeaderFontSize}" FontWeight="SemiBold"
+                                    HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TextBlock.TextWrapping="Wrap" />
+                  <Border Name="PART_HeaderActionsGap" Grid.Column="3" IsVisible="False" Width="{TemplateBinding HeaderContentSpacing}" />
+                  <ContentPresenter Name="PART_HeaderActionsPresenter" Grid.Column="4" IsVisible="False"
+                                    Content="{TemplateBinding HeaderActions}" ContentTemplate="{TemplateBinding HeaderActionsTemplate}"
+                                    Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}"
+                                    HorizontalContentAlignment="Right" VerticalContentAlignment="Center" />
+                </Grid>
+              </Border>
+              <Grid Name="PART_ContentGrid" Grid.Row="1" RowDefinitions="Auto,*,Auto,Auto">
+                <Border Name="PART_HeaderGap" IsVisible="False">
+                  <Border Name="PART_HeaderSeparator" Height="1" IsHitTestVisible="False"
+                          Background="{DynamicResource One.Line}" IsVisible="{TemplateBinding ShowHeaderSeparator}" />
+                </Border>
+                <Border Name="PART_ContentHost" Grid.Row="1" IsVisible="False" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                  <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                TextBlock.TextWrapping="Wrap" />
+                </Border>
+                <Border Name="PART_FooterGap" Grid.Row="2" IsVisible="False">
+                  <Border Name="PART_FooterSeparator" Height="1" IsHitTestVisible="False"
+                          Background="{DynamicResource One.Line}" IsVisible="{TemplateBinding ShowFooterSeparator}" />
+                </Border>
+                <Border Name="PART_FooterHost" Grid.Row="3" IsVisible="False" Background="{TemplateBinding FooterBackground}" Padding="{TemplateBinding FooterPadding}">
+                  <ContentPresenter Name="PART_FooterPresenter" IsVisible="False"
+                                Content="{TemplateBinding Footer}" ContentTemplate="{TemplateBinding FooterTemplate}"
+                                Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" TextBlock.TextWrapping="Wrap" />
+                </Border>
+              </Grid>
+            </Grid>
+          </Border>
+          <Border Name="PART_Outline" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{TemplateBinding CornerRadius}" IsHitTestVisible="False" />
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:has-header /template/ Border#PART_HeaderHost"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-title /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-icon /template/ ContentPresenter#PART_HeaderIconPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-actions /template/ ContentPresenter#PART_HeaderActionsPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-icon:has-title /template/ Border#PART_HeaderIconGap, ^:has-icon:has-actions /template/ Border#PART_HeaderIconGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-actions:has-title /template/ Border#PART_HeaderActionsGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-header:has-body /template/ Border#PART_HeaderGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-footer /template/ ContentPresenter#PART_FooterPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-footer:has-body /template/ Border#PART_FooterGap, ^:has-footer:has-header /template/ Border#PART_FooterGap"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-body /template/ Border#PART_ContentHost"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-footer /template/ Border#PART_FooterHost"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:disabled"><Setter Property="HeaderBackground" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="FooterBackground" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

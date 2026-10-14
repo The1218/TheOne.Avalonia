@@ -1,0 +1,398 @@
+[
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Text/Surface",
+    "ratio": 15.31
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Muted/Canvas",
+    "ratio": 5.52
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Muted/Subtle",
+    "ratio": 5.31
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "OnAccent/Accent",
+    "ratio": 6.06
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 7.74
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 10.2
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Accent/AccentSoft",
+    "ratio": 5.21
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Success/SuccessSoft",
+    "ratio": 5.16
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Danger/Surface",
+    "ratio": 6.28
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "Accent/Surface",
+    "ratio": 6.06
+  },
+  {
+    "variant": "A",
+    "theme": "light",
+    "pair": "InputLine/Surface",
+    "ratio": 3.48
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Text/Surface",
+    "ratio": 14.06
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Muted/Canvas",
+    "ratio": 8.53
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Muted/Subtle",
+    "ratio": 6.31
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "OnAccent/Accent",
+    "ratio": 7.85
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 9.57
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 6.22
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Accent/AccentSoft",
+    "ratio": 5.52
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Success/SuccessSoft",
+    "ratio": 7.8
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Danger/Surface",
+    "ratio": 7.84
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "Accent/Surface",
+    "ratio": 8.0
+  },
+  {
+    "variant": "A",
+    "theme": "dark",
+    "pair": "InputLine/Surface",
+    "ratio": 4.07
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Text/Surface",
+    "ratio": 15.04
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Muted/Canvas",
+    "ratio": 5.56
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Muted/Subtle",
+    "ratio": 5.29
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "OnAccent/Accent",
+    "ratio": 5.71
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 7.31
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 10.1
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Accent/AccentSoft",
+    "ratio": 5.0
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Success/SuccessSoft",
+    "ratio": 5.21
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Danger/Surface",
+    "ratio": 6.06
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "Accent/Surface",
+    "ratio": 5.71
+  },
+  {
+    "variant": "B",
+    "theme": "light",
+    "pair": "InputLine/Surface",
+    "ratio": 3.25
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Text/Surface",
+    "ratio": 14.42
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Muted/Canvas",
+    "ratio": 8.79
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Muted/Subtle",
+    "ratio": 6.83
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "OnAccent/Accent",
+    "ratio": 8.97
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 10.82
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 7.11
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Accent/AccentSoft",
+    "ratio": 6.68
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Success/SuccessSoft",
+    "ratio": 7.36
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Danger/Surface",
+    "ratio": 9.16
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "Accent/Surface",
+    "ratio": 9.96
+  },
+  {
+    "variant": "B",
+    "theme": "dark",
+    "pair": "InputLine/Surface",
+    "ratio": 4.29
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Text/Surface",
+    "ratio": 14.82
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Muted/Canvas",
+    "ratio": 5.61
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Muted/Subtle",
+    "ratio": 5.08
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "OnAccent/Accent",
+    "ratio": 6.73
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 8.59
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 11.61
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Accent/AccentSoft",
+    "ratio": 5.52
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Success/SuccessSoft",
+    "ratio": 5.17
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Danger/Surface",
+    "ratio": 6.07
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "Accent/Surface",
+    "ratio": 6.67
+  },
+  {
+    "variant": "C",
+    "theme": "light",
+    "pair": "InputLine/Surface",
+    "ratio": 3.35
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Text/Surface",
+    "ratio": 14.04
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Muted/Canvas",
+    "ratio": 8.71
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Muted/Subtle",
+    "ratio": 6.75
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "OnAccent/Accent",
+    "ratio": 9.57
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "OnAccent/AccentHover",
+    "ratio": 11.35
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "OnAccent/AccentPressed",
+    "ratio": 7.87
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Accent/AccentSoft",
+    "ratio": 6.57
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Success/SuccessSoft",
+    "ratio": 7.32
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Danger/Surface",
+    "ratio": 9.1
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "Accent/Surface",
+    "ratio": 9.75
+  },
+  {
+    "variant": "C",
+    "theme": "dark",
+    "pair": "InputLine/Surface",
+    "ratio": 4.9
+  }
+]

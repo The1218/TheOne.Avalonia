@@ -1,0 +1,98 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="One.StepHeader" TargetType="ListBoxItem">
+    <Setter Property="Width" Value="200" /><Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Template"><ControlTemplate><Grid>
+      <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" />
+      <Border Name="PART_HeaderFocus" BorderBrush="Transparent" BorderThickness="1" CornerRadius="6" IsHitTestVisible="False" />
+    </Grid></ControlTemplate></Setter>
+    <Style Selector="^:focus-visible /template/ Border#PART_HeaderFocus"><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:StepField}" TargetType="one:StepField">
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="Template"><ControlTemplate>
+      <Grid RowDefinitions="Auto,Auto">
+        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+        <ListBox Name="PART_FieldErrors" Grid.Row="1" Margin="0,4,0,0" ItemsSource="{TemplateBinding Errors}" IsVisible="{TemplateBinding HasErrors}" MaxHeight="96" MinHeight="0" Padding="0" BorderThickness="0" Background="Transparent" Foreground="{DynamicResource One.Danger}" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AutomationProperties.Name="字段验证错误">
+          <ListBox.Styles><Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large"><Setter Property="MinHeight" Value="0" /></Style></ListBox.Styles>
+          <ListBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ListBox.ItemsPanel>
+          <ListBox.ItemContainerTheme><ControlTheme TargetType="ListBoxItem">
+            <Setter Property="Focusable" Value="False" /><Setter Property="Padding" Value="0" /><Setter Property="MinHeight" Value="0" />
+            <Setter Property="Template"><ControlTemplate><ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" /></ControlTemplate></Setter>
+          </ControlTheme></ListBox.ItemContainerTheme>
+          <ListBox.ItemTemplate><DataTemplate x:DataType="one:StepValidationError"><TextBlock Text="{Binding Message}" TextWrapping="Wrap" /></DataTemplate></ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </ControlTemplate></Setter>
+  </ControlTheme>
+  <ControlTheme x:Key="One.StepFormField" TargetType="ListBoxItem">
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template"><ControlTemplate><ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="Stretch" /></ControlTemplate></Setter>
+  </ControlTheme>
+  <ControlTheme x:Key="One.StepForm" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+    <Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Padding" Value="0" /><Setter Property="MinHeight" Value="0" />
+    <Setter Property="Focusable" Value="False" /><Setter Property="MaxWidth" Value="640" /><Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="ItemContainerTheme" Value="{StaticResource One.StepFormField}" />
+    <Setter Property="ItemsPanel"><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></Setter>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:Step}" TargetType="one:Step">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="20" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="MinHeight" Value="360" />
+    <Setter Property="MaxHeight" Value="720" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+          <Grid RowDefinitions="Auto,Auto,*,Auto" RowSpacing="16">
+            <ListBox Name="PART_Steps" Height="112" MaxWidth="{TemplateBinding HeaderMaxWidth}" HorizontalAlignment="{TemplateBinding HeaderHorizontalAlignment}" MinHeight="0" Padding="0" BorderThickness="0" Background="Transparent" ItemContainerTheme="{StaticResource One.StepHeader}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.IsScrollChainingEnabled="False" AutomationProperties.Name="步骤导航">
+              <ListBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel Orientation="Horizontal" /></ItemsPanelTemplate></ListBox.ItemsPanel>
+              <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="one:StepItem">
+                  <Grid RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                    <Grid.Styles>
+                      <Style Selector="one|Tag.step-indicator"><Setter Property="Width" Value="36" /><Setter Property="Height" Value="36" /></Style>
+                      <Style Selector="one|Tag.step-indicator.one-small"><Setter Property="Width" Value="30" /><Setter Property="Height" Value="30" /></Style>
+                      <Style Selector="one|Tag.step-indicator.one-large"><Setter Property="Width" Value="42" /><Setter Property="Height" Value="42" /></Style>
+                    </Grid.Styles>
+                    <Grid ColumnDefinitions="*,Auto,*">
+                      <Border Name="PART_LeftConnector" Height="3" Background="{DynamicResource One.Line}" IsVisible="{Binding HasPrevious}" />
+                      <Border Name="PART_LeftProgress" Height="3" Background="{DynamicResource One.Accent}" Classes.reached="{Binding IsReached}" IsVisible="{Binding HasPrevious}"><Border.Styles><Style Selector="Border"><Setter Property="Opacity" Value="0" /></Style><Style Selector="Border.reached"><Setter Property="Opacity" Value="1" /></Style></Border.Styles></Border>
+                      <one:Tag Name="PART_Indicator" Grid.Column="1" Classes="step-indicator" Content="{Binding Indicator}" Status="{Binding Status}" Variant="{Binding IndicatorVariant}" MinHeight="0" MinWidth="0" Padding="0" CornerRadius="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                      <Border Name="PART_RightConnector" Grid.Column="2" Height="3" Background="{DynamicResource One.Line}" IsVisible="{Binding HasNext}" />
+                      <Border Name="PART_RightProgress" Grid.Column="2" Height="3" Background="{DynamicResource One.Accent}" Classes.reached="{Binding IsSuccess}" IsVisible="{Binding HasNext}"><Border.Styles><Style Selector="Border"><Setter Property="Opacity" Value="0" /></Style><Style Selector="Border.reached"><Setter Property="Opacity" Value="1" /></Style></Border.Styles></Border>
+                    </Grid>
+                    <TextBlock Grid.Row="1" Classes.reached="{Binding IsReached}" Text="{Binding Title}" TextAlignment="Center" TextTrimming="CharacterEllipsis">
+                      <TextBlock.Styles>
+                        <Style Selector="TextBlock"><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /></Style>
+                        <Style Selector="TextBlock.reached"><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="FontWeight" Value="SemiBold" /></Style>
+                      </TextBlock.Styles>
+                    </TextBlock>
+                    <TextBlock Grid.Row="2" Text="{Binding Description}" TextAlignment="Center" Foreground="{DynamicResource One.Muted}" FontSize="12" TextTrimming="CharacterEllipsis" />
+                  </Grid>
+                </DataTemplate>
+              </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox Name="PART_ValidationErrors" Grid.Row="1" ItemsSource="{TemplateBinding UnmappedErrors}" IsVisible="{TemplateBinding HasUnmappedErrors}" MaxHeight="120" MinHeight="0" BorderThickness="0" Padding="4" Foreground="{DynamicResource One.Danger}" Background="{DynamicResource One.DangerSoft}" Focusable="False" AutomationProperties.Name="步骤验证错误">
+              <ListBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ListBox.ItemsPanel>
+              <ListBox.ItemTemplate><DataTemplate x:DataType="one:StepValidationError"><TextBlock Text="{Binding Message}" TextWrapping="Wrap" /></DataTemplate></ListBox.ItemTemplate>
+            </ListBox>
+            <ContentPresenter Name="PART_ContentPresenter" Grid.Row="2" Content="{TemplateBinding CurrentContent}" ContentTemplate="{TemplateBinding CurrentContentTemplate}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            <Grid Grid.Row="3" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+              <ProgressBar Name="PART_Progress" IsIndeterminate="True" IsVisible="{TemplateBinding IsBusy}" Height="4" Width="120" MaxWidth="180" HorizontalAlignment="Left" VerticalAlignment="Center" />
+              <Button Name="PART_PreviousButton" Grid.Column="1" Content="{TemplateBinding PreviousText}" IsEnabled="{TemplateBinding CanGoBack}" />
+              <Button Name="PART_NextButton" Grid.Column="2" Content="{TemplateBinding ForwardText}" IsEnabled="{TemplateBinding CanGoNext}" Classes="primary" />
+            </Grid>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:busy /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="IsEnabled" Value="False" /></Style>
+    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="16" /></Style>
+    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="24" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

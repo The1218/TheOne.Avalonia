@@ -1,0 +1,905 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.LegacyControlGallery"
+    x:DataType="local:LegacyGalleryViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="Border.sample-card">
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{StaticResource One.Radius.Card}" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+        <Style Selector="TextBlock.helper">
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="TextBlock.field-label">
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+    </UserControl.Styles>
+    <ScrollViewer
+        HorizontalScrollBarVisibility="Disabled"
+        Name="CatalogScroll"
+        VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,24,16,24" Spacing="20">
+            <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="8">
+                    <TextBlock
+                        FontSize="11"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource One.Accent}"
+                        LetterSpacing="1"
+                        Text="THEONE / FOUNDATION" />
+                    <TextBlock
+                        FontSize="28"
+                        FontWeight="SemiBold"
+                        Text="基础控件，一套完整的视觉语言。"
+                        TextWrapping="Wrap" />
+                    <TextBlock Classes="helper" Text="真实主题 · 实时校验 · 键盘与鼠标交互" />
+                </StackPanel>
+                <CheckBox
+                    Content="启用交互"
+                    Grid.Column="1"
+                    IsChecked="{Binding DemoEnabled, Mode=TwoWay}"
+                    Margin="16,0,12,0"
+                    VerticalAlignment="Top" />
+            </Grid>
+            <local:CatalogPanel
+                IsEnabled="{Binding DemoEnabled}"
+                ItemWidth="490"
+                Name="Cards"
+                Orientation="Horizontal">
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="ActionsCard"
+                    Tag="1|按钮与操作 Button · RepeatButton · ToggleButton">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="01  按钮与操作" />
+                            <TextBlock Classes="helper" Text="Button · RepeatButton · ToggleButton" />
+                        </StackPanel>
+
+                        <WrapPanel>
+                            <Button
+                                Classes="primary"
+                                Command="{Binding SaveCommand}"
+                                Content="保存更改"
+                                Margin="0,0,8,8"
+                                Name="SaveButton" />
+                            <Button
+                                Command="{Binding ResetCommand}"
+                                Content="重置"
+                                Margin="0,0,8,8" />
+                            <Button
+                                Classes="ghost"
+                                Command="{Binding HelpCommand}"
+                                Content="帮助"
+                                Margin="0,0,8,8" />
+                            <Button
+                                Classes="danger"
+                                Content="危险操作"
+                                Margin="0,0,8,8"
+                                ToolTip.Tip="危险按钮的视觉样式，预览不会删除内容。" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Button
+                                Classes="primary small"
+                                Content="小尺寸"
+                                Margin="0,0,8,8" />
+                            <Button
+                                Classes="primary large"
+                                Content="触控尺寸"
+                                Margin="0,0,8,8" />
+                            <Button
+                                Content="禁用"
+                                IsEnabled="False"
+                                Margin="0,0,8,8" />
+                            <Button
+                                Classes="link"
+                                Content="链接按钮"
+                                Margin="0,0,8,8" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <ToggleButton
+                                Content="切换按钮"
+                                IsChecked="True"
+                                Margin="0,0,8,0"
+                                Name="ToggleSample" />
+                            <ToggleButton
+                                Content="三态"
+                                IsChecked="{x:Null}"
+                                IsThreeState="True"
+                                Margin="0,0,8,0" />
+                            <RepeatButton Command="{Binding SaveCommand}" Content="按住重复" />
+                        </WrapPanel>
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="InputsCard"
+                    Tag="2|输入与校验 TextBox · Password · Validation">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="02  输入与校验" />
+                            <TextBlock Classes="helper" Text="TextBox · Password · Validation" />
+                        </StackPanel>
+
+                        <StackPanel Spacing="4">
+                            <TextBlock Classes="field-label" Text="电子邮箱 / 实时校验" />
+                            <TextBox
+                                AutomationProperties.Name="电子邮箱"
+                                Classes="clearButton"
+                                Name="EmailBox"
+                                PlaceholderText="name@example.com"
+                                Text="{Binding Email, Mode=TwoWay}" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="{DynamicResource One.Danger}"
+                                IsVisible="{Binding HasErrors}"
+                                Text="{Binding EmailError}" />
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,12,*">
+                            <TextBox
+                                AutomationProperties.Name="密码"
+                                Classes="revealPasswordButton"
+                                Grid.Column="0"
+                                Name="PasswordBox"
+                                PasswordChar="●"
+                                Text="theone-demo" />
+                            <TextBox
+                                AutomationProperties.Name="只读输入"
+                                Grid.Column="2"
+                                IsReadOnly="True"
+                                Text="只读内容" />
+                        </Grid>
+                        <TextBox
+                            AcceptsReturn="True"
+                            AutomationProperties.Name="备注"
+                            MinHeight="72"
+                            PlaceholderText="多行输入，支持换行与滚动…"
+                            TextWrapping="Wrap" />
+
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="SelectionCard"
+                    Tag="3|选择与切换 CheckBox · RadioButton · ToggleSwitch">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="03  选择与切换" />
+                            <TextBlock Classes="helper" Text="CheckBox · RadioButton · ToggleSwitch" />
+                        </StackPanel>
+
+                        <WrapPanel>
+                            <CheckBox
+                                Content="自动保存"
+                                IsChecked="True"
+                                Margin="0,0,16,0"
+                                Name="CheckSample" />
+                            <CheckBox Content="未选中" Margin="0,0,16,0" />
+                            <CheckBox
+                                Content="部分选择"
+                                IsChecked="{x:Null}"
+                                IsThreeState="True" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <RadioButton
+                                Content="标准模式"
+                                GroupName="mode"
+                                IsChecked="True"
+                                Margin="0,0,20,0" />
+                            <RadioButton Content="紧凑模式" GroupName="mode" />
+                            <RadioButton
+                                Content="禁用"
+                                GroupName="mode"
+                                IsEnabled="False"
+                                Margin="20,0,0,0" />
+                        </WrapPanel>
+                        <WrapPanel>
+                            <ToggleSwitch
+                                IsChecked="True"
+                                Margin="0,0,16,0"
+                                Name="SwitchSample"
+                                OffContent="通知已关闭"
+                                OnContent="通知已开启" />
+                            <ToggleSwitch
+                                IsChecked="False"
+                                OffContent="关闭"
+                                OnContent="开启" />
+                        </WrapPanel>
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="ValuesCard"
+                    Tag="4|数值与进度 NumericUpDown · Slider · ProgressBar">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="04  数值与进度" />
+                            <TextBlock Classes="helper" Text="NumericUpDown · Slider · ProgressBar" />
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="140,16,*">
+                            <StackPanel Spacing="4">
+                                <TextBlock Classes="field-label" Text="数量" />
+                                <NumericUpDown
+                                    AutomationProperties.Name="数量"
+                                    FormatString="0"
+                                    Increment="1"
+                                    Maximum="20"
+                                    Minimum="0"
+                                    Name="NumberSample"
+                                    Value="3" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="4">
+                                <TextBlock Classes="field-label" Text="{Binding Progress, StringFormat='进度 {0:0}%'}" />
+                                <Slider
+                                    AutomationProperties.Name="进度"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Name="SliderSample"
+                                    Value="{Binding Progress, Mode=TwoWay}" />
+                            </StackPanel>
+                        </Grid>
+                        <ProgressBar
+                            Maximum="100"
+                            MinHeight="8"
+                            Minimum="0"
+                            Name="ProgressSample"
+                            Value="{Binding Progress}" />
+                        <ProgressBar IsIndeterminate="True" MinHeight="6" />
+                        <TextBlock Classes="helper" Text="拖动滑块或使用方向键，进度条随之更新。" />
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="ChoicesCard"
+                    Tag="2|下拉与自动完成 ComboBox · ComboBoxItem · AutoCompleteBox">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="05  下拉与自动完成" />
+                            <TextBlock Classes="helper" Text="ComboBox · ComboBoxItem · AutoCompleteBox" />
+                        </StackPanel>
+
+                        <Grid ColumnDefinitions="*,12,*">
+                            <ComboBox
+                                AutomationProperties.Name="目标平台"
+                                Grid.Column="0"
+                                HorizontalAlignment="Stretch"
+                                Name="PlatformPicker"
+                                SelectedIndex="0">
+                                <ComboBoxItem Content="macOS" />
+                                <ComboBoxItem Content="Windows" />
+                                <ComboBoxItem Content="Linux" />
+                            </ComboBox>
+                            <ComboBox
+                                AutomationProperties.Name="可编辑选择"
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                IsEditable="True"
+                                SelectedIndex="0">
+                                <ComboBoxItem Content="标准密度" />
+                                <ComboBoxItem Content="紧凑密度" />
+                            </ComboBox>
+                        </Grid>
+                        <AutoCompleteBox
+                            AutomationProperties.Name="自动完成"
+                            ItemsSource="{Binding Suggestions}"
+                            MinimumPrefixLength="1"
+                            Name="AutoCompleteSample"
+                            PlaceholderText="输入 A、S 或 The…" />
+                        <ComboBox
+                            AutomationProperties.Name="禁用下拉框"
+                            HorizontalAlignment="Stretch"
+                            IsEnabled="False"
+                            SelectedIndex="0">
+                            <ComboBoxItem Content="禁用选择" />
+                        </ComboBox>
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="DatesCard"
+                    Tag="5|日期与时间 CalendarDatePicker · DatePicker · TimePicker">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="06  日期与时间" />
+                            <TextBlock Classes="helper" Text="CalendarDatePicker · DatePicker · TimePicker" />
+                        </StackPanel>
+
+                        <CalendarDatePicker
+                            AutomationProperties.Name="日历选择"
+                            HorizontalAlignment="Stretch"
+                            Name="CalendarSample"
+                            PlaceholderText="选择日期" />
+                        <DatePicker
+                            AutomationProperties.Name="日期"
+                            HorizontalAlignment="Stretch"
+                            Name="DateSample" SelectedDate="2026-10-13" />
+                        <TimePicker
+                            AutomationProperties.Name="时间"
+                            ClockIdentifier="24HourClock"
+                            HorizontalAlignment="Stretch"
+                            Name="TimeSample" SelectedTime="14:35:20" UseSeconds="True" />
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="NavigationCard"
+                    Tag="6|导航与列表 TabControl · TabItem · ListBox · ListBoxItem">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="07  导航与列表" />
+                            <TextBlock Classes="helper" Text="TabControl · TabItem · ListBox · ListBoxItem" />
+                        </StackPanel>
+
+                        <TabControl
+                            MinHeight="108"
+                            Name="TabsSample"
+                            SelectedIndex="0">
+                            <TabItem Header="概览">
+                                <TextBlock
+                                    Margin="0,12"
+                                    Text="选项卡内容：主题资源、视觉状态与键盘操作。"
+                                    TextWrapping="Wrap" />
+                            </TabItem>
+                            <TabItem Header="样式">
+                                <TextBlock
+                                    Margin="0,12"
+                                    Text="主题资源通过 DynamicResource 随浅色与深色更新。"
+                                    TextWrapping="Wrap" />
+                            </TabItem>
+                            <TabItem Header="禁用" IsEnabled="False" />
+                        </TabControl>
+                        <ListBox
+                            MaxHeight="128"
+                            Name="ListSample"
+                            SelectedIndex="0">
+                            <ListBoxItem Content="主题资源" />
+                            <ListBoxItem Content="控件模板" />
+                            <ListBoxItem Content="键盘交互" />
+                            <ListBoxItem Content="滚动与焦点" />
+                        </ListBox>
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="LayoutCard"
+                    Tag="6|布局与提示 Expander · ScrollViewer · ScrollBar · Separator · ToolTip">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="08  布局与提示" />
+                            <TextBlock Classes="helper" Text="Expander · ScrollViewer · ScrollBar · Separator · ToolTip" />
+                        </StackPanel>
+
+                        <Expander
+                            Header="展开预览说明"
+                            HorizontalAlignment="Stretch"
+                            IsExpanded="True"
+                            Name="ExpanderSample">
+                            <TextBlock
+                                Margin="12"
+                                Text="这里展示真实官方基础控件，主题模板来自类库，预览界面只负责排列与交互演示。"
+                                TextWrapping="Wrap" />
+                        </Expander>
+                        <Separator />
+                        <ScrollViewer
+                            Height="76"
+                            Name="ScrollSample"
+                            VerticalScrollBarVisibility="Visible">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="01  滚动内容" />
+                                <TextBlock Text="02  同一套主题资源" />
+                                <TextBlock Text="03  支持键盘与滚轮" />
+                                <TextBlock Text="04  滚动条也已重写" />
+                                <TextBlock Text="05  查看底部内容" />
+                            </StackPanel>
+                        </ScrollViewer>
+                        <Button
+                            Classes="ghost"
+                            Content="悬停查看 ToolTip"
+                            ToolTip.Tip="提示层使用相同的语义背景、边框和文字颜色。" />
+
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="TreeCard"
+                    Tag="7|树形数据 TreeView TreeViewItem">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="09  树形数据与选择" />
+                            <TextBlock Classes="helper" Text="TreeView · TreeViewItem · TreeDataTemplate" />
+                        </StackPanel>
+                        <TreeView
+                            AutomationProperties.Name="控件库项目树"
+                            Height="296"
+                            HorizontalAlignment="Stretch"
+                            ItemsSource="{Binding TreeRoots}"
+                            Name="TreeSample"
+                            PointerPressed="OnTreePointerPressed"
+                            SelectedItem="{Binding SelectedTreeNode, Mode=TwoWay}">
+                            <TreeView.Styles>
+                                <Style Selector="TreeViewItem" x:DataType="local:PreviewTreeNode">
+                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                                </Style>
+                            </TreeView.Styles>
+                            <TreeView.ItemTemplate>
+                                <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="local:PreviewTreeNode">
+                                    <TextBlock
+                                        Text="{Binding Name}"
+                                        TextTrimming="CharacterEllipsis"
+                                        ToolTip.Tip="{Binding Description}" />
+                                </TreeDataTemplate>
+                            </TreeView.ItemTemplate>
+                            <TreeView.ContextMenu>
+                                <ContextMenu Name="TreeContextMenu">
+                                    <MenuItem Command="{Binding InspectNodeCommand}" Header="查看节点" />
+                                    <MenuItem
+                                        Command="{Binding RenameNodeCommand}"
+                                        Header="重命名演示节点"
+                                        Name="TreeRenameItem" />
+                                    <Separator />
+                                    <MenuItem Command="{Binding ExpandTreeCommand}" Header="展开所有" />
+                                    <MenuItem Command="{Binding CollapseTreeCommand}" Header="折叠所有" />
+                                </ContextMenu>
+                            </TreeView.ContextMenu>
+                        </TreeView>
+                        <Border
+                            Background="{DynamicResource One.Subtle}"
+                            CornerRadius="8"
+                            IsVisible="{Binding ShowTreeDetails}"
+                            Padding="12">
+                            <StackPanel Spacing="4">
+                                <TextBlock FontWeight="Medium" Text="{Binding SelectedNodeName}" />
+                                <TextBlock Classes="helper" Text="{Binding SelectedNodeDescription}" />
+                            </StackPanel>
+                        </Border>
+                        <WrapPanel>
+                            <Button
+                                Classes="small ghost"
+                                Command="{Binding ExpandTreeCommand}"
+                                Content="展开所有"
+                                Margin="0,0,8,0" />
+                            <Button
+                                Classes="small ghost"
+                                Command="{Binding CollapseTreeCommand}"
+                                Content="折叠所有" />
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="MenuCard"
+                    Tag="7|菜单 Menu MenuItem">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="10  菜单与子菜单" />
+                            <TextBlock Classes="helper" Text="Menu · MenuItem · Shortcut · Toggle" />
+                        </StackPanel>
+                        <Border
+                            BorderBrush="{DynamicResource One.Line}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="4">
+                            <Menu AutomationProperties.Name="预览菜单" Name="MenuSample">
+                                <MenuItem Header="_文件" Name="FileMenu">
+                                    <MenuItem
+                                        Command="{Binding MenuCommand}"
+                                        CommandParameter="新建项目"
+                                        Header="_新建项目"
+                                        InputGesture="Ctrl+N"
+                                        Name="NewMenuItem">
+                                        <MenuItem.Icon>
+                                            <PathIcon
+                                                Data="M0,6 H12 M6,0 V12"
+                                                Height="12"
+                                                Width="12" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding SaveCommand}" Header="保存预览" />
+                                    <MenuItem Header="最近打开" Name="RecentMenuItem">
+                                        <MenuItem
+                                            Command="{Binding MenuCommand}"
+                                            CommandParameter="打开 TheOne.Avalonia"
+                                            Header="TheOne.Avalonia"
+                                            Name="RecentLeafItem" />
+                                        <MenuItem
+                                            Command="{Binding MenuCommand}"
+                                            CommandParameter="打开 PreviewHost"
+                                            Header="PreviewHost" />
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem
+                                        Command="{Binding MenuCommand}"
+                                        CommandParameter="禁用导出"
+                                        Header="导出（不可用）"
+                                        IsEnabled="False"
+                                        Name="DisabledMenuItem" />
+                                </MenuItem>
+                                <MenuItem Header="_视图" Name="ViewMenu">
+                                    <MenuItem
+                                        Header="显示节点详情"
+                                        IsChecked="{Binding ShowTreeDetails, Mode=TwoWay}"
+                                        Name="DetailsMenuItem"
+                                        ToggleType="CheckBox" />
+                                    <Separator />
+                                    <MenuItem Command="{Binding ExpandTreeCommand}" Header="展开所有节点" />
+                                    <MenuItem Command="{Binding CollapseTreeCommand}" Header="折叠所有节点" />
+                                </MenuItem>
+                                <MenuItem Header="_帮助">
+                                    <MenuItem Command="{Binding HelpCommand}" Header="键盘操作提示" />
+                                    <MenuItem
+                                        Command="{Binding MenuCommand}"
+                                        CommandParameter="Still · 浅色与深色主题"
+                                        Header="关于 Still" />
+                                </MenuItem>
+                            </Menu>
+                        </Border>
+                        <TextBlock Classes="helper" Text="点击菜单查看弹层；方向键切换项目、Enter 执行、Esc 关闭。" />
+                        <TextBlock Classes="helper" Text="Ctrl+N / macOS ⌘N 已绑定到窗口命令，结果显示在底部状态栏。" />
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="ContextCard"
+                    Tag="7|右键菜单 ContextMenu MenuItem">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="11  右键菜单" />
+                            <TextBlock Classes="helper" Text="ContextMenu · Nested menu · Selection context" />
+                        </StackPanel>
+                        <Border
+                            AutomationProperties.Name="右键菜单预览区域"
+                            Background="{DynamicResource One.Subtle}"
+                            CornerRadius="8"
+                            Focusable="True"
+                            Name="ContextTarget"
+                            Padding="20">
+                            <Border.ContextMenu>
+                                <ContextMenu Name="ContextSample">
+                                    <MenuItem
+                                        Command="{Binding InspectNodeCommand}"
+                                        Header="查看选中节点"
+                                        Name="ContextInspectItem" />
+                                    <MenuItem
+                                        Command="{Binding RenameNodeCommand}"
+                                        Header="重命名演示节点"
+                                        Name="ContextRenameItem" />
+                                    <MenuItem Header="树操作" Name="ContextNestedItem">
+                                        <MenuItem
+                                            Command="{Binding CollapseTreeCommand}"
+                                            Header="折叠所有节点"
+                                            Name="ContextCollapseItem" />
+                                        <MenuItem Command="{Binding ExpandTreeCommand}" Header="展开所有节点" />
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem
+                                        Header="显示节点详情"
+                                        IsChecked="{Binding ShowTreeDetails, Mode=TwoWay}"
+                                        ToggleType="CheckBox" />
+                                    <MenuItem
+                                        Command="{Binding MenuCommand}"
+                                        CommandParameter="禁用删除"
+                                        Header="删除（不可用）"
+                                        IsEnabled="False"
+                                        Name="ContextDisabledItem" />
+                                </ContextMenu>
+                            </Border.ContextMenu>
+                            <StackPanel Spacing="8">
+                                <TextBlock FontWeight="Medium" Text="在此区域单击鼠标右键" />
+                                <TextBlock Classes="helper" Text="也可选中树节点后右键，菜单会作用于该节点。" />
+                                <TextBlock Classes="helper" Text="重命名仅修改本次预览中的演示数据。" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="RefinementsCard"
+                    Tag="8|尺寸与交互 TextBox Slider NumericUpDown Size">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="12  输入细节与统一尺寸" />
+                            <TextBlock Classes="helper" Text="点击输入框、移入滑杆；比较三种密度。" />
+                        </StackPanel>
+                        <Grid ColumnDefinitions="Auto,*,8,132" RowDefinitions="Auto,Auto,Auto">
+                            <TextBlock
+                                Margin="0,0,12,0"
+                                Text="小"
+                                VerticalAlignment="Center" />
+                            <TextBox
+                                Classes="small"
+                                Grid.Column="1"
+                                Name="SmallText"
+                                Text="Small · 30 px" />
+                            <NumericUpDown
+                                Classes="small"
+                                Grid.Column="3"
+                                Name="SmallNumber"
+                                Value="3" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="0,8,12,8"
+                                Text="正常"
+                                VerticalAlignment="Center" />
+                            <TextBox
+                                Classes="normal"
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                Margin="0,8"
+                                Name="NormalText"
+                                Text="Normal · 36 px" />
+                            <NumericUpDown
+                                Classes="normal"
+                                Grid.Column="3"
+                                Grid.Row="1"
+                                Margin="0,8"
+                                Name="NormalNumber"
+                                Value="6" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Margin="0,0,12,0"
+                                Text="大"
+                                VerticalAlignment="Center" />
+                            <TextBox
+                                Classes="large"
+                                Grid.Column="1"
+                                Grid.Row="2"
+                                Name="LargeText"
+                                Text="Large · 44 px" />
+                            <NumericUpDown
+                                Classes="large"
+                                Grid.Column="3"
+                                Grid.Row="2"
+                                Name="LargeNumber"
+                                Value="9" />
+                        </Grid>
+                        <Slider Name="RefinedSlider" Value="56" />
+                        <StackPanel
+                            Classes="small"
+                            Name="SizeScope"
+                            Spacing="8">
+                            <TextBlock Classes="helper" Text="容器上的尺寸可继承，控件也可单独覆盖。" />
+                            <WrapPanel>
+                                <Button
+                                    Content="继承小尺寸"
+                                    Margin="0,0,8,0"
+                                    Name="ScopedButton" />
+                                <ComboBox
+                                    MinWidth="140"
+                                    Name="ScopedCombo"
+                                    SelectedIndex="0">
+                                    <ComboBoxItem Content="容器内选择框" />
+                                </ComboBox>
+                            </WrapPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="CardTabsCard"
+                    Tag="8|尺寸与交互 TabControl Card Drag Close">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="13  Card 标签页" />
+                            <TextBlock Classes="helper" Text="连续面板 · 活动标签 × 关闭 · 平坦分隔标题" />
+                        </StackPanel>
+                        <TabControl
+                            Classes="card"
+                            ItemsSource="{Binding DemoTabs}"
+                            MinHeight="164"
+                            Name="CardTabs"
+                            SelectedIndex="1">
+                            <TabControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:DemoTab">
+                                    <TextBlock Text="{Binding Title}" />
+                                </DataTemplate>
+                            </TabControl.ItemTemplate>
+                            <TabControl.ContentTemplate>
+                                <DataTemplate x:DataType="local:DemoTab">
+                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </TabControl.ContentTemplate>
+                            <TabControl.Styles>
+                                <Style Selector="TabItem" x:DataType="local:DemoTab">
+                                    <Setter Property="one:TabFeatures.IsClosable" Value="{Binding CanClose}" />
+                                </Style>
+                            </TabControl.Styles>
+                        </TabControl>
+                        <WrapPanel>
+                            <Button
+                                Classes="small"
+                                Command="{Binding AddTabCommand}"
+                                Content="添加标签"
+                                Margin="0,0,8,0" />
+                            <Button
+                                Classes="small"
+                                Command="{Binding ReferenceTabsCommand}"
+                                Content="长标签示例"
+                                Margin="0,0,8,0"
+                                Name="ReferenceTabsButton" />
+                            <Button
+                                Classes="ghost small"
+                                Command="{Binding ResetTabsCommand}"
+                                Content="重置标签" />
+                        </WrapPanel>
+                        <TextBlock Classes="helper" Text="Ctrl / ⌘ + Shift + ← / → 调整顺序；关闭事件支持取消。" />
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="CalendarRefinementCard"
+                    Tag="8|尺寸与交互 CalendarDatePicker Calendar">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="14  可输入的日期选择" />
+                            <TextBlock Classes="helper" Text="点击编辑区打开日历；Esc 返回输入，Enter 提交日期。" />
+                        </StackPanel>
+                        <CalendarDatePicker
+                            CustomDateFormatString="yyyy-MM-dd"
+                            HorizontalAlignment="Stretch"
+                            Name="EditableDate"
+                            PlaceholderText="yyyy-MM-dd"
+                            SelectedDate="2026-10-12"
+                            SelectedDateFormat="Custom" />
+                        <CalendarDatePicker
+                            Classes="small"
+                            HorizontalAlignment="Stretch"
+                            Name="SmallDate"
+                            PlaceholderText="小尺寸日期" />
+                        <CalendarDatePicker
+                            Classes="large"
+                            HorizontalAlignment="Stretch"
+                            Name="LargeDate"
+                            PlaceholderText="大尺寸日期" />
+                        <CalendarDatePicker Name="DateTimeSample" HorizontalAlignment="Stretch"
+                            one:CalendarOptions.DisplayStyle="DateTime" one:CalendarOptions.Format="yyyy/MM/dd HH:mm"
+                            SelectedDate="2026-10-12T16:30:00" PlaceholderText="年 / 月 / 日 时:分" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <CalendarDatePicker Name="MonthSample" one:CalendarOptions.DisplayStyle="Month" SelectedDate="2026-10-12" HorizontalAlignment="Stretch" />
+                            <CalendarDatePicker Grid.Column="1" Name="YearSample" one:CalendarOptions.DisplayStyle="Year" SelectedDate="2026-10-12" HorizontalAlignment="Stretch" />
+                        </Grid>
+                        <TextBlock Classes="helper" Text="点击年月标题切换月份 / 年份；滚轮翻页，箭头翻页，Esc 撤销本次选择。" />
+                    </StackPanel>
+                </Border>
+                <Border
+                    Classes="sample-card"
+                    Margin="0,0,12,12"
+                    Name="MotionCard"
+                    Tag="8|尺寸与交互 Motion Expander TreeView">
+                    <StackPanel Spacing="12">
+                        <StackPanel Spacing="5">
+                            <TextBlock FontWeight="SemiBold" Text="15  展开与收起" />
+                            <TextBlock Classes="helper" Text="200 ms 展开，140 ms 收起；展开区平滑裁切，外边框始终连续。" />
+                        </StackPanel>
+                        <CheckBox
+                            Content="启用过渡效果"
+                            IsChecked="True"
+                            IsCheckedChanged="OnMotionChanged"
+                            Name="MotionToggle" />
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <TextBlock Text="展开方向" VerticalAlignment="Center" />
+                            <ComboBox
+                                Name="MotionDirectionPicker"
+                                SelectedIndex="0"
+                                SelectionChanged="OnExpandDirectionChanged"
+                                Width="140">
+                                <ComboBoxItem Content="向下" />
+                                <ComboBoxItem Content="向上" />
+                                <ComboBoxItem Content="向左" />
+                                <ComboBoxItem Content="向右" />
+                            </ComboBox>
+                        </StackPanel>
+                        <Expander
+                            Header="动画与键盘操作"
+                            HorizontalAlignment="Stretch"
+                            IsExpanded="True"
+                            Name="MotionExpander">
+                            <TextBlock Text="支持快速反复展开和收起。关闭动画后立刻切换；收起中的内容不会接收鼠标点击。" TextWrapping="Wrap" />
+                        </Expander>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button
+                                Click="OnTreeToggle"
+                                Content="展开 / 收起树"
+                                Name="TreeToggleButton" />
+                            <Button
+                                Click="OnTreeReverse"
+                                Content="快速反向 ×4"
+                                Name="TreeReverseButton" />
+                        </StackPanel>
+                        <TreeView Name="MotionTree">
+                            <TreeViewItem
+                                Header="资源与控件"
+                                IsExpanded="True"
+                                Name="MotionTreeRoot">
+                                <TreeViewItem
+                                    Header="主题颜色"
+                                    IsExpanded="True"
+                                    Name="MotionTreeBranch">
+                                    <TreeViewItem Header="浅色主题" />
+                                    <TreeViewItem Header="深色主题" />
+                                </TreeViewItem>
+                                <TreeViewItem Header="控件模板" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="下方节点 · 观察位置连续变化" />
+                        </TreeView>
+                        <TextBlock Classes="helper" Text="也可点击节点箭头或使用左右方向键；支持父子节点同时展开与收起。" />
+                    </StackPanel>
+                </Border>
+                <Border Classes="sample-card" Margin="0,0,12,12" Name="VirtualListsCard" IsVisible="False" Tag="9|大数据虚拟化 ListBox TreeView ItemsControl">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontWeight="SemiBold" Text="17  一万条数据 / 容器回收" />
+                        <TextBlock Classes="helper" Text="列表和树使用有界视口。滚动、Home / End 或跳转后观察实际创建的容器数量。" TextWrapping="Wrap" />
+                        <ListBox Name="HugeList" Height="200" />
+                        <Border Name="HugeTreeHost" Height="220" />
+                        <Button Classes="ghost" Name="HugeJump" Content="跳到列表末尾与第 9001 个子节点" Click="OnHugeJump" />
+                        <TextBlock Name="VirtualCounts" Classes="helper" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+                <Border Classes="sample-card" Margin="0,0,12,12" Name="VirtualPopupsCard" IsVisible="False" Tag="9|大数据虚拟化 ComboBox AutoCompleteBox TabControl Menu ContextMenu">
+                    <StackPanel Spacing="12">
+                        <TextBlock FontWeight="SemiBold" Text="18  一万项标签与弹层" />
+                        <TextBlock Classes="helper" Text="打开下拉框、输入“数据”查看建议，或右键菜单。标题栏支持滚轮横向滚动。" TextWrapping="Wrap" />
+                        <ComboBox Name="HugeCombo" MaxDropDownHeight="260" HorizontalAlignment="Stretch" />
+                        <AutoCompleteBox Name="HugeAuto" MinimumPrefixLength="1" MaxDropDownHeight="260" PlaceholderText="输入数据" />
+                        <Button Name="HugeMenuTarget" Content="右键：一万项菜单" HorizontalAlignment="Stretch" />
+                        <TabControl Name="HugeTabs" Classes="card" Height="180" />
+                        <Button Classes="ghost" Name="HugeTabJump" Content="选中第 9001 个标签" Click="OnHugeTabJump" />
+                    </StackPanel>
+                </Border>
+            </local:CatalogPanel>
+            <Border Name="DataGridCard" Classes="sample-card" IsVisible="False" Height="660" Margin="0,0,12,12" Tag="10|数据表格 DataGrid 一万条数据 虚拟化">
+            </Border>
+            <Border Name="LayoutControlsCard" Classes="sample-card" IsVisible="False" MinHeight="820" Margin="0,0,12,12" Tag="11|侧栏与分隔 SplitView GridSplitter 布局 虚拟化" />
+            <Border Name="SplitButtonsCard" Classes="sample-card" IsVisible="False" MinHeight="800" Margin="0,0,12,12" Tag="12|分裂按钮 SplitButton ToggleSplitButton 主操作 下拉 菜单 虚拟化" />
+            <Border Name="TextControlsCard" Classes="sample-card" IsVisible="False" MinHeight="880" Margin="0,0,12,12" Tag="13|标签与可选文本 Label SelectableTextBlock 选择 复制 富文本" />
+            <Border Name="FlyoutCard" Classes="sample-card" IsVisible="False" MinHeight="820" Margin="0,0,12,12" Tag="14|内容弹层 FlyoutPresenter Flyout 定位 关闭 虚拟化" />
+            <Border Name="SelectionControlsCard" Classes="sample-card" IsVisible="False" Margin="0,0,12,12" Tag="15|选择控件对比 CheckBox RadioButton ToggleSwitch 三档尺寸 明暗主题 悬停 按下 禁用" />
+            <Border Name="ButtonControlsCard" Classes="sample-card" IsVisible="False" Margin="0,0,12,12" Tag="16|按钮控件对比 Button ToggleButton RepeatButton 三档尺寸 明暗主题 悬停 按下 禁用 选中 重复 长按" />
+            <Border Name="TabStripCard" Classes="sample-card" Tag="17|独立标签导航 TabStrip TabStripItem 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="CarouselCard" Classes="sample-card" Tag="18|内容轮播 Carousel 千条数据 虚拟化 滑动" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="RefreshCard" Classes="sample-card" Tag="19|下拉刷新 RefreshContainer RefreshVisualizer 千条数据 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="ContentTransitionCard" Classes="sample-card" Tag="20|内容切换 TransitioningContentControl 动画 Motion 草稿 千条记录 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="NotificationCardPreview" Classes="sample-card" Tag="21|通知 NotificationCard WindowNotificationManager 提示 成功 警告 错误 自动关闭 手动关闭 Motion" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="OneWindowCard" Classes="sample-card" Tag="22|窗口 OneWindow ThemeButton 标题栏 LeftContent RightContent 通知 Toast Dialog 静态 API" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="ChartCard" Classes="sample-card" Tag="23|图表 Chart Line Area Bar HorizontalBar Scatter Pie Doughnut Gauge StackedBar StackedHorizontalBar StackedArea PercentStackedBar PercentStackedHorizontalBar PercentStackedArea 折线 面积 柱状 条形 散点 饼图 环形 仪表 堆叠 百分比 双轴 副轴 采样 十万 缩放 平移 数据 可视化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="InfoCardPreviewHost" Classes="sample-card" Tag="24|信息卡片 InfoCard Header HeaderIcon HeaderActions Content Footer 图标 操作 页脚 分割线 模板 表单 千条列表 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border Name="NavMenuPreviewHost" Classes="sample-card" Tag="25|导航菜单 NavMenu IconTemplate ContentTemplate ChildrenBinding 多级 分区 千条数据 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <TextBlock
+                Classes="helper"
+                IsVisible="False"
+                Name="NoResults"
+                Text="没有匹配的控件，请尝试其他关键词。" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

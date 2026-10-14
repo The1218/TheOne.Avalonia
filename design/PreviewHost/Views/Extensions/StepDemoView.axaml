@@ -1,0 +1,46 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.StepDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:StepDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel Spacing="16">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="Step · 验证步骤" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="模型属性声明验证规则 · 输入与错误提示由控件库生成 · 验证通过才能前进"
+            TextWrapping="Wrap" />
+        <WrapPanel>
+            <TextBlock Text="步骤条对齐" VerticalAlignment="Center" Margin="0,0,8,8" />
+            <ComboBox ItemsSource="{Binding HeaderAlignments}" SelectedItem="{Binding HeaderAlignment, Mode=TwoWay}" MinWidth="120" Margin="0,0,12,8" />
+            <Button
+                Click="ResetClicked"
+                Content="重置三步表单"
+                Margin="0,0,8,8" />
+            <Button
+                Click="ThousandClicked"
+                Content="加载 1,000 步"
+                Margin="0,0,8,8" />
+            <Button
+                Click="LastClicked"
+                Content="尝试跳到末步"
+                Margin="0,0,8,8" />
+        </WrapPanel>
+        <one:Step
+            CompletedCommand="{Binding CompletedCommand}"
+            Height="590"
+            HeaderHorizontalAlignment="{Binding HeaderAlignment}"
+            ItemsSource="{Binding Steps}"
+            Name="StepSample" />
+        <TextBlock
+            Name="StepStatus"
+            Text="{Binding Status}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,57 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme TargetType="FlyoutPresenter" x:Key="{x:Type FlyoutPresenter}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="Padding" Value="{DynamicResource One.Flyout.Padding}" />
+        <Setter Property="FontSize" Value="{DynamicResource One.Type.Body}" />
+        <Setter Property="MinWidth" Value="160" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.Flyout.MaxWidth}" />
+        <Setter Property="MaxHeight" Value="{DynamicResource One.Flyout.MaxHeight}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        ClipToBounds="True"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Name="LayoutRoot">
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                            Name="PART_ScrollViewer"
+                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                HorizontalContentAlignment="Stretch"
+                                Margin="{TemplateBinding Padding}"
+                                Name="PART_ContentPresenter"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                VerticalContentAlignment="Stretch" />
+                        </ScrollViewer>
+                    </Border>
+                    <!--  Keep the stroke above embedded buttons and scrollbars at the rounded edge.  -->
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        IsHitTestVisible="False"
+                        Name="PART_Outline" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

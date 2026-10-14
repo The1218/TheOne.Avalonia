@@ -1,0 +1,58 @@
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Cross-template states belong to Styles; ControlTheme permits a single template selector.  -->
+    <Style Selector=":is(SplitButton):checked /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    </Style>
+    <Style Selector=":is(SplitButton):checked /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    </Style>
+    <Style Selector=":is(SplitButton):pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.Line}" />
+    </Style>
+    <Style Selector=":is(SplitButton):checked:pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    </Style>
+    <Style Selector=":is(SplitButton):flyout-open /template/ Button#PART_SecondaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).primary /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).primary:checked /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).primary /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).primary:checked /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).primary:pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+    </Style>
+    <Style Selector=":is(SplitButton).primary:flyout-open /template/ Button#PART_SecondaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).accent /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).accent:checked /template/ Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).accent /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).accent:checked /template/ Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton).accent:pressed /template/ Button#PART_PrimaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+    </Style>
+    <Style Selector=":is(SplitButton).accent:flyout-open /template/ Button#PART_SecondaryButton /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector=":is(SplitButton):disabled /template/ Button /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).primary:disabled /template/ Button /template/ ContentPresenter#PART_ContentPresenter, :is(SplitButton).accent:disabled /template/ Button /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+    </Style>
+    <Style Selector=":is(SplitButton):disabled /template/ Border#SeparatorBorder, :is(SplitButton).primary:disabled /template/ Border#SeparatorBorder, :is(SplitButton).accent:disabled /template/ Border#SeparatorBorder">
+        <Setter Property="Background" Value="{DynamicResource One.Line}" />
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+</Styles>
+

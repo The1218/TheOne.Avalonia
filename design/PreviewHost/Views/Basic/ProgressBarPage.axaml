@@ -1,0 +1,14 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.ProgressBarPage" x:DataType="local:ProgressBarPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="ProgressBar" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="确定进度 / 完成 / 不确定进度 · 拖动滑块调整" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <ProgressBar Name="ControlSample" Value="{Binding Value, Mode=TwoWay}" Minimum="0" Maximum="100" MaxWidth="420" Height="10"/>
+    <ProgressBar Value="100" MaxWidth="420" Height="16"/>
+    <ProgressBar IsIndeterminate="True" MaxWidth="420" Height="10"/>
+    <Slider Value="{Binding Value, Mode=TwoWay}" MaxWidth="420"/>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

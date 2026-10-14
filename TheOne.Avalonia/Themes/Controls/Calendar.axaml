@@ -1,0 +1,49 @@
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="clr-namespace:TheOne.Avalonia.Controls;assembly=TheOne.Avalonia"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="Calendar" x:Key="{x:Type Calendar}">
+        <Setter Property="one:CalendarOptions.WheelNavigation" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinWidth" Value="310" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid
+                    Background="Transparent"
+                    Name="PART_Root"
+                    RowDefinitions="Auto,Auto">
+                    <!--  Calendar.MonthControl requires CalendarItem to be the first root child.  -->
+                    <CalendarItem
+                        Background="{TemplateBinding Background}"
+                        BorderThickness="0"
+                        Foreground="{TemplateBinding Foreground}"
+                        HeaderBackground="{TemplateBinding HeaderBackground}"
+                        Margin="9"
+                        Name="PART_CalendarItem" />
+                    <TimePicker
+                        ClockIdentifier="24HourClock"
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        IsVisible="{TemplateBinding one:CalendarOptions.ShowTime}"
+                        Margin="9,0,9,9"
+                        Name="PART_TimeEditor"
+                        SelectedTime="{Binding $parent[Calendar].(one:CalendarOptions.Time), Mode=TwoWay}" />
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Grid.RowSpan="2"
+                        IsHitTestVisible="False"
+                        ZIndex="-1" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

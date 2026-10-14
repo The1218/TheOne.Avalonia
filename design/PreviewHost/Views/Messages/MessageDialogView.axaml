@@ -1,0 +1,3 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.MessageDialogView" x:DataType="local:MessagePageViewModel">
+  <StackPanel Spacing="12"><one:Tag Content="{Binding Type}" Status="{Binding MessageStatus}" /><TextBlock Text="{Binding Message}" TextWrapping="Wrap" MaxWidth="520" /></StackPanel>
+</UserControl>

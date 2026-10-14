@@ -1,0 +1,59 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.SplitButtonPage"
+    x:DataType="local:SplitButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="SplitButton" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="默认 / 主要 / 禁用 · 主按钮与下拉菜单分别交互"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <SplitButton
+                    Command="{Binding InvokeCommand}"
+                    Content="默认操作"
+                    Margin="0,0,12,12"
+                    Name="ControlSample">
+                    <SplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+                <SplitButton
+                    Classes="primary"
+                    Command="{Binding InvokeCommand}"
+                    Content="主要操作"
+                    Margin="0,0,12,12">
+                    <SplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+                <SplitButton
+                    Command="{Binding InvokeCommand}"
+                    Content="禁用操作"
+                    IsEnabled="False"
+                    Margin="0,0,12,12">
+                    <SplitButton.Flyout>
+                        <MenuFlyout>
+                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                        </MenuFlyout>
+                    </SplitButton.Flyout>
+                </SplitButton>
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
+</local:BasicControlPage>

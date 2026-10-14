@@ -1,0 +1,56 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme TargetType="RefreshVisualizer" x:Key="{x:Type RefreshVisualizer}">
+        <Setter Property="one:RefreshMotion.UseMotionSettings" Value="True" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Height" Value="{DynamicResource One.Refresh.Height}" />
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="one:RefreshOptions.IndicatorSize" Value="{DynamicResource One.Refresh.IndicatorSize}" />
+        <Setter Property="Content">
+            <Template>
+                <PathIcon
+                    Data="M 18 2 L 18 5.4 A 9 9 0 1 0 21 12 L 19 12 A 7 7 0 1 1 16.2 6.6 L 13 6.6 L 13 8.6 L 20 8.6 L 20 2 Z"
+                    Height="{Binding $self.(one:RefreshOptions.IndicatorSize)}"
+                    Name="PART_Icon"
+                    Width="{Binding $self.(one:RefreshOptions.IndicatorSize)}"
+                    x:DataType="PathIcon" />
+            </Template>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Background="{TemplateBinding Background}" Name="PART_Root">
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        IsHitTestVisible="False"
+                        Name="PART_Outline" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^.one-refresh-horizontal">
+            <Setter Property="Height" Value="NaN" />
+            <Setter Property="Width" Value="{DynamicResource One.Refresh.Height}" />
+        </Style>
+        <Style Selector="^.one-refresh-bottom">
+            <Setter Property="BorderThickness" Value="0,1,0,0" />
+        </Style>
+        <Style Selector="^.one-refresh-left">
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+        </Style>
+        <Style Selector="^.one-refresh-right">
+            <Setter Property="BorderThickness" Value="1,0,0,0" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

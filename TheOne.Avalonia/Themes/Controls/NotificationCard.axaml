@@ -1,0 +1,165 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:converters="using:Avalonia.Data.Converters"
+    xmlns:n="using:Avalonia.Controls.Notifications"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="n:NotificationCard" x:Key="{x:Type n:NotificationCard}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="Padding" Value="{DynamicResource One.Notification.Padding}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Width" Value="{DynamicResource One.Notification.Width}" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="one:NotificationMotion.UseMotionSettings" Value="True" />
+        <Setter Property="one:NotificationMotion.EnterDuration" Value="{DynamicResource One.Motion.Notification.Enter}" />
+        <Setter Property="one:NotificationMotion.ExitDuration" Value="{DynamicResource One.Motion.Notification.Exit}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Name="PART_AnimationHost">
+                    <LayoutTransformControl Name="PART_LayoutTransformControl" UseRenderTransform="False">
+                        <Panel>
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                ClipToBounds="True"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                Name="PART_LayoutRoot">
+                                <Grid Margin="{TemplateBinding BorderThickness}">
+                                    <Panel
+                                        Background="{DynamicResource One.Accent}"
+                                        HorizontalAlignment="Left"
+                                        Name="PART_HeaderBar"
+                                        Width="3" />
+                                    <Grid
+                                        ColumnDefinitions="Auto,*,Auto"
+                                        ColumnSpacing="12"
+                                        Margin="{TemplateBinding Padding}">
+                                        <Border
+                                            Background="{DynamicResource One.AccentSoft}"
+                                            CornerRadius="24"
+                                            Height="{DynamicResource One.Notification.BadgeSize}"
+                                            Name="PART_StatusBadge"
+                                            VerticalAlignment="Top"
+                                            Width="{DynamicResource One.Notification.BadgeSize}">
+                                            <PathIcon
+                                                Data="M 9 3 L 11 3 L 11 6 L 9 6 Z M 9 8 L 11 8 L 11 17 L 9 17 Z"
+                                                Foreground="{DynamicResource One.Accent}"
+                                                Height="{DynamicResource One.Notification.IconSize}"
+                                                Name="PART_StatusIcon"
+                                                Width="{DynamicResource One.Notification.IconSize}" />
+                                        </Border>
+                                        <ContentPresenter
+                                            Content="{TemplateBinding Content}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Grid.Column="1"
+                                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            Name="PART_ContentPresenter"
+                                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                                            <ContentPresenter.DataTemplates>
+                                                <DataTemplate DataType="{x:Type n:INotification}" x:DataType="n:INotification">
+                                                    <StackPanel Spacing="6">
+                                                        <TextBlock
+                                                            FontWeight="SemiBold"
+                                                            IsVisible="{Binding Title, Converter={x:Static converters:StringConverters.IsNotNullOrEmpty}}"
+                                                            Name="PART_NotificationTitle"
+                                                            Text="{Binding Title}"
+                                                            TextWrapping="Wrap" />
+                                                        <TextBlock
+                                                            MaxHeight="96"
+                                                            Name="PART_NotificationMessage"
+                                                            Text="{Binding Message}"
+                                                            TextTrimming="CharacterEllipsis"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ContentPresenter.DataTemplates>
+                                        </ContentPresenter>
+                                        <Button
+                                            AutomationProperties.Name="关闭通知"
+                                            Classes="ghost"
+                                            CornerRadius="6"
+                                            Grid.Column="2"
+                                            Height="{DynamicResource One.Notification.CloseSize}"
+                                            MinHeight="0"
+                                            MinWidth="0"
+                                            Name="PART_CloseButton"
+                                            Padding="0"
+                                            ToolTip.Tip="关闭通知"
+                                            VerticalAlignment="Top"
+                                            Width="{DynamicResource One.Notification.CloseSize}"
+                                            n:NotificationCard.CloseOnClick="True">
+                                            <PathIcon
+                                                Data="M 3 2 L 10 9 L 17 2 L 18 3 L 11 10 L 18 17 L 17 18 L 10 11 L 3 18 L 2 17 L 9 10 L 2 3 Z"
+                                                Height="12"
+                                                Width="12" />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <Border
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}"
+                                IsHitTestVisible="False"
+                                Name="PART_Outline" />
+                        </Panel>
+                    </LayoutTransformControl>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:success /template/ Panel#PART_HeaderBar">
+            <Setter Property="Background" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:success /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:success /template/ Border#PART_StatusBadge">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+        </Style>
+        <Style Selector="^:success /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Data" Value="M 2 10 L 7 15 L 17 4 L 19 6 L 7 19 L 0 12 Z" />
+        </Style>
+        <Style Selector="^:warning /template/ Panel#PART_HeaderBar">
+            <Setter Property="Background" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:warning /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:warning /template/ Border#PART_StatusBadge">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        </Style>
+        <Style Selector="^:warning /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Data" Value="M 9 3 L 11 3 L 11 12 L 9 12 Z M 9 14 L 11 14 L 11 17 L 9 17 Z" />
+        </Style>
+        <Style Selector="^:error /template/ Panel#PART_HeaderBar">
+            <Setter Property="Background" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:error /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:error /template/ Border#PART_StatusBadge">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+        </Style>
+        <Style Selector="^:error /template/ PathIcon#PART_StatusIcon">
+            <Setter Property="Data" Value="M 3 2 L 10 9 L 17 2 L 18 3 L 11 10 L 18 17 L 17 18 L 10 11 L 3 18 L 2 17 L 9 10 L 2 3 Z" />
+        </Style>
+        <Style Selector="^:focus-within /template/ Border#PART_Outline">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+        <Style Selector="^[IsClosing=True]">
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style Selector="^[IsClosed=True]">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

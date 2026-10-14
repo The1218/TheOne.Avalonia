@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" xmlns:styling="using:TheOne.Avalonia.Styling" x:Class="TheOne.DesignPreview.CarouselDemoView" x:CompileBindings="True" x:DataType="local:CarouselDemoViewModel">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.helper"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="6">
+      <TextBlock Text="Carousel · 内容轮播" FontSize="22" FontWeight="SemiBold" />
+      <TextBlock Classes="helper" Text="1,000 项数据，按需创建页面。切换顶部主题和尺寸，使用按钮、方向键或拖动浏览。" />
+    </StackPanel>
+    <WrapPanel>
+      <CheckBox Name="EnableSwipe" Content="允许拖动" IsChecked="{Binding Swipe, Mode=TwoWay}" Margin="0,0,16,8" />
+      <CheckBox Name="WrapPages" Content="循环切换" IsChecked="{Binding Wrap, Mode=TwoWay}" Margin="0,0,16,8" />
+      <CheckBox Name="AnimatePages" Content="过渡效果" IsChecked="{Binding Animate, Mode=TwoWay}" Margin="0,0,16,8" />
+      <CheckBox Name="EnableCarousel" Content="启用轮播" IsChecked="{Binding Enabled, Mode=TwoWay}" Margin="0,0,16,8" />
+      <ComboBox Name="ViewportPicker" SelectedIndex="{Binding ViewportIndex, Mode=TwoWay}" Width="160" Margin="0,0,0,8" AutomationProperties.Name="页面显示比例">
+        <ComboBoxItem Content="完整页面" /><ComboBoxItem Content="显示相邻页面" />
+      </ComboBox>
+    </WrapPanel>
+    <Carousel Name="CarouselSample" Height="340" ItemsSource="{Binding Slides}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" IsSwipeEnabled="{Binding Swipe}" WrapSelection="{Binding Wrap}" ViewportFraction="{Binding ViewportFraction}" IsEnabled="{Binding Enabled}" AutomationProperties.Name="一千项内容轮播">
+      <Carousel.ItemTemplate>
+        <DataTemplate x:DataType="local:CarouselSlide">
+          <Border Background="{DynamicResource One.Subtle}" CornerRadius="12" Margin="4" Padding="16">
+          <Grid ColumnDefinitions="112,20,*" VerticalAlignment="Center">
+            <Border Grid.Column="0" Width="112" Height="128" Background="{DynamicResource One.AccentSoft}" CornerRadius="12" VerticalAlignment="Center">
+              <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="6">
+                <TextBlock Text="PAGE" FontSize="10" LetterSpacing="2" Foreground="{DynamicResource One.Accent}" HorizontalAlignment="Center" />
+                <TextBlock Text="{Binding Number, StringFormat='{}{0:0000}'}" FontSize="28" FontWeight="SemiBold" Foreground="{DynamicResource One.Accent}" HorizontalAlignment="Center" />
+              </StackPanel>
+            </Border>
+            <StackPanel Grid.Column="2" Spacing="12" VerticalAlignment="Center">
+              <TextBlock Text="{Binding Category}" FontSize="12" Foreground="{DynamicResource One.Muted}" />
+              <TextBlock Name="SlideTitle" Text="{Binding Title}" FontSize="22" FontWeight="SemiBold" TextWrapping="Wrap" />
+              <TextBlock Name="SlideDescription" Text="{Binding Description}" TextWrapping="Wrap" />
+              <Button Name="SlideAction" Content="查看详情" HorizontalAlignment="Left" Command="{Binding $parent[local:CarouselDemoView].Model.SlideActionCommand}" CommandParameter="{Binding}" />
+            </StackPanel>
+          </Grid>
+          </Border>
+        </DataTemplate>
+      </Carousel.ItemTemplate>
+    </Carousel>
+    <Grid ColumnDefinitions="Auto,*,Auto">
+      <Button Name="PreviousPage" IsEnabled="{Binding CanPrevious}" Content="上一页" Command="{Binding PreviousCommand}" />
+      <TextBlock Name="PagePosition" Text="{Binding Position}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" />
+      <Button Name="NextPage" IsEnabled="{Binding CanNext}" Content="下一页" Grid.Column="2" Command="{Binding NextCommand}" />
+    </Grid>
+    <Separator />
+    <WrapPanel>
+      <NumericUpDown Name="PageIndex" Minimum="1" Maximum="1000" Value="{Binding Target, Mode=TwoWay}" Width="144" Margin="0,0,8,8" AutomationProperties.Name="目标页面序号" />
+      <Button Name="JumpPage" Content="跳转" Command="{Binding JumpCommand}" Margin="0,0,8,8" />
+      <Button Name="LastPage" Content="最后一页" Command="{Binding LastCommand}" Margin="0,0,8,8" />
+      <Button Name="ReversePages" Content="快速往返" Command="{Binding ReverseCommand}" Margin="0,0,8,8" />
+      <Button Name="ResetCarousel" Content="重置" Command="{Binding ResetCommand}" Margin="0,0,8,8" />
+    </WrapPanel>
+    <TextBlock Name="CarouselMetrics" Text="{Binding Metrics}" Classes="helper" />
+    <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="16">
+      <StackPanel Spacing="6">
+        <TextBlock Name="CarouselStatus" Text="{Binding Status}" TextWrapping="Wrap" />
+        <TextBlock Classes="helper" Text="聚焦轮播后使用 ← / →、Home / End；拖动页面可切换，开启循环后可跨越首尾页。" />
+      </StackPanel>
+    </Border>
+    <TextBlock Text="相邻页面预览 · 精简卡片模板" FontWeight="SemiBold"/>
+    <Carousel Name="CompactCarouselSample" Height="180" ItemsSource="{Binding Slides}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" ViewportFraction="0.8" WrapSelection="True" IsSwipeEnabled="True">
+      <Carousel.ItemTemplate><DataTemplate x:DataType="local:CarouselSlide">
+        <Border Background="{DynamicResource One.AccentSoft}" CornerRadius="12" Margin="8" Padding="20">
+          <StackPanel Spacing="8" VerticalAlignment="Center"><TextBlock Text="{Binding Category}" Foreground="{DynamicResource One.Accent}"/><TextBlock Text="{Binding Title}" FontSize="20" FontWeight="SemiBold" TextWrapping="Wrap"/></StackPanel>
+        </Border>
+      </DataTemplate></Carousel.ItemTemplate>
+    </Carousel>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,172 @@
+<!--  Native Window/VisualLayerManager contract based on Avalonia 12.1.4 (MIT).  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:chrome="using:Avalonia.Controls.Chrome"
+    xmlns:n="using:Avalonia.Controls.Notifications"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button"
+        x:Key="One.WindowCloseButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Danger}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Surface}" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme TargetType="one:OneWindow" x:Key="{x:Type one:OneWindow}">
+        <Setter Property="WindowDecorations" Value="BorderOnly" />
+        <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+        <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource One.Canvas}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TitleBarHeight" Value="48" />
+        <Setter Property="MinWidth" Value="320" />
+        <Setter Property="MinHeight" Value="240" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border IsHitTestVisible="False" Name="PART_TransparencyFallback" />
+                    <Border Background="{TemplateBinding Background}" IsHitTestVisible="False" />
+                    <VisualLayerManager Name="PART_VisualLayerManager">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid RowDefinitions="Auto,*">
+                                <Border
+                                    Background="{DynamicResource One.Surface}"
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    BorderThickness="0,0,0,1"
+                                    Height="{TemplateBinding TitleBarHeight}"
+                                    IsVisible="{TemplateBinding ShowTitleBar}"
+                                    Name="PART_TitleBar"
+                                    chrome:WindowDecorationProperties.ElementRole="TitleBar">
+                                    <Grid
+                                        ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto"
+                                        ColumnSpacing="12"
+                                        Margin="12,0,0,0">
+                                        <TextBlock
+                                            FontWeight="SemiBold"
+                                            MaxWidth="280"
+                                            Text="{TemplateBinding Title}"
+                                            TextTrimming="CharacterEllipsis"
+                                            VerticalAlignment="Center" />
+                                        <ContentPresenter
+                                            Content="{TemplateBinding LeftContent}"
+                                            ContentTemplate="{TemplateBinding LeftContentTemplate}"
+                                            Grid.Column="1"
+                                            Name="PART_LeftContent"
+                                            VerticalAlignment="Center"
+                                            chrome:WindowDecorationProperties.ElementRole="User" />
+                                        <ContentPresenter
+                                            Content="{TemplateBinding RightContent}"
+                                            ContentTemplate="{TemplateBinding RightContentTemplate}"
+                                            Grid.Column="3"
+                                            Name="PART_RightContent"
+                                            VerticalAlignment="Center"
+                                            chrome:WindowDecorationProperties.ElementRole="User" />
+                                        <one:ThemeButton
+                                            Grid.Column="4"
+                                            IsVisible="{TemplateBinding ShowThemeButton}"
+                                            Name="PART_ThemeButton"
+                                            Scope="{TemplateBinding ThemeButtonScope}"
+                                            chrome:WindowDecorationProperties.ElementRole="User" />
+                                        <StackPanel
+                                            Grid.Column="5"
+                                            Orientation="Horizontal"
+                                            Spacing="0">
+                                            <Button
+                                                AutomationProperties.Name="最小化"
+                                                Classes="ghost"
+                                                CornerRadius="0"
+                                                Height="{TemplateBinding TitleBarHeight}"
+                                                IsEnabled="{TemplateBinding CanMinimize}"
+                                                MinHeight="0"
+                                                MinWidth="0"
+                                                Name="PART_MinimizeButton"
+                                                Padding="14"
+                                                Width="44"
+                                                chrome:WindowDecorationProperties.ElementRole="MinimizeButton">
+                                                <PathIcon
+                                                    Data="M 0 6 L 12 6 L 12 7 L 0 7 Z"
+                                                    Height="12"
+                                                    Width="12" />
+                                            </Button>
+                                            <Button
+                                                AutomationProperties.Name="最大化或还原"
+                                                Classes="ghost"
+                                                CornerRadius="0"
+                                                Height="{TemplateBinding TitleBarHeight}"
+                                                IsEnabled="{TemplateBinding CanMaximize}"
+                                                MinHeight="0"
+                                                MinWidth="0"
+                                                Name="PART_MaximizeButton"
+                                                Padding="14"
+                                                Width="44"
+                                                chrome:WindowDecorationProperties.ElementRole="MaximizeButton">
+                                                <PathIcon
+                                                    Data="M 0 0 L 12 0 L 12 12 L 0 12 Z M 1 1 L 1 11 L 11 11 L 11 1 Z"
+                                                    Height="12"
+                                                    Width="12" />
+                                            </Button>
+                                            <Button
+                                                AutomationProperties.Name="关闭窗口"
+                                                CornerRadius="0"
+                                                Height="{TemplateBinding TitleBarHeight}"
+                                                MinHeight="0"
+                                                MinWidth="0"
+                                                Name="PART_CloseButton"
+                                                Padding="14"
+                                                Theme="{StaticResource One.WindowCloseButton}"
+                                                Width="44"
+                                                chrome:WindowDecorationProperties.ElementRole="CloseButton">
+                                                <PathIcon
+                                                    Data="M 1 0 L 6 5 L 11 0 L 12 1 L 7 6 L 12 11 L 11 12 L 6 7 L 1 12 L 0 11 L 5 6 L 0 1 Z"
+                                                    Height="12"
+                                                    Width="12" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <Grid Grid.Row="1">
+                                    <ContentPresenter
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        Margin="{TemplateBinding Padding}"
+                                        Name="PART_ContentPresenter"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                    <n:WindowNotificationManager
+                                        Margin="16"
+                                        MaxItems="4"
+                                        Name="PART_Notifications"
+                                        Position="TopRight" />
+                                    <n:WindowNotificationManager
+                                        Margin="16"
+                                        MaxItems="3"
+                                        Name="PART_Toasts"
+                                        Position="TopCenter" />
+                                    <Panel
+                                        Background="#66000000"
+                                        IsVisible="False"
+                                        Name="PART_DialogShield" />
+                                    <Panel IsVisible="False" Name="PART_DialogLayer" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </VisualLayerManager>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:dialog-open /template/ Panel#PART_DialogShield, ^:dialog-open /template/ Panel#PART_DialogLayer">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:dialog-open /template/ ContentPresenter#PART_ContentPresenter, ^:dialog-open /template/ ContentPresenter#PART_LeftContent, ^:dialog-open /template/ ContentPresenter#PART_RightContent, ^:dialog-open /template/ one|ThemeButton#PART_ThemeButton">
+            <Setter Property="IsEnabled" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

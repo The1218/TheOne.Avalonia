@@ -1,0 +1,43 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:sys="using:System"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <sys:Double x:Key="One.ToolTipContentMaxWidth">320</sys:Double>
+
+    <ControlTheme TargetType="ToolTip" x:Key="{x:Type ToolTip}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
+        <Setter Property="FontSize" Value="{DynamicResource ToolTipContentThemeFontSize}" />
+        <Setter Property="Padding" Value="{DynamicResource ToolTipBorderThemePadding}" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.ToolTipContentMaxWidth}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Name="PART_LayoutRoot"
+                    Padding="{TemplateBinding Padding}">
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        MaxWidth="{TemplateBinding MaxWidth}"
+                        Name="PART_ContentPresenter"
+                        TextBlock.LetterSpacing="{TemplateBinding LetterSpacing}"
+                        TextBlock.TextWrapping="Wrap" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:open">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

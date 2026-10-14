@@ -1,0 +1,101 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <Color x:Key="One.CanvasColor">#F6F7F5</Color>
+      <SolidColorBrush x:Key="One.Canvas" Color="{StaticResource One.CanvasColor}" />
+      <Color x:Key="One.SurfaceColor">#FFFFFF</Color>
+      <SolidColorBrush x:Key="One.Surface" Color="{StaticResource One.SurfaceColor}" />
+      <Color x:Key="One.InfoCard.FooterColor">#FCFDFC</Color>
+      <SolidColorBrush x:Key="One.InfoCard.Footer" Color="{StaticResource One.InfoCard.FooterColor}" />
+      <SolidColorBrush x:Key="One.CardTabStrip" Color="#EEEEEE" />
+      <SolidColorBrush x:Key="One.CardTabBorder" Color="#CDD3D0" />
+      <SolidColorBrush x:Key="One.CardTabHover" Color="#E2E6E3" />
+      <Color x:Key="One.SubtleColor">#EEF2EF</Color>
+      <SolidColorBrush x:Key="One.Subtle" Color="{StaticResource One.SubtleColor}" />
+      <Color x:Key="One.TextColor">#1D2925</Color>
+      <SolidColorBrush x:Key="One.Text" Color="{StaticResource One.TextColor}" />
+      <Color x:Key="One.MutedColor">#576760</Color>
+      <SolidColorBrush x:Key="One.Muted" Color="{StaticResource One.MutedColor}" />
+      <Color x:Key="One.LineColor">#DFE6E1</Color>
+      <SolidColorBrush x:Key="One.Line" Color="{StaticResource One.LineColor}" />
+      <Color x:Key="One.InputLineColor">#809389</Color>
+      <SolidColorBrush x:Key="One.InputLine" Color="{StaticResource One.InputLineColor}" />
+      <Color x:Key="One.AccentColor">#13745C</Color>
+      <SolidColorBrush x:Key="One.Accent" Color="{StaticResource One.AccentColor}" />
+      <Color x:Key="One.AccentHoverColor">#0D624D</Color>
+      <SolidColorBrush x:Key="One.AccentHover" Color="{StaticResource One.AccentHoverColor}" />
+      <Color x:Key="One.AccentPressedColor">#084B3B</Color>
+      <SolidColorBrush x:Key="One.AccentPressed" Color="{StaticResource One.AccentPressedColor}" />
+      <Color x:Key="One.AccentSoftColor">#E6F3EC</Color>
+      <SolidColorBrush x:Key="One.AccentSoft" Color="{StaticResource One.AccentSoftColor}" />
+      <Color x:Key="One.OnAccentColor">#FFFFFF</Color>
+      <SolidColorBrush x:Key="One.OnAccent" Color="{StaticResource One.OnAccentColor}" />
+      <Color x:Key="One.SuccessColor">#14734D</Color>
+      <SolidColorBrush x:Key="One.Success" Color="{StaticResource One.SuccessColor}" />
+      <Color x:Key="One.SuccessSoftColor">#E8F5ED</Color>
+      <SolidColorBrush x:Key="One.SuccessSoft" Color="{StaticResource One.SuccessSoftColor}" />
+      <Color x:Key="One.WarningColor">#875900</Color>
+      <SolidColorBrush x:Key="One.Warning" Color="{StaticResource One.WarningColor}" />
+      <Color x:Key="One.DangerColor">#B33340</Color>
+      <SolidColorBrush x:Key="One.Danger" Color="{StaticResource One.DangerColor}" />
+      <SolidColorBrush x:Key="One.DangerHover" Color="#982938" />
+      <SolidColorBrush x:Key="One.DangerPressed" Color="#812331" />
+      <Color x:Key="One.DangerSoftColor">#FCEEEF</Color>
+      <SolidColorBrush x:Key="One.DangerSoft" Color="{StaticResource One.DangerSoftColor}" />
+      <Color x:Key="One.DisabledTextColor">#74857C</Color>
+      <SolidColorBrush x:Key="One.DisabledText" Color="{StaticResource One.DisabledTextColor}" />
+      <Color x:Key="One.DisabledSurfaceColor">#EEF2EF</Color>
+      <SolidColorBrush x:Key="One.DisabledSurface" Color="{StaticResource One.DisabledSurfaceColor}" />
+      <SolidColorBrush x:Key="One.Focus" Color="{StaticResource One.AccentColor}" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Dark">
+      <Color x:Key="One.CanvasColor">#111715</Color>
+      <SolidColorBrush x:Key="One.Canvas" Color="{StaticResource One.CanvasColor}" />
+      <Color x:Key="One.SurfaceColor">#19211E</Color>
+      <SolidColorBrush x:Key="One.Surface" Color="{StaticResource One.SurfaceColor}" />
+      <Color x:Key="One.InfoCard.FooterColor">#1C2421</Color>
+      <SolidColorBrush x:Key="One.InfoCard.Footer" Color="{StaticResource One.InfoCard.FooterColor}" />
+      <SolidColorBrush x:Key="One.CardTabStrip" Color="#252D29" />
+      <SolidColorBrush x:Key="One.CardTabBorder" Color="#4B5D53" />
+      <SolidColorBrush x:Key="One.CardTabHover" Color="#304038" />
+      <Color x:Key="One.SubtleColor">#222E28</Color>
+      <SolidColorBrush x:Key="One.Subtle" Color="{StaticResource One.SubtleColor}" />
+      <Color x:Key="One.TextColor">#EAF2ED</Color>
+      <SolidColorBrush x:Key="One.Text" Color="{StaticResource One.TextColor}" />
+      <Color x:Key="One.MutedColor">#A6B9AE</Color>
+      <SolidColorBrush x:Key="One.Muted" Color="{StaticResource One.MutedColor}" />
+      <Color x:Key="One.LineColor">#32463B</Color>
+      <SolidColorBrush x:Key="One.Line" Color="{StaticResource One.LineColor}" />
+      <Color x:Key="One.InputLineColor">#6F887B</Color>
+      <SolidColorBrush x:Key="One.InputLine" Color="{StaticResource One.InputLineColor}" />
+      <Color x:Key="One.AccentColor">#61C5A5</Color>
+      <SolidColorBrush x:Key="One.Accent" Color="{StaticResource One.AccentColor}" />
+      <Color x:Key="One.AccentHoverColor">#79D2B5</Color>
+      <SolidColorBrush x:Key="One.AccentHover" Color="{StaticResource One.AccentHoverColor}" />
+      <Color x:Key="One.AccentPressedColor">#4DAE90</Color>
+      <SolidColorBrush x:Key="One.AccentPressed" Color="{StaticResource One.AccentPressedColor}" />
+      <Color x:Key="One.AccentSoftColor">#203B32</Color>
+      <SolidColorBrush x:Key="One.AccentSoft" Color="{StaticResource One.AccentSoftColor}" />
+      <Color x:Key="One.OnAccentColor">#10261E</Color>
+      <SolidColorBrush x:Key="One.OnAccent" Color="{StaticResource One.OnAccentColor}" />
+      <Color x:Key="One.SuccessColor">#8DD9B5</Color>
+      <SolidColorBrush x:Key="One.Success" Color="{StaticResource One.SuccessColor}" />
+      <Color x:Key="One.SuccessSoftColor">#213B2E</Color>
+      <SolidColorBrush x:Key="One.SuccessSoft" Color="{StaticResource One.SuccessSoftColor}" />
+      <Color x:Key="One.WarningColor">#EEC777</Color>
+      <SolidColorBrush x:Key="One.Warning" Color="{StaticResource One.WarningColor}" />
+      <Color x:Key="One.DangerColor">#FFABB0</Color>
+      <SolidColorBrush x:Key="One.Danger" Color="{StaticResource One.DangerColor}" />
+      <SolidColorBrush x:Key="One.DangerHover" Color="#FFC0C4" />
+      <SolidColorBrush x:Key="One.DangerPressed" Color="#EB929A" />
+      <Color x:Key="One.DangerSoftColor">#412C30</Color>
+      <SolidColorBrush x:Key="One.DangerSoft" Color="{StaticResource One.DangerSoftColor}" />
+      <Color x:Key="One.DisabledTextColor">#84988D</Color>
+      <SolidColorBrush x:Key="One.DisabledText" Color="{StaticResource One.DisabledTextColor}" />
+      <Color x:Key="One.DisabledSurfaceColor">#222E28</Color>
+      <SolidColorBrush x:Key="One.DisabledSurface" Color="{StaticResource One.DisabledSurfaceColor}" />
+      <SolidColorBrush x:Key="One.Focus" Color="{StaticResource One.AccentColor}" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+  <SolidColorBrush x:Key="One.Transparent" Color="Transparent" />
+</ResourceDictionary>

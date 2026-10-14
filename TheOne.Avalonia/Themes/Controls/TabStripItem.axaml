@@ -1,0 +1,79 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme TargetType="TabStripItem" x:Key="{x:Type TabStripItem}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Name="PART_LayoutRoot">
+                    <Panel>
+                        <ContentPresenter
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Foreground="{TemplateBinding Foreground}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Border
+                            Background="{DynamicResource One.Accent}"
+                            CornerRadius="1"
+                            Height="2"
+                            IsHitTestVisible="False"
+                            IsVisible="False"
+                            Margin="10,0,10,2"
+                            Name="PART_SelectedPipe"
+                            VerticalAlignment="Bottom" />
+                    </Panel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+        </Style>
+        <Style Selector="^:selected">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:selected:pointerover">
+            <Setter Property="Foreground" Value="{DynamicResource One.AccentHover}" />
+        </Style>
+        <Style Selector="^:selected:pressed">
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#PART_SelectedPipe">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:selected:pointerover /template/ Border#PART_SelectedPipe">
+            <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+        </Style>
+        <Style Selector="^:selected:pressed /template/ Border#PART_SelectedPipe">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#PART_SelectedPipe">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,27 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TabControlPage" x:DataType="local:TabControlPageViewModel">
+  <StackPanel Spacing="18">
+    <TextBlock Text="TabControl" FontSize="22" FontWeight="SemiBold"/>
+    <TextBlock Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
+    <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}"/>
+    <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+      <TextBlock Text="拖动标题排序，点击选中标签的关闭按钮关闭；集合与选择由 ViewModel 管理。" TextWrapping="Wrap"/>
+      <TabControl Name="ControlSample" Height="300" Classes="card" ItemsSource="{Binding Tabs}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+        <TabControl.ItemTemplate>
+          <DataTemplate x:DataType="x:String">
+            <TextBlock Text="{Binding}"/>
+          </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+          <DataTemplate x:DataType="x:String">
+            <TextBlock Text="{Binding}" Margin="24"/>
+          </DataTemplate>
+        </TabControl.ContentTemplate>
+      </TabControl>
+    </StackPanel>
+    <TextBlock Text="{Binding Status}" TextWrapping="Wrap"/>
+    <StackPanel Orientation="Horizontal" Spacing="8">
+      <Button Content="末尾标签" Command="{Binding LastTabCommand}"/>
+      <Button Content="添加标签" Command="{Binding AddTabCommand}"/>
+    </StackPanel>
+  </StackPanel>
+</local:BasicControlPage>

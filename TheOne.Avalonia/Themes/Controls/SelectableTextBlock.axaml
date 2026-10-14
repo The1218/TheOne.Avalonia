@@ -1,0 +1,36 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). Native text layout and selection rendering are retained.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <MenuFlyout Placement="Bottom" x:Key="One.SelectableTextBlock.ContextFlyout">
+        <MenuItem
+            Command="{Binding $parent[SelectableTextBlock].Copy}"
+            Header="{DynamicResource StringTextFlyoutCopyText}"
+            InputGesture="{x:Static TextBox.CopyGesture}"
+            IsEnabled="{Binding $parent[SelectableTextBlock].CanCopy}" />
+    </MenuFlyout>
+    <ControlTheme TargetType="SelectableTextBlock" x:Key="{x:Type SelectableTextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="FontSize" Value="{DynamicResource One.Type.Body}" />
+        <Setter Property="LineHeight" Value="{DynamicResource One.Text.LineHeight}" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource One.AccentSoft}" />
+        <!--  Preserve per-run foreground and font size; consumers may explicitly override selection foreground.  -->
+        <Style Selector="^[IsEnabled=True]">
+            <Setter Property="Cursor" Value="IBeam" />
+            <Setter Property="ContextFlyout" Value="{StaticResource One.SelectableTextBlock.ContextFlyout}" />
+        </Style>
+        <Style Selector="^.muted">
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+        </Style>
+        <Style Selector="^.accent">
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:disabled, ^.muted:disabled, ^.accent:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Cursor" Value="Arrow" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

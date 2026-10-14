@@ -1,0 +1,47 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:Tag}" TargetType="one:Tag">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="5" />
+    <Setter Property="Padding" Value="9,3" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="MinHeight" Value="28" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+          <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="{TemplateBinding Spacing}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            <ContentPresenter Name="PART_IconPresenter" Content="{TemplateBinding Icon}" ContentTemplate="{TemplateBinding IconTemplate}" IsVisible="False" VerticalContentAlignment="Center" />
+            <ContentPresenter Name="PART_ContentPresenter" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:has-icon /template/ ContentPresenter#PART_IconPresenter"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:not(:has-icon) /template/ Grid, ^:not(:has-content) /template/ Grid"><Setter Property="ColumnSpacing" Value="0" /></Style>
+    <Style Selector="^:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /></Style>
+    <Style Selector="^:solid"><Setter Property="Background" Value="{DynamicResource One.Text}" /><Setter Property="Foreground" Value="{DynamicResource One.Canvas}" /></Style>
+    <Style Selector="^:information"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /><Setter Property="Background" Value="{DynamicResource One.AccentSoft}" /></Style>
+    <Style Selector="^:information:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:information:solid"><Setter Property="Background" Value="{DynamicResource One.Accent}" /><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /></Style>
+    <Style Selector="^:success"><Setter Property="Foreground" Value="{DynamicResource One.Success}" /><Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" /></Style>
+    <Style Selector="^:success:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Success}" /></Style>
+    <Style Selector="^:success:solid"><Setter Property="Background" Value="{DynamicResource One.Success}" /><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /></Style>
+    <Style Selector="^:warning"><Setter Property="Foreground" Value="{DynamicResource One.Warning}" /><Setter Property="Background" Value="{DynamicResource One.Subtle}" /></Style>
+    <Style Selector="^:warning:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" /></Style>
+    <Style Selector="^:warning:solid"><Setter Property="Background" Value="{DynamicResource One.Warning}" /><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /></Style>
+    <Style Selector="^:error"><Setter Property="Foreground" Value="{DynamicResource One.Danger}" /><Setter Property="Background" Value="{DynamicResource One.DangerSoft}" /></Style>
+    <Style Selector="^:error:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" /></Style>
+    <Style Selector="^:error:solid"><Setter Property="Background" Value="{DynamicResource One.Danger}" /><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /></Style>
+    <Style Selector="^:processing"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /><Setter Property="Background" Value="{DynamicResource One.AccentSoft}" /></Style>
+    <Style Selector="^:processing:outline"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:processing:solid"><Setter Property="Background" Value="{DynamicResource One.Accent}" /><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /></Style>
+    <Style Selector="^.one-small"><Setter Property="MinHeight" Value="24" /><Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="7,2" /></Style>
+    <Style Selector="^.one-large"><Setter Property="MinHeight" Value="32" /><Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="11,4" /></Style>
+    <Style Selector="^:disabled, ^:disabled:solid, ^:disabled:outline, ^:disabled:soft"><Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /><Setter Property="BorderBrush" Value="Transparent" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

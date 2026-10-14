@@ -1,0 +1,350 @@
+[
+  {
+    "theme": "Light",
+    "pair": "Text/Canvas",
+    "minimum": 4.5,
+    "ratio": 14.0
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/Surface",
+    "minimum": 4.5,
+    "ratio": 15.04
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/Subtle",
+    "minimum": 4.5,
+    "ratio": 13.31
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 13.18
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/Surface",
+    "minimum": 4.5,
+    "ratio": 5.98
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/Subtle",
+    "minimum": 4.5,
+    "ratio": 5.29
+  },
+  {
+    "theme": "Light",
+    "pair": "Accent/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 5.0
+  },
+  {
+    "theme": "Light",
+    "pair": "AccentHover/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 6.41
+  },
+  {
+    "theme": "Light",
+    "pair": "AccentPressed/AccentSoft",
+    "minimum": 3,
+    "ratio": 8.84
+  },
+  {
+    "theme": "Light",
+    "pair": "Success/SuccessSoft",
+    "minimum": 4.5,
+    "ratio": 5.21
+  },
+  {
+    "theme": "Light",
+    "pair": "Danger/Surface",
+    "minimum": 4.5,
+    "ratio": 6.06
+  },
+  {
+    "theme": "Light",
+    "pair": "InputLine/Surface",
+    "minimum": 3,
+    "ratio": 3.25
+  },
+  {
+    "theme": "Light",
+    "pair": "Focus/Surface",
+    "minimum": 3,
+    "ratio": 5.71
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 5.15
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/CardTabHover",
+    "minimum": 4.5,
+    "ratio": 11.93
+  },
+  {
+    "theme": "Light",
+    "pair": "Warning/Subtle",
+    "minimum": 3,
+    "ratio": 5.37
+  },
+  {
+    "theme": "Light",
+    "pair": "Danger/DangerSoft",
+    "minimum": 3,
+    "ratio": 5.37
+  },
+  {
+    "theme": "Light",
+    "pair": "Text/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 14.75
+  },
+  {
+    "theme": "Light",
+    "pair": "Muted/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 5.86
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Accent",
+    "minimum": 4.5,
+    "ratio": 5.71
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Muted",
+    "minimum": 4.5,
+    "ratio": 5.98
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Warning",
+    "minimum": 4.5,
+    "ratio": 6.07
+  },
+  {
+    "theme": "Light",
+    "pair": "Surface/Danger",
+    "minimum": 4.5,
+    "ratio": 6.06
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Accent",
+    "minimum": 4.5,
+    "ratio": 5.71
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/AccentHover",
+    "minimum": 4.5,
+    "ratio": 7.31
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/AccentPressed",
+    "minimum": 4.5,
+    "ratio": 10.1
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/Danger",
+    "minimum": 4.5,
+    "ratio": 6.06
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/DangerHover",
+    "minimum": 4.5,
+    "ratio": 7.75
+  },
+  {
+    "theme": "Light",
+    "pair": "OnAccent/DangerPressed",
+    "minimum": 4.5,
+    "ratio": 9.47
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/Canvas",
+    "minimum": 4.5,
+    "ratio": 15.92
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/Surface",
+    "minimum": 4.5,
+    "ratio": 14.42
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/Subtle",
+    "minimum": 4.5,
+    "ratio": 12.37
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 10.63
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/Surface",
+    "minimum": 4.5,
+    "ratio": 7.96
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/Subtle",
+    "minimum": 4.5,
+    "ratio": 6.83
+  },
+  {
+    "theme": "Dark",
+    "pair": "Accent/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 5.79
+  },
+  {
+    "theme": "Dark",
+    "pair": "AccentHover/AccentSoft",
+    "minimum": 4.5,
+    "ratio": 6.75
+  },
+  {
+    "theme": "Dark",
+    "pair": "AccentPressed/AccentSoft",
+    "minimum": 3,
+    "ratio": 4.48
+  },
+  {
+    "theme": "Dark",
+    "pair": "Success/SuccessSoft",
+    "minimum": 4.5,
+    "ratio": 7.36
+  },
+  {
+    "theme": "Dark",
+    "pair": "Danger/Surface",
+    "minimum": 4.5,
+    "ratio": 9.16
+  },
+  {
+    "theme": "Dark",
+    "pair": "InputLine/Surface",
+    "minimum": 3,
+    "ratio": 4.29
+  },
+  {
+    "theme": "Dark",
+    "pair": "Focus/Surface",
+    "minimum": 3,
+    "ratio": 7.86
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/CardTabStrip",
+    "minimum": 4.5,
+    "ratio": 6.85
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/CardTabHover",
+    "minimum": 4.5,
+    "ratio": 9.61
+  },
+  {
+    "theme": "Dark",
+    "pair": "Warning/Subtle",
+    "minimum": 3,
+    "ratio": 8.78
+  },
+  {
+    "theme": "Dark",
+    "pair": "Danger/DangerSoft",
+    "minimum": 3,
+    "ratio": 7.19
+  },
+  {
+    "theme": "Dark",
+    "pair": "Text/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 13.92
+  },
+  {
+    "theme": "Dark",
+    "pair": "Muted/InfoCard.Footer",
+    "minimum": 4.5,
+    "ratio": 7.68
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Accent",
+    "minimum": 4.5,
+    "ratio": 7.86
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Muted",
+    "minimum": 4.5,
+    "ratio": 7.96
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Warning",
+    "minimum": 4.5,
+    "ratio": 10.23
+  },
+  {
+    "theme": "Dark",
+    "pair": "Surface/Danger",
+    "minimum": 4.5,
+    "ratio": 9.16
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Accent",
+    "minimum": 4.5,
+    "ratio": 7.62
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/AccentHover",
+    "minimum": 4.5,
+    "ratio": 8.88
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/AccentPressed",
+    "minimum": 4.5,
+    "ratio": 5.9
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/Danger",
+    "minimum": 4.5,
+    "ratio": 8.88
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/DangerHover",
+    "minimum": 4.5,
+    "ratio": 10.31
+  },
+  {
+    "theme": "Dark",
+    "pair": "OnAccent/DangerPressed",
+    "minimum": 4.5,
+    "ratio": 6.91
+  }
+]

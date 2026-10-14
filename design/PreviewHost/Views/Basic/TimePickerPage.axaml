@@ -1,0 +1,11 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TimePickerPage" x:DataType="local:TimePickerPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="TimePicker" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><TimePicker Name="ControlSample" SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="24HourClock" UseSeconds="True" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time, Mode=TwoWay}" ClockIdentifier="12HourClock" UseSeconds="False" Margin="0,0,12,12" /><TimePicker SelectedTime="{Binding Time}" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

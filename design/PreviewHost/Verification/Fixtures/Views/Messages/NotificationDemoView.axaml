@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:n="using:Avalonia.Controls.Notifications" x:Class="TheOne.DesignPreview.NotificationDemoView" x:CompileBindings="True" xmlns:local="using:TheOne.DesignPreview" x:DataType="local:NotificationDemoViewModel">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.helper"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="6"><TextBlock Text="NotificationCard · 通知" FontSize="22" FontWeight="SemiBold" /><TextBlock Classes="helper" Text="显示四种通知，体验自动关闭与手动关闭。切换顶部主题和尺寸，在显示或关闭过程中切换动效。" /></StackPanel>
+    <WrapPanel>
+      <CheckBox Name="AutoCloseNotifications" IsChecked="{Binding AutoClose, Mode=TwoWay}" Content="自动关闭" Margin="0,0,16,8" />
+      <NumericUpDown Name="NotificationSeconds" Value="{Binding Seconds, Mode=TwoWay}" Minimum="0.5" Maximum="10" Increment="0.5" FormatString="0.0 秒" Width="184" Margin="0,0,16,8" AutomationProperties.Name="自动关闭延迟" />
+      <CheckBox Name="NotificationMotionEnabled" Content="通知动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
+      <ComboBox Name="NotificationPositionPicker" SelectedIndex="{Binding PositionIndex, Mode=TwoWay}" Width="126" Margin="0,0,16,8" AutomationProperties.Name="通知位置">
+        <ComboBoxItem Content="左上" /><ComboBoxItem Content="右上" /><ComboBoxItem Content="顶部居中" /><ComboBoxItem Content="左下" /><ComboBoxItem Content="右下" /><ComboBoxItem Content="底部居中" />
+      </ComboBox>
+    </WrapPanel>
+    <WrapPanel>
+      <Button Name="ShowInformationNotification" Content="提示" Click="OnInformation" Margin="0,0,8,8" />
+      <Button Name="ShowSuccessNotification" Content="成功" Click="OnSuccess" Classes="primary" Margin="0,0,8,8" />
+      <Button Name="ShowWarningNotification" Content="警告" Click="OnWarning" Margin="0,0,8,8" />
+      <Button Name="ShowErrorNotification" Content="错误" Click="OnError" Margin="0,0,8,8" />
+      <Button Name="ShowAllNotifications" Content="全部类型" Click="OnShowAll" Margin="0,0,8,8" />
+    </WrapPanel>
+    <Border Name="NotificationPreviewArea" Height="520" Background="{DynamicResource One.Canvas}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="12" ClipToBounds="True">
+      <Grid Margin="16">
+        <TextBlock Text="通知显示区域" Classes="helper" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False" />
+        <n:WindowNotificationManager Name="NotificationManager" MaxItems="4" Position="{Binding Position}" />
+      </Grid>
+    </Border>
+    <WrapPanel>
+      <Button Name="CloseOldestNotification" Content="关闭最早一条" Click="OnCloseOldest" Margin="0,0,8,8" />
+      <Button Name="CloseAllNotifications" Content="关闭全部" Click="OnCloseAll" Margin="0,0,8,8" />
+      <Button Name="ResetNotifications" Content="重置" Click="OnReset" Margin="0,0,8,8" />
+    </WrapPanel>
+    <TextBlock Name="NotificationMetrics" Text="{Binding Metrics}" Classes="helper" />
+    <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="16"><StackPanel Spacing="6">
+      <TextBlock Name="NotificationStatus" Text="{Binding Status}" TextWrapping="Wrap" />
+      <TextBlock Classes="helper" Text="关闭按钮或点击通知正文可关闭；也可使用下方按钮。自动关闭按延迟触发，关闭动效不会延长计时。最多同时显示 4 条；重置恢复全局动效设置。" />
+    </StackPanel></Border>
+  </StackPanel>
+</UserControl>

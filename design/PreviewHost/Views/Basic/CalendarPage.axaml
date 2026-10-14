@@ -1,0 +1,11 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.CalendarPage" x:DataType="local:CalendarPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="Calendar" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="月份 / 年份 / 十年视图" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><Calendar Name="ControlSample" SelectedDate="{Binding CalendarDate, Mode=TwoWay}" Margin="0,0,12,12" /><Calendar DisplayMode="Year" Margin="0,0,12,12" /><Calendar DisplayMode="Decade" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

@@ -1,0 +1,40 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style Selector="Button /template/ ContentPresenter#PART_ContentPresenter, ToggleButton /template/ ContentPresenter#PART_ContentPresenter, RepeatButton /template/ ContentPresenter#PART_ContentPresenter, ComboBox /template/ Border, CheckBox /template/ Border, RadioButton /template/ Border, ToggleButton /template/ Border#ToggleButtonBackground, TextBox /template/ Border#PART_BorderElement, NumericUpDown /template/ ButtonSpinner /template/ Border#PART_Border, TabItem /template/ Border#PART_LayoutRoot, TabStripItem /template/ Border#PART_LayoutRoot, ListBoxItem /template/ Border, TreeViewItem /template/ Border#PART_LayoutRoot, one|NavMenuItem /template/ Border#PART_LayoutRoot, MenuItem /template/ Border#PART_LayoutRoot, CalendarDatePicker /template/ Border#Background, CalendarDayButton /template/ ContentPresenter, CalendarButton /template/ ContentPresenter, GridSplitter /template/ Border#SplitterSurface">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="{DynamicResource One.Motion.Fast}" Property="Border.Background" />
+                <BrushTransition Duration="{DynamicResource One.Motion.Fast}" Property="Border.BorderBrush" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="TabItem:not(:selected) /template/ one|CardTabChrome#PART_LayoutRoot, Button /template/ Border#ButtonBackground">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="{DynamicResource One.Motion.Fast}" Property="Border.Background" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector="Slider /template/ Thumb">
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Duration="{DynamicResource One.Motion.Fast}" Property="Border.Background" />
+            </Transitions>
+        </Setter>
+    </Style>
+    <Style Selector=":is(Control).one-no-motion">
+        <Setter Property="Transitions" Value="{x:Null}" />
+    </Style>
+    <Style Selector="ToggleSwitch.one-no-motion /template/ Thumb, Expander.one-no-motion /template/ Path, TreeViewItem.one-no-motion /template/ Path, one|NavMenuItem.one-no-motion /template/ Path">
+        <Setter Property="Transitions" Value="{x:Null}" />
+    </Style>
+    <Style Selector="ToggleSwitch.one-no-motion">
+        <Setter Property="KnobTransitions" Value="{x:Null}" />
+    </Style>
+    <Style Selector="TabStripItem.one-no-motion /template/ Border#PART_LayoutRoot">
+        <Setter Property="Transitions" Value="{x:Null}" />
+    </Style>
+</Styles>

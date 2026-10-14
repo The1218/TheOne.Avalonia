@@ -1,0 +1,327 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.ChartDemoView"
+    Name="ChartDemoRoot"
+    x:CompileBindings="True"
+    x:DataType="local:ChartDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.helper">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector=":is(one|ChartBase).demo-chart" x:DataType="local:ChartDemoViewModel">
+            <Setter Property="AnimationDuration" Value="{Binding UpdateAnimationDuration}" />
+            <Setter Property="AutomationProperties.Name" Value="交互图表示例" />
+            <Setter Property="IsAnimationEnabled" Value="{Binding AnimateUpdates}" />
+            <Setter Property="IsEnabled" Value="{Binding Enabled}" />
+            <Setter Property="IsLegendInteractive" Value="{Binding LegendInteractive}" />
+            <Setter Property="IsPanEnabled" Value="{Binding PanEnabled}" />
+            <Setter Property="IsSmooth" Value="{Binding Smooth}" />
+            <Setter Property="IsZoomEnabled" Value="{Binding ZoomEnabled}" />
+            <Setter Property="NavigationAxes" Value="{Binding NavigationAxes}" />
+            <Setter Property="SamplingMode" Value="{Binding SamplingMode}" />
+            <Setter Property="SamplingPointBudget" Value="2000" />
+            <Setter Property="SamplingThreshold" Value="2000" />
+            <Setter Property="SecondaryUnit" Value="{Binding SecondaryUnit}" />
+            <Setter Property="SecondaryYAxisTitle" Value="{Binding SecondaryAxisTitle}" />
+            <Setter Property="SelectedIndex" Value="{Binding SelectedPoint, Mode=TwoWay}" />
+            <Setter Property="SelectedSeriesIndex" Value="{Binding SelectedSeries, Mode=TwoWay}" />
+            <Setter Property="SeriesSource" Value="{Binding Series}" />
+            <Setter Property="ShowCrosshair" Value="{Binding ShowCrosshair}" />
+            <Setter Property="ShowDataLabels" Value="{Binding ShowDataLabels}" />
+            <Setter Property="ShowGrid" Value="{Binding ShowGrid}" />
+            <Setter Property="ShowLegend" Value="{Binding ShowLegend}" />
+            <Setter Property="ShowSecondaryAxis" Value="{Binding ShowSecondaryAxis}" />
+            <Setter Property="Title" Value="{Binding ChartTitle}" />
+            <Setter Property="TooltipMode" Value="{Binding TooltipMode}" />
+            <Setter Property="Unit" Value="{Binding Unit}" />
+            <Setter Property="Viewport" Value="{Binding Viewport, Mode=TwoWay}" />
+            <Setter Property="YAxisTitle" Value="{Binding PrimaryAxisTitle}" />
+        </Style>
+        <Style Selector="one|GaugeChart.demo-chart" x:DataType="local:ChartDemoViewModel">
+            <Setter Property="Value" Value="{Binding GaugeValue, Mode=TwoWay}" />
+            <Setter Property="ShowGaugeNeedle" Value="{Binding GaugeNeedle}" />
+            <Setter Property="ShowGaugeTicks" Value="{Binding GaugeTicks}" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="18">
+        <StackPanel Spacing="6">
+            <TextBlock
+                FontSize="22"
+                FontWeight="SemiBold"
+                Text="Chart · 图表" />
+            <TextBlock Classes="helper" Text="移动光标查看同一位置的系列数据，点击图例显示或隐藏系列。F6 切换到图例，方向键浏览，空格切换。点击选择；Home / End 跳至首尾。支持缩放、平移、双轴和峰谷采样。" />
+        </StackPanel>
+        <WrapPanel>
+
+            <CheckBox
+                Content="启用图表"
+                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartEnabled" />
+            <CheckBox
+                Content="对比系列"
+                IsChecked="{Binding ShowComparison, Mode=TwoWay}"
+                IsEnabled="{Binding HasComparison}"
+                IsVisible="{Binding IsCartesian}"
+                Margin="0,0,16,8"
+                Name="ChartComparison" />
+            <CheckBox
+                Content="第二系列使用副轴"
+                IsChecked="{Binding UseSecondaryAxis, Mode=TwoWay}"
+                IsVisible="{Binding IsCartesian}"
+                Margin="0,0,16,8"
+                Name="ChartSecondaryAxis" />
+            <CheckBox
+                Content="副轴标签"
+                IsChecked="{Binding ShowSecondaryAxis, Mode=TwoWay}"
+                IsVisible="{Binding IsCartesian}"
+                Margin="0,0,16,8"
+                Name="ChartSecondaryLabels" />
+            <CheckBox
+                Content="大数据采样"
+                IsChecked="{Binding SamplingEnabled, Mode=TwoWay}"
+                IsVisible="{Binding IsCartesian}"
+                Margin="0,0,16,8"
+                Name="ChartSamplingEnabled" />
+            <CheckBox
+                Content="图例"
+                IsChecked="{Binding ShowLegend, Mode=TwoWay}"
+                Margin="0,0,16,8" />
+            <CheckBox
+                Content="网格"
+                IsChecked="{Binding ShowGrid, Mode=TwoWay}"
+                IsVisible="{Binding IsCartesian}"
+                Margin="0,0,16,8" />
+            <CheckBox
+                Content="数据标签"
+                IsChecked="{Binding ShowDataLabels, Mode=TwoWay}"
+                Margin="0,0,16,8" />
+        </WrapPanel>
+        <WrapPanel IsVisible="{Binding IsCartesian}">
+            <CheckBox
+                Content="平滑曲线"
+                IsChecked="{Binding Smooth, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartSmooth" />
+            <CheckBox
+                Content="十字光标"
+                IsChecked="{Binding ShowCrosshair, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartCrosshair" />
+            <CheckBox
+                Content="共享提示"
+                IsChecked="{Binding SharedTooltip, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartSharedTooltip" />
+            <CheckBox
+                Content="图例交互"
+                IsChecked="{Binding LegendInteractive, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartLegendInteractive" />
+            <CheckBox
+                Content="滚轮缩放"
+                IsChecked="{Binding ZoomEnabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartZoomEnabled" />
+            <CheckBox
+                Content="拖动平移"
+                IsChecked="{Binding PanEnabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartPanEnabled" />
+            <ComboBox
+                AutomationProperties.Name="缩放平移方向"
+                Margin="0,0,16,8"
+                Name="ChartAxesPicker"
+                SelectedIndex="{Binding NavigationAxesIndex, Mode=TwoWay}"
+                Width="160">
+                <ComboBoxItem Content="锁定视野" />
+                <ComboBoxItem Content="仅横向" />
+                <ComboBoxItem Content="仅纵向" />
+                <ComboBoxItem Content="横向与纵向" />
+            </ComboBox>
+            <Button
+                Click="OnZoomIn"
+                Content="放大 +"
+                Margin="0,0,8,8"
+                Name="ZoomInChart" />
+            <Button
+                Click="OnZoomOut"
+                Content="缩小 −"
+                Margin="0,0,8,8"
+                Name="ZoomOutChart" />
+            <Button
+                Click="OnPanLeft"
+                Content="← 平移"
+                Margin="0,0,8,8"
+                Name="PanLeftChart" />
+            <Button
+                Click="OnPanRight"
+                Content="平移 →"
+                Margin="0,0,8,8"
+                Name="PanRightChart" />
+            <Button
+                Click="OnResetViewport"
+                Content="完整视野"
+                Margin="0,0,8,8"
+                Name="ResetChartViewport" />
+        </WrapPanel>
+        <WrapPanel>
+            <CheckBox
+                Content="数据更新动效"
+                IsChecked="{Binding AnimateUpdates, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartAnimateUpdates" />
+            <ComboBox
+                AutomationProperties.Name="数据更新动效时长"
+                Margin="0,0,16,8"
+                Name="ChartAnimationSpeed"
+                SelectedIndex="{Binding AnimationDurationIndex, Mode=TwoWay}"
+                Width="150">
+                <ComboBoxItem Content="快速 · 200 ms" />
+                <ComboBoxItem Content="标准 · 500 ms" />
+                <ComboBoxItem Content="缓慢 · 1 s" />
+            </ComboBox>
+            <Button
+                Click="OnRapidUpdate"
+                Content="连续更新"
+                Margin="0,0,8,8"
+                Name="RapidChartUpdate" />
+            <Button
+                Click="OnExportPng"
+                Content="导出 PNG"
+                Margin="0,0,8,8"
+                Name="ExportChartPng" />
+        </WrapPanel>
+        <Border
+            Background="{DynamicResource One.Surface}"
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="1"
+            CornerRadius="10"
+            Padding="12">
+            <ContentControl Name="ChartHost" Content="{Binding #ChartDemoRoot.ChartSample}" />
+        </Border>
+        <Grid
+            ColumnDefinitions="Auto,*,Auto"
+            ColumnSpacing="16"
+            IsVisible="{Binding IsGauge}">
+            <TextBlock Text="完成度" VerticalAlignment="Center" />
+            <Slider
+                AutomationProperties.Name="仪表数值"
+                Grid.Column="1"
+                Maximum="100"
+                Minimum="0"
+                Name="ChartGaugeSlider"
+                Value="{Binding GaugeValue, Mode=TwoWay}" />
+            <TextBlock
+                Grid.Column="2"
+                Text="{Binding GaugeValue, StringFormat='{}{0:0}%'}"
+                VerticalAlignment="Center" />
+        </Grid>
+        <WrapPanel IsVisible="{Binding IsGauge}">
+            <CheckBox
+                Content="仪表指针"
+                IsChecked="{Binding GaugeNeedle, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartGaugeNeedle" />
+            <CheckBox
+                Content="仪表刻度"
+                IsChecked="{Binding GaugeTicks, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ChartGaugeTicks" />
+        </WrapPanel>
+        <WrapPanel>
+            <Button
+                Click="OnUpdateData"
+                Content="更新数据"
+                Margin="0,0,8,8"
+                Name="UpdateChartData" />
+            <Button
+                Click="OnThousandPoints"
+                Content="1,000 个数据点"
+                Margin="0,0,8,8"
+                Name="ThousandChartPoints" />
+            <Button
+                Click="OnHundredThousandPoints"
+                Content="100,000 个数据点"
+                Margin="0,0,8,8"
+                Name="HundredThousandChartPoints" />
+            <Button
+                Click="OnGapData"
+                Content="负数与缺失值"
+                Margin="0,0,8,8"
+                Name="ChartGapData" />
+            <Button
+                Click="OnStackData"
+                Content="正负堆叠数据"
+                Margin="0,0,8,8"
+                Name="ChartStackData" />
+            <Button
+                Click="OnSecondaryData"
+                Content="销售与访问双轴"
+                Margin="0,0,8,8"
+                Name="ChartSecondaryData" />
+            <Button
+                Click="OnThousandSeries"
+                Content="1,000 系列图例"
+                Margin="0,0,8,8"
+                Name="ThousandChartSeries" />
+            <Button
+                Click="OnLastPoint"
+                Content="选择末尾数据"
+                IsEnabled="{Binding IsCartesian}"
+                Margin="0,0,8,8"
+                Name="LastChartPoint" />
+            <Button
+                Click="OnReset"
+                Content="重置"
+                Margin="0,0,8,8"
+                Name="ResetChartData" />
+        </WrapPanel>
+        <Border
+            Background="{DynamicResource One.Subtle}"
+            CornerRadius="8"
+            Padding="16">
+            <StackPanel Spacing="6">
+                <TextBlock
+                    AutomationProperties.LiveSetting="Polite"
+                    Name="ChartSelectionLabel"
+                    Text="{Binding SelectedDetail}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Classes="helper"
+                    Name="ChartDataStatus"
+                    Text="{Binding Status}" />
+                <TextBlock
+                    Classes="helper"
+                    Name="ChartExportStatus"
+                    Text="{Binding ExportStatus}" />
+                <TextBlock
+                    Classes="helper"
+                    IsVisible="{Binding IsCartesian}"
+                    Name="ChartViewportStatus"
+                    Text="{Binding NavigationStatus}" />
+                <WrapPanel IsVisible="{Binding IsCartesian}">
+                    <TextBlock
+                        Classes="helper"
+                        Margin="0,0,16,0"
+                        Name="ChartHoveredCount"
+                        Text="{Binding #ChartDemoRoot.ChartSample.HoveredPoints.Count, StringFormat='当前对齐 {0} 个系列'}" />
+                    <TextBlock
+                        Classes="helper"
+                        Margin="0,0,16,0"
+                        Name="ChartRenderedCount"
+                        Text="{Binding #ChartDemoRoot.ChartSample.RenderedPointCount, StringFormat='实际绘制 {0:N0} 个顶点'}" />
+                    <TextBlock
+                        Classes="helper"
+                        Name="ChartSamplingState"
+                        Text="{Binding #ChartDemoRoot.ChartSample.SamplingActive, StringFormat='采样生效：{0}'}" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

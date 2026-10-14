@@ -1,0 +1,18 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.TreeViewPage" x:DataType="local:TreeViewPageViewModel">
+  <StackPanel Spacing="18">
+    <TextBlock Text="TreeView" FontSize="22" FontWeight="SemiBold"/>
+    <TextBlock Text="简洁节点 / 带说明节点 · 独立模型、双向展开状态与 1,000 项根及子集合" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
+    <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}"/>
+    <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><StackPanel Width="340" Spacing="8" Margin="0,0,16,16"><TextBlock Text="简洁树节点" Foreground="{DynamicResource One.Muted}"/><TreeView Name="ControlSample" Height="280" ItemsSource="{Binding TreeRoots}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+          <TreeView.DataTemplates><TreeDataTemplate x:DataType="local:PreviewTreeNode" ItemsSource="{Binding Children}"><TextBlock Text="{Binding Name}"/></TreeDataTemplate></TreeView.DataTemplates>
+          <TreeView.Styles><Style Selector="TreeViewItem" x:DataType="local:PreviewTreeNode"><Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/></Style></TreeView.Styles>
+        </TreeView></StackPanel><StackPanel Width="340" Spacing="8" Margin="0,0,16,16"><TextBlock Text="标题与说明节点" Foreground="{DynamicResource One.Muted}"/><TreeView Name="DetailedSample" Height="280" ItemsSource="{Binding TreeRoots}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+          <TreeView.DataTemplates><TreeDataTemplate x:DataType="local:PreviewTreeNode" ItemsSource="{Binding Children}"><StackPanel Spacing="4"><TextBlock Text="{Binding Name}" FontWeight="SemiBold"/><TextBlock Text="{Binding Description}" FontSize="12" Foreground="{DynamicResource One.Muted}"/></StackPanel></TreeDataTemplate></TreeView.DataTemplates>
+          <TreeView.Styles><Style Selector="TreeViewItem" x:DataType="local:PreviewTreeNode"><Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/></Style></TreeView.Styles>
+        </TreeView></StackPanel></WrapPanel>
+  </StackPanel>
+    <TextBlock Text="{Binding Status}" TextWrapping="Wrap"/>
+    <Button Content="第 1,000 项" Command="{Binding LastCommand}" HorizontalAlignment="Left"/>
+  </StackPanel>
+</local:BasicControlPage>

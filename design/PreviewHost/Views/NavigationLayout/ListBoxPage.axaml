@@ -1,0 +1,75 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ListBoxPage"
+    x:DataType="local:ListBoxPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ListBox" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="单行列表 / 图文列表 / 单选与多选 · 每种样式使用 1,000 项数据"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <StackPanel
+                    Margin="0,0,16,16"
+                    Spacing="8"
+                    Width="340">
+                    <TextBlock Foreground="{DynamicResource One.Muted}" Text="默认列表 · 单选" />
+                    <ListBox
+                        Height="240"
+                        ItemsSource="{Binding Items}"
+                        Name="ControlSample"
+                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,16,16"
+                    Spacing="8"
+                    Width="340">
+                    <TextBlock Foreground="{DynamicResource One.Muted}" Text="自定义内容 · 多选" />
+                    <ListBox
+                        Height="240"
+                        ItemsSource="{Binding Items}"
+                        Name="DetailedSample"
+                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                        SelectionMode="Multiple,Toggle">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Grid ColumnDefinitions="32,*" ColumnSpacing="12">
+                                    <Border
+                                        Background="{DynamicResource One.AccentSoft}"
+                                        CornerRadius="8"
+                                        Height="28"
+                                        Width="28">
+                                        <TextBlock
+                                            Foreground="{DynamicResource One.Accent}"
+                                            HorizontalAlignment="Center"
+                                            Text="W"
+                                            VerticalAlignment="Center" />
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Spacing="4">
+                                        <TextBlock FontWeight="SemiBold" Text="{Binding}" />
+                                        <TextBlock
+                                            FontSize="12"
+                                            Foreground="{DynamicResource One.Muted}"
+                                            Text="项目成员 · 可多选" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <Button
+            Command="{Binding LastCommand}"
+            Content="第 1,000 项"
+            HorizontalAlignment="Left" />
+    </StackPanel>
+</local:BasicControlPage>

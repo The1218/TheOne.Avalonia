@@ -1,0 +1,17 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.SplitViewPage" x:DataType="local:SplitViewPageViewModel">
+  <StackPanel Spacing="18">
+    <TextBlock Text="SplitView" FontSize="22" FontWeight="SemiBold"/>
+    <TextBlock Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
+    <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}"/>
+    <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+      <ToggleButton Content="展开侧栏" IsChecked="{Binding Expanded, Mode=TwoWay}" HorizontalAlignment="Left"/>
+      <SplitView Name="ControlSample" Height="320" IsPaneOpen="{Binding Expanded, Mode=TwoWay}" DisplayMode="CompactInline" OpenPaneLength="220" CompactPaneLength="48">
+        <SplitView.Pane>
+          <ListBox Height="300" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"/>
+        </SplitView.Pane>
+        <TextBlock Text="{Binding Text}" Margin="24"/>
+      </SplitView>
+    </StackPanel>
+    <TextBlock Text="{Binding Status}" TextWrapping="Wrap"/>
+  </StackPanel>
+</local:BasicControlPage>

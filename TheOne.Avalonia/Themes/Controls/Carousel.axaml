@@ -1,0 +1,76 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme TargetType="ContentPresenter" x:Key="One.CarouselItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </ControlTheme>
+    <ControlTheme TargetType="Carousel" x:Key="{x:Type Carousel}">
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Card}" />
+        <Setter Property="Padding" Value="{DynamicResource One.Carousel.Padding}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.Carousel.MinHeight}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="one:CarouselOptions.IsMouseSwipeEnabled" Value="True" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="ItemContainerTheme" Value="{StaticResource One.CarouselItem}" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <VirtualizingCarouselPanel />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="PageTransition">
+            <PageSlide
+                Duration="{StaticResource One.Motion.Carousel}"
+                Orientation="Horizontal"
+                SlideInEasing="CubicEaseOut"
+                SlideOutEasing="CubicEaseOut" />
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        ClipToBounds="True"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Name="PART_LayoutRoot">
+                        <ScrollViewer
+                            BringIntoViewOnFocusChange="False"
+                            HorizontalScrollBarVisibility="Hidden"
+                            Margin="{TemplateBinding BorderThickness}"
+                            Name="PART_ScrollViewer"
+                            VerticalScrollBarVisibility="Hidden">
+                            <ItemsPresenter
+                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                Margin="{TemplateBinding Padding}"
+                                Name="PART_ItemsPresenter" />
+                        </ScrollViewer>
+                    </Border>
+                    <Border
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        IsHitTestVisible="False"
+                        Name="PART_Outline" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:focus-within /template/ Border#PART_Outline">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        </Style>
+        <Style Selector="^.one-no-motion">
+            <Setter Property="PageTransition" Value="{x:Null}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

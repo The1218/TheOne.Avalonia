@@ -1,0 +1,72 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="One.ListBoxItemPadding">12,9,12,12</Thickness>
+    <ControlTheme TargetType="ListBoxItem" x:Key="{x:Type ListBoxItem}">
+        <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="{DynamicResource One.ListBoxItemPadding}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    Name="PART_ContentPresenter"
+                    Padding="{TemplateBinding Padding}"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+
+        <!--  PointerOver State  -->
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        </Style>
+
+        <!--  Pressed State  -->
+        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Line}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        </Style>
+
+        <!--  Selected State  -->
+        <Style Selector="^:selected">
+
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+
+            <!--  Selected Unfocused State  -->
+            <Style Selector="^:not(:focus) /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+
+            <!--  Selected PointerOver State  -->
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+
+            <!--  Selected Pressed State  -->
+            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+                <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

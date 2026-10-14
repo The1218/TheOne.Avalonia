@@ -1,0 +1,14 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.SelectableTextBlockPage" x:DataType="local:SelectableTextBlockPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="SelectableTextBlock" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="正文 / 强调 / 多行 / 辅助信息 · 保留文字选择与复制" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <SelectableTextBlock Name="ControlSample" Text="{Binding Text, Mode=TwoWay}" TextWrapping="Wrap"/>
+    <SelectableTextBlock Text="强调信息 · 可以选择并复制" FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource One.Accent}" TextWrapping="Wrap"/>
+    <SelectableTextBlock Text="多行文本展示&#10;拖动鼠标选择文字，使用快捷键复制。" TextWrapping="Wrap"/>
+    <SelectableTextBlock Text="辅助说明" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap"/>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

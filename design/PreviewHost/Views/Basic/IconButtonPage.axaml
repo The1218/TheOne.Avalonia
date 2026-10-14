@@ -1,0 +1,51 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.IconButtonPage"
+    x:DataType="local:IconButtonPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:kinds="clr-namespace:Material.Icons;assembly=Material.Icons"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock FontWeight="SemiBold" Text="IconButton · 图标属性与模板" />
+        <WrapPanel>
+            <one:IconButton
+                Classes="primary"
+                Command="{Binding InvokeCommand}"
+                Content="新建项目"
+                Icon="{Binding Icon}"
+                Margin="0,0,12,8"
+                Name="GeometryIcon" />
+            <one:IconButton
+                Command="{Binding InvokeCommand}"
+                Content="工作区"
+                Icon="{Binding MaterialIcon}"
+                Margin="0,0,12,8"
+                Name="MaterialIcon">
+                <one:IconButton.IconTemplate>
+                    <DataTemplate x:DataType="kinds:MaterialIconKind">
+                        <material:MaterialIcon Kind="{Binding}" />
+                    </DataTemplate>
+                </one:IconButton.IconTemplate>
+            </one:IconButton>
+            <one:IconButton
+                AutomationProperties.Name="收藏"
+                Classes="ghost"
+                Command="{Binding InvokeCommand}"
+                Margin="0,0,12,8"
+                Name="PathIconControl"
+                ToolTip.Tip="收藏">
+                <one:IconButton.Icon>
+                    <PathIcon Data="M8,1 L10,6 L15,6 L11,9 L13,15 L8,12 L3,15 L5,9 L1,6 L6,6 Z" />
+                </one:IconButton.Icon>
+            </one:IconButton>
+            <one:IconButton
+                Content="禁用图标操作"
+                Icon="{Binding Icon}"
+                IsEnabled="False"
+                Margin="0,0,12,8" />
+        </WrapPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+    </StackPanel>
+</local:BasicControlPage>

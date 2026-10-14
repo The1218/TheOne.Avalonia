@@ -1,0 +1,10 @@
+<Project>
+  <!-- One release train for our packages; upstream/framework/assembly versions are separate. -->
+  <PropertyGroup>
+    <TheOnePackageVersion Condition="'$(TheOnePackageVersion)' == ''">1.0.0-preview.1</TheOnePackageVersion>
+  </PropertyGroup>
+  <Target Name="ValidateTheOnePackageVersion" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' == 'true'">
+    <Error Condition="'$(Version)' != '$(TheOnePackageVersion)' or '$(PackageVersion)' != '$(TheOnePackageVersion)'"
+           Text="Version and PackageVersion must equal TheOnePackageVersion. Override only -p:TheOnePackageVersion when releasing both packages." />
+  </Target>
+</Project>

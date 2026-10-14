@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:ThemeButton}" TargetType="one:ThemeButton" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="Width" Value="{DynamicResource One.Size.Height}" /><Setter Property="Height" Value="{DynamicResource One.Size.Height}" />
+    <Setter Property="MinWidth" Value="0" /><Setter Property="MinHeight" Value="0" /><Setter Property="Padding" Value="8" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template"><ControlTemplate>
+      <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+        <Panel>
+          <PathIcon Name="PART_Moon" Width="16" Height="16" Foreground="{TemplateBinding Foreground}" Data="M 18 13 A 8 8 0 1 1 7 2 A 7 7 0 0 0 18 13 Z" />
+          <PathIcon Name="PART_Sun" IsVisible="False" Width="16" Height="16" Foreground="{TemplateBinding Foreground}" Data="M 10 5 A 5 5 0 1 1 9.99 5 Z M 9 0 L 11 0 L 11 3 L 9 3 Z M 9 17 L 11 17 L 11 20 L 9 20 Z M 0 9 L 3 9 L 3 11 L 0 11 Z M 17 9 L 20 9 L 20 11 L 17 11 Z M 2 3 L 3 2 L 5 4 L 4 5 Z M 15 16 L 16 15 L 18 17 L 17 18 Z M 15 4 L 17 2 L 18 3 L 16 5 Z M 2 17 L 4 15 L 5 16 L 3 18 Z" />
+        </Panel>
+      </Border>
+    </ControlTemplate></Setter>
+    <Style Selector="^:dark /template/ PathIcon#PART_Moon"><Setter Property="IsVisible" Value="False" /></Style>
+    <Style Selector="^:dark /template/ PathIcon#PART_Sun"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:pointerover /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /></Style>
+    <Style Selector="^:pressed /template/ Border#PART_Surface"><Setter Property="Background" Value="{DynamicResource One.Line}" /></Style>
+    <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_Surface"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /><Setter Property="BorderThickness" Value="1" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

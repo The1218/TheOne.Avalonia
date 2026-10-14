@@ -1,0 +1,88 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" xmlns:styling="using:TheOne.Avalonia.Styling" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:NavMenu}" TargetType="one:NavMenu" x:DataType="one:NavMenu" BasedOn="{StaticResource {x:Type TreeView}}">
+    <Setter Property="TransitionDuration" Value="{DynamicResource One.Motion.Expand}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="ItemHeight" Value="36" />
+    <Setter Property="IconSize" Value="18" />
+    <Setter Property="IconSpacing" Value="10" />
+    <Setter Property="Indent" Value="16" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}">
+          <Grid RowDefinitions="Auto,*">
+            <Grid Name="PART_FilterHeader" IsVisible="{TemplateBinding ShowFilter}" Margin="0,0,0,8">
+             <Grid Name="PART_FilterInlineHost">
+            <one:NavMenuFilterBox Name="PART_FilterBox" x:DataType="one:NavMenuFilterResult"
+                Text="{TemplateBinding SearchText, Mode=TwoWay}" PlaceholderText="{TemplateBinding FilterPlaceholder}"
+                ItemsSource="{TemplateBinding FilterResults}" MaxDropDownHeight="320"
+                ValueMemberBinding="{Binding Label}">
+              <one:NavMenuFilterBox.ItemTemplate>
+                <DataTemplate x:DataType="one:NavMenuFilterResult">
+                  <StackPanel Spacing="2">
+                    <one:NavMenuSearchText SourceText="{Binding Label}" TextTrimming="CharacterEllipsis" />
+                    <TextBlock Text="{Binding Path}" FontSize="12" Foreground="{DynamicResource One.Muted}" TextTrimming="CharacterEllipsis" />
+                  </StackPanel>
+                </DataTemplate>
+              </one:NavMenuFilterBox.ItemTemplate>
+            </one:NavMenuFilterBox>
+             </Grid>
+             <Button Name="PART_FilterButton" IsVisible="False" HorizontalAlignment="Center" Padding="0" MinHeight="0" MinWidth="0"
+                     Width="{TemplateBinding ItemHeight}" Height="{TemplateBinding ItemHeight}"
+                     Background="{DynamicResource One.Transparent}" BorderBrush="{DynamicResource One.Transparent}"
+                     ToolTip.Tip="{TemplateBinding FilterPlaceholder}" AutomationProperties.Name="{TemplateBinding FilterPlaceholder}">
+               <PathIcon Width="{TemplateBinding IconSize}" Height="{TemplateBinding IconSize}" Data="M 10,2 A 8,8 0 1 0 10,18 A 8,8 0 1 0 10,2 M 10,4 A 6,6 0 1 1 10,16 A 6,6 0 1 1 10,4 M 16,15 L 23,22 L 21,24 L 14,17 Z" />
+             </Button>
+             <Popup Name="PART_FilterPopup" IsLightDismissEnabled="True" ShouldUseOverlayLayer="True" Placement="RightEdgeAlignedTop" HorizontalOffset="8">
+               <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1"
+                       CornerRadius="{DynamicResource One.Radius.Card}" Padding="8">
+                 <Grid Name="PART_FilterPopupHost" />
+               </Border>
+             </Popup>
+            </Grid>
+            <ScrollViewer Grid.Row="1" Name="PART_MenuScrollViewer" Background="{TemplateBinding Background}"
+                HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}"
+                IsScrollChainingEnabled="{TemplateBinding (ScrollViewer.IsScrollChainingEnabled)}"
+                IsDeferredScrollingEnabled="{TemplateBinding (ScrollViewer.IsDeferredScrollingEnabled)}"
+                AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
+                BringIntoViewOnFocusChange="{TemplateBinding (ScrollViewer.BringIntoViewOnFocusChange)}">
+              <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" Margin="{TemplateBinding Padding}" />
+            </ScrollViewer>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:collapsed"><Setter Property="Width" Value="{Binding $self.CollapsedWidth}" /></Style>
+    <Style Selector="^:collapsed /template/ Grid#PART_FilterInlineHost"><Setter Property="IsVisible" Value="False" /></Style>
+    <Style Selector="^:collapsed /template/ Button#PART_FilterButton"><Setter Property="IsVisible" Value="True" /></Style>
+  </ControlTheme>
+  <ControlTheme x:Key="One.NavMenuCascadeChevron" TargetType="ToggleButton" BasedOn="{StaticResource One.TreeViewExpandCollapseChevron}">
+    <Style Selector="^:checked /template/ Path#ChevronPath"><Setter Property="RenderTransform" Value="rotate(0deg)" /></Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:NavMenuItem}" TargetType="one:NavMenuItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+    <Setter Property="Padding" Value="0,4,10,4" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Style Selector="^:compact"><Setter Property="Padding" Value="0" /></Style>
+    <Style Selector="^:compact /template/ Panel#PART_ExpandCollapseChevronContainer"><Setter Property="IsVisible" Value="False" /></Style>
+    <Style Selector="^:compact /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="HorizontalAlignment" Value="Center" /><Setter Property="HorizontalContentAlignment" Value="Center" /></Style>
+    <Style Selector="^:compact /template/ one|RevealHost#TreeContent"><Setter Property="IsOpen" Value="False" /><Setter Property="styling:Motion.Enabled" Value="False" /></Style>
+    <Style Selector="^:cascade"><Setter Property="Padding" Value="10,4,4,4" /></Style>
+    <Style Selector="^:cascade /template/ one|RevealHost#TreeContent"><Setter Property="IsOpen" Value="False" /><Setter Property="styling:Motion.Enabled" Value="False" /></Style>
+    <Style Selector="^:cascade /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="Grid.Column" Value="0" /></Style>
+    <Style Selector="^:cascade /template/ Panel#PART_ExpandCollapseChevronContainer"><Setter Property="Grid.Column" Value="1" /><Setter Property="HorizontalAlignment" Value="Right" /></Style>
+    <Style Selector="^:cascade /template/ ToggleButton#PART_ExpandCollapseChevron"><Setter Property="Theme" Value="{StaticResource One.NavMenuCascadeChevron}" /></Style>
+    <Style Selector="^:active-ancestor /template/ Border#PART_LayoutRoot"><Setter Property="Background" Value="{DynamicResource One.AccentSoft}" /></Style>
+    <Style Selector="^:active-ancestor /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:group /template/ ContentPresenter#PART_HeaderPresenter">
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+    </Style>
+    <Style Selector="^:active-ancestor:group /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:disabled /template/ Border#PART_LayoutRoot"><Setter Property="Background" Value="{DynamicResource One.Transparent}" /></Style>
+    <Style Selector="^:disabled /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

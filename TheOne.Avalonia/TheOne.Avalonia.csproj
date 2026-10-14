@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="../PackageVersions.props" />
+
+    <PropertyGroup>
+        <Version>$(TheOnePackageVersion)</Version>
+        <PackageVersion>$(TheOnePackageVersion)</PackageVersion>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageDescription>Still themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
+        <PackageReleaseNotes>Coordinated preview release with TheOne.Avalonia.DataGrid. Includes automatic entity filters, numeric summaries, native left/right frozen columns and improved column drag feedback. Requires .NET 10 and Avalonia 12.1.4.</PackageReleaseNotes>
+        <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <IsAotCompatible>true</IsAotCompatible>
+        <AvaloniaVersion>12.1.4</AvaloniaVersion>
+        <DataGridVersion>12.1.2</DataGridVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="../vendor/Avalonia.Controls.DataGrid/Avalonia.Controls.DataGrid.csproj" />
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="" />
+        <None Include="../LICENSE" Pack="true" PackagePath="" />
+        <None Update="PACKAGE.md" Pack="true" PackagePath="README.md" />
+    </ItemGroup>
+
+</Project>

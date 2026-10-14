@@ -1,0 +1,69 @@
+<local:BasicControlPage
+    x:Class="TheOne.DesignPreview.ItemsControlPage"
+    x:DataType="local:ItemsControlPageViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="18">
+        <TextBlock
+            FontSize="22"
+            FontWeight="SemiBold"
+            Text="ItemsControl" />
+        <TextBlock
+            Foreground="{DynamicResource One.Muted}"
+            Text="文字行 / 卡片内容模板 · 1,000 项数据，按视口回收"
+            TextWrapping="Wrap" />
+        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+            <WrapPanel>
+                <StackPanel
+                    Margin="0,0,16,16"
+                    Spacing="8"
+                    Width="340">
+                    <TextBlock Foreground="{DynamicResource One.Muted}" Text="文字行" />
+                    <ScrollViewer Height="240">
+                        <ItemsControl ItemsSource="{Binding Items}" Name="ControlSample">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <TextBlock Margin="12,8" Text="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,16,16"
+                    Spacing="8"
+                    Width="340">
+                    <TextBlock Foreground="{DynamicResource One.Muted}" Text="卡片行" />
+                    <ScrollViewer Height="240">
+                        <ItemsControl ItemsSource="{Binding Items}" Name="DetailedSample">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border
+                                        Background="{DynamicResource One.Subtle}"
+                                        CornerRadius="8"
+                                        Margin="4"
+                                        Padding="12">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock FontWeight="SemiBold" Text="{Binding}" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource One.Muted}"
+                                                Text="按需创建的内容模板" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </WrapPanel>
+        </StackPanel>
+        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+        <Button
+            Command="{Binding LastCommand}"
+            Content="第 1,000 项"
+            HorizontalAlignment="Left" />
+    </StackPanel>
+</local:BasicControlPage>

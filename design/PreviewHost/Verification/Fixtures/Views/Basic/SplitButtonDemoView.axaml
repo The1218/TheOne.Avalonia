@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.SplitButtonDemoView" x:DataType="local:SplitButtonDemoViewModel">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.note"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
+    <Style Selector="Border.demo-region"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="20" /></Style>
+    <Style Selector="SplitButton"><Setter Property="Margin" Value="0,0,16,8" /></Style>
+  </UserControl.Styles>
+  <StackPanel Spacing="18">
+    <StackPanel Spacing="6">
+      <TextBlock Text="21  分裂按钮 / SplitButton · ToggleSplitButton" FontWeight="SemiBold" TextWrapping="Wrap" />
+      <TextBlock Classes="note" Text="主区域执行操作，箭头打开菜单 · Enter / Space 执行 · F4 / Alt + ↓ 打开 · Esc 关闭" />
+    </StackPanel>
+    <WrapPanel>
+      <CheckBox Name="SplitDemoEnabled" Content="启用交互" IsChecked="{Binding IsEnabled}" Margin="0,0,16,8" />
+      <CheckBox Name="SplitCommandEnabled" Content="命令可执行" IsChecked="{Binding AllowCommand}" Margin="0,0,16,8" />
+      <Button Name="ResetSplitDemo" Content="重置" Command="{Binding ResetCommand}" Classes="ghost" />
+    </WrapPanel>
+    <Border Classes="demo-region">
+      <StackPanel Spacing="12">
+        <TextBlock Text="主操作 + 更多选择" FontWeight="SemiBold" />
+        <WrapPanel>
+          <SplitButton Name="ExportSplit" Content="{Binding ExportLabel}" Command="{Binding MainActionCommand}" CommandParameter="导出" IsEnabled="{Binding IsEnabled}">
+            <SplitButton.Flyout><MenuFlyout>
+              <MenuItem Header="导出为 PDF" Command="{Binding ChooseFormatCommand}" CommandParameter="PDF" />
+              <MenuItem Header="导出为 CSV" Command="{Binding ChooseFormatCommand}" CommandParameter="CSV" />
+              <MenuItem Header="导出为 Excel" Command="{Binding ChooseFormatCommand}" CommandParameter="Excel" />
+            </MenuFlyout></SplitButton.Flyout>
+          </SplitButton>
+          <SplitButton Name="PublishSplit" Classes="primary" Command="{Binding MainActionCommand}" CommandParameter="发布版本" IsEnabled="{Binding IsEnabled}">
+            <SplitButton.Content><StackPanel Orientation="Horizontal" Spacing="8"><PathIcon Width="14" Height="14" Data="M0,6 L14,0 L8,14 L6,8 Z" /><TextBlock Text="发布版本" /></StackPanel></SplitButton.Content>
+            <SplitButton.Flyout><MenuFlyout><MenuItem Header="立即发布" Command="{Binding MenuCommand}" CommandParameter="立即发布" /><MenuItem Header="安排发布" Command="{Binding MenuCommand}" CommandParameter="安排发布" /></MenuFlyout></SplitButton.Flyout>
+          </SplitButton>
+          <SplitButton Content="不可用" IsEnabled="False" />
+        </WrapPanel>
+        <TextBlock Classes="note" Text="选择菜单项更新操作选项，主操作只执行一次。两侧独立反馈，外框保持连续。" />
+      </StackPanel>
+    </Border>
+    <Border Classes="demo-region">
+      <StackPanel Spacing="12">
+        <TextBlock Text="切换状态 + 更多设置" FontWeight="SemiBold" />
+        <WrapPanel>
+          <ToggleSplitButton Name="AutoSplit" Content="自动发布" IsChecked="{Binding AutoPublish, Mode=TwoWay}" Command="{Binding MainActionCommand}" CommandParameter="切换自动发布" IsEnabled="{Binding IsEnabled}">
+            <SplitButton.Flyout><MenuFlyout><MenuItem Header="每天" Command="{Binding ChooseFrequencyCommand}" CommandParameter="每天" /><MenuItem Header="每周" Command="{Binding ChooseFrequencyCommand}" CommandParameter="每周" /><MenuItem Header="每月" Command="{Binding ChooseFrequencyCommand}" CommandParameter="每月" /></MenuFlyout></SplitButton.Flyout>
+          </ToggleSplitButton>
+          <ToggleSplitButton Name="PinnedSplit" Content="固定视图" Classes="primary" IsChecked="True" IsEnabled="{Binding IsEnabled}">
+            <SplitButton.Flyout><MenuFlyout><MenuItem Header="固定当前视图" Command="{Binding MenuCommand}" CommandParameter="固定当前视图" /><MenuItem Header="查看全部视图" Command="{Binding MenuCommand}" CommandParameter="查看全部视图" /></MenuFlyout></SplitButton.Flyout>
+          </ToggleSplitButton>
+          <ToggleSplitButton Content="已选且禁用" IsChecked="True" IsEnabled="False" />
+        </WrapPanel>
+        <TextBlock Text="{Binding FrequencyLabel}" Classes="note" />
+        <TextBlock Classes="note" Text="主区域切换 IsChecked 并同步绑定；箭头及菜单设置保持当前勾选状态。" />
+      </StackPanel>
+    </Border>
+    <Border Classes="demo-region">
+      <StackPanel Spacing="12">
+        <TextBlock Text="独立尺寸与大量菜单项" FontWeight="SemiBold" />
+        <WrapPanel>
+          <SplitButton Content="小尺寸" Classes="small" Command="{Binding MainActionCommand}" CommandParameter="小尺寸"><SplitButton.Flyout><MenuFlyout><MenuItem Header="小尺寸菜单" Command="{Binding MenuCommand}" CommandParameter="小尺寸" /></MenuFlyout></SplitButton.Flyout></SplitButton>
+          <ToggleSplitButton Content="正常尺寸" Classes="normal" IsChecked="True"><SplitButton.Flyout><MenuFlyout><MenuItem Header="正常尺寸菜单" Command="{Binding MenuCommand}" CommandParameter="正常尺寸" /></MenuFlyout></SplitButton.Flyout></ToggleSplitButton>
+          <SplitButton Content="大尺寸" Classes="large primary" Command="{Binding MainActionCommand}" CommandParameter="大尺寸"><SplitButton.Flyout><MenuFlyout><MenuItem Header="大尺寸菜单" Command="{Binding MenuCommand}" CommandParameter="大尺寸" /></MenuFlyout></SplitButton.Flyout></SplitButton>
+          <SplitButton Name="TemplateSplit" Content="选择模板 · 10,000" Command="{Binding MainActionCommand}" CommandParameter="使用模板" IsEnabled="{Binding IsEnabled}">
+            <SplitButton.Flyout><MenuFlyout ItemsSource="{Binding Templates}">
+              <MenuFlyout.ItemTemplate><DataTemplate x:DataType="local:SplitTemplateOption"><TextBlock Text="{Binding Name}" /></DataTemplate></MenuFlyout.ItemTemplate>
+              <MenuFlyout.ItemContainerTheme>
+                <ControlTheme TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}" x:DataType="local:SplitTemplateOption">
+                  <Setter Property="Command" Value="{Binding Command}" /><Setter Property="CommandParameter" Value="{Binding Name}" />
+                </ControlTheme>
+              </MenuFlyout.ItemContainerTheme>
+            </MenuFlyout></SplitButton.Flyout>
+          </SplitButton>
+        </WrapPanel>
+        <TextBlock Classes="note" Text="{Binding MenuMetrics}" />
+      </StackPanel>
+    </Border>
+    <StackPanel Spacing="6"><TextBlock Name="SplitCounts" Text="{Binding Counts}" /><TextBlock Name="SplitStatus" Text="{Binding Status}" Foreground="{DynamicResource One.Accent}" TextWrapping="Wrap" /></StackPanel>
+  </StackPanel>
+</UserControl>

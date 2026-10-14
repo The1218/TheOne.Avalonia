@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.ToastPage" x:DataType="local:MessagePageViewModel">
+  <StackPanel Spacing="18" MaxWidth="760" HorizontalAlignment="Stretch">
+    <TextBlock Text="Toast · 即时反馈" FontSize="22" FontWeight="SemiBold" />
+    <TextBlock Text="默认顶部居中。配置标题、状态、停留时间和位置后，点击显示观察效果。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+    <local:MessageDemoSettings />
+    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+      <StackPanel Spacing="6"><TextBlock Text="显示位置" /><ComboBox ItemsSource="{Binding Positions}" SelectedItem="{Binding Position, Mode=TwoWay}" HorizontalAlignment="Stretch" /></StackPanel>
+      <StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="停留秒数" /><NumericUpDown Value="{Binding Seconds, Mode=TwoWay}" Minimum="0.1" Maximum="120" Increment="0.5" IsEnabled="{Binding AutoClose}" /></StackPanel>
+      <StackPanel Grid.Column="2" Spacing="6"><TextBlock Text="同时显示上限" /><NumericUpDown Value="{Binding Maximum, Mode=TwoWay}" Minimum="1" Maximum="10" /></StackPanel>
+    </Grid>
+    <CheckBox Content="自动关闭" IsChecked="{Binding AutoClose, Mode=TwoWay}" />
+    <WrapPanel><Button Name="ShowMessage" Classes="primary" Content="显示 Toast" Command="{Binding ToastCommand}" Margin="0,0,12,0" /><Button Classes="ghost" Content="关闭全部" Command="{Binding CloseToastCommand}" /></WrapPanel>
+    <TextBlock Text="{Binding Status}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  </StackPanel>
+</UserControl>

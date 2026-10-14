@@ -1,0 +1,79 @@
+<!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTheme TargetType="GridSplitter" x:Key="{x:Type GridSplitter}">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="MinWidth" Value="{DynamicResource One.GridSplitter.Thickness}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.GridSplitter.Thickness}" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="PreviewContent">
+            <Template>
+                <Border
+                    Background="{DynamicResource One.Accent}"
+                    CornerRadius="3"
+                    IsHitTestVisible="False"
+                    Name="SplitterPreview"
+                    Opacity="0.7" />
+            </Template>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Name="SplitterSurface">
+                    <!--  A direction-neutral grip also supports native Auto direction and alignment.  -->
+                    <Canvas
+                        Height="6"
+                        HorizontalAlignment="Center"
+                        IsHitTestVisible="False"
+                        Name="SplitterGrip"
+                        VerticalAlignment="Center"
+                        Width="6">
+                        <Ellipse
+                            Fill="{TemplateBinding Foreground}"
+                            Height="2"
+                            Width="2" />
+                        <Ellipse
+                            Canvas.Left="4"
+                            Fill="{TemplateBinding Foreground}"
+                            Height="2"
+                            Width="2" />
+                        <Ellipse
+                            Canvas.Top="4"
+                            Fill="{TemplateBinding Foreground}"
+                            Height="2"
+                            Width="2" />
+                        <Ellipse
+                            Canvas.Left="4"
+                            Canvas.Top="4"
+                            Fill="{TemplateBinding Foreground}"
+                            Height="2"
+                            Width="2" />
+                    </Canvas>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+        </Style>
+        <Style Selector="^:focus-visible">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

@@ -1,0 +1,217 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.ContentTransitionDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:ContentTransitionDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.helper">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="TextBlock.page-title">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+    </UserControl.Styles>
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="{x:Type local:TransitionOverview}" x:DataType="local:TransitionOverview">
+            <StackPanel Spacing="16">
+                <TextBlock Classes="helper" Text="01 / 工作区" />
+                <TextBlock
+                    Classes="page-title"
+                    Name="TransitionPageTitle"
+                    Text="{Binding Title}" />
+                <TextBlock Text="让当前任务保持清晰。浏览概览、编辑草稿，或查看更新记录。" TextWrapping="Wrap" />
+                <Border
+                    Background="{DynamicResource One.AccentSoft}"
+                    CornerRadius="8"
+                    Padding="16">
+                    <StackPanel Spacing="8">
+                        <TextBlock FontWeight="SemiBold" Text="Still · 专注每一次切换" />
+                        <TextBlock Text="内容平滑变化，外框和布局保持稳定。关闭动效后立即显示最新内容。" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+                <Button
+                    Command="{Binding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
+                    CommandParameter="{Binding}"
+                    Content="查看工作区"
+                    HorizontalAlignment="Left"
+                    Name="OverviewAction" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:TransitionForm}" x:DataType="local:TransitionForm">
+            <StackPanel Spacing="16">
+                <TextBlock Classes="helper" Text="02 / 编辑" />
+                <TextBlock
+                    Classes="page-title"
+                    Name="TransitionPageTitle"
+                    Text="{Binding Title}" />
+                <TextBlock Text="切换页面后再回来，已输入的草稿仍然保留。" TextWrapping="Wrap" />
+                <Label Content="草稿内容" Target="{Binding #TransitionDraft}" />
+                <TextBox
+                    Name="TransitionDraft"
+                    PlaceholderText="记录下一步要做的事"
+                    Text="{Binding Draft, Mode=TwoWay}" />
+                <Button
+                    Classes="primary"
+                    Command="{Binding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
+                    CommandParameter="{Binding}"
+                    Content="保存草稿"
+                    HorizontalAlignment="Left"
+                    Name="SaveTransitionDraft" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:TransitionRecords}" x:DataType="local:TransitionRecords">
+            <Grid RowDefinitions="Auto,Auto,*" RowSpacing="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Classes="helper" Text="03 / 记录" />
+                    <TextBlock
+                        Classes="page-title"
+                        Name="TransitionPageTitle"
+                        Text="{Binding Title}" />
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="1"
+                    Text="1,000 条记录按需显示，切换后仍保留选择。"
+                    TextWrapping="Wrap" />
+                <ListBox
+                    AutomationProperties.Name="千条更新记录"
+                    Grid.Row="2"
+                    Height="240"
+                    ItemsSource="{Binding Rows}"
+                    Name="TransitionRecordsList"
+                    SelectedItem="{Binding SelectedRow, Mode=TwoWay}">
+                    <ListBox.Styles>
+                        <Style Selector="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListBox.Styles>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:TransitionRecord">
+                            <Grid ColumnDefinitions="52,*" ColumnSpacing="12">
+                                <TextBlock Foreground="{DynamicResource One.Muted}" Text="{Binding Number, StringFormat='{}{0:0000}'}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{Binding Title}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+    <StackPanel Spacing="18">
+        <StackPanel Spacing="6">
+            <TextBlock
+                FontSize="22"
+                FontWeight="SemiBold"
+                Text="TransitioningContentControl · 内容切换" />
+            <TextBlock Classes="helper" Text="在概览、草稿和记录之间切换。支持反向、快速切换，以及动画中关闭动效；通过顶部工具栏切换主题与尺寸。" />
+        </StackPanel>
+        <WrapPanel>
+            <ComboBox
+                AutomationProperties.Name="内容过渡方式"
+                Margin="0,0,16,8"
+                Name="ContentTransitionPicker"
+                SelectedIndex="{Binding TransitionIndex, Mode=TwoWay}"
+                Width="160">
+                <ComboBoxItem Content="淡入淡出" />
+                <ComboBoxItem Content="水平滑动" />
+                <ComboBoxItem Content="垂直滑动" />
+                <ComboBoxItem Content="无过渡" />
+            </ComboBox>
+            <CheckBox
+                Content="内容动效"
+                IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ContentMotionEnabled" />
+            <CheckBox
+                Content="反向过渡"
+                IsChecked="{Binding Reverse, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="ReverseContentTransition" />
+            <CheckBox
+                Content="启用内容区域"
+                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                Margin="0,0,16,8"
+                Name="EnableContentRegion" />
+        </WrapPanel>
+        <Grid ColumnDefinitions="Auto,*,Auto">
+            <Button
+                Command="{Binding PreviousCommand}"
+                Content="上一页"
+                IsEnabled="{Binding Enabled}"
+                Name="PreviousContentPage" />
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                Name="ContentPagePosition"
+                Text="{Binding Position}"
+                VerticalAlignment="Center" />
+            <Button
+                Command="{Binding NextCommand}"
+                Content="下一页"
+                Grid.Column="2"
+                IsEnabled="{Binding Enabled}"
+                Name="NextContentPage" />
+        </Grid>
+        <TransitioningContentControl
+            AutomationProperties.Name="工作区内容切换区域"
+            Content="{Binding Content, Mode=TwoWay}"
+            Height="400"
+            IsEnabled="{Binding Enabled}"
+            IsTransitionReversed="{Binding Reverse}"
+            Name="ContentTransitionSample"
+            PageTransition="{Binding Transition}"
+            TransitionCompleted="OnTransitionCompleted" />
+        <WrapPanel>
+            <Button
+                Command="{Binding RapidCommand}"
+                Content="快速往返"
+                IsEnabled="{Binding Enabled}"
+                Margin="0,0,8,8"
+                Name="RapidContentSwitch" />
+            <Button
+                Command="{Binding ClearCommand}"
+                Content="清空内容"
+                Margin="0,0,8,8"
+                Name="ClearTransitionContent" />
+            <Button
+                Command="{Binding RestoreCommand}"
+                Content="恢复当前页"
+                Margin="0,0,8,8"
+                Name="RestoreTransitionContent" />
+            <Button
+                Command="{Binding LastRecordCommand}"
+                Content="第 1,000 条记录"
+                IsEnabled="{Binding Enabled}"
+                Margin="0,0,8,8"
+                Name="LastTransitionRecord" />
+            <Button
+                Command="{Binding ResetCommand}"
+                Content="重置"
+                Margin="0,0,8,8"
+                Name="ResetContentTransition" />
+        </WrapPanel>
+        <TextBlock
+            Classes="helper"
+            Name="ContentTransitionMetrics"
+            Text="{Binding Metrics}" />
+        <Border
+            Background="{DynamicResource One.Subtle}"
+            CornerRadius="8"
+            Padding="16">
+            <StackPanel Spacing="6">
+                <TextBlock
+                    Name="ContentTransitionStatus"
+                    Text="{Binding Status}"
+                    TextWrapping="Wrap" />
+                <TextBlock Classes="helper" Text="切换动画约 200 ms。快速往返可验证最后一次选择；关闭动效保留内容和输入，重新开启后的下一次切换恢复动画。重置恢复全局动效设置。" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,11 @@
+<local:BasicControlPage xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls" x:Class="TheOne.DesignPreview.RepeatButtonPage" x:DataType="local:RepeatButtonPageViewModel">
+ <StackPanel Spacing="18">
+  <TextBlock Text="RepeatButton" FontSize="22" FontWeight="SemiBold" />
+  <TextBlock Text="标准重复 / 快速重复 / 禁用 · 操作次数显示在下方" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+  <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+  <StackPanel Spacing="16" IsEnabled="{Binding Enabled}">
+    <WrapPanel><RepeatButton Name="ControlSample" Content="按住重复执行" Command="{Binding InvokeCommand}" Margin="0,0,12,12" /><RepeatButton Content="快速重复" Delay="200" Interval="50" Command="{Binding InvokeCommand}" Margin="0,0,12,12" /><RepeatButton Content="禁用" IsEnabled="False" Margin="0,0,12,12" /></WrapPanel>
+  </StackPanel>
+  <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
+ </StackPanel>
+</local:BasicControlPage>

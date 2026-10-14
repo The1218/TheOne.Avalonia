@@ -1,0 +1,172 @@
+using Avalonia.Controls;
+namespace TheOne.DesignPreview;
+
+public sealed record PreviewPageDescriptor(int Id,string Title,string Group, IReadOnlyList<int>? ControlIds = null);
+
+internal static class PreviewPageCatalog
+{
+    public static IReadOnlyList<PreviewPageDescriptor> Controls { get; } =
+    [
+        new(1,"Button","基础控件"),
+        new(305,"IconButton","基础控件"),
+        new(101,"ToggleButton","基础控件"),
+        new(16,"RepeatButton","基础控件"),
+        new(2,"TextBox","基础控件"),
+        new(3,"CheckBox","基础控件"),
+        new(15,"RadioButton","基础控件"),
+        new(106,"ToggleSwitch","基础控件"),
+        new(4,"NumericUpDown","基础控件"),
+        new(108,"Slider","基础控件"),
+        new(109,"ProgressBar","基础控件"),
+        new(110,"ComboBox","基础控件"),
+        new(111,"AutoCompleteBox","基础控件"),
+        new(5,"CalendarDatePicker","基础控件"),
+        new(113,"Calendar","基础控件"),
+        new(114,"DatePicker","基础控件"),
+        new(115,"TimePicker","基础控件"),
+        new(13,"Label","基础控件"),
+        new(117,"SelectableTextBlock","基础控件"),
+        new(118,"ListBox","数据展示"),
+        new(9,"ItemsControl","数据展示"),
+        new(6,"TabControl","导航与布局"),
+        new(7,"TreeView","数据展示"),
+        new(122,"Menu","导航与布局"),
+        new(123,"ContextMenu","导航与布局"),
+        new(8,"Expander","导航与布局"),
+        new(125,"ScrollViewer","导航与布局"),
+        new(126,"ScrollBar","导航与布局"),
+        new(127,"Separator","导航与布局"),
+        new(128,"ToolTip","导航与布局"),
+        new(12,"SplitButton","导航与布局"),
+        new(130,"ToggleSplitButton","导航与布局"),
+        new(11,"SplitView","导航与布局"),
+        new(132,"GridSplitter","导航与布局"),
+        new(133,"RefreshVisualizer","扩展控件"),
+        new(10,"DataGrid","数据展示"),
+        new(14,"FlyoutPresenter","扩展控件"),
+        new(17,"TabStrip","导航与布局"),
+        new(18,"Carousel","数据展示"),
+        new(19,"RefreshContainer","扩展控件"),
+        new(20,"TransitioningContentControl","导航与布局"),
+        new(24,"InfoCard","扩展控件"),
+        new(25,"NavMenu","扩展控件"),
+        new(26,"Tag","扩展控件"),
+        new(27,"Step","扩展控件"),
+        new(300,"Toast","消息与对话框"),
+        new(301,"Dialog","消息与对话框"),
+        new(302,"OneNotification","消息与对话框"),
+        new(23,"LineChart","图表控件"),
+        new(201,"AreaChart","图表控件"),
+        new(202,"BarChart","图表控件"),
+        new(203,"HorizontalBarChart","图表控件"),
+        new(204,"ScatterChart","图表控件"),
+        new(205,"PieChart","图表控件"),
+        new(206,"DoughnutChart","图表控件"),
+        new(207,"GaugeChart","图表控件"),
+        new(208,"StackedBarChart","图表控件"),
+        new(209,"StackedHorizontalBarChart","图表控件"),
+        new(210,"StackedAreaChart","图表控件"),
+        new(211,"PercentStackedBarChart","图表控件"),
+        new(212,"PercentStackedHorizontalBarChart","图表控件"),
+        new(213,"PercentStackedAreaChart","图表控件"),
+    ];
+    private static readonly PreviewPageDescriptor[] CombinedPages =
+    [
+        new(400,"按钮","基础控件", [1,101,16,12,130,305]),
+        new(401,"文本与输入","基础控件", [2,110,111]),
+        new(402,"选择与开关","基础控件", [3,15,106]),
+        new(403,"数值与进度","基础控件", [4,108,109]),
+        new(404,"日期与时间","基础控件", [5,113,114,115]),
+        new(405,"数据展示","数据展示", [118,9,7,18,24,13,117]),
+        new(406,"标签与内容切换","导航与布局", [6,17,20]),
+        new(407,"菜单与浮层","导航与布局", [122,123,128,14]),
+        new(408,"滚动与分隔","导航与布局", [125,126,127,132]),
+        new(409,"趋势图","图表控件", [23,201,204]),
+        new(410,"柱状图","图表控件", [202,208,211]),
+        new(411,"条形图","图表控件", [203,209,212]),
+        new(412,"堆叠面积图","图表控件", [210,213]),
+        new(413,"饼图与环形图","图表控件", [205,206]),
+        new(414,"仪表图","图表控件", [207]),
+    ];
+    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = CombinedPages
+        .Concat(Controls.Where(control => !CombinedPages.Any(page => page.ControlIds!.Contains(control.Id)))).ToArray();
+    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = CombinedPages
+        .Concat(Controls.Select(control => control with { Group = SearchGroup(control.Id) })).ToArray();
+    private static string SearchGroup(int id)
+    {
+        var page = Find(id);
+        return page.ControlIds is null ? page.Group : $"{page.Group} / {page.Title}";
+    }
+    public static PreviewPageDescriptor Find(int id) => Pages.First(page => page.Id==id || page.ControlIds?.Contains(id)==true);
+    public static UserControl Create(int id)
+    {
+        var page = Find(id);
+        return page.ControlIds is null ? CreateControl(page.Id) : new ShowcasePage(page);
+    }
+    internal static UserControl CreateControl(int id) => id switch
+    {
+        1 => new ButtonPage(),
+        305 => new IconButtonPage(),
+        101 => new ToggleButtonPage(),
+        16 => new RepeatButtonPage(),
+        2 => new TextBoxPage(),
+        3 => new CheckBoxPage(),
+        15 => new RadioButtonPage(),
+        106 => new ToggleSwitchPage(),
+        4 => new NumericUpDownPage(),
+        108 => new SliderPage(),
+        109 => new ProgressBarPage(),
+        110 => new ComboBoxPage(),
+        111 => new AutoCompleteBoxPage(),
+        5 => new CalendarDatePickerPage(),
+        113 => new CalendarPage(),
+        114 => new DatePickerPage(),
+        115 => new TimePickerPage(),
+        13 => new LabelPage(),
+        117 => new SelectableTextBlockPage(),
+        118 => new ListBoxPage(),
+        9 => new ItemsControlPage(),
+        6 => new TabControlPage(),
+        7 => new TreeViewPage(),
+        122 => new MenuPage(),
+        123 => new ContextMenuPage(),
+        8 => new ExpanderPage(),
+        125 => new ScrollViewerPage(),
+        126 => new ScrollBarPage(),
+        127 => new SeparatorPage(),
+        128 => new ToolTipPage(),
+        12 => new SplitButtonPage(),
+        130 => new ToggleSplitButtonPage(),
+        11 => new SplitViewPage(),
+        132 => new GridSplitterPage(),
+        133 => new RefreshVisualizerPage(),
+        10 => new DataGridDemoView { Height = 660 },
+        14 => new FlyoutDemoView(),
+        17 => new TabStripDemoView(),
+        18 => new CarouselDemoView(),
+        19 => new RefreshDemoView(),
+        20 => new ContentTransitionDemoView(),
+        24 => new InfoCardDemoView(),
+        26 => new TagDemoView(),
+        27 => new StepDemoView(),
+        25 => new NavMenuDemoView(),
+        300 => new ToastPage(),
+        301 => new DialogPage(),
+        302 => new OneNotificationPage(),
+        23 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Line),
+        201 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Area),
+        202 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Bar),
+        203 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.HorizontalBar),
+        204 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Scatter),
+        205 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Pie),
+        206 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Doughnut),
+        207 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.Gauge),
+        208 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.StackedBar),
+        209 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.StackedHorizontalBar),
+        210 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.StackedArea),
+        211 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.PercentStackedBar),
+        212 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.PercentStackedHorizontalBar),
+        213 => new ChartShowcaseView(TheOne.Avalonia.Controls.ChartKind.PercentStackedArea),
+        _ => throw new ArgumentOutOfRangeException(nameof(id))
+    };
+}
