@@ -8,7 +8,7 @@
 - DataGrid：`vendor/Avalonia.Controls.DataGrid/`，上游 12.1.2。保留程序集身份、许可、原生 Presenter 和 PART_*；局部补丁写入 vendor README。
 - 预览与验证：`design/PreviewHost/`；独立消费端在 `Consumers/`，验证代码在 `Verification/`。不要新增独立测试项目或根目录脚本。
 - 文档：`docs/controls/` 对应公开控件，`docs/theme/` 对应主题；`en/` 和 `zh-cn/` 内容及示例同步维护；验证命令以 PreviewHost 及 Consumers 的 Program.cs 为准。
-- 维护工作使用 `.agents/skills/theone-maintenance/SKILL.md`；按需读取其中的任务提示词，不把所有文档一次性加载。
+- 维护 Skill 是本地配置，位于 `.agents/skills/theone-maintenance/SKILL.md`，不纳入 Git；存在时按需读取任务提示词，不把所有文档一次性加载。
 
 ## 实现约束
 
