@@ -52,6 +52,8 @@
       <SolidColorBrush x:Key="One.DisabledSurface" Color="{StaticResource One.DisabledSurfaceColor}" />
       <Color x:Key="One.InfoCard.FooterColor">#FCFCFC</Color>
       <SolidColorBrush x:Key="One.InfoCard.Footer" Color="{StaticResource One.InfoCard.FooterColor}" />
+      <BoxShadows x:Key="One.InfoCard.Shadow">0 2 8 0 #24000000</BoxShadows>
+      <BoxShadows x:Key="One.InfoCard.HoverShadow">0 4 16 0 #38000000</BoxShadows>
       <Color x:Key="One.CardTabStripColor">#EDEDED</Color>
       <SolidColorBrush x:Key="One.CardTabStrip" Color="{StaticResource One.CardTabStripColor}" />
       <Color x:Key="One.CardTabBorderColor">#CACECE</Color>
@@ -214,6 +216,8 @@
       <SolidColorBrush x:Key="One.DisabledSurface" Color="{StaticResource One.DisabledSurfaceColor}" />
       <Color x:Key="One.InfoCard.FooterColor">#131313</Color>
       <SolidColorBrush x:Key="One.InfoCard.Footer" Color="{StaticResource One.InfoCard.FooterColor}" />
+      <BoxShadows x:Key="One.InfoCard.Shadow">0 2 8 0 #70000000</BoxShadows>
+      <BoxShadows x:Key="One.InfoCard.HoverShadow">0 4 16 0 #90000000</BoxShadows>
       <Color x:Key="One.CardTabStripColor">#282929</Color>
       <SolidColorBrush x:Key="One.CardTabStrip" Color="{StaticResource One.CardTabStripColor}" />
       <Color x:Key="One.CardTabBorderColor">#474D4D</Color>

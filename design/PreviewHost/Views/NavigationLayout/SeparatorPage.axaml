@@ -19,6 +19,5 @@
             <Separator Name="ControlSample" />
             <TextBlock Text="设置" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

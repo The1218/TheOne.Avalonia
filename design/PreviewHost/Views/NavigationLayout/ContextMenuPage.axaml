@@ -32,6 +32,5 @@
                 <TextBlock Text="右键打开千条数据菜单" />
             </Border>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

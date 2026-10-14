@@ -120,6 +120,15 @@ Header 保留较明显的背景区别，Content 与 Footer 只有细微色差。
 
 ## 尺寸与样式
 
+`Classes="shadow"` 显示常驻外阴影；`Classes="hove"` 在鼠标移入时强调边框、调整正文底色并显示悬浮阴影，移出后恢复。类名使用 `hove`。两者可组合，`Classes="hove shadow"` 在常驻阴影上提供更明显的悬浮效果；禁用时这些类的阴影与悬浮效果停止。
+
+```xml
+<one:InfoCard Classes="hove shadow" Header="可交互卡片" Margin="16"
+              Content="鼠标移入查看强调边框和阴影。" />
+```
+
+效果不移动内容、不增加布局尺寸，也不拦截卡片中的原生输入。外阴影由独立的 `PART_Shadow` 绘制，内容仍由 `PART_Surface` 裁切圆角；父容器裁切时应留出足够 Margin / Padding。`BoxShadow` 可通过实例属性或样式设置，例如 `BoxShadow="0 2 10 0 #30000000"`；显式本地值优先于类样式。默认阴影使用随明暗切换的 `One.InfoCard.Shadow` 与 `One.InfoCard.HoverShadow` 资源。
+
 `Classes="outlined"` 使用主色边框与柔和标题背景；`Classes="glow"` 使用柔光渐变标题背景；`Classes="flat"` 去除外框与分割线，标题和页脚透明，适合嵌入布局。这些样式保留内容槽与模板接口，无展开折叠行为。
 
 通过 `ControlSizing.Size` 继承父级尺寸，或使用 `Classes="small"` / `normal` / `large` 在单张卡片上指定尺寸。以下属性也可通过 Style setter 或实例属性覆盖。
@@ -151,3 +160,13 @@ InfoCard 不替换内容的布局，也不额外包裹无限高度的滚动容�
 PreviewHost 的 InfoCard 预览包含标题、图标、操作区、页脚及两处分割线的独立开关，原生输入与按钮，明确类型的标题、正文、图标、操作区和页脚编译绑定模板，以及固定高度的 1,000 条成员列表和末尾跳转。固定高度与 MaxHeight 专项检查千条列表回收和页脚可见性。标题操作和页脚按钮可更新状态，禁用卡片会同时禁用各区域的交互。仅导出当前控件的测试图：
 
 执行命令与测试范围见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+
+专项可保存悬浮和阴影的实际像素截图：
+
+```bash
+dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-infocard .preview/infocard-effects/managed
+SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/infocard-effects/native
+.preview/infocard-effects/native/NativeAotSmoke --require-aot --verify-infocard .preview/infocard-effects/native-pixels
+```
+
+原生产物按现有 NativeAotSmoke 消费端编译，使用 macOS xcrun 的 clang 与 SDK。专项涵盖明暗主题、三档尺寸、鼠标进出、组合类、禁用、本地值覆盖和阴影实际像素。

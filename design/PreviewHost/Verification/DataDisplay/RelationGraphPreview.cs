@@ -34,6 +34,7 @@ internal static class RelationGraphPreview
         VerifyChanges(check);
         VerifyConsumer(check);
         VerifyNativeContent(check);
+        VerifySelection(check, output);
     }
 
     private static IDataTemplate Icons() => new FuncDataTemplate<Geometry>((icon, _) => new PathIcon { Data = icon });
@@ -219,5 +220,63 @@ internal static class RelationGraphPreview
         graph.RootNode = new RelationGraphNode { Title = "新根节点" }; Flush();
         check(button.Parent is null && icon.Parent is null, "RelationGraph/native content: replacing the root releases caller-owned controls");
         window.Close();
+    }
+
+    private static void VerifySelection(Action<bool, string> check, string? output)
+    {
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var density in Enum.GetValues<ControlSize>())
+        foreach (var direction in Enum.GetValues<Orientation>())
+        {
+            var root = new RelationGraphNode { Title = "根节点", Content = "选择与原生交互" };
+            var child = new RelationGraphNode { Title = "选中节点", Content = "双向绑定" }; root.Children!.Add(child);
+            var clicks = 0; var button = new Button { Content = "节点按钮" }; button.Click += (_, _) => clicks++;
+            var interactive = new RelationGraphNode { Title = "原生控件", Content = button }; root.Children.Add(interactive);
+            var graph = new RelationGraph { RootNode = root, SelectItem = child, Orientation = direction };
+            var window = Open(graph, theme, density, width: 1200, height: 680);
+            var selected = graph.GetNodePresenter(child)!; var initialBounds = selected.Bounds;
+            var label = $"RelationGraph/selection/{theme.Key}/{density}/{direction}";
+            check(ReferenceEquals(graph.SelectItem, child) && selected.IsSelected && !graph.GetNodePresenter(root)!.IsSelected, label + ": initial selection survives source and binding initialization");
+            using (var frame = window.CaptureRenderedFrame()!)
+            {
+                var surface = Part<Border>(selected, "PART_Surface");
+                var point = surface.TranslatePoint(new Point(6, surface.Bounds.Height / 2), window)!.Value;
+                check(HasInk(frame, point, ((ISolidColorBrush)selected.Background!).Color), label + ": selected node fill appears in rendered pixels");
+            }
+            Save(window, output, $"relation-selected-{theme.Key}-{density}-{direction}");
+            graph.SelectItem = root; Flush();
+            check(!selected.IsSelected && graph.GetNodePresenter(root)!.IsSelected && selected.Bounds == initialBounds, label + ": programmatic selection switches one node without changing layout");
+            var pointOnChild = CenterIn(selected, window);
+            window.MouseMove(pointOnChild); window.MouseDown(pointOnChild, MouseButton.Left); window.MouseUp(pointOnChild, MouseButton.Left); Flush();
+            check(ReferenceEquals(graph.SelectItem, child) && selected.IsSelected, label + ": pointer selects the original node model");
+            graph.SelectItem = null; Flush(); selected.Focus();
+            window.KeyPress(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null); window.KeyRelease(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null); Flush();
+            check(ReferenceEquals(graph.SelectItem, child), label + ": focused node supports keyboard selection");
+            graph.GetNodePresenter(interactive)!.IsEnabled = false; Flush();
+            var disabledPoint = CenterIn(graph.GetNodePresenter(interactive)!, window);
+            window.MouseDown(disabledPoint, MouseButton.Left); window.MouseUp(disabledPoint, MouseButton.Left); Flush();
+            check(ReferenceEquals(graph.SelectItem, child), label + ": disabled nodes do not change selection");
+            graph.GetNodePresenter(interactive)!.IsEnabled = true; Flush();
+            var buttonPoint = CenterIn(button, window); window.MouseMove(buttonPoint); window.MouseDown(buttonPoint, MouseButton.Left); window.MouseUp(buttonPoint, MouseButton.Left); Flush();
+            check(clicks == 1 && ReferenceEquals(graph.SelectItem, interactive) && button.IsKeyboardFocusWithin, label + ": embedded native buttons still click and retain focus");
+            root.Children.Remove(interactive); Flush(); check(graph.SelectItem is null && graph.GetNodePresenter(interactive) is null, label + ": removing the selected node clears its selection");
+            graph.SelectItem = new RelationGraphNode(); Flush(); check(graph.SelectItem is null, label + ": models outside the current tree are rejected");
+            graph.SelectItem = child; root.Children.Add(root); Flush(); check(graph.ValidationError is not null && graph.SelectItem is null, label + ": invalid trees clear their selection");
+            root.Children.Remove(root); Flush(); graph.SelectItem = child; graph.RootNode = null; Flush(); check(graph.SelectItem is null, label + ": clearing the root clears selection");
+            window.Close();
+        }
+        var view = new RelationGraphDemoView();
+        var host = Open(new ScrollViewer { Content = view, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto });
+        var defaultGraph = view.FindControl<RelationGraph>("RelationGraphSample")!;
+        var customGraph = view.FindControl<RelationGraph>("CustomRelationGraph")!;
+        view.Model.SelectedNode = view.Model.Root.Children![0]; view.Model.SelectedUnit = view.Model.CustomRoot.Branches![0]; Flush();
+        check(ReferenceEquals(defaultGraph.SelectItem, view.Model.SelectedNode) && ReferenceEquals(customGraph.SelectItem, view.Model.SelectedUnit), "RelationGraph/selection consumer: typed compiled bindings select default and custom models");
+        var card = defaultGraph.GetNodePresenter(view.Model.Root)!; card.BringIntoView(); Flush(); var p = CenterIn(card, host);
+        host.MouseMove(p); host.MouseDown(p, MouseButton.Left); host.MouseUp(p, MouseButton.Left); Flush();
+        check(ReferenceEquals(view.Model.SelectedNode, view.Model.Root), "RelationGraph/selection consumer: pointer selection writes back through the original compiled binding");
+        view.Model.SelectedNode = null; Flush(); check(defaultGraph.SelectItem is null && !card.IsSelected, "RelationGraph/selection consumer: VM null clears selected styling");
+        var unit = view.Model.SelectedUnit; view.Model.CustomRoot.Branches!.Remove(unit!); Flush();
+        check(customGraph.SelectItem is null && view.Model.SelectedUnit is null, "RelationGraph/selection consumer: source removal writes null back to the VM");
+        host.Close();
     }
 }

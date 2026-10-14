@@ -26,6 +26,5 @@
             <Label Content="字段说明 · 可使用内容模板" Foreground="{DynamicResource One.Muted}" />
             <Label Content="禁用标签" IsEnabled="False" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

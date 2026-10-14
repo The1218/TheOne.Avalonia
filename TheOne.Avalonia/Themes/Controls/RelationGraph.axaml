@@ -37,7 +37,7 @@
     <Setter Property="TextSpacing" Value="6" />
     <Setter Property="IconBackground" Value="{DynamicResource One.AccentSoft}" />
     <Setter Property="IconForeground" Value="{DynamicResource One.Accent}" />
-    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Focusable" Value="True" />
     <Setter Property="Template">
       <ControlTemplate>
         <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
@@ -65,6 +65,12 @@
       </ControlTemplate>
     </Setter>
     <Style Selector="^:root"><Setter Property="Background" Value="{DynamicResource One.RowSelected}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+    <Style Selector="^:pointerover:not(:selected):not(:root):not(:disabled)"><Setter Property="Background" Value="{DynamicResource One.SurfaceHover}" /></Style>
+    <Style Selector="^:selected:not(:disabled)">
+      <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+      <Setter Property="IconBackground" Value="{DynamicResource One.Accent}" /><Setter Property="IconForeground" Value="{DynamicResource One.OnAccent}" />
+    </Style>
+    <Style Selector="^:focus-visible /template/ Border#PART_Surface"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /></Style>
     <Style Selector="^:has-icon /template/ Border#PART_IconHost"><Setter Property="IsVisible" Value="True" /></Style>
     <Style Selector="^:has-title /template/ ContentPresenter#PART_HeaderPresenter"><Setter Property="IsVisible" Value="True" /></Style>
     <Style Selector="^:has-content /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="IsVisible" Value="True" /></Style>

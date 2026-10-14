@@ -53,6 +53,8 @@
             <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 TheOne 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
         </StackPanel>
         <WrapPanel>
+            <CheckBox Content="hove · 鼠标移入效果" IsChecked="{Binding HoverEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
+            <CheckBox Content="shadow · 常驻阴影" IsChecked="{Binding ShadowEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
             <CheckBox
                 Content="显示标题"
                 IsChecked="{Binding ShowHeader, Mode=TwoWay}"
@@ -100,6 +102,7 @@
                 Name="InfoCardReset" />
         </WrapPanel>
         <one:InfoCard
+            Classes.hove="{Binding HoverEnabled}" Classes.shadow="{Binding ShadowEnabled}"
             Content="{Binding Description}"
             Header="{Binding VisibleTitle}"
             IsEnabled="{Binding Enabled}"
@@ -117,6 +120,7 @@
             HeaderIconTemplate="{Binding ShowIcon, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardIconTemplate}}"
             IsEnabled="{Binding Enabled}"
             Name="InfoCardSlots"
+            Classes.hove="{Binding HoverEnabled}" Classes.shadow="{Binding ShadowEnabled}"
             ShowFooterSeparator="{Binding ShowFooterSeparator}"
             ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
         <one:InfoCard

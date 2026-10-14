@@ -5,12 +5,9 @@ namespace TheOne.DesignPreview;
 
 public class BasicControlViewModel : ReactiveObject
 {
-    private int _invocations;
-
     public BasicControlViewModel()
     {
-        InvokeCommand =
-            ReactiveCommand.Create<object?>(parameter => Status = $"已执行 {++_invocations} 次 · {parameter ?? Text}");
+        InvokeCommand = ReactiveCommand.Create<object?>(_ => { InvocationCount++; });
         LastCommand = ReactiveCommand.Create<object?>(_ =>
         {
             SelectedIndex = 999;
@@ -24,11 +21,11 @@ public class BasicControlViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = "TheOne · 示例文本";
 
-    public string Status
+    public int InvocationCount
     {
         get;
-        set => this.RaiseAndSetIfChanged(ref field, value);
-    } = "修改控件以检查 ViewModel 双向绑定";
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
 
     public double Value
     {

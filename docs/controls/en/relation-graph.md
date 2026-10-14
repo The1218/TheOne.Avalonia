@@ -70,6 +70,19 @@ Strings wrap; content may grow a node beyond `NodeMinHeight`. `Icon` can be a na
 
 Declare `xmlns:media="using:Avalonia.Media"` on the view. Templates receive the selected field value as their data context. Native controls retain focus, commands, and keyboard behavior. A Control instance may belong to only one region; for repeated icons, share Geometry and create separate controls with a template.
 
+## Node selection
+
+SelectItem holds the selected **node model object**, defaults to null and defaults to TwoWay binding. Clicking a valid node selects it. A focused node supports Enter / Space; Avalonia still manages Tab navigation. Clicking a native button or input inside a node also selects the node while preserving that control's command and focus.
+
+```xml
+<one:RelationGraph RootNode="{Binding Root}"
+                   SelectItem="{Binding SelectedNode, Mode=TwoWay}" />
+```
+
+SelectedNode should have the node model type, such as RelationGraphNode? or a custom OrganizationUnit?. Custom models still require ChildrenSource and the other compiled bindings. Selection matches objects by reference in the current tree; do not pass a newly constructed equal-looking object or a Presenter. Selection may initialize before RootNode and is validated after the first layout. Removing the selected node, clearing the root or invalidating the tree clears SelectItem and writes null back through the binding. Assigning an object outside a valid tree also clears selection. Assign null to clear it explicitly.
+
+Presenters expose read-only IsSelected and the :selected pseudoclass. The default theme accents the fill, outline and icon tile without changing node geometry. Customize the state through NodeTheme. Disabled nodes do not respond to pointer or keyboard selection.
+
 ## Layout and appearance
 
 | Property | Normal default | Purpose |
@@ -88,7 +101,7 @@ Dimensions, spacing, connectors, and templates are properties. A `NodeTheme` bas
 
 The theme uses `One.Surface`, `One.Text`, `One.Muted`, `One.Line`, `One.Accent`, `One.AccentSoft`, and `One.RowSelected`. The `:root` pseudo-class emphasizes the root outline and fill. Inherited `ControlSizing.Size` supports Small / Normal / Large: widths 220 / 260 / 300, minimum heights 72 / 88 / 104, with matching typography and icon changes. Explicit properties override density defaults.
 
-The graph measures its entire natural extent. Wrap it in a native `ScrollViewer` for narrow viewports; it does not squeeze node text. All nodes are realized without virtualization, so use bounded relation trees. There is no built-in collapse, dragging, zoom, or selection. Tree traversal is iterative, connectors are drawn directly, and node content uses native presenters.
+The graph measures its entire natural extent. Wrap it in a native `ScrollViewer` for narrow viewports; it does not squeeze node text. All nodes are realized without virtualization, so use bounded relation trees. There is no built-in collapse, dragging or zoom. Tree traversal is iterative, connectors are drawn directly, and node content uses native presenters.
 
 ## Preview and verification
 
@@ -105,3 +118,5 @@ Checks cover light/dark themes, three densities, both orientations, actual conne
 SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/relation-graph/native
 .preview/relation-graph/native/NativeAotSmoke --require-aot --verify-relation-graph .preview/relation-graph/native-pixels
 ```
+
+Selection checks cover light/dark, three densities, both directions, rendered selection pixels, pointer/keyboard selection, embedded button commands and focus, removal/invalid-tree cleanup, and two-way compiled bindings for default/custom models. The native consumer runs the same --verify-relation-graph suite.

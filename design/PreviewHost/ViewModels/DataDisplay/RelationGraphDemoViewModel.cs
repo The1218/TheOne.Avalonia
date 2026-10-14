@@ -38,6 +38,8 @@ public sealed record RelationGraphSlotSample(string Label, RelationGraphNode Nod
 
 public sealed class RelationGraphDemoViewModel : ReactiveObject
 {
+    public RelationGraphNode? SelectedNode { get; set => this.RaiseAndSetIfChanged(ref field, value); }
+    public RelationUnit? SelectedUnit { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     public RelationGraphDemoViewModel()
     {
         AddChildCommand = ReactiveCommand.Create(() =>

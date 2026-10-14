@@ -120,6 +120,15 @@ Header has a stronger background distinction; Content / Footer differ subtly. De
 
 ## Sizes and appearances
 
+`Classes="shadow"` adds a persistent outer shadow. `Classes="hove"` accents the outline, changes the body surface and adds a stronger shadow while the pointer is over the card; leaving restores the normal appearance. The API class name is `hove`. Combine them with `Classes="hove shadow"` for a persistent shadow with stronger hover feedback. Disabled cards stop these class effects.
+
+```xml
+<one:InfoCard Classes="hove shadow" Header="Interactive card" Margin="16"
+              Content="Hover to see the accent outline and shadow." />
+```
+
+The effects do not move content, increase layout size or intercept native input. A separate PART_Shadow renders outside the rounded, clipped PART_Surface. Leave sufficient Margin / Padding when an ancestor clips its contents. Override BoxShadow locally or in a style, for example `BoxShadow="0 2 10 0 #30000000"`; explicit local values take precedence over class styles. Defaults use the theme-aware One.InfoCard.Shadow and One.InfoCard.HoverShadow resources.
+
 `Classes="outlined"` uses an accent border and soft heading, `Classes="glow"` uses a glow gradient heading, and `Classes="flat"` removes outer borders / separators with transparent header / footer for embedded layouts. These styles keep content slots / templates and provide no expansion or collapse.
 
 Inherit parent `ControlSizing.Size` or set `Classes="small"` / `normal` / `large` on a card. Style setters / local properties can override the following.
@@ -151,3 +160,13 @@ Set finite `Height` / `MaxHeight` and use a `*` row in body `Grid` to give lists
 PreviewHost exposes independent header / icon / actions / footer / separator switches, native inputs / buttons, typed compiled templates for every slot, and a fixed-height thousand-member list with last-item navigation. Height / MaxHeight checks cover recycling and footer visibility. Header / footer actions update state; disabling affects all regions. Only this control's images are rendered:
 
 See [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
+
+Capture rendered hover and shadow pixels with the existing suite:
+
+```bash
+dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-infocard .preview/infocard-effects/managed
+SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/infocard-effects/native
+.preview/infocard-effects/native/NativeAotSmoke --require-aot --verify-infocard .preview/infocard-effects/native-pixels
+```
+
+Build the native executable through the existing NativeAotSmoke consumer, using macOS xcrun clang and SDK. The suite covers light/dark, three densities, pointer entry/exit, combined classes, disabling, local overrides and actual shadow pixels.

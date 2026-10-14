@@ -74,6 +74,5 @@
                 </StackPanel>
             </one:InfoCard>
         </one:LoadingContainer>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

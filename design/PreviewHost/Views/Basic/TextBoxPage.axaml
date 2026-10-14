@@ -43,7 +43,6 @@
                 Text="多行内容&#10;回车继续编辑"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
         <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
             <TextBox

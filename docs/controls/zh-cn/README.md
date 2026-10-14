@@ -25,9 +25,9 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [主题实现说明](../../theme/zh-cn/README.md) | 资源、模板、动画、验证范围与实现约束 |
 | [窗口与消息](windows.md) | OneWindow、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
-| [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、编译模板与三档尺寸 |
+| [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
-| [RelationGraph 树形关系图](relation-graph.md) | 单根树、横纵布局、默认 / 自定义模型、ChildrenSource 编译绑定与空值布局 |
+| [RelationGraph 树形关系图](relation-graph.md) | 单根树、横纵布局、默认 / 自定义模型、ChildrenSource 编译绑定、SelectItem 选择与空值布局 |
 | [FlowStep 与 FlowNode](flow-step.md) | 横向／纵向流程、三种状态、默认与自定义内容模板 |
 | [Tag 与 VerificationStep](tag-verification-step.md) | 图标状态标签、模型属性自动表单与单步验证导航 |
 

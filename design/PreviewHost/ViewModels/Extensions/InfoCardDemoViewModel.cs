@@ -6,6 +6,8 @@ namespace TheOne.DesignPreview;
 
 public sealed class InfoCardDemoViewModel : ReactiveObject
 {
+    public bool HoverEnabled { get; set => this.RaiseAndSetIfChanged(ref field, value); }
+    public bool ShadowEnabled { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     private static readonly Geometry InfoGeometry =
         Geometry.Parse(
             "F0 M 12,2 A 10,10 0 1 1 12,22 A 10,10 0 1 1 12,2 Z M 12,4 A 8,8 0 1 1 12,20 A 8,8 0 1 1 12,4 Z M 11,10 L 13,10 L 13,17 L 11,17 Z M 11,6 L 13,6 L 13,8 L 11,8 Z");
@@ -46,6 +48,7 @@ public sealed class InfoCardDemoViewModel : ReactiveObject
         {
             ShowHeader = ShowIcon = ShowHeaderActions = ShowFooter = Enabled = true;
             ShowHeaderSeparator = ShowFooterSeparator = true;
+            HoverEnabled = ShadowEnabled = false;
             WorkspaceName = "TheOne workspace";
             SaveCount = 0;
             DetailsCount = SyncCount = 0;

@@ -86,6 +86,7 @@
                     IconTemplate="{StaticResource NodeIconTemplate}"
                     LevelSpacing="{Binding DepthSpacing}"
                     Name="RelationGraphSample"
+                    SelectItem="{Binding SelectedNode, Mode=TwoWay}"
                     NodeSpacing="{Binding SiblingSpacing}"
                     NodeWidth="{Binding CardWidth}"
                     Orientation="{Binding Direction}"
@@ -114,11 +115,14 @@
                                              DataType={x:Type local:RelationUnit}}"
                 IconTemplate="{StaticResource NodeIconTemplate}"
                 Name="CustomRelationGraph"
+                SelectItem="{Binding SelectedUnit}"
                 Orientation="{Binding Direction}"
                 RootNode="{Binding CustomRoot}"
                 TitleSource="{CompiledBinding Name,
                                               DataType={x:Type local:RelationUnit}}" />
         </ScrollViewer>
+        <TextBlock Text="{Binding SelectedNode.Title, TargetNullValue=点击节点选择}" Foreground="{DynamicResource One.Accent}" />
+        <TextBlock Text="{Binding SelectedUnit.Name, TargetNullValue=点击自定义模型节点选择}" Foreground="{DynamicResource One.Accent}" />
         <TextBlock
             FontSize="18"
             FontWeight="SemiBold"

@@ -105,7 +105,7 @@ internal static class LoadingPreview
         Click(asyncPage.FindControl<Button>("LoadAction")!); Click(asyncPage.FindControl<Button>("LoadAction")!);
         check(asyncPage.Model.IsLoading && asyncPage.Model.OperationCount == 1, "Loading demo starts one asynchronous operation for repeated clicks");
         var frame = new DispatcherFrame(); DispatcherTimer.RunOnce(() => frame.Continue = false, TimeSpan.FromMilliseconds(3200)); Dispatcher.UIThread.PushFrame(frame); ControlPreview.Flush();
-        check(!asyncPage.Model.IsLoading && asyncPage.Model.Status.Contains("完成"), "Loading demo completes and restores content after async execution");
+        check(!asyncPage.Model.IsLoading && asyncPage.Model.OperationCount == 1, "Loading demo completes and restores content after async execution");
         asyncWindow.Close(); ControlPreview.Flush();
         Console.WriteLine("Runtime dynamic code supported: " + System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported);
     }

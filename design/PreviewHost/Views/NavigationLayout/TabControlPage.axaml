@@ -34,7 +34,6 @@
                 </TabControl.ContentTemplate>
             </TabControl>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
         <StackPanel Orientation="Horizontal" Spacing="8">
             <Button Command="{Binding LastTabCommand}" Content="末尾标签" />
             <Button Command="{Binding AddTabCommand}" Content="添加标签" />

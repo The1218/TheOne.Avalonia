@@ -49,7 +49,7 @@ internal static class ButtonsMessagesPreview
             check(Part<ContentPresenter>(control, "PART_IconPresenter").Child is PathIcon && !Part<ContentPresenter>(control, "PART_LabelPresenter").IsVisible, label + ": control icons and icon-only layout work without Content markup");
             icon.Icon = null; ControlPreview.Flush(); check(!presenter.IsVisible, label + ": clearing icon removes its region and gap");
             icon.Icon = model.Icon; ControlPreview.Flush(); Click(icon);
-            check(model.Status.Contains("1"), label + ": pointer activates the inherited Button command exactly once");
+            check(model.InvocationCount == 1, label + ": pointer activates the inherited Button command exactly once");
             foreach (var button in buttonPage.GetVisualDescendants().OfType<Button>().Where(item => item.GetType() == typeof(Button)))
             {
                 var content = Part<ContentPresenter>(button, "PART_ContentPresenter");

@@ -32,7 +32,6 @@
                 MaxWidth="420" />
             <Slider MaxWidth="420" Value="{Binding Value, Mode=TwoWay}" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
         <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
             <ProgressBar

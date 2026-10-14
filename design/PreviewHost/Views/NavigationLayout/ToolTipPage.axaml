@@ -21,6 +21,5 @@
                 Name="ControlSample"
                 ToolTip.Tip="{Binding Text}" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

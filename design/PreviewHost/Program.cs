@@ -23,7 +23,7 @@ internal static class Program
                 --verify-gantt [output] | --verify-relation-graph [output] | --verify-gauge-styles [output] | --verify-chart-axis-labels [output] | --verify-charts | --verify-compact-controls | --verify-text-alignment | --verify-pickers
                 --verify-datagrid-binding | --verify-datagrid-stage1 | --verify-datagrid-right
                 --verify-datagrid-summary | --verify-datagrid-filters
-                --verify-loginwindow | --verify-onewindow | --verify-tag-verification-step | --verify-flow-step [output] | --verify-infocard | --verify-control-variants
+                --verify-loginwindow | --verify-onewindow | --verify-tag-verification-step | --verify-flow-step [output] | --verify-infocard [output] | --verify-control-variants
                 --verify-login-lifetime / --verify-login-lifetime-close <OnMainWindowClose|OnLastWindowClose|OnExplicitShutdown>
                 --verify-navmenu | --verify-navmenu-hover | --verify-navmenu-edge
                 --verify-navmenu-search | --verify-navmenu-motion | --verify-navmenu-filter
@@ -122,7 +122,7 @@ internal static class Program
         if (args[0] == "--verify-control-variants") { ControlVariantsPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-infocard")
         {
-            InfoCardPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); });
+            InfoCardPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
             return;
         }
         if (args[0] == "--verify-navigation-chrome") { NavigationChromePreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }

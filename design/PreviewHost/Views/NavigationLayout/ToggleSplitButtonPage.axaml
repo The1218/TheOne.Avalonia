@@ -54,6 +54,5 @@
                 </ToggleSplitButton>
             </WrapPanel>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

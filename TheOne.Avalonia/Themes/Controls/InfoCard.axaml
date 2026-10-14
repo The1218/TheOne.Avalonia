@@ -18,9 +18,12 @@
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Focusable" Value="False" />
+    <Setter Property="ClipToBounds" Value="False" />
     <Setter Property="Template">
       <ControlTemplate>
         <Panel>
+          <Border Name="PART_Shadow" Background="Transparent" BoxShadow="{TemplateBinding BoxShadow}"
+                  CornerRadius="{TemplateBinding CornerRadius}" IsHitTestVisible="False" />
           <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
                   ClipToBounds="True">
@@ -85,5 +88,11 @@
     <Style Selector="^:has-body /template/ Border#PART_ContentHost"><Setter Property="IsVisible" Value="True" /></Style>
     <Style Selector="^:has-footer /template/ Border#PART_FooterHost"><Setter Property="IsVisible" Value="True" /></Style>
     <Style Selector="^:disabled"><Setter Property="HeaderBackground" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="FooterBackground" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+    <Style Selector="^.shadow:not(:disabled)"><Setter Property="BoxShadow" Value="{DynamicResource One.InfoCard.Shadow}" /></Style>
+    <Style Selector="^.hove:pointerover:not(:disabled)">
+      <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+      <Setter Property="Background" Value="{DynamicResource One.SurfaceHover}" />
+      <Setter Property="BoxShadow" Value="{DynamicResource One.InfoCard.HoverShadow}" />
+    </Style>
   </ControlTheme>
 </ResourceDictionary>

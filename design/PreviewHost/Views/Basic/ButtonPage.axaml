@@ -84,10 +84,6 @@
                     VerticalAlignment="Center" />
             </StackPanel>
         </StackPanel>
-        <TextBlock
-            Foreground="{DynamicResource One.Muted}"
-            Text="{Binding Status}"
-            TextWrapping="Wrap" />
         <TextBlock FontWeight="SemiBold" Text="加载状态 · 运行三秒，可在过程中关闭／开启动效" />
         <StackPanel Orientation="Horizontal" Spacing="16">
             <CheckBox Content="手动加载" IsChecked="{Binding IsLoading, Mode=TwoWay}" />

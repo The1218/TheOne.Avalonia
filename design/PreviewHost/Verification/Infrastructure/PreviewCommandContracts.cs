@@ -27,7 +27,7 @@ internal static class PreviewCommandContracts
         }
         var basic = new BasicControlViewModel();
         basic.InvokeCommand.Execute("parameter"); ControlPreview.Flush();
-        check(basic.InvokeCommand is ReactiveCommand<object?, RxVoid> && basic.Status.Contains("parameter"), "PreviewHost/commands: VM exposes the direct command instance through ICommand");
+        check(basic.InvokeCommand is ReactiveCommand<object?, RxVoid> && basic.InvocationCount == 1, "PreviewHost/commands: VM exposes the direct command instance through ICommand");
         basic.LastCommand.Execute(parameter); ControlPreview.Flush();
         check(basic.SelectedIndex == 999, "PreviewHost/commands: parameterless actions still accept and ignore control parameters");
 

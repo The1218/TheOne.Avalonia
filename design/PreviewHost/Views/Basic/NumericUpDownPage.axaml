@@ -41,7 +41,6 @@
                     Width="220" />
             </WrapPanel>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
         <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
             <WrapPanel>

@@ -24,6 +24,5 @@
                 <Calendar DisplayMode="Decade" Margin="0,0,12,12" />
             </WrapPanel>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

@@ -68,6 +68,5 @@
                 <TextBlock Margin="24" Text="{Binding Text}" />
             </SplitView>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

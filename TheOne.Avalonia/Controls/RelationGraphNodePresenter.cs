@@ -10,7 +10,7 @@ using global::Avalonia.Media;
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>A native node card. Header displays the model's Title.</summary>
-[PseudoClasses(":has-icon", ":has-title", ":has-content", ":icon-only", ":root")]
+[PseudoClasses(":has-icon", ":has-title", ":has-content", ":icon-only", ":root", ":selected")]
 [TemplatePart("PART_IconPresenter", typeof(ContentPresenter))]
 public class RelationGraphNodePresenter : HeaderedContentControl
 {
@@ -25,6 +25,8 @@ public class RelationGraphNodePresenter : HeaderedContentControl
     public static readonly StyledProperty<IBrush?> IconBackgroundProperty = AvaloniaProperty.Register<RelationGraphNodePresenter, IBrush?>(nameof(IconBackground));
     public static readonly StyledProperty<IBrush?> IconForegroundProperty = AvaloniaProperty.Register<RelationGraphNodePresenter, IBrush?>(nameof(IconForeground));
     public static readonly StyledProperty<bool> IsRootProperty = AvaloniaProperty.Register<RelationGraphNodePresenter, bool>(nameof(IsRoot));
+    public static readonly DirectProperty<RelationGraphNodePresenter, bool> IsSelectedProperty = AvaloniaProperty.RegisterDirect<RelationGraphNodePresenter, bool>(nameof(IsSelected), node => node.IsSelected);
+    private bool _isSelected;
     internal static readonly StyledProperty<object?> ChildrenSourceValueProperty = AvaloniaProperty.Register<RelationGraphNodePresenter, object?>("ChildrenSourceValue");
 
     public object? Icon { get => GetValue(IconProperty); set => SetValue(IconProperty, value); }
@@ -38,6 +40,9 @@ public class RelationGraphNodePresenter : HeaderedContentControl
     public IBrush? IconBackground { get => GetValue(IconBackgroundProperty); set => SetValue(IconBackgroundProperty, value); }
     public IBrush? IconForeground { get => GetValue(IconForegroundProperty); set => SetValue(IconForegroundProperty, value); }
     public bool IsRoot { get => GetValue(IsRootProperty); set => SetValue(IsRootProperty, value); }
+    /// <summary>Selection state maintained by the owning RelationGraph.</summary>
+    public bool IsSelected => _isSelected;
+    internal void SetSelected(bool selected) { SetAndRaise(IsSelectedProperty, ref _isSelected, selected); PseudoClasses.Set(":selected", selected); }
 
     public RelationGraphNodePresenter() => UpdateState();
     protected override Type StyleKeyOverride => typeof(RelationGraphNodePresenter);

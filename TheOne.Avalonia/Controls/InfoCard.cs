@@ -16,6 +16,7 @@ namespace TheOne.Avalonia.Controls;
 [TemplatePart("PART_FooterPresenter", typeof(ContentPresenter))]
 public class InfoCard : HeaderedContentControl
 {
+    public static readonly StyledProperty<BoxShadows> BoxShadowProperty = Border.BoxShadowProperty.AddOwner<InfoCard>();
     public static readonly StyledProperty<object?> HeaderIconProperty = AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderIcon));
     public static readonly StyledProperty<IDataTemplate?> HeaderIconTemplateProperty = AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(HeaderIconTemplate));
     public static readonly StyledProperty<object?> HeaderActionsProperty = AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderActions));
@@ -44,6 +45,9 @@ public class InfoCard : HeaderedContentControl
     }
 
     public InfoCard() => UpdateState();
+
+    /// <summary>Outer shadow, supplied by the shadow and hove theme classes.</summary>
+    public BoxShadows BoxShadow { get => GetValue(BoxShadowProperty); set => SetValue(BoxShadowProperty, value); }
 
     public object? HeaderIcon { get => GetValue(HeaderIconProperty); set => SetValue(HeaderIconProperty, value); }
     public IDataTemplate? HeaderIconTemplate { get => GetValue(HeaderIconTemplateProperty); set => SetValue(HeaderIconTemplateProperty, value); }

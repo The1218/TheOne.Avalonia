@@ -31,6 +31,5 @@
                 Text="辅助说明"
                 TextWrapping="Wrap" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

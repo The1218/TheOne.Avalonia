@@ -12,7 +12,6 @@ public class LoadingDemoViewModel : BasicControlViewModel
             if (IsLoading) return;
             IsLoading = true;
             OperationCount++;
-            Status = $"第 {OperationCount} 次加载：可在加载过程中切换动效。";
             try
             {
                 await Task.Delay(3000);
@@ -20,7 +19,6 @@ public class LoadingDemoViewModel : BasicControlViewModel
             finally
             {
                 IsLoading = false;
-                Status = $"第 {OperationCount} 次加载完成。";
             }
         });
     }

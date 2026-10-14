@@ -68,7 +68,6 @@
                 </StackPanel>
             </WrapPanel>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
         <Button
             Command="{Binding LastCommand}"
             Content="第 1,000 项"

@@ -71,6 +71,19 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 
 在视图中声明 `xmlns:media="using:Avalonia.Media"`。模板的数据上下文是相应字段值；显示字段可承载原生控件，保留焦点、按钮命令和键盘行为。同一个控件实例只能由一个节点区域拥有，需要重复图标时共享 Geometry 并由模板分别创建控件。
 
+## 节点选择
+
+`SelectItem` 保存当前选中的**节点模型对象**，默认值为 null，默认绑定方向是 TwoWay。点击任意有效节点会同步选中状态；节点获得键盘焦点后可按 Enter / Space 选中，Tab 导航仍由 Avalonia 处理。点击节点内的按钮或输入框也会选中节点，同时保留这些原生控件的命令和焦点。
+
+```xml
+<one:RelationGraph RootNode="{Binding Root}"
+                   SelectItem="{Binding SelectedNode, Mode=TwoWay}" />
+```
+
+`SelectedNode` 的类型应与节点模型一致，如 `RelationGraphNode?` 或自定义 `OrganizationUnit?`；自定义模型仍需配置 ChildrenSource 等编译绑定。选中值按对象引用匹配当前树，不能传入另建的相同内容对象或 Presenter。模型属性初始化可早于 RootNode，首轮布局后会校验选择。选中节点被移除、根节点清空或数据变为无效树时，SelectItem 自动清空并写回绑定；运行时设置树外对象也会清空。设置 null 可主动取消选择。
+
+节点 Presenter 提供只读 `IsSelected` 与 `:selected` 伪类，默认用强调色底色、轮廓和图标区显示选择。NodeTheme 可定制该状态；选择不改变节点几何尺寸。禁用节点不会响应指针和键盘选择。
+
 ## 布局与外观
 
 | 属性 | 默认 Normal 值 | 用途 |
@@ -89,7 +102,7 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 
 默认样式使用 `One.Surface`、`One.Text`、`One.Muted`、`One.Line`、`One.Accent`、`One.AccentSoft`、`One.RowSelected`。根节点通过 `:root` 显示强调轮廓和底色。`ControlSizing.Size` 支持 Small / Normal / Large：节点宽度为 220 / 260 / 300，高度下限为 72 / 88 / 104，字体与图标同步变化；显式属性覆盖尺寸默认值。
 
-控件按整棵树自然尺寸布局，使用外层原生 `ScrollViewer` 处理窄视口；不会压缩节点文字。当前完整实现所有节点，无虚拟化，适合有限规模的关系树。没有内置折叠、拖动、缩放或选择。布局遍历使用迭代方式，连接线直接绘制，节点内容使用原生 Presenter。
+控件按整棵树自然尺寸布局，使用外层原生 `ScrollViewer` 处理窄视口；不会压缩节点文字。当前完整实现所有节点，无虚拟化，适合有限规模的关系树。没有内置折叠、拖动或缩放。布局遍历使用迭代方式，连接线直接绘制，节点内容使用原生 Presenter。
 
 ## 预览与验证
 
@@ -106,3 +119,5 @@ dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-relation-gr
 SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/relation-graph/native
 .preview/relation-graph/native/NativeAotSmoke --require-aot --verify-relation-graph .preview/relation-graph/native-pixels
 ```
+
+选择专项覆盖明暗主题、三档尺寸、两种方向、真实选中像素、指针／键盘选择、节点内按钮命令与焦点、节点移除和无效树的选择清理，以及默认 / 自定义模型的双向编译绑定。原生消费执行同一 `--verify-relation-graph` 专项。

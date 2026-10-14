@@ -24,6 +24,5 @@
                 ViewportSize="20"
                 Width="360" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

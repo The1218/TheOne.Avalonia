@@ -32,6 +32,5 @@
                 MaxWidth="420"
                 Value="64" />
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

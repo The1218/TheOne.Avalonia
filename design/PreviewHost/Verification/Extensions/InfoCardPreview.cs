@@ -1,5 +1,6 @@
 using ReactiveUI;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Presenters;
@@ -11,6 +12,7 @@ using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
@@ -29,8 +31,9 @@ internal static class InfoCardPreview
         HorizontalAlignment = HorizontalAlignment.Stretch
     };
 
-    public static void Verify(Action<bool, string> check)
+    public static void Verify(Action<bool, string> check, string? output = null)
     {
+        if (output is not null) Directory.CreateDirectory(output);
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         {
@@ -38,6 +41,7 @@ internal static class InfoCardPreview
             VerifySlotsDensity(theme, size, check);
             VerifySeparators(theme, size, check);
             VerifyRegionChrome(theme, size, check);
+            VerifyHoverAndShadow(theme, size, check, output);
         }
         VerifyTemplatesAndInteraction(check);
         VerifySlotTemplatesAndInteraction(check);
@@ -504,6 +508,59 @@ internal static class InfoCardPreview
             frame.Save(path, PngBitmapEncoderOptions.Default); Console.WriteLine($"Rendered {path}");
             window.Close();
         }
+    }
+
+    private static void VerifyHoverAndShadow(ThemeVariant theme, ControlSize size, Action<bool, string> check, string? output)
+    {
+        var clicks = 0; var button = new Button { Content = "原生操作" }; button.Click += (_, _) => clicks++;
+        var card = new InfoCard { Header = "hove / shadow", Content = button, VerticalAlignment = VerticalAlignment.Top };
+        var window = Open(card, theme, size, height: 420); var bounds = card.Bounds;
+        var shadow = Part<Border>(card, "PART_Shadow"); var label = $"InfoCard/effects/{theme.Key}/{size}";
+        window.MouseMove(new Point(2, 2)); Flush();
+        var samplePoint = card.TranslatePoint(new Point(card.Bounds.Width / 2, card.Bounds.Height + 3), window)!.Value;
+        using var baseline = window.CaptureRenderedFrame()!; var baselinePixel = Pixel(baseline, samplePoint);
+        check(card.BoxShadow.Count == 0 && shadow.BoxShadow.Count == 0 && !shadow.IsHitTestVisible, label + ": default card has no shadow or extra input surface");
+        card.Classes.Add("shadow"); Flush();
+        check(card.BoxShadow.Count == 1 && card.BoxShadow == shadow.BoxShadow, label + ": shadow class supplies the outer template shadow");
+        using (var frame = window.CaptureRenderedFrame()!)
+        {
+            if (output is not null) frame.Save(Path.Combine(output, $"infocard-shadow-{theme.Key}-{size}.png"), PngBitmapEncoderOptions.Default);
+            check(Pixel(frame, samplePoint) != baselinePixel, label + ": shadow is visible outside the clipped surface in actual pixels");
+        }
+        card.Classes.Remove("shadow"); card.Classes.Add("hove"); Flush();
+        check(card.BoxShadow.Count == 0, label + ": hove has no resting shadow");
+        var center = card.TranslatePoint(new Point(card.Bounds.Width / 2, card.Bounds.Height / 2), window)!.Value;
+        window.MouseMove(center); Flush();
+        check(card.IsPointerOver && card.BoxShadow.Count == 1 && Colour(card.BorderBrush) == Resource(card, "One.Accent") && card.Bounds == bounds,
+            label + ": pointer hover adds an accent outline and shadow without moving content");
+        using (var frame = window.CaptureRenderedFrame()!)
+        {
+            check(Pixel(frame, samplePoint) != baselinePixel, label + ": hover shadow is rendered");
+            if (output is not null) frame.Save(Path.Combine(output, $"infocard-hove-{theme.Key}-{size}.png"), PngBitmapEncoderOptions.Default);
+        }
+        Click(button); check(clicks == 1 && button.IsKeyboardFocusWithin, label + ": hover decoration preserves native button input and focus");
+        card.Classes.Add("shadow"); window.MouseMove(new Point(2, 2)); Flush();
+        var resting = card.BoxShadow; window.MouseMove(center); Flush();
+        check(card.BoxShadow != resting, label + ": combined classes strengthen the resting shadow on hover");
+        card.IsEnabled = false; Flush(); check(card.BoxShadow.Count == 0, label + ": disabled cards stop hover and class shadows");
+        card.IsEnabled = true; card.BoxShadow = BoxShadows.Parse("0 1 3 0 #50000000"); card.BorderBrush = Brushes.Magenta; Flush();
+        check(card.BoxShadow == BoxShadows.Parse("0 1 3 0 #50000000") && Colour(card.BorderBrush) == Colors.Magenta,
+            label + ": explicit shadow and outline values override class defaults");
+        card.ClearValue(InfoCard.BoxShadowProperty); card.ClearValue(InfoCard.BorderBrushProperty);
+        card.Classes.Remove("hove"); card.Classes.Remove("shadow"); Flush();
+        check(card.BoxShadow.Count == 0, label + ": removing classes restores default styling");
+        window.Close();
+    }
+
+    private static Color Pixel(Bitmap bitmap, Point point)
+    {
+        var scale = bitmap.Dpi.X / 96;
+        var x = Math.Clamp((int)(point.X * scale), 0, bitmap.PixelSize.Width - 1);
+        var y = Math.Clamp((int)(point.Y * scale), 0, bitmap.PixelSize.Height - 1);
+        var bytes = new byte[4]; var pin = GCHandle.Alloc(bytes, GCHandleType.Pinned);
+        try { bitmap.CopyPixels(new PixelRect(x, y, 1, 1), pin.AddrOfPinnedObject(), bytes.Length, 4); }
+        finally { pin.Free(); }
+        return bitmap.Format == PixelFormat.Rgba8888 ? Color.FromArgb(bytes[3], bytes[0], bytes[1], bytes[2]) : Color.FromArgb(bytes[3], bytes[2], bytes[1], bytes[0]);
     }
 
     private static T Part<T>(Control card, string name) where T : Control => card.GetVisualDescendants().OfType<T>().Single(value => value.Name == name && value.TemplatedParent == card);

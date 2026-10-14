@@ -173,7 +173,7 @@ internal static class Program
         }
         if (args.Contains("--verify-infocard"))
         {
-            TheOne.DesignPreview.InfoCardPreview.Verify(Check);
+            TheOne.DesignPreview.InfoCardPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
             Console.WriteLine($"PASS: {_checks} InfoCard compiled binding / theme / interaction checks.");
             return;
         }

@@ -5,9 +5,12 @@ using global::Avalonia.Controls;
 using global::Avalonia.Controls.Primitives;
 using global::Avalonia.Controls.Templates;
 using global::Avalonia.Data;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
 using global::Avalonia.Layout;
 using global::Avalonia.Media;
 using global::Avalonia.Styling;
+using global::Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -16,6 +19,7 @@ public partial class RelationGraph : Control
 {
     public static readonly StyledProperty<IBrush?> BackgroundProperty = Panel.BackgroundProperty.AddOwner<RelationGraph>();
     public static readonly StyledProperty<object?> RootNodeProperty = AvaloniaProperty.Register<RelationGraph, object?>(nameof(RootNode));
+    public static readonly StyledProperty<object?> SelectItemProperty = AvaloniaProperty.Register<RelationGraph, object?>(nameof(SelectItem), defaultBindingMode: BindingMode.TwoWay);
     public static readonly StyledProperty<Orientation> OrientationProperty = AvaloniaProperty.Register<RelationGraph, Orientation>(nameof(Orientation), Orientation.Horizontal, validate: Enum.IsDefined);
     public static readonly StyledProperty<BindingBase?> ChildrenSourceProperty = AvaloniaProperty.Register<RelationGraph, BindingBase?>(nameof(ChildrenSource));
     public static readonly StyledProperty<BindingBase?> IconSourceProperty = AvaloniaProperty.Register<RelationGraph, BindingBase?>(nameof(IconSource));
@@ -49,6 +53,8 @@ public partial class RelationGraph : Control
     public IBrush? Background { get => GetValue(BackgroundProperty); set => SetValue(BackgroundProperty, value); }
 
     public object? RootNode { get => GetValue(RootNodeProperty); set => SetValue(RootNodeProperty, value); }
+    /// <summary>The selected node model, matched by reference. Null clears selection.</summary>
+    public object? SelectItem { get => GetValue(SelectItemProperty); set => SetValue(SelectItemProperty, value); }
     public Orientation Orientation { get => GetValue(OrientationProperty); set => SetValue(OrientationProperty, value); }
     /// <summary>A binding evaluated against each node, not against the graph's data context.</summary>
     [AssignBinding] public BindingBase? ChildrenSource { get => GetValue(ChildrenSourceProperty); set => SetValue(ChildrenSourceProperty, value); }
@@ -83,6 +89,7 @@ public partial class RelationGraph : Control
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == SelectItemProperty) UpdateSelection();
         if (change.Property == ChildrenSourceProperty || change.Property == IconSourceProperty || change.Property == TitleSourceProperty || change.Property == ContentSourceProperty)
         {
             foreach (var entry in _entries.Values) entry.Stop();
@@ -169,8 +176,27 @@ public partial class RelationGraph : Control
             foreach (var entry in _nodes) if (!Children.Contains(entry.View)) Children.Add(entry.View);
             SetAndRaise(ValidationErrorProperty, ref _validationError, error);
             SetAndRaise(NodeCountProperty, ref _nodeCount, _nodes.Count);
+            UpdateSelection();
         }
         finally { _rebuilding = false; }
+    }
+
+    private void UpdateSelection()
+    {
+        // Defer validation until the source has been rebuilt, allowing bindings to initialize in either order.
+        if (!_dirty && SelectItem is { } selected && !_nodes.Any(node => ReferenceEquals(node.Model, selected)))
+            SetCurrentValue(SelectItemProperty, null);
+        foreach (var node in _entries.Values) node.View.SetSelected(ReferenceEquals(node.Model, SelectItem));
+    }
+
+    private void SelectFromPointer(Entry entry, PointerPressedEventArgs e)
+    {
+        if (!entry.View.IsEffectivelyEnabled || !e.GetCurrentPoint(entry.View).Properties.IsLeftButtonPressed) return;
+        SetCurrentValue(SelectItemProperty, entry.Model);
+        // Selection must not steal focus from an embedded button, text editor or other native input.
+        for (var source = e.Source as Visual; source is not null && !ReferenceEquals(source, entry.View); source = source.GetVisualParent())
+            if (source is InputElement { Focusable: true }) return;
+        entry.View.Focus(NavigationMethod.Pointer);
     }
 
     private sealed class Entry(RelationGraph owner, object model)
@@ -192,6 +218,8 @@ public partial class RelationGraph : Control
             if (_active) return;
             _active = true;
             View.PropertyChanged += Changed;
+            View.AddHandler(InputElement.PointerPressedEvent, PointerPressed, RoutingStrategies.Tunnel);
+            View.KeyDown += KeyDown;
             Bind(RelationGraphNodePresenter.IconProperty, owner.IconSource ?? (Model is RelationGraphNode ? CompiledBinding.Create<RelationGraphNode, object?>(node => node.Icon, source: Model) : null));
             Bind(HeaderedContentControl.HeaderProperty, owner.TitleSource ?? (Model is RelationGraphNode ? CompiledBinding.Create<RelationGraphNode, object?>(node => node.Title, source: Model) : null));
             Bind(ContentControl.ContentProperty, owner.ContentSource ?? (Model is RelationGraphNode ? CompiledBinding.Create<RelationGraphNode, object?>(node => node.Content, source: Model) : null));
@@ -206,6 +234,12 @@ public partial class RelationGraph : Control
         {
             if (change.Property == RelationGraphNodePresenter.ChildrenSourceValueProperty && !owner._rebuilding) owner.RefreshData();
         }
+        private void PointerPressed(object? sender, PointerPressedEventArgs e) => owner.SelectFromPointer(this, e);
+        private void KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (!ReferenceEquals(e.Source, View) || !View.IsEffectivelyEnabled || e.KeyModifiers != KeyModifiers.None || e.Key is not (Key.Enter or Key.Space)) return;
+            owner.SetCurrentValue(SelectItemProperty, Model); e.Handled = true;
+        }
         public void WatchCollection(INotifyCollectionChanged? collection)
         {
             if (ReferenceEquals(_collection, collection)) return;
@@ -218,6 +252,8 @@ public partial class RelationGraph : Control
         {
             _active = false;
             View.PropertyChanged -= Changed;
+            View.RemoveHandler(InputElement.PointerPressedEvent, PointerPressed);
+            View.KeyDown -= KeyDown;
             WatchCollection(null);
             foreach (var binding in _bindings) binding.Dispose();
             _bindings.Clear();

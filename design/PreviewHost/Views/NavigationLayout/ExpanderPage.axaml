@@ -22,6 +22,5 @@
                 <TextBlock Margin="16" Text="{Binding Text}" />
             </Expander>
         </StackPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" />
     </StackPanel>
 </local:BasicControlPage>

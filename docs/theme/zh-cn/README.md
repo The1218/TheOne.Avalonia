@@ -84,3 +84,5 @@ Motion.Enabled 可在容器设置并继承；关闭或零时长立即完成当�
 FlowStep 主题包含不接收输入的连接线层 `PART_Connectors`、原生 `PART_ItemsPresenter` 与 `PART_ScrollViewer`。FlowNode 保留 `PART_ContentPresenter`，并通过 `PART_Indicator`、`PART_Ring`、`PART_Check`、`PART_Dot` 展示状态。状态伪类为 `:completed`、`:in-progress`、`:pending`、`:vertical`。默认内容资源键为 `One.FlowNode.DefaultContentTemplate`；共享语义画刷与继承尺寸支持明暗主题及三档尺寸。横向空间不足时滚动，纵向按内容真实高度布局；连接线层不拦截输入。模板优先级、尺寸与专项验证见 [FlowStep 与 FlowNode](../../controls/zh-cn/flow-step.md)。
 
 GanttChart 使用独立 `One.Gantt.*` 动态画刷、36／44／52 行高和固定表头；资源、模板 PART 与窄视口契约见 [甘特图](../../controls/zh-cn/gantt-chart.md)。
+
+InfoCard 支持 `hove` / `shadow` 类，外阴影采用 `One.InfoCard.Shadow` / `One.InfoCard.HoverShadow`，由不拦截输入的 `PART_Shadow` 绘制；详见 [InfoCard](../../controls/zh-cn/info-card.md)。RelationGraph 的节点主题支持只读 IsSelected / :selected 状态；选择不会改变节点尺寸，详见 [节点选择](../../controls/zh-cn/relation-graph.md#节点选择)。
