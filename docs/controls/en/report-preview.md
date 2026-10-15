@@ -60,4 +60,3 @@ Command-construction checks do not establish physical printing, Windows handler 
 PreviewHost → Extensions → ReportPreview loads saved JSON and an explicit 96-row sample source without external network access. The viewer fills the host content area.
 
 JSON includes public endpoint/image URLs and body selection, excluding fetched rows, responses and HTTP client credentials. Credentials belong in the consumer client, not saved URLs. Generated JSON metadata supports NativeAOT. Formatting, totals, conditions and validation follow [ReportDesign's model](report-design.md#preview-and-update-contract). One repeating detail table is supported; the viewer has no report editing or request method/body editor.
-

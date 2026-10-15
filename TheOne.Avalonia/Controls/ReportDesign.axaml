@@ -308,7 +308,7 @@
                     x:Name="ExportPdfButton" />
             </Grid>
         </Border>
-        
+
         <Border
             Grid.Row="1"
             Classes="divider"
@@ -652,7 +652,7 @@
                 </Grid>
             </Grid>
         </Border>
-        
+
         <Grid ColumnDefinitions="252,1,*,1,330" RowDefinitions="Auto,*" Grid.Row="2"><Border Grid.Column="2" Grid.ColumnSpan="3" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource One.Line}"><TabControl
                     x:Name="ViewTabs"
                     Classes="card"
@@ -1290,7 +1290,7 @@
                                 </Border>
                             </ScrollViewer>
                         </TabItem>
-                        
+
                     </TabControl>
                     <TextBlock
                         FontSize="12"
