@@ -14,9 +14,21 @@
             Text="Toast · 即时反馈" />
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="默认顶部居中。配置标题、状态、停留时间和位置后，点击显示观察效果。"
+            Text="仅展示状态图标与正文，两者垂直居中。支持多行内容、自动消失、点击关闭及关闭全部。"
             TextWrapping="Wrap" />
-        <local:MessageDemoSettings />
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+            <StackPanel Spacing="6">
+                <TextBlock Text="状态 / 类型" />
+                <ComboBox Name="MessageType" HorizontalAlignment="Stretch" ItemsSource="{Binding Types}" SelectedItem="{Binding Type, Mode=TwoWay}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Spacing="6">
+                <TextBlock Text="显示尺寸" />
+                <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Sizes}" SelectedItem="{Binding Size, Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+        <TextBox Name="MessageText" AcceptsReturn="True" MinHeight="76" PlaceholderText="提示内容"
+                 Text="{Binding Message, Mode=TwoWay}" TextWrapping="Wrap" />
+        <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
             <StackPanel Spacing="6">
                 <TextBlock Text="显示位置" />

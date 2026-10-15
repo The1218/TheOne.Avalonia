@@ -16,6 +16,7 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [Lists, trees, tabs, and grids](collections.md) | ItemsControl, ListBox, TreeView, TabControl, TabStrip, Card tabs, DataGrid, recycling, distant navigation |
 | [DataGrid extensions](datagrid-extensions.md) | Automatic entity-property filters, combined column filters, right frozen columns, numeric summaries |
 | [DataGrid binding and sorting](datagrid-binding.md) | Type inference, registered metadata, compiled editing, sort buttons, virtualization |
+| [DataGrid tree view prototype](datagrid-tree.md) | Stage-one local tree, expansion/collapse, native editing and selection |
 | [Loading controls](loading.md) | LoadingIndicator, button loading states, LoadingContainer |
 | [Menus and layout](layout.md) | Menu, ContextMenu, MenuFlyout, Flyout, FlyoutPresenter, Expander, SplitView, GridSplitter, ScrollViewer, ScrollBar, Separator |
 | [Carousel and refresh](collection-content.md) | Carousel, RefreshContainer, RefreshVisualizer |
@@ -26,9 +27,12 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [Windows and messaging](windows.md) | OneWindow, ThemeButton, LeftContent, RightContent, static notification / Toast / dialog APIs |
 | [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
+| [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |
 | [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
 | [RelationGraph](relation-graph.md) | Single-root relation trees, horizontal/vertical layout, default/custom models, compiled ChildrenSource, SelectItem selection and null regions |
+| [Pagination](pagination.md) | Standard / compact pagination, page sizes, jumping and boundary states |
 | [FlowStep and FlowNode](flow-step.md) | Horizontal / vertical flow, three states, default and custom content templates |
+| [Avatar](avatar.md) | Local and HTTP(S) avatars, text/icon fallback, three shapes and async lifecycle |
 | [Tag and VerificationStep](tag-verification-step.md) | Icon status tags, automatic forms from model properties, navigation with per-step validation |
 
 ComboBoxItem, ListBoxItem, TreeViewItem, TabItem, MenuItem, calendar cells, and internal DataGrid presenters receive their styles from the theme. Bind models for dynamic collections and let templates create containers on demand.

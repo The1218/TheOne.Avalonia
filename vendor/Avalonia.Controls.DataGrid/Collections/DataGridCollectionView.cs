@@ -386,7 +386,7 @@ namespace Avalonia.Collections
         /// <summary>
         /// Gets a value indicating whether the view supports AddNew.
         /// </summary>
-        public bool CanAddNew
+        public virtual bool CanAddNew
         {
             get
             {
@@ -411,7 +411,7 @@ namespace Avalonia.Collections
         /// Gets a value indicating whether the PageIndex value is allowed to change or not.
         /// </summary>
         //TODO Paging
-        public bool CanChangePage
+        public virtual bool CanChangePage
         {
             get { return true; }
         }
@@ -419,7 +419,7 @@ namespace Avalonia.Collections
         /// <summary>
         /// Gets a value indicating whether we support filtering with this ICollectionView.
         /// </summary>
-        public bool CanFilter
+        public virtual bool CanFilter
         {
             get { return true; }
         }
@@ -428,7 +428,7 @@ namespace Avalonia.Collections
         /// Gets a value indicating whether this view supports grouping.
         /// When this returns false, the rest of the interface is ignored.
         /// </summary>
-        public bool CanGroup
+        public virtual bool CanGroup
         {
             get { return true; }
         }
@@ -436,7 +436,7 @@ namespace Avalonia.Collections
         /// <summary>
         /// Gets a value indicating whether the view supports Remove and RemoveAt.
         /// </summary>
-        public bool CanRemove
+        public virtual bool CanRemove
         {
             get
             {
@@ -448,7 +448,7 @@ namespace Avalonia.Collections
         /// <summary>
         /// Gets a value indicating whether we support sorting with this ICollectionView.
         /// </summary>
-        public bool CanSort
+        public virtual bool CanSort
         {
             get { return true; }
         }
@@ -809,7 +809,7 @@ namespace Avalonia.Collections
         /// the items to display.
         /// </summary>
         //TODO Paging
-        public int PageSize
+        public virtual int PageSize
         {
             get
             {

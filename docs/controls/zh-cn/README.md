@@ -16,6 +16,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [列表、树、标签与表格](collections.md) | ItemsControl、ListBox、TreeView、TabControl、TabStrip、Card 标签、DataGrid、回收与远距离定位 |
 | [DataGrid 扩展](datagrid-extensions.md) | 自动实体属性筛选、多列组合、右侧冻结、底部数值统计 |
 | [DataGrid 绑定与排序](datagrid-binding.md) | 类型推断、注册元数据、编译编辑、排序按钮和虚拟化 |
+| [DataGrid 树视图原型](datagrid-tree.md) | 第一阶段本地树、展开折叠、原生编辑与选择状态 |
 | [加载控件](loading.md) | LoadingIndicator、按钮加载和 LoadingContainer |
 | [菜单与布局](layout.md) | Menu、ContextMenu、MenuFlyout、Flyout、FlyoutPresenter、Expander、SplitView、GridSplitter、ScrollViewer、ScrollBar、Separator |
 | [轮播与刷新](collection-content.md) | Carousel、RefreshContainer、RefreshVisualizer |
@@ -26,9 +27,12 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [窗口与消息](windows.md) | OneWindow、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
+| [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
 | [RelationGraph 树形关系图](relation-graph.md) | 单根树、横纵布局、默认 / 自定义模型、ChildrenSource 编译绑定、SelectItem 选择与空值布局 |
+| [Pagination 分页](pagination.md) | 标准／紧凑布局、每页条数、跳页与边界状态 |
 | [FlowStep 与 FlowNode](flow-step.md) | 横向／纵向流程、三种状态、默认与自定义内容模板 |
+| [Avatar 头像](avatar.md) | 本地与 HTTP(S) 图片、文字／图标占位、三种形状与异步加载生命周期 |
 | [Tag 与 VerificationStep](tag-verification-step.md) | 图标状态标签、模型属性自动表单与单步验证导航 |
 
 ComboBoxItem、ListBoxItem、TreeViewItem、TabItem、MenuItem、日历单元格和表格内部 Presenter 的样式由主题提供。动态集合优先绑定模型，由模板按需创建容器。

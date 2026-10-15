@@ -25,6 +25,7 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 
 | 控件 | Classes / 属性 | 用途 |
 | --- | --- | --- |
+| Avatar | `Shape`、`CornerRadius`、`Stretch`、`:loading`、`:error`、`:has-image`、`:has-text` | [头像](../../controls/zh-cn/avatar.md)：32 / 40 / 56 px，共享语义颜色与图片裁剪、占位 |
 | Button | `primary`，兼容 `accent` | 强调色主操作 |
 | Button / IconButton | `outline`、`ghost`、`link`、`success`、`info`、`warning`、`danger` | 轻操作与语义状态 |
 | 官方控件 / 容器 | `small`、`normal`、`large` | 统一三档密度，支持继承及单控件覆盖 |
@@ -86,3 +87,11 @@ FlowStep 主题包含不接收输入的连接线层 `PART_Connectors`、原生 `
 GanttChart 使用独立 `One.Gantt.*` 动态画刷、36／44／52 行高和固定表头；资源、模板 PART 与窄视口契约见 [甘特图](../../controls/zh-cn/gantt-chart.md)。
 
 InfoCard 支持 `hove` / `shadow` 类，外阴影采用 `One.InfoCard.Shadow` / `One.InfoCard.HoverShadow`，由不拦截输入的 `PART_Shadow` 绘制；详见 [InfoCard](../../controls/zh-cn/info-card.md)。RelationGraph 的节点主题支持只读 IsSelected / :selected 状态；选择不会改变节点尺寸，详见 [节点选择](../../controls/zh-cn/relation-graph.md#节点选择)。
+
+ImagePreview 的 PART_Viewport 直接绘制图片与透明棋盘格，导航与工具使用原生按钮；复用 One.* 语义画刷及三档密度。见 [图片预览](../../controls/zh-cn/image-preview.md)。
+
+## Pagination
+
+Pagination 主题保留原生 Button、ComboBox 与 TextBox。当前页使用主按钮状态，省略号不接收输入；`:compact`、`:empty`、`:invalid-jump` 表示布局、空数据与跳页校验。ItemHeight 随继承尺寸使用 30 / 36 / 44。部件、文本格式与验证见[控件契约](../../controls/zh-cn/pagination.md)。
+
+Toast 通过 one-toast 类选择 One.ToastCard 模板，仅呈现垂直居中的状态图标与正文；NotificationCard 默认通知模板保留标题和关闭按钮。两者共享原生生命周期与动效，排版及验证见 [窗口与消息](../../controls/zh-cn/windows.md)。

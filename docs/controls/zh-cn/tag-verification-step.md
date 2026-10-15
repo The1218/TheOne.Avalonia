@@ -145,8 +145,10 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 圆点连线导航区分完成勾号、当前实心编号、未开始浅色编号和错误感叹号，沿用 TheOne 语义色。圆点 small / normal / large 直径为 30 / 36 / 42；标题视口高度 112、最大宽度 960，默认居中；每项默认宽度 200。设置 `HeaderHorizontalAlignment="Stretch"` 时均分视口，每项最小宽度 120；较窄窗口或长列表保持横向滚动，不压缩成不可读的圆点。调整窗口或切换对齐实时重算项宽，仍使用官方 ListBox / VirtualizingStackPanel。成功状态保存在 StepItem 上，不依赖已创建的标题容器。
 
+内置表单支持原生 `Tab` / `Shift+Tab` 在输入项间切换焦点，遵循禁用状态与 `KeyboardNavigation.IsTabStop`，末尾字段可继续移到导航按钮。专用 `One.StepForm` 主题使用 `KeyboardNavigation.TabNavigation="Continue"`，不改变普通 ListBox 的导航模式；自定义内容模板仍保留原生焦点行为。
+
 VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
 
 默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step / VerificationStep”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
-专项验证运行 `dotnet run --project design/PreviewHost -- --verify-tag-verification-step`；渲染入口使用 `--render-controls .preview/verification-step VerificationStep`。发布后的 NativeAotSmoke 原生消费程序使用 `--require-aot --verify-tag-verification-step` 执行相同验证。
+只验证 VerificationStep 时运行 `dotnet run --project design/PreviewHost -- --verify-verification-step`，包含真实 Tab / Shift+Tab 按键检查；渲染入口使用 `--render-controls .preview/verification-step VerificationStep`。发布后的 NativeAotSmoke 原生消费程序使用 `--require-aot --verify-verification-step` 执行相同验证。

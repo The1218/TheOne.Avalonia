@@ -19,7 +19,13 @@ public partial class App : Application
     {
         if (!Program.IsHeadless && ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (desktop.Args?.Contains("--datagrid-stage1") == true)
+            if (desktop.Args?.Contains("--datagrid-tree") == true)
+            {
+                var fixture = new DataGridTreeFixture();
+                desktop.MainWindow = new Window { Title = "Tree DataGrid prototype", Width = 900, Height = 650, Content = fixture };
+                desktop.MainWindow.Closed += (_, _) => { fixture.Grid.CancelEdit(DataGridEditingUnit.Row); fixture.Grid.ItemsSource = null; fixture.Model.Dispose(); };
+            }
+            else if (desktop.Args?.Contains("--datagrid-stage1") == true)
                 desktop.MainWindow = new Window { Title = "DataGrid stage 1", Width = 900, Height = 650, Content = new DataGridStage1View() };
             else if (desktop.Args?.Contains("--login") == true)
             {

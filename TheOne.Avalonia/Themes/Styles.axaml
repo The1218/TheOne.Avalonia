@@ -1,5 +1,6 @@
 <Styles
     xmlns="https://github.com/avaloniaui"
+    xmlns:n="using:Avalonia.Controls.Notifications"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -141,5 +142,8 @@
     <Style Selector=":is(Button).primary:disabled /template/ ContentPresenter#PART_ContentPresenter, :is(Button).accent:disabled /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
         <Setter Property="BorderBrush" Value="Transparent" />
+    </Style>
+    <Style Selector="n|NotificationCard.one-toast">
+        <Setter Property="Theme" Value="{StaticResource One.ToastCard}" />
     </Style>
 </Styles>

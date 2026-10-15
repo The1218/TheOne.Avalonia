@@ -47,9 +47,15 @@ internal static partial class TagVerificationStepPreview
     public static void Verify(Action<bool, string> check)
     {
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>()) VerifyTag(theme, size, check);
+        VerifyStep(check);
+    }
+    public static void VerifyStep(Action<bool, string> check)
+    {
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         {
-            VerifyTag(theme, size, check); VerifyStep(theme, size, check);
+            VerifyFocus(theme, size, check); VerifyStep(theme, size, check);
         }
         VerifyAsync(check); VerifyCommands(check); VerifyVirtualization(check); VerifyErrorVirtualization(check); VerifyFieldMapping(check); VerifyRules(check); VerifyAutoForms(check);
     }

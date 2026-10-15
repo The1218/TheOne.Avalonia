@@ -162,4 +162,47 @@
             <Setter Property="IsVisible" Value="False" />
         </Style>
     </ControlTheme>
+    <!-- Toast shares the native lifecycle and status icon selectors, with a message-only layout. -->
+    <ControlTheme x:Key="One.ToastCard" TargetType="n:NotificationCard" BasedOn="{StaticResource {x:Type n:NotificationCard}}">
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Width}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Name="PART_AnimationHost">
+                    <LayoutTransformControl Name="PART_LayoutTransformControl" UseRenderTransform="False">
+                        <Panel>
+                            <Border Name="PART_LayoutRoot" Background="{TemplateBinding Background}"
+                                    CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
+                                <Grid Margin="{TemplateBinding BorderThickness}" MinHeight="{TemplateBinding MinHeight}">
+                                    <Grid Name="PART_ToastContent" Margin="{TemplateBinding Padding}" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                        <PathIcon Name="PART_StatusIcon" Width="18" Height="18" VerticalAlignment="Center"
+                                                  Foreground="{DynamicResource One.Info}"
+                                                  Data="M 9 3 L 11 3 L 11 6 L 9 6 Z M 9 8 L 11 8 L 11 17 L 9 17 Z" />
+                                        <ContentPresenter Grid.Column="1" Name="PART_ContentPresenter"
+                                                          Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="Center" VerticalContentAlignment="Center">
+                                            <ContentPresenter.DataTemplates>
+                                                <DataTemplate DataType="{x:Type n:INotification}" x:DataType="n:INotification">
+                                                    <TextBlock Name="PART_NotificationMessage" Text="{Binding Message}" TextWrapping="Wrap"
+                                                               VerticalAlignment="Center" />
+                                                </DataTemplate>
+                                            </ContentPresenter.DataTemplates>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <Border Name="PART_Outline" BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                                    IsHitTestVisible="False" />
+                        </Panel>
+                    </LayoutTransformControl>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
 </ResourceDictionary>

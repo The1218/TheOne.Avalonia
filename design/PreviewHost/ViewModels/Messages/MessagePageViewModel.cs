@@ -13,7 +13,7 @@ public sealed class MessagePageViewModel : ReactiveObject
         ToastCommand = ReactiveCommand.Create<object?>(_ =>
         {
             ConfigurationRequested?.Invoke(this, EventArgs.Empty);
-            OneToast.Show(CreateNotification());
+            OneToast.Show(CreateNotification(includeTitle: false));
             Status = $"已显示 {Type} Toast";
         });
         NotificationCommand = ReactiveCommand.Create<object?>(_ =>
@@ -170,9 +170,9 @@ public sealed class MessagePageViewModel : ReactiveObject
     public ICommand FormDialogCommand { get; }
     public event EventHandler? ConfigurationRequested;
 
-    private Notification CreateNotification()
+    private Notification CreateNotification(bool includeTitle = true)
     {
-        return new Notification(ShowTitle ? Title : "", Message, Type,
+        return new Notification(includeTitle && ShowTitle ? Title : "", Message, Type,
             AutoClose ? TimeSpan.FromSeconds((double)Math.Clamp(Seconds ?? 4, .1m, 120m)) : TimeSpan.Zero,
             () => Status = $"消息点击 {++ClickCount} 次", () => Status = $"消息关闭 {++CloseCount} 次");
     }

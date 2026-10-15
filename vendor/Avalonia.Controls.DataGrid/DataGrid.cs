@@ -3992,7 +3992,8 @@ namespace Avalonia.Controls
                 var focusedObject = TopLevel.GetTopLevel(this)?.FocusManager.GetFocusedElement() as Visual;
                 var root = focusedObject?.GetVisualRoot();
                 var isPopup = root != null && root != this.GetVisualRoot();
-                var focusLeftDataGrid = !this.IsVisualAncestorOf(focusedObject);
+                // Returning focus from an editor to the grid itself stays inside the grid.
+                var focusLeftDataGrid = !ReferenceEquals(focusedObject, this) && !this.IsVisualAncestorOf(focusedObject);
 
                 DataGridColumn editingColumn = null;
 

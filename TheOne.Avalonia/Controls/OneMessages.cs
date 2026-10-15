@@ -102,12 +102,13 @@ public static class OneToast
     /// <summary>Default message owner, automatically updated when a themed window opens or activates. Access on the UI thread.</summary>
     public static Window? Owner { get => DefaultOwner.Value; set => DefaultOwner.Value = value; }
     public static void Show(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)
-        => OneWindowRegistry.MessageHost(OneWindowRegistry.Resolve(owner, Owner), true).Show(new Notification("", message, type, expiration ?? TimeSpan.FromSeconds(2.5)));
-    /// <summary>Shows a toast with a title, expiration and click/close callbacks.</summary>
+        => Show(new Notification("", message, type, expiration ?? TimeSpan.FromSeconds(2.5)), owner);
+    /// <summary>Shows the notification's message and status icon, ignoring Title, while retaining expiration and click/close callbacks.</summary>
     public static void Show(INotification notification, Window? owner = null)
     {
         ArgumentNullException.ThrowIfNull(notification);
-        OneWindowRegistry.MessageHost(OneWindowRegistry.Resolve(owner, Owner), true).Show(notification);
+        OneWindowRegistry.MessageHost(OneWindowRegistry.Resolve(owner, Owner), true).Show(
+            notification, notification.Type, notification.Expiration, notification.OnClick, notification.OnClose, ["one-toast"]);
     }
     public static async Task ShowAsync(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)
         => await Dispatcher.UIThread.InvokeAsync(() => Show(message, type, expiration, owner));

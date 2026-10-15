@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.PaginationDemoView" x:DataType="local:PaginationDemoViewModel" x:CompileBindings="True">
+  <StackPanel Spacing="20">
+    <TextBlock Text="Pagination · 分页控件" FontSize="22" FontWeight="SemiBold" />
+    <TextBlock Text="标准 / 紧凑布局 · 页码导航 · 每页条数 · 跳页 · 窄视口自动切换布局" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+    <WrapPanel>
+      <Button Content="恢复 1,280 条" Command="{Binding ResetCommand}" Margin="0,0,8,8" />
+      <Button Content="缩减到 45 条" Command="{Binding ShrinkCommand}" Margin="0,0,8,8" />
+      <Button Content="空数据" Command="{Binding EmptyCommand}" Margin="0,0,8,8" />
+    </WrapPanel>
+    <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+    <TextBlock Text="标准布局" FontWeight="SemiBold" FontSize="18" />
+    <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="8" Padding="16">
+      <one:Pagination Name="StandardPagination" TotalCount="{Binding TotalCount}" PageSize="{Binding PageSize, Mode=TwoWay}" CurrentPage="{Binding CurrentPage, Mode=TwoWay}"
+                      PageSizeOptions="{Binding PageSizeOptions}" PageChangedCommand="{Binding PageChangedCommand}" />
+    </Border>
+    <TextBlock Text="紧凑布局" FontWeight="SemiBold" FontSize="18" />
+    <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="8" Padding="16" MaxWidth="380" HorizontalAlignment="Left">
+      <one:Pagination Name="CompactPagination" Layout="Compact" TotalCount="{Binding TotalCount}" PageSize="{Binding PageSize, Mode=TwoWay}" CurrentPage="{Binding CurrentPage, Mode=TwoWay}" PageSizeOptions="{Binding PageSizeOptions}" />
+    </Border>
+    <TextBlock Text="边界状态" FontWeight="SemiBold" FontSize="18" />
+    <TextBlock Text="首页 · 上一页禁用" Foreground="{DynamicResource One.Muted}" />
+    <one:Pagination Name="FirstPagination" TotalCount="1280" CurrentPage="1" ShowTotal="False" ShowPageSizeSelector="False" ShowRange="False" ShowJump="False" />
+    <TextBlock Text="末页 · 下一页禁用" Foreground="{DynamicResource One.Muted}" />
+    <one:Pagination Name="LastPagination" TotalCount="1280" CurrentPage="64" ShowTotal="False" ShowPageSizeSelector="False" ShowRange="False" ShowJump="False" />
+    <TextBlock Text="无记录与整体禁用" FontWeight="SemiBold" FontSize="18" />
+    <one:Pagination Name="EmptyPagination" />
+    <one:Pagination Name="DisabledPagination" TotalCount="1280" CurrentPage="8" IsEnabled="False" />
+  </StackPanel>
+</UserControl>

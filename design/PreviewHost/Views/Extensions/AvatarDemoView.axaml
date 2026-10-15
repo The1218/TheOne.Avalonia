@@ -1,0 +1,48 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview" x:DataType="local:AvatarDemoView" x:Class="TheOne.DesignPreview.AvatarDemoView" x:CompileBindings="True">
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="24" Margin="24" MaxWidth="820" HorizontalAlignment="Stretch">
+      <StackPanel Spacing="8">
+        <TextBlock Text="Avatar · 头像" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock Text="本地文件与网络图片，统一的身份展示。加载中或失败时保留文字占位。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+      </StackPanel>
+      <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="12" Padding="24">
+        <StackPanel Spacing="20">
+          <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
+            <one:Avatar Name="AvatarSample" Source="{Binding ImageSource}" Width="80" Height="80" FontSize="24" Text="林默" AutomationProperties.Name="林默的头像" />
+            <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+              <TextBlock Text="林默" FontSize="20" FontWeight="SemiBold" />
+              <TextBlock Text="产品设计师 · TheOne 工作区" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+            </StackPanel>
+          </Grid>
+          <TextBlock Text="图片来源" FontWeight="SemiBold" />
+          <TextBox Name="AvatarSourceInput" PlaceholderText="本地路径、file:/// 或 https://…" AutomationProperties.Name="头像图片路径或网络地址" />
+          <WrapPanel>
+            <Button Content="加载头像" Classes="primary" Click="OnLoad" Margin="0,0,8,8" />
+            <Button Content="重试" Click="OnReload" Margin="0,0,8,8" />
+            <Button Content="清除图片" Click="OnClear" Margin="0,0,8,8" />
+          </WrapPanel>
+          <TextBlock Name="AvatarLoadStatus" Text="未设置图片时显示文字占位。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        </StackPanel>
+      </Border>
+      <StackPanel Spacing="12">
+        <TextBlock Text="图片头像" FontSize="16" FontWeight="SemiBold" />
+        <StackPanel Orientation="Horizontal" Spacing="20">
+          <one:Avatar Source="{Binding ExampleImageSource}" Text="LM" AutomationProperties.Name="圆形图片头像" />
+          <one:Avatar Source="{Binding ExampleImageSource}" Shape="Rounded" Text="JL" AutomationProperties.Name="圆角图片头像" />
+          <one:Avatar Source="{Binding ExampleImageSource}" Shape="Square" Text="AK" AutomationProperties.Name="方形图片头像" />
+        </StackPanel>
+      </StackPanel>
+      <StackPanel Spacing="16">
+        <TextBlock Text="三种形状" FontSize="16" FontWeight="SemiBold" />
+        <WrapPanel>
+          <StackPanel Spacing="8" Margin="0,0,32,16"><one:Avatar Text="林默" AutomationProperties.Name="圆形头像" /><TextBlock Text="圆形" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+          <StackPanel Spacing="8" Margin="0,0,32,16"><one:Avatar Text="JL" Shape="Rounded" AutomationProperties.Name="圆角头像" /><TextBlock Text="圆角" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+          <StackPanel Spacing="8" Margin="0,0,32,16"><one:Avatar Text="AK" Shape="Square" AutomationProperties.Name="方形头像" /><TextBlock Text="方形" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+          <StackPanel Spacing="8" Margin="0,0,32,16"><one:Avatar AutomationProperties.Name="默认人物头像" /><TextBlock Text="默认图标" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+          <StackPanel Spacing="8" Margin="0,0,0,16"><one:Avatar Text="TW" IsEnabled="False" AutomationProperties.Name="禁用头像" /><TextBlock Text="禁用" Foreground="{DynamicResource One.Muted}" /></StackPanel>
+        </WrapPanel>
+      </StackPanel>
+      <TextBlock Text="跟随全局 Small / Normal / Large 尺寸。头像仅展示身份；需要点击交互时，将它放入原生 Button。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

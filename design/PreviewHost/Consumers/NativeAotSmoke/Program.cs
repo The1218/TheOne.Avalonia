@@ -74,12 +74,14 @@ internal static class Program
         if (args.Contains("--verify-control-variants")) { TheOne.DesignPreview.ControlVariantsPreview.Verify(Check); Console.WriteLine($"PASS: {_checks} Theme theme checks."); return; }
         if (args.Contains("--verify-gantt")) { TheOne.DesignPreview.GanttPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} Gantt native hierarchy / scrolling / pixel checks."); return; }
         if (args.Contains("--verify-relation-graph")) { TheOne.DesignPreview.RelationGraphPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} RelationGraph native layout / compiled binding / pixel checks."); return; }
+        if (args.Contains("--verify-image-preview")) { TheOne.DesignPreview.ImagePreviewChecks.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} ImagePreview source / interaction / compiled binding / pixel checks."); return; }
         if (args.Contains("--verify-loginwindow"))
         {
             TheOne.DesignPreview.LoginWindowChecks.Verify(Check);
             Console.WriteLine($"PASS: {_checks} LoginWindow compiled binding / theme / lifetime checks.");
             return;
         }
+        if (args.Contains("--verify-datagrid-tree")) { TheOne.DesignPreview.DataGridTreePreview.Verify(Check); Console.WriteLine($"PASS: {_checks} DataGrid tree projection / native editing / selection checks."); return; }
         if (args.Contains("--verify-datagrid-binding"))
         {
             TheOne.DesignPreview.DataGridBindingPreview.Verify(Check);
@@ -161,21 +163,41 @@ internal static class Program
             Console.WriteLine($"PASS: {_checks} NavMenu compiled binding / theme / virtualization checks.");
             return;
         }
+        if (args.Contains("--verify-pagination"))
+        {
+            TheOne.DesignPreview.PaginationPreview.Verify(Check);
+            Console.WriteLine($"PASS: {_checks} Pagination native binding / layout / interaction checks."); return;
+        }
         if (args.Contains("--verify-flow-step"))
         {
             TheOne.DesignPreview.FlowStepPreview.Verify(Check);
             Console.WriteLine($"PASS: {_checks} FlowStep compiled binding / layout / interaction checks."); return;
+        }
+        if (args.Contains("--verify-verification-step"))
+        {
+            TheOne.DesignPreview.TagVerificationStepPreview.VerifyStep(Check);
+            Console.WriteLine($"PASS: {_checks} VerificationStep validation / keyboard / virtualization checks."); return;
         }
         if (args.Contains("--verify-tag-verification-step"))
         {
             TheOne.DesignPreview.TagVerificationStepPreview.Verify(Check);
             Console.WriteLine($"PASS: Tag / VerificationStep compiled validation, interaction and virtualization ({_checks} checks)."); return;
         }
+        if (args.Contains("--verify-avatar"))
+        {
+            TheOne.DesignPreview.AvatarPreview.Verify(Check, args.SkipWhile(arg => arg != "--verify-avatar").Skip(1).FirstOrDefault());
+            Console.WriteLine($"PASS: {_checks} Avatar local / HTTP / lifecycle / clipping checks."); return;
+        }
         if (args.Contains("--verify-infocard"))
         {
             TheOne.DesignPreview.InfoCardPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
             Console.WriteLine($"PASS: {_checks} InfoCard compiled binding / theme / interaction checks.");
             return;
+        }
+        if (args.Contains("--verify-toast"))
+        {
+            VerifyToast(args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            Console.WriteLine($"PASS: {_checks} Toast content / layout / native lifecycle checks."); return;
         }
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
@@ -184,6 +206,48 @@ internal static class Program
             Verify(theme, size, args.FirstOrDefault(arg => !arg.StartsWith("--")));
         }
         Console.WriteLine($"PASS: {_checks} compiled binding / theme / interaction checks; {ThemeManifest.Assets.Length} dictionaries, {ThemeManifest.Themes.Length} control theme keys.");
+    }
+    private static void VerifyToast(string? output)
+    {
+        if (output is not null) Directory.CreateDirectory(output);
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>())
+        {
+            var window = new OneWindow { Width = 320, Height = 300, RequestedThemeVariant = theme, WindowDecorations = WindowDecorations.None };
+            ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false); window.Show(); Flush();
+            var host = window.GetVisualDescendants().OfType<WindowNotificationManager>().Single(m => m.Name == "PART_Toasts");
+            foreach (var type in Enum.GetValues<NotificationType>())
+            {
+                var clicks = 0; var closes = 0;
+                var notification = new Notification("Hidden toast title", "保存完成，所有改动已同步。多行正文与状态图标垂直居中，较长的提示内容应完整换行，不截断显示。", type, TimeSpan.Zero, () => clicks++, () => closes++);
+                OneToast.Show(notification, window); Flush();
+                var card = host.GetVisualDescendants().OfType<NotificationCard>().Single();
+                var message = card.GetVisualDescendants().OfType<TextBlock>().Single(t => t.Name == "PART_NotificationMessage");
+                var icon = card.GetVisualDescendants().OfType<PathIcon>().Single(t => t.Name == "PART_StatusIcon");
+                Check(ReferenceEquals(card.Content, notification) && card.Classes.Contains("one-toast") &&
+                      !card.GetVisualDescendants().Any(c => c.Name is "PART_CloseButton" or "PART_NotificationTitle" or "PART_HeaderBar"),
+                      $"Toast/{theme.Key}/{size}/{type}: native toast has only status icon and compiled message");
+                var a = icon.TranslatePoint(new Point(0, icon.Bounds.Height / 2), card)!.Value.Y;
+                var b = message.TranslatePoint(new Point(0, message.Bounds.Height / 2), card)!.Value.Y;
+                var point = card.TranslatePoint(default, window)!.Value;
+                Check(Math.Abs(a - b) < 1 && message.Bounds.Height > card.FontSize * 2 && point.X >= 0 && point.X + card.Bounds.Width <= window.Bounds.Width + 1,
+                      $"Toast/{theme.Key}/{size}/{type}: multiline text and icon center inside a narrow window");
+                if (output is not null)
+                {
+                    using var frame = window.CaptureRenderedFrame()!;
+                    frame.Save(Path.Combine(output, $"toast-{theme.Key}-{size}-{type}.png"), PngBitmapEncoderOptions.Default);
+                }
+                Click(message); Flush();
+                Check(clicks == 1 && closes == 1 && !host.GetVisualDescendants().OfType<NotificationCard>().Any(),
+                      $"Toast/{theme.Key}/{size}/{type}: body click closes exactly once with native callbacks");
+            }
+            OneToast.Show("已保存", expiration: TimeSpan.FromMilliseconds(120), owner: window); Flush();
+            var shortCard = host.GetVisualDescendants().OfType<NotificationCard>().Single();
+            Check(shortCard.Bounds.Width < 280, $"Toast/{theme.Key}/{size}: short content sizes naturally");
+            Advance(220);
+            Check(!host.GetVisualDescendants().OfType<NotificationCard>().Any(), $"Toast/{theme.Key}/{size}: titleless toast retains native expiration");
+            window.Close();
+        }
     }
     private static void Verify(ThemeVariant theme, ControlSize size, string? output)
     {

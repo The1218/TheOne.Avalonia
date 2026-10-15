@@ -30,6 +30,7 @@
     <Setter Property="Template"><ControlTemplate><ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="Stretch" /></ControlTemplate></Setter>
   </ControlTheme>
   <ControlTheme x:Key="One.StepForm" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
     <Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Padding" Value="0" /><Setter Property="MinHeight" Value="0" />
     <Setter Property="Focusable" Value="False" /><Setter Property="MaxWidth" Value="640" /><Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="ItemContainerTheme" Value="{StaticResource One.StepFormField}" />

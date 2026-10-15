@@ -19,11 +19,14 @@ internal static class Program
                 PreviewHost: no arguments = desktop
                 --login [--trace-login] = desktop login demo
                 --datagrid-stage1 = desktop DataGrid experiment
+                --datagrid-tree = desktop tree DataGrid prototype
+                --verify-datagrid-tree [output] = tree projection / editing / selection checks
                 --verify-controls | --verify-core-controls | --verify-preview-pages | --verify-buttons-messages
+                --verify-image-preview [output]
                 --verify-gantt [output] | --verify-relation-graph [output] | --verify-gauge-styles [output] | --verify-chart-axis-labels [output] | --verify-charts | --verify-compact-controls | --verify-text-alignment | --verify-pickers
                 --verify-datagrid-binding | --verify-datagrid-stage1 | --verify-datagrid-right
                 --verify-datagrid-summary | --verify-datagrid-filters
-                --verify-loginwindow | --verify-onewindow | --verify-tag-verification-step | --verify-flow-step [output] | --verify-infocard [output] | --verify-control-variants
+                --verify-loginwindow | --verify-onewindow | --verify-tag-verification-step | --verify-verification-step | --verify-flow-step [output] | --verify-pagination [output] | --verify-avatar [output] | --verify-infocard [output] | --verify-control-variants
                 --verify-login-lifetime / --verify-login-lifetime-close <OnMainWindowClose|OnLastWindowClose|OnExplicitShutdown>
                 --verify-navmenu | --verify-navmenu-hover | --verify-navmenu-edge
                 --verify-navmenu-search | --verify-navmenu-motion | --verify-navmenu-filter
@@ -33,9 +36,9 @@ internal static class Program
                 """);
             return;
         }
-        if (args.Length > 0 && args[0] is not ("--login" or "--datagrid-stage1" or "--verify-datagrid-stage1" or "--verify-datagrid-binding" or "--verify-datagrid-summary" or "--verify-datagrid-right" or "--verify-datagrid-filters" or "--verify-loginwindow" or "--verify-login-lifetime" or "--verify-login-lifetime-close" or "--verify-controls" or "--verify-core-controls" or "--verify-compact-controls" or "--verify-charts" or "--verify-chart-axis-labels" or "--verify-gauge-styles" or "--verify-gantt" or "--verify-relation-graph" or "--verify-text-alignment" or "--verify-navigation-chrome" or "--verify-onewindow" or "--verify-expander-motion" or "--render-controls" or "--verify-pickers" or "--verify-tag-verification-step" or "--verify-flow-step" or "--verify-infocard" or "--verify-control-variants" or "--verify-tab-drag" or "--verify-navmenu" or "--verify-navmenu-hover" or "--verify-navmenu-edge" or "--verify-loading" or "--verify-buttons-messages" or "--verify-preview-pages" or "--verify-notifications" or "--verify-content-transition" or "--verify-carousel" or "--verify-refresh" or "--verify-flyout" or "--verify-navmenu-search" or "--verify-navmenu-motion" or "--verify-navmenu-filter"))
+        if (args.Length > 0 && args[0] is not ("--login" or "--datagrid-tree" or "--datagrid-stage1" or "--verify-datagrid-stage1" or "--verify-datagrid-tree" or "--verify-datagrid-binding" or "--verify-datagrid-summary" or "--verify-datagrid-right" or "--verify-datagrid-filters" or "--verify-loginwindow" or "--verify-login-lifetime" or "--verify-login-lifetime-close" or "--verify-controls" or "--verify-core-controls" or "--verify-compact-controls" or "--verify-charts" or "--verify-chart-axis-labels" or "--verify-gauge-styles" or "--verify-gantt" or "--verify-relation-graph" or "--verify-text-alignment" or "--verify-navigation-chrome" or "--verify-onewindow" or "--verify-expander-motion" or "--render-controls" or "--verify-pickers" or "--verify-tag-verification-step" or "--verify-verification-step" or "--verify-flow-step" or "--verify-pagination" or "--verify-avatar" or "--verify-image-preview" or "--verify-infocard" or "--verify-control-variants" or "--verify-tab-drag" or "--verify-navmenu" or "--verify-navmenu-hover" or "--verify-navmenu-edge" or "--verify-loading" or "--verify-buttons-messages" or "--verify-preview-pages" or "--verify-notifications" or "--verify-content-transition" or "--verify-carousel" or "--verify-refresh" or "--verify-flyout" or "--verify-navmenu-search" or "--verify-navmenu-motion" or "--verify-navmenu-filter"))
             throw new ArgumentException($"Unknown preview command: {args[0]}");
-        if (args.Length == 0 || args[0] is "--login" or "--datagrid-stage1")
+        if (args.Length == 0 || args[0] is "--login" or "--datagrid-tree" or "--datagrid-stage1")
         {
             BuildAvaloniaApp(false).StartWithClassicDesktopLifetime(args);
             return;
@@ -63,6 +66,7 @@ internal static class Program
             ButtonControlsPreview.Verify(); TextControlsPreview.Verify(); InteractionRepairsPreview.Verify();
             return;
         }
+        if (args[0] == "--verify-datagrid-tree") { DataGridTreePreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null); return; }
         if (args[0] == "--verify-datagrid-binding") { DataGridBindingPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridPreview.Verify(); return; }
         if (args[0] == "--verify-datagrid-summary") { DataGridSummaryPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridFilterPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridRightFrozenPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridPreview.Verify(); return; }
         if (args[0] == "--verify-datagrid-right") { DataGridRightFrozenPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridFilterPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridStage1Preview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); DataGridPreview.Verify(); return; }
@@ -116,10 +120,18 @@ internal static class Program
             NavMenuPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); });
             return;
         }
+        if (args[0] == "--verify-pagination") { PaginationPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null); PreviewPagesPreview.VerifyPaginationPage((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-flow-step") { FlowStepPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null); return; }
+        if (args[0] == "--verify-avatar") { AvatarPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null); return; }
+        if (args[0] == "--verify-verification-step") { TagVerificationStepPreview.VerifyStep((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-tag-verification-step") { TagVerificationStepPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-tab-drag") { TabDragPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
         if (args[0] == "--verify-control-variants") { ControlVariantsPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }); return; }
+        if (args[0] == "--verify-image-preview")
+        {
+            ImagePreviewChecks.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
         if (args[0] == "--verify-infocard")
         {
             InfoCardPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);

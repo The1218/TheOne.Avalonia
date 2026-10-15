@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
+             x:Class="TheOne.DesignPreview.DataGridTreeFixture" x:DataType="local:DataGridTreeFixtureModel">
+  <Grid RowDefinitions="Auto,*" RowSpacing="12">
+    <TextBlock Text="树视图原型 · 点击箭头展开折叠，F2 编辑名称，Esc 取消" TextWrapping="Wrap" />
+    <DataGrid Grid.Row="1" Name="TreeGrid" ItemsSource="{Binding View}" AutoGenerateColumns="False"
+              MaxColumnWidth="360" FrozenColumnCount="1" SelectionMode="Single"
+              one:DataGridTreeFeatures.IsEnabled="True">
+      <DataGrid.Columns>
+        <one:DataGridTreeTextColumn Header="名称" Width="300" Binding="{Binding Name, Mode=TwoWay}" />
+        <DataGridTextColumn Header="数量" Width="100" Binding="{Binding Quantity, Mode=TwoWay}" />
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

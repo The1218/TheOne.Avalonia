@@ -10,6 +10,22 @@
     <AvaloniaVersion>12.1.4</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../ViewModels/Extensions/PaginationDemoViewModel.cs" Link="PaginationDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/PaginationDemoView.axaml.cs" Link="PaginationDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/PaginationDemoView.axaml" Link="PaginationDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/PaginationPreview.cs" Link="PaginationPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../../Views/Extensions/AvatarDemoView.axaml.cs" Link="AvatarDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/AvatarDemoView.axaml" Link="AvatarDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/AvatarPreview.cs" Link="AvatarPreview.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="../../Assets/preview-lake.png" Link="Assets/preview-lake.png" />
+    <Compile Include="../../ViewModels/DataDisplay/ImagePreviewDemoViewModel.cs" Link="ImagePreviewDemoViewModel.cs" />
+    <Compile Include="../../Views/DataDisplay/ImagePreviewDemoView.axaml.cs" Link="ImagePreviewDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/DataDisplay/ImagePreviewDemoView.axaml" Link="ImagePreviewDemoView.axaml" />
+    <Compile Include="../../Verification/DataDisplay/ImagePreviewChecks.cs" Link="ImagePreviewChecks.cs" />
     <Compile Include="../../ViewModels/DataDisplay/GanttDemoViewModel.cs" Link="GanttDemoViewModel.cs" />
     <Compile Include="../../Views/DataDisplay/GanttDemoView.axaml.cs" Link="GanttDemoView.axaml.cs" />
     <AvaloniaResource Include="../../Views/DataDisplay/GanttDemoView.axaml" Link="GanttDemoView.axaml" />
@@ -36,6 +52,7 @@
     <Compile Include="../../Views/Extensions/VerificationStepDemoView.axaml.cs" Link="VerificationStepDemoView.axaml.cs" />
     <AvaloniaResource Include="../../Views/Extensions/TagDemoView.axaml" Link="TagDemoView.axaml" />
     <AvaloniaResource Include="../../Views/Extensions/VerificationStepDemoView.axaml" Link="VerificationStepDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/VerificationStepFocusPreview.cs" Link="VerificationStepFocusPreview.cs" />
     <Compile Include="../../Verification/Extensions/VerificationStepAutomaticPreview.cs" Link="VerificationStepAutomaticPreview.cs" />
     <Compile Include="../../Verification/Extensions/TagVerificationStepPreview.cs" Link="TagVerificationStepPreview.cs" />
   </ItemGroup>
@@ -45,6 +62,9 @@
     <AvaloniaResource Include="../../Views/DataDisplay/DataGridBindingDemoView.axaml" Link="DataGridBindingDemoView.axaml" />
     <Compile Include="../../Verification/Fixtures/DataGridCollectionsFixture.axaml.cs" Link="DataGridCollectionsFixture.axaml.cs" />
     <AvaloniaResource Include="../../Verification/Fixtures/DataGridCollectionsFixture.axaml" Link="DataGridCollectionsFixture.axaml" />
+    <Compile Include="../../Verification/Fixtures/DataGridTreeFixture.axaml.cs" Link="DataGridTreeFixture.axaml.cs" />
+    <AvaloniaResource Include="../../Verification/Fixtures/DataGridTreeFixture.axaml" Link="DataGridTreeFixture.axaml" />
+    <Compile Include="../../Verification/DataDisplay/DataGridTreePreview.cs" Link="DataGridTreePreview.cs" />
     <Compile Include="../../Verification/DataDisplay/DataGridBindingPreview.cs" Link="DataGridBindingPreview.cs" />
   </ItemGroup>
   <ItemGroup>

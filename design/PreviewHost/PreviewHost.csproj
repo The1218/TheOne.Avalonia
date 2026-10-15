@@ -9,6 +9,7 @@
     <AvaloniaVersion>12.1.4</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <AvaloniaResource Include="Assets/**" />
     <Compile Remove="Consumers/**/*.cs" />
     <AvaloniaResource Remove="Consumers/**/*.axaml" />
     <AvaloniaXaml Remove="Consumers/**/*.axaml" />

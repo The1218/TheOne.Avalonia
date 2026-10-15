@@ -55,7 +55,7 @@ OneToast.Show("更新完成", NotificationType.Success);
 var result = await OneDialog.ShowAsync("确认", "是否继续？", OneDialogButtons.YesNoCancel);
 ```
 
-通知使用窗口内部的原生 WindowNotificationManager，默认右上方、最多 4 条活动通知、4 秒自动关闭；Toast 使用独立管理器，顶部居中、最多 3 条、2.5 秒自动关闭。TimeSpan.Zero 保留到手动关闭。两者使用紧凑的 NotificationCard：三档宽度 280 / 320 / 360，字号 11 / 12 / 13、内边距 8 / 10 / 12，沿用语义类型与 Motion.Enabled 动画；CloseAll 可清空指定类别。
+通知使用窗口内部的原生 WindowNotificationManager，默认右上方、最多 4 条活动通知、4 秒自动关闭；Toast 使用独立管理器，顶部居中、最多 3 条、2.5 秒自动关闭。TimeSpan.Zero 保留到手动关闭。两者沿用原生 NotificationCard 生命周期、语义状态与 Motion.Enabled 动画；CloseAll 可清空指定类别。Notification 保留标题和关闭按钮，三档宽度 280 / 320 / 360，字号 11 / 12 / 13、内边距 8 / 10 / 12。Toast 使用 One.ToastCard 专用模板，仅展示状态图标与正文，无标题、关闭按钮、装饰色条或图标徽章；传入 INotification.Title 也不会显示。短内容自然收缩，长内容在 280 / 320 / 360 最大宽度内换行，窄窗口继续受可用宽度约束；图标与整段文字垂直居中，无固定正文高度或省略号。Toast 三档字号 12 / 14 / 16、图标 16 / 18 / 20、内边距 12,8 / 16,10 / 20,12。持久 Toast 可点击正文或调用 CloseAll 关闭，点击／关闭回调仍执行一次。
 
 未传 owner 时使用各服务的 Owner；默认 Owner 随 OneWindow / LoginWindow 打开或激活自动更新，也可在 UI 线程设置。隐藏、关闭或尚未打开的默认 owner 会回退到最近激活的可见主题窗口。多窗口时可显式传 owner；不可用的显式 owner 报错，不静默转到其他窗口。OneWindow.Current 提供 UI 线程上的最近可见 OneWindow，仅使用弱引用登记，关闭时自动移除。
 
@@ -85,7 +85,7 @@ ShowContentAsync 也支持模型与显式 contentTemplate。Control 内容不能
 
 窗口关闭时清理活动和排队请求，防止等待悬空；关闭被取消时继续保留宿主。自定义 OneWindow / LoginWindow 模板必须保留 PART_VisualLayerManager、PART_ContentPresenter、PART_Notifications、PART_Toasts、PART_DialogShield 和 PART_DialogLayer，标题栏自定义继续遵循相应 PART_*。缺失消息部件时 API 报错。
 
-PreviewHost 的“消息与对话框”保留 Toast、Dialog、Notification 独立页面，支持类型、标题、正文、尺寸及动效配置。通知／Toast 支持位置、显示上限、停留秒数、自动／手动关闭和回调状态；Dialog 支持标题栏、关闭按钮、确认按钮组合、蒙层与 Esc 关闭及 VM 表单返回。OneWindow、LoginWindow、NotificationCard 不再作为目录展示页，控件和底层回归保留；ThemeButton 位于 Button 示例。独立编译绑定与原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
+PreviewHost 的“消息与对话框”保留 Toast、Dialog、Notification 独立页面，支持类型、正文、尺寸及动效配置；Toast 不提供标题配置，Notification 和 Dialog 保留标题。通知／Toast 支持位置、显示上限、停留秒数、自动／手动关闭和回调状态；Dialog 支持标题栏、关闭按钮、确认按钮组合、蒙层与 Esc 关闭及 VM 表单返回。OneWindow、LoginWindow、NotificationCard 不再作为目录展示页，控件和底层回归保留；ThemeButton 位于 Button 示例。独立编译绑定与原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
 
 ## 泛型 VM 对话框
 
@@ -124,3 +124,5 @@ public sealed class EditorViewModel : DialogContext
 RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关联的请求；父页面 await 得到 OneDialogResult。该事件支持后台线程触发，排队中的 VM 也可以主动结束，不会创建其 View 或影响当前对话框。关闭按钮、可选蒙层点击返回 Closed；Escape 返回 Cancel；取消令牌取消 Task；宿主关闭返回 Closed。
 
 完成、取消或宿主关闭都会解绑关闭事件，同一个 VM 可顺序复用。为避免同一个关闭事件误关多个窗口，同一个 DialogContext 不允许同时用于多个请求；同时调用返回故障 Task。千条泛型请求验证仅创建当前显示的一个 View，其余只保留请求数据。PreviewHost「窗口 OneWindow」中的自定义表单可切换标题、关闭按钮、蒙层及 Escape 选项，并通过编译绑定的内部保存／取消命令验证返回值。
+
+Toast 专项：先执行 `dotnet build TheOne.Avalonia.slnx`，再执行 PreviewHost 的 `--verify-buttons-messages`；NativeAotSmoke 的 `--require-aot --verify-toast .preview/toast/native-pixels` 覆盖明暗主题、三档尺寸、四种状态、窄窗口多行居中、回调与自动消失。

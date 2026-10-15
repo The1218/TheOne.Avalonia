@@ -92,14 +92,41 @@ internal static class ButtonsMessagesPreview
         var host = Part<WindowNotificationManager>(window, "PART_Toasts");
         var card = host.GetVisualDescendants().OfType<NotificationCard>().Single();
         check(host.Position == NotificationPosition.BottomRight && host.MaxItems == 2 && ControlSizing.GetSize(card) == size && !Motion.GetEnabled(card), $"Messages/{theme.Key}/{size}: toast position, limit, density and motion reach the real host");
-        check(card.Bounds.Width == (size == ControlSize.Small ? 280 : size == ControlSize.Large ? 360 : 320)
-            && card.FontSize == (size == ControlSize.Small ? 11 : size == ControlSize.Large ? 13 : 12)
-            && Part<Border>(card, "PART_StatusBadge").Bounds.Width == (size == ControlSize.Small ? 20 : size == ControlSize.Large ? 28 : 24),
+        check(card.Bounds.Width <= (size == ControlSize.Small ? 280 : size == ControlSize.Large ? 360 : 320) && card.Bounds.Width > 100
+            && card.FontSize == (size == ControlSize.Small ? 12 : size == ControlSize.Large ? 16 : 14)
+            && Part<PathIcon>(card, "PART_StatusIcon").Bounds.Width == (size == ControlSize.Small ? 16 : size == ControlSize.Large ? 20 : 18),
             $"Messages/{theme.Key}/{size}: actual toast card uses compact width, text and icon density");
-        check(card.Content is INotification { Title: "Custom title", Message: "Configured toast", Type: NotificationType.Error, Expiration: var expiration } && expiration == TimeSpan.Zero,
-            $"Messages/{theme.Key}/{size}: title, type, content and persistent duration reach the native notification");
+        check(card.Content is INotification { Title: "", Message: "Configured toast", Type: NotificationType.Error, Expiration: var expiration } && expiration == TimeSpan.Zero,
+            $"Messages/{theme.Key}/{size}: toast carries only message, type and persistent duration");
+        check(!card.GetVisualDescendants().Any(part => part.Name is "PART_CloseButton" or "PART_NotificationTitle" or "PART_HeaderBar") &&
+              !page.GetVisualDescendants().OfType<TextBox>().Any(text => text.Name == "MessageTitle"),
+            $"Messages/{theme.Key}/{size}: toast and demo have no title, close button or decorative stripe");
         model.CloseToastCommand.Execute(null); ControlPreview.Flush();
         check(model.CloseCount == 1, $"Messages/{theme.Key}/{size}: close callback updates the parent state");
+        window.Width = 320; ControlPreview.Flush();
+        foreach (var type in Enum.GetValues<NotificationType>())
+        {
+            var clicked = 0; var closed = 0;
+            const string text = "多行提示内容应完整换行，图标始终与整段文字垂直居中。支持中文与 English，较长的内容也不会被固定高度截断。";
+            var notification = new Notification("不应展示的标题", text, type, TimeSpan.Zero, () => clicked++, () => closed++);
+            OneToast.Show(notification, window); ControlPreview.Flush();
+            var toast = host.GetVisualDescendants().OfType<NotificationCard>().Single();
+            var icon = Part<PathIcon>(toast, "PART_StatusIcon");
+            var message = toast.GetVisualDescendants().OfType<TextBlock>().Single(t => t.Name == "PART_NotificationMessage");
+            var iconY = icon.TranslatePoint(new Point(0, icon.Bounds.Height / 2), toast)!.Value.Y;
+            var messageY = message.TranslatePoint(new Point(0, message.Bounds.Height / 2), toast)!.Value.Y;
+            check(Math.Abs(iconY - messageY) < 1 && message.Bounds.Height > toast.FontSize * 2 &&
+                  double.IsPositiveInfinity(message.MaxHeight) && message.TextTrimming == TextTrimming.None,
+                $"Messages/{theme.Key}/{size}/{type}: multiline toast centers icon/text and wraps without a height cap");
+            var origin = toast.TranslatePoint(default, window)!.Value;
+            check(origin.X >= 0 && origin.X + toast.Bounds.Width <= window.Bounds.Width + 1 &&
+                  !toast.GetVisualDescendants().OfType<TextBlock>().Any(t => t.Text == notification.Title),
+                $"Messages/{theme.Key}/{size}/{type}: narrow toast stays within the window and ignores provided titles");
+            var clickPoint = Position(message);
+            window.MouseMove(clickPoint); window.MouseDown(clickPoint, MouseButton.Left); window.MouseUp(clickPoint, MouseButton.Left); ControlPreview.Flush();
+            check(clicked == 1 && closed == 1 && !host.GetVisualDescendants().OfType<NotificationCard>().Any(),
+                $"Messages/{theme.Key}/{size}/{type}: content click closes once and preserves native callbacks");
+        }
         window.Close(); ControlPreview.Flush();
         var notificationPage = new OneNotificationPage(); window = Open(notificationPage, theme, size); model = notificationPage.Model;
         var settings = notificationPage.GetVisualDescendants().OfType<MessageDemoSettings>().Single();

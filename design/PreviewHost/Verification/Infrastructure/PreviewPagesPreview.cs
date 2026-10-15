@@ -13,6 +13,28 @@ namespace TheOne.DesignPreview;
 
 internal static class PreviewPagesPreview
 {
+    public static void VerifyPaginationPage(Action<bool, string> check)
+    {
+        var descriptor = PreviewPageCatalog.Find(312);
+        check(descriptor.Title == "Pagination" && descriptor.Group == "扩展控件", "PreviewHost/Pagination: catalogue and extension navigation identify the pagination page");
+        var window = new MainWindow { Width = 1280, Height = 1000, WindowDecorations = WindowDecorations.None };
+        Motion.SetEnabled(window, false); window.Show();
+        try
+        {
+            window.NavigateToCategory(312); ControlPreview.Flush();
+            var gallery = window.FindControl<ControlGallery>("Gallery")!;
+            var demo = (PaginationDemoView)gallery.GetControlView(312);
+            check(gallery.CurrentView == demo && window.Model.CurrentPage == descriptor && demo.FindControl<Pagination>("StandardPagination")!.PageCount == 64,
+                "PreviewHost/Pagination: navigation loads the typed demo and actual pagination controls");
+            demo.FindControl<Pagination>("StandardPagination")!.GoToPage(10); ControlPreview.Flush();
+            window.NavigateToCategory(1); window.Model.Search = "Pagination"; ControlPreview.Flush();
+            window.Model.SelectedSearchResult = window.Model.SearchResults.Single(page => page.Title == "Pagination"); ControlPreview.Flush();
+            check(gallery.CurrentView == demo && demo.Model.CurrentPage == 10 && window.Model.Search == "",
+                "PreviewHost/Pagination: searching returns to the cached page without resetting its shared page state");
+        }
+        finally { window.Close(); ControlPreview.Flush(); }
+    }
+
     public static void Verify(Action<bool,string> check)
     {
         Console.WriteLine($"Runtime dynamic code supported: {System.Runtime.CompilerServices.RuntimeFeature.IsDynamicCodeSupported}");

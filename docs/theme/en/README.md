@@ -25,6 +25,7 @@ The base templates adapt Avalonia **12.1.4** Fluent sources; the Calendar family
 
 | Control | Classes / properties | Purpose |
 | --- | --- | --- |
+| Avatar | `Shape`, `CornerRadius`, `Stretch`, `:loading`, `:error`, `:has-image`, `:has-text` | [Avatar](../../controls/en/avatar.md): 32 / 40 / 56 px, shared semantic colors and clipped image fallback |
 | Button | `primary`, with `accent` compatibility | Primary action in the accent color |
 | Button / IconButton | `outline`, `ghost`, `link`, `success`, `info`, `warning`, `danger` | Lightweight actions and semantic states |
 | Native controls / containers | `small`, `normal`, `large` | Three shared densities, inherited with per-control overrides |
@@ -86,3 +87,11 @@ The FlowStep theme supplies a non-interactive connector layer (`PART_Connectors`
 GanttChart uses dedicated `One.Gantt.*` dynamic brushes, 36 / 44 / 52 row heights and a frozen header. See [GanttChart](../../controls/en/gantt-chart.md) for resources, template parts and narrow viewport behavior.
 
 InfoCard supports `hove` / `shadow` classes using `One.InfoCard.Shadow` / `One.InfoCard.HoverShadow` and a non-interactive PART_Shadow; see [InfoCard](../../controls/en/info-card.md). RelationGraph node themes expose read-only IsSelected / :selected without changing geometry; see [node selection](../../controls/en/relation-graph.md#node-selection).
+
+ImagePreview draws images and transparency checkerboards in PART_Viewport while retaining native navigation and toolbar buttons. It uses shared One.* semantic brushes and inherited densities. See [ImagePreview](../../controls/en/image-preview.md).
+
+## Pagination
+
+The Pagination theme preserves native buttons, ComboBox and TextBox. Current pages use the primary button class, ellipses remain non-interactive, and `:compact`, `:empty`, `:invalid-jump` represent layout, empty data and jump validation. ItemHeight is 30 / 36 / 44 across inherited densities. See the [control contract](../../controls/en/pagination.md) for parts, formats and verification.
+
+The one-toast class selects One.ToastCard, with vertically centered status icon and message only. The default NotificationCard template retains its title and close button. Both share the native lifecycle and motion. See [windows and messages](../../controls/en/windows.md).
