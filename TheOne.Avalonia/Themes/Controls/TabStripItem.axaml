@@ -1,5 +1,5 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
 
     <ControlTheme TargetType="TabStripItem" x:Key="{x:Type TabStripItem}">
         <Setter Property="Background" Value="Transparent" />
@@ -21,6 +21,7 @@
                     CornerRadius="{TemplateBinding CornerRadius}"
                     Name="PART_LayoutRoot">
                     <Panel>
+                        <Grid ColumnDefinitions="*,Auto">
                         <ContentPresenter
                             Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -30,6 +31,22 @@
                             Padding="{TemplateBinding Padding}"
                             RecognizesAccessKey="True"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Button
+                            Name="PART_CloseButton"
+                            Grid.Column="1"
+                            Classes="one-close"
+                            Theme="{StaticResource One.CardTabHeaderButton}"
+                            Command="{x:Static one:TabFeatures.CloseTabCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                            Focusable="False"
+                            Width="24" Height="24" MinWidth="0" MinHeight="0"
+                            Margin="0,0,6,0" Padding="5"
+                            AutomationProperties.Name="关闭标签页"
+                            ToolTip.Tip="关闭标签页（Ctrl / ⌘ + W）">
+                            <Button.IsVisible><TemplateBinding Property="one:TabFeatures.ShowCloseButton" /></Button.IsVisible>
+                            <PathIcon Data="M 1,0 L 6,5 L 11,0 L 12,1 L 7,6 L 12,11 L 11,12 L 6,7 L 1,12 L 0,11 L 5,6 L 0,1 Z" Width="12" Height="12" />
+                        </Button>
+                        </Grid>
                         <Border
                             Background="{DynamicResource One.Accent}"
                             CornerRadius="1"

@@ -1,0 +1,1370 @@
+<UserControl
+    Background="{DynamicResource One.Surface}"
+    x:Class="TheOne.Avalonia.Controls.ReportDesign"
+    x:DataType="one:ReportDesign"
+    x:Name="Root"
+    FontFamily="Microsoft YaHei, PingFang SC, Segoe UI, Arial"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:report="using:TheOne.Avalonia.Reporting"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:sys="using:System"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush Color="#EAF6F6" x:Key="One.Report.TabBackground"/><SolidColorBrush Color="#EFF4F5" x:Key="One.Report.PreviewBackground"/><SolidColorBrush Color="#E6E9EB" x:Key="One.Report.WorkspaceBackground"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush Color="#183D3D" x:Key="One.Report.TabBackground"/><SolidColorBrush Color="#182B2D" x:Key="One.Report.PreviewBackground"/><SolidColorBrush Color="#101A1C" x:Key="One.Report.WorkspaceBackground"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Styles>
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+        </Style>
+        <Style Selector="TextBlock.section">
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Margin" Value="0,8,0,4" />
+        </Style>
+        <Style Selector="Border.divider">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="12,5" />
+        </Style>
+        <Style Selector="Button.primary">
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="Button.flat">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.tool">
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.tool.active"><Setter Property="Foreground" Value="{DynamicResource One.Accent}"/>
+            <Setter Property="Background" Value="{DynamicResource One.Report.TabBackground}" />
+        </Style>
+        <Style Selector="ToggleButton.tool">
+            <Setter Property="Width" Value="38" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        </Style>
+        <Style Selector="ToggleButton.tool /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="ToggleButton.tool:checked /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Report.TabBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="Button.tool:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+        <Style Selector="ToggleButton.tool:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="ComboBox.toolbar-editor">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="34" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style Selector="ComboBox#FontFamilyPicker /template/ Popup#PART_Popup">
+            <Setter Property="Width" Value="320" />
+            <Setter Property="MaxWidth" Value="320" />
+        </Style>
+        <Style Selector="Expander.condition /template/ ToggleButton#ExpanderHeader /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="ToggleButton.tool:checked">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="MinHeight" Value="34" />
+        </Style>
+        <Style Selector="Expander">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Expander.condition /template/ ToggleButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        </Style>
+        <Style Selector="ToggleButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="UniformGrid.palette &gt; Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Button.header">
+            <Setter Property="Height" Value="34" />
+            <Setter Property="MinHeight" Value="34" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="NumericUpDown">
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="ShowButtonSpinner" Value="False" />
+            <Setter Property="Padding" Value="8,5" />
+        </Style>
+    <Style Selector="TextBox[AcceptsReturn=False]:not(.one-small)"><Setter Property="Height" Value="34"/><Setter Property="MinHeight" Value="34"/><Setter Property="Padding" Value="10,5"/></Style>
+        <Style Selector="ComboBox">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Padding" Value="10,5"/>
+        </Style>
+        <Style Selector="NumericUpDown">
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="MinHeight" Value="34"/>
+        </Style>
+        <Style Selector="TextBox.expression /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="{DynamicResource One.Surface}"/>
+        </Style>
+        <Style Selector="CheckBox.compact">
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="MinHeight" Value="22"/>
+            <Setter Property="Padding" Value="8,0,0,0"/>
+        </Style>
+        <Style Selector="Menu &gt; MenuItem">
+            <Setter Property="MinWidth" Value="74"/>
+        </Style>
+        <Style Selector="ComboBox.one-normal, NumericUpDown.one-normal, TextBox.one-normal">
+            <Setter Property="MinHeight" Value="34"/>
+        </Style>
+        <Style Selector="NumericUpDown /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="MinHeight" Value="0"/>
+        </Style>
+        <Style Selector="NumericUpDown /template/ TextBox#PART_TextBox">
+            <Setter Property="Height" Value="NaN"/>
+            <Setter Property="MinHeight" Value="0"/>
+        </Style>
+        <Style Selector="TreeView#StructureTree TreeViewItem /template/ Border#PART_LayoutRoot">
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="MinHeight" Value="28"/>
+        </Style>
+        <Style Selector="TreeView#StructureTree TreeViewItem /template/ ContentPresenter#PART_HeaderPresenter">
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style Selector="Expander.condition">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+        <Style Selector="Expander.condition /template/ ToggleButton#ExpanderHeader /template/ Border#ToggleButtonBackground">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style Selector="Expander.condition /template/ ToggleButton#ExpanderHeader /template/ Border#ExpandCollapseChevronBorder">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="Expander.condition:expanded one|ReportIcon.disclosure">
+            <Setter Property="RenderTransform" Value="rotate(90deg)"/>
+        </Style>
+<Style Selector="Border.inspector TextBox[AcceptsReturn=False], Border.inspector ComboBox.one-normal, Border.inspector NumericUpDown.one-normal"><Setter Property="Height" Value="30"/><Setter Property="MinHeight" Value="30"/></Style>
+<Style Selector="Border.inspector NumericUpDown /template/ ButtonSpinner#PART_Spinner.one-normal"><Setter Property="MinHeight" Value="0"/><Setter Property="Height" Value="NaN"/></Style>
+<Style Selector="Border.inspector NumericUpDown /template/ TextBox#PART_TextBox.one-normal"><Setter Property="Height" Value="NaN"/><Setter Property="MinHeight" Value="0"/></Style>
+<Style Selector="Border.inspector TextBlock"><Setter Property="FontSize" Value="12"/></Style>
+<Style Selector="Border.inspector ColorPicker"><Setter Property="HorizontalAlignment" Value="Stretch"/></Style>
+        <Style Selector="Button.one-close">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+        </Style>
+</UserControl.Styles>
+    <Grid
+        DataContext="{Binding #Root.State}"
+        RowDefinitions="46,58,*,32"
+        x:DataType="one:ReportDesignState">
+        <Border Padding="24,6,22,0">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto,Auto,Auto">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="12"
+                    VerticalAlignment="Center">
+                    <Border
+                        Background="{DynamicResource One.Accent}"
+                        CornerRadius="3"
+                        Padding="3">
+                        <one:ReportIcon
+                            Foreground="{DynamicResource One.OnAccent}"
+                            Height="18"
+                            Kind="Logo"
+                            Width="18" />
+                    </Border>
+                    <TextBlock
+                        FontSize="20"
+                        FontFamily="Arial, Helvetica"
+                        LetterSpacing="-0.4"
+                        FontWeight="Bold"
+                        Text="ReportDesign"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+                <Border
+                    Background="{DynamicResource One.Line}"
+                    Grid.Column="1"
+                    Height="20"
+                    Margin="26,0,26,0"
+                    Width="1" />
+                <TabStrip
+                    x:Name="ReportNameTabs"
+                    Grid.Column="2"
+                    Padding="0"
+                    BorderThickness="0"
+                    IsVisible="{Binding HasDocument}"
+                    AutomationProperties.Name="当前报表"
+                    ItemsSource="{Binding OpenDocuments}"
+                    SelectedItem="{Binding #Root.Document, Mode=OneWay}"
+                    one:TabFeatures.CanClose="True"
+                    one:TabFeatures.CloseCommand="{Binding #Root.CloseDocumentCommand}">
+                    <TabStrip.Styles>
+                        <Style Selector="TabStripItem">
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </TabStrip.Styles>
+                    <TabStrip.ItemTemplate>
+                        <DataTemplate x:DataType="report:ReportDocument">
+                            <TextBlock Text="{Binding Title}" MaxWidth="180" TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                    </TabStrip.ItemTemplate>
+                </TabStrip>
+                <TextBlock
+                    Classes="caption"
+                    Grid.Column="3"
+                    Margin="20,0"
+                    Text="{Binding SaveStatus}"
+                    VerticalAlignment="Center" />
+                <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="6" Margin="0,0,14,0">
+<Button x:Name="NewReportButton" Classes="header" Content="新建" Click="OnNew"/>
+<Button Classes="header" Content="打开" Click="OnLoadTemplate"/>
+<Button x:Name="SaveButton" Classes="header" Content="保存" IsEnabled="{Binding HasDocument}" Command="{Binding #Root.SaveCommand}" CommandParameter="{Binding Document}" Click="OnSaveRequested"/>
+</StackPanel>
+<Button
+                    Classes="header"
+                    x:Name="PageSettingsButton"
+                    IsEnabled="{Binding HasDocument}"
+                    Click="OnPageSettings"
+                    Content="页面设置"
+                    Grid.Column="5"
+                    Margin="0,0,12,0"
+                    Padding="18,5" />
+                <Button
+                    BorderBrush="{DynamicResource One.Accent}"
+                    Classes="header"
+                    Click="OnPreview"
+                    Content="预览"
+                    IsEnabled="{Binding HasDocument}"
+                    Foreground="{DynamicResource One.Accent}"
+                    Grid.Column="6"
+                    Margin="0,0,12,0"
+                    Padding="28,5"
+                    x:Name="PreviewButton" />
+                <Button
+                    Classes="primary header"
+                    Click="OnExportPdf"
+                    Content="导出 PDF"
+                    Grid.Column="7"
+                    IsEnabled="{Binding CanExport}"
+                    Padding="22,5"
+                    x:Name="ExportPdfButton" />
+            </Grid>
+        </Border>
+        
+        <Border
+            Grid.Row="1"
+            Classes="divider"
+            BorderThickness="0,1,0,1"
+            Padding="20,10,22,10">
+            <Grid ColumnDefinitions="*,122">
+                <ScrollViewer
+                    x:Name="ToolbarScroll"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Disabled">
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Spacing="0"
+                        x:Name="CommandBar">
+                        <Grid Width="110" ColumnDefinitions="36,16,36,*">
+                            <Button
+                                x:Name="UndoButton"
+                                Classes="tool"
+                                Width="36"
+                                IsEnabled="{Binding CanUndo}"
+                                Click="OnUndo"
+                                ToolTip.Tip="撤销"
+                                AutomationProperties.Name="撤销">
+                                <one:ReportIcon
+                                    Kind="Undo"
+                                    Width="20"
+                                    Height="20" />
+                            </Button>
+                            <Button
+                                Grid.Column="2"
+                                x:Name="RedoButton"
+                                Classes="tool"
+                                Width="36"
+                                IsEnabled="{Binding CanRedo}"
+                                Click="OnRedo"
+                                ToolTip.Tip="重做"
+                                AutomationProperties.Name="重做">
+                                <one:ReportIcon
+                                    Kind="Redo"
+                                    Width="20"
+                                    Height="20" />
+                            </Button>
+                        </Grid>
+                        <Border
+                            Width="1"
+                            Height="30"
+                            Background="{DynamicResource One.Line}" />
+                        <Border Width="239" Padding="23,0,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="14">
+                                <Button
+                                    Classes="tool active"
+                                    Click="OnSelectTool"
+                                    ToolTip.Tip="选择元素"
+                                    AutomationProperties.Name="选择元素">
+                                    <one:ReportIcon
+                                        Kind="Pointer"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="插入文本"
+                                    ToolTip.Tip="插入文本"
+                                    Click="OnInsert"
+                                    Tag="Text">
+                                    <one:ReportIcon
+                                        Kind="Text"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="插入表格"
+                                    ToolTip.Tip="插入表格"
+                                    Click="OnInsert"
+                                    Tag="Table">
+                                    <one:ReportIcon
+                                        Kind="Table"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="插入图片"
+                                    ToolTip.Tip="插入图片"
+                                    Click="OnInsert"
+                                    Tag="Image">
+                                    <one:ReportIcon
+                                        Kind="Image"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Border
+                            Width="1"
+                            Height="30"
+                            Background="{DynamicResource One.Line}" />
+                        <Border Width="267" Padding="19,0,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <ComboBox
+                                    x:Name="FontFamilyPicker"
+                                    Classes="toolbar-editor"
+                                    Width="145"
+                                    IsEnabled="{Binding HasElement}"
+                                    ItemsSource="{Binding FontFamilies}"
+                                    SelectedItem="{Binding #Root.FontFamilyName, Mode=TwoWay}"
+                                    PlaceholderText="微软雅黑"
+                                    AutomationProperties.Name="字体">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="sys:String">
+                                            <TextBlock Text="{Binding .}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding .}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ComboBox
+                                    x:Name="FontEditor"
+                                    Classes="toolbar-editor"
+                                    Width="91"
+                                    IsEnabled="{Binding HasElement}"
+                                    ItemsSource="{Binding FontSizes}"
+                                    SelectedItem="{Binding #Root.FontSizeValue, Mode=TwoWay}"
+                                    AutomationProperties.Name="字号" />
+                            </StackPanel>
+                        </Border>
+                        <Border Width="166" Padding="17,0,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="9">
+                                <ToggleButton
+                                    x:Name="BoldButton"
+                                    Classes="tool"
+                                    IsChecked="{Binding SelectedElement.Bold, Mode=TwoWay}"
+                                    IsEnabled="{Binding HasElement}"
+                                    ToolTip.Tip="加粗"
+                                    AutomationProperties.Name="加粗">
+                                    <one:ReportIcon
+                                        Kind="Bold"
+                                        Width="20"
+                                        Height="20" />
+                                </ToggleButton>
+                                <ToggleButton
+                                    x:Name="ItalicButton"
+                                    Classes="tool"
+                                    IsChecked="{Binding SelectedElement.Italic, Mode=TwoWay}"
+                                    IsEnabled="{Binding HasElement}"
+                                    ToolTip.Tip="斜体"
+                                    AutomationProperties.Name="斜体">
+                                    <one:ReportIcon
+                                        Kind="Italic"
+                                        Width="20"
+                                        Height="20" />
+                                </ToggleButton>
+                                <ToggleButton
+                                    x:Name="UnderlineButton"
+                                    Classes="tool"
+                                    IsChecked="{Binding SelectedElement.Underline, Mode=TwoWay}"
+                                    IsEnabled="{Binding HasElement}"
+                                    ToolTip.Tip="下划线"
+                                    AutomationProperties.Name="下划线">
+                                    <one:ReportIcon
+                                        Kind="Underline"
+                                        Width="20"
+                                        Height="20" />
+                                </ToggleButton>
+                            </StackPanel>
+                        </Border>
+                        <Border
+                            Width="1"
+                            Height="30"
+                            Background="{DynamicResource One.Line}" />
+                        <Border Width="215" Padding="14,0,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="9">
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="文字左对齐"
+                                    ToolTip.Tip="文字左对齐"
+                                    Click="OnTextAlignment"
+                                    Tag="Left">
+                                    <one:ReportIcon
+                                        Kind="AlignLeft"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="文字居中"
+                                    ToolTip.Tip="文字居中"
+                                    Click="OnTextAlignment"
+                                    Tag="Center">
+                                    <one:ReportIcon
+                                        Kind="AlignCenter"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="文字右对齐"
+                                    ToolTip.Tip="文字右对齐"
+                                    Click="OnTextAlignment"
+                                    Tag="Right">
+                                    <one:ReportIcon
+                                        Kind="AlignRight"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="文字两端对齐"
+                                    ToolTip.Tip="文字两端对齐"
+                                    Click="OnTextAlignment"
+                                    Tag="Justify">
+                                    <one:ReportIcon
+                                        Kind="Justify"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Border
+                            Width="1"
+                            Height="30"
+                            Background="{DynamicResource One.Line}" />
+                        <Border Width="139" Padding="21,0,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="18">
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="项目符号列表"
+                                    ToolTip.Tip="项目符号列表"
+                                    Click="OnTextList"
+                                    Tag="Bullet"
+                                    IsEnabled="{Binding HasBindableElement}">
+                                    <one:ReportIcon
+                                        Kind="List"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                                <Button
+                                    Classes="tool"
+                                    AutomationProperties.Name="勾选列表"
+                                    ToolTip.Tip="勾选列表"
+                                    Click="OnTextList"
+                                    Tag="Check"
+                                    IsEnabled="{Binding HasBindableElement}">
+                                    <one:ReportIcon
+                                        Kind="CheckBox"
+                                        Width="20"
+                                        Height="20" />
+                                </Button>
+                            </StackPanel>
+                        </Border>
+                        <Button
+                            x:Name="BorderMenuButton"
+                            Classes="tool"
+                            Width="60"
+                            IsEnabled="{Binding HasElement}"
+                            ToolTip.Tip="边框"
+                            AutomationProperties.Name="边框">
+                            <StackPanel Orientation="Horizontal" Spacing="9">
+                                <one:ReportIcon
+                                    Kind="Table"
+                                    Width="20"
+                                    Height="20" />
+                                <one:ReportIcon
+                                    Kind="Chevron"
+                                    Width="10"
+                                    Height="10" />
+                            </StackPanel>
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel
+                                        Width="210"
+                                        Spacing="10"
+                                        x:DataType="one:ReportDesignState">
+                                        <TextBlock Text="边框" FontWeight="SemiBold" />
+                                        <CheckBox
+                                            x:Name="BorderToggle"
+                                            Content="显示边框"
+                                            IsChecked="{Binding SelectedElement.ShowBorder, Mode=TwoWay}" />
+                                        <TextBlock Text="文字 / 边框颜色" Classes="caption" />
+                                        <ColorPicker Color="{Binding SelectedElement.Foreground, Mode=TwoWay, Converter={x:Static one:ReportColorConverter.Instance}}" AutomationProperties.Name="边框颜色" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <Button
+                            x:Name="FillMenuButton"
+                            Classes="tool"
+                            Width="60"
+                            Margin="4,0,0,0"
+                            IsEnabled="{Binding HasElement}"
+                            ToolTip.Tip="填充颜色"
+                            AutomationProperties.Name="填充颜色">
+                            <StackPanel Orientation="Horizontal" Spacing="9">
+                                <one:ReportIcon
+                                    Kind="Fill"
+                                    Width="20"
+                                    Height="20" />
+                                <one:ReportIcon
+                                    Kind="Chevron"
+                                    Width="10"
+                                    Height="10" />
+                            </StackPanel>
+                            <Button.Flyout>
+                                <Flyout>
+                                    <StackPanel
+                                        Width="210"
+                                        Spacing="10"
+                                        x:DataType="one:ReportDesignState">
+                                        <TextBlock Text="填充颜色" FontWeight="SemiBold" />
+                                        <ColorPicker
+                                            x:Name="ToolbarFillEditor"
+                                            Color="{Binding SelectedElement.Fill, Mode=TwoWay, Converter={x:Static one:ReportColorConverter.Instance}}"
+                                            AutomationProperties.Name="填充颜色值" />
+                                        <TextBlock
+                                            Text="支持颜色名称、#RRGGBB 和 Transparent"
+                                            Classes="caption"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Column="1" ColumnDefinitions="1,30,33,14,44">
+                    <Border
+                        Width="1"
+                        Height="30"
+                        Background="{DynamicResource One.Line}" />
+                    <TextBlock
+                        Grid.Column="2"
+                        Text="吸附"
+                        VerticalAlignment="Center"
+                        FontSize="14" />
+                    <ToggleSwitch
+                        Grid.Column="4"
+                        IsChecked="{Binding Snap, Mode=TwoWay}"
+                        OnContent=""
+                        OffContent=""
+                        MinWidth="44"
+                        Padding="0"
+                        AutomationProperties.Name="吸附到毫米网格" />
+                </Grid>
+            </Grid>
+        </Border>
+        
+        <Grid ColumnDefinitions="252,1,*,1,330" RowDefinitions="Auto,*" Grid.Row="2"><Border Grid.Column="2" Grid.ColumnSpan="3" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource One.Line}"><TabControl
+                    x:Name="ViewTabs"
+                    Classes="card"
+                    one:TabFeatures.CanClose="False"
+                    one:TabFeatures.CanReorder="False"
+                    Padding="0"
+                    SelectedIndex="{Binding ViewTabIndex, Mode=TwoWay}"
+                    AutomationProperties.Name="设计与预览">
+                    <TabItem
+                        Header="设计"
+                        MinWidth="80"
+                        x:Name="DesignTab" HorizontalContentAlignment="Center" />
+                    <TabItem
+                        Header="预览"
+                        MinWidth="80"
+                        x:Name="PreviewTab" HorizontalContentAlignment="Center" />
+                </TabControl></Border>
+            <Border Grid.RowSpan="2" BorderThickness="0,0,1,0" Classes="divider">
+                <Grid RowDefinitions="*" Margin="0,0,0,10">
+                    <TabControl
+                        x:Name="SourceTabs"
+                        Classes="card"
+                        one:TabFeatures.CanClose="False"
+                        one:TabFeatures.CanReorder="False"
+                        Padding="0"
+                        AutomationProperties.Name="组件与数据">
+                        <TabItem
+                            Header="组件"
+                            IsSelected="{Binding IsComponentsTab, Mode=OneWay}"
+                            x:Name="ComponentsTabButton"
+                            MinWidth="80" HorizontalContentAlignment="Center">
+                            <Border Padding="14,12">
+                                <Grid RowDefinitions="Auto,*">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Classes="section" Text="基础组件" />
+                                        <UniformGrid
+                                            Classes="palette"
+                                            Columns="2"
+                                            Rows="4">
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,6,6"
+                                                MinHeight="44"
+                                                Tag="Text"
+                                                x:Name="TextPalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="Text" />
+                                                    <TextBlock Text="文本" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,0,6"
+                                                MinHeight="44"
+                                                Tag="Table"
+                                                x:Name="TablePalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="Table" />
+                                                    <TextBlock Text="表格" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,6,6"
+                                                MinHeight="44"
+                                                Tag="Image"
+                                                x:Name="ImagePalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="Image" />
+                                                    <TextBlock Text="图片" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,0,6"
+                                                MinHeight="44"
+                                                Tag="Line"
+                                                x:Name="LinePalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="Line" />
+                                                    <TextBlock Text="线条" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,6,6"
+                                                MinHeight="44"
+                                                Tag="Rectangle"
+                                                x:Name="RectanglePalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="Rectangle" />
+                                                    <TextBlock Text="矩形" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Click="OnInsert"
+                                                Margin="0,0,0,6"
+                                                MinHeight="44"
+                                                Tag="PageNumber"
+                                                x:Name="PageNumberPalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                                    <one:ReportIcon Kind="PageNumber" />
+                                                    <TextBlock Text="页码" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Click="OnInsert" Margin="0,0,6,6" MinHeight="44" Tag="CheckBox" x:Name="CheckBoxPalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12"><one:ReportIcon Kind="CheckBoxElement" /><TextBlock Text="复选框" /></StackPanel>
+                                            </Button>
+                                            <Button Click="OnInsert" Margin="0,0,0,6" MinHeight="44" Tag="Barcode" x:Name="BarcodePalette">
+                                                <StackPanel Orientation="Horizontal" Spacing="12"><one:ReportIcon Kind="Barcode" /><TextBlock Text="条码" /></StackPanel>
+                                            </Button>
+                                        </UniformGrid>
+                                        <TextBlock
+                                            Classes="caption"
+                                            Text="拖入组件；选中后拖动边框调整大小。"
+                                            TextWrapping="Wrap" />
+
+                                    </StackPanel>
+                                    <Grid RowDefinitions="Auto,*,Auto"
+                                        Grid.Row="1"
+                                        Margin="0,8,0,0"
+                                        RowSpacing="4">
+                                        <TextBlock Classes="section" Text="报表结构" />
+                                        <TreeView
+                                            Grid.Row="1"
+                                            AutomationProperties.Name="报表结构"
+                                            Background="Transparent"
+                                            ItemsSource="{Binding Structure}"
+                                            MinHeight="0"
+                                            SelectionChanged="OnStructureSelection"
+                                            x:Name="StructureTree" Margin="0,4,0,0">
+                                            <TreeView.Resources><x:Double x:Key="One.TreeViewItemIndent">22</x:Double></TreeView.Resources><TreeView.Styles>
+                                                <Style Selector="TreeViewItem /template/ ToggleButton#PART_ExpandCollapseChevron.one-normal, TreeViewItem /template/ ToggleButton#PART_ExpandCollapseChevron.one-small, TreeViewItem /template/ ToggleButton#PART_ExpandCollapseChevron.one-large">
+                                                    <Setter Property="Width" Value="24"/>
+                                                    <Setter Property="Height" Value="24"/>
+                                                    <Setter Property="MinHeight" Value="0"/>
+                                                </Style>
+                                                <Style Selector="TreeViewItem /template/ Panel#PART_ExpandCollapseChevronContainer">
+                                                    <Setter Property="Margin" Value="0"/>
+                                                </Style>
+                                                <Style Selector="TreeViewItem.one-normal, TreeViewItem.one-small, TreeViewItem.one-large" x:DataType="one:ReportStructureNode">
+                                                    <Setter Property="IsExpanded" Value="{Binding Expanded}" />
+                                                    <Setter Property="MinHeight" Value="28" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </TreeView.Styles>
+                                            <TreeView.ItemTemplate>
+                                                <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="one:ReportStructureNode">
+                                                    <StackPanel
+                                                        Margin="0,3"
+                                                        Orientation="Horizontal"
+                                                        Spacing="10">
+                                                        <one:ReportIcon
+                                                            Height="17"
+                                                            Kind="{Binding Icon}"
+                                                            Width="17" />
+                                                        <TextBlock Text="{Binding Name}" />
+                                                    </StackPanel>
+                                                </TreeDataTemplate>
+                                            </TreeView.ItemTemplate>
+                                        </TreeView>
+                                        <StackPanel
+                                            Grid.Row="2"
+                                            Margin="4,10,0,6"
+                                            Orientation="Horizontal"
+                                            Spacing="10">
+                                            <one:ReportIcon
+                                                Height="17"
+                                                Kind="Info"
+                                                Width="17" />
+                                            <TextBlock Classes="caption" Text="拖入组件；点击结构节点定位元素。" MaxWidth="192" TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </TabItem>
+                        <TabItem
+                            Header="数据"
+                            IsSelected="{Binding IsDataTab, Mode=TwoWay}"
+                            x:Name="DataTabButton"
+                            MinWidth="84" HorizontalContentAlignment="Center">
+                            <Border Padding="14,12">
+                                <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+                                    <TextBlock Classes="section" Text="API 数据源（可选）" />
+                                    <Button
+                                        Classes="primary"
+                                        Click="OnFetchData"
+                                        Content="＋ 添加数据源"
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        IsEnabled="{Binding CanFetch}"
+                                        Margin="0,8"
+                                        x:Name="AddDataSourceButton" />
+                                    <StackPanel Grid.Row="2" Margin="0,0,0,8" Spacing="4">
+                                        <TextBlock Classes="caption" Text="{Binding ApiUrl}" TextTrimming="CharacterEllipsis" ToolTip.Tip="{Binding ApiUrl}" />
+                                        <TextBlock x:Name="ApiSourceStatus" Classes="caption" Text="{Binding ApiStatus}" IsVisible="{Binding HasApiError}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <TextBox
+                                        Grid.Row="3"
+                                        Margin="0,0,0,8"
+                                        PlaceholderText="搜索数据"
+                                        styling:ControlSizing.Size="Small"
+                                        TextChanged="OnSearch"
+                                        x:Name="FieldSearch" />
+                                    <TreeView
+                                        AutomationProperties.Name="接口数据"
+                                        Background="Transparent"
+                                        Grid.Row="4"
+                                        MinHeight="0"
+                                        styling:ControlSizing.Size="Small"
+                                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                        ScrollViewer.IsScrollChainingEnabled="False"
+                                        ItemsSource="{Binding DataNodes}"
+                                        x:Name="DataTree">
+                                        <TreeView.ItemsPanel>
+                                            <!-- A bounded JSON hierarchy uses one physical scroll viewport. -->
+                                            <ItemsPanelTemplate><StackPanel /></ItemsPanelTemplate>
+                                        </TreeView.ItemsPanel>
+                                        <TreeView.Styles>
+                                            <Style Selector="TreeViewItem" x:DataType="report:ReportDataNode">
+                                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                                <Setter Property="ItemsPanel">
+                                                    <ItemsPanelTemplate><StackPanel /></ItemsPanelTemplate>
+                                                </Setter>
+                                            </Style>
+                                        </TreeView.Styles>
+                                        <TreeView.ItemTemplate>
+                                            <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="report:ReportDataNode">
+                                                <Grid ColumnDefinitions="*,*" ColumnSpacing="8" ClipToBounds="True">
+                                                    <ToolTip.Tip>
+                                                        <StackPanel Spacing="4" MaxWidth="360">
+                                                            <TextBlock Text="{Binding Name}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                                            <TextBlock Text="{Binding Pointer}" TextWrapping="Wrap" />
+                                                            <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" />
+                                                        </StackPanel>
+                                                    </ToolTip.Tip>
+                                                    <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                                    <TextBlock Grid.Column="1" Classes="caption" Text="{Binding Preview}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                                                </Grid>
+                                            </TreeDataTemplate>
+                                        </TreeView.ItemTemplate>
+                                    </TreeView>
+                                </Grid>
+                            </Border>
+                        </TabItem>
+                    </TabControl>
+
+                </Grid>
+            </Border>
+            <GridSplitter
+                Background="{DynamicResource One.Subtle}"
+                Grid.Column="1"
+                ResizeDirection="Columns" />
+            <Grid Grid.Row="1"
+                Grid.Column="2"
+                Background="{DynamicResource One.Report.WorkspaceBackground}"
+                RowDefinitions="*,Auto">
+                <ScrollViewer
+                    Grid.Row="0"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto"
+                    x:Name="PageScroll">
+                    <one:ReportPageSurface
+                        HorizontalAlignment="Center"
+                        Margin="26,11,12,12"
+                        VerticalAlignment="Top"
+                        x:Name="PageSurface" />
+                </ScrollViewer>
+                <Border
+                    Background="{DynamicResource One.Surface}"
+                    Grid.Row="1"
+                    IsVisible="{Binding IsPreview}"
+                    Padding="8">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <Button
+                            Click="OnPreviousPage"
+                            Content="上一页"
+                            IsEnabled="{Binding CanPrevious}"
+                            x:Name="PreviousPageButton" />
+                        <TextBlock Text="{Binding PageStatus}" VerticalAlignment="Center" />
+                        <Button
+                            Click="OnNextPage"
+                            Content="下一页"
+                            IsEnabled="{Binding CanNext}"
+                            x:Name="NextPageButton" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <GridSplitter Grid.Row="1"
+                Background="{DynamicResource One.Subtle}"
+                Grid.Column="3"
+                ResizeDirection="Columns" />
+            <Border Grid.Row="1"
+                BorderThickness="1,0,0,0"
+                Classes="divider inspector"
+                Grid.Column="4">
+                <Grid RowDefinitions="Auto,*,32">
+                    <StackPanel Margin="12,8,12,8" Spacing="8">
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Text="属性" />
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <one:ReportIcon
+                                Height="24"
+                                Kind="Table"
+                                Width="24" />
+                            <TextBlock
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Text="{Binding SelectionLabel}"
+                                VerticalAlignment="Center" />
+                        </StackPanel>
+                    </StackPanel>
+                    <TabControl
+                        x:Name="PropertyTabs"
+                        Classes="card"
+                        one:TabFeatures.CanClose="False"
+                        one:TabFeatures.CanReorder="False"
+                        Grid.Row="1"
+                        Padding="0"
+                        SelectedIndex="{Binding PropertyTab, Mode=TwoWay}"
+                        AutomationProperties.Name="元素属性">
+                        <TabItem
+                            Header="属性"
+                            x:Name="StylePropertiesTab"
+                            MinWidth="90" HorizontalContentAlignment="Center">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                <Border Padding="12,8,12,10">
+                                    <StackPanel Spacing="6"><Expander Header="位置与尺寸 · mm" IsExpanded="False"><StackPanel Spacing="6">
+                                        <Grid
+                                            ColumnDefinitions="*,100"
+                                            IsEnabled="{Binding HasElement}"
+                                            RowDefinitions="Auto,Auto,Auto,Auto">
+                                            <TextBlock Text="X" VerticalAlignment="Center" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Margin="0,0,0,8"
+                                                Maximum="297"
+                                                Minimum="0"
+                                                Value="{Binding SelectedElement.X, Mode=TwoWay}" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Y"
+                                                VerticalAlignment="Center" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                Margin="0,0,0,8"
+                                                Maximum="420"
+                                                Minimum="0"
+                                                Value="{Binding SelectedElement.Y, Mode=TwoWay}" />
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Text="宽度"
+                                                VerticalAlignment="Center" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Grid.Row="2"
+                                                Margin="0,0,0,8"
+                                                Maximum="297"
+                                                Minimum="8"
+                                                Value="{Binding SelectedElement.Width, Mode=TwoWay}" />
+                                            <TextBlock
+                                                Grid.Row="3"
+                                                Text="高度"
+                                                VerticalAlignment="Center" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                Grid.Row="3"
+                                                Maximum="420"
+                                                Minimum="2"
+                                                Value="{Binding SelectedElement.Height, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Button
+                                            Click="OnDeleteElement"
+                                            Content="删除选中元素"
+                                            IsEnabled="{Binding HasElement}" />
+                                        </StackPanel></Expander>
+                                        <StackPanel IsVisible="{Binding HasImageElement}" Spacing="10"><TextBlock Classes="section" Text="服务器图片"/><TextBox Text="{Binding SelectedElement.ImageUrl, Mode=TwoWay}" PlaceholderText="https://server/logo.png" AutomationProperties.Name="图片网络地址"/><Button Click="OnLoadRemoteImage" Content="加载网络图片"/>
+                                            <TextBlock Classes="section" Text="图片" />
+                                            <Button
+                                                Click="OnChooseImage"
+                                                Content="选择 / 替换图片…"
+                                                x:Name="ChooseImageButton" />
+                                            <TextBlock
+                                                Classes="caption"
+                                                Text="{Binding SelectedElement.ImageName}"
+                                                TextWrapping="Wrap" />
+                                            <ComboBox
+                                                AutomationProperties.Name="图片缩放方式"
+                                                SelectedIndex="{Binding #Root.ImageFitIndex, Mode=TwoWay}"
+                                                x:Name="ImageFitPicker">
+                                                <ComboBoxItem Content="等比适应" />
+                                                <ComboBoxItem Content="等比填充（裁剪）" />
+                                                <ComboBoxItem Content="拉伸填充" />
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <TextBlock Classes="section" Text="元素名称" />
+                                        <TextBox IsEnabled="{Binding HasElement}" Text="{Binding SelectedElement.Name, Mode=TwoWay}" />
+                                        <TextBlock
+                                            Classes="section"
+                                            IsVisible="{Binding HasTextElement}"
+                                            Text="内容 / 标签" />
+                                        <TextBox
+                                            AcceptsReturn="True"
+                                            IsVisible="{Binding HasTextElement}"
+                                            MinHeight="64"
+                                            Text="{Binding SelectedElement.Text, Mode=TwoWay}"
+                                            TextWrapping="Wrap"
+                                            x:Name="ElementTextEditor" />
+                                        <CheckBox x:Name="ElementCheckedEditor" IsVisible="{Binding HasCheckBoxElement}" Content="默认勾选（绑定字段优先）" IsChecked="{Binding SelectedElement.IsChecked, Mode=TwoWay}" />
+                                        <StackPanel IsVisible="{Binding HasBarcodeElement}" Spacing="6">
+                                            <TextBlock Classes="caption" Text="Code 128 · 支持英文、数字和常用 ASCII 符号（1–128 字符）" TextWrapping="Wrap" />
+                                            <CheckBox x:Name="BarcodeTextToggle" Content="显示条码文字" IsChecked="{Binding SelectedElement.BarcodeShowText, Mode=TwoWay}" />
+                                        </StackPanel>
+                                        <Grid ColumnDefinitions="*,90">
+                                            <TextBlock Text="字号" VerticalAlignment="Center" />
+                                            <NumericUpDown
+                                                Grid.Column="1"
+                                                IsEnabled="{Binding HasElement}"
+                                                Maximum="150"
+                                                Minimum="6"
+                                                Value="{Binding #Root.FontSizeValue, Mode=TwoWay}" />
+                                        </Grid>
+                                        <CheckBox
+                                            Content="加粗"
+                                            IsChecked="{Binding SelectedElement.Bold, Mode=TwoWay}"
+                                            IsEnabled="{Binding HasElement}" />
+                                        <TextBlock Text="文字 / 线条颜色" />
+                                        <ColorPicker IsEnabled="{Binding HasElement}" Color="{Binding SelectedElement.Foreground, Mode=TwoWay, Converter={x:Static one:ReportColorConverter.Instance}}" />
+                                        <TextBlock Text="填充颜色" />
+                                        <ColorPicker IsEnabled="{Binding HasElement}" Color="{Binding SelectedElement.Fill, Mode=TwoWay, Converter={x:Static one:ReportColorConverter.Instance}}" />
+                                        <CheckBox
+                                            Content="显示边框"
+                                            IsChecked="{Binding SelectedElement.ShowBorder, Mode=TwoWay}"
+                                            IsEnabled="{Binding HasElement}" />
+                                        <StackPanel IsVisible="{Binding HasTableColumn}" Spacing="8">
+                                            <TextBlock Classes="section" Text="表格列标题" />
+                                            <TextBox Text="{Binding SelectedColumn.Header, Mode=TwoWay}" x:Name="HeaderEditor" />
+                                            <TextBlock Text="静态单元格内容" />
+                                            <TextBox Text="{Binding SelectedColumn.Text, Mode=TwoWay}" />
+                                            <Grid ColumnDefinitions="*,90">
+                                                <TextBlock Text="列宽权重" VerticalAlignment="Center" />
+                                                <NumericUpDown
+                                                    Grid.Column="1"
+                                                    Increment="0.25"
+                                                    Maximum="10000"
+                                                    Minimum="0.001"
+                                                    Value="{Binding SelectedColumn.WidthWeight, Mode=TwoWay}" />
+                                            </Grid>
+                                            <Button
+                                                Click="OnAddColumn"
+                                                Content="添加列"
+                                                x:Name="AddColumnButton" />
+                                            <Button Click="OnRemoveColumn" Content="删除此列" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem
+                            Header="数据"
+                            x:Name="DataPropertiesTab"
+                            MinWidth="90" HorizontalContentAlignment="Center">
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                                <Border Padding="12,8,12,10">
+                                    <StackPanel Spacing="0">
+                                        <TextBlock
+                                            FontWeight="SemiBold"
+                                            Margin="0,2,0,16"
+                                            Text="▾  数据绑定" />
+                                        <Grid
+                                            ColumnDefinitions="82,*"
+                                            RowDefinitions="Auto,Auto,Auto"
+                                            RowSpacing="6">
+                                            <TextBlock Text="数据源" VerticalAlignment="Center" />
+                                            <Border
+                                                BorderBrush="{DynamicResource One.Line}"
+                                                BorderThickness="1"
+                                                CornerRadius="4"
+                                                Grid.Column="1"
+                                                Padding="12,8">
+                                                <TextBlock Text="{Binding SourceName}" TextTrimming="CharacterEllipsis" />
+                                            </Border>
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="字段"
+                                                VerticalAlignment="Center" />
+                                            <ComboBox
+                                                AutomationProperties.Name="绑定字段"
+                                                Grid.Column="1"
+                                                Grid.Row="1"
+                                                IsEnabled="{Binding HasBindableElement}"
+                                                ItemsSource="{Binding #Root.SourceFields}"
+                                                SelectedItem="{Binding #Root.SelectedField, Mode=TwoWay}"
+                                                x:Name="BindingPicker">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate x:DataType="report:ReportFieldInfo">
+                                                        <TextBlock Text="{Binding Key}" TextTrimming="CharacterEllipsis" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Text="表达式"
+                                                VerticalAlignment="Center" />
+                                            <Grid
+                                                ColumnDefinitions="*,38"
+                                                ColumnSpacing="8"
+                                                Grid.Column="1"
+                                                Grid.Row="2">
+                                                <TextBox
+                                                    IsReadOnly="True"
+                                                    Text="{Binding BindingStatus}"
+                                                    ToolTip.Tip="{Binding BindingStatus}" Classes="expression" />
+                                                <Button
+                                                    AutomationProperties.Name="选择绑定字段表达式"
+                                                    Click="OnOpenFieldPicker"
+                                                    Content="ƒx"
+                                                    FontSize="18"
+                                                    FontStyle="Italic"
+                                                    Grid.Column="1"
+                                                    IsEnabled="{Binding HasBindableElement}"
+                                                    Padding="6,3"
+                                                    ToolTip.Tip="选择绑定字段"
+                                                    x:Name="BindFieldButton" />
+                                            </Grid>
+                                        </Grid>
+                                        <StackPanel IsVisible="{Binding HasTableColumn}" Spacing="0">
+                                            <Separator Margin="0,10,0,8" />
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Margin="0,0,0,16"
+                                                Text="▾  显示格式" />
+                                            <Grid
+                                                ColumnDefinitions="82,*"
+                                                RowDefinitions="Auto,Auto,Auto,Auto"
+                                                RowSpacing="6">
+                                                <TextBlock Text="类型" VerticalAlignment="Center" />
+                                                <ComboBox
+                                                    Grid.Column="1"
+                                                    SelectedIndex="{Binding #Root.FormatIndex, Mode=TwoWay}"
+                                                    x:Name="FormatPicker">
+                                                    <ComboBoxItem Content="自动" />
+                                                    <ComboBoxItem Content="文本" />
+                                                    <ComboBoxItem Content="数字" />
+                                                    <ComboBoxItem Content="货币" />
+                                                    <ComboBoxItem Content="日期" />
+                                                </ComboBox>
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="小数位数"
+                                                    VerticalAlignment="Center" />
+                                                <NumericUpDown
+                                                    Grid.Column="1"
+                                                    Grid.Row="1"
+                                                    Maximum="8"
+                                                    Minimum="0"
+                                                    Value="{Binding SelectedColumn.DecimalPlaces, Mode=TwoWay}"
+                                                    x:Name="DecimalEditor" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    Text="千分位"
+                                                    VerticalAlignment="Center" />
+                                                <CheckBox
+                                                    Content="使用千分位分隔符" Classes="compact"
+                                                    FontSize="12"
+                                                    Grid.Column="1"
+                                                    Grid.Row="2"
+                                                    IsChecked="{Binding SelectedColumn.UseThousandsSeparator, Mode=TwoWay}" />
+                                                <TextBlock
+                                                    Grid.Row="3"
+                                                    Text="格式预览"
+                                                    VerticalAlignment="Center" />
+                                                <Border
+                                                    Background="{DynamicResource One.Report.PreviewBackground}"
+                                                    CornerRadius="4"
+                                                    Grid.Column="1"
+                                                    Grid.Row="3"
+                                                    Padding="12,8">
+                                                    <TextBlock Text="{Binding FormatSample}" />
+                                                </Border>
+                                            </Grid>
+                                            <Separator Margin="0,10,0,8" />
+                                            <TextBlock
+                                                FontWeight="SemiBold"
+                                                Margin="0,0,0,16"
+                                                Text="▾  汇总" />
+                                            <Grid ColumnDefinitions="82,*">
+                                                <TextBlock Text="汇总方式" VerticalAlignment="Center" />
+                                                <ComboBox
+                                                    Grid.Column="1"
+                                                    SelectedIndex="{Binding #Root.SumIndex, Mode=TwoWay}"
+                                                    x:Name="SumPicker">
+                                                    <ComboBoxItem Content="无" />
+                                                    <ComboBoxItem Content="求和（末页）" />
+                                                </ComboBox>
+                                            </Grid>
+                                            <CheckBox
+                                                Content="末页显示此列合计"
+                                                IsChecked="{Binding SelectedColumn.ShowSum, Mode=TwoWay}"
+                                                IsVisible="False"
+                                                x:Name="SumEditor" />
+                                        </StackPanel>
+                                        <Separator Margin="0,10,0,8" />
+                                        <Expander
+                                            Classes="condition"
+                                            x:Name="ConditionalStylesExpander"
+                                            IsExpanded="False"
+                                            IsVisible="{Binding HasTableColumn}"><Expander.Header><StackPanel Orientation="Horizontal" Spacing="10"><one:ReportIcon Classes="disclosure" Kind="Disclosure" Width="10" Height="10"/><TextBlock Text="条件样式" FontWeight="SemiBold"/></StackPanel></Expander.Header>
+                                            <StackPanel Margin="0,10" Spacing="10">
+                                                <CheckBox
+                                                    Content="启用数字条件"
+                                                    IsChecked="{Binding SelectedColumn.ConditionEnabled, Mode=TwoWay}"
+                                                    x:Name="ConditionToggle" />
+                                                <ComboBox AutomationProperties.Name="数字条件比较方式" SelectedIndex="{Binding #Root.ConditionIndex, Mode=TwoWay}">
+                                                    <ComboBoxItem Content="大于" />
+                                                    <ComboBoxItem Content="小于" />
+                                                    <ComboBoxItem Content="等于" />
+                                                </ComboBox>
+                                                <NumericUpDown
+                                                    AutomationProperties.Name="条件阈值"
+                                                    Maximum="1000000000000000"
+                                                    Minimum="-1000000000000000"
+                                                    Value="{Binding SelectedColumn.ConditionValue, Mode=TwoWay}" />
+                                                <TextBlock Classes="caption" Text="满足条件时的文字颜色" />
+                                                <ColorPicker AutomationProperties.Name="条件文字颜色" Color="{Binding SelectedColumn.ConditionColor, Mode=TwoWay, Converter={x:Static one:ReportColorConverter.Instance}}"/>
+                                            </StackPanel>
+                                        </Expander>
+                                    </StackPanel>
+                                </Border>
+                            </ScrollViewer>
+                        </TabItem>
+                        
+                    </TabControl>
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource One.Accent}"
+                        Grid.Row="2"
+                        Margin="18,0"
+                        Text="{Binding BindingSummary}"
+                        VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </Grid>
+        <Border
+            BorderThickness="0,1,0,0"
+            Classes="divider"
+            Grid.Row="3"
+            Padding="20,3">
+            <Grid ColumnDefinitions="318,*,Auto,140,Auto,Auto,Auto">
+                <TextBlock
+                    Classes="caption"
+                    Text="{Binding PaperLabel}"
+                    VerticalAlignment="Center" />
+                <TextBlock
+                    Classes="caption"
+                    Grid.Column="1"
+                    Margin="22,0"
+                    Text="{Binding StatusDisplay}" HorizontalAlignment="Center"
+                    TextTrimming="CharacterEllipsis"
+                    ToolTip.Tip="{Binding Status}"
+                    VerticalAlignment="Center"
+                    x:Name="StatusText" />
+                <Button
+                    AutomationProperties.Name="缩小"
+                    Classes="tool"
+                    Click="OnZoomOut"
+                    Grid.Column="2"
+                    ToolTip.Tip="缩小">
+                    <one:ReportIcon
+                        Height="14"
+                        Kind="Minus"
+                        Width="14" />
+                </Button>
+                <Slider
+                    Grid.Column="3"
+                    Margin="8,0"
+                    Maximum="1.5"
+                    Minimum="0.35"
+                    Value="{Binding Zoom, Mode=TwoWay}"
+                    x:Name="ZoomSlider" />
+                <Button
+                    AutomationProperties.Name="放大"
+                    Classes="tool"
+                    Click="OnZoomIn"
+                    Grid.Column="4"
+                    ToolTip.Tip="放大">
+                    <one:ReportIcon
+                        Height="14"
+                        Kind="Plus"
+                        Width="14" />
+                </Button>
+                <TextBlock
+                    Grid.Column="5"
+                    Text="{Binding ZoomLabel}"
+                    TextAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="64" />
+                <Button
+                    AutomationProperties.Name="适合页面"
+                    Classes="tool"
+                    Click="OnFitPage"
+                    Grid.Column="6"
+                    ToolTip.Tip="适合页面">
+                    <one:ReportIcon Kind="Fit" />
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

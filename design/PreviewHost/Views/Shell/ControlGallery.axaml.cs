@@ -24,6 +24,12 @@ public partial class ControlGallery : UserControl
             _pages.Add(descriptor.Id,page=PreviewPageCatalog.Create(descriptor.Id));
             if(page is ShowcasePage showcase) showcase.ControlRequested += ControlRequested;
         }
+        // Editors own a bounded viewport; do not measure their canvas at infinite height.
+        var isReportDesigner=page is TheOne.Avalonia.Controls.ReportDesign or TheOne.Avalonia.Controls.ReportPreview;
+        var fillsViewport=isReportDesigner || page is WorkflowEditorDemoView;
+        PageScroll.VerticalScrollBarVisibility=fillsViewport ? global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled : global::Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
+        PageHost.VerticalContentAlignment=fillsViewport ? global::Avalonia.Layout.VerticalAlignment.Stretch : global::Avalonia.Layout.VerticalAlignment.Top;
+        PageFrame.Padding=new Thickness(isReportDesigner ? 0 : 28);
         PageHost.Content=page; ResetScroll();
     }
     private void ControlRequested(object? sender,int id) => ScrollToControl(id);

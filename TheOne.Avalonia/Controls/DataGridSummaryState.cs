@@ -40,7 +40,7 @@ internal sealed class DataGridSummaryState
     private void GridChanged(object? sender, AvaloniaPropertyChangedEventArgs args)
     {
         if (args.Property == DataGrid.CollectionViewProperty) { ConnectView(); Queue(); }
-        else if (args.Property == DataGridFeatures.SummaryScopeProperty || args.Property == DataGridFeatures.SummaryEmptyTextProperty || args.Property == DataGridFeatures.SummaryLabelProperty) Queue();
+        else if (args.Property == DataGridFeatures.SummaryScopeProperty || args.Property == DataGridFeatures.SummaryLeavesOnlyProperty || args.Property == DataGridFeatures.SummaryEmptyTextProperty || args.Property == DataGridFeatures.SummaryLabelProperty) Queue();
     }
     private void ColumnsChanged(object? sender, NotifyCollectionChangedEventArgs args) { BindColumns(); Queue(); }
     private void EditEnded(object? sender, DataGridRowEditEndedEventArgs args) => Queue();
@@ -70,10 +70,12 @@ internal sealed class DataGridSummaryState
         DisconnectView(); _view = _grid.CollectionView;
         if (_view is null) return;
         _view.CollectionChanged += CollectionChanged;
+        if (_view is IDataGridTreeQueryView tree) tree.TreeChanged += TreeChanged;
         if (_view is INotifyPropertyChanged notifying) notifying.PropertyChanged += ViewChanged;
         _source = _view.SourceCollection as INotifyCollectionChanged;
         if (_source is not null) _source.CollectionChanged += CollectionChanged;
     }
+    private void TreeChanged(object? sender, EventArgs args) => Queue();
     private void CollectionChanged(object? sender, NotifyCollectionChangedEventArgs args) => Queue();
     private void ViewChanged(object? sender, PropertyChangedEventArgs args) => Queue();
     private void RowChanged(object? sender, PropertyChangedEventArgs args) => Queue();
@@ -82,6 +84,7 @@ internal sealed class DataGridSummaryState
         if (_view is not null)
         {
             _view.CollectionChanged -= CollectionChanged;
+            if (_view is IDataGridTreeQueryView tree) tree.TreeChanged -= TreeChanged;
             if (_view is INotifyPropertyChanged notifying) notifying.PropertyChanged -= ViewChanged;
         }
         if (_source is not null) _source.CollectionChanged -= CollectionChanged;
@@ -112,12 +115,22 @@ internal sealed class DataGridSummaryState
         }
         try
         {
+            var tree = _view as IDataGridTreeQueryView;
+            var scope = DataGridFeatures.GetSummaryScope(_grid);
+            var visible = scope == DataGridSummaryScope.VisibleItems && _view is not null
+                ? new HashSet<object>(_view.Cast<object>(), ReferenceEqualityComparer.Instance) : null;
             if (_view is not null && entries.Count > 0)
-                foreach (var item in _view.SourceCollection)
+                foreach (var item in tree?.LoadedItems ?? _view.SourceCollection)
                 {
                     if (item is null) continue;
                     Observe(item);
-                    bool match = DataGridFeatures.GetSummaryScope(_grid) == DataGridSummaryScope.SourceItems || (_view.Filter?.Invoke(item) ?? true);
+                    bool match = scope switch
+                    {
+                        DataGridSummaryScope.SourceItems => true,
+                        DataGridSummaryScope.VisibleItems => visible!.Contains(item),
+                        _ => tree?.IsFilterMatch(item) ?? (_view.Filter?.Invoke(item) ?? true)
+                    };
+                    if (tree is not null && DataGridFeatures.GetSummaryLeavesOnly(_grid) && !tree.IsLeaf(item)) match = false;
                     foreach (var entry in entries)
                     {
                         try

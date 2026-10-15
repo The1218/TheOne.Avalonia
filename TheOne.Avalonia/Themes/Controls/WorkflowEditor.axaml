@@ -1,0 +1,121 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" xmlns:w="using:TheOne.Avalonia.Workflow" xmlns:styling="using:TheOne.Avalonia.Styling" xmlns:conv="using:Avalonia.Data.Converters" x:CompileBindings="True">
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light"><SolidColorBrush x:Key="One.Workflow.Canvas" Color="#F5F9FB" /><SolidColorBrush x:Key="One.Workflow.Note" Color="#FFF4C7" /></ResourceDictionary>
+    <ResourceDictionary x:Key="Dark"><SolidColorBrush x:Key="One.Workflow.Canvas" Color="#141C23" /><SolidColorBrush x:Key="One.Workflow.Note" Color="#5D512F" /></ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+  <StreamGeometry x:Key="One.Workflow.Undo">M9,4 L4,9 9,14 M4,9 H14 C22,9 22,21 14,21 H9</StreamGeometry>
+  <StreamGeometry x:Key="One.Workflow.Redo">M15,4 L20,9 15,14 M20,9 H10 C2,9 2,21 10,21 H15</StreamGeometry>
+  <StreamGeometry x:Key="One.Workflow.Cursor">M5,3 L5,21 10,15 15,22 18,20 13,13 21,12 Z</StreamGeometry>
+  <StreamGeometry x:Key="One.Workflow.Hand">M7,12 V7 Q7,4 10,7 V3 Q12,0 14,3 V7 Q16,3 18,7 V10 Q21,6 22,11 V17 Q20,24 14,24 Q7,24 5,19 L2,14 Q2,10 7,12 Z</StreamGeometry>
+  <StreamGeometry x:Key="One.Workflow.Fit">M3,9 V3 H9 M15,3 H21 V9 M21,15 V21 H15 M9,21 H3 V15</StreamGeometry>
+  <DataTemplate x:Key="One.WorkflowEditor.NodeTemplate" x:DataType="w:WorkflowNode">
+    <StackPanel Spacing="4"><TextBlock Text="{Binding Title}" FontWeight="SemiBold" TextWrapping="Wrap" /><TextBlock Text="{Binding Description}" FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" /><TextBlock Text="{Binding StateText}" FontSize="11" Foreground="{DynamicResource One.Accent}" /></StackPanel>
+  </DataTemplate>
+  <DataTemplate x:Key="One.WorkflowEditor.DefinitionTemplate" x:DataType="w:WorkflowNodeDefinition">
+    <StackPanel Spacing="3"><TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12" /><TextBlock Text="{Binding Description}" FontSize="11" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" /></StackPanel>
+  </DataTemplate>
+  <DataTemplate x:Key="One.WorkflowEditor.PropertyTemplate" x:DataType="w:WorkflowNode">
+    <DockPanel>
+      <Button DockPanel.Dock="Bottom" Content="删除节点" Command="{Binding $parent[one:WorkflowEditor].DeleteCommand}" Margin="0,8,0,0" />
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"><StackPanel Spacing="12">
+        <TextBlock Text="{Binding Title}" FontWeight="SemiBold" /><TextBlock Text="{Binding Id, StringFormat='ID: {0}'}" FontSize="11" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        <TabStrip SelectedIndex="0"><TabStripItem Name="DefaultBasicTab" Content="基础" /><TabStripItem Name="DefaultDataTab" Content="数据" /><TabStripItem Name="DefaultPortsTab" Content="端口" /></TabStrip>
+        <Panel>
+          <StackPanel IsVisible="{Binding #DefaultBasicTab.IsSelected}" Spacing="8" IsEnabled="{Binding !$parent[one:WorkflowEditor].IsReadOnly}">
+            <TextBlock Text="节点名称" /><TextBox Name="PART_NodeTitle" Text="{Binding $parent[one:WorkflowEditor].SelectedNodeEditor.Title, Mode=TwoWay}" />
+            <TextBlock Text="节点类型" /><TextBlock Text="{Binding TypeId}" Foreground="{DynamicResource One.Muted}" />
+            <TextBlock Text="说明" /><TextBox Text="{Binding $parent[one:WorkflowEditor].SelectedNodeEditor.Description, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="64" />
+          </StackPanel>
+          <ItemsControl IsVisible="{Binding #DefaultDataTab.IsSelected}" IsEnabled="{Binding !$parent[one:WorkflowEditor].IsReadOnly}" ItemsSource="{Binding $parent[one:WorkflowEditor].SelectedNodeEditor.Fields}">
+            <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="12" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate><DataTemplate x:DataType="w:WorkflowPropertyEditor"><StackPanel Spacing="4">
+              <TextBlock Text="{Binding Title}" /><TextBlock Text="{Binding TypeHint}" FontSize="11" Foreground="{DynamicResource One.Muted}" />
+              <ComboBox ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption, Mode=TwoWay}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate x:DataType="w:WorkflowReferenceOption"><TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" /></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+              <TextBox Text="{Binding Literal, Mode=TwoWay}" IsVisible="{Binding IsLiteral}" />
+            </StackPanel></DataTemplate></ItemsControl.ItemTemplate>
+          </ItemsControl>
+          <ItemsControl IsVisible="{Binding #DefaultPortsTab.IsSelected}" ItemsSource="{Binding Ports}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="12" /></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate x:DataType="w:WorkflowPort"><StackPanel Spacing="4"><TextBlock Text="{Binding Title}" FontWeight="SemiBold" /><TextBlock Text="{Binding Id}" FontSize="11" Foreground="{DynamicResource One.Muted}" /><TextBlock Text="{Binding DataType}" FontSize="11" /></StackPanel></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        </Panel>
+      </StackPanel></ScrollViewer>
+    </DockPanel>
+  </DataTemplate>
+  <DataTemplate x:Key="One.WorkflowEditor.HeaderTemplate" x:DataType="one:WorkflowEditor">
+    <Grid ColumnDefinitions="*,Auto,Auto" Margin="12,6">
+      <TextBlock Text="{Binding Document.Title}" FontWeight="SemiBold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+      <Button Grid.Column="1" Content="校验流程" Command="{Binding ValidateCommand}" Margin="8,0" />
+      <Button Name="PART_Save" Grid.Column="2" Content="保存" Classes="primary" Command="{Binding SaveCommand}" CommandParameter="{Binding Document}" IsEnabled="{Binding SaveCommand, Converter={x:Static conv:ObjectConverters.IsNotNull}}" />
+    </Grid>
+  </DataTemplate>
+  <ControlTheme x:Key="{x:Type one:WorkflowEditor}" TargetType="one:WorkflowEditor">
+    <Setter Property="Background" Value="{DynamicResource One.Canvas}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="FontSize" Value="14" /><Setter Property="HorizontalAlignment" Value="Stretch" /><Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HeaderTemplate" Value="{StaticResource One.WorkflowEditor.HeaderTemplate}" />
+    <Setter Property="NodeTemplate" Value="{StaticResource One.WorkflowEditor.NodeTemplate}" /><Setter Property="NodeDefinitionTemplate" Value="{StaticResource One.WorkflowEditor.DefinitionTemplate}" /><Setter Property="PropertyTemplate" Value="{StaticResource One.WorkflowEditor.PropertyTemplate}" />
+    <Setter Property="Template"><ControlTemplate>
+      <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="6" Background="{TemplateBinding Background}" ClipToBounds="True">
+        <DockPanel>
+          <DockPanel.Styles>
+            <Style Selector="Button.workflow-tool"><Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Padding" Value="8,4" /><Setter Property="MinHeight" Value="30" /><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /></Style>
+            <Style Selector="Button.workflow-library"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Padding" Value="8,7" /><Setter Property="HorizontalAlignment" Value="Stretch" /><Setter Property="HorizontalContentAlignment" Value="Stretch" /></Style>
+          </DockPanel.Styles>
+          <Border DockPanel.Dock="Top" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="0,0,0,1" styling:ControlSizing.Size="Small" TextElement.FontSize="12"><ContentPresenter Name="PART_Header" Content="{Binding RelativeSource={RelativeSource TemplatedParent}}" ContentTemplate="{TemplateBinding HeaderTemplate}" /></Border>
+          <Border DockPanel.Dock="Left" Width="195" IsVisible="{TemplateBinding ShowNodeLibrary}" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="0,0,1,0" Padding="14,12" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+            <DockPanel>
+              <StackPanel DockPanel.Dock="Top" Spacing="12" Margin="0,0,0,14">
+                <Grid ColumnDefinitions="*,Auto"><TextBlock Text="节点库" FontWeight="SemiBold" /><Button Grid.Column="1" Content="‹" Classes="workflow-tool" Command="{Binding ToggleLibraryCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="折叠节点库" Height="18" Width="18" MinHeight="0" Padding="0" /></Grid>
+                <TextBox Name="PART_Search" PlaceholderText="搜索节点…" Text="{Binding SearchText, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" FontSize="12" BorderThickness="1" BorderBrush="{DynamicResource One.Line}" Background="{DynamicResource One.Surface}" MinHeight="0" Height="30" Padding="8,4" />
+              </StackPanel>
+              <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="4" Padding="8,16" Margin="0,12,0,0"><TextBlock Text="拖拽节点到画布" FontSize="11" Foreground="{DynamicResource One.Muted}" HorizontalAlignment="Center" /></Border>
+              <ScrollViewer HorizontalScrollBarVisibility="Disabled"><ItemsControl ItemsSource="{TemplateBinding LibraryGroups}">
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="14" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate><DataTemplate x:DataType="w:WorkflowNodeGroup"><StackPanel Spacing="8"><TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12" />
+                  <ItemsControl ItemsSource="{Binding Items}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="6" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate><DataTemplate x:DataType="w:WorkflowNodeDefinition">
+                      <Button Classes="workflow-library" Tag="{Binding}" Command="{Binding $parent[one:WorkflowEditor].AddNodeCommand}" CommandParameter="{Binding}"><ContentPresenter Content="{Binding}" ContentTemplate="{Binding $parent[one:WorkflowEditor].NodeDefinitionTemplate}" /></Button>
+                    </DataTemplate></ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel></DataTemplate></ItemsControl.ItemTemplate>
+              </ItemsControl></ScrollViewer>
+            </DockPanel>
+          </Border>
+          <Border DockPanel.Dock="Right" Width="296" IsVisible="{TemplateBinding ShowProperties}" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1,0,0,0" Padding="16,12" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+            <DockPanel><Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,16"><TextBlock Text="节点属性" FontWeight="SemiBold" /><Button Grid.Column="1" Content="×" Classes="workflow-tool" Command="{Binding TogglePropertiesCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="关闭属性面板" Height="18" Width="18" MinHeight="0" Padding="0" /></Grid><ContentPresenter Name="PART_Properties" Content="{TemplateBinding SelectedNode}" ContentTemplate="{TemplateBinding PropertyTemplate}" /></DockPanel>
+          </Border>
+          <Grid RowDefinitions="46,*,32">
+            <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="0,0,0,1" Padding="8,5" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+              <Grid ColumnDefinitions="*,Auto"><ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled"><StackPanel Orientation="Horizontal" Spacing="4">
+                <Button Classes="workflow-tool" Command="{Binding UndoCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="撤销 · Ctrl/Cmd+Z" AutomationProperties.Name="撤销"><Path Data="{StaticResource One.Workflow.Undo}" Stroke="{DynamicResource One.Muted}" StrokeThickness="1.6" Stretch="Uniform" Width="17" Height="17" /></Button>
+                <Button Classes="workflow-tool" Command="{Binding RedoCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="重做" AutomationProperties.Name="重做"><Path Data="{StaticResource One.Workflow.Redo}" Stroke="{DynamicResource One.Muted}" StrokeThickness="1.6" Stretch="Uniform" Width="17" Height="17" /></Button>
+                <Border Width="1" Background="{DynamicResource One.Line}" Margin="8,3" />
+                <ToggleButton IsChecked="{Binding !IsPanMode, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ToolTip.Tip="选择" Padding="8,5" AutomationProperties.Name="选择工具"><PathIcon Data="{StaticResource One.Workflow.Cursor}" Width="15" Height="17" /></ToggleButton>
+                <ToggleButton IsChecked="{Binding IsPanMode, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ToolTip.Tip="平移" Padding="8,5" AutomationProperties.Name="平移工具"><PathIcon Data="{StaticResource One.Workflow.Hand}" Width="16" Height="18" /></ToggleButton>
+                <Border Width="1" Background="{DynamicResource One.Line}" Margin="8,3" />
+                <Button Classes="workflow-tool" Content="自动排列" Command="{Binding ArrangeCommand, RelativeSource={RelativeSource TemplatedParent}}" />
+                <Button Classes="workflow-tool" Content="对齐" Command="{Binding AlignCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="将所选节点顶部对齐" />
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="10,0,0,0"><ToggleSwitch IsChecked="{Binding SnapToGrid, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" OnContent="" OffContent="" VerticalAlignment="Center" /><TextBlock Text="吸附" FontSize="11" VerticalAlignment="Center" /></StackPanel>
+              </StackPanel></ScrollViewer>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" Background="{DynamicResource One.Surface}"><Button Classes="workflow-tool" Content="{TemplateBinding ZoomText}" Command="{Binding FitCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="适应画布" /><Button Classes="workflow-tool" Command="{Binding FitCommand, RelativeSource={RelativeSource TemplatedParent}}" ToolTip.Tip="适应画布"><Path Data="{StaticResource One.Workflow.Fit}" Stroke="{DynamicResource One.Muted}" StrokeThickness="1.6" Stretch="Uniform" Width="17" Height="17" /></Button><Button Classes="workflow-tool" Content="?" ToolTip.Tip="空格/中键平移 · 滚轮缩放 · Shift 多选 · Delete 删除 · Ctrl/Cmd+Z 撤销" /></StackPanel>
+              </Grid>
+            </Border>
+            <Grid Grid.Row="1" ClipToBounds="True">
+              <one:WorkflowCanvas Name="PART_Canvas" />
+              <Border HorizontalAlignment="Left" VerticalAlignment="Top" Background="{DynamicResource One.AccentSoft}" CornerRadius="4" Padding="8,4" Margin="18" IsVisible="{TemplateBinding ShowRuntimePreview}" styling:ControlSizing.Size="Small" TextElement.FontSize="12"><TextBlock Text="● 运行状态预览" Foreground="{DynamicResource One.Accent}" FontSize="11" /></Border>
+              <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="12" Spacing="8" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+                <one:WorkflowMiniMap Width="200" Height="90" Editor="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="4" HorizontalAlignment="Right"><StackPanel Orientation="Horizontal"><Button Classes="workflow-tool" Content="−" Command="{Binding ZoomOutCommand, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.Name="缩小" /><TextBlock Text="{TemplateBinding ZoomText}" FontSize="11" Margin="12,0" VerticalAlignment="Center" /><Button Classes="workflow-tool" Content="+" Command="{Binding ZoomInCommand, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.Name="放大" /></StackPanel></Border>
+              </StackPanel>
+              <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{DynamicResource One.Surface}" CornerRadius="3" Margin="14,0,0,14" Padding="6,3" styling:ControlSizing.Size="Small" TextElement.FontSize="12"><TextBlock Text="空格拖动画布 · 滚轮缩放 · Shift 多选" FontSize="11" Foreground="{DynamicResource One.Muted}" /></Border>
+              <Border IsVisible="{TemplateBinding ShowValidation}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="12" Width="280" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="6" Padding="12" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+                <StackPanel Spacing="10"><TextBlock Text="流程校验" FontWeight="SemiBold" /><ItemsControl ItemsSource="{TemplateBinding ValidationIssues}"><ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Spacing="6" /></ItemsPanelTemplate></ItemsControl.ItemsPanel><ItemsControl.ItemTemplate><DataTemplate x:DataType="w:WorkflowValidationIssue"><Button Content="{Binding Message}" Command="{Binding $parent[one:WorkflowEditor].LocateIssueCommand}" CommandParameter="{Binding}" HorizontalAlignment="Stretch" ToolTip.Tip="定位节点" /></DataTemplate></ItemsControl.ItemTemplate></ItemsControl></StackPanel>
+              </Border>
+            </Grid>
+            <Border Grid.Row="2" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="0,1,0,0" Padding="14,4" styling:ControlSizing.Size="Small" TextElement.FontSize="12">
+              <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{TemplateBinding GraphSummary}" FontSize="11" VerticalAlignment="Center" ToolTip.Tip="{TemplateBinding Status}" /><Button Grid.Column="1" Classes="workflow-tool" Content="{TemplateBinding ValidationSummary}" Command="{Binding ValidateCommand, RelativeSource={RelativeSource TemplatedParent}}" Padding="4,0" MinHeight="22" Foreground="{DynamicResource One.Muted}" /></Grid>
+            </Border>
+          </Grid>
+        </DockPanel>
+      </Border>
+    </ControlTemplate></Setter>
+    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /></Style><Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

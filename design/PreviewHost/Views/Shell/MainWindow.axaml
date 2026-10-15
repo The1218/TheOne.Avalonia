@@ -1,5 +1,6 @@
 <one:OneWindow
     Height="900"
+    Icon="avares://PreviewHost/Assets/Brand/theone-app.ico"
     MinHeight="500"
     MinWidth="640"
     ThemeButtonScope="Application"
@@ -30,11 +31,13 @@
             Name="Sidebar"
             Padding="12,20">
             <Grid RowDefinitions="Auto,*">
-                <TextBlock
-                    FontSize="20"
-                    FontWeight="SemiBold"
-                    Margin="12,0,0,20"
-                    Text="THE ONE" />
+                <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,0,0,20">
+                    <local:PreviewBrandIcon Name="BrandIcon" Width="32" Height="32"
+                        AutomationProperties.Name="The One 应用图标" />
+                    <TextBlock Name="BrandWordmark" FontSize="20" FontWeight="SemiBold"
+                        VerticalAlignment="Center" IsVisible="{Binding !EffectiveNavigationCollapsed}"
+                        Text="THE ONE" />
+                </StackPanel>
                 <one:NavMenu
                     ChildrenBinding="{Binding Entries}"
                     ExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"

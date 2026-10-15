@@ -1,0 +1,310 @@
+<!-- Native color editing is retained; only the dropdown chrome and panel layout are themed. -->
+<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:p="using:Avalonia.Controls.Primitives" xmlns:styling="using:TheOne.Avalonia.Styling" x:CompileBindings="True">
+  <Styles.Resources>
+    <x:Double x:Key="ColorSliderSize">16</x:Double>
+    <x:Double x:Key="ColorSliderTrackSize">12</x:Double>
+    <CornerRadius x:Key="ColorSliderCornerRadius">6</CornerRadius>
+    <CornerRadius x:Key="ColorSliderTrackCornerRadius">6</CornerRadius>
+    <ControlTheme x:Key="One.ColorPickerButton" TargetType="DropDownButton">
+      <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+      <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="FocusAdorner" Value="{x:Null}" />
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+      <Setter Property="Template">
+        <ControlTemplate>
+          <Border Name="RootBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}">
+            <Grid ColumnDefinitions="*,28">
+              <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Padding="10,0,4,0" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+              <PathIcon Name="DropDownGlyph" Grid.Column="1" Width="10" Height="10" IsHitTestVisible="False"
+                        Foreground="{TemplateBinding Foreground}" Data="M 1,3 L 5,7 L 9,3" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter>
+      <Style Selector="^:pointerover /template/ Border#RootBorder">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+      </Style>
+      <Style Selector="^:pressed /template/ Border#RootBorder">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+      </Style>
+      <Style Selector="^:focus-visible /template/ Border#RootBorder, ^:flyout-open /template/ Border#RootBorder">
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+      </Style>
+    </ControlTheme>
+  </Styles.Resources>
+
+  <Style Selector="ColorPicker">
+    <Setter Property="Height" Value="NaN" />
+    <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
+    <Setter Property="MinWidth" Value="150" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="SelectedIndex" Value="1" />
+    <Setter Property="Palette"><styling:ColorPickerPalette /></Setter>
+    <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
+    <Setter Property="IsAccentColorsVisible" Value="False" />
+    <Setter Property="IsColorPreviewVisible" Value="False" />
+    <Setter Property="Content">
+      <Template>
+        <Grid ColumnDefinitions="24,*" ColumnSpacing="10">
+          <Border Width="24" Height="20" CornerRadius="3" VerticalAlignment="Center"
+                  Background="{StaticResource ColorControlCheckeredBackgroundBrush}">
+            <Border Background="{TemplateBinding HsvColor, Converter={StaticResource ToBrushConverter}}" CornerRadius="3"
+                    BorderBrush="{DynamicResource One.InputLine}" BorderThickness="1" />
+          </Border>
+          <TextBlock Grid.Column="1" Text="{TemplateBinding Color}" VerticalAlignment="Center"
+                     FontSize="{TemplateBinding FontSize}" Foreground="{DynamicResource One.Text}" />
+        </Grid>
+      </Template>
+    </Setter>
+  </Style>
+  <Style Selector="ColorPicker /template/ DropDownButton">
+    <Setter Property="Theme" Value="{StaticResource One.ColorPickerButton}" />
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+    <Setter Property="FocusAdorner" Value="{x:Null}" />
+  </Style>
+  <Style Selector="ColorPicker /template/ DropDownButton:pointerover">
+    <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector="ColorPicker /template/ DropDownButton:pressed">
+    <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+  </Style>
+  <Style Selector="ColorPicker:focus-within /template/ DropDownButton">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector="ColorPicker:disabled">
+    <Setter Property="Opacity" Value="0.5" />
+  </Style>
+  <Style Selector="ColorView">
+    <Setter Property="MinWidth" Value="280" />
+    <Setter Property="MaxWidth" Value="340" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+    <Setter Property="SelectedIndex" Value="1" />
+    <Setter Property="Palette"><styling:ColorPickerPalette /></Setter>
+    <Setter Property="ColorSpectrumComponents" Value="SaturationValue" />
+    <Setter Property="IsAccentColorsVisible" Value="False" />
+    <Setter Property="IsColorPreviewVisible" Value="False" />
+  </Style>
+  <Style Selector="ColorView /template/ TabControl#PART_TabControl">
+    <Setter Property="MinWidth" Value="{Binding $parent[ColorView].Bounds.Width}" />
+    <Setter Property="MaxWidth" Value="{Binding $parent[ColorView].Bounds.Width}" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ Border#TabBackgroundBorder, FlyoutPresenter.one-colorpicker Border#TabBackgroundBorder">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="CornerRadius" Value="8" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ Border#ContentBackgroundBorder, FlyoutPresenter.one-colorpicker Border#ContentBackgroundBorder">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabControl#PART_TabControl, FlyoutPresenter.one-colorpicker TabControl#PART_TabControl">
+    <Setter Property="Height" Value="NaN" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="Margin" Value="1" />
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="FlyoutPresenter.one-colorpicker TabControl#PART_TabControl">
+    <Setter Property="Width" Value="320" />
+  </Style>
+  <Style Selector="FlyoutPresenter.one-colorpicker">
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabControl#PART_TabControl /template/ ScrollViewer#PART_StandardHeaderScroll, FlyoutPresenter.one-colorpicker TabControl#PART_TabControl /template/ ScrollViewer#PART_StandardHeaderScroll">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Margin" Value="12,8,12,0" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem:nth-child(1), FlyoutPresenter.one-colorpicker TabItem:nth-child(1)">
+    <Setter Property="Header" Value="Custom" />
+    <Setter Property="AutomationProperties.Name" Value="Custom color" />
+    <Setter Property="IsVisible">
+      <MultiBinding Converter="{x:Static BoolConverters.Or}">
+        <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
+        <Binding Path="$parent[ColorView].IsColorComponentsVisible" />
+      </MultiBinding>
+    </Setter>
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem:nth-child(2), FlyoutPresenter.one-colorpicker TabItem:nth-child(2)">
+    <Setter Property="Header" Value="Palette" />
+    <Setter Property="AutomationProperties.Name" Value="Color palette" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem /template/ Border#PART_LayoutRoot, FlyoutPresenter.one-colorpicker TabItem /template/ Border#PART_LayoutRoot">
+    <Setter Property="MinHeight" Value="32" /><Setter Property="MaxHeight" Value="32" />
+    <Setter Property="Margin" Value="0" />
+  </Style>
+  <!-- Keep the native spectrum and sliders, arranged like a compact desktop color editor. -->
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem:nth-child(1) > Grid, FlyoutPresenter.one-colorpicker TabItem:nth-child(1) > Grid">
+    <Setter Property="Margin" Value="16,12,16,16" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ p|ColorSpectrum, FlyoutPresenter.one-colorpicker p|ColorSpectrum">
+    <Setter Property="Grid.Column" Value="0" />
+    <Setter Property="Grid.Row" Value="0" />
+    <Setter Property="IsVisible" Value="{Binding $parent[ColorView].IsColorSpectrumVisible}" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ p|ColorSlider#ColorSpectrumThirdComponentSlider, FlyoutPresenter.one-colorpicker p|ColorSlider#ColorSpectrumThirdComponentSlider">
+    <Setter Property="Grid.Column" Value="0" />
+    <Setter Property="Orientation" Value="Horizontal" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" /><Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Margin" Value="0,14,0,0" />
+    <Setter Property="IsVisible">
+      <MultiBinding Converter="{x:Static BoolConverters.And}">
+        <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
+        <Binding Path="$parent[ColorView].IsColorSpectrumSliderVisible" />
+      </MultiBinding>
+    </Setter>
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ p|ColorSlider#ColorSpectrumAlphaSlider, FlyoutPresenter.one-colorpicker p|ColorSlider#ColorSpectrumAlphaSlider">
+    <Setter Property="Grid.Column" Value="0" />
+    <Setter Property="Orientation" Value="Horizontal" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" /><Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Margin" Value="0,10,0,0" />
+    <Setter Property="IsVisible">
+      <MultiBinding Converter="{x:Static BoolConverters.And}">
+        <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
+        <Binding Path="$parent[ColorView].IsAlphaVisible" />
+      </MultiBinding>
+    </Setter>
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ ListBox, FlyoutPresenter.one-colorpicker ListBox">
+    <Setter Property="Margin" Value="12,12,12,16" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="ItemTemplate">
+      <DataTemplate x:DataType="Color">
+        <Border CornerRadius="4" Background="{StaticResource ColorControlCheckeredBackgroundBrush}">
+          <Border CornerRadius="4" BorderBrush="{DynamicResource One.InputLine}" BorderThickness="1">
+            <Border.Background><SolidColorBrush Color="{Binding}" /></Border.Background>
+          </Border>
+        </Border>
+      </DataTemplate>
+    </Setter>
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ ListBox ListBoxItem, FlyoutPresenter.one-colorpicker ListBoxItem">
+    <Setter Property="Margin" Value="2" /><Setter Property="Height" Value="24" />
+    <Setter Property="MinHeight" Value="24" /><Setter Property="MaxHeight" Value="24" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" /><Setter Property="VerticalContentAlignment" Value="Stretch" />
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ ListBox ListBoxItem /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Padding" Value="0" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ ListBox ListBoxItem Border, FlyoutPresenter.one-colorpicker ListBoxItem Border">
+    <Setter Property="CornerRadius" Value="4" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ ListBox ListBoxItem /template/ Rectangle#BorderRectangle, FlyoutPresenter.one-colorpicker ListBoxItem /template/ Rectangle#BorderRectangle">
+    <Setter Property="RadiusX" Value="4" /><Setter Property="RadiusY" Value="4" />
+    <Setter Property="StrokeThickness" Value="2" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem /template/ Border#PART_LayoutRoot, FlyoutPresenter.one-colorpicker TabItem /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ TabItem /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker TabItem /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ TabItem:pointerover /template/ Border#PART_LayoutRoot, FlyoutPresenter.one-colorpicker TabItem:pointerover /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ TabItem:selected /template/ Border#PART_LayoutRoot, FlyoutPresenter.one-colorpicker TabItem:selected /template/ Border#PART_LayoutRoot">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ TabItem:selected /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ TabItem:selected /template/ Border#PART_SelectedPipe, FlyoutPresenter.one-colorpicker TabItem:selected /template/ Border#PART_SelectedPipe">
+    <Setter Property="IsVisible" Value="False" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ RadioButton /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker RadioButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ RadioButton:checked /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker RadioButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ RadioButton:pointerover /template/ ContentPresenter#PART_ContentPresenter, FlyoutPresenter.one-colorpicker RadioButton:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ TextBox#PART_HexTextBox, :is(ColorView) /template/ NumericUpDown, FlyoutPresenter.one-colorpicker TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker NumericUpDown">
+    <Setter Property="MinHeight" Value="36" /><Setter Property="MaxHeight" Value="36" />
+    <Setter Property="FontSize" Value="14" />
+  </Style>
+  <Style Selector=":is(ColorView).one-small /template/ TextBox#PART_HexTextBox, :is(ColorView).one-small /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-small TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-small NumericUpDown">
+    <Setter Property="MinHeight" Value="30" /><Setter Property="MaxHeight" Value="30" /><Setter Property="FontSize" Value="12" />
+  </Style>
+  <Style Selector=":is(ColorView).one-large /template/ TextBox#PART_HexTextBox, :is(ColorView).one-large /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-large TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-large NumericUpDown">
+    <Setter Property="MinHeight" Value="44" /><Setter Property="MaxHeight" Value="44" /><Setter Property="FontSize" Value="16" />
+  </Style>
+  <Style Selector=":is(ColorView) /template/ Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker Grid#HexInputGrid > Border">
+    <Setter Property="MinHeight" Value="36" /><Setter Property="MaxHeight" Value="36" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ Grid#HexInputGrid > Border, :is(ColorView)[IsVisible=True] /template/ TabItem:nth-child(3) > Grid > Border, FlyoutPresenter.one-colorpicker Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker TabItem:nth-child(3) > Grid > Border">
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+  </Style>
+  <Style Selector=":is(ColorView)[IsVisible=True] /template/ Grid#HexInputGrid > Border TextBlock, :is(ColorView)[IsVisible=True] /template/ TabItem:nth-child(3) > Grid > Border TextBlock, FlyoutPresenter.one-colorpicker Grid#HexInputGrid > Border TextBlock, FlyoutPresenter.one-colorpicker TabItem:nth-child(3) > Grid > Border TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+  </Style>
+  <Style Selector=":is(ColorView).one-small /template/ Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker-small Grid#HexInputGrid > Border">
+    <Setter Property="MinHeight" Value="30" /><Setter Property="MaxHeight" Value="30" />
+  </Style>
+  <Style Selector=":is(ColorView).one-large /template/ Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker-large Grid#HexInputGrid > Border">
+    <Setter Property="MinHeight" Value="44" /><Setter Property="MaxHeight" Value="44" />
+  </Style>
+  <Style Selector="ColorPicker.one-small"><Setter Property="MinHeight" Value="30" /><Setter Property="FontSize" Value="12" /></Style>
+  <Style Selector="ColorPicker.one-large"><Setter Property="MinHeight" Value="44" /><Setter Property="FontSize" Value="16" /></Style>
+  <Style Selector="ColorPicker.one-small /template/ DropDownButton"><Setter Property="MinHeight" Value="30" /></Style>
+  <Style Selector="ColorPicker.one-normal /template/ DropDownButton"><Setter Property="MinHeight" Value="36" /></Style>
+  <Style Selector="ColorPicker.one-large /template/ DropDownButton"><Setter Property="MinHeight" Value="44" /></Style>
+  <Style Selector="p|ColorSlider /template/ Thumb#ColorSliderThumb">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Text}" />
+  </Style>
+  <Style Selector="TextBlock.one-color-component-label, Border.one-color-component-label TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+    <Setter Property="FontSize" Value="12" />
+  </Style>
+  <Style Selector="Border.one-color-component-label">
+    <Setter Property="Background" Value="Transparent" />
+  </Style>
+  <Style Selector="Grid.one-color-components NumericUpDown /template/ TextBox">
+    <Setter Property="Padding" Value="4,0" />
+    <Setter Property="MinWidth" Value="0" />
+  </Style>
+  <Style Selector="Grid.one-color-components RadioButton /template/ ContentPresenter#PART_ContentPresenter">
+    <Setter Property="Padding" Value="2,0" />
+  </Style>
+  <Style Selector="p|ColorSpectrum">
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+  </Style>
+  <Style Selector="p|ColorPreviewer[IsVisible=True] /template/ Border">
+    <Setter Property="BoxShadow" Value="0 0 0 0 Transparent" />
+  </Style>
+</Styles>

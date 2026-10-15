@@ -1,5 +1,7 @@
 using global::Avalonia;
 using global::Avalonia.Automation;
+using global::Avalonia.Automation.Peers;
+using global::Avalonia.Automation.Provider;
 using global::Avalonia.Collections;
 using global::Avalonia.Controls;
 using global::Avalonia.Controls.Shapes;
@@ -18,10 +20,19 @@ public sealed class DataGridTreeTextColumn : DataGridTextColumn
         AvaloniaProperty.Register<DataGridTreeTextColumn, double>(nameof(Indent), 16, validate: value => double.IsFinite(value) && value >= 0);
     public double Indent { get => GetValue(IndentProperty); set => SetValue(IndentProperty, value); }
 
-    protected override Control GenerateElement(DataGridCell cell, object dataItem) => new DataGridTreeCellPresenter(base.GenerateElement(cell, dataItem), Indent);
+    protected override Control GenerateElement(DataGridCell cell, object dataItem)
+    {
+        // A tree column needs a shared origin; centering each node moves it with the label width.
+        cell.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+        var content = base.GenerateElement(cell, dataItem);
+        if (content is TextBlock text) text.TextAlignment = TextAlignment.Left;
+        return new DataGridTreeCellPresenter(content, Indent);
+    }
     protected override Control GenerateEditingElementDirect(DataGridCell cell, object dataItem)
     {
         var editor = base.GenerateEditingElementDirect(cell, dataItem);
+        cell.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+        if (editor is TextBox textBox) textBox.TextAlignment = TextAlignment.Left;
         var tree = cell.GetVisualAncestors().OfType<DataGrid>().FirstOrDefault()?.CollectionView as IDataGridTreeCollectionView;
         if (tree is not null && tree.TryGetNodeState(dataItem, out var state)) editor.Margin = new Thickness(state.Depth * Indent + 20, 0, 0, 0);
         return editor;
@@ -40,6 +51,7 @@ internal sealed class DataGridTreeCellPresenter : Grid
     private readonly double _indent;
     private IDataGridTreeCollectionView? _tree;
     private DataGrid? _grid;
+    private ExpandCollapseState _automationState = ExpandCollapseState.LeafNode;
     public Control NativeContent { get; }
     public DataGridTreeCellPresenter(Control content, double indent)
     {
@@ -88,7 +100,35 @@ internal sealed class DataGridTreeCellPresenter : Grid
         var valid = DataContext is { } item && _tree is not null && _tree.TryGetNodeState(item, out state);
         Margin = new Thickness(valid ? state.Depth * _indent : 0, 0, 0, 0);
         _expander.IsVisible = valid && state.HasChildren;
+        _expander.IsEnabled = !state.IsForcedExpanded;
         _icon.Data = state.IsExpanded ? Expanded : Collapsed;
         AutomationProperties.SetName(_expander, state.IsExpanded ? "Collapse" : "Expand");
+        var automationState = !valid || !state.HasChildren ? ExpandCollapseState.LeafNode :
+            state.IsExpanded ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed;
+        var previousState = _automationState;
+        _automationState = automationState;
+        if (previousState != automationState && ControlAutomationPeer.FromElement(this) is TreeCellAutomationPeer peer)
+            peer.StateChanged(previousState, automationState);
+    }
+    protected override AutomationPeer OnCreateAutomationPeer() => new TreeCellAutomationPeer(this);
+    private sealed class TreeCellAutomationPeer(DataGridTreeCellPresenter owner) : ControlAutomationPeer(owner), IExpandCollapseProvider
+    {
+        protected override AutomationControlType GetAutomationControlTypeCore() => AutomationControlType.TreeItem;
+        protected override bool IsControlElementCore() => true;
+        protected override bool IsContentElementCore() => true;
+        protected override string? GetNameCore() => !string.IsNullOrEmpty(base.GetNameCore()) ? base.GetNameCore() : (owner.NativeContent as TextBlock)?.Text;
+        protected override string? GetHelpTextCore() => owner.DataContext is { } item && owner._tree is { } tree && tree.TryGetNodeState(item, out var state)
+            ? $"Level {state.Depth + 1}" : base.GetHelpTextCore();
+        public ExpandCollapseState ExpandCollapseState => owner._automationState;
+        public bool ShowsMenu => false;
+        public void Expand() => Change(true);
+        public void Collapse() => Change(false);
+        private void Change(bool expanded)
+        {
+            if (!owner.IsEffectivelyEnabled || owner.DataContext is not { } item || owner._tree is not { } tree || !tree.TrySetExpanded(item, expanded))
+                throw new InvalidOperationException("The tree node cannot change expansion while filtering or editing prevents it.");
+        }
+        public void StateChanged(ExpandCollapseState previous, ExpandCollapseState current) =>
+            RaisePropertyChangedEvent(ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty, previous, current);
     }
 }

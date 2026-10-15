@@ -19,7 +19,11 @@ public partial class App : Application
     {
         if (!Program.IsHeadless && ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (desktop.Args?.Contains("--datagrid-tree") == true)
+            if (desktop.Args?.Contains("--colorpicker") == true)
+                desktop.MainWindow = new Window { Title = "ColorPicker · TheOne", Width = 940, Height = 860, Content = new ScrollViewer { Content = new ColorPickerPage { Margin = new Thickness(28) } } };
+            else if (desktop.Args?.Contains("--reportdesign") == true)
+                desktop.MainWindow = ReportDesignDemo.CreateWindow();
+            else if (desktop.Args?.Contains("--datagrid-tree") == true)
             {
                 var fixture = new DataGridTreeFixture();
                 desktop.MainWindow = new Window { Title = "Tree DataGrid prototype", Width = 900, Height = 650, Content = fixture };

@@ -1,0 +1,68 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <DataTemplate x:Key="One.Upload.EmptyTemplate" x:DataType="one:Upload">
+    <StackPanel Spacing="10" HorizontalAlignment="Center" Margin="12,18">
+      <Border Background="{DynamicResource One.AccentSoft}" CornerRadius="12" Width="46" Height="46" HorizontalAlignment="Center">
+        <PathIcon Width="23" Height="23" Foreground="{DynamicResource One.Accent}" Data="M11,2 L11,14 L13,14 L13,2 Z M6,7 L7.4,8.4 L12,3.8 L16.6,8.4 L18,7 L12,1 Z M3,14 L3,20 Q3,22 5,22 L19,22 Q21,22 21,20 L21,14 L19,14 L19,20 L5,20 L5,14 Z" />
+      </Border>
+      <TextBlock Text="{Binding Title}" FontWeight="SemiBold" HorizontalAlignment="Center" TextWrapping="Wrap" />
+      <TextBlock Text="{Binding Description}" Foreground="{DynamicResource One.Muted}" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+      <Button Name="PART_Select" Content="{Binding SelectText}" Command="{Binding SelectCommand}" HorizontalAlignment="Center" Classes="primary" AutomationProperties.Name="选择上传图片" />
+    </StackPanel>
+  </DataTemplate>
+  <DataTemplate x:Key="One.Upload.FileTemplate" x:DataType="one:Upload">
+    <StackPanel Spacing="12">
+      <Border Background="{DynamicResource One.Subtle}" CornerRadius="6" Height="170" ClipToBounds="True">
+        <Grid>
+          <Image Name="PART_Preview" Source="{Binding PreviewImage}" Stretch="Uniform" />
+          <PathIcon IsVisible="{Binding !HasPreview}" Width="44" Height="44" Foreground="{DynamicResource One.Muted}" Data="M5,2 L14,2 L20,8 L20,22 L4,22 L4,2 Z M6,4 L6,20 L18,20 L18,9 L13,9 L13,4 Z M15,5 L15,7 L17,7 Z M8,12 L16,12 L16,14 L8,14 Z M8,16 L14,16 L14,18 L8,18 Z" />
+          <one:LoadingIndicator IsVisible="{Binding IsPreviewLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+      </Border>
+      <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+        <TextBlock Text="{Binding SelectedFile.Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="1" Text="{Binding SelectedFile.SizeText}" Foreground="{DynamicResource One.Muted}" VerticalAlignment="Center" />
+      </Grid>
+    </StackPanel>
+  </DataTemplate>
+  <DataTemplate x:Key="One.Upload.ActionsTemplate" x:DataType="one:Upload">
+    <WrapPanel>
+      <Button Name="PART_Replace" Content="{Binding ReplaceText}" Command="{Binding SelectCommand}" Margin="0,0,8,8" />
+      <Button Name="PART_Remove" Content="{Binding RemoveText}" Command="{Binding RemoveCommand}" Classes="ghost" Margin="0,0,8,8" />
+      <Button Name="PART_Upload" Content="{Binding UploadText}" Command="{Binding RequestUploadCommand}" Classes="primary" Margin="0,0,0,8" />
+    </WrapPanel>
+  </DataTemplate>
+  <ControlTheme x:Key="{x:Type one:Upload}" TargetType="one:Upload">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+    <Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="16" /><Setter Property="FontSize" Value="14" />
+    <Setter Property="MinWidth" Value="240" /><Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="EmptyTemplate" Value="{StaticResource One.Upload.EmptyTemplate}" />
+    <Setter Property="FileTemplate" Value="{StaticResource One.Upload.FileTemplate}" />
+    <Setter Property="ActionsTemplate" Value="{StaticResource One.Upload.ActionsTemplate}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+          <StackPanel Spacing="12">
+            <ContentPresenter Name="PART_Empty" Content="{Binding $parent[one:Upload]}" ContentTemplate="{TemplateBinding EmptyTemplate}" />
+            <ContentPresenter Name="PART_File" Content="{Binding $parent[one:Upload]}" ContentTemplate="{TemplateBinding FileTemplate}" IsVisible="False" />
+            <ProgressBar Name="PART_Progress" Minimum="0" Maximum="100" Value="{TemplateBinding Progress}" IsVisible="False" MinWidth="0" HorizontalAlignment="Stretch" />
+            <TextBlock Text="{TemplateBinding StatusText}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+            <TextBlock Name="PART_Error" Text="{TemplateBinding ErrorMessage}" Foreground="{DynamicResource One.Danger}" TextWrapping="Wrap" IsVisible="False" />
+            <ContentPresenter Name="PART_Actions" Content="{Binding $parent[one:Upload]}" ContentTemplate="{TemplateBinding ActionsTemplate}" IsVisible="False" />
+          </StackPanel>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:has-file /template/ ContentPresenter#PART_Empty"><Setter Property="IsVisible" Value="False" /></Style>
+    <Style Selector="^:has-file /template/ ContentPresenter#PART_File"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:has-file /template/ ContentPresenter#PART_Actions"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:error /template/ TextBlock#PART_Error"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:error /template/ Border#PART_Surface"><Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" /></Style>
+    <Style Selector="^:busy /template/ ProgressBar#PART_Progress"><Setter Property="IsVisible" Value="True" /></Style>
+    <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
+    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="12" /></Style>
+    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="20" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

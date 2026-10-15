@@ -8,6 +8,10 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 
 | 文档 | 控件 / 能力 |
 | --- | --- |
+| [ColorPicker / ColorView 颜色选择器](color-picker.md) | 官方颜色控件的 TheOne 外观、色谱、调色板、RGB/HSV、透明度与 Hex 输入 |
+| [WorkflowEditor 流程编辑器](workflow-editor.md) | 图模型契约、模板、业务配置、上游数据引用和 JSON 保存加载 |
+| [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |
+| [Upload 上传](upload.md) | 单文件选择、图片预览、替换／删除及宿主上传命令 |
 | [IconButton 与按钮层次](icon-button.md) | 属性图标、Geometry／PathIcon／Material 模板、主次操作与语义状态 |
 | [分裂按钮](split-button.md) | SplitButton、ToggleSplitButton、主操作、菜单、键盘和虚拟回收 |
 | [文本展示](text-display.md) | TextBlock、Label、SelectableTextBlock、选择复制和字段关联 |
@@ -16,7 +20,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [列表、树、标签与表格](collections.md) | ItemsControl、ListBox、TreeView、TabControl、TabStrip、Card 标签、DataGrid、回收与远距离定位 |
 | [DataGrid 扩展](datagrid-extensions.md) | 自动实体属性筛选、多列组合、右侧冻结、底部数值统计 |
 | [DataGrid 绑定与排序](datagrid-binding.md) | 类型推断、注册元数据、编译编辑、排序按钮和虚拟化 |
-| [DataGrid 树视图原型](datagrid-tree.md) | 第一阶段本地树、展开折叠、原生编辑与选择状态 |
+| [DataGrid 树视图原型](datagrid-tree.md) | 本地树、同级排序、祖先保留筛选、树统计与原生编辑 |
 | [加载控件](loading.md) | LoadingIndicator、按钮加载和 LoadingContainer |
 | [菜单与布局](layout.md) | Menu、ContextMenu、MenuFlyout、Flyout、FlyoutPresenter、Expander、SplitView、GridSplitter、ScrollViewer、ScrollBar、Separator |
 | [轮播与刷新](collection-content.md) | Carousel、RefreshContainer、RefreshVisualizer |
@@ -29,6 +33,8 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
 | [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
+| [ReportDesign 报表设计器](report-design.md) | 自由拖放、固定页眉页脚、接口／图片地址、MVVM JSON 保存与 PDF |
+| [ReportPreview 报表预览](report-preview.md) | JSON 只读报表、接口数据与图片、分页浏览、PDF 导出及桌面打印 |
 | [RelationGraph 树形关系图](relation-graph.md) | 单根树、横纵布局、默认 / 自定义模型、ChildrenSource 编译绑定、SelectItem 选择与空值布局 |
 | [Pagination 分页](pagination.md) | 标准／紧凑布局、每页条数、跳页与边界状态 |
 | [FlowStep 与 FlowNode](flow-step.md) | 横向／纵向流程、三种状态、默认与自定义内容模板 |

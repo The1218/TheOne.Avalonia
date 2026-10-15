@@ -31,6 +31,19 @@ internal static class DataGridTreePreview
             var label = $"DataGrid/tree/{theme.Key}/{size}";
             check(grid.Columns.OfType<DataGridBoundColumn>().All(column => column.Binding is CompiledBinding), label + ": XAML infers original model bindings from the generic tree view");
             check(model.View.Count == 2 && ReferenceEquals(grid.CollectionView, model.View), label + ": native grid consumes collapsed tree without another view wrapper");
+            TextBlock Label(TreePrototypeNode node) => grid.Columns[0].GetCellContent(Rows(grid).Single(row => ReferenceEquals(row.DataContext, node)))
+                .GetVisualDescendants().OfType<TextBlock>().Single(block => block.Text == node.Name);
+            double X(Control control) => control.TranslatePoint(default, grid)!.Value.X;
+            check(Math.Abs(X(Expander(grid, model.Root)) - X(Expander(grid, model.Other))) < 0.5
+                && Math.Abs(X(Label(model.Root)) - X(Label(model.Other))) < 0.5
+                && Label(model.Root).TextAlignment == global::Avalonia.Media.TextAlignment.Left,
+                label + ": different length root labels share left aligned arrow and text origins");
+            if (output is not null)
+            {
+                Directory.CreateDirectory(output);
+                using var wide = new RenderTargetBitmap(new PixelSize(760, 440)); wide.Render(window);
+                wide.Save(Path.Combine(output, $"datagrid-tree-{theme.Key}-{size}-wide.png"), PngBitmapEncoderOptions.Default);
+            }
             Click(Expander(grid, model.Root));
             check(model.View.Count == 4, label + ": pointer expands only immediate children");
             Click(Expander(grid, model.Branch));
@@ -38,12 +51,16 @@ internal static class DataGridTreePreview
             var leafRow = Rows(grid).Single(row => ReferenceEquals(row.DataContext, model.Leaf));
             var text = grid.Columns[0].GetCellContent(leafRow).GetVisualDescendants().OfType<TextBlock>().First(block => block.Text == model.Leaf.Name);
             check(text.TranslatePoint(default, grid)!.Value.X > 50 && text.Bounds.Height > 0, label + ": nested tree content is indented and arranged");
+            check(Math.Abs(X(text) - X(Label(model.Root)) - 2 * ((TheOne.Avalonia.Controls.DataGridTreeTextColumn)grid.Columns[0]).Indent) < 0.5,
+                label + ": nested label origin advances by exactly one indent per level");
 
             grid.SelectedItem = model.Leaf; grid.CurrentColumn = grid.Columns[0];
             Flush();
             check(!grid.IsReadOnly && !grid.Columns[0].IsReadOnly && !((System.Collections.IList)model.View).IsReadOnly,
                 label + ": protected structural projection still allows native model editing");
             check(grid.BeginEdit(), label + ": tree text column enters native editing"); Flush();
+            check(Editor(grid).TextAlignment == global::Avalonia.Media.TextAlignment.Left,
+                label + ": native editor preserves the left aligned tree text");
             Editor(grid).Text = "已编辑组件"; Flush();
             check(grid.CommitEdit(DataGridEditingUnit.Row, true) && model.Leaf.Name == "已编辑组件" && model.Leaf.CommitCount > 0,
                 label + ": compiled native TextBox commits through IEditableObject"); Flush();
@@ -137,11 +154,13 @@ internal static class DataGridTreePreview
     {
         using var model = new DataGridTreeFixtureModel();
         var view = model.View;
-        check(!view.CanSort && !view.CanFilter && !view.CanGroup && !view.CanAddNew && !view.CanRemove && !view.CanChangePage, "DataGrid/tree: prototype explicitly disables unsupported view operations");
+        check(view.CanSort && view.CanFilter && !view.CanGroup && !view.CanAddNew && !view.CanRemove && !view.CanChangePage, "DataGrid/tree: tree queries are enabled while structural view operations stay disabled");
         bool Rejected(Action action) { try { action(); return false; } catch (NotSupportedException) { return true; } }
-        check(Rejected(() => view.SortDescriptions.Add(DataGridSortDescription.FromPath(nameof(TreePrototypeNode.Name)))) && view.SortDescriptions.Count == 0,
-            "DataGrid/tree: unsupported sort descriptions are rejected before mutation");
-        check(Rejected(() => view.Filter = _ => true) && Rejected(() => view.PageSize = 2), "DataGrid/tree: filtering and paging cannot flatten or split the tree");
+        view.SortDescriptions.Add(DataGridSortDescription.FromPath(nameof(TreePrototypeNode.Name)));
+        check(view.SortDescriptions.Count == 1 && view.Count == 2, "DataGrid/tree: sibling sorting retains collapsed root rows");
+        view.SortDescriptions.Clear();
+        view.Filter = _ => true; view.Filter = null!;
+        check(Rejected(() => view.PageSize = 2), "DataGrid/tree: paging cannot split the tree");
         var notifications = new List<System.Collections.Specialized.NotifyCollectionChangedEventArgs>();
         view.CollectionChanged += (_, args) => notifications.Add(args);
         view.TrySetExpanded(model.Root, true); view.TrySetExpanded(model.Branch, true);

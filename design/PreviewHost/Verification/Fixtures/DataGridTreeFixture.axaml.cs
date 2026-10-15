@@ -14,7 +14,7 @@ public partial class DataGridTreeFixture : UserControl
     public DataGridTreeFixture() { DataContext = Model; global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this); }
 }
 
-public sealed class DataGridTreeFixtureModel : IDisposable
+public sealed class DataGridTreeFixtureModel : IDisposable, INotifyPropertyChanged
 {
     public TreePrototypeNode Root { get; } = new("研发项目");
     public TreePrototypeNode Branch { get; } = new("客户端");
@@ -22,9 +22,24 @@ public sealed class DataGridTreeFixtureModel : IDisposable
     public TreePrototypeNode Other { get; } = new("库存明细 · 1,000 项");
     public ObservableCollection<TreePrototypeNode> Roots { get; }
     public DataGridTreeCollectionView<TreePrototypeNode> View { get; }
+    public DataGridSummaryScope[] SummaryScopes { get; } = Enum.GetValues<DataGridSummaryScope>();
+    private DataGridSummaryScope _summaryScope;
+    private bool _summaryLeavesOnly;
+    public DataGridSummaryScope SummaryScope
+    {
+        get => _summaryScope;
+        set { _summaryScope = value; PropertyChanged?.Invoke(this, new(nameof(SummaryScope))); }
+    }
+    public bool SummaryLeavesOnly
+    {
+        get => _summaryLeavesOnly;
+        set { _summaryLeavesOnly = value; PropertyChanged?.Invoke(this, new(nameof(SummaryLeavesOnly))); }
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
     public DataGridTreeFixtureModel()
     {
         DataGridAot.PreserveRowType<TreePrototypeNode>();
+        DataGridAot.PreserveRowType<TreePrototypeDetails>();
         Branch.Children.Add(Leaf); Branch.Children.Add(new("交互验证"));
         Root.Children.Add(Branch); Root.Children.Add(new("服务端"));
         for (int index = 0; index < 1000; index++) Other.Children.Add(new($"设备 {index + 1:0000}") { Quantity = index + 1 });
@@ -40,6 +55,12 @@ public sealed class TreePrototypeNode : INotifyPropertyChanged, IEditableObject
     private int _quantity;
     private ObservableCollection<TreePrototypeNode> _children = [];
     private (string Name, int Quantity)? _backup;
+    private TreePrototypeDetails _details = new();
+    public TreePrototypeDetails Details
+    {
+        get => _details;
+        set { _details = value; PropertyChanged?.Invoke(this, new(nameof(Details))); }
+    }
     public TreePrototypeNode() { }
     public TreePrototypeNode(string name) => _name = name;
     public string Name
@@ -73,4 +94,15 @@ public sealed class TreePrototypeNode : INotifyPropertyChanged, IEditableObject
         if (_backup is { } backup) { Name = backup.Name; Quantity = backup.Quantity; _backup = null; }
         CancelCount++;
     }
+}
+
+public sealed class TreePrototypeDetails : INotifyPropertyChanged
+{
+    private int _score;
+    public int Score
+    {
+        get => _score;
+        set { _score = value; PropertyChanged?.Invoke(this, new(nameof(Score))); }
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
 }

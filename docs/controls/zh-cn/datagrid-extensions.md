@@ -48,7 +48,7 @@ column.Bind(DataGridColumnOptions.FilterConditionProperty,
 
 ### 数据视图与生命周期边界
 
-第一版支持官方 DataGridCollectionView（普通 IEnumerable 的 ItemsSource 也会被官方 DataGrid 自动包装为该视图）。它提供公开编辑状态与 Filter 通知；不反射调用内部 editable 接口。自定义 IDataGridCollectionView 暂不接入列筛选，入口保持不可用并说明限制。
+支持官方 DataGridCollectionView 及其派生的 [DataGridTreeCollectionView](datagrid-tree.md)（普通 IEnumerable 的 ItemsSource 也会被官方 DataGrid 自动包装为普通视图）。它提供公开编辑状态与 Filter 通知；不反射调用内部 editable 接口。自定义 IDataGridCollectionView 暂不接入列筛选，入口保持不可用并说明限制。
 
 同一 CollectionView 同时只允许一个表格管理活动列条件；需要独立筛选的多个表格应为同一模型集合各建一个 CollectionView。行为保留后续业务 Filter 的替换，卸载时只撤销自身安装的谓词；编辑尚未结束时延迟恢复，恢复回调不保留已卸载 UI。
 
@@ -122,7 +122,8 @@ PreviewHost 的 DataGrid 页可调节“右侧冻结”数量，默认 0。专�
 | 配置 | 类型／默认值 | 行为 |
 | --- | --- | --- |
 | DataGridFeatures.ShowSummaryRow | bool／false | 独立统计行；关闭停止计算与订阅，保留列配置 |
-| SummaryScope | DataGridSummaryScope／FilteredItems | 业务与列筛选后的本地源模型、分页前；SourceItems 忽略筛选 |
+| SummaryScope | DataGridSummaryScope／FilteredItems | 业务与列筛选后的本地源模型、分页前；SourceItems 忽略筛选，VisibleItems 使用当前视图枚举；树视图 FilteredItems 只计直接命中节点 |
+| SummaryLeavesOnly | bool／false | 树视图仅统计原始叶节点，避免父级与子项重复累加；普通行均视为叶节点 |
 | SummaryLabel | string／合计 | 原生行头槽可见时显示，不覆盖第一列结果 |
 | SummaryEmptyText | string／— | 无有效数值时的 Sum／Average／Min／Max 文字；Count 为 0 |
 | DataGridColumnOptions.SummaryEnabled | bool／false | 显式启用该列，限数值或可空数值属性 |

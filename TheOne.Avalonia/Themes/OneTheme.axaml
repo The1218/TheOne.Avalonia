@@ -51,6 +51,8 @@
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/ImagePreview.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/FlowStep.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Pagination.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/WorkflowEditor.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Upload.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/RelationGraph.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/GanttChart.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Avatar.axaml" />
@@ -85,5 +87,7 @@
       <ColorPaletteResources x:Key="Dark" Accent="#63D9DE" RegionColor="#0F0F0F" />
     </FluentTheme.Palettes>
   </FluentTheme>
+  <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
   <StyleInclude Source="avares://TheOne.Avalonia/Themes/Styles.axaml" />
+  <StyleInclude Source="avares://TheOne.Avalonia/Themes/Controls/ColorPicker.axaml" />
 </Styles>

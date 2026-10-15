@@ -5,7 +5,7 @@
     xmlns:local="using:TheOne.DesignPreview"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="PageScroll">
-        <Border Padding="28">
+        <Border Padding="28" Name="PageFrame">
             <ContentControl HorizontalContentAlignment="Stretch" Name="PageHost" />
         </Border>
     </ScrollViewer>

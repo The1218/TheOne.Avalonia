@@ -17,7 +17,7 @@ NuGet 包版本与主库共用根目录 [PackageVersions.props](../../PackageVer
 - DataGrid.RightFrozen.cs：右区属性、有效冻结成员、三区几何与中央滚入／滚动定位。
 - DataGridColumns.cs、DataGridColumn.cs、DataGrid.cs：冻结状态、列增删／隐藏／重排、滚动条视口。
 - DataGridCellsPresenter／DataGridColumnHeadersPresenter：原生测量、排列与双侧裁剪。
-- Collections/DataGridTreeCollectionView.cs：第一阶段本地树可见投影，原模型身份、单项增删、展开状态及源订阅；继承原生编辑与当前位置。DataGridCollectionView 的能力及 PageSize 属性开放重写，普通视图默认行为不变；树原型拒绝排序、筛选、分组、分页及视图增删。使用边界见 [树视图原型](../../docs/controls/zh-cn/datagrid-tree.md)。
+- Collections/DataGridTreeCollectionView.cs／Query.cs：本地树投影、稳定同级排序、祖先保留筛选、临时展开、嵌套排序通知、查询失败回滚与源模型枚举。基类开放 Filter／SortDescriptions／DeferRefresh 重写及 IsSourcePreprocessed 钩子，原生编辑不对树投影二次筛选／全局排序，普通视图保留默认路径。仍拒绝分组、分页及视图增删。契约见 [树视图原型](../../docs/controls/zh-cn/datagrid-tree.md)。
 - Collections/DataGridCollectionView.Generic.cs：泛型视图继承原生集合视图，保留排序／筛选／分组并提供编译列类型推断；基类开放继承。
 - DataGridColumn.cs：修饰键排序入口、三态 CycleSort、方向／优先级读取及列排序能力变更通知。
 - DataGridColumnHeader.cs：冻结区内拖动、原始抓取位置、指针捕获及 Esc／越界释放／卸载清理；表头 Presenter 使用测量尺寸排列拖影和插入提示。三态排序复用提交与 Sorting 事件，Shift 保留其他列优先级。

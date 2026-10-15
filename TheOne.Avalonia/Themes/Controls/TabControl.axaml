@@ -7,6 +7,100 @@
 
     <Thickness x:Key="One.TabControlTopPlacementItemMargin">0 0 0 2</Thickness>
 
+    <ControlTemplate x:Key="One.CardTabControlTemplate" TargetType="TabControl">
+        <Border Background="{DynamicResource One.CardTabStrip}" CornerRadius="{TemplateBinding CornerRadius}">
+            <DockPanel>
+                <Border
+                    CornerRadius="{TemplateBinding CornerRadius,
+                                                   Converter={StaticResource TopCornerRadiusFilterConverter}}"
+                    DockPanel.Dock="{TemplateBinding TabStripPlacement}"
+                    Margin="0,0,0,-1"
+                    Name="CardHeaderBackground"
+                    ZIndex="1">
+                    <Panel>
+                        <Border
+                            Background="{DynamicResource One.CardTabStrip}"
+                            CornerRadius="{TemplateBinding CornerRadius,
+                                                           Converter={StaticResource TopCornerRadiusFilterConverter}}"
+                            Margin="0,0,0,1"
+                            Name="HeaderSurface" />
+                        <one:CardTabStrip x:Name="CardStrip">
+                            <Button
+                                AutomationProperties.Name="向后滚动标签"
+                                Classes="one-card-arrow"
+                                DockPanel.Dock="Right"
+                                Focusable="False"
+                                IsEnabled="{Binding #CardStrip.CanScrollForward}"
+                                IsVisible="{Binding #CardStrip.HasOverflow}"
+                                Margin="0,0,0,1"
+                                MinHeight="0"
+                                MinWidth="0"
+                                Name="PART_HeaderForward"
+                                Theme="{StaticResource One.CardTabHeaderButton}"
+                                ToolTip.Tip="向后滚动标签"
+                                Width="28">
+                                <PathIcon
+                                    Data="M 3,0 L 9,6 L 3,12 L 2,11 L 7,6 L 2,1 Z"
+                                    Height="12"
+                                    Name="ForwardGlyph"
+                                    Width="12" />
+                            </Button>
+                            <Button
+                                AutomationProperties.Name="向前滚动标签"
+                                Classes="one-card-arrow"
+                                DockPanel.Dock="Right"
+                                Focusable="False"
+                                IsEnabled="{Binding #CardStrip.CanScrollBackward}"
+                                IsVisible="{Binding #CardStrip.CanScrollBackward}"
+                                Margin="0,0,0,1"
+                                MinHeight="0"
+                                MinWidth="0"
+                                Name="PART_HeaderBack"
+                                Theme="{StaticResource One.CardTabHeaderButton}"
+                                ToolTip.Tip="向前滚动标签"
+                                Width="28">
+                                <PathIcon
+                                    Data="M 8,1 L 3,6 L 8,11 L 7,12 L 1,6 L 7,0 Z"
+                                    Height="12"
+                                    Name="BackGlyph"
+                                    Width="12" />
+                            </Button>
+                            <ScrollViewer
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                Name="PART_HeaderScroll"
+                                Padding="8,0,0,0"
+                                VerticalScrollBarVisibility="Disabled">
+                                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
+                            </ScrollViewer>
+                        </one:CardTabStrip>
+                    </Panel>
+                </Border>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Name="CardContentFrame">
+                    <Panel ClipToBounds="True">
+                        <ContentPresenter
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            IsVisible="False"
+                            Margin="{TemplateBinding Padding}"
+                            Name="PART_SelectedContentHost2"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <ContentPresenter
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            Name="PART_SelectedContentHost"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Panel>
+                </Border>
+            </DockPanel>
+        </Border>
+    </ControlTemplate>
+
     <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
@@ -68,6 +162,68 @@
         <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
             <Setter Property="Margin" Value="{DynamicResource One.TabControlTopPlacementItemMargin}" />
         </Style>
+        <!-- Keep card appearance inside the native theme. A class-level Theme setter
+             is removed on logical detach and can orphan the native presenter cache. -->
+        <Style Selector="^.card">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.CardTabBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.TabContent}" />
+            <Setter Property="Padding" Value="16" />
+            <Setter Property="ItemContainerTheme" Value="{StaticResource One.CardTabItem}" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter>
+            <Setter Property="Template" Value="{StaticResource One.CardTabControlTemplate}" />
+            <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
+                <Setter Property="Margin" Value="0" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#CardHeaderBackground">
+                <Setter Property="Margin" Value="0,-1,0,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Bottom] /template/ Button#PART_HeaderBack, ^[TabStripPlacement=Bottom] /template/ Button#PART_HeaderForward">
+                <Setter Property="Margin" Value="0,1,0,0" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ Border#CardHeaderBackground">
+                <Setter Property="Margin" Value="0,0,-1,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Right] /template/ Border#CardHeaderBackground">
+                <Setter Property="Margin" Value="-1,0,0,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource RightCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Bottom] /template/ Border#HeaderSurface">
+                <Setter Property="Margin" Value="0,1,0,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource BottomCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ Border#HeaderSurface">
+                <Setter Property="Margin" Value="0,0,1,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Right] /template/ Border#HeaderSurface">
+                <Setter Property="Margin" Value="1,0,0,0" />
+                <Setter Property="CornerRadius" Value="{TemplateBinding CornerRadius, Converter={StaticResource RightCornerRadiusFilterConverter}}" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ ScrollViewer#PART_HeaderScroll, ^[TabStripPlacement=Right] /template/ ScrollViewer#PART_HeaderScroll">
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="Padding" Value="0,8,0,0" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ ItemsPresenter#PART_ItemsPresenter &gt; VirtualizingStackPanel, ^[TabStripPlacement=Right] /template/ ItemsPresenter#PART_ItemsPresenter &gt; VirtualizingStackPanel">
+                <Setter Property="Orientation" Value="Vertical" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ Button#PART_HeaderBack, ^[TabStripPlacement=Left] /template/ Button#PART_HeaderForward, ^[TabStripPlacement=Right] /template/ Button#PART_HeaderBack, ^[TabStripPlacement=Right] /template/ Button#PART_HeaderForward">
+                <Setter Property="Width" Value="NaN" />
+                <Setter Property="Height" Value="28" />
+                <Setter Property="Margin" Value="1,0,1,0" />
+            </Style>
+            <Style Selector="^[TabStripPlacement=Left] /template/ PathIcon#BackGlyph, ^[TabStripPlacement=Left] /template/ PathIcon#ForwardGlyph, ^[TabStripPlacement=Right] /template/ PathIcon#BackGlyph, ^[TabStripPlacement=Right] /template/ PathIcon#ForwardGlyph">
+                <Setter Property="RenderTransform" Value="rotate(90deg)" />
+                <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            </Style>
+        </Style>
     </ControlTheme>
     <ControlTheme
         BasedOn="{StaticResource {x:Type TabControl}}"
@@ -83,101 +239,7 @@
                 <VirtualizingStackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </Setter>
-        <Setter Property="Template">
-            <ControlTemplate>
-                <Border Background="{DynamicResource One.CardTabStrip}" CornerRadius="{TemplateBinding CornerRadius}">
-                    <DockPanel>
-                        <Border
-                            CornerRadius="{TemplateBinding CornerRadius,
-                                                           Converter={StaticResource TopCornerRadiusFilterConverter}}"
-                            DockPanel.Dock="{TemplateBinding TabStripPlacement}"
-                            Margin="0,0,0,-1"
-                            Name="CardHeaderBackground"
-                            ZIndex="1">
-                            <Panel>
-                                <Border
-                                    Background="{DynamicResource One.CardTabStrip}"
-                                    CornerRadius="{TemplateBinding CornerRadius,
-                                                                   Converter={StaticResource TopCornerRadiusFilterConverter}}"
-                                    Margin="0,0,0,1"
-                                    Name="HeaderSurface" />
-                                <one:CardTabStrip x:Name="CardStrip">
-                                    <Button
-                                        AutomationProperties.Name="向后滚动标签"
-                                        Classes="one-card-arrow"
-                                        DockPanel.Dock="Right"
-                                        Focusable="False"
-                                        IsEnabled="{Binding #CardStrip.CanScrollForward}"
-                                        IsVisible="{Binding #CardStrip.HasOverflow}"
-                                        Margin="0,0,0,1"
-                                        MinHeight="0"
-                                        MinWidth="0"
-                                        Name="PART_HeaderForward"
-                                        Theme="{StaticResource One.CardTabHeaderButton}"
-                                        ToolTip.Tip="向后滚动标签"
-                                        Width="28">
-                                        <PathIcon
-                                            Data="M 3,0 L 9,6 L 3,12 L 2,11 L 7,6 L 2,1 Z"
-                                            Height="12"
-                                            Name="ForwardGlyph"
-                                            Width="12" />
-                                    </Button>
-                                    <Button
-                                        AutomationProperties.Name="向前滚动标签"
-                                        Classes="one-card-arrow"
-                                        DockPanel.Dock="Right"
-                                        Focusable="False"
-                                        IsEnabled="{Binding #CardStrip.CanScrollBackward}"
-                                        IsVisible="{Binding #CardStrip.CanScrollBackward}"
-                                        Margin="0,0,0,1"
-                                        MinHeight="0"
-                                        MinWidth="0"
-                                        Name="PART_HeaderBack"
-                                        Theme="{StaticResource One.CardTabHeaderButton}"
-                                        ToolTip.Tip="向前滚动标签"
-                                        Width="28">
-                                        <PathIcon
-                                            Data="M 8,1 L 3,6 L 8,11 L 7,12 L 1,6 L 7,0 Z"
-                                            Height="12"
-                                            Name="BackGlyph"
-                                            Width="12" />
-                                    </Button>
-                                    <ScrollViewer
-                                        Focusable="False"
-                                        HorizontalScrollBarVisibility="Hidden"
-                                        Name="PART_HeaderScroll"
-                                        Padding="8,0,0,0"
-                                        VerticalScrollBarVisibility="Disabled">
-                                        <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
-                                    </ScrollViewer>
-                                </one:CardTabStrip>
-                            </Panel>
-                        </Border>
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            ClipToBounds="True"
-                            CornerRadius="{TemplateBinding CornerRadius}"
-                            Name="CardContentFrame">
-                            <Panel ClipToBounds="True">
-                                <ContentPresenter
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    IsVisible="False"
-                                    Margin="{TemplateBinding Padding}"
-                                    Name="PART_SelectedContentHost2"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                <ContentPresenter
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    Margin="{TemplateBinding Padding}"
-                                    Name="PART_SelectedContentHost"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Panel>
-                        </Border>
-                    </DockPanel>
-                </Border>
-            </ControlTemplate>
-        </Setter>
+        <Setter Property="Template" Value="{StaticResource One.CardTabControlTemplate}" />
         <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
             <Setter Property="Margin" Value="0" />
         </Style>

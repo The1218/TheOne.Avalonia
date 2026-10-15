@@ -4,7 +4,7 @@ using global::Avalonia.Interactivity;
 namespace TheOne.Avalonia.Controls;
 
 public enum DataGridSummaryKind { Sum, Average, Min, Max, Count }
-public enum DataGridSummaryScope { FilteredItems, SourceItems }
+public enum DataGridSummaryScope { FilteredItems, SourceItems, VisibleItems }
 public sealed record DataGridSummaryResult(object? Value, long ValidCount, string? Error = null);
 public sealed class DataGridSummaryUpdatedEventArgs : RoutedEventArgs
 {

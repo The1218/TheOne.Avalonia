@@ -101,6 +101,8 @@ The path addresses root 0's 9,001st child. Only path-required containers are cre
 
 Card supports closing and reordering. Headers have backgrounds only; content retains a border. Overflow shows scroll arrows; headings and selected content are created on demand. `TabStripPlacement` supports Top / Bottom / Left / Right.
 
+The `card` appearance stays inside the native TabControl theme instead of replacing `Theme` from a class selector. Cached pages can leave and rejoin the visual/logical tree with headers, selection and native virtualization intact; hosts do not need to recreate the tab control.
+
 After dragging beyond 6 px, the heading follows the pointer and neighboring headings ease aside. Release commits one reorder and preserves selection. Edge autoscrolling and recycling-safe previews are supported. Esc, capture loss, disabling reordering / the control, external collection changes, or unloading cancels and cleans up without delayed commits.
 
 Displacement / placement uses `One.Motion.Fast` (120 ms) and CubicEaseOut. `Motion.Enabled=False` or zero duration applies immediately. Set `TabFeatures.CanReorder=True` for ordinary / pills tabs. Native virtual panels remain; only the dragged heading has a preview.
@@ -172,7 +174,9 @@ PreviewHost's large-data page shows ten-thousand-item lists, roots / children, s
 <Grid RowDefinitions="Auto,*">
   <TabStrip Name="SectionTabs" Classes="normal"
             ItemsSource="{Binding Sections}"
-            SelectedItem="{Binding ActiveSection, Mode=TwoWay}">
+            SelectedItem="{Binding ActiveSection, Mode=TwoWay}"
+            one:TabFeatures.CanClose="True"
+            one:TabFeatures.CloseCommand="{Binding CloseSectionCommand}">
     <TabStrip.ItemTemplate>
       <DataTemplate x:DataType="vm:Section">
         <TextBlock Text="{Binding Title}" />
@@ -186,6 +190,20 @@ PreviewHost's large-data page shows ten-thousand-item lists, roots / children, s
 Use native `Avalonia.Controls.Primitives.TabStrip` and `TabStripItem`. Default heights are 30 / 36 / 44 and fonts 12 / 14 / 16. One item remains selected by default; clicks, arrows, Home / End, and access keys are supported. `AutoScrollToSelectedItem=False` disables automatic selected-item reveal.
 
 Headings use horizontal virtualization / recycling by default; `ScrollIntoView(index)` locates explicitly. Bound outer width and bind headings to data instead of prebuilding many controls or using WrapPanel. Bind model `IsEnabled` in `ItemContainerTheme` for individual disabled states. TabStrip supplies navigation only; the host creates page content through bindings / templates.
+
+Closing is opt-in: `TabFeatures.CanClose` defaults to False. With it enabled, native `TabStripItem` headers show a close button; Ctrl / macOS ⌘ + W closes the selected item while the strip has keyboard focus. Set `TabFeatures.IsClosable=False` on a container to pin it. Closing uses the cancellable `TabFeatures.TabClosingEvent`, with the data item in `Item` and a `Cancel` flag, just like TabControl. `CloseSectionCommand` receives that item, respects `CanExecute`, and owns the collection update; omit it to remove from a mutable IList automatically. Readonly/fixed-size sources require a host command. Closing selects an adjacent item and retains native virtualization/recycling.
+
+```csharp
+SectionTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
+{
+    if (args.Item is Section section && section.HasUnsavedChanges)
+        args.Cancel = true;
+});
+if (SectionTabs.ContainerFromIndex(SectionTabs.SelectedIndex) is TabStripItem item)
+    TabFeatures.Close(item);
+```
+
+`Section.HasUnsavedChanges` is an application property. For asynchronous confirmation, cancel first and let the host confirm before removing the item. `CanClose`, `CloseCommand` and `Close(TabStripItem)` add standalone closing without changing existing TabControl APIs; `CanReorder` and `Move` remain TabControl-only.
 
 The standalone tab-navigation preview has 10,000 actual items, container counts, target / last navigation, and enabled-state changes.
 

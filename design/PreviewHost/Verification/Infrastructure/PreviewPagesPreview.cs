@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
+using Avalonia.Input;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
 using ReactiveUI;
@@ -13,6 +14,127 @@ namespace TheOne.DesignPreview;
 
 internal static class PreviewPagesPreview
 {
+    public static void VerifyReportDesignPage(Action<bool, string> check, string? output = null)
+    {
+        var descriptor = PreviewPageCatalog.Find(318);
+        check(descriptor.Title == "ReportDesign" && descriptor.Group == "扩展控件" && PreviewPageCatalog.Pages.Count(p => p.Id == 318) == 1,
+            "PreviewHost/ReportDesign: unique extension navigation entry");
+        var window = new MainWindow { Width = 1920, Height = 1200, WindowDecorations = WindowDecorations.None };
+        Motion.SetEnabled(window, false); window.Show();
+        try
+        {
+            window.NavigateToCategory(318); ControlPreview.Flush();
+            var gallery = window.FindControl<ControlGallery>("Gallery")!;
+            var designer = (ReportDesign)gallery.GetControlView(318);
+            var paperScroll = designer.FindControl<ScrollViewer>("PageScroll")!;
+            var hostScroll = gallery.FindControl<ScrollViewer>("PageScroll")!;
+            check(gallery.CurrentView == designer && window.Model.CurrentPage == descriptor && designer.Document!.Elements.Count > 0 && designer.DataSource is not null,
+                "PreviewHost/ReportDesign: navigation opens the editable sales report sample");
+            check(hostScroll.VerticalScrollBarVisibility == ScrollBarVisibility.Disabled && gallery.FindControl<Border>("PageFrame")!.Padding == new Thickness(0)
+                && designer.Bounds.Height > 600 && paperScroll.Bounds.Height > 300 && designer.Bounds.Height <= gallery.Bounds.Height,
+                "PreviewHost/ReportDesign: the designer fills a bounded viewport and owns paper scrolling");
+            designer.Document!.Title = "保留报表编辑";
+            var preview = designer.FindControl<TabItem>("PreviewTab")!;
+            var point = preview.TranslatePoint(new Point(preview.Bounds.Width / 2, preview.Bounds.Height / 2), window)!.Value;
+            window.MouseDown(point, MouseButton.Left); window.MouseUp(point, MouseButton.Left); ControlPreview.Flush();
+            check(designer.IsPreview && designer.Layout!.Pages.Count > 1,
+                "PreviewHost/ReportDesign: the embedded native preview tab opens paginated details");
+            window.NavigateToCategory(1); ControlPreview.Flush();
+            check(hostScroll.VerticalScrollBarVisibility == ScrollBarVisibility.Auto && gallery.FindControl<Border>("PageFrame")!.Padding == new Thickness(28),
+                "PreviewHost/ReportDesign: leaving the designer restores the standard gallery layout");
+            window.Model.Search = "ReportDesign"; ControlPreview.Flush();
+            window.Model.SelectedSearchResult = window.Model.SearchResults.Single(p => p.Title == "ReportDesign"); ControlPreview.Flush();
+            check(gallery.CurrentView == designer && designer.Document.Title == "保留报表编辑" && designer.IsPreview && window.Model.Search == "",
+                "PreviewHost/ReportDesign: search returns to the cached document and preview state");
+            designer.ShowDesign(); ControlPreview.Flush();
+            if (output is not null)
+            {
+                Directory.CreateDirectory(output);
+                using var frame = window.CaptureRenderedFrame();
+                frame?.Save(Path.Combine(output, "reportdesign-previewhost.png"), PngBitmapEncoderOptions.Default);
+            }
+            window.NavigateToCategory(319); ControlPreview.Flush();
+            var reader = (ReportPreview)gallery.GetControlView(319);
+            check(PreviewPageCatalog.Find(319).Title == "ReportPreview" && reader.Layout?.Pages.SelectMany(p => p.Rows).Count() == 96,
+                "PreviewHost/ReportPreview: the independent viewer entry loads document JSON and its supplied sample source");
+            check(reader.Bounds.Height > 600 && reader.Bounds.Height <= gallery.Bounds.Height && hostScroll.VerticalScrollBarVisibility == ScrollBarVisibility.Disabled,
+                "PreviewHost/ReportPreview: the independent viewer owns a bounded page viewport");
+            if (output is not null)
+            {
+                using var frame = window.CaptureRenderedFrame();
+                frame?.Save(Path.Combine(output, "reportpreview-previewhost.png"), PngBitmapEncoderOptions.Default);
+            }
+        }
+        finally { window.Close(); ControlPreview.Flush(); }
+    }
+
+    public static void VerifyWorkflowPage(Action<bool, string> check)
+    {
+        var descriptor = PreviewPageCatalog.Find(315);
+        check(descriptor.Title == "WorkflowEditor" && descriptor.Group == "扩展控件" && PreviewPageCatalog.Pages.Count(p => p.Id == 315) == 1,
+            "PreviewHost/WorkflowEditor: unique extension navigation entry");
+        var window = new MainWindow { Width = 1600, Height = 1100, WindowDecorations = WindowDecorations.None };
+        Motion.SetEnabled(window, false); window.Show();
+        try
+        {
+            window.NavigateToCategory(315); ControlPreview.Flush();
+            var gallery = window.FindControl<ControlGallery>("Gallery")!; var demo = (WorkflowEditorDemoView)gallery.GetControlView(315);
+            check(gallery.CurrentView == demo && demo.Model.Document.Nodes.Count(n => !n.IsAnnotation) == 7,
+                "PreviewHost/WorkflowEditor: navigation arranges the complete seven-node design sample");
+            var editor = demo.FindControl<WorkflowEditor>("Editor")!; var height = editor.Bounds.Height;
+            window.Height = 850; ControlPreview.Flush();
+            check(editor.Bounds.Height < height && editor.Bounds.Height > 500 && gallery.FindControl<ScrollViewer>("PageScroll")!.VerticalScrollBarVisibility == ScrollBarVisibility.Disabled,
+                "PreviewHost/WorkflowEditor: gallery supplies a finite viewport and editor fills it on resize");
+            var node = demo.Model.Document.Nodes.Single(n => n.Id == "approval_01"); node.Title = "保留配置";
+            window.NavigateToCategory(1); window.Model.Search = "WorkflowEditor"; ControlPreview.Flush();
+            window.Model.SelectedSearchResult = window.Model.SearchResults.Single(p => p.Title == "WorkflowEditor"); ControlPreview.Flush();
+            check(gallery.CurrentView == demo && demo.Model.Document.Nodes.Single(n => n.Id == "approval_01").Title == "保留配置",
+                "PreviewHost/WorkflowEditor: searching restores the cached view and consumer data");
+        }
+        finally { window.Close(); ControlPreview.Flush(); }
+    }
+    public static void VerifyDataGridTreePage(Action<bool, string> check, string? output = null)
+    {
+        var descriptor = PreviewPageCatalog.Find(313);
+        check(descriptor.Title == "DataGridTree" && descriptor.Group == "数据展示"
+            && PreviewPageCatalog.Pages.Count(page => page.Id == 313) == 1,
+            "PreviewHost/DataGridTree: tree grid has its own data display navigation entry");
+        var window = new MainWindow { Width = 1280, Height = 1000, WindowDecorations = WindowDecorations.None };
+        Motion.SetEnabled(window, false); window.Show();
+        DataGridTreeFixture? demo = null;
+        try
+        {
+            window.NavigateToCategory(313); ControlPreview.Flush();
+            var gallery = window.FindControl<ControlGallery>("Gallery")!;
+            demo = (DataGridTreeFixture)gallery.GetControlView(313);
+            check(gallery.CurrentView == demo && window.Model.CurrentPage == descriptor
+                && demo.Grid.Bounds.Height > 0 && ReferenceEquals(demo.Grid.CollectionView, demo.Model.View),
+                "PreviewHost/DataGridTree: normal navigation arranges the existing tree fixture and native grid");
+            check(DataGridFeatures.GetShowColumnFilters(demo.Grid) && DataGridFeatures.GetShowSummaryRow(demo.Grid),
+                "PreviewHost/DataGridTree: page exposes phase two filtering and summaries");
+            demo.Model.View.TrySetExpanded(demo.Model.Root, true);
+            demo.Grid.SelectedItem = demo.Model.Branch; ControlPreview.Flush();
+            window.NavigateToCategory(10); window.Model.Search = "DataGridTree"; ControlPreview.Flush();
+            window.Model.SelectedSearchResult = window.Model.SearchResults.Single(page => page.Title == "DataGridTree");
+            ControlPreview.Flush();
+            check(gallery.CurrentView == demo && demo.Model.View.Count == 4
+                && ReferenceEquals(demo.Grid.SelectedItem, demo.Model.Branch) && window.Model.Search == "",
+                "PreviewHost/DataGridTree: search returns to the cached page with expansion and selection intact");
+            if (output is not null)
+            {
+                Directory.CreateDirectory(output);
+                using var frame = window.CaptureRenderedFrame();
+                frame?.Save(Path.Combine(output, "datagrid-tree-page.png"), PngBitmapEncoderOptions.Default);
+            }
+        }
+        finally
+        {
+            window.Close();
+            if (demo is not null) { demo.Grid.ItemsSource = null; demo.Model.Dispose(); }
+            ControlPreview.Flush();
+        }
+    }
+
     public static void VerifyPaginationPage(Action<bool, string> check)
     {
         var descriptor = PreviewPageCatalog.Find(312);

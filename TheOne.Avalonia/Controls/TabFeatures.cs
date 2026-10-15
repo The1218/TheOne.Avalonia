@@ -2,6 +2,7 @@ using System.Collections;
 using System.Windows.Input;
 using global::Avalonia;
 using global::Avalonia.Controls;
+using global::Avalonia.Controls.Primitives;
 using global::Avalonia.Input;
 using global::Avalonia.Interactivity;
 using global::Avalonia.VisualTree;
@@ -14,13 +15,13 @@ public sealed class TabClosingEventArgs(object item) : CancelRoutedEventArgs(Tab
     public object Item { get; } = item;
 }
 
-/// <summary>Optional close and reorder behaviour for standard TabControl/TabItem.</summary>
+/// <summary>Optional closing for native tabs and strips; reordering remains specific to TabControl.</summary>
 public sealed partial class TabFeatures : AvaloniaObject
 {
-    public static readonly AttachedProperty<bool> CanCloseProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("CanClose");
+    public static readonly AttachedProperty<bool> CanCloseProperty = AvaloniaProperty.RegisterAttached<TabFeatures, SelectingItemsControl, bool>("CanClose");
     public static readonly AttachedProperty<bool> CanReorderProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("CanReorder");
-    public static readonly AttachedProperty<bool> IsClosableProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabItem, bool>("IsClosable", true);
-    public static readonly AttachedProperty<bool> ShowCloseButtonProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabItem, bool>("ShowCloseButton");
+    public static readonly AttachedProperty<bool> IsClosableProperty = AvaloniaProperty.RegisterAttached<TabFeatures, Control, bool>("IsClosable", true);
+    public static readonly AttachedProperty<bool> ShowCloseButtonProperty = AvaloniaProperty.RegisterAttached<TabFeatures, Control, bool>("ShowCloseButton");
     public static bool GetShowCloseButton(TabItem item) => item.GetValue(ShowCloseButtonProperty);
     public static void SetShowCloseButton(TabItem item, bool value) => item.SetValue(ShowCloseButtonProperty, value);
     private static void UpdateCloseVisibility(TabItem item, TabControl? owner = null)
@@ -29,14 +30,15 @@ public sealed partial class TabFeatures : AvaloniaObject
         item.SetValue(ShowCloseButtonProperty, owner != null && GetCanClose(owner) && GetIsClosable(item));
         QueueCommandRefresh();
     }
-    public static readonly AttachedProperty<ICommand?> CloseCommandProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, ICommand?>("CloseCommand");
-    public static readonly RoutedEvent<TabClosingEventArgs> TabClosingEvent = RoutedEvent.Register<TabControl, TabClosingEventArgs>("TabClosing", RoutingStrategies.Bubble);
+    public static readonly AttachedProperty<ICommand?> CloseCommandProperty = AvaloniaProperty.RegisterAttached<TabFeatures, SelectingItemsControl, ICommand?>("CloseCommand");
+    public static readonly RoutedEvent<TabClosingEventArgs> TabClosingEvent = RoutedEvent.Register<Control, TabClosingEventArgs>("TabClosing", RoutingStrategies.Bubble);
     public static ICommand CloseTabCommand { get; } = new CloseTab();
     private static readonly AttachedProperty<WeakReference<TabControl>?> OwnerProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabItem, WeakReference<TabControl>?>("Owner");
     private static readonly AttachedProperty<DragState?> StateProperty = AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, DragState?>("State");
 
     static TabFeatures()
     {
+        InitializeStripClosing();
         CanReorderProperty.Changed.AddClassHandler<TabControl>((tabs, _) => { Attach(tabs); if (!GetCanReorder(tabs)) tabs.GetValue(StateProperty)?.Clear(); });
         CanCloseProperty.Changed.AddClassHandler<TabControl>((tabs, _) =>
         {
@@ -135,7 +137,7 @@ public sealed partial class TabFeatures : AvaloniaObject
     {
         public event EventHandler? CanExecuteChanged;
         public void Refresh() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        public bool CanExecute(object? parameter) => parameter is TabItem item && CanClose(item);
-        public void Execute(object? parameter) { if (parameter is TabItem item) Close(item); }
+        public bool CanExecute(object? parameter) => parameter switch { TabItem item => CanClose(item), TabStripItem item => CanClose(item), _ => false };
+        public void Execute(object? parameter) { if (parameter is TabItem item) Close(item); else if (parameter is TabStripItem stripItem) Close(stripItem); }
     }
 }

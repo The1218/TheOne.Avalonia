@@ -1,0 +1,753 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.WorkflowEditorDemoView"
+    x:CompileBindings="True"
+    x:DataType="local:WorkflowEditorDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:icons="using:Material.Icons.Avalonia"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:styling="using:TheOne.Avalonia.Styling"
+    xmlns:w="using:TheOne.Avalonia.Workflow"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <DataTemplate x:DataType="w:WorkflowNodeDefinition" x:Key="WorkflowPaletteTemplate">
+            <Grid ColumnDefinitions="34,*">
+                <ContentControl Content="{Binding Content}">
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate x:DataType="local:WorkflowBusinessSummary">
+                            <Border
+                                Background="{Binding IconBackground}"
+                                CornerRadius="5"
+                                Height="32"
+                                Width="32">
+                                <icons:MaterialIcon
+                                    Foreground="{Binding Accent}"
+                                    Height="25"
+                                    Kind="{Binding Icon}"
+                                    Width="25" />
+                            </Border>
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="8,0,0,0"
+                    Spacing="2"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="12"
+                        FontWeight="SemiBold"
+                        Text="{Binding Title}" />
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="{Binding Description}" />
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:DataType="w:WorkflowNode" x:Key="DesignedNodeTemplate">
+            <ContentControl Content="{Binding Content}">
+                <ContentControl.ContentTemplate>
+                    <DataTemplate x:DataType="local:WorkflowBusinessSummary">
+                        <Grid>
+                            <StackPanel IsVisible="{Binding IsNotNote}" Spacing="8">
+                                <Grid ColumnDefinitions="32,*">
+                                    <Border
+                                        Background="{Binding IconBackground}"
+                                        CornerRadius="5"
+                                        Height="30"
+                                        Width="30">
+                                        <icons:MaterialIcon
+                                            Foreground="{Binding Accent}"
+                                            Height="23"
+                                            Kind="{Binding Icon}"
+                                            Width="23" />
+                                    </Border>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="8,0,8,0"
+                                        Spacing="3"
+                                        VerticalAlignment="Center">
+                                        <TextBlock
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding Node.Title}"
+                                            TextTrimming="CharacterEllipsis" />
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{DynamicResource One.Muted}"
+                                            Text="{Binding Node.Description}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <StackPanel
+                                        IsVisible="{Binding !HasWarning}"
+                                        Orientation="Horizontal"
+                                        Spacing="4">
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{Binding StateBrush}"
+                                            Text="{Binding StateIcon}" />
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{Binding StateBrush}"
+                                            Text="{Binding Node.StateText}" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        FontSize="10"
+                                        Foreground="#E04455"
+                                        IsVisible="{Binding HasWarning}"
+                                        Text="{Binding Warning}" />
+                                    <TextBlock
+                                        FontSize="10"
+                                        Foreground="{Binding StateBrush}"
+                                        Grid.Column="1"
+                                        IsVisible="{Binding HasWarning}"
+                                        Text="{Binding Node.StateText}" />
+                                </Grid>
+                            </StackPanel>
+                            <Border
+                                Background="#FFF4C7"
+                                IsVisible="{Binding IsNote}"
+                                MinHeight="74"
+                                Padding="14">
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="#625324"
+                                    Text="{Binding Node.Description}"
+                                    TextWrapping="Wrap" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ContentControl.ContentTemplate>
+            </ContentControl>
+        </DataTemplate>
+        <DataTemplate x:DataType="w:WorkflowNode" x:Key="CustomNodeTemplate">
+            <StackPanel Spacing="4">
+                <TextBlock
+                    FontSize="11"
+                    Foreground="{DynamicResource One.Accent}"
+                    Text="{Binding TypeId}" />
+                <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
+                <TextBlock FontSize="11" Text="{Binding StateText}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:DataType="local:WorkflowEditorDemoViewModel" x:Key="BusinessFields">
+            <ItemsControl ItemsSource="{Binding Fields}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="14" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:WorkflowFieldEditor">
+                        <StackPanel Spacing="6">
+                            <TextBlock
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Text="{Binding Title}" />
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="{DynamicResource One.Muted}"
+                                Text="{Binding TypeHint}" />
+                            <ComboBox
+                                HorizontalAlignment="Stretch"
+                                ItemsSource="{Binding Options}"
+                                SelectedItem="{Binding SelectedOption, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="w:WorkflowReferenceOption">
+                                        <TextBlock
+                                            FontSize="11"
+                                            Text="{Binding Title}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBox
+                                FontSize="12"
+                                IsVisible="{Binding IsLiteral}"
+                                PlaceholderText="输入固定值"
+                                Text="{Binding Literal, Mode=TwoWay}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid Margin="4" RowDefinitions="*,Auto" RowSpacing="6">
+        <Grid.Styles>
+            <Style Selector="Button.workflow-header">
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="MinHeight" Value="30" />
+                <Setter Property="Padding" Value="9,4" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style Selector="TextBox">
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="MinHeight" Value="30" />
+                <Setter Property="Padding" Value="8,4" />
+            </Style>
+            <Style Selector="ComboBox">
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="MinHeight" Value="30" />
+            </Style>
+            <Style Selector="NumericUpDown">
+                <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            </Style>
+        </Grid.Styles>
+        <one:WorkflowEditor
+            Document="{Binding Document, Mode=TwoWay}"
+            FitPadding="32,92,32,32"
+            Name="Editor"
+            NodeDefinitionTemplate="{StaticResource WorkflowPaletteTemplate}"
+            NodeDefinitions="{Binding NodeDefinitions}"
+            NodeTemplate="{StaticResource DesignedNodeTemplate}"
+            SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
+            SaveCommand="{Binding SaveCommand}"
+            ShowRuntimePreview="True">
+          <one:WorkflowEditor.HeaderTemplate><DataTemplate x:DataType="one:WorkflowEditor">
+            <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}"><ContentControl.ContentTemplate><DataTemplate x:DataType="local:WorkflowEditorDemoViewModel">
+        <Border
+            Background="{DynamicResource One.Surface}"
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="1"
+            CornerRadius="6"
+            Padding="14,6"
+            TextElement.FontSize="12"
+            styling:ControlSizing.Size="Small">
+            <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    VerticalAlignment="Center">
+                    <icons:MaterialIcon
+                        Foreground="{DynamicResource One.Accent}"
+                        Height="24"
+                        Kind="VectorCombine"
+                        Width="24" />
+                    <TextBlock
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Text="TheOne" />
+                    <Border
+                        Background="{DynamicResource One.Line}"
+                        Height="20"
+                        Margin="7,0"
+                        Width="1" />
+                    <TextBlock
+                        FontSize="12"
+                        FontWeight="SemiBold"
+                        Text="WorkflowEditor" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="20,0"
+                    Name="HeaderBreadcrumb"
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="工作流 / 采购审批" />
+                    <TextBlock
+                        FontSize="12"
+                        FontWeight="SemiBold"
+                        Text="{Binding Document.Title}" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="2"
+                    Name="HeaderSaveState"
+                    Orientation="Horizontal"
+                    Spacing="8"
+                    VerticalAlignment="Center">
+                    <Border
+                        BorderBrush="{DynamicResource One.Line}"
+                        BorderThickness="1"
+                        CornerRadius="3"
+                        Padding="5,2">
+                        <TextBlock FontSize="10" Text="草稿" />
+                    </Border>
+                    <TextBlock
+                        FontSize="11"
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="{Binding SaveStateText}" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="3"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <Button Classes="workflow-header" Command="{Binding $parent[one:WorkflowEditor].ValidateCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <icons:MaterialIcon Kind="FileCheckOutline" Width="15" />
+                            <TextBlock Text="校验流程" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Classes="workflow-header"
+                        Command="{Binding ExportCommand}">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <icons:MaterialIcon Kind="TrayArrowDown" Width="15" />
+                            <TextBlock Text="导出 JSON" />
+                        </StackPanel>
+                    </Button>
+                    <Button
+                        Classes="primary"
+                        Name="SaveWorkflowButton"
+                        Command="{Binding $parent[one:WorkflowEditor].SaveCommand}"
+                        CommandParameter="{Binding Document}"
+                        Content="保存"
+                        FontSize="12"
+                        MinHeight="30"
+                        Padding="14,4" />
+                    <Button
+                        Classes="workflow-header"
+                        Command="{Binding PreviewStateCommand}"
+                        ToolTip.Tip="宿主提供的运行状态演示">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <icons:MaterialIcon Kind="Play" Width="16" />
+                            <TextBlock Text="试运行" />
+                        </StackPanel>
+                    </Button>
+                    <TextBlock
+                        FontSize="10"
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="（宿主能力）"
+                        VerticalAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </Border>
+            </DataTemplate></ContentControl.ContentTemplate></ContentControl>
+          </DataTemplate></one:WorkflowEditor.HeaderTemplate>
+            <one:WorkflowEditor.PropertyTemplate>
+                <DataTemplate x:DataType="w:WorkflowNode">
+                    <DockPanel IsEnabled="{Binding !$parent[one:WorkflowEditor].IsReadOnly}">
+                        <Grid
+                            ColumnDefinitions="*,*"
+                            DockPanel.Dock="Bottom"
+                            Margin="0,8,0,0">
+                            <Button
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="CopyNode"
+                                Content="复制节点"
+                                FontSize="12"
+                                Foreground="{DynamicResource One.Accent}"
+                                Height="28"
+                                MinHeight="0"
+                                Padding="4" />
+                            <Button
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding $parent[one:WorkflowEditor].DeleteCommand}"
+                                Content="删除节点"
+                                FontSize="12"
+                                Foreground="#DE4756"
+                                Grid.Column="1"
+                                Height="28"
+                                MinHeight="0"
+                                Padding="4" />
+                        </Grid>
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                            <StackPanel Spacing="12">
+                                <Grid ColumnDefinitions="36,*">
+                                    <ContentControl Content="{Binding Content}">
+                                        <ContentControl.ContentTemplate>
+                                            <DataTemplate x:DataType="local:WorkflowBusinessSummary">
+                                                <Border
+                                                    Background="{Binding IconBackground}"
+                                                    CornerRadius="6"
+                                                    Height="36"
+                                                    Width="34">
+                                                    <icons:MaterialIcon
+                                                        Foreground="{Binding Accent}"
+                                                        Height="27"
+                                                        Kind="{Binding Icon}"
+                                                        Width="27" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ContentControl.ContentTemplate>
+                                    </ContentControl>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="10,0,0,0"
+                                        Spacing="4">
+                                        <TextBlock
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding Title}" />
+                                        <TextBlock
+                                            FontSize="10"
+                                            Foreground="{DynamicResource One.Muted}"
+                                            Text="{Binding Id, StringFormat='ID: {0}'}" />
+                                    </StackPanel>
+                                </Grid>
+                                <TabStrip Name="InspectorTabs" SelectedIndex="0">
+                                    <TabStripItem Content="基础" Name="BasicTab" />
+                                    <TabStripItem Content="规则" Name="RulesTab" />
+                                    <TabStripItem Content="外观" Name="AppearanceTab" />
+                                </TabStrip>
+                                <Panel>
+                                    <StackPanel
+                                        IsVisible="{Binding #BasicTab.IsSelected}"
+                                        Margin="0,5,0,0"
+                                        Name="BasicPanel"
+                                        Spacing="8">
+                                        <Grid ColumnDefinitions="80,*">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Text="节点名称 *"
+                                                VerticalAlignment="Center" />
+                                            <TextBox
+                                                Grid.Column="1"
+                                                Height="30"
+                                                LostFocus="ApplyNodeTitle"
+                                                MinHeight="0"
+                                                Name="NodeTitleInput"
+                                                Padding="8,4"
+                                                Text="{Binding $parent[local:WorkflowEditorDemoView].Model.NodeTitle, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Grid ColumnDefinitions="80,*">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Text="节点类型"
+                                                VerticalAlignment="Center" />
+                                            <TextBox
+                                                Grid.Column="1"
+                                                Height="30"
+                                                IsReadOnly="True"
+                                                MinHeight="0"
+                                                Padding="8,4"
+                                                Text="{Binding $parent[local:WorkflowEditorDemoView].Model.SelectedNodeType}" />
+                                        </Grid>
+                                        <StackPanel IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsApproval}" Spacing="8">
+                                            <Grid ColumnDefinitions="80,*">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="审批人 *"
+                                                    VerticalAlignment="Center" />
+                                                <ComboBox
+                                                    Grid.Column="1"
+                                                    Height="30"
+                                                    HorizontalAlignment="Stretch"
+                                                    ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.Roles}"
+                                                    MinHeight="0"
+                                                    Padding="6,0"
+                                                    PlaceholderText="请选择审批人"
+                                                    SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.SelectedRole, Mode=TwoWay}">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate x:DataType="local:WorkflowRole">
+                                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                                <icons:MaterialIcon Kind="AccountCircle" Width="18" />
+                                                                <TextBlock Text="{Binding Title}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="80,*">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="审批方式"
+                                                    VerticalAlignment="Center" />
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                                    <RadioButton
+                                                        Content="任一人通过"
+                                                        FontSize="12"
+                                                        GroupName="ApprovalMode"
+                                                        IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AnyApproval, Mode=TwoWay}"
+                                                        MinHeight="22"
+                                                        Padding="0"
+                                                        Width="90" />
+                                                    <RadioButton
+                                                        Content="全部通过"
+                                                        FontSize="12"
+                                                        GroupName="ApprovalMode"
+                                                        IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AllApproval, Mode=TwoWay}"
+                                                        MinHeight="22"
+                                                        Padding="0"
+                                                        Width="78" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid ColumnDefinitions="80,*,78">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="超时设置"
+                                                    VerticalAlignment="Center" />
+                                                <NumericUpDown
+                                                    FontSize="12"
+                                                    Grid.Column="1"
+                                                    Height="30"
+                                                    Margin="0,0,6,0"
+                                                    Maximum="999"
+                                                    MinHeight="0"
+                                                    Minimum="1"
+                                                    Padding="8,4"
+                                                    ShowButtonSpinner="False"
+                                                    Value="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutHours, Mode=TwoWay}" />
+                                                <ComboBox
+                                                    Grid.Column="2"
+                                                    Height="30"
+                                                    HorizontalAlignment="Stretch"
+                                                    ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnits}"
+                                                    MinHeight="0"
+                                                    Padding="4,0"
+                                                    SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnit, Mode=TwoWay}" />
+                                            </Grid>
+                                            <Grid ColumnDefinitions="80,*">
+                                                <TextBlock
+                                                    FontSize="12"
+                                                    Text="允许转交"
+                                                    VerticalAlignment="Center" />
+                                                <ToggleSwitch
+                                                    Grid.Column="1"
+                                                    Height="24"
+                                                    IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AllowDelegate, Mode=TwoWay}"
+                                                    MinHeight="0"
+                                                    OffContent=""
+                                                    OnContent="" />
+                                            </Grid>
+                                            <Grid ColumnDefinitions="80,*">
+                                                <TextBlock FontSize="12" Text="说明" />
+                                                <TextBox
+                                                    AcceptsReturn="True"
+                                                    Grid.Column="1"
+                                                    Height="56"
+                                                    Text="{Binding $parent[local:WorkflowEditorDemoView].Model.Description, Mode=TwoWay}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </StackPanel>
+                                        <ContentControl
+                                            Content="{Binding $parent[local:WorkflowEditorDemoView].Model}"
+                                            ContentTemplate="{StaticResource BusinessFields}"
+                                            IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsOtherNode}" />
+                                        <Border
+                                            Background="{DynamicResource One.Line}"
+                                            Height="1"
+                                            Margin="0,4" />
+                                        <TextBlock
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Text="连接端口" />
+                                        <ItemsControl ItemsSource="{Binding Ports}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Spacing="10" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="w:WorkflowPort">
+                                                    <Grid ColumnDefinitions="40,*,Auto">
+                                                        <TextBlock FontSize="11" Text="{Binding Title}" />
+                                                        <Border
+                                                            Background="{DynamicResource One.Subtle}"
+                                                            CornerRadius="3"
+                                                            Grid.Column="1"
+                                                            HorizontalAlignment="Left"
+                                                            Padding="4,2">
+                                                            <TextBlock FontSize="10" Text="{Binding Id}" />
+                                                        </Border>
+                                                        <TextBlock
+                                                            FontSize="10"
+                                                            Foreground="{DynamicResource One.Muted}"
+                                                            Grid.Column="2"
+                                                            Text="{Binding MaxConnections, StringFormat='最多 {0} 条'}" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                        <Grid ColumnDefinitions="80,*" IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsApproval}">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Text="驳回处理"
+                                                VerticalAlignment="Center" />
+                                            <ComboBox
+                                                Grid.Column="1"
+                                                Height="30"
+                                                HorizontalAlignment="Stretch"
+                                                ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.RejectionModes}"
+                                                MinHeight="0"
+                                                Padding="6,0"
+                                                SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.RejectionMode, Mode=TwoWay}" />
+                                        </Grid>
+                                        <Border
+                                            Background="{DynamicResource One.Subtle}"
+                                            CornerRadius="4"
+                                            Padding="8">
+                                            <StackPanel Spacing="4">
+                                                <TextBlock FontSize="11" Text="数据输出" />
+                                                <TextBlock
+                                                    FontFamily="monospace"
+                                                    FontSize="10"
+                                                    Text="{Binding $parent[local:WorkflowEditorDemoView].Model.OutputSummary}"
+                                                    TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel
+                                        IsVisible="{Binding #RulesTab.IsSelected}"
+                                        Margin="0,12,0,0"
+                                        Name="RulesPanel"
+                                        Spacing="12">
+                                        <TextBlock
+                                            FontSize="12"
+                                            FontWeight="SemiBold"
+                                            Text="业务字段与数据关联" />
+                                        <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}" ContentTemplate="{StaticResource BusinessFields}" />
+                                        <Button Command="{Binding $parent[local:WorkflowEditorDemoView].Model.ResolveDataCommand}" Content="解析数据关联" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        IsVisible="{Binding #AppearanceTab.IsSelected}"
+                                        Margin="0,12,0,0"
+                                        Name="AppearancePanel"
+                                        Spacing="12">
+                                        <TextBlock FontSize="12" Text="默认模板 / 自定义模板" />
+                                        <CheckBox
+                                            Content="使用简洁业务模板"
+                                            FontSize="12"
+                                            IsCheckedChanged="TemplateChanged"
+                                            Name="CustomTemplateToggle" />
+                                        <TextBlock
+                                            FontSize="11"
+                                            Foreground="{DynamicResource One.Muted}"
+                                            Text="节点外观由 NodeTemplate 与 ContentTemplate 定制，端口和选择行为由控件保留。"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Panel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </DockPanel>
+                </DataTemplate>
+            </one:WorkflowEditor.PropertyTemplate>
+        </one:WorkflowEditor>
+        <Expander
+            FontSize="12"
+            Header="消费端接入示例 · 数据配置、关联及保存加载"
+            Name="ConsumerExamples"
+            Grid.Row="1"
+            MaxHeight="420"
+            IsExpanded="{Binding ShowConsumerExamples, Mode=TwoWay}"
+            styling:ControlSizing.Size="Small">
+          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="12" Spacing="12">
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="{Binding Message}"
+                    TextWrapping="Wrap" />
+                <WrapPanel>
+                    <Button
+                        Command="{Binding ResetCommand}"
+                        Content="恢复设计图示例"
+                        Margin="0,0,8,8" />
+                    <Button
+                        Command="{Binding ExportCommand}"
+                        Content="生成 JSON"
+                        Margin="0,0,8,8" />
+                    <Button
+                        Command="{Binding LoadCommand}"
+                        Content="从 JSON 加载"
+                        Margin="0,0,8,8" />
+                    <Button
+                        Command="{Binding OpenCommand}"
+                        Content="打开文件"
+                        Margin="0,0,8,8" />
+                    <Button
+                        Command="{Binding ResolveDataCommand}"
+                        Content="解析数据关联"
+                        Margin="0,0,8,8" />
+                </WrapPanel>
+                <WrapPanel>
+                    <CheckBox
+                        Content="只读"
+                        IsChecked="{Binding #Editor.IsReadOnly, Mode=TwoWay}"
+                        Margin="0,0,12,0" />
+                    <CheckBox
+                        Content="节点库"
+                        IsChecked="{Binding #Editor.ShowNodeLibrary, Mode=TwoWay}"
+                        Margin="0,0,12,0" />
+                    <CheckBox Content="属性面板" IsChecked="{Binding #Editor.ShowProperties, Mode=TwoWay}" />
+                </WrapPanel>
+                <TextBox
+                    AcceptsReturn="True"
+                    FontFamily="monospace"
+                    Height="220"
+                    Name="JsonInput"
+                    Text="{Binding Json, Mode=TwoWay}"
+                    TextWrapping="NoWrap" />
+                <TextBlock FontWeight="SemiBold" Text="默认模板 · 独立只读视图绑定同一文档" />
+                <one:WorkflowEditor
+                    Document="{Binding Document}"
+                    Height="300"
+                    IsReadOnly="True"
+                    Name="DefaultEditor"
+                    ShowNodeLibrary="False"
+                    styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}" />
+                <TextBlock FontWeight="SemiBold" Text="数据关联示例 · 宿主提供申请数据、审批配置和通知收件人" />
+                <WrapPanel>
+                    <Button
+                        Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ResolveDataCommand}"
+                        Content="解析上游数据"
+                        Margin="0,0,8,0" />
+                    <Button
+                        Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ExportCommand}"
+                        Content="保存关联 JSON"
+                        Margin="0,0,8,0" />
+                    <Button Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.LoadCommand}" Content="加载关联 JSON" />
+                </WrapPanel>
+                <TextBlock
+                    FontSize="12"
+                    Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Message}"
+                    TextWrapping="Wrap" />
+                <one:WorkflowEditor
+                    Document="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Document}"
+                    Height="340"
+                    Name="AssociationEditor"
+                    SelectedNode="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.SelectedNode, Mode=TwoWay}"
+                    ShowNodeLibrary="False"
+                    styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}">
+                    <one:WorkflowEditor.ContentTemplate>
+                        <DataTemplate x:DataType="local:WorkflowBusinessSummary">
+                            <Border
+                                BorderBrush="{DynamicResource One.Line}"
+                                BorderThickness="0,1,0,0"
+                                Padding="0,6,0,0">
+                                <StackPanel Spacing="4">
+                                    <TextBlock
+                                        FontSize="11"
+                                        Foreground="{DynamicResource One.Accent}"
+                                        Text="{Binding Caption}" />
+                                    <TextBlock
+                                        FontSize="10"
+                                        Text="{Binding Detail}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </one:WorkflowEditor.ContentTemplate>
+                    <one:WorkflowEditor.PropertyTemplate>
+                        <DataTemplate x:DataType="w:WorkflowNode">
+                            <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel}" ContentTemplate="{StaticResource BusinessFields}" />
+                        </DataTemplate>
+                    </one:WorkflowEditor.PropertyTemplate>
+                </one:WorkflowEditor>
+                <TextBox
+                    AcceptsReturn="True"
+                    FontFamily="monospace"
+                    Height="160"
+                    Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Json, Mode=TwoWay}" />
+            </StackPanel>
+          </ScrollViewer>
+        </Expander>
+    </Grid>
+</UserControl>

@@ -19,7 +19,8 @@ internal sealed partial class DataGridFilterState
         _baseFilter = _view.Filter;
         if (_view is INotifyPropertyChanged notifying) notifying.PropertyChanged += ViewChanged;
         _view.CollectionChanged += ViewCollectionChanged;
-        _source = _view.SourceCollection as INotifyCollectionChanged;
+        if (_view is IDataGridTreeQueryView tree) tree.LoadedItemsChanged += LoadedItemsChanged;
+        _source = _view is IDataGridTreeQueryView ? null : _view.SourceCollection as INotifyCollectionChanged;
         if (_source is not null) _source.CollectionChanged += SourceChanged;
     }
     private void ViewChanged(object? sender, PropertyChangedEventArgs args)
@@ -32,6 +33,7 @@ internal sealed partial class DataGridFilterState
     {
         if (!_writingView && !_busy && _installed is not null) BindRows();
     }
+    private void LoadedItemsChanged(object? sender, EventArgs args) { BindRows(); QueueRebuild(); }
     private void SourceChanged(object? sender, NotifyCollectionChangedEventArgs args) { BindRows(); QueueRebuild(); }
     private void RowChanged(object? sender, PropertyChangedEventArgs args) => QueueRebuild();
     private void BindRows()
@@ -41,7 +43,7 @@ internal sealed partial class DataGridFilterState
         {
             var automatic = _applied.Where(pair => pair.Value is not null).Select(pair => DataGridAutoFields.Resolve(pair.Key)).OfType<DataGridAutoFields.AutomaticAccessor>().ToArray();
             void Observe(object item) { if (item is INotifyPropertyChanged notifying) current.Add(notifying); }
-            foreach (var item in _view.SourceCollection)
+            foreach (var item in _view is IDataGridTreeQueryView tree ? tree.LoadedItems : _view.SourceCollection)
             {
                 if (item is null) continue;
                 Observe(item);
@@ -87,6 +89,7 @@ internal sealed partial class DataGridFilterState
         var view = _view;
         if (view is null) return;
         view.CollectionChanged -= ViewCollectionChanged;
+        if (view is IDataGridTreeQueryView tree) tree.LoadedItemsChanged -= LoadedItemsChanged;
         if (view is INotifyPropertyChanged notify) notify.PropertyChanged -= ViewChanged;
         if (_installed is not null && ReferenceEquals(view.Filter, _installed))
         {

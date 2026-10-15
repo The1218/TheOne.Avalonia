@@ -12,7 +12,11 @@ using Avalonia.Threading;
 namespace Avalonia.Collections;
 
 /// <summary>Presentation state for an original model in a local tree.</summary>
-public readonly record struct DataGridTreeNodeState(int Depth, object? Parent, bool HasChildren, bool IsExpanded);
+public readonly record struct DataGridTreeNodeState(int Depth, object? Parent, bool HasChildren, bool IsExpanded)
+{
+    public bool IsForcedExpanded { get; init; }
+    public bool IsFilterMatch { get; init; }
+}
 
 /// <summary>A cancellable change to the visible tree. Item is null for a source refresh.</summary>
 public sealed class DataGridTreeChangingEventArgs(object? item, bool? expanded) : CancelEventArgs
@@ -30,9 +34,18 @@ public interface IDataGridTreeCollectionView
     bool TrySetExpanded(object item, bool expanded);
 }
 
-/// <summary>Stage-one local tree projection using native editing and currency management.
-/// Sorting, filtering, grouping, paging and view-based structural edits are not supported.</summary>
-public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnumerable<T>, IList, IDataGridTreeCollectionView, IDisposable where T : class
+/// <summary>Optional query/summary contract, separate from the existing tree presentation API.</summary>
+public interface IDataGridTreeQueryView : IDataGridTreeCollectionView
+{
+    event EventHandler? LoadedItemsChanged;
+    IEnumerable LoadedItems { get; }
+    bool IsFilterMatch(object item);
+    bool IsLeaf(object item);
+}
+
+/// <summary>Local tree projection with sibling sorting, ancestor-preserving filtering,
+/// native editing and currency. Grouping, paging and view-based structural edits are unsupported.</summary>
+public sealed partial class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnumerable<T>, IList, IDataGridTreeQueryView, IDisposable where T : class
 {
     private sealed record Node(T Item, T? Parent, int Depth, IEnumerable<T>? Source, T[] Children);
     private readonly IEnumerable<T> _roots;
@@ -55,8 +68,7 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
         _children = childrenSelector ?? throw new ArgumentNullException(nameof(childrenSelector));
         _visible = visible;
         DataGridRowMetadata.RegisterCollection<DataGridTreeCollectionView<T>, T>();
-        // Reject unsupported descriptions before they can reorder the projected tree.
-        SortDescriptions.Validate = _ => throw new NotSupportedException("Tree sorting is not available in the stage-one prototype.");
+        _ = SortDescriptions;
         GroupDescriptions.Validate = _ => throw new NotSupportedException("Tree grouping is not supported.");
         PropertyChanged += EditStateChanged;
         RefreshTree();
@@ -67,8 +79,9 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
     bool IList.IsReadOnly => false;
     public override bool CanAddNew => false;
     public override bool CanRemove => false;
-    public override bool CanSort => false;
-    public override bool CanFilter => false;
+    public override bool CanSort => true;
+    public override bool CanFilter => true;
+    protected override bool IsSourcePreprocessed => true;
     public override bool CanGroup => false;
     public override bool CanChangePage => false;
     public override int PageSize
@@ -79,12 +92,17 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
 
     public event EventHandler<DataGridTreeChangingEventArgs>? TreeChanging;
     public event EventHandler? TreeChanged;
+    public event EventHandler? LoadedItemsChanged;
+    public IEnumerable LoadedItems => _order.Select(node => node.Item);
+    public bool IsFilterMatch(object item) => _matches.Contains(item);
+    public bool IsLeaf(object item) => _nodes.TryGetValue(item, out var node) && node.Children.Length == 0;
 
     public bool TryGetNodeState(object item, out DataGridTreeNodeState state)
     {
         if (_nodes.TryGetValue(item, out var node))
         {
-            state = new(node.Depth, node.Parent, node.Children.Length > 0, _expanded.Contains(item));
+            state = new(node.Depth, node.Parent, node.Children.Any(child => _included.Contains(child)), _expanded.Contains(item) || _forcedExpanded.Contains(item))
+            { IsForcedExpanded = _forcedExpanded.Contains(item), IsFilterMatch = _matches.Contains(item) };
             return true;
         }
         state = default;
@@ -94,7 +112,8 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
     public bool TrySetExpanded(object item, bool expanded)
     {
         VerifyAccess();
-        if (_changing || !_nodes.TryGetValue(item, out var node) || (expanded && node.Children.Length == 0)) return false;
+        if (_changing || _queryDeferLevel > 0 || (!expanded && _forcedExpanded.Contains(item)) || !_nodes.TryGetValue(item, out var node) || (expanded && node.Children.Length == 0)) return false;
+        if (expanded && _forcedExpanded.Contains(item)) return true;
         if (_expanded.Contains(item) == expanded) return true;
         _changing = true;
         try
@@ -103,7 +122,8 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
             TreeChanging?.Invoke(this, args);
             if (args.Cancel || IsEditingItem || IsAddingNew) return false;
             if (expanded) _expanded.Add(item); else _expanded.Remove(item);
-            ApplyProjection();
+            try { PublishProjection(CreateProjection(_nodes, _order)); }
+            catch { if (expanded) _expanded.Remove(item); else _expanded.Add(item); throw; }
             TreeChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
@@ -115,7 +135,7 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
     public bool RefreshTree()
     {
         VerifyAccess();
-        if (_changing) { _pending = true; return false; }
+        if (_changing || _queryDeferLevel > 0) { _pending = true; return false; }
         _changing = true;
         bool published = false;
         try
@@ -141,25 +161,31 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
                 for (int index = children.Length - 1; index >= 0; index--)
                     stack.Push((children[index], entry.Item, entry.Depth + 1));
             }
+            var projection = CreateProjection(nodes, order);
+            bool loadedChanged = order.Count != _order.Count || order.Where((node, index) => index >= _order.Count ||
+                !ReferenceEquals(node.Item, _order[index].Item) || !ReferenceEquals(node.Parent, _order[index].Parent) || !ReferenceEquals(node.Source, _order[index].Source)).Any();
             _nodes = nodes; _order = order;
             _expanded.RemoveWhere(item => !nodes.ContainsKey(item));
             Reconnect(collections);
-            _pending = false;
-            ApplyProjection();
+            _pending = _queryPending = false;
+            PublishProjection(projection);
+            bool filterChanged = !ReferenceEquals(_appliedFilter, _treeFilter);
+            _appliedSorts = SortDescriptions.ToArray(); _appliedFilter = _treeFilter;
+            SetQueryError(null);
             published = true;
+            if (loadedChanged) LoadedItemsChanged?.Invoke(this, EventArgs.Empty);
             TreeChanged?.Invoke(this, EventArgs.Empty);
+            if (filterChanged) OnPropertyChanged(nameof(Filter));
             return true;
         }
         finally { _changing = false; if (published) QueuePending(); }
     }
 
-    private void ApplyProjection()
+    private void PublishProjection(Projection projection)
     {
-        var next = new List<T>();
-        var visible = new HashSet<object>(ReferenceEqualityComparer.Instance);
-        foreach (var node in _order)
-            if (node.Parent is null || (visible.Contains(node.Parent) && _expanded.Contains(node.Parent)))
-            { next.Add(node.Item); visible.Add(node.Item); }
+        _matches = projection.Matches; _included = projection.Included; _forcedExpanded = projection.ForcedExpanded;
+        ReconnectQueryObservers(projection.Observers);
+        var next = projection.Visible;
         int prefix = 0, suffix = 0;
         while (prefix < _visible.Count && prefix < next.Count && ReferenceEquals(_visible[prefix], next[prefix])) prefix++;
         while (suffix < _visible.Count - prefix && suffix < next.Count - prefix &&
@@ -185,17 +211,32 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
     private void SourceChanged(object? sender, NotifyCollectionChangedEventArgs args) => RefreshTree();
     private void ModelChanged(object? sender, PropertyChangedEventArgs args)
     {
-        if (sender is T item && _nodes.TryGetValue(item, out var node) && !ReferenceEquals(node.Source, _children(item))) RefreshTree();
+        if (sender is T item && _nodes.TryGetValue(item, out var node))
+        {
+            if (!ReferenceEquals(node.Source, _children(item))) RefreshTree();
+            else if (_treeFilter is not null || SortDescriptions.Count > 0) { _queryPending = true; QueuePending(); }
+        }
     }
     private void EditStateChanged(object? sender, PropertyChangedEventArgs args)
     {
         if (args.PropertyName is nameof(IsEditingItem) or nameof(IsAddingNew)) QueuePending();
+        else if (args.PropertyName == nameof(Culture)) { _queryPending = true; QueuePending(); }
     }
     private void QueuePending()
     {
-        if (!_pending || _queued || _disposed || IsEditingItem || IsAddingNew) return;
+        if ((!_pending && !_queryPending) || _queued || _disposed || _queryDeferLevel > 0 || IsEditingItem || IsAddingNew) return;
         _queued = true;
-        Dispatcher.UIThread.Post(() => { _queued = false; if (!_disposed && _pending) RefreshTree(); });
+        Dispatcher.UIThread.Post(() =>
+        {
+            _queued = false;
+            if (_disposed || IsEditingItem || IsAddingNew || _queryDeferLevel > 0) return;
+            try
+            {
+                if (_pending) RefreshTree();
+                else if (_queryPending) { _queryPending = false; ApplyQuery(); }
+            }
+            catch (Exception exception) { _pending = _queryPending = false; SetQueryError(exception.Message); }
+        });
     }
     private void VerifyAccess()
     {
@@ -212,11 +253,13 @@ public sealed class DataGridTreeCollectionView<T> : DataGridCollectionView, IEnu
     {
         Dispatcher.UIThread.VerifyAccess();
         if (_disposed) return;
-        if (IsEditingItem || IsAddingNew) throw new InvalidOperationException("Finish editing before disposing the tree view.");
+        if (_changing || _queryDeferLevel > 0 || IsEditingItem || IsAddingNew) throw new InvalidOperationException("Finish editing and query deferrals before disposing the tree view.");
         _disposed = true;
         PropertyChanged -= EditStateChanged;
         foreach (var source in _collections) source.CollectionChanged -= SourceChanged;
         foreach (var model in _models) model.PropertyChanged -= ModelChanged;
         _collections.Clear(); _models.Clear();
+        foreach (var observer in _queryObservers) observer.PropertyChanged -= QueryModelChanged;
+        _queryObservers.Clear();
     }
 }

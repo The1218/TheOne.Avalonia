@@ -91,7 +91,6 @@
         <Setter Property="one:Virtualization.Enabled" Value="True" />
     </Style>
     <Style Selector="TabControl.card">
-        <Setter Property="Theme" Value="{StaticResource One.CardTabControl}" />
         <Setter Property="one:TabFeatures.CanClose" Value="True" />
         <Setter Property="one:TabFeatures.CanReorder" Value="True" />
     </Style>

@@ -35,6 +35,7 @@ public sealed class DataGridFeatures : AvaloniaObject
     public static readonly RoutedEvent<DataGridFilterChangedEventArgs> FilterChangedEvent = RoutedEvent.Register<DataGrid, DataGridFilterChangedEventArgs>("FilterChanged", RoutingStrategies.Bubble);
     public static readonly AttachedProperty<bool> ShowSummaryRowProperty = AvaloniaProperty.RegisterAttached<DataGridFeatures, DataGrid, bool>("ShowSummaryRow");
     public static readonly AttachedProperty<DataGridSummaryScope> SummaryScopeProperty = AvaloniaProperty.RegisterAttached<DataGridFeatures, DataGrid, DataGridSummaryScope>("SummaryScope", DataGridSummaryScope.FilteredItems, validate: Enum.IsDefined);
+    public static readonly AttachedProperty<bool> SummaryLeavesOnlyProperty = AvaloniaProperty.RegisterAttached<DataGridFeatures, DataGrid, bool>("SummaryLeavesOnly");
     public static readonly AttachedProperty<string> SummaryLabelProperty = AvaloniaProperty.RegisterAttached<DataGridFeatures, DataGrid, string>("SummaryLabel", "合计");
     public static readonly AttachedProperty<string> SummaryEmptyTextProperty = AvaloniaProperty.RegisterAttached<DataGridFeatures, DataGrid, string>("SummaryEmptyText", "—");
     public static readonly RoutedEvent<DataGridSummaryUpdatedEventArgs> SummaryUpdatedEvent = RoutedEvent.Register<DataGrid, DataGridSummaryUpdatedEventArgs>("SummaryUpdated", RoutingStrategies.Bubble);
@@ -43,6 +44,8 @@ public sealed class DataGridFeatures : AvaloniaObject
     public static void SetShowSummaryRow(DataGrid grid, bool value) => grid.SetValue(ShowSummaryRowProperty, value);
     public static DataGridSummaryScope GetSummaryScope(DataGrid grid) => grid.GetValue(SummaryScopeProperty);
     public static void SetSummaryScope(DataGrid grid, DataGridSummaryScope value) => grid.SetValue(SummaryScopeProperty, value);
+    public static bool GetSummaryLeavesOnly(DataGrid grid) => grid.GetValue(SummaryLeavesOnlyProperty);
+    public static void SetSummaryLeavesOnly(DataGrid grid, bool value) => grid.SetValue(SummaryLeavesOnlyProperty, value);
     public static string GetSummaryLabel(DataGrid grid) => grid.GetValue(SummaryLabelProperty);
     public static void SetSummaryLabel(DataGrid grid, string value) => grid.SetValue(SummaryLabelProperty, value);
     public static string GetSummaryEmptyText(DataGrid grid) => grid.GetValue(SummaryEmptyTextProperty);

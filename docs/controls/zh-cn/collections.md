@@ -101,6 +101,8 @@ if (container is not null)
 
 Card 支持关闭与重排。标题仅有背景色，正文保留边框；溢出显示滚动箭头，按需创建标题和选中内容。`TabStripPlacement` 支持 Top / Bottom / Left / Right。
 
+`card` 外观在原生 TabControl 主题内部应用，不再由类选择器替换 `Theme`。缓存页面离开、重新加入可视／逻辑树后，保留页签、选择和原生虚拟化，宿主无须重新创建设计器或页签控件。
+
 拖动超过 6 px 后，标题跟手，邻项平滑让位；松手仅提交一次排序，保留选择。边缘自动滚动，预览不受容器回收影响。Esc、捕获丢失、禁用／关闭重排、外部集合变化或卸载会取消并清理，不会迟到提交。
 
 让位／落位使用 `One.Motion.Fast`（120 ms）与 CubicEaseOut；`Motion.Enabled=False` 或零时长立即完成。普通／pills 标签设置 `TabFeatures.CanReorder=True` 即可使用。保留原生虚拟面板，只生成当前拖动的标题预览。
@@ -172,7 +174,9 @@ PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节�
 <Grid RowDefinitions="Auto,*">
   <TabStrip Name="SectionTabs" Classes="normal"
             ItemsSource="{Binding Sections}"
-            SelectedItem="{Binding ActiveSection, Mode=TwoWay}">
+            SelectedItem="{Binding ActiveSection, Mode=TwoWay}"
+            one:TabFeatures.CanClose="True"
+            one:TabFeatures.CloseCommand="{Binding CloseSectionCommand}">
     <TabStrip.ItemTemplate>
       <DataTemplate x:DataType="vm:Section">
         <TextBlock Text="{Binding Title}" />
@@ -186,6 +190,20 @@ PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节�
 使用官方 `Avalonia.Controls.Primitives.TabStrip` 和 `TabStripItem`，默认三档高度 30 / 36 / 44、字号 12 / 14 / 16。默认保持一个选中项，支持点击、方向键、Home / End 和访问键；`AutoScrollToSelectedItem=False` 可关闭自动选中项定位。
 
 标题默认横向虚拟化和回收，可使用 `ScrollIntoView(index)` 显式定位；需给外层有限宽度，并通过数据集合绑定标题。大量标签不要预创建控件，也不要替换为 WrapPanel。单独控制某项的禁用状态时，可在 `ItemContainerTheme` 中绑定模型的 `IsEnabled`。此控件只提供导航，页面内容由宿主绑定与模板创建。
+
+关闭能力按需开启，`TabFeatures.CanClose` 默认为 False。启用后，原生 `TabStripItem` 显示关闭按钮；标签栏持有键盘焦点时，Ctrl / macOS ⌘ + W 关闭选中项。在容器上设置 `TabFeatures.IsClosable=False` 可固定某项。关闭复用可取消的 `TabFeatures.TabClosingEvent`，参数 `Item` 为数据项，`Cancel` 可阻止关闭。`CloseSectionCommand` 接收数据项并遵循 `CanExecute`，由命令更新集合；省略命令时自动从可修改 IList 删除。只读／定长源需由宿主命令处理。关闭后选择相邻项，保留原生虚拟化与回收。
+
+```csharp
+SectionTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
+{
+    if (args.Item is Section section && section.HasUnsavedChanges)
+        args.Cancel = true;
+});
+if (SectionTabs.ContainerFromIndex(SectionTabs.SelectedIndex) is TabStripItem item)
+    TabFeatures.Close(item);
+```
+
+`Section.HasUnsavedChanges` 为业务属性；异步确认需先取消当前关闭，再由宿主确认并移除项。`CanClose`、`CloseCommand` 与 `Close(TabStripItem)` 新增独立标签关闭，保留现有 TabControl API；`CanReorder` 和 `Move` 仍仅适用于 TabControl。
 
 PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器计数、目标定位、末项和启用切换。
 

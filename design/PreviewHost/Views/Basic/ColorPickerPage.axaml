@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.ColorPickerPage"
+             x:DataType="local:ColorPickerPageViewModel" x:CompileBindings="True">
+  <StackPanel Spacing="22">
+    <StackPanel Spacing="7">
+      <TextBlock Text="ColorPicker · 颜色选择器" FontSize="26" FontWeight="SemiBold" />
+      <TextBlock Text="色谱、调色板与 RGB / HSV · 透明度与 Hex 输入" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+    </StackPanel>
+    <WrapPanel>
+      <CheckBox Name="AlphaToggle" Content="启用透明度" IsChecked="{Binding AlphaEnabled, Mode=TwoWay}" Margin="0,0,24,8" />
+      <CheckBox Name="PaletteToggle" Content="显示调色板" IsChecked="{Binding PaletteVisible, Mode=TwoWay}" Margin="0,0,0,8" />
+    </WrapPanel>
+    <StackPanel Spacing="10">
+      <TextBlock Text="下拉选择" FontWeight="SemiBold" />
+      <WrapPanel>
+        <ColorPicker Name="ControlSample" Color="{Binding SelectedColor, Mode=TwoWay}" IsAlphaEnabled="{Binding AlphaEnabled}"
+                     IsColorPaletteVisible="{Binding PaletteVisible}" Margin="0,0,16,8" AutomationProperties.Name="选择颜色" />
+        <ColorPicker Name="OpaqueSample" Color="#C86835" IsAlphaEnabled="False" Margin="0,0,16,8" AutomationProperties.Name="不透明颜色" />
+        <ColorPicker Name="DisabledSample" Color="#778080" IsEnabled="False" Margin="0,0,0,8" AutomationProperties.Name="禁用颜色选择" />
+      </WrapPanel>
+    </StackPanel>
+    <Grid Name="ColorLayout" ColumnDefinitions="340,28,*" RowDefinitions="Auto,Auto">
+      <StackPanel Spacing="12">
+        <TextBlock Text="精细调色" FontWeight="SemiBold" />
+        <Border Name="InlineFrame" HorizontalAlignment="Left">
+          <ColorView Name="ColorViewSample" Color="{Binding SelectedColor, Mode=TwoWay}" IsAlphaEnabled="{Binding AlphaEnabled}"
+                     IsColorPaletteVisible="{Binding PaletteVisible}" AutomationProperties.Name="精细颜色选择" />
+        </Border>
+      </StackPanel>
+      <StackPanel Name="ColorSummary" Grid.Column="2" Spacing="14" MaxWidth="250" HorizontalAlignment="Left">
+        <TextBlock Text="当前颜色" FontWeight="SemiBold" />
+        <Border Height="72" CornerRadius="6" BorderBrush="{DynamicResource One.InputLine}" BorderThickness="1"
+                Background="{DynamicResource ColorControlCheckeredBackgroundBrush}">
+          <Border Background="{Binding SelectedBrush}" CornerRadius="6" />
+        </Border>
+        <SelectableTextBlock Text="{Binding Hex}" FontSize="22" FontWeight="SemiBold" />
+        <TextBlock Text="{Binding Channels}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        <TextBlock Text="颜色预览为 #AARRGGBB。编辑器内 Hex 输入沿用官方顺序。" FontSize="12" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        <Button Content="恢复主题色" Click="ResetColor" HorizontalAlignment="Left" />
+      </StackPanel>
+    </Grid>
+  </StackPanel>
+</UserControl>

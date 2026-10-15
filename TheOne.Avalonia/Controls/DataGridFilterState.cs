@@ -132,7 +132,7 @@ internal sealed partial class DataGridFilterState
             // Accessor failures must not leave a half-refreshed view or overwrite valid conditions.
             try
             {
-                foreach (var item in _view.SourceCollection) { _ = Predicate(item!); }
+                foreach (var item in _view is IDataGridTreeQueryView tree ? tree.LoadedItems : _view.SourceCollection) { _ = Predicate(item!); }
                 if (clauses.FirstOrDefault(clause => clause.Error is not null)?.Error is { } error) return new(false, error);
             }
             catch (Exception exception) { return new(false, "无法读取筛选数据：" + exception.Message); }

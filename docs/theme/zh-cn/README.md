@@ -11,6 +11,7 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 | 操作 | Button、ToggleButton、RepeatButton、SplitButton、ToggleSplitButton |
 | 文本与数值输入 | TextBox、NumericUpDown、ButtonSpinner、AutoCompleteBox |
 | 选择 | ComboBox、ComboBoxItem、CheckBox、RadioButton、ToggleSwitch |
+| 颜色 | 官方 ColorPicker、ColorView、ColorSpectrum、ColorSlider 与 ColorPreviewer；见[使用文档](../../controls/zh-cn/color-picker.md) |
 | 数值与反馈 | Slider、ProgressBar、ToolTip、NotificationCard |
 | 日期时间 | CalendarDatePicker、Calendar、CalendarItem、日期单元格、DatePicker、TimePicker，以及日期时间弹层 Presenter |
 | 导航与列表 | TabControl、TabItem、TabStrip、TabStripItem、Carousel、ItemsControl、ListBox、ListBoxItem、TreeView、TreeViewItem、DataGrid 及其单元格／表头／行／行标题／分组标题 |
@@ -30,6 +31,7 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 | Button / IconButton | `outline`、`ghost`、`link`、`success`、`info`、`warning`、`danger` | 轻操作与语义状态 |
 | 官方控件 / 容器 | `small`、`normal`、`large` | 统一三档密度，支持继承及单控件覆盖 |
 | TabControl | `card` | 无边框标题、正文边框、关闭与排序 |
+| TabStrip | `TabFeatures.CanClose`、`CloseCommand`、单项 `IsClosable` | 按需开启原生标题关闭及 Ctrl / ⌘ + W；见[接口](../../controls/zh-cn/collections.md#tabstrip-独立标签导航)，排序仍仅适用于 TabControl |
 | ToggleButton | `segment` | 分段选择外观 |
 | TextBox | `clearButton` | 清除输入 |
 | TextBox | `revealPasswordButton` | 显示 / 隐藏密码 |
@@ -55,7 +57,7 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 | `Themes/Styles.axaml`、`Motion.axaml` | 样式类、焦点、错误与画刷过渡 |
 | `Themes/OneTheme.axaml` | 主题入口与资源合并 |
 | `Controls/RevealHost.cs` | 树／Expander 裁切展开、占位与反向动画 |
-| `Controls/TabFeatures.cs`、`CardTabChrome.cs`、`CardTabStrip.cs` | Card 标签行为与轮廓 |
+| `Controls/TabFeatures.cs`、`TabFeatures.Close.cs`、`CardTabChrome.cs`、`CardTabStrip.cs` | TabControl／TabStrip 关闭、TabControl 排序及 Card 轮廓 |
 
 画刷使用 DynamicResource，可由宿主覆盖。调整强调色需同步 One.Accent、AccentHover、AccentPressed、AccentSoft、OnAccent。正文对比度至少 4.5:1，焦点至少 3:1。Nova 原色有边框及按下文字对比度例外，见[配色说明](theme-colors.md)；报告为 [contrast-report.json](../contrast-report.json)。
 
@@ -95,3 +97,13 @@ ImagePreview 的 PART_Viewport 直接绘制图片与透明棋盘格，导航与�
 Pagination 主题保留原生 Button、ComboBox 与 TextBox。当前页使用主按钮状态，省略号不接收输入；`:compact`、`:empty`、`:invalid-jump` 表示布局、空数据与跳页校验。ItemHeight 随继承尺寸使用 30 / 36 / 44。部件、文本格式与验证见[控件契约](../../controls/zh-cn/pagination.md)。
 
 Toast 通过 one-toast 类选择 One.ToastCard 模板，仅呈现垂直居中的状态图标与正文；NotificationCard 默认通知模板保留标题和关闭按钮。两者共享原生生命周期与动效，排版及验证见 [窗口与消息](../../controls/zh-cn/windows.md)。
+
+## WorkflowEditor
+
+WorkflowEditor 复用 One.* 画刷，明暗画布与注释背景使用 One.Workflow.Canvas / One.Workflow.Note。HeaderTemplate、NodeTemplate、ContentTemplate、NodeDefinitionTemplate、PropertyTemplate 保留图编辑行为并允许定制展示。默认模板包括可编辑属性面板与 Command 驱动的保存标题栏，控件默认填满父容器视口。PART_Canvas 直接绘制圆角连线和点阵，缩略图绘制轻量投影。详见[流程编辑器](../../controls/zh-cn/workflow-editor.md)。
+
+## MessageBox 与 Upload
+
+OneMessageBox 复用已带主题的 OneDialog Presenter 及其模态生命周期。默认内容使用 One.Accent / One.Danger 语义画刷、原生命令按钮和继承尺寸。见[确认框](../../controls/zh-cn/message-box.md)。
+
+Upload 内置 EmptyTemplate、FileTemplate、ActionsTemplate，三个模板均接收 Upload 控件，便于编译绑定。主题使用原生 Button / Image、公共语义画刷、12 / 14 / 16 字号，以及 `:has-file`、`:loading`、`:error`、`:busy` 状态。见[上传控件](../../controls/zh-cn/upload.md)。

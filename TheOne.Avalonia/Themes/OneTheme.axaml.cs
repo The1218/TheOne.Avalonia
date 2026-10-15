@@ -10,6 +10,7 @@ public partial class OneTheme : Styles
     {
         _ = Styling.ControlSizing.SizeProperty;
         _ = Styling.Motion.EnabledProperty;
+        Styling.ColorPickerStyling.Initialize();
         AvaloniaXamlLoader.Load(this);
     }
 }

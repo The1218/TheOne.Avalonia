@@ -72,6 +72,15 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 - [控件文档](docs/controls/zh-cn/README.md)：控件属性、行为与接入示例。
 - [主题文档](docs/theme/zh-cn/README.md)：配色、样式、尺寸与动效。
 
+## 按需引入的独立包
+
+| 可选包 | 作用 | 主题注册 |
+| --- | --- | --- |
+| `TheOne.Avalonia.CodeEditor` | 独立代码编辑器，提供语法高亮、补全、诊断和格式化 | `CodeEditorTheme` |
+| `TheOne.PrintingTools.Avalonia` | 桌面打印预览、打印机设置、PDF 导出及 Windows / macOS / Linux 打印后端 | `PrintingToolsTheme` |
+
+这两个包均为**按需单独引入**，不会随 TheOne.Avalonia 自动安装。源码、预览、版本与发布文档在各自项目中独立维护；使用时在 App.axaml 显式注册对应主题。本仓库及其 PreviewHost 不再依赖这两个包或相邻项目目录。
+
 ## 仓库结构
 
 | 路径 | 用途 |

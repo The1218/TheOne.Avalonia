@@ -11,6 +11,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../ViewModels/Extensions/PaginationDemoViewModel.cs" Link="PaginationDemoViewModel.cs" />
+    <Compile Include="../../ViewModels/Extensions/WorkflowEditorDemoViewModel.cs" Link="WorkflowEditorDemoViewModel.cs" />
+    <Compile Include="../../ViewModels/Messages/MessageBoxDemoViewModel.cs" Link="MessageBoxDemoViewModel.cs" />
+    <Compile Include="../../Views/Messages/MessageBoxDemoView.axaml.cs" Link="MessageBoxDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Messages/MessageBoxDemoView.axaml" Link="MessageBoxDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/MessageBoxPreview.cs" Link="MessageBoxPreview.cs" />
+    <Compile Include="../../ViewModels/Extensions/UploadDemoViewModel.cs" Link="UploadDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/UploadDemoView.axaml.cs" Link="UploadDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/UploadDemoView.axaml" Link="UploadDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/UploadPreview.cs" Link="UploadPreview.cs" />
+    <Compile Include="../../Verification/Extensions/UploadApiPreview.cs" Link="UploadApiPreview.cs" />
+    <Compile Include="../../Infrastructure/Workflow/WorkflowEditorFileService.cs" Link="WorkflowEditorFileService.cs" />
+    <Compile Include="../../Views/Extensions/WorkflowEditorDemoView.axaml.cs" Link="WorkflowEditorDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/WorkflowEditorDemoView.axaml" Link="WorkflowEditorDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/WorkflowEditorPreview.cs" Link="WorkflowEditorPreview.cs" />
     <Compile Include="../../Views/Extensions/PaginationDemoView.axaml.cs" Link="PaginationDemoView.axaml.cs" />
     <AvaloniaResource Include="../../Views/Extensions/PaginationDemoView.axaml" Link="PaginationDemoView.axaml" />
     <Compile Include="../../Verification/Extensions/PaginationPreview.cs" Link="PaginationPreview.cs" />
@@ -64,6 +78,7 @@
     <AvaloniaResource Include="../../Verification/Fixtures/DataGridCollectionsFixture.axaml" Link="DataGridCollectionsFixture.axaml" />
     <Compile Include="../../Verification/Fixtures/DataGridTreeFixture.axaml.cs" Link="DataGridTreeFixture.axaml.cs" />
     <AvaloniaResource Include="../../Verification/Fixtures/DataGridTreeFixture.axaml" Link="DataGridTreeFixture.axaml" />
+    <Compile Include="../../Verification/DataDisplay/DataGridTreeQueryPreview.cs" Link="DataGridTreeQueryPreview.cs" />
     <Compile Include="../../Verification/DataDisplay/DataGridTreePreview.cs" Link="DataGridTreePreview.cs" />
     <Compile Include="../../Verification/DataDisplay/DataGridBindingPreview.cs" Link="DataGridBindingPreview.cs" />
   </ItemGroup>
@@ -110,9 +125,36 @@
     <AvaloniaResource Include="../../Views/Extensions/InfoCardDemoView.axaml" Link="InfoCardDemoView.axaml" />
     <Compile Include="../../Views/Extensions/InfoCardDemoView.axaml.cs" Link="InfoCardDemoView.axaml.cs" />
     <ProjectReference Include="../../../../TheOne.Avalonia/TheOne.Avalonia.csproj" />
+    <Compile Include="../../Views/ReportDesign/ReportDesignDemo.cs" Link="ReportDesignDemo.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportDesignPreview.cs" Link="ReportDesignPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportDesignFeaturesPreview.cs" Link="ReportDesignFeaturesPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportStructurePreview.cs" Link="ReportStructurePreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportFontsPreview.cs" Link="ReportFontsPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportCanvasInteractionPreview.cs" Link="ReportCanvasInteractionPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportDialogsPreview.cs" Link="ReportDialogsPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportDataTreePreview.cs" Link="ReportDataTreePreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportApiComponentsPreview.cs" Link="ReportApiComponentsPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportNavigationPreview.cs" Link="ReportNavigationPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportLifecyclePreview.cs" Link="ReportLifecyclePreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportDataTreeScrollPreview.cs" Link="ReportDataTreeScrollPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportReloadPreview.cs" Link="ReportReloadPreview.cs" />
+    <Compile Include="../../Verification/DataDisplay/ReportAuthenticationPreview.cs" Link="ReportAuthenticationPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/TabStripClosePreview.cs" Link="TabStripClosePreview.cs" />
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="3.0.2" />
     <PackageReference Include="Avalonia.Headless" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="ReactiveUI.Avalonia" Version="12.1.4" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(ReportOnlyPreview)' == 'true'">
+    <StartupObject>TheOne.DesignPreview.ReportOnlyProgram</StartupObject>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ReportOnlyPreview)' == 'true'">
+    <Compile Remove="@(Compile)" />
+    <AvaloniaResource Remove="@(AvaloniaResource)" />
+    <AvaloniaXaml Remove="@(AvaloniaXaml)" />
+    <Compile Include="../../Verification/DataDisplay/Report*Preview.cs" LinkBase="ReportVerification" />
+    <Compile Include="../../Verification/DataDisplay/ReportOnlyProgram.cs" Link="ReportOnlyProgram.cs" />
+    <Compile Include="../../Views/ReportDesign/ReportDesignDemo.cs" Link="ReportDesignDemo.cs" />
   </ItemGroup>
 </Project>

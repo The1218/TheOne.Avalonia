@@ -8,6 +8,10 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 
 | Document | Controls / capabilities |
 | --- | --- |
+| [ColorPicker and ColorView](color-picker.md) | Official color controls with TheOne chrome, spectrum, palette, RGB/HSV, alpha and hex input |
+| [WorkflowEditor](workflow-editor.md) | Graph contracts, templates, business configuration, upstream references and JSON persistence |
+| [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |
+| [Upload](upload.md) | Single-file selection, image preview, replace/remove and host-owned upload commands |
 | [IconButton and button hierarchy](icon-button.md) | Icon properties, Geometry / PathIcon / Material templates, primary and secondary actions, semantic states |
 | [Split buttons](split-button.md) | SplitButton, ToggleSplitButton, primary actions, menus, keyboard input, virtualization |
 | [Text display](text-display.md) | TextBlock, Label, SelectableTextBlock, selection, copying, field association |
@@ -16,7 +20,7 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [Lists, trees, tabs, and grids](collections.md) | ItemsControl, ListBox, TreeView, TabControl, TabStrip, Card tabs, DataGrid, recycling, distant navigation |
 | [DataGrid extensions](datagrid-extensions.md) | Automatic entity-property filters, combined column filters, right frozen columns, numeric summaries |
 | [DataGrid binding and sorting](datagrid-binding.md) | Type inference, registered metadata, compiled editing, sort buttons, virtualization |
-| [DataGrid tree view prototype](datagrid-tree.md) | Stage-one local tree, expansion/collapse, native editing and selection |
+| [DataGrid tree view prototype](datagrid-tree.md) | Local trees, sibling sorting, ancestor-preserving filters, tree summaries and native editing |
 | [Loading controls](loading.md) | LoadingIndicator, button loading states, LoadingContainer |
 | [Menus and layout](layout.md) | Menu, ContextMenu, MenuFlyout, Flyout, FlyoutPresenter, Expander, SplitView, GridSplitter, ScrollViewer, ScrollBar, Separator |
 | [Carousel and refresh](collection-content.md) | Carousel, RefreshContainer, RefreshVisualizer |
@@ -29,6 +33,8 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
 | [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |
 | [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
+| [ReportDesign](report-design.md) | Drag-and-drop reports, fixed page regions, API/image URLs, MVVM JSON saving and PDF |
+| [ReportPreview](report-preview.md) | Read-only JSON reports, API data/images, paginated viewing, PDF export and desktop printing |
 | [RelationGraph](relation-graph.md) | Single-root relation trees, horizontal/vertical layout, default/custom models, compiled ChildrenSource, SelectItem selection and null regions |
 | [Pagination](pagination.md) | Standard / compact pagination, page sizes, jumping and boundary states |
 | [FlowStep and FlowNode](flow-step.md) | Horizontal / vertical flow, three states, default and custom content templates |

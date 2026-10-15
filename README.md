@@ -72,6 +72,15 @@ Target `net10.0` and use Avalonia 12.1.4 consistently. Load the theme in `App.ax
 - [Control documentation](docs/controls/en/README.md): properties, behavior, and usage examples.
 - [Theme documentation](docs/theme/en/README.md): colors, styles, sizes, and motion.
 
+## Optional packages
+
+| Optional package | Purpose | Theme registration |
+| --- | --- | --- |
+| `TheOne.Avalonia.CodeEditor` | Standalone code editor with syntax highlighting, completion, diagnostics and formatting | `CodeEditorTheme` |
+| `TheOne.PrintingTools.Avalonia` | Desktop print preview, printer settings, PDF export and Windows / macOS / Linux printing backends | `PrintingToolsTheme` |
+
+Reference these packages **only when needed**. Neither is automatically included by TheOne.Avalonia; each has independent source, previews, versions and release documentation. Register the selected package's theme explicitly in App.axaml. This repository and its PreviewHost do not require either package or a sibling checkout.
+
 ## Repository layout
 
 | Path | Purpose |

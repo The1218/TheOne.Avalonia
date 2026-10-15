@@ -48,7 +48,7 @@ Incompatible condition bindings restore the last valid value; query errors with 
 
 ### Collection views and lifecycle
 
-The initial implementation supports native DataGridCollectionView; native DataGrid wraps ordinary IEnumerable ItemsSource in that view too. It exposes edit state and Filter notifications without reflecting into internal editable interfaces. Custom IDataGridCollectionView does not yet support column filters; entry points remain disabled with a reason.
+Native DataGridCollectionView and its [DataGridTreeCollectionView](datagrid-tree.md) derivative support column filtering; native DataGrid wraps ordinary IEnumerable ItemsSource in the flat view too. It exposes edit state and Filter notifications without reflecting into internal editable interfaces. Custom IDataGridCollectionView does not yet support column filters; entry points remain disabled with a reason.
 
 Only one grid can manage active column conditions on a CollectionView at a time. For independent filtering, create one CollectionView per grid over the same model collection. Later business Filter replacements are preserved. On unload, the behavior removes only its own predicate; restoration waits for active editing to finish, and callbacks do not retain unloaded UI.
 
@@ -122,7 +122,8 @@ Dragging preserves native drop targets and frozen-region limits. The source head
 | Setting | Type / default | Behavior |
 | --- | --- | --- |
 | DataGridFeatures.ShowSummaryRow | bool / false | Separate summary row; disabling stops calculation / subscriptions but retains column settings |
-| SummaryScope | DataGridSummaryScope / FilteredItems | Locally loaded models after business / column filters and before paging; SourceItems ignores filters |
+| SummaryScope | DataGridSummaryScope / FilteredItems | Locally loaded models after business / column filters and before paging; SourceItems ignores filters, VisibleItems enumerates the current view; tree FilteredItems counts direct matches only |
+| SummaryLeavesOnly | bool / false | Only structural tree leaves, preventing parent/child double counting; ordinary rows are all leaves |
 | SummaryLabel | string / 合计 | Default label means total; shown in the native row-header slot when visible, without replacing the first result |
 | SummaryEmptyText | string / — | Sum / Average / Min / Max text when no numeric values exist; Count is 0 |
 | DataGridColumnOptions.SummaryEnabled | bool / false | Explicitly enable the column; numeric or nullable numeric properties only |

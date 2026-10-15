@@ -625,7 +625,7 @@ namespace Avalonia.Collections
         /// Use <seealso cref="CanFilter"/> property to test if filtering is supported before
         /// assigning a non-null value.
         /// </exception>
-        public Func<object, bool> Filter
+        public virtual Func<object, bool> Filter
         {
             get
             {
@@ -948,7 +948,7 @@ namespace Avalonia.Collections
         /// Use <seealso cref="CanSort"/> property to test if sorting is supported before adding
         /// to SortDescriptions.
         /// </exception>
-        public DataGridSortDescriptionCollection SortDescriptions
+        public virtual DataGridSortDescriptionCollection SortDescriptions
         {
             get
             {
@@ -1143,6 +1143,9 @@ namespace Avalonia.Collections
             get { return _timestamp; }
         }
 
+        /// <summary>True when a derived view supplies an already sorted and filtered projection.</summary>
+        protected virtual bool IsSourcePreprocessed => false;
+
         /// <summary>
         /// Gets a value indicating whether a private copy of the data 
         /// is needed for sorting, filtering, and paging. We want any deriving 
@@ -1152,7 +1155,7 @@ namespace Avalonia.Collections
         //TODO Paging
         private bool UsesLocalArray
         {
-            get { return SortDescriptions.Count > 0 || Filter != null || _pageSize > 0 || GroupDescriptions.Count > 0; }
+            get { return !IsSourcePreprocessed && (SortDescriptions.Count > 0 || Filter != null || _pageSize > 0 || GroupDescriptions.Count > 0); }
         }
 
         /// <summary>
@@ -1871,7 +1874,7 @@ namespace Avalonia.Collections
         /// Defer cycles are used to coalesce changes to the ICollectionView.
         /// </summary>
         /// <returns>IDisposable used to notify that we no longer need to defer, when we dispose</returns>
-        public IDisposable DeferRefresh()
+        public virtual IDisposable DeferRefresh()
         {
             if (IsAddingNew || IsEditingItem)
             {
@@ -3068,7 +3071,7 @@ namespace Avalonia.Collections
         /// Helper to raise a PropertyChanged event.
         /// </summary>
         /// <param name="propertyName">Property name for the property that changed</param>
-        private void OnPropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
         }
@@ -3251,14 +3254,14 @@ namespace Avalonia.Collections
 
             foreach (object item in enumerable)
             {
-                if (Filter == null || PassesFilter(item))
+                if (IsSourcePreprocessed || Filter == null || PassesFilter(item))
                 {
                     localList.Add(item);
                 }
             }
 
             // sort the local array
-            if (!CheckFlag(CollectionViewFlags.IsDataSorted) && SortDescriptions.Count > 0)
+            if (!IsSourcePreprocessed && !CheckFlag(CollectionViewFlags.IsDataSorted) && SortDescriptions.Count > 0)
             {
                 localList = SortList(localList);
             }
@@ -3444,7 +3447,7 @@ namespace Avalonia.Collections
             {
                 for (var i = 0; i < args.NewItems.Count; i++)
                 {
-                    if (Filter == null || PassesFilter(args.NewItems[i]))
+                    if (IsSourcePreprocessed || Filter == null || PassesFilter(args.NewItems[i]))
                     {
                         ProcessAddEvent(args.NewItems[i], args.NewStartingIndex + i);
                     }
@@ -3559,9 +3562,9 @@ namespace Avalonia.Collections
         private void ProcessInsertToCollection(object item, int index)
         {
             // first check to see if it passes the filter
-            if (Filter == null || PassesFilter(item))
+            if (IsSourcePreprocessed || Filter == null || PassesFilter(item))
             {
-                if (SortDescriptions.Count > 0)
+                if (!IsSourcePreprocessed && SortDescriptions.Count > 0)
                 {
                     var itemType = ItemType;
                     foreach (var sort in SortDescriptions)

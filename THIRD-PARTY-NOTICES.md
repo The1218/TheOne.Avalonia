@@ -1,5 +1,7 @@
 # Avalonia template adaptations
 
+ColorPicker, ColorView, ColorSpectrum, ColorSlider and ColorPreviewer use the unmodified official Avalonia.Controls.ColorPicker 12.1.4 package and its Fluent color-editing templates (Avalonia MIT license below). TheOne provides scoped dropdown-button chrome, compact panel layout, a hue-ordered default palette and density styles without changing the color model, drawing algorithms or native interaction code.
+
 PreviewHost additionally uses Material.Icons.Avalonia 3.0.2 and Material.Icons 3.0.2 by SKProCH (MIT), https://github.com/SKProCH/Material.Icons. These are consumer-only demonstration dependencies; TheOne.Avalonia does not require the icon package.
 
 OneWindow retains the native Avalonia 12.1.4 Window template contracts for the transparency fallback, content presenter and VisualLayerManager. TheOne adds customizable titlebar slots, native decoration roles, ThemeButton, automatic native notification hosts and its own dialog presenter/lifecycle. The native Window template is distributed under the Avalonia MIT license below.

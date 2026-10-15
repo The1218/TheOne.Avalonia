@@ -11,6 +11,7 @@ OneTheme is the library's default theme. It uses shared `One.*` resources and in
 | Actions | Button, ToggleButton, RepeatButton, SplitButton, ToggleSplitButton |
 | Text and numeric input | TextBox, NumericUpDown, ButtonSpinner, AutoCompleteBox |
 | Selection | ComboBox, ComboBoxItem, CheckBox, RadioButton, ToggleSwitch |
+| Colors | Official ColorPicker, ColorView, ColorSpectrum, ColorSlider and ColorPreviewer; [guide](../../controls/en/color-picker.md) |
 | Values and feedback | Slider, ProgressBar, ToolTip, NotificationCard |
 | Dates and times | CalendarDatePicker, Calendar, CalendarItem, date cells, DatePicker, TimePicker, date/time popup presenters |
 | Navigation and lists | TabControl, TabItem, TabStrip, TabStripItem, Carousel, ItemsControl, ListBox, ListBoxItem, TreeView, TreeViewItem, DataGrid and its cells, headers, rows, row headers, group headers |
@@ -30,6 +31,7 @@ The base templates adapt Avalonia **12.1.4** Fluent sources; the Calendar family
 | Button / IconButton | `outline`, `ghost`, `link`, `success`, `info`, `warning`, `danger` | Lightweight actions and semantic states |
 | Native controls / containers | `small`, `normal`, `large` | Three shared densities, inherited with per-control overrides |
 | TabControl | `card` | Borderless headers, bordered content, closing, reordering |
+| TabStrip | `TabFeatures.CanClose`, `CloseCommand`, per-item `IsClosable` | Optional native header closing and Ctrl / ⌘ + W; [API](../../controls/en/collections.md#standalone-tabstrip). Reordering remains TabControl-only |
 | ToggleButton | `segment` | Segmented selection appearance |
 | TextBox | `clearButton` | Clear input |
 | TextBox | `revealPasswordButton` | Show / hide password |
@@ -55,7 +57,7 @@ The base templates adapt Avalonia **12.1.4** Fluent sources; the Calendar family
 | `Themes/Styles.axaml`, `Motion.axaml` | Style classes, focus, errors, brush transitions |
 | `Themes/OneTheme.axaml` | Theme entry point and merged resources |
 | `Controls/RevealHost.cs` | Clipped expansion, space reservation, and reverse motion for trees / Expander |
-| `Controls/TabFeatures.cs`, `CardTabChrome.cs`, `CardTabStrip.cs` | Card tab behavior and outlines |
+| `Controls/TabFeatures.cs`, `TabFeatures.Close.cs`, `CardTabChrome.cs`, `CardTabStrip.cs` | TabControl / TabStrip closing, TabControl reordering and Card outlines |
 
 Brushes use DynamicResource and can be overridden by the host. When changing the accent color, update One.Accent, AccentHover, AccentPressed, AccentSoft, and OnAccent together. Body text needs at least 4.5:1 contrast; focus indicators need at least 3:1. Nova's original colors have exceptions for borders and pressed text; see [color details](theme-colors.md) and [contrast-report.json](../contrast-report.json).
 
@@ -95,3 +97,13 @@ ImagePreview draws images and transparency checkerboards in PART_Viewport while 
 The Pagination theme preserves native buttons, ComboBox and TextBox. Current pages use the primary button class, ellipses remain non-interactive, and `:compact`, `:empty`, `:invalid-jump` represent layout, empty data and jump validation. ItemHeight is 30 / 36 / 44 across inherited densities. See the [control contract](../../controls/en/pagination.md) for parts, formats and verification.
 
 The one-toast class selects One.ToastCard, with vertically centered status icon and message only. The default NotificationCard template retains its title and close button. Both share the native lifecycle and motion. See [windows and messages](../../controls/en/windows.md).
+
+## WorkflowEditor
+
+WorkflowEditor uses shared One.* brushes, with One.Workflow.Canvas and One.Workflow.Note for light/dark canvas and annotation surfaces. HeaderTemplate, NodeTemplate, ContentTemplate, NodeDefinitionTemplate and PropertyTemplate preserve graph interaction while customizing presentation. Default templates include an editable inspector and command-driven save header. The editor stretches to its parent viewport. PART_Canvas draws rounded edges and the dot grid; the minimap draws a lightweight graph projection. See [WorkflowEditor](../../controls/en/workflow-editor.md).
+
+## MessageBox and Upload
+
+OneMessageBox reuses the themed OneDialog presenter and its modal lifecycle. Its default content uses One.Accent / One.Danger semantic brushes, native command buttons and inherited density. See [MessageBox](../../controls/en/message-box.md).
+
+Upload includes default EmptyTemplate, FileTemplate and ActionsTemplate; each receives the Upload control for compiled bindings. The theme uses native buttons and Image, shared semantic brushes, inherited text sizes 12 / 14 / 16, and `:has-file`, `:loading`, `:error`, `:busy` states. See [Upload](../../controls/en/upload.md).

@@ -61,6 +61,25 @@ internal static class Program
     {
         Console.WriteLine($"Runtime dynamic code supported: {RuntimeFeature.IsDynamicCodeSupported}");
         if (args.Contains("--require-aot") && RuntimeFeature.IsDynamicCodeSupported) throw new InvalidOperationException("This verification requires the native executable.");
+        if (args.Any(arg => arg is "--verify-report-authentication" or "--verify-report-lifecycle" or "--verify-report-tree-scroll" or "--verify-report-sidebar" or "--verify-report-reload"))
+        {
+            AppBuilder.Configure<AuditApp>().WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            var output = args.FirstOrDefault(arg => !arg.StartsWith("--"));
+            if (args.Contains("--verify-report-reload")) TheOne.DesignPreview.ReportReloadPreview.Verify(Check, output);
+            else if (args.Contains("--verify-report-sidebar")) { TheOne.DesignPreview.ReportDataTreeScrollPreview.Verify(Check, output); TheOne.DesignPreview.ReportStructurePreview.Verify(Check, output); }
+            else if (args.Contains("--verify-report-authentication")) TheOne.DesignPreview.ReportAuthenticationPreview.Verify(Check, output);
+            else if (args.Contains("--verify-report-tree-scroll")) TheOne.DesignPreview.ReportDataTreeScrollPreview.Verify(Check, output);
+            else TheOne.DesignPreview.ReportLifecyclePreview.Verify(Check, output);
+            Console.WriteLine($"PASS: {_checks} focused report authentication / lifecycle checks.");
+            return;
+        }
+        if (args.Contains("--verify-tabstrip-close"))
+        {
+            AppBuilder.Configure<AuditApp>().WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            TheOne.DesignPreview.TabStripClosePreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            Console.WriteLine($"PASS: {_checks} native TabStrip close / command / recycling / TabControl compatibility checks.");
+            return;
+        }
         var lifetimeCommand = Array.FindIndex(args, argument => argument is "--verify-login-lifetime" or "--verify-login-lifetime-close");
         if (lifetimeCommand >= 0)
         {
@@ -71,6 +90,20 @@ internal static class Program
         }
         _ = DataGridAot.PreserveRowType<AuditRow>();
         AppBuilder.Configure<AuditApp>().WithInterFont().UseReactiveUI(static _ => { }).UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+        if (args.Contains("--verify-report-api-components"))
+        {
+            TheOne.DesignPreview.ReportApiComponentsPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            Console.WriteLine($"PASS: {_checks} Report API / checkbox / barcode native checks."); return;
+        }
+        if (args.Contains("--verify-reportdesign-interactions"))
+        {
+            var output = args.FirstOrDefault(arg => !arg.StartsWith("--"));
+            TheOne.DesignPreview.ReportCanvasInteractionPreview.Verify(Check, output);
+            TheOne.DesignPreview.ReportDialogsPreview.Verify(Check, output);
+            TheOne.DesignPreview.ReportDataTreePreview.Verify(Check, output);
+            Console.WriteLine($"PASS: {_checks} ReportDesign native canvas / data tree / dialog checks."); return;
+        }
+        if (args.Contains("--verify-reportdesign")) { TheOne.DesignPreview.ReportDesignPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} ReportDesign native binding / pagination / pixel checks."); return; }
         if (args.Contains("--verify-control-variants")) { TheOne.DesignPreview.ControlVariantsPreview.Verify(Check); Console.WriteLine($"PASS: {_checks} Theme theme checks."); return; }
         if (args.Contains("--verify-gantt")) { TheOne.DesignPreview.GanttPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} Gantt native hierarchy / scrolling / pixel checks."); return; }
         if (args.Contains("--verify-relation-graph")) { TheOne.DesignPreview.RelationGraphPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--"))); Console.WriteLine($"PASS: {_checks} RelationGraph native layout / compiled binding / pixel checks."); return; }
@@ -81,6 +114,7 @@ internal static class Program
             Console.WriteLine($"PASS: {_checks} LoginWindow compiled binding / theme / lifetime checks.");
             return;
         }
+        if (args.Contains("--verify-datagrid-tree-query")) { TheOne.DesignPreview.DataGridTreeQueryPreview.Verify(Check); Console.WriteLine($"PASS: {_checks} Tree sibling sorting / filtering / summary checks."); return; }
         if (args.Contains("--verify-datagrid-tree")) { TheOne.DesignPreview.DataGridTreePreview.Verify(Check); Console.WriteLine($"PASS: {_checks} DataGrid tree projection / native editing / selection checks."); return; }
         if (args.Contains("--verify-datagrid-binding"))
         {
@@ -167,6 +201,21 @@ internal static class Program
         {
             TheOne.DesignPreview.PaginationPreview.Verify(Check);
             Console.WriteLine($"PASS: {_checks} Pagination native binding / layout / interaction checks."); return;
+        }
+        if (args.Contains("--verify-messagebox"))
+        {
+            TheOne.DesignPreview.MessageBoxPreview.Verify(Check);
+            Console.WriteLine($"PASS: {_checks} MessageBox native confirmation / commands / input checks."); return;
+        }
+        if (args.Contains("--verify-upload"))
+        {
+            TheOne.DesignPreview.UploadPreview.Verify(Check);
+            Console.WriteLine($"PASS: {_checks} Upload native selection / preview / binding / command checks."); return;
+        }
+        if (args.Contains("--verify-workflow"))
+        {
+            TheOne.DesignPreview.WorkflowEditorPreview.Verify(Check);
+            Console.WriteLine($"PASS: {_checks} WorkflowEditor native contracts / templates / data references / persistence checks."); return;
         }
         if (args.Contains("--verify-flow-step"))
         {
