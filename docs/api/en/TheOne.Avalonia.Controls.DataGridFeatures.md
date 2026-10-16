@@ -12,7 +12,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`FrozenRightColumnCount`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L29) | `int` | writable; OneWay; attached | `inherited registration` | Number of frozen columns on the right, sharing available width with left-frozen columns. |
+| [`FrozenRightColumnCount`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L29) | `int` | writable; OneWay; attached | `0 / default` | Number of frozen columns on the right, sharing available width with left-frozen columns. Validation: `value => value >= 0` |
 | [`ShowColumnFilters`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L33) | `bool` | writable; OneWay; attached | `false` | Enables column-filter entry points; each column must also permit filtering. |
 | [`ShowSummaryRow`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L36) | `bool` | writable; OneWay; attached | `false` | bool / false ; Separate summary row; disabling stops calculation / subscriptions but retains column settings |
 | [`SummaryEmptyText`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L40) | `string` | writable; OneWay; attached | `"—"` | string / — ; Sum / Average / Min / Max text when no numeric values exist; Count is 0 |

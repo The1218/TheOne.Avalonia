@@ -2,110 +2,104 @@ using System.Collections;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Templates;
-using Avalonia.Layout;
 using Avalonia.LogicalTree;
-using Avalonia.Markup.Xaml.MarkupExtensions;
+using Avalonia.Media;
 using Avalonia.VisualTree;
+using TheOne.Avalonia.Controls;
 using TheOne.DesignPreview.Reference;
 
 namespace TheOne.DesignPreview;
 
-internal sealed record PreviewProperty(TypeContract Owner, PropertyContract Contract)
-{
-    public string Key => Owner.Id + "." + Contract.Name;
-    public string Label => Owner.Name + "." + Contract.Name;
-}
-
-// Supplement the original complete demo in place. Never reparent or resize its controls.
+// Visible documentation supplements the complete demo without changing its model or bindings.
 internal sealed class ControlDetailsView : UserControl
 {
     private readonly string _name;
     private readonly Control _demo;
-    private readonly ComboBox _properties = new() { Name = "AdditionalProperty", HorizontalAlignment = HorizontalAlignment.Stretch };
-    private readonly ComboBox _values = new();
-    private readonly TextBox _editor = new() { Name = "PropertyEditor", PlaceholderText = "输入该属性的值" };
-    private readonly TextBlock _description = Text(""), _live = Text(""), _feedback = Text("");
-    private readonly Button _apply = new() { Name = "ApplyProperty", Content = "应用到上方示例", Classes = { "primary" } };
-    private readonly Button _restore = new() { Content = "恢复开始编辑时的值" };
-    private readonly Dictionary<string, object?> _original = [];
-    private readonly StackPanel _events = new() { Spacing = 4 };
-    private readonly string[] _styleNames;
-    private IDisposable? _subscription;
     private readonly bool _pageOwnsObservation;
+    private readonly List<(TypeContract Owner, PropertyContract Contract, TextBlock Live)> _live = [];
+    private readonly StackPanel _events = new() { Spacing = 4 };
+    private IDisposable? _subscription;
+    private bool _hasEvents;
     internal AvaloniaObject Target { get; private set; }
-    internal ComboBox PropertyPicker => _properties;
-    internal Expander PropertySection { get; }
-    internal Expander StyleSection { get; }
-    internal int EventCount => _events.Children.Count;
     internal string ControlName => _name;
+    internal int EventCount => _hasEvents ? _events.Children.Count : 0;
+    internal Description PropertyTable { get; } = new() { Name = "AdditionalProperties" };
+    internal Description ApiTable { get; } = new() { Name = "PublicApi" };
+    internal IReadOnlyList<Description> ModelTables { get; }
 
     internal ControlDetailsView(string name, Control demo, bool pageOwnsObservation = false)
     {
-        _name = name; _demo = demo; Target = FindTarget(demo, name); _pageOwnsObservation = pageOwnsObservation;
+        _name = name; _demo = demo; _pageOwnsObservation = pageOwnsObservation;
+        Target = FindTarget(demo, name);
         var owners = ContractCatalog.Owners(name);
-        var styles = ContractCatalog.Current.Styles.Where(s => ContractCatalog.StyleTargets(name).Contains(s.Target) && !s.Internal).DistinctBy(s => s.Name).ToArray();
-        _styleNames = styles.Select(s => s.Name).ToArray();
-        var styleBody = new StackPanel { Spacing = 12 };
-        styleBody.Children.Add(Text("保留完整示例。点击样式将其应用到上方的实际控件；状态、尺寸与数据仍由原示例控制。"));
-        var choices = new WrapPanel();
+        var body = new StackPanel { Spacing = 24 };
+        var styles = ContractCatalog.Current.Styles.Where(s => ContractCatalog.StyleTargets(name).Contains(s.Target) && !s.Internal)
+            .DistinctBy(s => (s.Target, s.Name)).ToArray();
+        var styleTable = new Description { Name = "StyleContracts" };
         foreach (var style in styles)
+            styleTable.Items.Add(Row(style.Target + "." + style.Name, "Classes=\"" + style.Name + "\"", style.Effect.Length > 0 ? style.Effect : style.Selector));
+        if (styles.Length == 0) styleTable.Items.Add(Row("默认样式", "使用控件默认主题；没有额外公开的外观 Classes。"));
+        body.Children.Add(Section(name + " · Style 样式", styleTable));
+        var common = new Description { Name = "CommonProperties" };
+        foreach (var row in PreviewNativeContracts.Properties(name)) common.Items.Add(Row(row.Name, row.Detail));
+        body.Children.Add(Section(name + " · 公共属性", common));
+        foreach (var owner in owners)
+        foreach (var property in owner.Properties)
         {
-            var button = new Button { Content = "Classes=\"" + style.Name + "\"", Margin = new Thickness(0, 0, 8, 8) };
-            button.Click += (_, _) => ApplyStyle(style.Name); choices.Children.Add(button);
-            styleBody.Children.Add(new Expander { Header = style.Name + " · 选择器、状态与资源", Content = Text(style.Effect.Length > 0 ? style.Effect : style.Selector) });
+            var live = Text("");
+            var description = new StackPanel { Spacing = 4, Children =
+            {
+                Text(property.Type + (property.Writable ? " · 可写" : " · 只读"), true), Text(property.Summary),
+                Text("默认：" + property.Default + "    绑定：" + property.Binding), live
+            } };
+            if (property.Choices.Length > 0) description.Children.Add(Text("可选值：" + string.Join(" / ", property.Choices)));
+            if (property.Validation.Length > 0) description.Children.Add(Text("校验：" + property.Validation));
+            if (property.Identifier.Length > 0) description.Children.Add(Text("属性标识：" + property.Identifier));
+            PropertyTable.Items.Add(new DescriptionItem { Header = owner.Name + "." + property.Name, Content = description });
+            _live.Add((owner, property, live));
         }
-        styleBody.Children.Insert(1, choices);
-        if (styles.Length == 0) styleBody.Children.Add(Text("此控件使用默认主题和属性配置；密度使用顶部的 Small / Normal / Large 切换。"));
-        StyleSection = new Expander { Header = name + " · 样式演示", Content = styleBody };
-
-        _properties.ItemTemplate = new FuncDataTemplate<PreviewProperty>((p, _) => Text(p?.Label ?? ""));
-        _properties.ItemsSource = owners.SelectMany(o => o.Properties.Select(p => new PreviewProperty(o, p))).ToArray();
-        _properties.SelectionChanged += (_, _) => DescribeProperty();
-        _apply.Click += (_, _) => ApplyValue(_values.IsVisible ? _values.SelectedItem as string ?? "" : _editor.Text ?? "");
-        _restore.Click += (_, _) =>
-        {
-            if (_properties.SelectedItem is PreviewProperty p && _original.TryGetValue(p.Key, out var value))
-            { ContractAccessors.Restore(Resolve(p.Contract), p.Key, value); DescribeProperty(); }
-        };
-        _apply.Margin = _restore.Margin = new Thickness(0, 0, 8, 8);
-        PropertySection = new Expander { Header = name + " · 额外属性演示", Content = new StackPanel { Spacing = 10, Children =
-        {
-            _properties, _description, _live, _editor, _values,
-            new WrapPanel { Children = { _apply, _restore } }, _feedback
-        } } };
-        var api = new StackPanel { Spacing = 10 };
+        if (PropertyTable.ItemCount == 0) PropertyTable.Items.Add(Row("额外属性", "没有额外属性；使用上面的原生公共属性。"));
+        body.Children.Add(Section(name + " · 额外属性", PropertyTable));
+        foreach (var native in PreviewNativeContracts.Api(name)) ApiTable.Items.Add(Row(native.Name, native.Detail));
         foreach (var owner in owners)
         {
-            var members = new StackPanel { Spacing = 8 };
-            foreach (var member in owner.Methods.Concat(owner.Events).Concat(owner.Fields)) members.Children.Add(Text(member.Signature + "\n" + member.Summary));
-            api.Children.Add(new Expander { Header = owner.Id, Content = members });
+            foreach (var member in owner.Methods) ApiTable.Items.Add(Row(owner.Name + " · 方法", member.Signature, member.Summary));
+            foreach (var member in owner.Events) ApiTable.Items.Add(Row(owner.Name + " · 事件", member.Signature, member.Summary));
+            foreach (var member in owner.Fields.Where(f => !f.ValueType.Contains("Property", StringComparison.Ordinal)))
+                ApiTable.Items.Add(Row(owner.Name + " · 字段", member.Signature, member.Summary));
         }
-        var models = new ComboBox { HorizontalAlignment = HorizontalAlignment.Stretch };
-        var modelText = Text("");
-        models.ItemsSource = ContractCatalog.Models(owners);
-        models.ItemTemplate = new FuncDataTemplate<TypeContract>((t, _) => Text(t?.Id ?? ""));
-        models.SelectionChanged += (_, _) =>
+        if (ApiTable.ItemCount == 0) ApiTable.Items.Add(Row("API / 事件", "使用原生继承的交互与事件；没有新增方法或事件。"));
+        body.Children.Add(Section(name + " · API / 事件", ApiTable));
+        var modelTables = new List<Description>();
+        var modelBody = new StackPanel { Spacing = 16 };
+        var ownerIds = owners.Select(o => o.Id).ToHashSet();
+        foreach (var model in ContractCatalog.Models(owners).Where(m => !ownerIds.Contains(m.Id) && !m.IsStatic))
         {
-            if (models.SelectedItem is not TypeContract t) return;
-            modelText.Text = t.Summary + "\n\n" + string.Join("\n\n", t.Properties.Select(p => p.Name + " : " + p.Type + "\n" + p.Summary + "\n初值：" + p.Default))
-                + "\n\n" + string.Join("\n", t.Values.Select(v => v.Signature))
-                + "\n\n" + string.Join("\n\n", t.Methods.Select(m => m.Signature + "\n" + m.Summary));
-        };
-        models.SelectedIndex = models.ItemCount > 0 ? 0 : -1;
-        var body = new StackPanel { Spacing = 12, Children =
+            var table = new Description();
+            table.Items.Add(Row("类型", model.Id, model.Summary));
+            foreach (var property in model.Properties)
+                table.Items.Add(Row(property.Name, property.Type + (property.Writable ? " · 可写" : " · 只读"), property.Summary,
+                    "默认：" + property.Default + (property.Choices.Length > 0 ? "\n可选值：" + string.Join(" / ", property.Choices) : "")));
+            foreach (var value in model.Values) table.Items.Add(Row("枚举值", value.Signature, value.Summary));
+            foreach (var member in model.Methods.Concat(model.Events).Concat(model.Fields)) table.Items.Add(Row("成员", member.Signature, member.Summary));
+            modelBody.Children.Add(new StackPanel { Spacing = 8, Children = { Text(model.Name, true), table } });
+            modelTables.Add(table);
+        }
+        ModelTables = modelTables;
+        if (modelTables.Count == 0)
         {
-            Text(name + " · 样式、属性与接入", 18), StyleSection, PropertySection,
-            new Expander { Header = name + " · API 与事件", Content = api },
-            new Expander { Header = name + " · 内置模型", Content = new StackPanel { Spacing = 10, Children = { models, modelText } } },
-            new Expander { Header = name + " · 当前示例事件", Content = _events }
-        } };
-        var border = new Border { Padding = new Thickness(16), BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(8), Child = body };
-        border.Bind(Border.BorderBrushProperty, new DynamicResourceExtension("One.Line")); Content = border;
+            var table = new Description(); table.Items.Add(Row("Model", PreviewNativeContracts.Model(name))); modelBody.Children.Add(table);
+        }
+        body.Children.Add(Section(name + " · Model 内置模型", modelBody));
+        _events.Children.Add(Text("操作上方完整示例后，这里显示该实例触发的事件。"));
+        body.Children.Add(Section(name + " · 实时事件", _events));
+        Content = body;
         AttachedToVisualTree += (_, _) => { if (!_pageOwnsObservation) Observe(); };
         DetachedFromVisualTree += (_, _) => { if (!_pageOwnsObservation) StopObserving(); };
     }
-
+    internal static Control Section(string title, Control content) => PreviewSection.Create(title, content);
+    private static DescriptionItem Row(string label, params string[] lines) => new()
+    { Header = label, Content = new StackPanel { Spacing = 4, Children = { Text(string.Join("\n", lines.Where(l => l.Length > 0))) } } };
     internal void StopObserving()
     {
         _subscription?.Dispose(); _subscription = null; Target.PropertyChanged -= Changed;
@@ -114,60 +108,32 @@ internal sealed class ControlDetailsView : UserControl
     private void SampleReplaced(object? sender, EventArgs args) => Observe();
     internal void Observe()
     {
-        StopObserving();
-        // Popups/template children can become available only after the complete demo attaches.
-        var resolved = FindTarget(_demo, _name);
-        if (!ReferenceEquals(Target, resolved)) { Target = resolved; _original.Clear(); }
+        StopObserving(); Target = FindTarget(_demo, _name);
         _subscription = ContractAccessors.Watch(Target, Log); Target.PropertyChanged += Changed;
         if (_demo is WindowControlDemoView windows) windows.SampleChanged += SampleReplaced;
-        if (_properties.SelectedIndex < 0 && _properties.ItemCount > 0) _properties.SelectedIndex = 0;
-        DescribeProperty();
+        foreach (var entry in _live) Update(entry);
     }
     private AvaloniaObject Resolve(PropertyContract p) => p.Target.EndsWith("DataGridColumn", StringComparison.Ordinal) && Target is DataGrid grid && grid.Columns.Count > 0 ? grid.Columns[0] : Target;
-    private void DescribeProperty()
+    private void Update((TypeContract Owner, PropertyContract Contract, TextBlock Live) entry)
     {
-        if (_properties.SelectedItem is not PreviewProperty p) return;
-        var contract = p.Contract;
-        var matched = ContractAccessors.Matches(Resolve(contract), p.Key);
-        var value = matched ? ContractAccessors.Read(Resolve(contract), p.Key) : null;
-        if (matched && !_original.ContainsKey(p.Key)) _original[p.Key] = value;
-        _description.Text = p.Label + " : " + contract.Type + "\n" + contract.Summary + "\n注册／模型初值：" + contract.Default + "\n绑定：" + contract.Binding
-            + (contract.Validation.Length > 0 ? "\n校验：" + contract.Validation : "");
-        _live.Text = matched ? "当前示例值：" + Format(value) : "此成员用于相关子项／弹层或模型，见本页的完整业务示例与内置模型说明。";
-        var choices = contract.Choices.Length > 0 ? contract.Choices : contract.Type is "bool" or "bool?" ? new[] { "false", "true" } : [];
-        if (choices.Length > 0 && contract.Type.EndsWith('?')) choices = new[] { "" }.Concat(choices).ToArray();
-        _values.ItemsSource = choices; _values.SelectedItem = Format(value); _values.IsVisible = choices.Length > 0;
-        _editor.IsVisible = choices.Length == 0; _editor.Text = Format(value);
-        _apply.IsEnabled = matched && contract.Writable && ContractAccessors.CanEdit(p.Key);
-        _restore.IsEnabled = matched && contract.Writable && _original.ContainsKey(p.Key);
-        _feedback.Text = _apply.IsEnabled ? "修改只作用于本页原始示例；复杂集合与模板保留原业务示例。" : contract.Writable ? "此类型使用完整示例中的模型／集合配置。" : "只读输出，操作原示例观察其变化。";
-    }
-    internal bool ApplyValue(string value)
-    {
-        if (_properties.SelectedItem is not PreviewProperty p) return false;
-        try
+        var key = entry.Owner.Id + "." + entry.Contract.Name;
+        if (!ReferenceEquals(Resolve(entry.Contract), Target))
         {
-            var changed = ContractAccessors.Set(Resolve(p.Contract), p.Key, value, Log);
-            DescribeProperty(); _feedback.Text = changed ? "已应用到本页原示例。" : "该成员需要对应模型或子项。"; return changed;
+            entry.Live.Text = "列配置在对应 DataGridColumn 上设置，完整用法中展示了实际列配置。";
+            return;
         }
-        catch (Exception error) when (error is ArgumentException or FormatException or OverflowException or InvalidOperationException)
-        { _feedback.Text = "值未应用：" + error.Message; return false; }
-    }
-    internal void ApplyStyle(string name)
-    {
-        if (Target is not Control control || !_styleNames.Contains(name)) return;
-        foreach (var existing in control.Classes.Where(c => _styleNames.Contains(c)).ToArray()) control.Classes.Remove(existing);
-        control.Classes.Add(name); control.BringIntoView();
+        entry.Live.Text = ContractAccessors.Matches(Resolve(entry.Contract), key)
+            ? "当前示例：" + Format(ContractAccessors.Read(Resolve(entry.Contract), key)) : "在对应子项、模型或弹层上设置。";
     }
     private void Changed(object? sender, AvaloniaPropertyChangedEventArgs args)
     {
-        if (PropertySection.IsExpanded && _properties.SelectedItem is PreviewProperty p && args.Property.Name == p.Contract.Name && ContractAccessors.Matches(Resolve(p.Contract), p.Key))
-            _live.Text = "当前示例值：" + Format(ContractAccessors.Read(Resolve(p.Contract), p.Key));
+        foreach (var entry in _live.Where(p => p.Contract.Name == args.Property.Name)) Update(entry);
     }
     private void Log(string value)
     {
+        if (!_hasEvents) { _events.Children.Clear(); _hasEvents = true; }
         _events.Children.Insert(0, Text(value));
-        while (_events.Children.Count > 40) _events.Children.RemoveAt(40);
+        while (EventCount > 10) _events.Children.RemoveAt(10);
     }
     internal static AvaloniaObject FindTarget(Control demo, string name)
     {
@@ -178,8 +144,9 @@ internal sealed class ControlDetailsView : UserControl
     }
     private static string Format(object? value) => value switch
     {
-        null => "", bool b => b ? "true" : "false", string text => text,
+        null => "null", bool b => b ? "true" : "false", string text => text,
         ICollection collection => collection.Count + " 项", IFormattable f => f.ToString(null, CultureInfo.InvariantCulture), _ => value.ToString() ?? ""
     };
-    private static TextBlock Text(string text, double size = 13) => new() { Text = text, FontSize = size, TextWrapping = global::Avalonia.Media.TextWrapping.Wrap };
+    private static TextBlock Text(string text, bool heading = false) => new()
+    { Text = text, FontWeight = heading ? FontWeight.SemiBold : FontWeight.Normal, TextWrapping = TextWrapping.Wrap };
 }

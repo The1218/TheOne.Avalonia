@@ -1,0 +1,56 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="{x:Type one:Description}" TargetType="one:Description">
+    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="8" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="ItemsPanel"><ItemsPanelTemplate><StackPanel /></ItemsPanelTemplate></Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                Padding="{TemplateBinding Padding}" ClipToBounds="True">
+          <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^.borderless"><Setter Property="BorderThickness" Value="0" /><Setter Property="CornerRadius" Value="0" /></Style>
+    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /></Style>
+    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /></Style>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:DescriptionItem}" TargetType="one:DescriptionItem">
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="Padding" Value="12,10" />
+    <Setter Property="Focusable" Value="False" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Name="PART_Row" BorderBrush="{DynamicResource One.Line}" BorderThickness="0,1,0,0">
+          <Grid Name="PART_Layout" ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto">
+            <Border Name="PART_Label" Width="{TemplateBinding LabelWidth}" Background="{DynamicResource One.Subtle}"
+                    BorderBrush="{DynamicResource One.Line}" BorderThickness="0,0,1,0" Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="PART_HeaderPresenter" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" FontWeight="SemiBold"
+                                TextBlock.TextWrapping="Wrap" />
+            </Border>
+            <Border Name="PART_Value" Grid.Column="1" Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" TextBlock.TextWrapping="Wrap" />
+            </Border>
+          </Grid>
+        </Border>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:first /template/ Border#PART_Row"><Setter Property="BorderThickness" Value="0" /></Style>
+    <Style Selector="^:stacked /template/ Border#PART_Label"><Setter Property="Width" Value="NaN" /><Setter Property="Grid.ColumnSpan" Value="2" /><Setter Property="BorderThickness" Value="0,0,0,1" /></Style>
+    <Style Selector="^:stacked /template/ Border#PART_Value"><Setter Property="Grid.Column" Value="0" /><Setter Property="Grid.ColumnSpan" Value="2" /><Setter Property="Grid.Row" Value="1" /></Style>
+    <Style Selector="^.one-small"><Setter Property="Padding" Value="10,7" /></Style>
+    <Style Selector="^.one-large"><Setter Property="Padding" Value="14,13" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

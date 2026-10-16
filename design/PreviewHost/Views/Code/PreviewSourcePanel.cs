@@ -17,6 +17,7 @@ public sealed class PreviewSourcePanel : UserControl
     private readonly PreviewCodeBlock _code = new();
     private readonly StackPanel _body = new() { Spacing = 10 };
     private Control[] _views = [];
+    private bool _includeStyleExamples;
     public PreviewSourcePanel()
     {
         Content = _expander;
@@ -31,9 +32,10 @@ public sealed class PreviewSourcePanel : UserControl
             { _code.CodeType = source.Language; _code.Text = source.Text; _code.Editor.Header = source.Name; }
         };
     }
-    internal void SetViews(IEnumerable<Control> views)
+    internal void SetViews(IEnumerable<Control> views, bool includeStyleExamples = false)
     {
         _views = views.ToArray();
+        _includeStyleExamples = includeStyleExamples;
         _expander.IsExpanded = false;
         _expander.Content = null;
         _files.ItemsSource = null;
@@ -42,14 +44,15 @@ public sealed class PreviewSourcePanel : UserControl
     internal void SetViewportHeight(double height) => _code.Editor.MaxHeight = Math.Max(96, height * .45);
     private void LoadSources()
     {
-        var sources = ReadSources(_views);
+        var sources = ReadSources(_views, _includeStyleExamples);
         _files.ItemsSource = sources;
         _expander.Content = _body;
         if (sources.Count > 0) _files.SelectedIndex = 0;
     }
-    internal static IReadOnlyList<PreviewSourceFile> ReadSources(IEnumerable<Control> views)
+    internal static IReadOnlyList<PreviewSourceFile> ReadSources(IEnumerable<Control> views, bool includeStyleExamples = false)
     {
         var names = new HashSet<string>(StringComparer.Ordinal);
+        if (includeStyleExamples) names.Add(nameof(ControlStyleShowcase));
         foreach (var view in views)
         {
             names.Add(view.GetType().Name);

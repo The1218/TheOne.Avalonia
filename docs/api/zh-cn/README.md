@@ -57,6 +57,8 @@
 | [`TheOne.Avalonia.Controls.DataGridTreeTextColumn`](TheOne.Avalonia.Controls.DataGridTreeTextColumn.md) | Class | 1 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.DataGridValueAccessor`](TheOne.Avalonia.Controls.DataGridValueAccessor.md) | Class | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.DateInputDisplayStyle`](TheOne.Avalonia.Controls.DateInputDisplayStyle.md) | Enum | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.Description`](TheOne.Avalonia.Controls.Description.md) | Class／控件 | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DescriptionItem`](TheOne.Avalonia.Controls.DescriptionItem.md) | Class／控件 | 2 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs`](TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs.md) | Class | 1 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.DialogContext`](TheOne.Avalonia.Controls.DialogContext.md) | Class | 0 | 1 | 2 |
 | [`TheOne.Avalonia.Controls.DialogOptions`](TheOne.Avalonia.Controls.DialogOptions.md) | Class | 9 | 1 | 0 |

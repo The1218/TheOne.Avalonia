@@ -48,6 +48,7 @@
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/ThemeButton.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Chart.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/InfoCard.axaml" />
+        <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Description.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/ImagePreview.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/FlowStep.axaml" />
         <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Pagination.axaml" />

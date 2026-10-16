@@ -6,7 +6,7 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 
 ## Documentation
 
-[Complete public API and built-in models](../../api/en/README.md) includes every declared member, default, binding mode, validation condition, style selector and source link. Each guide below includes its additional-property/style inventory. PreviewHost presents each complete control demo on its own page, followed by styles, additional properties, APIs/events and built-in models. Only Button, Input and Select share comparison pages. Property edits use typed accessors and preserve StyledProperty bindings.
+[Complete public API and built-in models](../../api/en/README.md) includes every declared member, default, binding mode, validation condition, style selector and source link. Each guide below includes its additional-property/style inventory. PreviewHost directly compares styles, sizes and states, labeling examples with their actual `Classes` and property values. `Description` components explain public properties, APIs/events and built-in models. Property descriptions include types, defaults, binding modes, access and validation; APIs retain complete signatures, and models list each field's purpose. Only Button, Input and Select share comparison pages; other controls have independent complete pages that grow naturally with their content.
 
 For adoption or migration in an external project, start with [integration and migration](../../integration/en/README.md), including version/dependency requirements, platform boundaries and a portable Codex brief.
 
@@ -39,6 +39,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [ThemeColorPicker / ThemeButton](../../theme/en/theme-color-picker.md) | Palette dropdown, independent Light / Dark icon toggle, PreviewHost code highlighting |
 | [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
+| [Description](description.md) | Labels/content, native collections and templates, wide/narrow layout, borderless, three sizes and property/API/model descriptions |
 | [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |
 | [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
 | [ReportDesign](report-design.md) | Drag-and-drop reports, fixed page regions, API/image URLs, MVVM JSON saving and PDF |

@@ -50,7 +50,7 @@ internal static class Program
         }
         var types = symbols.Values.OrderBy(Key, StringComparer.Ordinal).Select(s =>
         {
-            var type = ReadType(s, root);
+            var type = ReadType(s, root, compilation);
             return type.Id == "Avalonia.Controls.DataGridColumn" ? type with
             {
                 Properties = type.Properties.Where(p => p.Name == "SortPriority").ToArray(),
@@ -68,6 +68,8 @@ internal static class Program
             ["FlowNode"] = ["FlowNodeContent", "FlowNodeItem", "FlowNodeStatus"],
             ["VerificationStep"] = ["StepItem", "StepState", "StepValidation", "StepCompareAttribute"],
             ["Form"] = ["StepValidation", "StepCompareAttribute"],
+            ["Description"] = ["DescriptionItem"],
+            ["DescriptionItem"] = ["Description"],
             ["Upload"] = ["UploadHttp", "UploadHttpResult", "UploadModel"],
             ["DataGridFeatures"] = ["DataGridFilterCondition", "DataGridSummaryResult", "DataGridFilterApplyResult"],
             ["DataGridTreeFeatures"] = ["DataGridTreeCollectionView", "IDataGridTreeQueryView", "DataGridTreeNodeState"]
@@ -105,7 +107,7 @@ internal static class Program
         .WithParameterOptions(SymbolDisplayParameterOptions.IncludeType | SymbolDisplayParameterOptions.IncludeName | SymbolDisplayParameterOptions.IncludeDefaultValue | SymbolDisplayParameterOptions.IncludeParamsRefOut)
         .WithGenericsOptions(SymbolDisplayGenericsOptions.IncludeTypeParameters | SymbolDisplayGenericsOptions.IncludeTypeConstraints | SymbolDisplayGenericsOptions.IncludeVariance));
 
-    private static TypeContract ReadType(INamedTypeSymbol type, string root)
+    private static TypeContract ReadType(INamedTypeSymbol type, string root, Compilation compilation)
     {
         var members = type.GetMembers().Where(m => m.DeclaredAccessibility == Accessibility.Public && !m.IsImplicitlyDeclared).ToArray();
         var fields = members.OfType<IFieldSymbol>().ToDictionary(f => f.Name);
@@ -113,14 +115,14 @@ internal static class Program
         foreach (var p in members.OfType<IPropertySymbol>())
         {
             fields.TryGetValue(p.Name + "Property", out var field);
-            properties.Add(ReadProperty(p.IsIndexer ? Signature(p) : p.Name, p.Type, p, field, p.SetMethod?.DeclaredAccessibility == Accessibility.Public, false, root));
+            properties.Add(ReadProperty(p.IsIndexer ? Signature(p) : p.Name, p.Type, p, field, p.SetMethod?.DeclaredAccessibility == Accessibility.Public, false, root, compilation));
         }
         foreach (var field in fields.Values.Where(f => f.Type.Name == "AttachedProperty"))
         {
             var name = field.Name.EndsWith("Property", StringComparison.Ordinal) ? field.Name[..^8] : field.Name;
             if (properties.Any(p => p.Name == name)) continue;
             var writable = type.GetMembers("Set" + name).OfType<IMethodSymbol>().Any(m => m.DeclaredAccessibility == Accessibility.Public && m.Parameters.Length == 2);
-            properties.Add(ReadProperty(name, ((INamedTypeSymbol)field.Type).TypeArguments[0], field, field, writable, true, root));
+            properties.Add(ReadProperty(name, ((INamedTypeSymbol)field.Type).TypeArguments[0], field, field, writable, true, root, compilation));
         }
         var control = false;
         for (var b = type; b is not null; b = b.BaseType) if (b.ToDisplayString() == "Avalonia.Controls.Control") { control = true; break; }
@@ -148,9 +150,9 @@ internal static class Program
             members.OfType<IFieldSymbol>().Where(f => type.TypeKind != TypeKind.Enum).Select(f => new MemberContract(Signature(f), Doc(f), Location(f, root))).ToArray());
     }
 
-    private static PropertyContract ReadProperty(string name, ITypeSymbol valueType, ISymbol member, IFieldSymbol? field, bool writable, bool attached, string root)
+    private static PropertyContract ReadProperty(string name, ITypeSymbol valueType, ISymbol member, IFieldSymbol? field, bool writable, bool attached, string root, Compilation compilation)
     {
-        var initializer = field?.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is VariableDeclaratorSyntax v ? v.Initializer?.Value : null;
+        var initializer = PropertyRegistration(field, compilation);
         var registration = initializer?.ToString() ?? "";
         var mode = Regex.Match(registration, @"defaultBindingMode:\s*(?:global::)?(?:\w+\.)*(\w+)").Groups[1].Value;
         var validation = initializer is InvocationExpressionSyntax registrationCall
@@ -187,6 +189,27 @@ internal static class Program
             defaultValue, binding, validation, writable, attached, field?.Name ?? "", Location(member, root),
             registration.Contains("inherits: true"), member.IsStatic, enumType?.TypeKind == TypeKind.Enum ? enumType.GetMembers().OfType<IFieldSymbol>().Where(f => f.HasConstantValue).Select(f => f.Name).ToArray() : [],
             attached ? member.ContainingType.GetMembers("Get" + name).OfType<IMethodSymbol>().FirstOrDefault(m => m.DeclaredAccessibility == Accessibility.Public && m.Parameters.Length == 1) is { } getter ? Key(getter.Parameters[0].Type) : "" : member.ContainingType.Name == "DataGridColumn" ? Key(member.ContainingType) : "");
+    }
+
+    private static ExpressionSyntax? PropertyRegistration(IFieldSymbol? field, Compilation compilation)
+    {
+        var seen = new HashSet<ISymbol>(SymbolEqualityComparer.Default);
+        ExpressionSyntax? initializer = null;
+        while (field is not null && seen.Add(field))
+        {
+            if (field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is not VariableDeclaratorSyntax { Initializer.Value: { } value }) break;
+            initializer = value;
+            // A no-argument AddOwner preserves its source registration, including
+            // defaults, validation and inheritance. Metadata overrides retain
+            // their own initializer for the explicit-argument reader.
+            if (value is not InvocationExpressionSyntax
+                {
+                    ArgumentList.Arguments.Count: 0,
+                    Expression: MemberAccessExpressionSyntax { Name.Identifier.ValueText: "AddOwner" } access
+                }) break;
+            field = compilation.GetSemanticModel(value.SyntaxTree).GetSymbolInfo(access.Expression).Symbol as IFieldSymbol;
+        }
+        return initializer;
     }
 
     private static IEnumerable<StyleContract> ReadStyles(string root)

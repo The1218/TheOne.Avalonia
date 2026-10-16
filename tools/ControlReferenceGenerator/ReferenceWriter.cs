@@ -21,6 +21,7 @@ internal static class ReferenceWriter
         ["content-feedback"] = ["TransitioningContentControl", "ContentTransitionOptions", "NotificationCard", "NotificationMotion"],
         ["layout"] = ["Menu", "MenuItem", "ContextMenu", "MenuFlyout", "Flyout", "FlyoutPresenter", "Expander", "SplitView", "GridSplitter", "ScrollViewer", "ScrollBar", "Separator"],
         ["loading"] = ["LoadingContainer", "LoadingIndicator", "ButtonLoading"],
+        ["description"] = ["Description", "DescriptionItem"],
         ["form"] = ["Form", "FormItem", "StepValidation", "StepValidationError", "IStepValidator", "StepCompareAttribute"],
         ["multi-select-box"] = ["MultiSelectBox", "MultiSelectItemAdapter", "MultiSelectBoxItem", "MultiSelectTag"],
         ["nav-menu"] = ["NavMenu", "NavMenuItem", "NavMenuSearchText", "NavMenuFilterBox", "NavMenuFilterResult"],
@@ -114,7 +115,7 @@ internal static class ReferenceWriter
                 if (!Topics.TryGetValue(topic, out var names)) continue;
                 var content = new StringBuilder(original[(lang, topic)].TrimEnd() + "\n\n" + Start + "\n");
                 content.AppendLine(zh ? "## 额外属性、样式与完整 API\n" : "## Additional properties, styles and complete API\n");
-                content.AppendLine(zh ? "本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 在各控件自己的页面完整展示原始示例，并补充样式、额外属性、API／事件与内置模型；仅 Button、Input、Select 合并比较。\n" : "This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost keeps complete demos on their own pages, with styles, additional properties, APIs/events and models on each page. Only Button, Input and Select share comparison pages.\n");
+                content.AppendLine(zh ? "本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 在各控件页直接标明示例的 Classes、尺寸及状态；公共属性、API／事件和模型字段使用 Description 组件说明，包含属性类型、默认值、绑定模式、校验条件及 API 签名。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。\n" : "This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost labels example Classes, sizes and states directly on each control page. Description components explain public properties, APIs/events and model fields, including property types, defaults, binding modes, validation and API signatures. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.\n");
                 var owners = data.Types.Where(t => names.Contains(t.Name)).ToArray();
                 foreach (var owner in owners)
                 {

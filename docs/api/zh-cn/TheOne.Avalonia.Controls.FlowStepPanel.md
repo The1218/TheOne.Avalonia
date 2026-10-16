@@ -12,9 +12,9 @@ Equal horizontal slots or natural vertical rows, with rails between actual marke
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L23) | `double` | 可写; OneWay | `inherited registration` | 150 / 180 / 210 |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L22) | `double` | 可写; OneWay | `inherited registration` | 20 / 24 / 32 |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L21) | `Avalonia.Layout.Orientation` | 可写; OneWay | `inherited registration` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 可选值：`Horizontal`, `Vertical` |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L23) | `double` | 可写; OneWay; 向后代继承 | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L22) | `double` | 可写; OneWay; 向后代继承 | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L21) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
 | [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L24) | `double` | 可写; OneWay | `0` | 宿主提供给流程布局的可用宽度；用于节点排布，通常由模板维护。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ## 方法与构造

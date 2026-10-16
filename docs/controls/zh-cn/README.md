@@ -6,7 +6,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 
 ## 文档导航
 
-[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出每个声明成员、初值、绑定模式、校验条件、样式选择器及源码链接。下列每个指南均补充对应的额外属性和样式清单。PreviewHost 在每个控件自己的页面完整展示示例，并附样式、额外属性、API／事件及内置模型；仅 Button、Input、Select 合并比较。属性调整使用类型化访问器并保留 StyledProperty 绑定。
+[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出每个声明成员、初值、绑定模式、校验条件、样式选择器及源码链接。下列每个指南均补充对应的额外属性和样式清单。PreviewHost 在每个控件页直接并列展示样式、尺寸及状态，示例标明实际 `Classes` 和属性值；公共属性、API／事件、内置模型使用 `Description` 组件说明。属性说明包含类型、默认值、绑定模式、读写边界和校验，API 保留完整签名，模型按字段列出用途。仅 Button、Input、Select 合并比较，其余控件使用独立完整页面；页面随内容自然增高。
 
 外部项目首次接入或迁移，先读[项目接入与迁移](../../integration/zh-cn/README.md)，其中包含版本、依赖、跨平台边界及可复制给 Codex 的任务说明。
 
@@ -39,6 +39,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [ThemeColorPicker / ThemeButton](../../theme/zh-cn/theme-color-picker.md) | 配色下拉选择、独立明暗图标开关与 PreviewHost 代码高亮 |
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
+| [Description 说明列表](description.md) | 标签／内容、原生集合与模板、宽窄布局、borderless、三档尺寸及属性／API／模型说明 |
 | [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
 | [ReportDesign 报表设计器](report-design.md) | 自由拖放、固定页眉页脚、接口／图片地址、MVVM JSON 保存与 PDF |

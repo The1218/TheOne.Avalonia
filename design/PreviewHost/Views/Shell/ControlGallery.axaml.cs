@@ -41,7 +41,9 @@ public partial class ControlGallery : UserControl
         PageHost.VerticalContentAlignment=fillsViewport ? global::Avalonia.Layout.VerticalAlignment.Stretch : global::Avalonia.Layout.VerticalAlignment.Top;
         PageFrame.Padding=new Thickness(isReportDesigner ? 0 : 28);
         _currentView=page; PageHost.Content=presentation; ResetScroll(); UpdateViewport();
-        SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page });
+        var hasStyleExamples = descriptor.ControlIds?.Any(controlId => ControlStyleShowcase.Supports(PreviewPageCatalog.Controls.First(control => control.Id == controlId).Title))
+            ?? ControlStyleShowcase.Supports(descriptor.Title);
+        SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page }, hasStyleExamples);
     }
     private void UpdateViewport()
     {

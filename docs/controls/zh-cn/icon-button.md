@@ -34,7 +34,7 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 <!-- generated-contracts:start -->
 ## 额外属性、样式与完整 API
 
-本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 在各控件自己的页面完整展示原始示例，并补充样式、额外属性、API／事件与内置模型；仅 Button、Input、Select 合并比较。
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 在各控件页直接标明示例的 Classes、尺寸及状态；公共属性、API／事件和模型字段使用 Description 组件说明，包含属性类型、默认值、绑定模式、校验条件及 API 签名。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### ButtonLoading
 
@@ -57,7 +57,7 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 | [`IconSize`](../../../TheOne.Avalonia/Controls/IconButton.cs#L26) | `double` | 可写; OneWay | `15` | 图标绘制尺寸，单位 DIP；独立于文本字号与按钮点击区域。 校验：`value => double.IsFinite(value) && value > 0` |
 | [`IconSpacing`](../../../TheOne.Avalonia/Controls/IconButton.cs#L27) | `double` | 可写; OneWay | `8` | 图标与相邻文本／内容的 DIP 间距。 校验：`value => double.IsFinite(value) && value >= 0` |
 | [`IconTemplate`](../../../TheOne.Avalonia/Controls/IconButton.cs#L25) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L23) | `bool` | 可写; OneWay | `inherited registration` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L23) | `bool` | 可写; OneWay | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
 | [`ShowIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L21) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### ThemeButton

@@ -12,11 +12,15 @@ internal sealed class ControlPreviewPage : UserControl
     {
         Demo = demo; UsesViewport = demo is WorkflowEditorDemoView or ReportDesign or ReportPreview;
         Details = new ControlDetailsView(descriptor.Title, demo, UsesViewport);
-        var supplements = new StackPanel { Spacing = 16, Children = { Details } };
+        var supplements = new StackPanel { Spacing = 24 };
+        var styles = ControlStyleShowcase.Create(descriptor.Title);
+        if (UsesViewport && styles is not null) supplements.Children.Add(styles);
+        supplements.Children.Add(Details);
         foreach (var name in descriptor.Title switch
         {
             "Form" => new[] { "FormItem" }, "FlowStep" => new[] { "FlowNode" }, "LoadingContainer" => new[] { "LoadingIndicator" },
-            "ColorPicker" => new[] { "ColorView" }, "RefreshContainer" => new[] { "RefreshVisualizer" }, _ => Array.Empty<string>()
+            "ColorPicker" => new[] { "ColorView" }, "RefreshContainer" => new[] { "RefreshVisualizer" },
+            "Description" => new[] { "DescriptionItem" }, _ => Array.Empty<string>()
         }) supplements.Children.Add(new ControlDetailsView(name, demo));
         if (UsesViewport)
         {
@@ -29,7 +33,15 @@ internal sealed class ControlPreviewPage : UserControl
         {
             new TabItem { Header = "完整示例", Content = demo },
             new TabItem { Header = "样式、属性与 API", Content = new ScrollViewer { Content = supplements, HorizontalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled } }
-        } } : new StackPanel { Spacing = 24, Children = { demo, supplements } };
+        } } : Presentation(descriptor.Title, demo, styles, supplements);
+    }
+    private static Control Presentation(string name, UserControl demo, Control? styles, Control supplements)
+    {
+        var page = new StackPanel { Spacing = 24 };
+        if (styles is not null) page.Children.Add(styles);
+        page.Children.Add(PreviewSection.Create(name + " · 完整用法", demo));
+        page.Children.Add(supplements);
+        return page;
     }
     internal void SetViewportHeight(double height)
     {

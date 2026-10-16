@@ -4,6 +4,10 @@ namespace TheOne.Documentation;
 internal static class PropertyHelp
 {
     private static readonly Dictionary<string, (string Zh, string En)> Entries = Parse("""
+    Description.LabelWidth|标签列的 DIP 宽度；向后代继承，可由 DescriptionItem 单项覆盖，窄布局切换为上下排列。|Label-column width in DIPs, inherited by descendants and overridable per DescriptionItem; narrow layouts place the label above the content.
+    Description.StackWidth|切换上下排列的可用宽度阈值，单位 DIP；宽度小于该值时标签在上、内容在下。向后代继承，可由单项覆盖。|Available-width threshold in DIPs for stacked labels and content; below this width the label appears above its content. Inherited by descendants and overridable per item.
+    DescriptionItem.LabelWidth|此说明项的标签列 DIP 宽度；默认继承 Description.LabelWidth，局部值仅覆盖本项。|Label-column width in DIPs for this row; inherits Description.LabelWidth by default, while a local value overrides this item only.
+    DescriptionItem.StackWidth|此说明项切换上下排列的可用宽度阈值，单位 DIP；默认继承 Description.StackWidth，局部值仅覆盖本项。|Available-width threshold in DIPs for stacking this row; inherits Description.StackWidth by default, while a local value overrides this item only.
     IsLoading|显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。|Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes.
     Orientation|横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。|Horizontal/vertical arrangement; updates node, connector and content layout without changing business order.
     Placement|装饰或内容的位置枚举；按枚举值选择边缘，不使用字符串坐标。|Placement enum selecting a decoration/content edge rather than string coordinates.

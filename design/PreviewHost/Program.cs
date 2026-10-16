@@ -26,12 +26,14 @@ internal static class Program
             else PreviewCodePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }
-        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-pages")
+        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-pages" or "--verify-description" or "--verify-style-showcase")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
             void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
             if (args[0] == "--verify-home") HomePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             else if (args[0] == "--verify-control-pages") ControlPagesPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-description") DescriptionPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-style-showcase") ControlStyleShowcasePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             else PreviewPrintingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }
@@ -191,6 +193,9 @@ internal static class Program
                 --colorpicker = desktop native ColorPicker demo
                 --verify-colorpicker [output] = ColorPicker / ColorView themes, input, binding and pixels only
                 --verify-home [output] = Home layout, live examples, navigation and cached state only
+                --verify-control-pages [output] = per-control navigation, visible Description contracts and intact complete examples only
+                --verify-description [output] = Description layout, templates, themes, density and drawing only
+                --verify-style-showcase [output] = labelled style/state/size examples and responsive drawing only
                 --verify-preview-printing [output] = report PDF snapshot, package preview and fake queue submission only
                 --verify-colorpicker-model-spacing [output] = RGB / HSV spacing, pointer, keyboard and gap pixels only
                 --verify-workflow [output] = WorkflowEditor contracts, binding, editing, persistence and rendering

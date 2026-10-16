@@ -19,7 +19,11 @@ public partial class ShowcasePage : UserControl
         {
             var descriptor = PreviewPageCatalog.Controls.First(control => control.Id == id);
             var view = PreviewPageCatalog.CreateControl(id);
-            var section = new Border { Classes = { "section" }, Child = new StackPanel { Spacing = 20, Children = { view, new ControlDetailsView(descriptor.Title, view) } } };
+            var content = new StackPanel { Spacing = 24 };
+            if (ControlStyleShowcase.Create(descriptor.Title) is { } styles) content.Children.Add(styles);
+            content.Children.Add(PreviewSection.Create(descriptor.Title + " · 完整用法", view));
+            content.Children.Add(new ControlDetailsView(descriptor.Title, view));
+            var section = new Border { Classes = { "section" }, Child = content };
             _views.Add(id, view);
             _sections.Add(id, section);
             Sections.Children.Add(section);

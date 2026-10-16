@@ -5,7 +5,7 @@
 A cross-platform theme and control library built on Avalonia's native controls. It includes light and dark themes, three control sizes, multiple control styles, and gradient palettes. PreviewHost provides interactive examples.
 
 - Consistent themes for buttons, inputs, selectors, date and time pickers, lists, trees, menus, and layout controls.
-- Fourteen chart types, plus Form/FormItem, MultiSelectBox, NavMenu, InfoCard, Tag, VerificationStep, window, and messaging extensions.
+- Fourteen chart types, plus Form/FormItem, MultiSelectBox, NavMenu, InfoCard, Description, Tag, VerificationStep, window, and messaging extensions.
 - DataGrid with compiled bindings, automatic entity-property filters, frozen columns on both sides, and numeric summaries.
 
 ## Requirements and versions
@@ -71,7 +71,7 @@ Target `net10.0` and use Avalonia 12.1.4 consistently. Load the theme in `App.ax
 
 - [Integration and migration](docs/integration/en/README.md): existing-project adoption, platform boundaries, and a portable brief for Codex.
 - [Documentation index](docs/README.md): choose a task and language.
-- [Complete public API and models](docs/api/en/README.md): declared properties, defaults, styles, methods, events and built-in models; PreviewHost provides complete per-control pages with style and property examples.
+- [Complete public API and models](docs/api/en/README.md): declared properties, defaults, styles, methods, events and built-in models. PreviewHost labels style comparisons with actual Classes and property values; Description components explain properties, API signatures and model fields on each control page.
 - [Control documentation](docs/controls/en/README.md): properties, behavior, and usage examples.
 - [Theme documentation](docs/theme/en/README.md): colors, styles, sizes, and motion.
 

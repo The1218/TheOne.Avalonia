@@ -5,7 +5,7 @@
 基于 Avalonia 官方控件的跨平台主题与控件库，内置明暗主题、三档尺寸、多种控件外观与渐变配色。PreviewHost 提供可交互的控件示例。
 
 - 为按钮、输入、选择、日期时间、列表、树、菜单和布局控件提供统一主题。
-- 提供 14 种图表，以及 Form/FormItem、MultiSelectBox、NavMenu、InfoCard、Tag、VerificationStep、窗口与消息扩展。
+- 提供 14 种图表，以及 Form/FormItem、MultiSelectBox、NavMenu、InfoCard、Description、Tag、VerificationStep、窗口与消息扩展。
 - DataGrid 支持编译绑定、自动实体属性筛选、左右冻结列与底部数值统计。
 
 ## 环境与版本
@@ -71,7 +71,7 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 
 - [项目接入与迁移](docs/integration/zh-cn/README.md)：外部项目改造、跨平台边界及可复制给 Codex 的任务说明。
 - [文档总入口](docs/README.md)：按任务和语言选择文档。
-- [完整公共 API 与模型](docs/api/zh-cn/README.md)：所有额外属性、初值、样式、方法、事件与内置模型；PreviewHost 在各控件页面提供完整示例、样式与属性演示。
+- [完整公共 API 与模型](docs/api/zh-cn/README.md)：所有额外属性、初值、样式、方法、事件与内置模型。PreviewHost 在各控件页标明样式示例的实际 Classes 和属性值，并用 Description 组件说明公共属性、API 签名与模型字段。
 - [控件文档](docs/controls/zh-cn/README.md)：控件属性、行为与接入示例。
 - [主题文档](docs/theme/zh-cn/README.md)：配色、样式、尺寸与动效。
 

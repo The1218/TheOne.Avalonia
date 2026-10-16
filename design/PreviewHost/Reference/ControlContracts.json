@@ -4697,9 +4697,9 @@
           "Name": "FrozenRightColumnCount",
           "Type": "int",
           "Summary": "\u53F3\u4FA7\u51BB\u7ED3\u5217\u6570\uFF1B\u4E0E\u5DE6\u4FA7\u51BB\u7ED3\u533A\u57DF\u5171\u540C\u5360\u7528\u53EF\u7528\u5BBD\u5EA6\u3002",
-          "Default": "inherited registration",
+          "Default": "0 / default",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "value =\u003E value \u003E= 0",
           "Writable": true,
           "Attached": true,
           "Identifier": "FrozenRightColumnCountProperty",
@@ -5862,6 +5862,150 @@
       "Fields": []
     },
     {
+      "Id": "TheOne.Avalonia.Controls.Description",
+      "Name": "Description",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": true,
+      "IsStatic": false,
+      "Base": "Avalonia.Controls.ItemsControl",
+      "Summary": "A naturally sized list of labelled values, with automatic stacking in narrow layouts.",
+      "Source": "TheOne.Avalonia/Controls/Description.cs:7",
+      "Properties": [
+        {
+          "Name": "LabelWidth",
+          "Type": "double",
+          "Summary": "\u0060double\u0060\uFF0C\u0060180\u0060 ;  \u53CC\u5217\u5E03\u5C40\u4E2D\u540D\u79F0\u5217\u5BBD\u5EA6\uFF0C\u5355\u4F4D DIP\u3002\u53EF\u7ED1\u5B9A\u3001\u53EF\u901A\u8FC7\u6837\u5F0F\u8BBE\u7F6E\uFF0C\u5E76\u7EE7\u627F\u81F3\u884C\uFF1B\u5FC5\u987B\u4E3A\u6709\u9650\u975E\u8D1F\u503C\u3002",
+          "Default": "180",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "LabelWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/Description.cs:18",
+          "Inherits": true,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "StackWidth",
+          "Type": "double",
+          "Summary": "\u0060double\u0060\uFF0C\u0060520\u0060 ;  \u884C\u53EF\u7528\u5BBD\u5EA6\u5C0F\u4E8E\u6B64\u503C\u65F6\uFF0C\u540D\u79F0\u79FB\u5230\u5185\u5BB9\u4E0A\u65B9\u3002\u00600\u0060 \u4FDD\u6301\u53CC\u5217\uFF1B\u5FC5\u987B\u4E3A\u6709\u9650\u975E\u8D1F\u503C\u3002",
+          "Default": "520",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "StackWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/Description.cs:21",
+          "Inherits": true,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "Description.Description()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/Description.cs:7",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [
+        "TheOne.Avalonia.Controls.DescriptionItem"
+      ],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E Description.LabelWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/Description.cs:9",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E Description.StackWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/Description.cs:13",
+          "ValueType": ""
+        }
+      ]
+    },
+    {
+      "Id": "TheOne.Avalonia.Controls.DescriptionItem",
+      "Name": "DescriptionItem",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": true,
+      "IsStatic": false,
+      "Base": "Avalonia.Controls.Primitives.HeaderedContentControl",
+      "Summary": "A label and value row. Header and Content accept text, controls or typed data templates.",
+      "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:10",
+      "Properties": [
+        {
+          "Name": "LabelWidth",
+          "Type": "double",
+          "Summary": "\u0060double\u0060\uFF0C\u0060180\u0060 ;  \u53CC\u5217\u5E03\u5C40\u4E2D\u540D\u79F0\u5217\u5BBD\u5EA6\uFF0C\u5355\u4F4D DIP\u3002\u53EF\u7ED1\u5B9A\u3001\u53EF\u901A\u8FC7\u6837\u5F0F\u8BBE\u7F6E\uFF0C\u5E76\u7EE7\u627F\u81F3\u884C\uFF1B\u5FC5\u987B\u4E3A\u6709\u9650\u975E\u8D1F\u503C\u3002",
+          "Default": "180",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "LabelWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:18",
+          "Inherits": true,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "StackWidth",
+          "Type": "double",
+          "Summary": "\u0060double\u0060\uFF0C\u0060520\u0060 ;  \u884C\u53EF\u7528\u5BBD\u5EA6\u5C0F\u4E8E\u6B64\u503C\u65F6\uFF0C\u540D\u79F0\u79FB\u5230\u5185\u5BB9\u4E0A\u65B9\u3002\u00600\u0060 \u4FDD\u6301\u53CC\u5217\uFF1B\u5FC5\u987B\u4E3A\u6709\u9650\u975E\u8D1F\u503C\u3002",
+          "Default": "520",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "StackWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:21",
+          "Inherits": true,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "DescriptionItem.DescriptionItem()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:10",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [
+        "TheOne.Avalonia.Controls.Description"
+      ],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E DescriptionItem.LabelWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:12",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E DescriptionItem.StackWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/DescriptionItem.cs:13",
+          "ValueType": ""
+        }
+      ]
+    },
+    {
       "Id": "TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs",
       "Name": "DialogCloseRequestedEventArgs",
       "Namespace": "TheOne.Avalonia.Controls",
@@ -6386,14 +6530,14 @@
           "Name": "Orientation",
           "Type": "Avalonia.Layout.Orientation",
           "Summary": "\u6A2A\u5411\u6216\u7EB5\u5411\u6392\u5217\uFF1B\u5207\u6362\u540E\u540C\u65F6\u66F4\u65B0\u8282\u70B9\u3001\u8FDE\u7EBF\u53CA\u5185\u5BB9\u5E03\u5C40\uFF0C\u4E0D\u6539\u53D8\u4E1A\u52A1\u987A\u5E8F\u3002",
-          "Default": "inherited registration",
+          "Default": "Orientation.Horizontal",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "Enum.IsDefined",
           "Writable": true,
           "Attached": false,
           "Identifier": "OrientationProperty",
           "Source": "TheOne.Avalonia/Controls/FlowNode.cs:38",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [
             "Horizontal",
@@ -6769,9 +6913,9 @@
           "Name": "ContentSpacing",
           "Type": "double",
           "Summary": "10 / 12 / 16",
-          "Default": "inherited registration",
+          "Default": "12",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "ContentSpacingProperty",
@@ -6785,14 +6929,14 @@
           "Name": "Orientation",
           "Type": "Avalonia.Layout.Orientation",
           "Summary": "\u6A2A\u5411\u6216\u7EB5\u5411\u6392\u5217\uFF1B\u5207\u6362\u540E\u540C\u65F6\u66F4\u65B0\u8282\u70B9\u3001\u8FDE\u7EBF\u53CA\u5185\u5BB9\u5E03\u5C40\uFF0C\u4E0D\u6539\u53D8\u4E1A\u52A1\u987A\u5E8F\u3002",
-          "Default": "inherited registration",
+          "Default": "Orientation.Horizontal",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "Enum.IsDefined",
           "Writable": true,
           "Attached": false,
           "Identifier": "OrientationProperty",
           "Source": "TheOne.Avalonia/Controls/FlowStepPanel.cs:63",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [
             "Horizontal",
@@ -7104,14 +7248,14 @@
           "Name": "MinNodeWidth",
           "Type": "double",
           "Summary": "150 / 180 / 210",
-          "Default": "inherited registration",
+          "Default": "180",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "MinNodeWidthProperty",
           "Source": "TheOne.Avalonia/Controls/FlowStepPanel.cs:23",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [],
           "Target": ""
@@ -7120,14 +7264,14 @@
           "Name": "NodeSpacing",
           "Type": "double",
           "Summary": "20 / 24 / 32",
-          "Default": "inherited registration",
+          "Default": "24",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "NodeSpacingProperty",
           "Source": "TheOne.Avalonia/Controls/FlowStepPanel.cs:22",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [],
           "Target": ""
@@ -7136,14 +7280,14 @@
           "Name": "Orientation",
           "Type": "Avalonia.Layout.Orientation",
           "Summary": "\u6A2A\u5411\u6216\u7EB5\u5411\u6392\u5217\uFF1B\u5207\u6362\u540E\u540C\u65F6\u66F4\u65B0\u8282\u70B9\u3001\u8FDE\u7EBF\u53CA\u5185\u5BB9\u5E03\u5C40\uFF0C\u4E0D\u6539\u53D8\u4E1A\u52A1\u987A\u5E8F\u3002",
-          "Default": "inherited registration",
+          "Default": "Orientation.Horizontal",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "Enum.IsDefined",
           "Writable": true,
           "Attached": false,
           "Identifier": "OrientationProperty",
           "Source": "TheOne.Avalonia/Controls/FlowStepPanel.cs:21",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [
             "Horizontal",
@@ -7301,14 +7445,14 @@
           "Name": "LabelOrientation",
           "Type": "Avalonia.Layout.Orientation",
           "Summary": "\u9ED8\u8BA4 \u0060Vertical\u0060 / \u0060120\u0060\uFF0C\u5411\u5B57\u6BB5\u7EE7\u627F\uFF1B\u5BBD\u5EA6\u5FC5\u987B\u4E3A\u6B63\u6709\u9650\u6570",
-          "Default": "inherited registration",
+          "Default": "Orientation.Vertical",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "Enum.IsDefined",
           "Writable": true,
           "Attached": false,
           "Identifier": "LabelOrientationProperty",
           "Source": "TheOne.Avalonia/Controls/Form.cs:48",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [
             "Horizontal",
@@ -7320,14 +7464,14 @@
           "Name": "LabelWidth",
           "Type": "double",
           "Summary": "\u9ED8\u8BA4 \u0060Vertical\u0060 / \u0060120\u0060\uFF0C\u5411\u5B57\u6BB5\u7EE7\u627F\uFF1B\u5BBD\u5EA6\u5FC5\u987B\u4E3A\u6B63\u6709\u9650\u6570",
-          "Default": "inherited registration",
+          "Default": "120",
           "Binding": "OneWay",
-          "Validation": "",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "LabelWidthProperty",
           "Source": "TheOne.Avalonia/Controls/Form.cs:49",
-          "Inherits": false,
+          "Inherits": true,
           "Static": false,
           "Choices": [],
           "Target": ""
@@ -9927,7 +10071,7 @@
           "Name": "IsLoading",
           "Type": "bool",
           "Summary": "\u663E\u793A\u5FD9\u788C\u6307\u793A\uFF1B\u6309\u94AE\u4FDD\u7559\u5C3A\u5BF8\u5E76\u963B\u6B62\u91CD\u590D\u64CD\u4F5C\uFF0C\u5BB9\u5668\u663E\u793A\u52A0\u8F7D\u5C42\u3002\u4EFB\u52A1\u5B8C\u6210\u540E\u7531\u5BBF\u4E3B\u590D\u4F4D\u3002",
-          "Default": "inherited registration",
+          "Default": "false",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
@@ -29728,6 +29872,46 @@
       "Effect": "DatePickerPresenter.one-small, TimePickerPresenter.one-small =\u003E styling:PickerSizing.ItemHeight=32; styling:PickerSizing.ViewportHeight=160; styling:PickerSizing.PopupHeight=288; FontSize=12",
       "Internal": true,
       "Source": "TheOne.Avalonia/Themes/Sizing.axaml:620"
+    },
+    {
+      "Target": "Description",
+      "Name": "borderless",
+      "Selector": "^.borderless",
+      "Effect": "^.borderless =\u003E BorderThickness=0; CornerRadius=0",
+      "Internal": false,
+      "Source": "TheOne.Avalonia/Themes/Controls/Description.axaml:21"
+    },
+    {
+      "Target": "Description",
+      "Name": "one-large",
+      "Selector": "^.one-large",
+      "Effect": "^.one-large =\u003E FontSize=16",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/Description.axaml:23"
+    },
+    {
+      "Target": "Description",
+      "Name": "one-small",
+      "Selector": "^.one-small",
+      "Effect": "^.one-small =\u003E FontSize=12",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/Description.axaml:22"
+    },
+    {
+      "Target": "DescriptionItem",
+      "Name": "one-large",
+      "Selector": "^.one-large",
+      "Effect": "^.one-large =\u003E Padding=14,13",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/Description.axaml:54"
+    },
+    {
+      "Target": "DescriptionItem",
+      "Name": "one-small",
+      "Selector": "^.one-small",
+      "Effect": "^.one-small =\u003E Padding=10,7",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/Description.axaml:53"
     },
     {
       "Target": "Expander",

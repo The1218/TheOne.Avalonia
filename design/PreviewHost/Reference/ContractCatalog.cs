@@ -25,10 +25,12 @@ internal static class ContractCatalog
             ?? throw new InvalidOperationException("Embedded control contracts are empty.");
     });
     internal static ContractSet Current => Data.Value;
-    internal static TypeContract? Find(string name) => Current.Types.FirstOrDefault(t => t.Name == name);
+    internal static TypeContract? Find(string name) => Current.Types.FirstOrDefault(t => t.Name == (name switch
+    { "Toast" => "OneToast", "Dialog" => "OneDialog", "MessageBox" => "OneMessageBox", _ => name }));
     internal static IReadOnlyList<TypeContract> Owners(string name)
     {
-        var names = new HashSet<string> { name, "ControlSizing", "Motion" };
+        var names = new HashSet<string> { name };
+        if (Find(name)?.IsStatic != true) { names.Add("ControlSizing"); names.Add("Motion"); }
         for (var type = Find(name); type is not null; type = Find(type.Base.Split('.').Last()))
         { names.Add(type.Name); if (type.Base == type.Id) break; }
         foreach (var extra in name switch
@@ -51,7 +53,8 @@ internal static class ContractCatalog
         var names = new HashSet<string> { name };
         for (var type = Find(name); type is not null; type = Find(type.Base.Split('.').Last()))
         { names.Add(type.Name); names.Add(type.Base.Split('.').Last()); }
-        if (name is "RepeatButton" or "ToggleButton" or "SplitButton" or "ToggleSplitButton") names.Add("Button");
+        if (name is "RepeatButton" or "ToggleButton") names.Add("Button");
+        if (name == "ToggleSplitButton") names.Add("SplitButton");
         return names.ToArray();
     }
     internal static IReadOnlyList<TypeContract> Models(IEnumerable<TypeContract> owners)

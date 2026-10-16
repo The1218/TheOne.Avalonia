@@ -11,6 +11,8 @@ dotnet run --project tools/ControlReferenceGenerator/ControlReferenceGenerator.c
 
 Use the same command with `--check` instead of `--generate` to fail on reference/catalog/accessor drift. No modification timestamps or absolute machine paths are embedded. The tool uses Roslyn shipped with the SDK and adds no production dependency. Its JSON output argument is diagnostic data and belongs under `.preview/`.
 
+For a no-argument `AddOwner<T>()`, the generator follows the source field when available to preserve the original default, binding mode, validation and inheritance metadata. External Avalonia registrations without source remain marked as inherited registrations. An explicit metadata override is read from its own declaration.
+
 Tracked outputs:
 
 - `docs/api/en/` and `docs/api/zh-cn/`: each exported type, declared properties with access/default/binding/validation, signatures, events, enum values, related models and source links.
@@ -18,7 +20,9 @@ Tracked outputs:
 - `design/PreviewHost/Reference/ControlContracts.json`: embedded descriptions, models and styles; deserialized with a source-generated JSON context.
 - `design/PreviewHost/Reference/ContractAccessors.g.cs`: direct typed property reads/writes, restoration and event subscriptions. No runtime reflection activation or binding is used.
 
-PreviewHost keeps complete demos on their individual pages, with local style/property/API/model sections. Only Button, Input and Select share comparison pages. The demo is never extracted or reparented. The page grows naturally; canvas editors own a finite viewport and place reference content in a separate tab. Typed property edits use SetCurrentValue for StyledProperty/AttachedProperty members to preserve bindings. Theme/window/service examples retain their real ownership rules. Template-only classes are documented and excluded from manual style choices.
+PreviewHost keeps complete demos on their individual pages. Visible example cards compare styles, sizes and states, labeling the exact `Classes` and property values beside the rendered examples. `Description` components present public properties, API/event signatures and built-in model fields. Property rows include their type, registration default, binding mode, read/write scope and validation; model rows retain member types and meanings. Native inherited APIs, such as `ItemsSource`, `Header` and `Content`, remain Avalonia APIs and should be identified as inherited in authored examples. `Description` and `DescriptionItem` have their own guide, generated contracts and paired API links.
+
+Only Button, Input and Select share comparison pages. The original demo is never extracted or reparented. Pages and reference rows grow naturally; canvas editors own a finite viewport and keep reference content reachable in a separate tab. Typed property examples that update StyledProperty/AttachedProperty members use SetCurrentValue to preserve bindings. Theme/window/service examples retain their real ownership rules. Template-only classes are documented as automatic state and are not offered as public appearance choices. The catalog supplies description content; property dropdown editors are not the reference presentation.
 
 After updating preview behavior, build only PreviewHost with isolated artifacts and run its independent `--verify-control-pages` entry. This checks the new catalog/demos and does not request a full control-library regression. The MultiSelectBox scroll fix has separate coverage in `--verify-multiselect`; the Home-specific partial verification file is not linked into the native package consumer.
 
