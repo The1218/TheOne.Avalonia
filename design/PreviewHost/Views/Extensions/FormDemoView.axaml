@@ -1,0 +1,65 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.FormDemoView"
+    x:CompileBindings="True"
+    x:DataType="vm:FormDemoViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:vm="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel
+            HorizontalAlignment="Stretch"
+            MaxWidth="700"
+            Spacing="16">
+            <TextBlock
+                FontSize="24"
+                FontWeight="SemiBold"
+                Text="Form 表单" />
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                Text="复用 VerificationStep 的属性校验；字段使用原生输入和编译绑定。必填提示仅负责展示。"
+                TextWrapping="Wrap" />
+            <one:Form
+                Name="FormSample"
+                SubmitCommand="{Binding SaveCommand}"
+                Validator="{Binding Validator}">
+                <StackPanel Spacing="16">
+                    <one:FormItem
+                        HelpText="请输入 2–24 个字符。"
+                        IsRequired="True"
+                        Label="姓名"
+                        MemberName="Name"
+                        Name="NameField">
+                        <TextBox Name="NameInput" Text="{Binding Account.Name, Mode=TwoWay}" />
+                    </one:FormItem>
+                    <one:FormItem
+                        IsRequired="True"
+                        Label="邮箱"
+                        MemberName="Email"
+                        Name="EmailField">
+                        <TextBox Name="EmailInput" Text="{Binding Account.Email, Mode=TwoWay}" />
+                    </one:FormItem>
+                    <one:FormItem Label="确认邮箱" MemberName="ConfirmEmail">
+                        <TextBox Name="ConfirmInput" Text="{Binding Account.ConfirmEmail, Mode=TwoWay}" />
+                    </one:FormItem>
+                    <one:FormItem
+                        HelpText="输入非法数字时保留草稿，原生转换错误也会阻止提交。"
+                        Label="年龄"
+                        MemberName="Age">
+                        <TextBox Name="AgeInput" Text="{Binding Account.Age, Mode=TwoWay}" />
+                    </one:FormItem>
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Button
+                            Classes="primary"
+                            Click="SaveClicked"
+                            Content="校验并保存"
+                            IsEnabled="{Binding #FormSample.CanSubmit}"
+                            Name="SaveButton" />
+                        <Button Click="ClearClicked" Content="清除校验提示" />
+                    </StackPanel>
+                </StackPanel>
+            </one:Form>
+            <TextBlock Text="{Binding SavedCount, StringFormat='成功保存 {0} 次'}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

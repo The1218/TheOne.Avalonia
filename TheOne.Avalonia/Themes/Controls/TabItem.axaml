@@ -16,7 +16,7 @@
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Padding" Value="{DynamicResource TabItemHeaderMargin}" />
-        <Setter Property="Margin" Value="0" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="MinHeight" Value="{DynamicResource One.TabItemMinHeight}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">

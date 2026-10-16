@@ -41,7 +41,7 @@
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />

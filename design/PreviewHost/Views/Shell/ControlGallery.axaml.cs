@@ -10,7 +10,11 @@ public partial class ControlGallery : UserControl
     private GalleryViewModel? _model;
     private readonly Dictionary<int, UserControl> _pages = [];
     private int _scrollRequest;
-    public ControlGallery() { InitializeComponent(); DataContextChanged += (_,_) => ObserveModel(); DetachedFromVisualTree += (_,_) => Unsubscribe(); AttachedToVisualTree += (_,_) => ObserveModel(); }
+    public ControlGallery()
+    {
+        InitializeComponent(); DataContextChanged += (_,_) => ObserveModel(); DetachedFromVisualTree += (_,_) => Unsubscribe(); AttachedToVisualTree += (_,_) => ObserveModel();
+        SizeChanged += (_, _) => SourcePanel.SetViewportHeight(Bounds.Height);
+    }
     public UserControl? CurrentView => PageHost.Content as UserControl;
     public int CreatedPageCount => _pages.Count;
     private void Unsubscribe() { if(_model is not null) { _model.PropertyChanged -= ModelChanged; _model.ControlRequested -= ControlRequested; } }
@@ -23,6 +27,7 @@ public partial class ControlGallery : UserControl
         {
             _pages.Add(descriptor.Id,page=PreviewPageCatalog.Create(descriptor.Id));
             if(page is ShowcasePage showcase) showcase.ControlRequested += ControlRequested;
+            if(page is HomePage home) home.ControlRequested += (_, id) => _model?.Select(id);
         }
         // Editors own a bounded viewport; do not measure their canvas at infinite height.
         var isReportDesigner=page is TheOne.Avalonia.Controls.ReportDesign or TheOne.Avalonia.Controls.ReportPreview;
@@ -31,6 +36,7 @@ public partial class ControlGallery : UserControl
         PageHost.VerticalContentAlignment=fillsViewport ? global::Avalonia.Layout.VerticalAlignment.Stretch : global::Avalonia.Layout.VerticalAlignment.Top;
         PageFrame.Padding=new Thickness(isReportDesigner ? 0 : 28);
         PageHost.Content=page; ResetScroll();
+        SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page });
     }
     private void ControlRequested(object? sender,int id) => ScrollToControl(id);
     public UserControl GetControlView(int id) => CurrentView is ShowcasePage showcase ? showcase.GetControlView(id) : CurrentView!;

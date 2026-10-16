@@ -61,6 +61,18 @@ internal static class Program
     {
         Console.WriteLine($"Runtime dynamic code supported: {RuntimeFeature.IsDynamicCodeSupported}");
         if (args.Contains("--require-aot") && RuntimeFeature.IsDynamicCodeSupported) throw new InvalidOperationException("This verification requires the native executable.");
+        if (args.Contains("--verify-multiselect"))
+        {
+            AppBuilder.Configure<AuditApp>().WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            TheOne.DesignPreview.MultiSelectBoxPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            Console.WriteLine($"PASS: {_checks} MultiSelectBox native checks."); return;
+        }
+        if (args.Contains("--verify-form"))
+        {
+            AppBuilder.Configure<AuditApp>().WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            TheOne.DesignPreview.FormPreview.Verify(Check, args.FirstOrDefault(arg => !arg.StartsWith("--")));
+            Console.WriteLine($"PASS: {_checks} Form / FormItem native checks."); return;
+        }
         if (args.Any(arg => arg is "--verify-report-authentication" or "--verify-report-lifecycle" or "--verify-report-tree-scroll" or "--verify-report-sidebar" or "--verify-report-reload"))
         {
             AppBuilder.Configure<AuditApp>().WithInterFont().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });

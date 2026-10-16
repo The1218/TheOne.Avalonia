@@ -17,6 +17,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <!--  Narrow padding should be used for mouse input, when non-narrow one should be used for touch input in future.  -->
         <Setter Property="Padding" Value="12,8" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -105,7 +106,8 @@
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="{DynamicResource One.MenuBarHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource One.MenuBarHeight}" />
+        <Setter Property="Padding" Value="2" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource One.TopLevelMenuItem}" />
         <Setter Property="Template">
             <ControlTemplate>

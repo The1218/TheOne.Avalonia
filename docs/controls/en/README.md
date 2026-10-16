@@ -8,6 +8,8 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 
 | Document | Controls / capabilities |
 | --- | --- |
+| [Form and FormItem](form.md) | Editing forms, field labels, shared validation, error summary, cancellation and validated submission |
+| [MultiSelectBox](multi-select-box.md) | Search, selected tags, clearing, disabled options, keyboard navigation and virtualization |
 | [ColorPicker and ColorView](color-picker.md) | Official color controls with TheOne chrome, spectrum, palette, RGB/HSV, alpha and hex input |
 | [WorkflowEditor](workflow-editor.md) | Graph contracts, templates, business configuration, upstream references and JSON persistence |
 | [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |
@@ -27,8 +29,10 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 | [Content transitions and notifications](content-feedback.md) | TransitioningContentControl, NotificationCard |
 | [NavMenu](nav-menu.md) | Navigation, collapsing, cascading menus, search, and motion; follow the feature-specific links |
 | [LoginWindow](login-window.md) | Login handoff and shutdown lifecycle |
+| [Window owners and message services](window-owners.md) | Native ownership, routing, threading, Toast / Notification, Dialog queues and cancellation, login handoff |
 | [Theme implementation](../../theme/en/README.md) | Resources, templates, animation, verification scope, implementation constraints |
-| [Windows and messaging](windows.md) | OneWindow, ThemeButton, LeftContent, RightContent, static notification / Toast / dialog APIs |
+| [OneWindow and window services](windows.md) | Themed main window, ThemeButton, LeftContent, RightContent, static notification / Toast / dialog APIs |
+| [ThemeColorPicker / ThemeButton](../../theme/en/theme-color-picker.md) | Palette dropdown, independent Light / Dark icon toggle, PreviewHost code highlighting |
 | [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
 | [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |

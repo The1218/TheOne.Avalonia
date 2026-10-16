@@ -18,7 +18,11 @@ namespace TheOne.Avalonia.Controls;
 /// <summary>A read-only all-day Gantt with native virtualized selection and one shared row viewport.</summary>
 public partial class GanttChart : TemplatedControl
 {
-    public GanttChart() => AddHandler(PointerWheelChangedEvent, OnNavigationWheel, RoutingStrategies.Tunnel);
+    public GanttChart()
+    {
+        AddHandler(PointerWheelChangedEvent, OnNavigationWheel, RoutingStrategies.Tunnel);
+        ResourcesChanged += (_, _) => Redraw();
+    }
     public static readonly StyledProperty<IEnumerable<GanttTask>?> ItemsSourceProperty = AvaloniaProperty.Register<GanttChart, IEnumerable<GanttTask>?>(nameof(ItemsSource));
     public static readonly StyledProperty<GanttTask?> SelectedTaskProperty = AvaloniaProperty.Register<GanttChart, GanttTask?>(nameof(SelectedTask), defaultBindingMode: BindingMode.TwoWay);
     public static readonly StyledProperty<DateOnly> ViewStartProperty = AvaloniaProperty.Register<GanttChart, DateOnly>(nameof(ViewStart), DateOnly.FromDateTime(DateTime.Today));
@@ -83,6 +87,7 @@ public partial class GanttChart : TemplatedControl
     private int _visibleTaskCount;
     private GanttSelection? _selection;
     private bool _active, _pending, _selecting;
+    private bool _redrawPending;
     private double _offset;
     private double _rowWidth;
     private static bool Positive(double v) => double.IsFinite(v) && v > 0;
@@ -244,7 +249,18 @@ public partial class GanttChart : TemplatedControl
         { UpdateEmpty(); Redraw(); UpdateScrollMetrics(); }
     }
     private IEnumerable<GanttRowPresenter> Presenters() => _list?.GetVisualDescendants().OfType<GanttRowPresenter>() ?? [];
-    private void Redraw() { _header?.InvalidateVisual(); foreach (var row in Presenters()) { row.RefreshTheme(); row.InvalidateVisual(); } }
+    private void Redraw()
+    {
+        if (!_active || _redrawPending) return;
+        _redrawPending = true;
+        Dispatcher.UIThread.Post(() =>
+        {
+            _redrawPending = false;
+            if (!_active) return;
+            _header?.InvalidateVisual();
+            foreach (var row in Presenters()) { row.RefreshTheme(); row.InvalidateVisual(); }
+        }, DispatcherPriority.Render);
+    }
     private void UpdateEmpty()
     {
         if (_empty is null) return;

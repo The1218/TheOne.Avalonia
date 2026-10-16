@@ -4,6 +4,7 @@
              xmlns:one="using:TheOne.Avalonia.Themes"
              x:Class="TheOne.DesignPreview.App">
   <Application.Styles>
+    <one:CodeEditorTheme />
     <one:OneTheme />
     <material:MaterialIconStyles />
   </Application.Styles>

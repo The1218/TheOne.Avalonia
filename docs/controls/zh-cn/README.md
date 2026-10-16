@@ -8,6 +8,8 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 
 | 文档 | 控件 / 能力 |
 | --- | --- |
+| [Form 与 FormItem 表单](form.md) | 普通表单、字段标签、共享校验、错误摘要、异步取消与校验后提交 |
+| [MultiSelectBox 多选框](multi-select-box.md) | 搜索、多选标签、清空、禁选项、键盘操作与虚拟化 |
 | [ColorPicker / ColorView 颜色选择器](color-picker.md) | 官方颜色控件的 TheOne 外观、色谱、调色板、RGB/HSV、透明度与 Hex 输入 |
 | [WorkflowEditor 流程编辑器](workflow-editor.md) | 图模型契约、模板、业务配置、上游数据引用和 JSON 保存加载 |
 | [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |
@@ -27,8 +29,10 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [内容过渡与通知](content-feedback.md) | TransitioningContentControl、NotificationCard |
 | [NavMenu](nav-menu.md) | 导航、折叠、级联、搜索与动效，按功能继续查阅 |
 | [LoginWindow](login-window.md) | 登录交接与退出生命周期 |
+| [窗口 owner 与消息服务](window-owners.md) | 原生归属、默认路由、线程、Toast／Notification、Dialog 队列与取消、登录交接 |
 | [主题实现说明](../../theme/zh-cn/README.md) | 资源、模板、动画、验证范围与实现约束 |
-| [窗口与消息](windows.md) | OneWindow、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
+| [OneWindow 与窗口服务](windows.md) | 主题主窗口、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
+| [ThemeColorPicker / ThemeButton](../../theme/zh-cn/theme-color-picker.md) | 配色下拉选择、独立明暗图标开关与 PreviewHost 代码高亮 |
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
 | [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |

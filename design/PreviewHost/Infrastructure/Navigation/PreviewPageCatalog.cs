@@ -5,6 +5,7 @@ public sealed record PreviewPageDescriptor(int Id,string Title,string Group, IRe
 
 internal static class PreviewPageCatalog
 {
+    public static PreviewPageDescriptor Home { get; } = new(0, "Home 首页", "开始使用");
     public static IReadOnlyList<PreviewPageDescriptor> Controls { get; } =
     [
         new(1,"Button","基础控件"),
@@ -19,6 +20,8 @@ internal static class PreviewPageCatalog
         new(319,"ReportPreview","扩展控件"),
         new(320,"MessageBox","消息与对话框"),
         new(321,"Upload","扩展控件"),
+        new(322,"Form","扩展控件"),
+        new(323,"MultiSelectBox","扩展控件"),
         new(101,"ToggleButton","基础控件"),
         new(16,"RepeatButton","基础控件"),
         new(2,"TextBox","基础控件"),
@@ -102,9 +105,9 @@ internal static class PreviewPageCatalog
         new(414,"仪表图","图表控件", [207]),
         new(415,"Step","扩展控件", [27,307]),
     ];
-    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = CombinedPages
+    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home }.Concat(CombinedPages)
         .Concat(Controls.Where(control => !CombinedPages.Any(page => page.ControlIds!.Contains(control.Id)))).ToArray();
-    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = CombinedPages
+    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = new[] { Home }.Concat(CombinedPages)
         .Concat(Controls.Select(control => control with { Group = SearchGroup(control.Id) })).ToArray();
     private static string SearchGroup(int id)
     {
@@ -119,6 +122,7 @@ internal static class PreviewPageCatalog
     }
     internal static UserControl CreateControl(int id) => id switch
     {
+        0 => new HomePage(),
         1 => new ButtonPage(),
         305 => new IconButtonPage(),
         306 => new LoadingContainerPage(),
@@ -128,9 +132,11 @@ internal static class PreviewPageCatalog
         315 => new WorkflowEditorDemoView(),
         317 => new ColorPickerPage(),
         318 => ReportDesignDemo.CreateDesignerSample(),
-        319 => ReportDesignDemo.CreatePreviewSample(),
+        319 => PreviewPrinting.CreatePreviewSample(),
         320 => new MessageBoxDemoView(),
         321 => new UploadDemoView(),
+        322 => new FormDemoView(),
+        323 => new MultiSelectBoxDemoView(),
         101 => new ToggleButtonPage(),
         16 => new RepeatButtonPage(),
         2 => new TextBoxPage(),

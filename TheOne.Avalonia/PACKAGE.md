@@ -2,6 +2,8 @@
 
 TheOne themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows and DataGrid entity filters, left/right frozen columns and numeric summaries.
 
+Preview.3 adds Form/FormItem validation, searchable virtualized MultiSelectBox, enum-based theme color switching and a bindable ThemeColorPicker. It improves theme refresh and NavMenu scrolling, and aligns input borders, item spacing, calendar layout and selection states. Window ownership, toast, notification and dialog behavior are covered in the bilingual documentation.
+
 ```xml
 <Application.Styles>
   <one:OneTheme />

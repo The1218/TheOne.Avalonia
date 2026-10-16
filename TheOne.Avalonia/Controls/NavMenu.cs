@@ -20,7 +20,7 @@ using global::Avalonia.VisualTree;
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>A native virtualized navigation tree with separately templated icons and labels.</summary>
-[PseudoClasses(":collapsed")]
+[PseudoClasses(":collapsed", ":bounded-roots")]
 public partial class NavMenu : TreeView
 {
     public static readonly StyledProperty<IDataTemplate?> IconTemplateProperty = AvaloniaProperty.Register<NavMenu, IDataTemplate?>(nameof(IconTemplate));
@@ -36,6 +36,7 @@ public partial class NavMenu : TreeView
     public static readonly StyledProperty<ICommand?> ItemInvokedCommandProperty = AvaloniaProperty.Register<NavMenu, ICommand?>(nameof(ItemInvokedCommand));
     public static readonly RoutedEvent<NavMenuItemInvokedEventArgs> ItemInvokedEvent = RoutedEvent.Register<NavMenu, NavMenuItemInvokedEventArgs>(nameof(ItemInvoked), RoutingStrategies.Bubble);
     private readonly ConditionalWeakTable<NavMenuItem, RowBindings> _bindings = new();
+    private bool _navigationLayoutChanged = true;
     private object? _lastNavigableItem;
     private bool _restoringSelection;
     private NavMenuItem? _pressedItem;
@@ -79,6 +80,9 @@ public partial class NavMenu : TreeView
     /// <summary>Realize only an ancestor path, then select its target data item.</summary>
     public bool SelectPath(params int[] path)
     {
+        // ScrollIntoView must use current row measurements after a density or viewport change.
+        var refreshLayout = _navigationLayoutChanged;
+        if (refreshLayout) { UpdateLayout(); _navigationLayoutChanged = false; }
         if (UsesPopupNavigation && path.Length > 1)
         {
             if (!OpenSubmenu(path[0]) || Submenu is not { } child) return false;
@@ -86,6 +90,7 @@ public partial class NavMenu : TreeView
         }
         if (Virtualization.BringIntoView(this, path) is not NavMenuItem { IsEffectivelyEnabled: true, IsGroup: false } node || node.Parent is not ItemsControl owner) return false;
         SetCurrentValue(SelectedItemProperty, owner.ItemFromContainer(node));
+        if (refreshLayout) node.UpdateLayout();
         node.BringIntoView(); return true;
     }
 
@@ -98,10 +103,22 @@ public partial class NavMenu : TreeView
         base.PrepareContainerForItemOverride(container, item, index);
         if (container is not NavMenuItem node) return;
         var bindings = _bindings.GetValue(node, static _ => new RowBindings());
-        ApplyDensity(node);
-        var tip = new ContentControl { Content = item };
-        bindings.Add(tip.Bind(ContentControl.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this)));
-        node.SetCurrentValue(ToolTip.TipProperty, tip);
+        // Native ContentPresenter forgets its recycling template when a row detaches.
+        // Keep the default header with its own row, rather than rebuilding all bindings on reattachment.
+        if (!ReferenceEquals(item, node) && ItemTemplate is NavigationTemplate navigation &&
+            (ReferenceEquals(node.HeaderTemplate, navigation) || node.HeaderTemplate is RowHeaderTemplate))
+        {
+            if (bindings.HeaderTemplate?.Template != navigation) bindings.HeaderTemplate = new RowHeaderTemplate(navigation);
+            node.SetCurrentValue(TreeViewItem.HeaderTemplateProperty, bindings.HeaderTemplate);
+        }
+        if (item is not null)
+        {
+            var tip = bindings.ToolTip ??= new ContentControl();
+            tip.Content = item;
+            bindings.Add(tip.Bind(ContentControl.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this)));
+            node.SetCurrentValue(ToolTip.TipProperty, tip);
+        }
+        else node.SetCurrentValue(ToolTip.TipProperty, null);
         if (ActiveSearch is not null) node.SetCurrentValue(TreeViewItem.IsExpandedProperty, node.ItemCount > 0);
         else if (ExpandedBinding is { } expanded) bindings.Add(node.Bind(TreeViewItem.IsExpandedProperty, expanded));
         if (IsGroupBinding is { } group) bindings.Add(node.Bind(NavMenuItem.IsGroupProperty, group));
@@ -116,21 +133,33 @@ public partial class NavMenu : TreeView
         CollapsedPropertyChanged(change);
         SearchPropertyChanged(change);
         FilterPropertyChanged(change);
+        // Keep small root collections attached: recycling an expanded root otherwise
+        // discards its descendants' viewport measurements and remounts the whole branch.
+        // Large root collections and each branch's children remain virtualized.
+        if (change.Property == ChildrenBindingProperty || change.Property == ItemCountProperty)
+            PseudoClasses.Set(":bounded-roots", ChildrenBinding is not null && ItemCount <= 32);
         if (change.Property == ChildrenBindingProperty || change.Property == ExpandedBindingProperty || change.Property == IsGroupBindingProperty || change.Property == IsItemEnabledBindingProperty)
             SetCurrentValue(ItemTemplateProperty, new NavigationTemplate(this));
         if (change.Property == ItemHeightProperty || change.Property == FontSizeProperty || change.Property == IndentProperty)
+        {
+            _navigationLayoutChanged = true;
             foreach (var node in GetRealizedTreeContainers().OfType<NavMenuItem>()) ApplyDensity(node);
+        }
+        if (change.Property == BoundsProperty && change.GetOldValue<Rect>().Size != change.GetNewValue<Rect>().Size)
+            _navigationLayoutChanged = true;
     }
 
     private void ApplyDensity(NavMenuItem node)
     {
         node.SetCurrentValue(FontSizeProperty, FontSize);
         node.SetCurrentValue(MinHeightProperty, ItemHeight);
-        node.Resources["One.TreeViewItemIndent"] = UsesPopupNavigation ? 0d : Indent;
+        var indent = UsesPopupNavigation ? 0d : Indent;
+        if (!node.Resources.TryGetValue("One.TreeViewItemIndent", out var current) || !Equals(current, indent))
+            node.Resources["One.TreeViewItemIndent"] = indent;
         node.SetCurrentValue(NavMenuItem.IsCascadeItemProperty, _popupParent is not null);
         node.SetCurrentValue(NavMenuItem.IsCompactProperty, IsCollapsed);
         node.SetCurrentValue(ToolTip.ServiceEnabledProperty, IsCollapsed && (!OpenOnHover || node.ItemCount == 0));
-        node.SetCurrentValue(NavMenuItem.IsActiveAncestorProperty, UsesPopupNavigation && SelectedItem is not null && ReferenceEquals(ItemFromContainer(node), _activeRoot));
+        node.SetCurrentValue(NavMenuItem.IsActiveAncestorProperty, UsesPopupNavigation && SelectedItem is not null && _activeRoot is not null && ReferenceEquals(ItemFromContainer(node), _activeRoot));
     }
 
     private void TrackChildContainers(object? sender, ContainerPreparedEventArgs args)
@@ -175,7 +204,7 @@ public partial class NavMenu : TreeView
             if (SelectedItem is null) _activeRoot = null;
             else if (TreeContainerFromItem(SelectedItem) is { } selected)
             {
-                var root = selected.GetLogicalAncestors().OfType<NavMenuItem>().LastOrDefault() ?? selected;
+                var root = selected.GetLogicalAncestors().OfType<NavMenuItem>().LastOrDefault(node => node.Parent == this) ?? selected;
                 _activeRoot = ItemFromContainer(root);
             }
             UpdateActiveRoots();
@@ -241,9 +270,21 @@ public partial class NavMenu : TreeView
 
     private sealed class RowBindings
     {
+        public ContentControl? ToolTip;
+        public RowHeaderTemplate? HeaderTemplate;
         private readonly List<IDisposable> _values = [];
         public void Add(IDisposable value) => _values.Add(value);
         public void Dispose() { foreach (var value in _values) value.Dispose(); _values.Clear(); }
+    }
+
+    private sealed class RowHeaderTemplate(NavigationTemplate template) : ITreeDataTemplate
+    {
+        internal NavigationTemplate Template => template;
+        private Control? _content;
+        private readonly Border _empty = new();
+        public bool Match(object? data) => true;
+        public Control Build(object? data) => data is null ? _empty : _content = template.Build(data, _content);
+        public IDisposable BindChildren(AvaloniaObject target, AvaloniaProperty targetProperty, object item) => template.BindChildren(target, targetProperty, item);
     }
 
     private sealed class IconGapVisibilityConverter : IMultiValueConverter
@@ -252,24 +293,48 @@ public partial class NavMenu : TreeView
         public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture) => values.Count == 2 && values[0] is IDataTemplate && values[1] is false;
     }
 
-    private sealed class DefaultContentConverter(NavMenu owner) : IValueConverter
+    private sealed class RecyclingTemplateConverter(IDataTemplate? fallback = null) : IValueConverter
     {
-        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value ?? new SearchContentTemplate(owner);
+        private IDataTemplate? _source;
+        private IDataTemplate? _wrapped;
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        {
+            if (value is not IDataTemplate template) { _source = null; _wrapped = null; return fallback; }
+            if (!ReferenceEquals(_source, template)) { _source = template; _wrapped = new RowContentTemplate(template); }
+            return _wrapped;
+        }
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
     }
-    private sealed class SearchContentTemplate(NavMenu owner) : IDataTemplate
+    private sealed class RowContentTemplate(IDataTemplate template) : IDataTemplate
     {
+        private Control? _content;
+        private readonly Border _empty = new();
+        public bool Match(object? data) => template.Match(data);
+        public Control? Build(object? data)
+        {
+            if (data is null) return _empty;
+            return _content = template is IRecyclingDataTemplate recycling ? recycling.Build(data, _content) : template.Build(data);
+        }
+    }
+    private sealed class SearchContentTemplate(NavMenu owner) : IRecyclingDataTemplate
+    {
+        private NavMenuSearchText? _text;
         public bool Match(object? data) => true;
         public Control Build(object? data)
         {
-            var text = new NavMenuSearchText { DataContext = data, TextTrimming = global::Avalonia.Media.TextTrimming.CharacterEllipsis };
-            if (owner.SearchTextBinding is { } binding) text.Bind(NavMenuSearchText.SourceTextProperty, binding);
-            else text.SourceText = data?.ToString();
-            return text;
+            if (_text is null)
+            {
+                _text = new NavMenuSearchText { TextTrimming = global::Avalonia.Media.TextTrimming.CharacterEllipsis };
+                if (owner.SearchTextBinding is { } binding) _text.Bind(NavMenuSearchText.SourceTextProperty, binding);
+            }
+            _text.DataContext = data;
+            if (owner.SearchTextBinding is null) _text.SourceText = data?.ToString();
+            return _text;
         }
+        public Control Build(object? data, Control? existing) => Build(data);
     }
 
-    private sealed class NavigationTemplate(NavMenu owner) : ITreeDataTemplate
+    private sealed class NavigationTemplate(NavMenu owner) : ITreeDataTemplate, IRecyclingDataTemplate
     {
         public bool Match(object? data) => true;
         public IDisposable BindChildren(AvaloniaObject target, AvaloniaProperty targetProperty, object item)
@@ -280,7 +345,7 @@ public partial class NavMenu : TreeView
         public Control Build(object? data)
         {
             var icon = new ContentPresenter { Name = "NavMenuIcon", Content = data, VerticalAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Stretch, VerticalContentAlignment = VerticalAlignment.Stretch };
-            icon.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.DisplayIconTemplate, source: owner));
+            icon.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.DisplayIconTemplate, source: owner, converter: new RecyclingTemplateConverter()));
             icon.Bind(WidthProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.IconSize, source: owner));
             icon.Bind(HeightProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.IconSize, source: owner));
             icon.Bind(IsVisibleProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.DisplayIconTemplate, source: owner, converter: ObjectConverters.IsNotNull));
@@ -292,10 +357,19 @@ public partial class NavMenu : TreeView
                 Bindings = { CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.DisplayIconTemplate, source: owner), CompiledBinding.Create<NavMenu, bool>(menu => menu.IsCollapsed, source: owner) }
             });
             var text = new ContentPresenter { Name = "NavMenuContent", Content = data, [Grid.ColumnProperty] = 2, VerticalAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            text.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: owner, converter: new DefaultContentConverter(owner)));
+            text.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: owner, converter: new RecyclingTemplateConverter(new SearchContentTemplate(owner))));
             text.Bind(IsVisibleProperty, CompiledBinding.Create<NavMenu, bool>(menu => menu.IsCollapsed, source: owner, converter: BoolConverters.Not));
             TextBlock.SetTextTrimming(text, global::Avalonia.Media.TextTrimming.CharacterEllipsis);
             return new Grid { ColumnDefinitions = ColumnDefinitions.Parse("Auto,Auto,*"), DataContext = data, Children = { icon, gap, text } };
+        }
+        public Control Build(object? data, Control? existing)
+        {
+            if (data is null) return new Border();
+            if (existing is not Grid grid || grid.Children.Count != 3) return Build(data);
+            grid.DataContext = data;
+            ((ContentPresenter)grid.Children[0]).Content = data;
+            ((ContentPresenter)grid.Children[2]).Content = data;
+            return grid;
         }
     }
 }

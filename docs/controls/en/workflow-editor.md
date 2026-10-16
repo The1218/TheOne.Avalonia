@@ -68,6 +68,8 @@ The demo's reference-resolution action uses a host dictionary to provide request
 - PropertyTemplate receives the selected node. The default uses native TabStrip tabs for basic metadata, data and ports; it edits name, description, literals and upstream references through document undo history, and respects IsReadOnly. SelectedNodeEditor exposes WorkflowNodeEditor and WorkflowPropertyEditor adapters for custom templates. A host can supply specialized business UI or hide the panel and bind SelectedNode externally. Templates own their scroll container; delete stays outside the default scrolling region.
 - SelectedConnection exposes the selected edge for external label or business-condition editing. The default inspector displays nodes.
 
+Node and connection selection are exclusive, including external `SelectedNode` / `SelectedConnection` assignments. Selecting a connection clears all selected nodes and the node inspector; selecting a node clears the selected connection. Models outside the current document normalize to null, even when they share an ID with a document model.
+
 The demo supplies typed field rows and literal/reference ComboBoxes. SetProperty and document Edit integrate host edits with the same graph undo history. The host rebuilds Content by TypeId after loading or copying rather than persisting presentation objects or sharing mutable business objects with the original node.
 
 ## Editing and validation

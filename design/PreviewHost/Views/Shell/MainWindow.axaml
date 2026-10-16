@@ -81,12 +81,10 @@
                             SelectedItem="{Binding Size, Mode=TwoWay}"
                             VerticalAlignment="Center"
                             Width="110" />
-                        <ComboBox
-                            ItemsSource="{Binding Themes}"
-                            Name="ThemePicker"
-                            SelectedItem="{Binding Theme, Mode=TwoWay}"
+                        <one:ThemeColorPicker
+                            Name="ThemeColorPicker"
                             VerticalAlignment="Center"
-                            Width="110" />
+                            Width="160" />
                         <CheckBox
                             Content="动效"
                             IsChecked="{Binding MotionEnabled, Mode=TwoWay}"

@@ -55,7 +55,7 @@
     <ControlTheme TargetType="TimePicker" x:Key="{x:Type TimePicker}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource One.TimePickerBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="HorizontalAlignment" Value="Left" />

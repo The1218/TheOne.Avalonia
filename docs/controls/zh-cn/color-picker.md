@@ -23,6 +23,7 @@
 下拉入口默认显示透明棋盘底色块与当前颜色值，悬停、按下和展开时由同一个圆角外框绘制边界；消费者显式设置 `Content` /
 `ContentTemplate` 时仍以消费者内容为准。面板参考 Eremex 的紧凑颜色编辑器布局，默认打开色板（`SelectedIndex="1"`），仅提供 Custom / Palette 两个文字标签。
 Custom（`SelectedIndex="0"`）在饱和度／亮度色谱下方集中显示 RGB / HSV 切换、横排四个分量输入、Hex、色相与透明度滑条；不再提供独立 Values 页（索引 2）。
+内嵌面板与下拉弹层中的 RGB / HSV 模型按钮均保留 4 px 间距。
 RGB / HSV、Hex 和数值编辑仍使用官方控件实例、命名部件与双向绑定。`IsColorComponentsVisible` 控制整个输入组；`IsColorSpectrumVisible="False"` 时仍可在 Custom 使用分量输入。
 默认色板按 10 个色相列、5 档明度排列，包含中性色和主题青绿色；设置官方 `Palette` 属性可替换该色板。
 默认隐藏底部大预览条及衍生颜色（`IsColorPreviewVisible="False"`、`IsAccentColorsVisible="False"`）；这些官方属性仍可由消费者显式开启。
@@ -37,6 +38,7 @@ RGB / HSV、Hex 和数值编辑仍使用官方控件实例、命名部件与双�
 PreviewHost 导航包含 **ColorPicker**；`--colorpicker` 可直接打开桌面演示，
 `--verify-colorpicker [output]` 只测试 ColorPicker / ColorView 的布局、主题、绑定、
 指针、键盘和实际像素结果。
+`--verify-colorpicker-model-spacing [output]` 仅验证模型按钮间距、文字容纳、原生指针／键盘切换及间隙像素，覆盖明暗主题和三档尺寸。
 
 控件逻辑及基础模板由官方包提供：
 [Avalonia ColorPicker 文档](https://docs.avaloniaui.net/controls/input/selectors/colorpicker)。

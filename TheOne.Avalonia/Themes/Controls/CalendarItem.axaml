@@ -3,6 +3,10 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <x:Double x:Key="One.CalendarBodyHeight.Small">258</x:Double>
+    <x:Double x:Key="One.CalendarBodyHeight.Normal">294</x:Double>
+    <x:Double x:Key="One.CalendarBodyHeight.Large">342</x:Double>
+
     <ControlTheme
         BasedOn="{StaticResource {x:Type Button}}"
         TargetType="Button"
@@ -62,18 +66,26 @@
                     <Grid
                         ColumnDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                         Grid.Row="1"
+                        Height="{DynamicResource One.CalendarBodyHeight.Normal}"
+                        HorizontalAlignment="Center"
                         IsVisible="False"
                         Name="PART_MonthView"
                         RowDefinitions="30,Auto,Auto,Auto,Auto,Auto,Auto" />
                     <Grid
                         ColumnDefinitions="*,*,*,*"
                         Grid.Row="1"
+                        Height="{DynamicResource One.CalendarBodyHeight.Normal}"
                         IsVisible="False"
-                        MinHeight="294"
                         Name="PART_YearView"
                         RowDefinitions="*,*,*" />
                 </Grid>
             </ControlTemplate>
         </Setter>
+        <Style Selector="^.one-small /template/ Grid#PART_MonthView, ^.one-small /template/ Grid#PART_YearView">
+            <Setter Property="Height" Value="{DynamicResource One.CalendarBodyHeight.Small}" />
+        </Style>
+        <Style Selector="^.one-large /template/ Grid#PART_MonthView, ^.one-large /template/ Grid#PART_YearView">
+            <Setter Property="Height" Value="{DynamicResource One.CalendarBodyHeight.Large}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

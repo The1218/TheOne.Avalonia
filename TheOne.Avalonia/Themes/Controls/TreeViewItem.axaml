@@ -76,6 +76,7 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Classes="TreeViewItemLayoutRoot"
+                        Margin="4,2"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Focusable="True"
                         MinHeight="{TemplateBinding MinHeight}"

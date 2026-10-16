@@ -10,6 +10,14 @@
     <AvaloniaVersion>12.1.4</AvaloniaVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../ViewModels/Extensions/MultiSelectBoxDemoViewModel.cs" Link="MultiSelectBoxDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/MultiSelectBoxDemoView.axaml.cs" Link="MultiSelectBoxDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/MultiSelectBoxDemoView.axaml" Link="MultiSelectBoxDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/MultiSelectBoxPreview.cs" Link="MultiSelectBoxPreview.cs" />
+    <Compile Include="../../ViewModels/Extensions/FormDemoViewModel.cs" Link="FormDemoViewModel.cs" />
+    <Compile Include="../../Views/Extensions/FormDemoView.axaml.cs" Link="FormDemoView.axaml.cs" />
+    <AvaloniaResource Include="../../Views/Extensions/FormDemoView.axaml" Link="FormDemoView.axaml" />
+    <Compile Include="../../Verification/Extensions/FormPreview.cs" Link="FormPreview.cs" />
     <Compile Include="../../ViewModels/Extensions/PaginationDemoViewModel.cs" Link="PaginationDemoViewModel.cs" />
     <Compile Include="../../ViewModels/Extensions/WorkflowEditorDemoViewModel.cs" Link="WorkflowEditorDemoViewModel.cs" />
     <Compile Include="../../ViewModels/Messages/MessageBoxDemoViewModel.cs" Link="MessageBoxDemoViewModel.cs" />
@@ -156,5 +164,17 @@
     <Compile Include="../../Verification/DataDisplay/Report*Preview.cs" LinkBase="ReportVerification" />
     <Compile Include="../../Verification/DataDisplay/ReportOnlyProgram.cs" Link="ReportOnlyProgram.cs" />
     <Compile Include="../../Views/ReportDesign/ReportDesignDemo.cs" Link="ReportDesignDemo.cs" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(ThemeOnlyPreview)' == 'true'">
+    <StartupObject>TheOne.DesignPreview.ThemeOnlyProgram</StartupObject>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ThemeOnlyPreview)' == 'true'">
+    <Compile Remove="@(Compile)" />
+    <AvaloniaResource Remove="@(AvaloniaResource)" />
+    <AvaloniaXaml Remove="@(AvaloniaXaml)" />
+    <Compile Include="../../Verification/Infrastructure/ThemeOnlyProgram.cs" Link="ThemeOnlyProgram.cs" />
+    <Compile Include="../../Verification/Infrastructure/ThemeColorApiPreview.cs" Link="ThemeColorApiPreview.cs" />
+    <Compile Include="../../Verification/Infrastructure/ThemeColorApiFixture.axaml.cs" Link="ThemeColorApiFixture.axaml.cs" />
+    <AvaloniaResource Include="../../Verification/Infrastructure/ThemeColorApiFixture.axaml" Link="ThemeColorApiFixture.axaml" />
   </ItemGroup>
 </Project>

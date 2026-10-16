@@ -1,0 +1,189 @@
+<UserControl
+    x:Class="TheOne.DesignPreview.HomePage"
+    x:CompileBindings="True"
+    x:DataType="local:HomePage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel HorizontalAlignment="Stretch" Spacing="28">
+        <StackPanel Spacing="12">
+            <TextBlock
+                FontSize="12"
+                FontWeight="SemiBold"
+                Foreground="{DynamicResource One.Accent}"
+                Text="THEONE · AVALONIA" />
+            <TextBlock
+                FontSize="30"
+                FontWeight="Bold"
+                Text="从原生控件，到完整的业务界面。"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                HorizontalAlignment="Left"
+                MaxWidth="760"
+                Text="保留熟悉的输入、焦点和数据绑定，用统一的主题构建桌面应用。先试试样式，再进入完整示例。"
+                TextWrapping="Wrap" />
+            <WrapPanel>
+                <TextBlock Margin="0,0,20,8" Text=".NET 10 / Avalonia 12" />
+                <TextBlock Margin="0,0,20,8" Text="Light / Dark" />
+                <TextBlock Margin="0,0,20,8" Text="Small / Normal / Large" />
+            </WrapPanel>
+            <WrapPanel>
+                <Button
+                    Classes="primary"
+                    Click="NavigateClicked"
+                    Content="从表单开始"
+                    Margin="0,0,10,8"
+                    Name="ExploreButton"
+                    Tag="322" />
+                <Button
+                    Click="NavigateClicked"
+                    Content="查看 DataGrid"
+                    Margin="0,0,10,8"
+                    Tag="10" />
+                <Button
+                    Click="NavigateClicked"
+                    Content="报表与打印"
+                    Margin="0,0,10,8"
+                    Tag="319" />
+            </WrapPanel>
+        </StackPanel>
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="20"
+            Name="Examples"
+            RowSpacing="20">
+            <Border
+                Background="{DynamicResource One.Surface}"
+                BorderBrush="{DynamicResource One.Line}"
+                BorderThickness="1"
+                Classes="home-panel"
+                CornerRadius="8"
+                Padding="20">
+                <StackPanel Spacing="14">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="亲手试一试" />
+                    <TextBlock
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="输入、标签与操作，共用一套密度和颜色。"
+                        TextWrapping="Wrap" />
+                    <one:FormItem HelpText="原生 TextBox，支持编辑、选择与键盘焦点。" Label="工作区名称">
+                        <TextBox
+                            Name="WorkspaceInput"
+                            PlaceholderText="输入工作区名称"
+                            Text="设计工作区" />
+                    </one:FormItem>
+                    <one:FormItem Label="关注的能力">
+                        <one:MultiSelectBox Name="Capabilities" PlaceholderText="选择控件能力" />
+                    </one:FormItem>
+                    <WrapPanel>
+                        <Button
+                            Classes="primary"
+                            Click="SaveClicked"
+                            Content="保存设置"
+                            Margin="0,0,8,8" />
+                        <Button
+                            Classes="soft"
+                            Content="柔和按钮"
+                            Margin="0,0,8,8" />
+                        <Button Content="默认按钮" Margin="0,0,8,8" />
+                    </WrapPanel>
+                    <TextBlock
+                        Foreground="{DynamicResource One.Muted}"
+                        Name="SampleStatus"
+                        Text="修改上方内容，点击保存查看反馈。"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+            <Border
+                Background="{DynamicResource One.Subtle}"
+                BorderBrush="{DynamicResource One.Line}"
+                BorderThickness="1"
+                CornerRadius="8"
+                Grid.Column="1"
+                Name="QuickStart"
+                Padding="20">
+                <StackPanel Spacing="14">
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="只加载一次主题" />
+                    <TextBlock
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="在 App.axaml 注册 OneTheme，然后继续使用原生 Avalonia 控件。"
+                        TextWrapping="Wrap" />
+                    <local:PreviewCodeBlock Text="&lt;Application.Styles&gt;&#10;  &lt;themes:OneTheme /&gt;&#10;&lt;/Application.Styles&gt;&#10;&#10;&lt;!-- themes: using:TheOne.Avalonia.Themes --&gt;&#10;&#10;&lt;Button Classes=&quot;primary&quot;&#10;        Content=&quot;保存&quot; /&gt;&#10;&lt;TextBox PlaceholderText=&quot;输入内容&quot; /&gt;" />
+                    <TextBlock
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="从顶部切换主题、尺寸和动效，观察这一页的实时变化。"
+                        TextWrapping="Wrap" />
+                    <local:PreviewCodeBlock Text="&lt;StackPanel styling:ControlSizing.Size=&quot;Small&quot;&#10;            styling:Motion.Enabled=&quot;False&quot; /&gt;&#10;&lt;!-- styling: using:TheOne.Avalonia.Styling --&gt;" />
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Border
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="20">
+            <StackPanel Spacing="12">
+                <TextBlock
+                    FontSize="22"
+                    FontWeight="SemiBold"
+                    Text="主题、配色与资源" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="默认 Nova，可选择 10 套配色。顶部配色选择器切换颜色资源，太阳 / 月亮按钮只切换 Light / Dark；尺寸和业务数据保持独立。"
+                    TextWrapping="Wrap" />
+                <local:PreviewCodeBlock CodeType="CSharp" Text="OneTheme.SetColor(ThemeColor.Atlas);&#10;// 启动时先读取应用保存的 ThemeColor，再创建主窗口。&#10;OneTheme.SetColor(settings.ColorTheme);&#10;// 在窗口中使用编译绑定：&#10;// &lt;one:ThemeColorPicker SelectThemeColor=&quot;{Binding ColorTheme}&quot; /&gt;&#10;// ColorTheme 为 ThemeColor；默认双向绑定。由应用负责保存配置。" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="动态资源随配色更新：One.Surface、One.Text、One.Accent 等。渐变提供 Subtle（柔和）和 Vivid（明显）两类，每类包含 Brand、Cool、Natural、Warm。以下色块可随顶部选择实时变化。"
+                    TextWrapping="Wrap" />
+                <WrapPanel Name="GradientSamples" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="用法：Background=&quot;{DynamicResource One.Gradient.Subtle.Brand}&quot;&#10;文档：docs/theme/zh-cn/theme-color-picker.md · theme-colors.md"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+        <StackPanel Spacing="8">
+            <TextBlock
+                FontSize="22"
+                FontWeight="SemiBold"
+                Text="从这些控件开始" />
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                Text="每个入口都包含可交互预览。下面的片段展示接入方式，业务视图仍需声明实际 x:DataType。"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <Grid
+            ColumnSpacing="16"
+            Name="Features"
+            RowSpacing="16" />
+        <Border
+            BorderBrush="{DynamicResource One.Line}"
+            BorderThickness="0,1,0,0"
+            Padding="0,20,0,0">
+            <StackPanel Spacing="10">
+                <TextBlock
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Text="窗口，也是一等公民" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="OneWindow 提供主题标题栏、通知与对话框；LoginWindow 保留原生窗口生命周期，并负责登录后的主窗口交接。"
+                    TextWrapping="Wrap" />
+                <local:PreviewCodeBlock Text="&lt;one:OneWindow Title=&quot;工作区&quot; /&gt;&#10;&lt;!-- one: using:TheOne.Avalonia.Controls --&gt;" />
+                <local:PreviewCodeBlock CodeType="CSharp" Text="if (await login.CompleteLoginAsync(new MainWindow()))&#10;    await OneToast.ShowAsync(&quot;欢迎回来&quot;);" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Text="文档：docs/controls/zh-cn/windows.md · login-window.md&#10;登录演示：dotnet run --project design/PreviewHost -- --login"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

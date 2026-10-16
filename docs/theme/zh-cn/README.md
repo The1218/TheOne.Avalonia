@@ -6,6 +6,8 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 
 ## 官方模板
 
+运行时配色选择与独立明暗开关见 [ThemeColorPicker / ThemeButton](theme-color-picker.md)，包含 PreviewHost 代码高亮与专项入口。
+
 | 分组 | 控件 |
 | --- | --- |
 | 操作 | Button、ToggleButton、RepeatButton、SplitButton、ToggleSplitButton |
@@ -23,6 +25,14 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 基础模板基于 Avalonia **12.1.4** 官方 Fluent 源码适配；Calendar 系列及 Card 模板为本库自行实现。模板保留 `PART_*`、输入 Presenter、验证容器、Popup、Track、Spinner、滚动手势与原生键盘行为。颜色、圆角、默认尺寸、辅助主题键和视觉状态已按 TheOne 重写。来源与 MIT 许可见仓库根目录的 `THIRD-PARTY-NOTICES.md`，该文件也纳入打包内容。
 
 ## 样式接口
+
+统一间距规范、控件检查范围和独立验证入口见[项表面间距](item-spacing.md)。
+
+TreeViewItem 在节点标题表面（`PART_LayoutRoot`）使用 `Margin="4,2"`：左右各留 4px，可见行之间保留 4px 空隙。子项 Presenter 保留原生层级缩进，边距不随树深度累加。`--verify-treeview-spacing [output]` 检查标题间距、选中像素、三级缩进、指针选择、展开按钮折叠与键盘展开，覆盖明暗主题、三档尺寸和宽窄视口。
+
+TextBox、AutoCompleteBox、NumericUpDown、ComboBox、CalendarDatePicker、DatePicker、TimePicker 和 MultiSelectBox 的常态边框统一使用可见的 1px `One.InputLine`；焦点和错误状态保留各自语义色，嵌入式编辑器保留单层外边框。ListBoxItem 和 ComboBoxItem 均使用 `Margin="4,2"`：左右各留 4px，相邻项表面之间保留 4px 空隙，继续使用原生容器和虚拟化。需要紧凑排列时，可在项上局部覆盖 Margin。`--verify-combobox-spacing [output]` 专项只检查 ComboBox 的边距、实际像素与原生选择，覆盖明暗主题、三档尺寸和宽窄视口。`--verify-listbox-spacing [output]` 检查默认及自定义内容的 ListBox 边距、选中像素、原生多选与容器回收。
+
+PreviewHost 的 `--verify-input-appearance [output]` 专项覆盖明暗主题、三档尺寸、两种背景和宽窄视口下的输入边框像素、列表／下拉项间距及原生输入。`--verify-datagrid-filter-entries` 只检查筛选按钮显隐和运行时配置变更。
 
 | 控件 | Classes / 属性 | 用途 |
 | --- | --- | --- |

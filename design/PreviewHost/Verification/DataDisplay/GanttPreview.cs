@@ -59,6 +59,8 @@ internal static class GanttPreview
             label + ": Gantt brushes resolve the window theme variant");
         var rows = list.GetVisualDescendants().OfType<ListBoxItem>().ToArray();
         check(chart.RowHeight == height && rows.All(r => Math.Abs(r.Bounds.Height - height) < 1), label + $": native rows use the requested density (chart={chart.RowHeight}, rows={string.Join(',', rows.Select(r => r.Bounds.Height))})");
+        check(rows.All(row => row.Margin == default) && rows.Zip(rows.Skip(1)).All(pair => Math.Abs(pair.Second.Bounds.Top - pair.First.Bounds.Bottom) < .5),
+            label + ": continuous timeline rows opt out of list margins and have no grid gaps");
         Save(window, output, $"gantt-{theme.Key}-{density}-wide");
         using (var frame = window.CaptureRenderedFrame()!)
         {

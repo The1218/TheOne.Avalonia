@@ -95,7 +95,8 @@ public sealed partial class TabFeatures : AvaloniaObject
             && focused.GetVisualAncestors().Prepend(focused).OfType<TabItem>().Any(header => Owner(header) == tabs);
         var args = new TabClosingEventArgs(data);
         tabs.RaiseEvent(args);
-        if (args.Cancel) return false;
+        var current = Data(tabs, item);
+        if (args.Cancel || Owner(item) != tabs || !(ReferenceEquals(current, data) || data is ValueType && Equals(current, data)) || !CanClose(item)) return false;
         if (GetCloseCommand(tabs) is { } command) command.Execute(data);
         else
         {

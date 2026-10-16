@@ -30,6 +30,8 @@ Tag 用于显示状态，不承担按钮或切换选择行为。状态文字与�
 
 ## VerificationStep 带验证的 Step
 
+普通编辑页可使用 [Form / FormItem](form.md)，复用本页的校验器与错误类型。`FormItem` 也可用于步骤的自定义内容，按最近校验宿主显示字段错误。
+
 `VerificationStep` 是带验证的 Step：当前步骤验证通过后才能向前导航。它替代原有 `Step` 控件，C# 类型引用和 XAML 标签需改为 `VerificationStep`。配套的 `StepItem`、`StepField`、`StepValidation` API 名称和行为保持不变。
 
 默认用法只需步骤模型、常见验证属性和 ItemsSource。`StepItem<T>` 自动创建属性验证器，并在没有自定义内容模板时生成表单、字段标签及输入下方的错误提示；无需声明 StepField 或逐步调用 StepValidation.For。T 使用模型的具体类型，公共属性的 NativeAOT 元数据由控件库保留。

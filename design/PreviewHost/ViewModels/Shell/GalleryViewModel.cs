@@ -16,7 +16,7 @@ public sealed class GalleryViewModel : ReactiveObject
             if (parameter is PreviewPageDescriptor page)
                 Select(page.Id);
         });
-        SelectedNavigation = NavigationRoots[0].Entries[0];
+        SelectedNavigation = NavigationRoots[0];
     }
 
     public ObservableCollection<NavEntry> NavigationRoots { get; } = PreviewNavigation.CreatePages();
@@ -125,6 +125,12 @@ public sealed class GalleryViewModel : ReactiveObject
     public void Select(int id)
     {
         var destination = PreviewPageCatalog.Find(id);
+        if (destination.Id == PreviewPageCatalog.Home.Id)
+        {
+            SelectedNavigation = NavigationRoots[0];
+            Search = "";
+            return;
+        }
         foreach (var group in NavigationRoots)
         foreach (var page in group.Entries)
             if (page.Category == destination.Id)

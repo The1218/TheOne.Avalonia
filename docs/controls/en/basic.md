@@ -80,6 +80,8 @@ Dropdowns and suggestions use the theme's virtualized templates. Supply model co
 
 ## NumericUpDown and ButtonSpinner
 
+NumericUpDown's default and `filled` styles use a single outer border with neutral spinner separators; focus/error colors stay on the outer border. The `underlined` variant draws only its baseline and leaves the spinner buttons borderless. Both left/right spinner placement and hidden spinner buttons retain native input behavior. `--verify-numericupdown [output]` in PreviewHost verifies only this control's styles, pixels, and input across themes, sizes, and wide/narrow viewports.
+
 ```xml
 <NumericUpDown Minimum="0" Maximum="100" Increment="1"
                FormatString="0" Value="{Binding Quantity, Mode=TwoWay}" />

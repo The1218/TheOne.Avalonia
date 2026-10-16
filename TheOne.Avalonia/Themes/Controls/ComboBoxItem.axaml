@@ -9,6 +9,7 @@
         <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="Margin" Value="4,2" />
         <Setter Property="Padding" Value="{DynamicResource ComboBoxItemThemePadding}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />

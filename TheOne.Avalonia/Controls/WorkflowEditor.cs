@@ -190,11 +190,26 @@ public class WorkflowEditor : TemplatedControl
         if (change.Property == DocumentProperty) { _selection.Clear(); SetCurrentValue(SelectedNodeProperty, null); SetCurrentValue(SelectedConnectionProperty, null); _canvas?.CancelGesture(); Observe(); }
         if (change.Property == SelectedNodeProperty)
         {
-            if (SelectedNode is { } node && Document?.Nodes.Contains(node) == true) { if (!_selection.Contains(node)) { _selection.Clear(); _selection.Add(node); } }
+            if (SelectedNode is { } node)
+            {
+                if (Document?.Nodes.Contains(node) != true) { SetCurrentValue(SelectedNodeProperty, null); return; }
+                SetCurrentValue(SelectedConnectionProperty, null);
+                if (!_selection.Contains(node)) { _selection.Clear(); _selection.Add(node); }
+            }
             else _selection.Clear();
             RefreshNodeEditor(); _canvas?.InvalidateVisual(); _canvas?.UpdateSelection(); UpdateCommands();
         }
-        if (change.Property == SelectedConnectionProperty) { _canvas?.InvalidateVisual(); UpdateCommands(); }
+        if (change.Property == SelectedConnectionProperty)
+        {
+            if (SelectedConnection is { } connection)
+            {
+                if (Document?.Connections.Contains(connection) != true) { SetCurrentValue(SelectedConnectionProperty, null); return; }
+                _selection.Clear();
+                SetCurrentValue(SelectedNodeProperty, null);
+                _canvas?.UpdateSelection();
+            }
+            _canvas?.InvalidateVisual(); UpdateCommands();
+        }
         if (change.Property == NodeTemplateProperty || change.Property == ContentTemplateProperty) _canvas?.Refresh(true);
         if (change.Property == ZoomProperty || change.Property == PanProperty)
         { SetAndRaise(ZoomTextProperty, ref _zoomText, $"{Zoom:P0}"); _canvas?.InvalidateArrange(); _canvas?.InvalidateVisual(); }

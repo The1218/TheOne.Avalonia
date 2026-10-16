@@ -41,7 +41,11 @@ ReportPrintResult result = await viewer.PrintAsync(
     new ReportPrintOptions(PrinterName: null, Copies: 1), cancellationToken);
 ```
 
-PDF 使用已加载的数据、图片及分页快照，保持物理纸张尺寸、矢量文字／图形和内嵌图片。`ExportPdfAsync`、`PrintAsync` 不再请求 HTTP；需要更新资源时刷新或重新加载。导出按钮使用系统保存对话框；打印先生成临时 PDF，再交给 `TheOne.Avalonia.Reporting` 中的 `PrintTool`。点击打印即显式提交到默认 CUPS 打印机，或调用 Windows PDF 打印处理程序。
+PDF 使用已加载的数据、图片及分页快照，保持物理纸张尺寸、矢量文字／图形和内嵌图片。`ExportPdfAsync`、`PrintAsync` 不再请求 HTTP；需要更新资源时刷新或重新加载。导出按钮使用系统保存对话框；打印先生成临时 PDF。未配置宿主 `PrintHandler` 时，仍交给 `TheOne.Avalonia.Reporting` 中的 `PrintTool`，直接提交到 CUPS 或调用 Windows PDF 打印处理程序。
+
+`PrintHandler` 是每个预览实例可选的 CLR 回调，类型为 `Func<string, ReportPrintOptions?, CancellationToken, Task<ReportPrintResult>>`。PDF 路径在任务完成前保持有效；读取完毕后返回 `KeepDocument=false`，异步打印程序仍需读取时返回 true。异常和取消会恢复打印按钮并清理未保留的临时文件。
+
+PreviewHost 引用 [TheOne.PrintingTools.Avalonia](https://github.com/The1218/TheOne.PrintingTools.Avalonia) `1.0.0-preview.3`，并在 ReportPreview 示例上配置该回调。点击打印先打开包提供的打印设置／预览，用户确认后才提交任务。打印包主题仅加载到打印窗口内，跟随当前明暗主题与三档密度。主控件库不依赖此打印包；适配实现见 [PreviewPrinting](../../../design/PreviewHost/Infrastructure/Printing/PreviewPrinting.cs)。
 
 `PrintTool.PrintPdfAsync(path, options, cancellationToken)` 可提交已有 PDF；`CreateStartInfo(path, platform, options)` 只构造平台调用参数，不提交作业。
 
@@ -53,7 +57,7 @@ PDF 使用已加载的数据、图片及分页快照，保持物理纸张尺寸�
 
 `ReportPrintResult.Message` 只表示提交或调用处理程序的结果，不表示纸张已实际打印。CUPS 失败抛出包含命令错误的异常。Windows 处理程序可能在调用返回后读取 PDF，因此 `KeepDocument` 为 true；`ReportPreview.PrintAsync` 保留文件，通过 `DocumentPath` 和消息返回路径。应用运行 24 小时后计时清理，后续初始化预览控件或打印时也会清理过期文件；应用退出不会立即删除保留文件。应用启动时还可调用 `PrintTool.CleanupTemporaryDocuments()` 清理库产生的过期打印文件。CUPS 临时文件在提交／失败后删除；直接调用 `PrintTool` 的消费者自行管理 PDF 生命周期。
 
-命令构造检查不代表物理打印、Windows PDF 处理程序或 Linux 队列已实跑。消费者需在目标平台验证打印服务及设备；内置打印按钮尚未提供跨平台原生打印设置对话框。
+命令构造检查不代表物理打印、Windows PDF 处理程序或 Linux 队列已实跑。消费者需在目标平台验证打印服务及设备；默认 PrintTool 路径没有打印设置对话框，PreviewHost 使用上述包提供的预览界面。
 
 ## 接入与限制
 

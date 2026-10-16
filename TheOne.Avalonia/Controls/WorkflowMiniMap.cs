@@ -8,6 +8,7 @@ namespace TheOne.Avalonia.Controls;
 
 public sealed class WorkflowMiniMap : Control
 {
+    public WorkflowMiniMap() => ResourcesChanged += (_, _) => InvalidateVisual();
     public static readonly StyledProperty<WorkflowEditor?> EditorProperty = AvaloniaProperty.Register<WorkflowMiniMap, WorkflowEditor?>(nameof(Editor));
     public WorkflowEditor? Editor { get => GetValue(EditorProperty); set => SetValue(EditorProperty, value); }
     private WorkflowEditor? _observed;
@@ -22,7 +23,7 @@ public sealed class WorkflowMiniMap : Control
     private void Observe() { Stop(); if (TopLevel.GetTopLevel(this) != null) { _observed = Editor; if (_observed != null) { _observed.DocumentEdited += Edited; _observed.PropertyChanged += EditorChanged; } } InvalidateVisual(); }
     private void Edited(object? s, EventArgs e) => InvalidateVisual();
     private void EditorChanged(object? s, AvaloniaPropertyChangedEventArgs e) => InvalidateVisual();
-    private IBrush Brush(string key, IBrush fallback) => this.TryFindResource(key, out var v) && v is IBrush b ? b : fallback;
+    private IBrush Brush(string key, IBrush fallback) => this.TryFindResource(key, ActualThemeVariant, out var v) && v is IBrush b ? b : fallback;
     private Point Map(Point p) => new(_offset.X + (p.X - _graph.X) * _scale, _offset.Y + (p.Y - _graph.Y) * _scale);
     public override void Render(DrawingContext context)
     {

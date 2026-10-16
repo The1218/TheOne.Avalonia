@@ -117,6 +117,8 @@ Displacement / placement uses `One.Motion.Fast` (120 ms) and CubicEaseOut. `Moti
 | `TabFeatures.Close(tabItem)` | Attempts to close the container's data item |
 | `TabFeatures.Move(tabs, from, to)` | Attempts reordering by zero-based indices |
 
+After `TabClosing`, closing rechecks the container's owner, data identity and current close permission. If the callback replaces the source or container, pins/disables the tab, rejects the command, or already closes the item, the original operation stops without changing the callback's selection.
+
 Cancel closing unsaved content in the view (`DocumentsTabs` is a named TabControl):
 
 ```csharp

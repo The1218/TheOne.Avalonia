@@ -95,7 +95,7 @@ internal static class NavMenuPreview
         menu.IsEnabled = true;
         foreach (var next in new[] { ControlSize.Small, ControlSize.Large, ControlSize.Normal })
         {
-            ControlSizing.SetSize(window, next); menu.SelectPath(0, 9); Flush();
+            ControlSizing.SetSize(window, next); check(menu.SelectPath(0, 9), $"{label}: path selection remains valid while changing density to {next}"); Flush();
             target = (NavMenuItem)menu.TreeContainerFromItem(menu.SelectedItem!)!;
             var expected = next switch { ControlSize.Small => 30, ControlSize.Large => 44, _ => 36 };
             check(Part<Border>(target, "PART_LayoutRoot").Bounds.Height == expected && Part<ToggleButton>(target, "PART_ExpandCollapseChevron").Height == expected, $"{label}: live density updates the visible row to {next} ({Part<Border>(target, "PART_LayoutRoot").Bounds.Height}/{expected})");
@@ -143,7 +143,8 @@ internal static class NavMenuPreview
         var chevronPath = Part<ToggleButton>(group, "PART_ExpandCollapseChevron").GetVisualDescendants().OfType<global::Avalonia.Controls.Shapes.Path>().First();
         check(chevronPath.Transitions is { Count: > 0 }, "NavMenu/motion: enabled chevron retains native transition");
         Motion.SetEnabled(window, false); Flush();
-        check(group.Bounds.Height == Part<Border>(group, "PART_LayoutRoot").Bounds.Height && !reveal.IsVisible && chevronPath.Transitions is null, $"NavMenu/motion: disabling motion completes collapse and disables chevron animation (height={reveal.Bounds.Height}, visible={reveal.IsVisible}, open={reveal.IsOpen}, expanded={group.IsExpanded}, motion={Motion.GetEnabled(reveal)}, transitions={chevronPath.Transitions?.Count})");
+        var groupHeader = Part<Border>(group, "PART_LayoutRoot");
+        check(group.Bounds.Height == groupHeader.Bounds.Height + groupHeader.Margin.Top + groupHeader.Margin.Bottom && !reveal.IsVisible && chevronPath.Transitions is null, $"NavMenu/motion: disabling motion leaves only the header and its item spacing, with no chevron animation (row={group.Bounds.Height}, header={groupHeader.Bounds.Height}, margin={groupHeader.Margin}, visible={reveal.IsVisible}, transitions={chevronPath.Transitions?.Count})");
         Motion.SetEnabled(window, true); roots[1].IsExpanded = true; Advance(280); Flush();
         check(reveal.IsVisible && reveal.Bounds.Height > 0 && chevronPath.Transitions is { Count: > 0 }, "NavMenu/motion: re-enabling restores expansion and chevron transitions");
         Motion.SetEnabled(window, false);

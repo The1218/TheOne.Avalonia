@@ -23,7 +23,7 @@ Compiled column bindings identify entity properties automatically. Enable grid f
 </DataGrid>
 ```
 
-After OneTheme loads, each column has a funnel entry point, with accent colors for active conditions. Text supports contains matching; numbers support exact values and inclusive ranges. Either range endpoint can be omitted; empty conditions clear the column. Boolean, date, action-template, and unidentified-property columns show disabled entry points with explanatory tooltips. `FilterEnabled=False` hides a column's entry point.
+After OneTheme loads, filterable columns have a funnel entry point, with accent colors for active conditions. Text supports contains matching; numbers support exact values and inclusive ranges. Either range endpoint can be omitted; empty conditions clear the column. Boolean, date, action-template, and unidentified-property columns have no filter button. `FilterEnabled=False` or `FilterKind=None` also hides a column's entry point. Runtime changes update the header and close an unavailable filter popup.
 
 ```csharp
 var result = DataGridFeatures.ApplyFilter(grid, grid.Columns[0], new TextFilterCondition("显示器"));

@@ -2,6 +2,8 @@
 
 **简体中文** · [English](../en/theme-colors.md)
 
+本页说明默认配色；新增的 9 套可选资源、配色下拉选择器及独立明暗开关见 [ThemeColorPicker / ThemeButton](theme-color-picker.md)。
+
 默认颜色按 [Eremex DeltaDesign 的 Nova 资源](https://github.com/Eremex/controlthemes/blob/5f6cb3ad8b904cead6bd432f62596648cc9a1039/Source/Eremex.Avalonia.Themes.DeltaDesign/PaletteResources/Nova.axaml)逐项映射，并与 `Eremex.Avalonia.Themes.DeltaDesign 1.5.53-preview3` 的运行时资源交叉核对。参考 Demo 使用的主题入口见 [App.axaml](https://github.com/Eremex/controls-demo/blob/2edf87b8eea9f58f935b0383bbf724abfd43122a/DemoCenter/DemoCenter/App.axaml)。不再根据旧截图取近似色，也不将强调色人为压暗或增艳。
 
 颜色直接写入类库 `Themes/Colors.axaml`；加载 OneTheme 即生效。公共 `One.*` 名称保留，按钮、输入、选择、列表、表格、导航、菜单、浮层、窗口与消息共用这些资源，无需宿主注入。保留 Avalonia 原生模板、行为与三档尺寸，不引入 Eremex 依赖或复制其模板实现。
@@ -53,6 +55,25 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 
 ## 渐变与扩展色
 
+全部 10 个 `ThemeColor` 的 Light / Dark 均提供以下 8 种渐变；两类各 4 种。切换配色或明暗模式时，通过 `DynamicResource` 自动更新。
+
+| 用途 | 柔和（渐变不明显） | 明显（强调色渐变） |
+| --- | --- | --- |
+| 品牌 | `One.Gradient.Subtle.Brand` | `One.Gradient.Vivid.Brand` |
+| 冷色 | `One.Gradient.Subtle.Cool` | `One.Gradient.Vivid.Cool` |
+| 自然 | `One.Gradient.Subtle.Natural` | `One.Gradient.Vivid.Natural` |
+| 暖色 | `One.Gradient.Subtle.Warm` | `One.Gradient.Vivid.Warm` |
+
+每个键是不可变 LinearGradientBrush，并同时提供同名前缀的 `.StartColor`、`.EndColor`。Subtle 从低比例语义色过渡至较高比例，适合卡片表面，文字使用 `One.Text`。Vivid 从当前 Accent 过渡到明暗端或 Info / Success / Warning，适合装饰条或强调图形；叠加文字时需按所选配色检查对比度。原有 Brand / BrandHover / BrandPressed / Glow / Data 键继续保留。
+
+```xml
+<Border Background="{DynamicResource One.Gradient.Subtle.Brand}" Padding="16">
+  <TextBlock Text="主题卡片" Foreground="{DynamicResource One.Text}" />
+</Border>
+```
+
+自定义颜色通过宿主 Application.Resources 或控件局部 Resources 覆盖同名键；需要同时覆盖 Light / Dark 时使用 ThemeDictionaries。不要在每次切换时移除或重新加载整个 OneTheme；调用 [枚举 API](theme-color-picker.md) 即可，保留业务控件与绑定。
+
 渐变、状态浅底和图表系列组合为 TheOne 扩展，不宣称是 Eremex 原生效果：
 
 - `One.Gradient.Brand` 从 Nova Accent 过渡到相邻青蓝色，另有 Hover / Pressed，使用 OnAccent 文字。
@@ -96,4 +117,4 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 
 外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。对比度报告见 [contrast-report.json](../contrast-report.json)。
 
-`underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger；`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。
+`underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger，禁用底线保留 InputLine。可编辑 ComboBox 只使用外层底线，不再出现内部编辑器边框；焦点和校验覆盖层使用同一底线颜色。NumericUpDown 的步进按钮在此变体中不绘制边框。PreviewHost 的 `--verify-underlined-inputs [output]` 仅验证 TextBox、可编辑／不可编辑 ComboBox 与 AutoCompleteBox。`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。

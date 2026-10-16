@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
   <ControlTheme x:Key="One.Gantt.Row" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+    <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" /><Setter Property="CornerRadius" Value="0" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="VerticalContentAlignment" Value="Stretch" />

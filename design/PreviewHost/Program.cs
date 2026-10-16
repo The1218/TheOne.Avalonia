@@ -13,6 +13,74 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        if (args.Length > 0 && args[0] is "--verify-theme-colors" or "--verify-preview-code" or "--verify-theme-performance" or "--verify-theme-api" or "--verify-theme-refresh" or "--verify-navmenu-scroll" or "--verify-navmenu-fling")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
+            if (args[0] == "--verify-theme-colors") ThemeAppearancePreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-theme-api") ThemeColorApiPreview.Verify(Check);
+            else if (args[0] == "--verify-theme-performance") ThemeSwitchPerformancePreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-theme-refresh") ThemeRefreshPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-navmenu-scroll") NavMenuScrollPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-navmenu-fling") NavMenuFlingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else PreviewCodePreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
+            if (args[0] == "--verify-home") HomePreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else PreviewPrintingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] is "--verify-underlined-inputs" or "--verify-calendar-layout")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
+            var output = args.Length > 1 ? args[1] : null;
+            if (args[0] == "--verify-underlined-inputs") UnderlinedInputPreview.Verify(Check, output);
+            else CalendarLayoutPreview.Verify(Check, output);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-numericupdown")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            NumericUpDownPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] is "--verify-menu-item-spacing" or "--verify-tab-item-spacing" or "--verify-tabstrip-item-spacing")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
+            var output = args.Length > 1 ? args[1] : null;
+            if (args[0] == "--verify-menu-item-spacing") ItemSurfaceSpacingPreview.VerifyMenus(Check, output);
+            else ItemSurfaceSpacingPreview.VerifyTabs(Check, output, args[0] == "--verify-tabstrip-item-spacing");
+            return;
+        }
+        if (args.Length > 0 && args[0] is "--verify-input-appearance" or "--verify-datagrid-filter-entries" or "--verify-combobox-spacing" or "--verify-listbox-spacing" or "--verify-treeview-spacing")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
+            if (args[0] == "--verify-input-appearance") InputAppearancePreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-combobox-spacing") InputAppearancePreview.VerifyComboBoxSpacing(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-listbox-spacing") InputAppearancePreview.VerifyListBoxSpacing(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-treeview-spacing") InputAppearancePreview.VerifyTreeViewSpacing(Check, args.Length > 1 ? args[1] : null);
+            else DataGridFilterPreview.VerifyEntries(Check);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-multiselect")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            MultiSelectBoxPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-form")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            FormPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
         if (args.Length > 0 && args[0] is "--verify-report-authentication" or "--verify-report-lifecycle" or "--verify-report-tree-scroll" or "--verify-report-sidebar" or "--verify-report-reload")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
@@ -63,6 +131,30 @@ internal static class Program
             BuildAvaloniaApp(false).StartWithClassicDesktopLifetime(args);
             return;
         }
+        if (args.Length > 0 && args[0] == "--verify-workflow-selection-state")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            WorkflowSelectionStatePreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-tab-selection-state")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            TabSelectionStatePreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-navmenu-selection")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            NavMenuSelectionPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
+        if (args.Length > 0 && args[0] == "--verify-colorpicker-model-spacing")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            ColorPickerPreview.VerifyModelSpacing((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
+            return;
+        }
         if (args.Length > 0 && args[0] == "--verify-colorpicker")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
@@ -86,13 +178,20 @@ internal static class Program
         {
             Console.WriteLine("""
                 PreviewHost: no arguments = desktop
+                --verify-multiselect [output] = MultiSelectBox search, selection, keyboard, virtualization and pixels only
+                --verify-form [output] = Form / FormItem validation, binding, keyboard, lifecycle and pixels only
                 --verify-brand-icon [output] = application icon assets and PreviewHost branding only
                 --export-brand-icon [output] = export vector-based PNG / ICO / ICNS application icons
                 --verify-messagebox [output] = simple confirmation, commands, keyboard and themes only
                 --verify-upload [output] = single-file selection, preview, commands, HTTP API and themes only
                 --verify-tabstrip-close [output] = native TabStrip closing, commands, recycling and TabControl compatibility only
+                --verify-tab-selection-state [output] = TabControl close callbacks, stale containers and selection lifetime only
+                --verify-workflow-selection-state [output] = WorkflowEditor node / edge selection exclusivity and document ownership only
                 --colorpicker = desktop native ColorPicker demo
                 --verify-colorpicker [output] = ColorPicker / ColorView themes, input, binding and pixels only
+                --verify-home [output] = Home layout, live examples, navigation and cached state only
+                --verify-preview-printing [output] = report PDF snapshot, package preview and fake queue submission only
+                --verify-colorpicker-model-spacing [output] = RGB / HSV spacing, pointer, keyboard and gap pixels only
                 --verify-workflow [output] = WorkflowEditor contracts, binding, editing, persistence and rendering
                 --reportdesign = desktop report designer
                 --verify-reportdesign [output] = report binding / expansion / pagination checks
@@ -115,6 +214,7 @@ internal static class Program
                 --verify-loginwindow | --verify-onewindow | --verify-tag-verification-step | --verify-verification-step | --verify-flow-step [output] | --verify-pagination [output] | --verify-avatar [output] | --verify-infocard [output] | --verify-control-variants
                 --verify-login-lifetime / --verify-login-lifetime-close <OnMainWindowClose|OnLastWindowClose|OnExplicitShutdown>
                 --verify-navmenu | --verify-navmenu-hover | --verify-navmenu-edge
+                --verify-navmenu-selection [output] = collapsed submenu selection states, hover, keyboard and pixels only
                 --verify-navmenu-search | --verify-navmenu-motion | --verify-navmenu-filter
                 --verify-expander-motion | --verify-carousel | --verify-refresh | --verify-tab-drag
                 --verify-flyout | --verify-notifications | --verify-content-transition

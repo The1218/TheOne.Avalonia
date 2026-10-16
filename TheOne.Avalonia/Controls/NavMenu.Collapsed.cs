@@ -104,7 +104,7 @@ public partial class NavMenu
         _submenuBindings.Add(child.Bind(IndentProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.Indent, source: this)));
         var heading = new ContentPresenter { Name = "PART_SubmenuHeader", Content = data, FontWeight = FontWeight.SemiBold, Margin = new Thickness(0, 0, 0, 8) };
         _submenuBindings.Add(heading.Bind(FontSizeProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.FontSize, source: this)));
-        _submenuBindings.Add(heading.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this, converter: new DefaultContentConverter(this))));
+        _submenuBindings.Add(heading.Bind(ContentPresenter.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this, converter: new RecyclingTemplateConverter(new SearchContentTemplate(this)))));
         var back = new Button { Name = "PART_SubmenuBack", Content = "‹ 返回", IsVisible = false, Margin = new Thickness(0, 0, 8, 8) };
         back.Click += (_, _) => CloseSubmenu();
         _submenuBackButton = back;
@@ -244,7 +244,7 @@ public partial class NavMenu
     private void UpdateActiveRoots()
     {
         foreach (var root in GetRealizedContainers().OfType<NavMenuItem>())
-            root.SetCurrentValue(NavMenuItem.IsActiveAncestorProperty, UsesPopupNavigation && SelectedItem is not null && ReferenceEquals(ItemFromContainer(root), _activeRoot));
+            root.SetCurrentValue(NavMenuItem.IsActiveAncestorProperty, UsesPopupNavigation && SelectedItem is not null && _activeRoot is not null && ReferenceEquals(ItemFromContainer(root), _activeRoot));
     }
 
     protected override void OnKeyDown(KeyEventArgs args)

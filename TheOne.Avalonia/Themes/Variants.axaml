@@ -124,6 +124,12 @@
   </Style>
 
   <!-- Underlined input chrome leaves official text, spinner and popup presenters intact. -->
+  <Style Selector="NumericUpDown /template/ ButtonSpinner#PART_Spinner /template/ RepeatButton.one-spin">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+  </Style>
+  <Style Selector="NumericUpDown.underlined /template/ ButtonSpinner#PART_Spinner /template/ RepeatButton.one-spin">
+    <Setter Property="BorderThickness" Value="0" />
+  </Style>
   <Style Selector="TextBox.underlined, ComboBox.underlined, NumericUpDown.underlined, AutoCompleteBox.underlined">
     <Setter Property="Background" Value="{DynamicResource One.Surface}" />
     <Setter Property="BorderThickness" Value="0,0,0,1" />
@@ -135,6 +141,25 @@
   </Style>
   <Style Selector="ComboBox.underlined:focus-within, NumericUpDown.underlined:focus-within, AutoCompleteBox.underlined:focus-within">
     <Setter Property="BorderThickness" Value="0,0,0,2" />
+  </Style>
+  <Style Selector="ComboBox.underlined /template/ TextBox#PART_EditableTextBox">
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="FocusAdorner" Value="{x:Null}" />
+  </Style>
+  <Style Selector="ComboBox.underlined /template/ TextBox#PART_EditableTextBox /template/ Border#PART_BorderElement">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="CornerRadius" Value="0" />
+  </Style>
+  <Style Selector="ComboBox.underlined:focus-within /template/ Border#Background, ComboBox.underlined:focus-within /template/ Border#HighlightBackground">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" />
+  </Style>
+  <Style Selector="ComboBox.underlined:error /template/ Border#Background, ComboBox.underlined:error /template/ Border#HighlightBackground">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+  </Style>
+  <Style Selector="TextBox.underlined:disabled /template/ Border#PART_BorderElement, AutoCompleteBox.underlined:disabled /template/ TextBox#PART_TextBox /template/ Border#PART_BorderElement, ComboBox.underlined:disabled /template/ Border#Background, ComboBox.underlined:disabled /template/ Border#HighlightBackground">
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
   </Style>
   <Style Selector="TabControl.pills > TabItem">
     <Setter Property="CornerRadius" Value="999" />

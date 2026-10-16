@@ -1,5 +1,5 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="{x:Type one:ThemeButton}" TargetType="one:ThemeButton" BasedOn="{StaticResource {x:Type Button}}">
+  <ControlTheme x:Key="{x:Type one:ThemeButton}" TargetType="one:ThemeButton" BasedOn="{StaticResource {x:Type ToggleButton}}">
     <Setter Property="Width" Value="{DynamicResource One.Size.Height}" /><Setter Property="Height" Value="{DynamicResource One.Size.Height}" />
     <Setter Property="MinWidth" Value="0" /><Setter Property="MinHeight" Value="0" /><Setter Property="Padding" Value="8" /><Setter Property="BorderThickness" Value="0" /><Setter Property="Background" Value="Transparent" />
     <Setter Property="Template"><ControlTemplate>

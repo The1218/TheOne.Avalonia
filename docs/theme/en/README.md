@@ -6,6 +6,8 @@ OneTheme is the library's default theme. It uses shared `One.*` resources and in
 
 ## Native control templates
 
+See [ThemeColorPicker / ThemeButton](theme-color-picker.md) for runtime palettes, independent Light / Dark switching, PreviewHost code highlighting, and scoped verification.
+
 | Group | Controls |
 | --- | --- |
 | Actions | Button, ToggleButton, RepeatButton, SplitButton, ToggleSplitButton |
@@ -23,6 +25,14 @@ OneTheme is the library's default theme. It uses shared `One.*` resources and in
 The base templates adapt Avalonia **12.1.4** Fluent sources; the Calendar family and Card templates are implemented by this library. Templates keep `PART_*`, input presenters, validation containers, Popup, Track, Spinner, scrolling gestures, and native keyboard behavior. Colors, radii, default dimensions, helper theme keys, and visual states use TheOne's design. Sources and MIT notices are in the root `THIRD-PARTY-NOTICES.md`, which is also included in the packages.
 
 ## Style APIs
+
+See [item surface spacing](item-spacing.md) for the shared spacing rules, audited control families, and independent verification commands.
+
+TreeViewItem applies `Margin="4,2"` to the header surface (`PART_LayoutRoot`): 4px on either side and 4px between visible rows. Child presenters keep the native level indentation; margins do not accumulate with tree depth. `--verify-treeview-spacing [output]` checks header spacing, selected pixels, three-level indentation, pointer selection, chevron collapse, and keyboard expansion across themes, sizes, and wide/narrow viewports.
+
+TextBox, AutoCompleteBox, NumericUpDown, ComboBox, CalendarDatePicker, DatePicker, TimePicker, and MultiSelectBox use a visible 1px `One.InputLine` resting border. Focus and error states keep their semantic colors. Embedded editors retain a single outer border. ListBoxItem and ComboBoxItem both use `Margin="4,2"`: 4px on either side and 4px between adjacent item surfaces, without replacing native containers or virtualization. Override an item's Margin locally when a denser layout is required. `--verify-combobox-spacing [output]` checks only ComboBox popup spacing, pixels, and native selection across themes, sizes, and wide/narrow viewports. `--verify-listbox-spacing [output]` checks ListBox spacing, selected pixels, native multiple selection, and recycling with default and custom content.
+
+Run `--verify-input-appearance [output]` in PreviewHost for input border pixels, list/dropdown spacing, and native input across light/dark, three sizes, two backgrounds, and wide/narrow viewports. `--verify-datagrid-filter-entries` checks only filter button visibility and runtime changes.
 
 | Control | Classes / properties | Purpose |
 | --- | --- | --- |

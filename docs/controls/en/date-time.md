@@ -50,6 +50,8 @@ DateTime, Month, and Year default to `yyyy-MM-dd HH:mm`, `yyyy-MM`, and `yyyy`. 
 
 Native month paging, year / decade views, ranges, blackout dates, and keyboard selection remain available. Today has an outline; selection uses the accent color. Use native `SelectionMode` and `SelectedDates` for multiple dates. The date grid has a fixed layout bound.
 
+Date, month, and year grids reserve the same body height within each density: Small 258px, Normal 294px, Large 342px. Switching modes or opening directly in month/year selection keeps the outer height stable. Date cells stay centered at their natural size. Month/year buttons are centered at their natural label size and native minimum height, so selection no longer fills the entire grid slot. The native hit target, focus, and selection behavior remain on the button. CalendarDatePicker popups share this layout. Theme resources `One.CalendarBodyHeight.Small`, `.Normal`, and `.Large` can be overridden when customizing calendar fonts or cell dimensions. PreviewHost's `--verify-calendar-layout [output]` checks only Calendar and its CalendarDatePicker popup caller.
+
 ## DatePicker and TimePicker
 
 ```xml

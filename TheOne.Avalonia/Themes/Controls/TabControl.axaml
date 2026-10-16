@@ -125,6 +125,7 @@
                             DockPanel.Dock="{TemplateBinding TabStripPlacement}"
                             HorizontalScrollBarVisibility="Hidden"
                             Name="PART_StandardHeaderScroll"
+                            Padding="2"
                             VerticalScrollBarVisibility="Disabled">
                             <ItemsPresenter
                                 DockPanel.Dock="{TemplateBinding TabStripPlacement}"

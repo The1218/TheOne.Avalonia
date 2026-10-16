@@ -11,7 +11,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />

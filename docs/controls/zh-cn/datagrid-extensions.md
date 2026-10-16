@@ -23,7 +23,7 @@
 </DataGrid>
 ```
 
-加载 OneTheme 后，每列显示漏斗入口；生效条件使用强调色。文本支持包含搜索，数值支持精确值和包含上下界的范围；范围允许只填一端，空条件清除该列。布尔、日期、操作模板列及无法确定实体属性的列显示不可用入口，并通过提示说明原因；`FilterEnabled=False` 隐藏单列入口。
+加载 OneTheme 后，可筛选的列显示漏斗入口；生效条件使用强调色。文本支持包含搜索，数值支持精确值和包含上下界的范围；范围允许只填一端，空条件清除该列。布尔、日期、操作模板列及无法确定实体属性的列不显示筛选按钮；`FilterEnabled=False` 或 `FilterKind=None` 也会隐藏单列入口。运行时更改配置会更新表头，并关闭已不可用的筛选弹层。
 
 ```csharp
 var result = DataGridFeatures.ApplyFilter(grid, grid.Columns[0], new TextFilterCondition("显示器"));

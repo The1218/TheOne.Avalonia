@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Coordinated preview. Improves DataGrid compiled binding and NativeAOT compatibility, compact chart labels, GaugeChart presets and theme consistency. Adds English and Simplified Chinese control and theme documentation. Requires .NET 10 and Avalonia 12.1.4.</PackageReleaseNotes>
+        <PackageReleaseNotes>Adds Form/FormItem, searchable virtualized MultiSelectBox, enum-based theme color switching, bindable ThemeColorPicker and palette gradients. Improves theme refresh and NavMenu reverse scrolling performance. Fixes input borders, item spacing, selection states, calendar layout and DataGrid filter indicators. Expands bilingual control/window-owner documentation and PreviewHost Home, code and print examples. Requires .NET 10 and Avalonia 12.1.4; upgrade TheOne.Avalonia.DataGrid to the same preview version.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

@@ -30,7 +30,7 @@ The DataGrid family is adapted from Avalonia.Controls.DataGrid 12.1.2 (MIT), inc
 
 DataGrid source: https://github.com/AvaloniaUI/Avalonia.Controls.DataGrid/tree/12.1.2/src/Avalonia.Controls.DataGrid/Themes
 
-The Calendar family, card-tab templates and interaction helpers are authored for TheOne. The card tabs reference Eremex's documented interaction model; no Eremex source code or binaries are included.
+The Calendar family, card-tab templates and interaction helpers are authored for TheOne. The card tabs reference Eremex's documented interaction model; no Eremex control templates or binaries are included. Semantic palette values map from Eremex/controlthemes commit 5f6cb3ad8b904cead6bd432f62596648cc9a1039 (Nova default, Atlas, AtlasDeep, Helios, HeliosDeep, NovaDeep, Terra, TerraDeep, Vega, VegaDeep). TheOne authors the resource mapping, palette switching, gradients and status tints. Reference: https://github.com/Eremex/controlthemes/tree/5f6cb3ad8b904cead6bd432f62596648cc9a1039/Source/Eremex.Avalonia.Themes.DeltaDesign/PaletteResources .
 
 Source: https://github.com/AvaloniaUI/Avalonia/tree/12.1.4/src/Avalonia.Themes.Fluent/Controls
 

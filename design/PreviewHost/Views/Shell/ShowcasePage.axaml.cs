@@ -30,4 +30,5 @@ public partial class ShowcasePage : UserControl
     }
     public UserControl GetControlView(int id) => _views[id];
     public Border GetSection(int id) => _sections[id];
+    internal IEnumerable<Control> SourceViews => _views.Values;
 }

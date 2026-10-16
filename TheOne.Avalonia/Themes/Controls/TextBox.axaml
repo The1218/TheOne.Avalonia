@@ -114,7 +114,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="CaretBrush" Value="{DynamicResource One.Text}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="SelectionBrush" Value="{DynamicResource One.TextSelection}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource One.Placeholder}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
@@ -262,7 +262,7 @@
             <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
 
             <Style Selector="^ /template/ Border#PART_BorderElement">
-                <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
                 <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
             </Style>
 

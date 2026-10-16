@@ -6,7 +6,7 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
         <Setter Property="Padding" Value="14,0" />
-        <Setter Property="Margin" Value="2,0" />
+        <Setter Property="Margin" Value="2" />
         <Setter Property="MinHeight" Value="{DynamicResource One.Size.Height}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />

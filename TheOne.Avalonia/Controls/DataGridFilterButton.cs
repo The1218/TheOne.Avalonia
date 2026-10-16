@@ -87,7 +87,7 @@ public sealed class DataGridFilterButton : Button
     private void ColumnChanged(object? sender, AvaloniaPropertyChangedEventArgs args) => Update();
     private void Update()
     {
-        IsVisible = _header?.Classes.Contains(":dragIndicator") != true && _grid is not null && _column is not null && _grid.Columns.Contains(_column) && DataGridFeatures.GetShowColumnFilters(_grid) && DataGridColumnOptions.GetFilterEnabled(_column);
+        IsVisible = _header?.Classes.Contains(":dragIndicator") != true && _grid is not null && _column is not null && _grid.Columns.Contains(_column) && DataGridFeatures.GetShowColumnFilters(_grid) && DataGridColumnOptions.EffectiveKind(_column) != DataGridFilterKind.None;
         _header?.Classes.Set("one-filter-header", IsVisible);
         IsEnabled = IsVisible && DataGridColumnOptions.EffectiveKind(_column!) != DataGridFilterKind.None && _grid!.CollectionView is DataGridCollectionView { CanFilter: true };
         var active = _column is not null && DataGridColumnOptions.GetFilterCondition(_column) is { IsEmpty: false };

@@ -80,6 +80,8 @@ CheckBox 默认不绘制文字行背景，勾选框自身保留填色与状态�
 
 ## NumericUpDown 与 ButtonSpinner
 
+NumericUpDown 的默认及 `filled` 样式使用单层外边框，步进按钮分隔线保持中性色，焦点／错误色仅作用于外边框。`underlined` 变体仅绘制底线，步进按钮不绘制边框。左右按钮位置和隐藏按钮均保留原生输入行为。PreviewHost 的 `--verify-numericupdown [output]` 专项仅验证此控件在明暗主题、三档尺寸和宽窄视口下的样式、实际像素及输入。
+
 ```xml
 <NumericUpDown Minimum="0" Maximum="100" Increment="1"
                FormatString="0" Value="{Binding Quantity, Mode=TwoWay}" />

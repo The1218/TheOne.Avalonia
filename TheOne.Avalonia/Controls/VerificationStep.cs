@@ -233,13 +233,8 @@ public class VerificationStep : TemplatedControl
             catch (Exception error) { errors = [new("", error.GetBaseException().Message)]; }
             if (lifetime.IsCancellationRequested || generation != _generation || !this.IsAttachedToVisualTree() || !IsEffectivelyEnabled) return false;
             var allErrors = errors.Concat(_formProperties?.SelectMany(field => field.DraftErrors) ?? []).Distinct().ToList();
-            foreach (var control in Inputs().Where(DataValidationErrors.GetHasErrors))
-                foreach (var error in DataValidationErrors.GetErrors(control)?.Cast<object>() ?? [])
-                {
-                    var message = error is Exception exception ? exception.GetBaseException().Message : error.ToString() ?? "Invalid input.";
-                    var member = MemberOf(control);
-                    if (!allErrors.Any(existing => existing.MemberName == member && existing.Message == message)) allErrors.Add(new(member, message));
-                }
+            foreach (var error in StepValidationVisuals.NativeErrors(Inputs()))
+                if (!allErrors.Contains(error)) allErrors.Add(error);
             SetErrors(allErrors.ToArray());
             if (allErrors.Count > 0)
             {
@@ -284,14 +279,10 @@ public class VerificationStep : TemplatedControl
             Inputs().FirstOrDefault(control => control.Focusable && control.IsEffectivelyEnabled && MemberOf(control) == field.Property.Name)?.Focus();
         }, DispatcherPriority.Loaded);
     }
-    private static string MemberOf(Control control)
-    {
-        var field = control.GetVisualAncestors().OfType<StepField>().FirstOrDefault();
-        return !string.IsNullOrEmpty(field?.MemberName) ? field.MemberName : control.Name ?? "";
-    }
+    private static string MemberOf(Control control) => StepValidationVisuals.MemberOf(control);
     internal void RefreshFieldErrors() => SetErrors(_errors);
     private IEnumerable<Control> Inputs() => _contentPresenter?.GetVisualDescendants().OfType<Control>()
-        .Where(control => ReferenceEquals(control.GetVisualAncestors().OfType<VerificationStep>().FirstOrDefault(), this)) ?? [];
+        .Where(control => ReferenceEquals(StepValidationVisuals.Owner(control), this)) ?? [];
     private void CancelValidation()
     {
         _generation++; var validation = _validation; _validation = null;

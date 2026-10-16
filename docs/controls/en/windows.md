@@ -4,6 +4,8 @@
 
 OneWindow inherits native Window and is available after OneTheme loads. It keeps Content / ContentTemplate, ownership, Closing, state, and platform lifecycle. Title bars, messages, and dialogs live in templates without wrapping and reassigning business Content.
 
+Use `OneWindow` for the main workspace and [LoginWindow](login-window.md) for a sign-in window that hands off to it. Both already have dedicated documentation and preserve native window ownership. PreviewHost opens on Home; its live controls and usage snippets lead into the full samples.
+
 ```xml
 <one:OneWindow xmlns="https://github.com/avaloniaui"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,11 +26,15 @@ OneWindow inherits native Window and is available after OneTheme loads. It keeps
 </one:OneWindow>
 ```
 
+The code-behind must inherit the same window type: `public partial class MainWindow : OneWindow`. Set `desktop.MainWindow = new MainWindow();` during desktop startup. Register `OneTheme` once in App.axaml; ordinary controls inside the window use the application's theme and density.
+
 Code-behind must also inherit OneWindow. LeftContent / RightContent accept objects or Control, with LeftContentTemplate / RightContentTemplate; object templates need x:DataType. Controls inherit window DataContext, and buttons / inputs do not initiate title-bar dragging.
 
 See [LoginWindow](login-window.md) for login UI, authenticated handoff, and process shutdown.
 
 ## Title bar and theme
+
+ThemeButton is an icon-only ToggleButton, checked for Dark, switching Light / Dark only. The independent [ThemeColorPicker](../../theme/en/theme-color-picker.md) selects color resources.
 
 ShowTitleBar / ShowThemeButton default to True; TitleBarHeight is overridable. small / normal / large title heights are 42 / 48 / 56, with body / dialog fonts 12 / 14 / 16. Classes or ControlSizing.Size follow window theme and motion inheritance.
 
@@ -43,6 +49,8 @@ ThemeButton switches the nearest window's effective Light / Dark by default; ico
 Clicks use SetCurrentValue to preserve bindings. The shortcut toggles light / dark; RequestedThemeVariant=Default still follows system settings. PreviewHost uses Application scope synchronized with its theme dropdown.
 
 ## Automatic message hosts
+
+See [window owners and message services](window-owners.md) for owner resolution, native ownership versus message targets, threading, Dialog queues, and login handoff.
 
 Show OneWindow, then use the services without finding TopLevel, creating managers, or registering hosts:
 

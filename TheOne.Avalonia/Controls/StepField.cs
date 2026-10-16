@@ -19,7 +19,8 @@ public class StepField : ContentControl
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs args)
     {
         base.OnAttachedToVisualTree(args);
-        this.GetVisualAncestors().OfType<VerificationStep>().FirstOrDefault()?.RefreshFieldErrors();
+        if (StepValidationVisuals.Owner(this) is Form form) form.RefreshFieldErrors();
+        else if (StepValidationVisuals.Owner(this) is VerificationStep step) step.RefreshFieldErrors();
     }
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs args)
     {

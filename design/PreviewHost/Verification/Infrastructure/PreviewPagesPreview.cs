@@ -166,7 +166,9 @@ internal static class PreviewPagesPreview
         var window=new MainWindow {Width=1280,Height=920,WindowDecorations=WindowDecorations.None};
         Motion.SetEnabled(window,false);window.Show();ControlPreview.Flush();
         var gallery=window.FindControl<ControlGallery>("Gallery")!;
-        check(window.Model.NavigationRoots.Count==PreviewPageCatalog.Pages.Select(page=>page.Group).Distinct().Count() && window.Model.NavigationRoots.Sum(group=>group.Entries.Count)==PreviewPageCatalog.Pages.Count,"PreviewHost/pages: grouped pages have one navigation entry in each catalog category");
+        check(window.Model.NavigationRoots.Count==PreviewPageCatalog.Pages.Select(page=>page.Group).Distinct().Count()
+            && window.Model.NavigationRoots.Sum(group=>group.Entries.Count)+(window.Model.NavigationRoots.Count(root=>root.Category is not null))==PreviewPageCatalog.Pages.Count,
+            "PreviewHost/pages: standalone Home and grouped pages each have one navigation entry");
         check(gallery.CreatedPageCount==1,"PreviewHost/pages: opening shell creates only the active page");
         foreach(var page in PreviewPageCatalog.Pages)
         {

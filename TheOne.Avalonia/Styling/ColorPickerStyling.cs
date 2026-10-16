@@ -75,6 +75,7 @@ internal static class ColorPickerStyling
         components.Margin = new Thickness(0, 10, 0, 0);
         var header = components.Children.OfType<Grid>().First();
         var model = header.Children.OfType<Grid>().First();
+        model.ColumnSpacing = 4;
         var hex = header.Children.OfType<Grid>().Single(g => g.Name == "HexInputGrid");
         header.Children.Remove(model); header.Children.Remove(hex); components.Children.Remove(header);
         var labels = components.Children.OfType<Border>().OrderBy(Grid.GetRow).ToArray();

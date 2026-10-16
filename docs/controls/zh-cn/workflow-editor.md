@@ -68,6 +68,8 @@ NodeDefinitions 由宿主注册；工厂返回独立新节点、唯一 ID 和匹
 - PropertyTemplate 接收选中节点。默认使用内置 TabStrip 展示基础、数据和端口页，支持编辑名称、说明、固定值与上游引用，修改参与文档撤销历史，并遵循 IsReadOnly。SelectedNodeEditor 暴露 WorkflowNodeEditor / WorkflowPropertyEditor，方便自定义模板复用编辑逻辑。业务专用表单可替换此模板，也可隐藏面板后在外部绑定 SelectedNode。模板自行提供滚动容器，默认删除按钮固定在滚动区域外。
 - SelectedConnection 提供选中边，宿主可在外部编辑 Label 或业务条件；默认面板显示节点属性。
 
+节点与连线选择互斥，外部设置 `SelectedNode` / `SelectedConnection` 时同样生效。选中连线会清空所有选中节点及节点属性面板；选中节点会清除连线选择。不属于当前文档的模型统一归为空，即使其 ID 与文档中的模型相同也不会串用选择状态。
+
 示例强类型配置行使用 ComboBox 切换固定值/上游引用，通过 Document.SetProperty 和 Edit 参与图编辑的同一撤销历史。加载和复制后，宿主按 TypeId 重建 Content，避免把展示对象写入文件或与原节点共享可变业务对象。
 
 ## 编辑与校验

@@ -4,6 +4,8 @@
 
 OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 Content / ContentTemplate、所有者、Closing、窗口状态和平台窗口生命周期；标题栏、消息与对话框位于模板中，不把业务 Content 包装后重新赋值。
 
+主工作区使用 `OneWindow`；登录并交接主窗口的流程使用 [LoginWindow](login-window.md)。两者均已有专门说明，并保留原生窗口所有者关系。PreviewHost 默认打开 Home 首页，可从可操作示例及用法片段进入完整控件演示。
+
 ```xml
 <one:OneWindow xmlns="https://github.com/avaloniaui"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -24,11 +26,15 @@ OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 C
 </one:OneWindow>
 ```
 
+代码隐藏需继承相同类型：`public partial class MainWindow : OneWindow`。桌面启动时设置 `desktop.MainWindow = new MainWindow();`；在 App.axaml 中注册一次 `OneTheme`，窗口内的普通控件会跟随应用主题与密度。
+
 对应 code-behind 的基类也改为 OneWindow。LeftContent / RightContent 支持普通对象、Control，以及 LeftContentTemplate / RightContentTemplate；对象模板需声明 x:DataType。控件继续继承窗口 DataContext，按钮和输入区域不会触发标题栏拖动。
 
 登录界面、认证后交接与进程退出策略见 [LoginWindow](login-window.md)。
 
 ## 标题栏与主题
+
+ThemeButton 为无文本的图标 ToggleButton，勾选代表 Dark，仅切换 Light / Dark；配色由独立的 [ThemeColorPicker](../../theme/zh-cn/theme-color-picker.md) 控制。
 
 ShowTitleBar 和 ShowThemeButton 默认为 True；TitleBarHeight 可覆盖。默认 small / normal / large 高度为 42 / 48 / 56，正文及对话框字号为 12 / 14 / 16。使用 Classes 或 ControlSizing.Size，沿用窗口主题与动效继承。
 
@@ -43,6 +49,8 @@ ThemeButton 默认切换最近窗口的有效 Light / Dark 主题，图标、提
 点击使用 SetCurrentValue，保留原有绑定；主题快捷按钮切换明暗，跟随系统仍可通过 RequestedThemeVariant=Default 设置。PreviewHost 的主窗体使用 Application 范围，与原主题下拉框同步。
 
 ## 自动消息宿主
+
+owner 的解析顺序、原生窗口归属与消息目标的区别、线程要求、Dialog 队列和登录交接详见[窗口 owner 与消息服务](window-owners.md)。
 
 使用 OneWindow 并显示窗口后即可调用，不需查找 TopLevel、创建管理器或注册宿主：
 

@@ -40,6 +40,35 @@ internal static partial class DataGridFilterPreview
         VerifyNumber<float>(0.1f, "0.1", check); VerifyNumber<double>(1.25, "1.25", check); VerifyNumber<decimal>(1.25m, "1,25", check, CultureInfo.GetCultureInfo("de-DE"));
         VerifyNullable(check);
     }
+    public static void VerifyEntries(Action<bool, string> check)
+    {
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>())
+        {
+            var (window, fixture, _) = Open(theme, size); var grid = fixture.Grid; var column = grid.Columns[1];
+            var button = Entry(grid, column); var label = $"DataGrid/filter-entry/{theme.Key}/{size}";
+            try
+            {
+                check(button.IsVisible && button.IsEnabled, label + ": supported columns expose an enabled filter");
+                DataGridColumnOptions.SetFilterEnabled(column, false); Flush();
+                check(!button.IsVisible, label + ": explicitly disabled filtering hides the entry");
+                DataGridColumnOptions.SetFilterEnabled(column, true); DataGridColumnOptions.SetFilterKind(column, DataGridFilterKind.None); Flush();
+                check(!button.IsVisible && !button.GetVisualAncestors().OfType<DataGridColumnHeader>().Single().Classes.Contains("one-filter-header"), label + ": None removes the button and reserved header state");
+                DataGridColumnOptions.SetFilterKind(column, DataGridFilterKind.Auto); Flush();
+                Click(window, button); check(button.Flyout!.IsOpen, label + ": re-enabling retains native pointer activation");
+                DataGridColumnOptions.SetFilterKind(column, DataGridFilterKind.None); Flush();
+                check(!button.IsVisible && !button.Flyout.IsOpen, label + ": disabling an open filter closes its popup");
+                DataGridColumnOptions.SetFilterKind(column, DataGridFilterKind.Auto);
+                ((DataGridBoundColumn)column).Binding = CompiledBinding.Create<GridRecord, bool>(row => row.Enabled); Flush();
+                check(!button.IsVisible, label + ": unsupported properties have no filter button");
+                ((DataGridBoundColumn)column).Binding = CompiledBinding.Create<GridRecord, string>(row => row.Name); Flush();
+                check(button.IsVisible && button.IsEnabled, label + ": changing back to a supported property restores the entry");
+                DataGridFeatures.SetShowColumnFilters(grid, false); Flush();
+                check(!button.IsVisible, label + ": the grid switch hides all entries");
+            }
+            finally { window.Close(); Flush(); }
+        }
+    }
     private static void VerifyInteraction(ThemeVariant theme, ControlSize size, Action<bool, string> check)
     {
         var (window, fixture, view) = Open(theme, size); var grid = fixture.Grid; var name = grid.Columns[1]; var quantity = grid.Columns[3];
@@ -96,7 +125,7 @@ internal static partial class DataGridFilterPreview
         DataGridColumnOptions.SetFilterEnabled(name, true); DataGridColumnOptions.SetValueAccessor(name, null); Flush();
         check(button.IsVisible && button.IsEnabled, $"{label}: clearing an explicit accessor automatically resolves the compiled entity property");
         ((DataGridBoundColumn)name).Binding = CompiledBinding.Create<GridRecord, bool>(row => row.Enabled); Flush();
-        check(button.IsVisible && !button.IsEnabled, $"{label}: unsupported entity property type disables the entry after binding replacement");
+        check(!button.IsVisible && !button.IsEnabled, $"{label}: unsupported entity property type hides the entry after binding replacement");
         window.Close(); Flush();
     }
     private static DataGridFilterButton Entry(DataGrid grid, DataGridColumn column) => grid.GetVisualDescendants().OfType<DataGridFilterButton>().Single(button => DataGridColumn.GetColumnContainingElement(button) == column);

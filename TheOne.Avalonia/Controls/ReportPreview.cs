@@ -24,6 +24,8 @@ public sealed class ReportPreview : UserControl
     public ReportLayout? Layout { get; private set; }
     /// <summary>Optional consumer-owned client for authenticated API and image requests. Not serialized.</summary>
     public HttpClient? HttpClient { get; set; }
+    /// <summary>Optional host printer. The PDF exists until the returned task completes; KeepDocument controls its subsequent lifetime.</summary>
+    public Func<string, ReportPrintOptions?, CancellationToken, Task<ReportPrintResult>>? PrintHandler { get; set; }
     public int CurrentPageNumber => _page + 1;
     public double Zoom { get => _zoom; set { if (!double.IsFinite(value)) throw new ArgumentOutOfRangeException(nameof(value)); _zoom = Math.Clamp(value, .25, 2); Draw(); } }
     private double _zoom = .75;
@@ -163,7 +165,7 @@ public sealed class ReportPreview : UserControl
             var settings = new FileStreamOptions { Mode = FileMode.CreateNew, Access = FileAccess.Write, Share = FileShare.None };
             if (!OperatingSystem.IsWindows()) settings.UnixCreateMode = UnixFileMode.UserRead | UnixFileMode.UserWrite;
             await using (var file = new FileStream(path, settings)) await ExportPdfAsync(file, cancellationToken);
-            var result = await PrintTool.PrintPdfAsync(path, options, cancellationToken); keep = result.KeepDocument;
+            var result = await (PrintHandler ?? PrintTool.PrintPdfAsync)(path, options, cancellationToken); keep = result.KeepDocument;
             if (keep) PrintTool.ScheduleTemporaryCleanup(path);
             return keep ? result with { Message = result.Message + " 临时文件将在运行 24 小时后或下次使用控件时清理：" + path, DocumentPath = path } : result;
         }

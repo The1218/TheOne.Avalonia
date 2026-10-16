@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Presenters;
 using Avalonia.Headless;
 using Avalonia.Input;
 using Avalonia.Media;
@@ -14,6 +15,88 @@ namespace TheOne.DesignPreview;
 
 internal static class ColorPickerPreview
 {
+    public static void VerifyModelSpacing(Action<bool, string> check, string? output = null)
+    {
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>())
+        foreach (var width in new[] { 480, 320 })
+        {
+            var view = new ColorView { SelectedIndex = 0, Color = Color.Parse("#80006061") };
+            var picker = new ColorPicker { SelectedIndex = 0, Color = view.Color };
+            var root = new StackPanel { Spacing = 12, Children = { picker, view } };
+            ControlSizing.SetSize(root, size);
+            var window = Open(new Border { Padding = new Thickness(16), Child = root }, width, 840, theme);
+            try
+            {
+                VerifyModelGroup(view, view, $"inline/{theme}/{size}/{width}");
+                if (output != null)
+                {
+                    using var frame = window.CaptureRenderedFrame()!;
+                    Save(frame, output, $"colorpicker-model-{theme}-{size}-{width}.png");
+                }
+                var button = picker.GetVisualDescendants().OfType<DropDownButton>().Single();
+                Click(window, button, .5, .5);
+                check(button.Flyout?.IsOpen == true, $"ColorPicker/model: {theme}/{size}/{width} opens with native pointer input");
+                if (button.Flyout is Flyout flyout && flyout.Content is Control content)
+                {
+                    Part<TabControl>(content, "PART_TabControl").SelectedIndex = 0; Flush();
+                    VerifyModelGroup(content, picker, $"popup/{theme}/{size}/{width}");
+                    if (output != null && TopLevel.GetTopLevel(content) is { } popup)
+                    {
+                        using var frame = popup.CaptureRenderedFrame()!;
+                        Save(frame, output, $"colorpicker-model-popup-{theme}-{size}-{width}.png");
+                    }
+                }
+                else check(false, "ColorPicker/model: native popup content exists");
+                button.Flyout?.Hide(); Flush();
+            }
+            finally { window.Close(); Flush(); }
+        }
+
+        void VerifyModelGroup(Control content, ColorView view, string label)
+        {
+            WaitFor(() => content.GetVisualDescendants().OfType<Grid>().Any(g => g.Classes.Contains("one-color-components")));
+            var hsv = Part<RadioButton>(content, "HsvRadioButton");
+            var model = (Grid)hsv.GetVisualParent()!;
+            var rgb = model.Children.OfType<RadioButton>().Single(r => r != hsv);
+            var gap = hsv.Bounds.Left - rgb.Bounds.Right;
+            check(Math.Abs(gap - 4) < .1, $"ColorPicker/model: {label} RGB and HSV have a 4 px gap (actual={gap})");
+            check(rgb.Bounds.Width > 0 && hsv.Bounds.Right <= model.Bounds.Width + .1 &&
+                Math.Abs(rgb.Bounds.Height - hsv.Bounds.Height) < .1,
+                $"ColorPicker/model: {label} buttons fit their shared model column and align vertically");
+            foreach (var radio in new[] { rgb, hsv })
+            {
+                var presenter = Part<ContentPresenter>(radio, "PART_ContentPresenter");
+                check(presenter.Child is { } child && child.DesiredSize.Width <= presenter.Bounds.Width - presenter.Padding.Left - presenter.Padding.Right + .1,
+                    $"ColorPicker/model: {label}/{radio.Content} label fits without clipping");
+            }
+            var initial = view.Color;
+            var host = TopLevel.GetTopLevel(content)!;
+            var point = hsv.TranslatePoint(new Point(hsv.Bounds.Width / 2, hsv.Bounds.Height / 2), host)!.Value;
+            host.MouseDown(point, MouseButton.Left); host.MouseUp(point, MouseButton.Left); Flush();
+            check(view.ColorModel == ColorModel.Hsva && hsv.IsChecked == true && rgb.IsChecked != true,
+                $"ColorPicker/model: {label} pointer switches to HSV exclusively");
+            rgb.Focus();
+            host.KeyPress(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null);
+            host.KeyRelease(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null); Flush();
+            check(view.ColorModel == ColorModel.Rgba && rgb.IsChecked == true && hsv.IsChecked != true && view.Color == initial,
+                $"ColorPicker/model: {label} keyboard restores RGB without changing color");
+            using var frame = host.CaptureRenderedFrame()!;
+            var bytes = new byte[frame.PixelSize.Width * frame.PixelSize.Height * 4];
+            var memory = System.Runtime.InteropServices.Marshal.AllocHGlobal(bytes.Length);
+            try
+            {
+                frame.CopyPixels(new PixelRect(frame.PixelSize), memory, bytes.Length, frame.PixelSize.Width * 4);
+                System.Runtime.InteropServices.Marshal.Copy(memory, bytes, 0, bytes.Length);
+                var mid = rgb.TranslatePoint(new Point(rgb.Bounds.Width + gap / 2, rgb.Bounds.Height / 2), host)!.Value;
+                var surfacePoint = model.TranslatePoint(new Point(model.Bounds.Width / 2, -2), host)!.Value;
+                int Pixel(Point p) => BitConverter.ToInt32(bytes, ((int)p.Y * frame.PixelSize.Width + (int)p.X) * 4);
+                check(Pixel(mid) == Pixel(surfacePoint), $"ColorPicker/model: {label} gap renders the surrounding surface instead of button chrome");
+            }
+            finally { System.Runtime.InteropServices.Marshal.FreeHGlobal(memory); }
+        }
+    }
+
     public static void Verify(Action<bool, string> check, string? output = null)
     {
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })

@@ -50,6 +50,8 @@ DateTime、Month、Year 默认格式分别为 `yyyy-MM-dd HH:mm`、`yyyy-MM`、`
 
 保留月份翻页、年 / 十年视图、范围与禁选日期、键盘选择。今天用描边标记，选中日期用强调色。需要多日期时使用官方 `SelectionMode` 和 `SelectedDates`；日期网格为固定上限布局。
 
+日期、月份、年份网格在同一档尺寸下预留相同主体高度：Small 258px、Normal 294px、Large 342px。切换视图或直接打开月份／年份选择时，外部高度保持稳定，日期单元格按自然尺寸居中排列。月份／年份按钮按文字自然尺寸及原生最小高度居中，选中背景不再铺满整个网格槽，命中区域、焦点与选择行为仍由原生按钮提供。CalendarDatePicker 弹层共用此布局。自定义日历字体或单元格尺寸时，可覆盖 `One.CalendarBodyHeight.Small`、`.Normal`、`.Large` 资源。PreviewHost 的 `--verify-calendar-layout [output]` 仅验证 Calendar 及其 CalendarDatePicker 弹层调用方。
+
 ## DatePicker 与 TimePicker
 
 ```xml

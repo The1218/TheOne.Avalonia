@@ -8,6 +8,7 @@ internal static class PreviewNavigationIcons
     private static readonly Dictionary<MaterialIconKind, Geometry> Cache = new();
     public static Geometry Group(string name) => Get(name switch
     {
+        "开始使用" => MaterialIconKind.HomeOutline,
         "基础控件" => MaterialIconKind.ViewGridOutline,
         "数据展示" => MaterialIconKind.TableLarge,
         "导航与布局" => MaterialIconKind.DockLeft,
@@ -18,6 +19,7 @@ internal static class PreviewNavigationIcons
     });
     public static Geometry Page(int id) => Get(id switch
     {
+        0 => MaterialIconKind.HomeOutline,
         400 or 1 or 305 or 101 or 16 or 12 or 130 => MaterialIconKind.GestureTapButton,
         401 or 2 or 110 or 111 => MaterialIconKind.FormTextbox,
         402 or 3 or 15 or 106 => MaterialIconKind.ToggleSwitchOutline,
@@ -44,12 +46,13 @@ internal static class PreviewNavigationIcons
         319 => MaterialIconKind.FileDocumentOutline,
         320 => MaterialIconKind.MessageQuestionOutline,
         321 => MaterialIconKind.CloudUploadOutline,
+        323 => MaterialIconKind.FormatListNumbered,
         311 => MaterialIconKind.AccountCircleOutline,
         19 => MaterialIconKind.Refresh,
         24 => MaterialIconKind.CardTextOutline,
         25 => MaterialIconKind.NavigationVariantOutline,
         26 => MaterialIconKind.TagOutline,
-        415 or 27 or 307 => MaterialIconKind.FormatListNumbered,
+        415 or 27 or 307 or 322 => MaterialIconKind.FormatListNumbered,
         312 => MaterialIconKind.BookOpenPageVariantOutline,
         300 => MaterialIconKind.MessageBadgeOutline,
         301 => MaterialIconKind.WindowRestore,

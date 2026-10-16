@@ -30,6 +30,7 @@ public sealed class WorkflowCanvas : Control
     private bool _space;
     public WorkflowCanvas()
     {
+        ResourcesChanged += (_, _) => { UpdateSelectionShadow(); InvalidateVisual(); };
         _host = new NodeHost(this); ClipToBounds = true; Focusable = true; VisualChildren.Add(_host); LogicalChildren.Add(_host);
         AddHandler(PointerPressedEvent, (_, e) =>
         {
@@ -56,9 +57,16 @@ public sealed class WorkflowCanvas : Control
             var selected = _owner?.SelectedNodes.Contains(node) == true;
             view.Border.Bind(Border.BorderBrushProperty, new DynamicResourceExtension(selected ? "One.Accent" : "One.Line"));
             view.Border.BorderThickness = new Thickness(1);
-            view.Border.BoxShadow = selected ? new BoxShadows(new BoxShadow { Color = Color.FromArgb(60, 0, 150, 153), Blur = 8, Spread = 2 }) : default;
         }
+        UpdateSelectionShadow();
         InvalidateVisual();
+    }
+    private void UpdateSelectionShadow()
+    {
+        var color = Brush("One.Accent", Brushes.Teal) is ISolidColorBrush solid ? solid.Color : Colors.Teal;
+        foreach (var (node, view) in _views)
+            view.Border.BoxShadow = _owner?.SelectedNodes.Contains(node) == true
+                ? new BoxShadows(new BoxShadow { Color = Color.FromArgb(60, color.R, color.G, color.B), Blur = 8, Spread = 2 }) : default;
     }
     public Point ToWorld(Point point) => _owner is { } o ? new Point((point.X - o.Pan.X) / o.Zoom, (point.Y - o.Pan.Y) / o.Zoom) : point;
     private Point ToScreen(Point point) => _owner is { } o ? new Point(point.X * o.Zoom + o.Pan.X, point.Y * o.Zoom + o.Pan.Y) : point;
@@ -85,7 +93,7 @@ public sealed class WorkflowCanvas : Control
         }
         InvalidateVisual();
     }
-    private IBrush Brush(string key, IBrush fallback) => this.TryFindResource(key, out var value) && value is IBrush brush ? brush : fallback;
+    private IBrush Brush(string key, IBrush fallback) => this.TryFindResource(key, ActualThemeVariant, out var value) && value is IBrush brush ? brush : fallback;
     private Point? Anchor(string nodeId, string portId)
     {
         var view = _views.FirstOrDefault(v => v.Key.Id == nodeId).Value;

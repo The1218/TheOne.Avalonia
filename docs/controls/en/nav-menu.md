@@ -36,6 +36,8 @@ Children can use `ObservableCollection<MenuNode>` for live additions / removals,
 
 ## Selection, invocation, and groups
 
+In collapsed mode, hovering a root opens its submenu without changing the selected page. Unrelated submenu rows remain unselected; active-ancestor styling requires a resolved, non-null item in the current menu level.
+
 `SelectedItem` is the data object for the current page; use `SelectionChanged` to synchronize page content. `ItemInvoked` and `ItemInvokedCommand` receive that object on click, Enter, or Space, including repeated activation of the selected page. `SelectPath` performs programmatic navigation without firing invocation events or commands.
 
 `IsGroupBinding` marks group headers. Clicking a header or pressing Enter / Space expands or collapses it without replacing page selection or running navigation commands. Ordinary nodes with children can still represent selectable pages; their arrow expands independently. Buttons, inputs, and selection controls in templates retain their own interactions.
@@ -63,7 +65,9 @@ Normal rows are transparent; hover uses `One.Subtle`, selection uses `One.Accent
 
 ## Virtualization and verification
 
-Roots and every child level use native `VirtualizingStackPanel`, preserving `PART_*`, focus, selection, and expansion. Provide finite height or a bounded `*` row in `Grid`. Avoid unbounded navigation in a height-unconstrained `StackPanel` or outer infinite ScrollViewer. Virtualization reduces UI containers; it is not business-data pagination.
+Large root collections and every child level use native `VirtualizingStackPanel`, preserving `PART_*`, focus, selection, and expansion. With `ChildrenBinding` and at most 32 roots, the root layer uses `StackPanel` to retain group containers. This prevents entire branches from being recycled, remounted, and re-estimated when rapidly reversing the scroll direction. Children remain virtualized with one cached viewport on each side. Adding or removing roots across this limit switches the default panel automatically; an explicitly assigned `ItemsPanel` takes precedence.
+
+Provide finite height or a bounded `*` row in `Grid`. Avoid unbounded navigation in a height-unconstrained `StackPanel` or outer infinite ScrollViewer. Virtualization reduces UI containers; it is not business-data pagination. The `--verify-navmenu-fling` check uses PreviewHost's actual sidebar to cover bottom-to-top wheel reversal, stable height across group boundaries, narrow sidebars, and large child collections.
 
 PreviewHost's sidebar uses NavMenu with six groups: basic controls, data display, navigation / layout, charts, extensions, and interaction verification. Extensions → NavMenu demonstrates 1,000 items per level and 5,000 models in total, with navigation to the final root, second-level, and third-level pages and live realized-container counts.
 

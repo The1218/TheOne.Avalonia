@@ -1,0 +1,82 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+  <ControlTheme x:Key="One.MultiSelectAction" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+    <Setter Property="MinHeight" Value="0" /><Setter Property="MinWidth" Value="0" />
+    <Setter Property="Height" Value="24" /><Setter Property="Width" Value="24" /><Setter Property="Padding" Value="3" />
+    <Setter Property="Background" Value="Transparent" /><Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="Template"><ControlTemplate>
+      <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+    </ControlTemplate></Setter>
+  </ControlTheme>
+  <ControlTheme x:Key="{x:Type one:MultiSelectBox}" TargetType="one:MultiSelectBox">
+    <Setter Property="Focusable" Value="True" /><Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+    <Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" /><Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="6" /><Setter Property="Padding" Value="6,2" /><Setter Property="MinWidth" Value="120" />
+    <Setter Property="Template"><ControlTemplate>
+      <Border Name="PART_Input" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}" MinHeight="{TemplateBinding ItemHeight}">
+        <Border.Styles>
+          <Style Selector="Button.one-small, Button.one-normal, Button.one-large"><Setter Property="MinHeight" Value="0" /><Setter Property="MinWidth" Value="0" /><Setter Property="Padding" Value="0" /></Style>
+          <Style Selector="one|Tag.one-small, one|Tag.one-normal, one|Tag.one-large"><Setter Property="MinHeight" Value="0" /><Setter Property="Padding" Value="4,0" /></Style>
+        </Border.Styles>
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="4">
+          <Grid VerticalAlignment="Center">
+            <TextBlock Name="PART_Placeholder" Text="{TemplateBinding PlaceholderText}" Foreground="{DynamicResource One.Placeholder}" IsVisible="{TemplateBinding HasSelection, Converter={x:Static BoolConverters.Not}}" TextTrimming="CharacterEllipsis" />
+            <DockPanel IsVisible="{TemplateBinding HasSelection}">
+              <TextBlock DockPanel.Dock="Right" Margin="4,0" VerticalAlignment="Center" IsVisible="{TemplateBinding HasHiddenSelection}" Text="{Binding HiddenSelectedCount, RelativeSource={RelativeSource TemplatedParent}, StringFormat='+{0}'}" />
+              <ItemsControl Name="PART_Tags" ItemsSource="{TemplateBinding DisplayTags}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                <ItemsControl.Template><ControlTemplate><ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" /></ControlTemplate></ItemsControl.Template>
+                <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate><DataTemplate x:DataType="one:MultiSelectBoxItem">
+                  <one:Tag Background="{DynamicResource One.AccentSoft}" Foreground="{DynamicResource One.Text}" Margin="0,1,4,1" Padding="4,0" MinHeight="0" MaxWidth="160">
+                    <Grid ColumnDefinitions="*,Auto">
+                      <ContentControl Content="{Binding TagContent}" ContentTemplate="{Binding TagTemplate}" VerticalContentAlignment="Center" MaxWidth="116" ClipToBounds="True" />
+                      <Button Grid.Column="1" Theme="{StaticResource One.MultiSelectAction}" MinWidth="0" MinHeight="0" Width="20" Height="20" Padding="0" CommandParameter="{Binding Item}" IsEnabled="{Binding CanRemove}" AutomationProperties.Name="{Binding RemoveLabel}">
+                        <PathIcon Width="10" Height="10" Data="M 2,0 L 5,3 L 8,0 L 10,2 L 7,5 L 10,8 L 8,10 L 5,7 L 2,10 L 0,8 L 3,5 L 0,2 Z" />
+                      </Button>
+                    </Grid>
+                  </one:Tag>
+                </DataTemplate></ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </DockPanel>
+          </Grid>
+          <Button Name="PART_ClearButton" Grid.Column="1" Theme="{StaticResource One.MultiSelectAction}" MinWidth="0" MinHeight="0" Width="24" Height="24" Padding="0" IsVisible="{TemplateBinding CanClear}" AutomationProperties.Name="{TemplateBinding ClearText}" VerticalAlignment="Center">
+            <PathIcon Width="10" Height="10" Data="M 2,0 L 5,3 L 8,0 L 10,2 L 7,5 L 10,8 L 8,10 L 5,7 L 2,10 L 0,8 L 3,5 L 0,2 Z" />
+          </Button>
+          <Button Name="PART_OpenButton" Grid.Column="2" Theme="{StaticResource One.MultiSelectAction}" MinWidth="0" MinHeight="0" Width="24" Height="24" Padding="0" Focusable="False" AutomationProperties.Name="{TemplateBinding OpenText}" VerticalAlignment="Center">
+            <PathIcon Width="12" Height="8" Data="M 0,0 L 6,6 L 12,0 L 14,2 L 6,10 L -2,2 Z" />
+          </Button>
+          <Popup Name="PART_Popup" IsLightDismissEnabled="True" OverlayDismissEventPassThrough="True" Placement="Bottom" WindowManagerAddShadowHint="False">
+            <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="6" Padding="6">
+              <Grid RowDefinitions="Auto,*" RowSpacing="6">
+                <TextBox Name="PART_SearchBox" Text="{TemplateBinding SearchText, Mode=TwoWay}" PlaceholderText="{TemplateBinding SearchPlaceholderText}" AutomationProperties.Name="{TemplateBinding SearchPlaceholderText}" />
+                <ListBox Name="PART_Results" Grid.Row="1" SelectionMode="Multiple,Toggle" MinHeight="0" BorderThickness="0" Background="Transparent" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                  <ListBox.Styles>
+                    <Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large"><Setter Property="Padding" Value="8,2" /></Style>
+                    <Style Selector="CheckBox.one-small, CheckBox.one-normal, CheckBox.one-large"><Setter Property="MinHeight" Value="20" /><Setter Property="Padding" Value="8,0,0,0" /></Style>
+                  </ListBox.Styles>
+                  <ListBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ListBox.ItemsPanel>
+                  <ListBox.ItemContainerTheme><ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}" x:DataType="one:MultiSelectBoxItem">
+                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}" /><Setter Property="Padding" Value="8,2" /><Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                  </ControlTheme></ListBox.ItemContainerTheme>
+                  <ListBox.ItemTemplate><DataTemplate x:DataType="one:MultiSelectBoxItem">
+                    <CheckBox MinHeight="20" IsChecked="{Binding IsSelected, Mode=OneWay}" Content="{Binding DisplayContent}" ContentTemplate="{Binding ContentTemplate}" Focusable="False" IsHitTestVisible="False" AutomationProperties.Name="{Binding Text}" />
+                  </DataTemplate></ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Name="PART_Empty" Grid.Row="1" Text="{TemplateBinding EmptyText}" IsVisible="{TemplateBinding HasNoResults}" Margin="8" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+              </Grid>
+            </Border>
+          </Popup>
+        </Grid>
+      </Border>
+    </ControlTemplate></Setter>
+    <Style Selector="^:focus-visible /template/ Border#PART_Input"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /></Style>
+    <Style Selector="^:open /template/ Border#PART_Input"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /></Style>
+    <Style Selector="^:disabled /template/ Border#PART_Input"><Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /></Style>
+    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /></Style>
+    <Style Selector="^.one-normal"><Setter Property="FontSize" Value="14" /></Style>
+    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /></Style>
+  </ControlTheme>
+</ResourceDictionary>

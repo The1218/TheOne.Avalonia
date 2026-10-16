@@ -117,6 +117,8 @@ Card 支持关闭与重排。标题仅有背景色，正文保留边框；溢出
 | `TabFeatures.Close(tabItem)` | 尝试关闭容器对应的数据项 |
 | `TabFeatures.Move(tabs, from, to)` | 按零基索引尝试重排 |
 
+`TabClosing` 回调返回后，关闭操作会重新核对容器所属控件、数据身份与当前关闭权限。若回调更换数据源或容器、固定或禁用标签、拒绝命令，或已关闭该项，原操作会停止，不再改动回调设置的选择状态。
+
 取消有未保存内容的关闭，可在视图代码中监听（`DocumentsTabs` 为具名 TabControl）：
 
 ```csharp

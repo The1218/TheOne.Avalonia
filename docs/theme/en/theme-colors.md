@@ -2,6 +2,8 @@
 
 [简体中文](../zh-cn/theme-colors.md) · **English**
 
+This page describes the default palette. See [ThemeColorPicker / ThemeButton](theme-color-picker.md) for nine additional palettes, the palette dropdown, and independent Light / Dark switching.
+
 Default colors map individually from [Eremex DeltaDesign Nova resources](https://github.com/Eremex/controlthemes/blob/5f6cb3ad8b904cead6bd432f62596648cc9a1039/Source/Eremex.Avalonia.Themes.DeltaDesign/PaletteResources/Nova.axaml), cross-checked against runtime resources from `Eremex.Avalonia.Themes.DeltaDesign 1.5.53-preview3`. The reference demo's theme entry is [App.axaml](https://github.com/Eremex/controls-demo/blob/2edf87b8eea9f58f935b0383bbf724abfd43122a/DemoCenter/DemoCenter/App.axaml). Colors are not approximated from old screenshots or artificially darkened / saturated.
 
 Colors live directly in library `Themes/Colors.axaml` and take effect with OneTheme. Shared `One.*` names remain; buttons, inputs, selection, lists, grids, navigation, menus, popups, windows, and messaging reuse them without host injection. Native Avalonia templates, behaviors, and sizes remain; no Eremex dependency or copied template implementation is added.
@@ -53,6 +55,25 @@ Original Nova neutral borders have contrast below 3:1; Light ToggleButton presse
 
 ## Gradients and extended colors
 
+All ten `ThemeColor` palettes provide eight additional gradients in both Light and Dark: four subtle and four vivid variants. Use `DynamicResource` to follow palette and mode changes.
+
+| Use | Subtle | Vivid |
+| --- | --- | --- |
+| Brand | `One.Gradient.Subtle.Brand` | `One.Gradient.Vivid.Brand` |
+| Cool | `One.Gradient.Subtle.Cool` | `One.Gradient.Vivid.Cool` |
+| Natural | `One.Gradient.Subtle.Natural` | `One.Gradient.Vivid.Natural` |
+| Warm | `One.Gradient.Subtle.Warm` | `One.Gradient.Vivid.Warm` |
+
+Each key holds an immutable LinearGradientBrush and exposes matching `.StartColor` and `.EndColor` keys. Subtle blends small semantic-color proportions into the surface; use `One.Text` for card text. Vivid transitions from the palette accent toward a light/dark endpoint or Info / Success / Warning, suitable for accents and decoration. Check contrast for any overlaid text in the chosen palette. Existing Brand / BrandHover / BrandPressed / Glow / Data keys remain available.
+
+```xml
+<Border Background="{DynamicResource One.Gradient.Subtle.Brand}" Padding="16">
+  <TextBlock Text="Themed card" Foreground="{DynamicResource One.Text}" />
+</Border>
+```
+
+Override keys in host Application.Resources or local control Resources; use ThemeDictionaries for independent Light / Dark overrides. Use the [enum API](theme-color-picker.md) instead of removing or reloading OneTheme on each selection; existing controls and bindings remain intact.
+
 Gradients, soft semantic backgrounds, and chart series combinations are TheOne extensions, not claims of native Eremex effects:
 
 - `One.Gradient.Brand` transitions from Nova Accent toward adjacent cyan, with Hover / Pressed variants and OnAccent text.
@@ -96,4 +117,4 @@ Default chart brushes map to `One.Chart.Series1..6`, cycling after six. For many
 
 Appearances are shown on their existing control pages, with no separate theme-preview page. Checks / targeted rendering: [preview entry points](../../../design/PreviewHost/Program.cs). Contrast results: [contrast-report.json](../contrast-report.json).
 
-`underlined` input focus uses a 2 px bottom line; validation still uses Danger. Selected `pills` headers use Accent / OnAccent. `cards` only changes ListBox native container spacing, radii, and borders, retaining VirtualizingStackPanel. `outlined` cards keep content slots, separators, and subtle footer color differences.
+`underlined` input focus uses a 2 px bottom line; validation still uses Danger and disabled baselines retain InputLine. Editable ComboBox uses one outer baseline, with no separate editor outline; its focus and validation overlays share the baseline color. NumericUpDown spin buttons stay borderless in this variant. PreviewHost's `--verify-underlined-inputs [output]` checks TextBox, editable/noneditable ComboBox, and AutoCompleteBox independently of other controls. Selected `pills` headers use Accent / OnAccent. `cards` only changes ListBox native container spacing, radii, and borders, retaining VirtualizingStackPanel. `outlined` cards keep content slots, separators, and subtle footer color differences.

@@ -68,5 +68,11 @@
     <ControlTheme
         BasedOn="{StaticResource One.CalendarCell}"
         TargetType="CalendarButton"
-        x:Key="{x:Type CalendarButton}" />
+        x:Key="{x:Type CalendarButton}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Padding" Value="8,0" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

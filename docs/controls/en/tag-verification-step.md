@@ -30,6 +30,8 @@ Tag displays status rather than button / toggle selection behavior. Applications
 
 ## VerificationStep validation
 
+For ordinary editing pages, use [Form / FormItem](form.md) with the same validators and error types. `FormItem` also works in custom step content, assigning errors to the nearest validation host.
+
 `VerificationStep` is a step control with validation: forward navigation requires the current step to pass validation. It replaces the former `Step` control; update C# references and XAML tags to `VerificationStep`. The supporting `StepItem`, `StepField`, and `StepValidation` APIs retain their names and behavior.
 
 Default usage needs models, standard validation attributes, and ItemsSource only. `StepItem<T>` creates property validators and, without custom templates, generates forms, labels, and errors below inputs. No StepField declarations or per-step StepValidation.For calls are needed. T is the concrete model type; the library preserves its public-property metadata for NativeAOT.

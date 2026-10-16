@@ -56,6 +56,9 @@
         </Border>
       </ControlTemplate>
     </Setter>
+    <Style Selector="^:bounded-roots">
+      <Setter Property="ItemsPanel"><ItemsPanelTemplate><StackPanel /></ItemsPanelTemplate></Setter>
+    </Style>
     <Style Selector="^:collapsed"><Setter Property="Width" Value="{Binding $self.CollapsedWidth}" /></Style>
     <Style Selector="^:collapsed /template/ Grid#PART_FilterInlineHost"><Setter Property="IsVisible" Value="False" /></Style>
     <Style Selector="^:collapsed /template/ Button#PART_FilterButton"><Setter Property="IsVisible" Value="True" /></Style>
@@ -64,6 +67,8 @@
     <Style Selector="^:checked /template/ Path#ChevronPath"><Setter Property="RenderTransform" Value="rotate(0deg)" /></Style>
   </ControlTheme>
   <ControlTheme x:Key="{x:Type one:NavMenuItem}" TargetType="one:NavMenuItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+    <!-- Retain one viewport on either side so reversing a fling reuses nearby rows. -->
+    <Setter Property="ItemsPanel"><ItemsPanelTemplate><VirtualizingStackPanel CacheLength="1" /></ItemsPanelTemplate></Setter>
     <Setter Property="Padding" Value="0,4,10,4" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Style Selector="^:compact"><Setter Property="Padding" Value="0" /></Style>

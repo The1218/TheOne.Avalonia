@@ -41,7 +41,11 @@ ReportPrintResult result = await viewer.PrintAsync(
     new ReportPrintOptions(PrinterName: null, Copies: 1), cancellationToken);
 ```
 
-PDF uses the already loaded data, image and pagination snapshot, with physical paper dimensions, vector text/shapes and embedded images. `ExportPdfAsync` and `PrintAsync` make no HTTP requests; refresh or load again to update resources. The export button uses the native save dialog. Printing exports a temporary PDF and delegates to `PrintTool` in `TheOne.Avalonia.Reporting`. Clicking Print explicitly submits to the default CUPS printer or invokes the Windows PDF print handler.
+PDF uses the already loaded data, image and pagination snapshot, with physical paper dimensions, vector text/shapes and embedded images. `ExportPdfAsync` and `PrintAsync` make no HTTP requests; refresh or load again to update resources. The export button uses the native save dialog. Printing exports a temporary PDF. Without a host `PrintHandler`, it delegates to `PrintTool` in `TheOne.Avalonia.Reporting`; this default submits to CUPS or invokes the Windows PDF print handler.
+
+`PrintHandler` is an optional per-viewer CLR callback with signature `Func<string, ReportPrintOptions?, CancellationToken, Task<ReportPrintResult>>`. Its path remains valid until the task completes. Return `KeepDocument=false` after consuming the PDF, or true when an asynchronous printer still needs it. Exceptions and cancellation restore the print button and clean up non-retained temporary files.
+
+PreviewHost references [TheOne.PrintingTools.Avalonia](https://github.com/The1218/TheOne.PrintingTools.Avalonia) `1.0.0-preview.3` and installs this callback on its ReportPreview sample. It opens that package's print settings / preview window; no job is submitted until the user confirms. The package theme is scoped to the print window, with the current Light/Dark variant and Small/Normal/Large density. The main control library has no dependency on the printing package; see [PreviewPrinting](../../../design/PreviewHost/Infrastructure/Printing/PreviewPrinting.cs) for the adapter.
 
 `PrintTool.PrintPdfAsync(path, options, cancellationToken)` accepts an existing PDF. `CreateStartInfo(path, platform, options)` exposes invocation parameters without submitting a job.
 
@@ -53,7 +57,7 @@ PDF uses the already loaded data, image and pagination snapshot, with physical p
 
 `ReportPrintResult.Message` reports submission/handler invocation, not physical paper output. CUPS failures throw with command error output. Windows handlers may read the PDF after invocation returns, so `KeepDocument` is true; `ReportPreview.PrintAsync` retains the file and returns its path through `DocumentPath` and the message. It schedules cleanup after 24 hours of application runtime; later viewer initialization or printing also removes expired files. Application exit does not immediately delete retained files. `PrintTool.CleanupTemporaryDocuments()` can also clean expired library print files at application startup. CUPS temporary files are deleted after submission/failure. Direct `PrintTool` callers manage their own PDF lifetime.
 
-Command-construction checks do not establish physical printing, Windows handler behavior or a Linux queue run. Verify the target platform's service and device in the consuming application. The built-in Print button does not provide a cross-platform native print-settings dialog.
+Command-construction checks do not establish physical printing, Windows handler behavior or a Linux queue run. Verify the target platform's service and device in the consuming application. The default PrintTool path does not provide a print-settings dialog; PreviewHost uses the package preview described above.
 
 ## Integration and limits
 

@@ -25,7 +25,7 @@
         <Setter Property="MaxDropDownHeight" Value="504" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ComboBoxBorderThemeThickness}" />
         <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
@@ -178,13 +178,13 @@
         <!--  PointerOver State  -->
         <Style Selector="^:pointerover /template/ Border#Background">
             <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
 
         <!--  Pressed State  -->
         <Style Selector="^:pressed /template/ Border#Background">
             <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource One.Transparent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
         </Style>
 
         <!--  Error State  -->
