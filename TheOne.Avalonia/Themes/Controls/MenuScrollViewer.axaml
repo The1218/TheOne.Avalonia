@@ -13,12 +13,18 @@
             <ControlTemplate>
                 <DockPanel>
                     <RepeatButton
+                        Classes="one-scroll-button"
+                        Height="16"
+                        MinHeight="0"
+                        MinWidth="0"
+                        Padding="0"
                         Background="Transparent"
                         BorderThickness="0"
                         Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}"
                         DockPanel.Dock="Top"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
+                        VerticalAlignment="Stretch"
                         RenderTransform="{x:Null}">
                         <RepeatButton.IsVisible>
                             <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="0">
@@ -39,12 +45,18 @@
                         </Viewbox>
                     </RepeatButton>
                     <RepeatButton
+                        Classes="one-scroll-button"
+                        Height="16"
+                        MinHeight="0"
+                        MinWidth="0"
+                        Padding="0"
                         Background="Transparent"
                         BorderThickness="0"
                         Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
                         DockPanel.Dock="Bottom"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
+                        VerticalAlignment="Stretch"
                         RenderTransform="{x:Null}">
                         <RepeatButton.IsVisible>
                             <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="100">

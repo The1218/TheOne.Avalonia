@@ -75,6 +75,19 @@ internal static class Program
             NumericUpDownPreview.Verify((condition, message) => { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }, args.Length > 1 ? args[1] : null);
             return;
         }
+        if (args.Length > 0 && args[0] == "--verify-menu-scrolling")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            var failures = 0;
+            void Check(bool condition, string message)
+            {
+                Console.WriteLine((condition ? "PASS: " : "FAIL: ") + message);
+                if (!condition) failures++;
+            }
+            MenuScrollingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            if (failures > 0) throw new InvalidOperationException($"Menu scrolling: {failures} failed checks.");
+            return;
+        }
         if (args.Length > 0 && args[0] is "--verify-menu-item-spacing" or "--verify-tab-item-spacing" or "--verify-tabstrip-item-spacing")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
@@ -220,6 +233,7 @@ internal static class Program
                 --verify-description [output] = Description layout, templates, themes, density and drawing only
                 --verify-style-showcase [output] = labelled style/state/size examples and responsive drawing only
                 --verify-native-theme-preview [output] = compact native theme samples, project TabFeatures and responsive drawing only
+                --verify-menu-scrolling [output] = compact menu scroll buttons, unobscured items and native scrolling only
                 --verify-tab-end-drop [output] = TabControl release past the last header, collection identity and drag cleanup only
                 --verify-virtualized-items-reinsert [output] = virtualized list, selector and item reinsertion checks only
                 --verify-virtualized-hierarchy-reinsert [output] = virtualized tree and menu reinsertion checks only
