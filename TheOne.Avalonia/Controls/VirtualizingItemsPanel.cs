@@ -28,6 +28,12 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
 
     protected override Type StyleKeyOverride => typeof(VirtualizingStackPanel);
 
+    internal void ReleaseForMenuPanelChange(ItemsControl owner)
+    {
+        if (!ReferenceEquals(ItemsControl, owner)) return;
+        foreach (var child in Children.ToArray()) RemoveInternalChild(child);
+    }
+
     protected override void OnItemsControlChanged(ItemsControl? oldValue)
     {
         if (oldValue is TreeView or TreeViewItem)

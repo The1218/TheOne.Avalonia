@@ -2,6 +2,7 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -11,9 +12,10 @@
 
     <ControlTheme TargetType="ContextMenu" x:Key="{x:Type ContextMenu}">
         <Setter Property="ItemsPanel">
-            <ItemsPanelTemplate>
-                <one:VirtualizingItemsPanel />
-            </ItemsPanelTemplate>
+            <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
+                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="ContextMenu" />
+                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="ContextMenu" />
+            </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />

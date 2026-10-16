@@ -19,7 +19,9 @@ public partial class App : Application
     {
         if (!Program.IsHeadless && ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (desktop.Args?.Contains("--colorpicker") == true)
+            if (desktop.Args?.Contains("--verify-menu-first-open") == true)
+                desktop.MainWindow = MenuFirstOpenPreview.CreateWindow(desktop, desktop.Args);
+            else if (desktop.Args?.Contains("--colorpicker") == true)
                 desktop.MainWindow = new Window { Title = "ColorPicker · TheOne", Width = 940, Height = 860, Content = new ScrollViewer { Content = new ColorPickerPage { Margin = new Thickness(28) } } };
             else if (desktop.Args?.Contains("--reportdesign") == true)
                 desktop.MainWindow = ReportDesignDemo.CreateWindow();

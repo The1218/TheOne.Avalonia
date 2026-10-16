@@ -177,4 +177,15 @@
     <Compile Include="../../Verification/Infrastructure/ThemeColorApiFixture.axaml.cs" Link="ThemeColorApiFixture.axaml.cs" />
     <AvaloniaResource Include="../../Verification/Infrastructure/ThemeColorApiFixture.axaml" Link="ThemeColorApiFixture.axaml" />
   </ItemGroup>
+  <PropertyGroup Condition="'$(MenuOnlyPreview)' == 'true'">
+    <StartupObject>TheOne.DesignPreview.MenuOnlyProgram</StartupObject>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(MenuOnlyPreview)' == 'true'">
+    <Compile Remove="@(Compile)" />
+    <AvaloniaResource Remove="@(AvaloniaResource)" />
+    <AvaloniaXaml Remove="@(AvaloniaXaml)" />
+    <Compile Include="../../Verification/NavigationLayout/MenuOnlyProgram.cs" Link="MenuOnlyProgram.cs" />
+    <Compile Include="../../Verification/NavigationLayout/MenuScrollingPreview.cs" Link="MenuScrollingPreview.cs" />
+    <Compile Include="../../Verification/NavigationLayout/MenuPanelTransitionPreview.cs" Link="MenuPanelTransitionPreview.cs" />
+  </ItemGroup>
 </Project>

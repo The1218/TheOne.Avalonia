@@ -2,6 +2,7 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -9,9 +10,10 @@
 
     <ControlTheme TargetType="MenuFlyoutPresenter" x:Key="{x:Type MenuFlyoutPresenter}">
         <Setter Property="ItemsPanel">
-            <ItemsPanelTemplate>
-                <one:VirtualizingItemsPanel />
-            </ItemsPanelTemplate>
+            <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
+                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+            </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.OutlineStrong}" />
@@ -53,9 +55,10 @@
         x:Key="One.HorizontalMenuFlyoutPresenter">
         <Setter Property="MinWidth" Value="{DynamicResource HorizontalMenuFlyoutThemeMinWidth}" />
         <Setter Property="ItemsPanel">
-            <ItemsPanelTemplate>
-                <one:VirtualizingItemsPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
+            <MultiBinding Converter="{x:Static one:MenuItemsPanels.Horizontal}">
+                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+            </MultiBinding>
         </Setter>
     </ControlTheme>
 </ResourceDictionary>

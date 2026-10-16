@@ -85,6 +85,7 @@ internal static class Program
                 if (!condition) failures++;
             }
             MenuScrollingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            MenuPanelTransitionPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             if (failures > 0) throw new InvalidOperationException($"Menu scrolling: {failures} failed checks.");
             return;
         }
@@ -165,7 +166,7 @@ internal static class Program
             else PreviewBrandIconPreview.Export(output ?? ".preview/icon-messagebox-upload/brand-assets");
             return;
         }
-        if (args.Length > 0 && args[0] == "--colorpicker")
+        if (args.Length > 0 && args[0] is "--colorpicker" or "--verify-menu-first-open")
         {
             BuildAvaloniaApp(false).StartWithClassicDesktopLifetime(args);
             return;
@@ -227,6 +228,7 @@ internal static class Program
                 --verify-tab-selection-state [output] = TabControl close callbacks, stale containers and selection lifetime only
                 --verify-workflow-selection-state [output] = WorkflowEditor node / edge selection exclusivity and document ownership only
                 --colorpicker = desktop native ColorPicker demo
+                --verify-menu-first-open [output] [--manual] [--dark] [--small|--large] [--narrow] [--mixed] = native ContextMenu first-open/hover layout checks
                 --verify-colorpicker [output] = ColorPicker / ColorView themes, input, binding and pixels only
                 --verify-home [output] = Home layout, live examples, navigation and cached state only
                 --verify-control-pages [output] = deduplicated pages, property snippets, business APIs and required original samples only
