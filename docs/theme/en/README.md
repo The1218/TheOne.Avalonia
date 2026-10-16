@@ -6,7 +6,7 @@ OneTheme is the library's default theme. It uses shared `One.*` resources and in
 
 ## Native control templates
 
-See the [complete API/model reference](../../api/en/README.md) and each control guide's generated style inventory for all added declarations and selectors. PreviewHost keeps complete demos on their individual pages, with local style choices, property editing, event observation and model inspection. Template-only `one-*` classes remain automatic.
+Each [control guide](../../controls/en/README.md) lists only control-specific properties, public Classes usage, actual business actions and related models. PreviewHost shows Classes through labeled examples and adds short usage snippets to property and business-action descriptions, without selector/setter inventories. See the separate [complete source contract](../../api/en/README.md) for exact constructors, attached-property accessors and public identifiers. Template-only `one-*` classes remain automatic.
 
 See [ThemeColorPicker / ThemeButton](theme-color-picker.md) for runtime palettes, independent Light / Dark switching, PreviewHost code highlighting, and scoped verification.
 
@@ -77,7 +77,7 @@ Brushes use DynamicResource and can be overridden by the host. When changing the
 
 ## Shared theme configuration
 
-These project-added settings apply across controls. PreviewHost explains them once on Home; individual control pages focus on their own added Classes, properties, extension APIs and models. Inherited Avalonia APIs are outside these per-control references.
+These project-added settings apply across controls. PreviewHost explains them once on Home; individual control pages focus on control-specific properties, labeled Classes examples, actual business actions and related models. Inherited Avalonia APIs are outside these per-control references.
 
 | Setting | Contract |
 | --- | --- |

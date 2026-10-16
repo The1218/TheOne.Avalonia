@@ -5,8 +5,8 @@
 | Task / 任务 | English | 简体中文 |
 | --- | --- | --- |
 | Integrate an existing project, migrate a UI, or hand work to Codex | [Integration and migration](integration/en/README.md) | [项目接入与迁移](integration/zh-cn/README.md) |
-| Find control contracts and examples | [Controls](controls/en/README.md) | [控件](controls/zh-cn/README.md) |
-| Look up every declared property, style, API and built-in model | [Complete API](api/en/README.md) | [完整 API 与模型](api/zh-cn/README.md) |
+| Use project-added properties, labeled Classes examples and business actions | [Control usage](controls/en/README.md) | [控件用法](controls/zh-cn/README.md) |
+| Precisely inspect all public declarations, constructors, accessors and identifiers | [Complete source contract](api/en/README.md) | [完整源码契约](api/zh-cn/README.md) |
 | Configure colors, sizes and motion | [Themes](theme/en/README.md) | [主题](theme/zh-cn/README.md) |
 
 The integration guide contains a portable coding-agent brief. It does not depend on a maintainer's local `AGENTS.md`, skills, absolute paths, or old build outputs. Start with the target project's own instructions, then read only the control documents relevant to the migration.
@@ -15,6 +15,6 @@ The integration guide contains a portable coding-agent brief. It does not depend
 
 Baseline / 文档基线：TheOne.Avalonia + TheOne.Avalonia.DataGrid **1.0.0-preview.3**, **.NET 10**, **Avalonia 12.1.4**. Package versions, upstream DataGrid version and assembly identities are separate; see the integration guide.
 
-The API reference and per-control previews follow the checked-out source; preview.3 predates these additions. Use each control's own navigation page. Only Button, Input and Select share comparison pages. Complete demos retain their original data and layout; local style/property/API/model sections share the generated catalog. Canvas editors keep their full viewport with reference content in a separate tab. See [reference maintenance](../tools/ControlReferenceGenerator/README.md) for regeneration and drift checks.
+The source contract and per-control previews follow the checked-out source; preview.3 predates these additions. Each control page shows labeled Classes examples, project-specific properties, actual business actions and related models. Property and action descriptions include short code examples; raw style selectors, constructor/accessor lists and identifiers stay in the separate source contract. Shared sizing and motion settings are centralized on Home. Only Button, Input and Select share comparison pages. Complete demos retain their original data and layout; canvas editors keep their full viewport with reference content in a separate tab. See [reference maintenance](../tools/ControlReferenceGenerator/README.md) for regeneration and drift checks.
 
-API 清单与各控件预览跟随当前源码，preview.3 发布包早于本轮新增内容。PreviewHost 中直接进入相应控件页；仅 Button、Input、Select 合并比较。完整示例保留原始数据与布局，本页补充样式、属性、API／事件和内置模型。画布编辑器保留完整视口，说明位于单独的页内标签。更新与检查方法见[文档维护工具](../tools/ControlReferenceGenerator/README.md)。
+源码契约与各控件预览跟随当前源码，preview.3 发布包早于本轮新增内容。每个控件页展示 Classes 标签样例、专属属性、实际业务动作及关联模型，属性与动作说明附短示例代码；原始样式选择器、构造／访问器清单和标识符另保留在源码契约中。尺寸、动效等通用配置集中在 Home。仅 Button、Input、Select 合并比较，完整示例保留原始数据与布局。画布编辑器保留完整视口，说明位于单独的页内标签。更新与检查方法见[文档维护工具](../tools/ControlReferenceGenerator/README.md)。

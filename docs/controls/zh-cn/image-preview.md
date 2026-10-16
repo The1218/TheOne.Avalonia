@@ -57,13 +57,13 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 专项使用本地 HTTP 服务验证真实网络加载、失败重试及取消竞争，无外部网络依赖；同时检查本地路径、Bitmap 所有权、集合变化、编译绑定、全屏、明暗三档尺寸、窄视口与实际像素。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### ImagePreview
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -92,7 +92,7 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 
 ### ImagePreviewSurface
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreviewSurface.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreviewSurface.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -101,22 +101,36 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| ImagePreview | `one-large` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-large => ChromeHeight=52; FontSize=16 |
-| ImagePreview | `one-normal` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-normal => ChromeHeight=44; FontSize=14 |
-| ImagePreview | `one-small` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-small => ChromeHeight=36; FontSize=12 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | Class | 22 | 9 | 1 |
-| [`TheOne.Avalonia.Controls.ImagePreviewSurface`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreviewSurface.md) | Class | 2 | 2 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Previous()` | 切换到上一张可用预览图片。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Next()` | 切换到下一张可用预览图片。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Reload()` | 重新加载当前图片；原始来源与错误状态遵循图片加载契约。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.FitToWindow()` | 将图片缩放到适合当前视口，不修改源像素。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ActualSize()` | 按实际像素比例显示图片；视口可能出现滚动范围。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ZoomIn()` | 放大当前预览视图；遵守控件的缩放范围。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ZoomOut()` | 缩小当前预览视图；遵守控件的缩放范围。 |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ToggleFullScreen()` | 切换图片预览的全屏展示状态。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | `CloseRequested` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+没有额外关联数据模型。
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

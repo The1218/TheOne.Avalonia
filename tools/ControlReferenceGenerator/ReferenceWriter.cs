@@ -67,7 +67,7 @@ internal static class ReferenceWriter
         {
             var zh = lang == "zh-cn";
             var index = new StringBuilder(zh ? "# 完整公共 API 与内置模型\n\n" : "# Public API and built-in model reference\n\n");
-            index.AppendLine(zh ? "由同版本源码与主题选择器生成，包含主库全部公开类型及 DataGrid fork 的新增 API；原生 Avalonia 的继承 API 不重复声明。\n" : "Generated from same-version source and theme selectors, covering every main-library public type and added DataGrid fork APIs. Inherited native Avalonia APIs are not redeclared.\n");
+            index.AppendLine(zh ? "这是同版本完整源码契约，供接入审查与精确查阅：包含主库全部公开类型及 DataGrid fork 新增声明，也保留构造、附加属性访问器和公开标识符；原生 Avalonia 继承 API 不重复声明。日常使用请先看[控件用法](../../controls/zh-cn/README.md)，其中只列专属属性、业务动作与关联模型，不列模板选择器或属性访问器清单。\n" : "This is the complete same-version source contract for integration review and precise lookup. It includes every main-library public type and added DataGrid fork declaration, retaining constructors, attached-property accessors and public identifiers. Inherited native Avalonia APIs are not redeclared. Start with [control usage](../../controls/en/README.md) for control-specific properties, business actions and related models without template-selector or property-accessor inventories.\n");
             index.AppendLine("[English](../en/README.md) · [简体中文](../zh-cn/README.md)\n");
             index.AppendLine(zh ? "| 类型 | 类别 | 额外属性 | 方法／构造 | 事件 |\n| --- | --- | ---: | ---: | ---: |" : "| Type | Kind | Declared properties | Methods/constructors | Events |\n| --- | --- | ---: | ---: | ---: |");
             foreach (var type in data.Types)
@@ -114,24 +114,52 @@ internal static class ReferenceWriter
                 var topic = Path.GetFileNameWithoutExtension(file);
                 if (!Topics.TryGetValue(topic, out var names)) continue;
                 var content = new StringBuilder(original[(lang, topic)].TrimEnd() + "\n\n" + Start + "\n");
-                content.AppendLine(zh ? "## 额外属性、样式与完整 API\n" : "## Additional properties, styles and complete API\n");
-                content.AppendLine(zh ? "本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。\n" : "This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.\n");
+                content.AppendLine(zh ? "## 专属属性、Classes 用法与业务 API\n" : "## Control-specific properties, Classes usage and business APIs\n");
+                content.AppendLine(zh ? "本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。\n" : "This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.\n");
                 var owners = data.Types.Where(t => names.Contains(t.Name) && t.Name is not "ControlSizing" and not "Motion").ToArray();
                 foreach (var owner in owners)
                 {
-                    content.AppendLine($"### {owner.Name}\n\n[API / model reference](../../api/{lang}/{FileName(owner)})\n");
+                    content.AppendLine($"### {owner.Name}\n\n[{(zh ? "完整源码契约" : "Complete source contract")}](../../api/{lang}/{FileName(owner)})\n");
                     AppendProperties(content, owner, owner.Properties, lang, root, file, original);
                 }
                 if (owners.Length == 0) content.AppendLine(zh ? "本页的原生控件没有同名 TheOne 包装类；本项目增加的能力来自下列样式。\n" : "These native controls have no same-name TheOne wrappers; project-added capabilities come from the styles below.\n");
                 content.AppendLine(zh ? "尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。\n" : "See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.\n");
-                var styles = data.Styles.Where(s => names.Contains(s.Target) && s.Target != "Control").ToArray();
-                content.AppendLine(zh ? "### Style 类与自动状态\n\n| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |\n| --- | --- | --- | --- |" : "### Style classes and automatic state\n\n| Control | Class | Scope | Effective setters/resources |\n| --- | --- | --- | --- |");
-                foreach (var style in styles) content.AppendLine($"| {style.Target} | {Code(style.Name)} | {(style.Internal ? zh ? "模板自动类；不手动绑定" : "automatic template class; do not bind manually" : zh ? "显式 Classes，可与尺寸类组合" : "explicit Classes; combine with density")} | {Cell(style.Effect)} |");
-                content.AppendLine(zh ? "\n`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。\n" : "\n`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.\n");
-                var family = Related(data, owners, topic);
-                content.AppendLine(zh ? "### API、事件与内置模型\n\n| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |\n| --- | --- | ---: | ---: | ---: |" : "### APIs, events and built-in models\n\n| Type | Kind | Properties/enum values | Methods/constructors | Events |\n| --- | --- | ---: | ---: | ---: |");
-                foreach (var t in family) content.AppendLine($"| [{Code(t.Id)}](../../api/{lang}/{FileName(t)}) | {t.Kind} | {t.Properties.Length + t.Values.Length} | {t.Methods.Length} | {t.Events.Length} |");
-                content.AppendLine($"\n[Complete public API index](../../api/{lang}/README.md)\n{End}");
+                var styles = data.Styles.Where(s => names.Contains(s.Target) && s.Target != "Control" && !s.Internal)
+                    .DistinctBy(s => (s.Target, s.Name)).ToArray();
+                content.AppendLine(zh ? "### Classes 用法\n" : "### Classes usage\n");
+                foreach (var group in styles.GroupBy(s => s.Target))
+                    content.AppendLine($"- {Code(group.Key)}: {string.Join(" / ", group.Select(s => Code("Classes=\"" + s.Name + "\"")))}");
+                if (styles.Length == 0) content.AppendLine(zh ? "没有额外公开外观类，使用默认主题及专属属性。" : "No added public appearance classes; use the default theme and control-specific properties.");
+                content.AppendLine(zh ? "\n以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。\n" : "These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.\n");
+                var family = Related(data, owners, topic).ToArray();
+                var actions = family.SelectMany(owner => owner.Methods.Where(member => IsBusinessAction(owner, member)).Select(member => (Owner: owner, Member: member))).ToArray();
+                content.AppendLine(zh ? "### 业务 API\n" : "### Business APIs\n");
+                if (actions.Length == 0) content.AppendLine(zh ? "没有额外业务方法；通过本节专属属性配置。\n" : "No additional business methods; configure the control-specific properties above.\n");
+                else
+                {
+                    content.AppendLine(zh ? "| 类型 | 动作签名 | 用途 |\n| --- | --- | --- |" : "| Type | Action signature | Purpose |\n| --- | --- | --- |");
+                    foreach (var action in actions)
+                        content.AppendLine($"| [{Code(action.Owner.Name)}](../../api/{lang}/{FileName(action.Owner)}) | {Code(action.Member.Signature)} | {Cell(MemberDescription(action.Owner, action.Member, lang, original))} |");
+                    content.AppendLine();
+                }
+                var events = family.SelectMany(owner => owner.Events.Select(member => (Owner: owner, Member: member))).ToArray();
+                if (events.Length > 0)
+                {
+                    content.AppendLine(zh ? "### 事件订阅\n\n按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。\n\n| 类型 | 事件 | 用途 |\n| --- | --- | --- |" : "### Event subscriptions\n\nSubscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.\n\n| Type | Event | Purpose |\n| --- | --- | --- |");
+                    foreach (var entry in events)
+                        content.AppendLine($"| [{Code(entry.Owner.Name)}](../../api/{lang}/{FileName(entry.Owner)}) | {Code(Regex.Match(entry.Member.Signature, @"\.([A-Za-z_]\w*)$").Groups[1].Value)} | {Cell(MemberDescription(entry.Owner, entry.Member, lang, original))} |");
+                    content.AppendLine();
+                }
+                var models = family.Where(t => !t.IsControl && !t.IsStatic && (t.Properties.Length > 0 || t.Values.Length > 0 || t.Fields.Length > 0)).ToArray();
+                content.AppendLine(zh ? "### 关联模型\n" : "### Related models\n");
+                if (models.Length == 0) content.AppendLine(zh ? "没有额外关联数据模型。\n" : "No additional related data models.\n");
+                else
+                {
+                    content.AppendLine(zh ? "| 模型 | 属性／枚举值 |\n| --- | ---: |" : "| Model | Properties/enum values |\n| --- | ---: |");
+                    foreach (var model in models) content.AppendLine($"| [{Code(model.Id)}](../../api/{lang}/{FileName(model)}) | {model.Properties.Length + model.Values.Length} |");
+                    content.AppendLine();
+                }
+                content.AppendLine($"[{(zh ? "完整源码契约（含构造、属性访问器和标识符，供精确查阅）" : "Complete source contract (including constructors, property accessors and identifiers for precise lookup)")}](../../api/{lang}/README.md)\n{End}");
                 outputs[file] = content.ToString();
             }
         }
@@ -159,6 +187,13 @@ internal static class ReferenceWriter
         var changed = true;
         while (changed) { changed = false; foreach (var t in data.Types.Where(t => ids.Contains(t.Id)).ToArray()) foreach (var id in t.Related) if (data.Types.Any(t => t.Id == id)) changed |= ids.Add(id); }
         return data.Types.Where(t => ids.Contains(t.Id));
+    }
+
+    private static bool IsBusinessAction(TypeContract owner, MemberContract member)
+    {
+        var name = Regex.Match(member.Signature, @"\.([A-Za-z_]\w*)(?:<[^>]+>)?\(").Groups[1].Value;
+        if (name.Length == 0 || name == owner.Name || name is "Render" or "Convert" or "ToString" or "Equals" or "GetHashCode" or "Dispose" or "Create" or "Register" or "RegisterCollection" or "PreserveRowType" or "GetConfiguredTransition") return false;
+        return !owner.Properties.Any(property => name == "Get" + property.Name || name == "Set" + property.Name);
     }
 
     private static void AppendProperties(StringBuilder b, TypeContract owner, PropertyContract[] properties, string lang, string root, string output, Dictionary<(string Lang, string Topic), string> docs)

@@ -69,13 +69,13 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 内部 PickerScroll.Enabled 默认启用：滚轮停止 140 ms 后吸附整数行，手势结束立即对齐，确定／Enter 对齐后提交；非循环列表限制有效范围。选中条内外文字分层裁剪，避免小数滚动时状态文字落在错误背景上；不改变原生选择模型，卸载时停止计时并解除订阅。专项和定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### CalendarInput
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarInput.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarInput.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -83,7 +83,7 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 
 ### CalendarOptions
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarOptions.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarOptions.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -96,7 +96,7 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 
 ### PickerScroll
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Styling.PickerScroll.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Styling.PickerScroll.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -105,7 +105,7 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 
 ### PickerSizing
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Styling.PickerSizing.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Styling.PickerSizing.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -115,37 +115,27 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Calendar | `one-large` | 模板自动类；不手动绑定 | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| Calendar | `one-normal` | 模板自动类；不手动绑定 | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| Calendar | `one-small` | 模板自动类；不手动绑定 | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| CalendarDatePicker | `filled` | 显式 Classes，可与尺寸类组合 | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| CalendarDatePicker | `one-large` | 模板自动类；不手动绑定 | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16; :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, CalendarDatePicker.one-large, ListBoxItem.one-large, MenuItem.one-large => Padding=16,10; CalendarDatePicker.one-large /template/ Button#PART_Button => Width=44 |
-| CalendarDatePicker | `one-normal` | 模板自动类；不手动绑定 | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14; :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, CalendarDatePicker.one-normal, ListBoxItem.one-normal, MenuItem.one-normal => Padding=12,7; CalendarDatePicker.one-normal /template/ Button#PART_Button => Width=36 |
-| CalendarDatePicker | `one-small` | 模板自动类；不手动绑定 | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12; :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, CalendarDatePicker.one-small, ListBoxItem.one-small, MenuItem.one-small => Padding=10,4; CalendarDatePicker.one-small /template/ Button#PART_Button => Width=30 |
-| DatePicker | `filled` | 显式 Classes，可与尺寸类组合 | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| DatePicker | `one-large` | 模板自动类；不手动绑定 | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| DatePicker | `one-normal` | 模板自动类；不手动绑定 | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| DatePicker | `one-small` | 模板自动类；不手动绑定 | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
-| TimePicker | `filled` | 显式 Classes，可与尺寸类组合 | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| TimePicker | `one-large` | 模板自动类；不手动绑定 | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| TimePicker | `one-normal` | 模板自动类；不手动绑定 | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| TimePicker | `one-small` | 模板自动类；不手动绑定 | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
+- `CalendarDatePicker`: `Classes="filled"`
+- `DatePicker`: `Classes="filled"`
+- `TimePicker`: `Classes="filled"`
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.CalendarInput`](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarInput.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.CalendarOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarOptions.md) | Class | 6 | 12 | 0 |
-| [`TheOne.Avalonia.Controls.DateInputDisplayStyle`](../../api/zh-cn/TheOne.Avalonia.Controls.DateInputDisplayStyle.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Styling.PickerScroll`](../../api/zh-cn/TheOne.Avalonia.Styling.PickerScroll.md) | Class | 2 | 5 | 0 |
-| [`TheOne.Avalonia.Styling.PickerSizing`](../../api/zh-cn/TheOne.Avalonia.Styling.PickerSizing.md) | Class | 3 | 7 | 0 |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.CalendarInput`](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarInput.md) | 1 |
+| [`TheOne.Avalonia.Controls.CalendarOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.CalendarOptions.md) | 6 |
+| [`TheOne.Avalonia.Controls.DateInputDisplayStyle`](../../api/zh-cn/TheOne.Avalonia.Controls.DateInputDisplayStyle.md) | 4 |
+| [`TheOne.Avalonia.Styling.PickerScroll`](../../api/zh-cn/TheOne.Avalonia.Styling.PickerScroll.md) | 2 |
+| [`TheOne.Avalonia.Styling.PickerSizing`](../../api/zh-cn/TheOne.Avalonia.Styling.PickerSizing.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

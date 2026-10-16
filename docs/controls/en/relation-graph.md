@@ -123,13 +123,13 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 Selection checks cover light/dark, three densities, both directions, rendered selection pixels, pointer/keyboard selection, embedded button commands and focus, removal/invalid-tree cleanup, and two-way compiled bindings for default/custom models. The native consumer runs the same --verify-relation-graph suite.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### RelationGraph
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.RelationGraph.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.RelationGraph.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -159,7 +159,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### RelationGraphNode
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.RelationGraphNode.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.RelationGraphNode.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -170,7 +170,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### RelationGraphNodePresenter
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.RelationGraphNodePresenter.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.RelationGraphNodePresenter.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -189,24 +189,31 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| RelationGraph | `one-large` | automatic template class; do not bind manually | ^.one-large => NodeWidth=300; NodeMinHeight=104; NodeSpacing=44; LevelSpacing=100 |
-| RelationGraph | `one-small` | automatic template class; do not bind manually | ^.one-small => NodeWidth=220; NodeMinHeight=72; NodeSpacing=28; LevelSpacing=60 |
-| RelationGraphNodePresenter | `one-large` | automatic template class; do not bind manually | ^.one-large => Padding=20,18; FontSize=16; HeaderFontSize=18; IconSize=28; IconTileSize=52; IconSpacing=18; TextSpacing=8 |
-| RelationGraphNodePresenter | `one-small` | automatic template class; do not bind manually | ^.one-small => Padding=12,10; FontSize=12; HeaderFontSize=14; IconSize=20; IconTileSize=36; IconSpacing=10; TextSpacing=4 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`RelationGraph`](../../api/en/TheOne.Avalonia.Controls.RelationGraph.md) | `RelationGraphNodePresenter? RelationGraph.GetNodePresenter(object node)` | Finds a realized native card; returns null before layout or for invalid trees. |
+| [`RelationGraph`](../../api/en/TheOne.Avalonia.Controls.RelationGraph.md) | `void RelationGraph.RefreshData()` | Refresh after changing a collection that does not notify. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.RelationGraph`](../../api/en/TheOne.Avalonia.Controls.RelationGraph.md) | Class | 23 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.RelationGraphNode`](../../api/en/TheOne.Avalonia.Controls.RelationGraphNode.md) | Class | 4 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.RelationGraphNodePresenter`](../../api/en/TheOne.Avalonia.Controls.RelationGraphNodePresenter.md) | Class | 12 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`RelationGraphNode`](../../api/en/TheOne.Avalonia.Controls.RelationGraphNode.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.RelationGraphNode`](../../api/en/TheOne.Avalonia.Controls.RelationGraphNode.md) | 4 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

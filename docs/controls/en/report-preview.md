@@ -66,13 +66,13 @@ PreviewHost → Extensions → ReportPreview loads saved JSON and an explicit 96
 JSON includes public endpoint/image URLs and body selection, excluding fetched rows, responses and HTTP client credentials. Credentials belong in the consumer client, not saved URLs. Generated JSON metadata supports NativeAOT. Formatting, totals, conditions and validation follow [ReportDesign's model](report-design.md#preview-and-update-contract). One repeating detail table is supported; the viewer has no report editing or request method/body editor.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### ReportPreview
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -88,52 +88,80 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`ReportPreview`](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md) | `Task ReportPreview.LoadAsync(string json, CancellationToken cancellationToken = default(CancellationToken))` | Loads report JSON and associated data/images asynchronously, respecting cancellation, failures and stale-load isolation. |
+| [`ReportPreview`](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md) | `void ReportPreview.GoToPage(int page)` | Navigates to a requested page; paging/report contracts define indexing and range handling. |
+| [`ReportPreview`](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md) | `Task ReportPreview.ExportPdfAsync(Stream destination, CancellationToken cancellationToken = default(CancellationToken))` | Asynchronously exports the current report layout to PDF; see output/cancellation parameters. |
+| [`ReportPreview`](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md) | `Task<ReportPrintResult> ReportPreview.PrintAsync(ReportPrintOptions? options = null, CancellationToken cancellationToken = default(CancellationToken))` | Invokes the configured print handler and awaits its result; the host chooses printing dependencies/submission policy. |
+| [`PrintTool`](../../api/en/TheOne.Avalonia.Reporting.PrintTool.md) | `static ProcessStartInfo PrintTool.CreateStartInfo(string pdfPath, ReportPrintPlatform platform, ReportPrintOptions? options = null)` | Builds shell-free CUPS arguments, or the Windows registered PDF print verb. |
+| [`PrintTool`](../../api/en/TheOne.Avalonia.Reporting.PrintTool.md) | `static Task<ReportPrintResult> PrintTool.PrintPdfAsync(string pdfPath, ReportPrintOptions? options = null, CancellationToken cancellationToken = default(CancellationToken))` | Passes an existing PDF to the desktop print adapter and returns its result; see platform/file-retention rules. |
+| [`PrintTool`](../../api/en/TheOne.Avalonia.Reporting.PrintTool.md) | `static void PrintTool.CleanupTemporaryDocuments()` | Removes print PDFs older than 24 hours, including files left by a previous process. Call at application startup if printing is infrequent. Only this library's temporary folders are inspected. |
+| [`ReportDataSource`](../../api/en/TheOne.Avalonia.Reporting.ReportDataSource.md) | `object? ReportDataSource.GetValue(int rowIndex, string fieldKey)` | Reads an original-row value through an explicit field key/typed getter, without reflection paths. |
+| [`ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | `string ReportDocument.Save()` | Returns a portable JSON definition including public API/image URLs, but no fetched records. |
+| [`ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | `static ReportDocument ReportDocument.Load(string json)` | Loads a typed business document from JSON under its version/field/structure validation contract. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static bool ReportJsonData.IsRootField(string key)` | Checks whether a field key uses the report root-field prefix. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static object? ReportJsonData.ReadRootValue(string json, string pointer)` | Reads a scalar field from the JSON root using its path. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static IReadOnlyList<ReportDataNode> ReportJsonData.CreateTree(string json)` | Builds a bounded response tree. Truncating display nodes never truncates the source rows. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static IReadOnlyList<ReportJsonBody> ReportJsonData.FindBodies(string json)` | Finds JSON arrays and paths that can serve as report detail-record sources. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer)` | Creates a report source from a JSON record-array path and explicit field configuration. |
+| [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer, IEnumerable<string>? rootFieldKeys)` | Creates a report source from a JSON record-array path and explicit field configuration. |
+| [`ReportPaginator`](../../api/en/TheOne.Avalonia.Reporting.ReportPaginator.md) | `static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)` | Validates the document and computes immutable paginated layout shared by preview/printing. |
+| [`ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Exports a paginated report PDF asynchronously with caller-supplied destination/cancellation/file lifetime. |
+| [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Fetches one bounded JSON response using the same request path as the independent preview. |
+| [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Loads records asynchronously from report API configuration without persisting fetched rows in the template. |
+| [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Resolves report images asynchronously with batch-owned caching/failure state. |
+| [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client, CancellationToken cancellationToken, ReportDataSource? source)` | Resolves report images asynchronously with batch-owned caching/failure state. |
+| [`ReportTemplate`](../../api/en/TheOne.Avalonia.Reporting.ReportTemplate.md) | `static ReportDocument ReportTemplate.CreateSalesDetail()` | A source-independent starting template matching the sales report design. |
+| [`ReportTemplate`](../../api/en/TheOne.Avalonia.Reporting.ReportTemplate.md) | `static string ReportTemplate.Save(ReportDocument document)` | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
+| [`ReportTemplate`](../../api/en/TheOne.Avalonia.Reporting.ReportTemplate.md) | `static ReportDocument ReportTemplate.Load(string json)` | Loads a typed business document from JSON under its version/field/structure validation contract. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ReportPreview`](../../api/en/TheOne.Avalonia.Controls.ReportPreview.md) | Class | 9 | 5 | 0 |
-| [`TheOne.Avalonia.Reporting.PrintTool`](../../api/en/TheOne.Avalonia.Reporting.PrintTool.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportApiAuthentication`](../../api/en/TheOne.Avalonia.Reporting.ReportApiAuthentication.md) | Class | 7 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportApiParameterMode`](../../api/en/TheOne.Avalonia.Reporting.ReportApiParameterMode.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | Class | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportColumn.md) | Class | 12 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportCondition`](../../api/en/TheOne.Avalonia.Reporting.ReportCondition.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | Class | 9 | 0 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportDataNodeKind`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNodeKind.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportDataSource`](../../api/en/TheOne.Avalonia.Reporting.ReportDataSource.md) | Class | 3 | 2 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | Class | 29 | 3 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | Class | 25 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | Enum | 8 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportField<T>`](../../api/en/TheOne.Avalonia.Reporting.ReportField_T_.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportFieldInfo`](../../api/en/TheOne.Avalonia.Reporting.ReportFieldInfo.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportImageFit`](../../api/en/TheOne.Avalonia.Reporting.ReportImageFit.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportJsonBody`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonBody.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | Class | 0 | 6 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportLayout`](../../api/en/TheOne.Avalonia.Reporting.ReportLayout.md) | Class | 19 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportLayoutColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutColumn.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportLayoutElement`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutElement.md) | Class | 12 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportLayoutRow`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutRow.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportObservable`](../../api/en/TheOne.Avalonia.Reporting.ReportObservable.md) | Class | 0 | 0 | 1 |
-| [`TheOne.Avalonia.Reporting.ReportPage`](../../api/en/TheOne.Avalonia.Reporting.ReportPage.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportPaginator`](../../api/en/TheOne.Avalonia.Reporting.ReportPaginator.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportPrintOptions`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintOptions.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportPrintPlatform`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintPlatform.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportPrintResult`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintResult.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | Class | 0 | 4 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportTemplate`](../../api/en/TheOne.Avalonia.Reporting.ReportTemplate.md) | Class | 0 | 3 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportTextAlignment`](../../api/en/TheOne.Avalonia.Reporting.ReportTextAlignment.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportTextListStyle`](../../api/en/TheOne.Avalonia.Reporting.ReportTextListStyle.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportValueFormat`](../../api/en/TheOne.Avalonia.Reporting.ReportValueFormat.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Reporting.ReportValueKind`](../../api/en/TheOne.Avalonia.Reporting.ReportValueKind.md) | Enum | 3 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`ReportObservable`](../../api/en/TheOne.Avalonia.Reporting.ReportObservable.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Reporting.ReportApiAuthentication`](../../api/en/TheOne.Avalonia.Reporting.ReportApiAuthentication.md) | 7 |
+| [`TheOne.Avalonia.Reporting.ReportApiParameterMode`](../../api/en/TheOne.Avalonia.Reporting.ReportApiParameterMode.md) | 2 |
+| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 5 |
+| [`TheOne.Avalonia.Reporting.ReportColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportColumn.md) | 12 |
+| [`TheOne.Avalonia.Reporting.ReportCondition`](../../api/en/TheOne.Avalonia.Reporting.ReportCondition.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | 9 |
+| [`TheOne.Avalonia.Reporting.ReportDataNodeKind`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNodeKind.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportDataSource`](../../api/en/TheOne.Avalonia.Reporting.ReportDataSource.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | 29 |
+| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | 25 |
+| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | 8 |
+| [`TheOne.Avalonia.Reporting.ReportField<T>`](../../api/en/TheOne.Avalonia.Reporting.ReportField_T_.md) | 4 |
+| [`TheOne.Avalonia.Reporting.ReportFieldInfo`](../../api/en/TheOne.Avalonia.Reporting.ReportFieldInfo.md) | 4 |
+| [`TheOne.Avalonia.Reporting.ReportImageFit`](../../api/en/TheOne.Avalonia.Reporting.ReportImageFit.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportJsonBody`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonBody.md) | 2 |
+| [`TheOne.Avalonia.Reporting.ReportLayout`](../../api/en/TheOne.Avalonia.Reporting.ReportLayout.md) | 19 |
+| [`TheOne.Avalonia.Reporting.ReportLayoutColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutColumn.md) | 4 |
+| [`TheOne.Avalonia.Reporting.ReportLayoutElement`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutElement.md) | 12 |
+| [`TheOne.Avalonia.Reporting.ReportLayoutRow`](../../api/en/TheOne.Avalonia.Reporting.ReportLayoutRow.md) | 4 |
+| [`TheOne.Avalonia.Reporting.ReportPage`](../../api/en/TheOne.Avalonia.Reporting.ReportPage.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportPrintOptions`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintOptions.md) | 2 |
+| [`TheOne.Avalonia.Reporting.ReportPrintPlatform`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintPlatform.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportPrintResult`](../../api/en/TheOne.Avalonia.Reporting.ReportPrintResult.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportTextAlignment`](../../api/en/TheOne.Avalonia.Reporting.ReportTextAlignment.md) | 4 |
+| [`TheOne.Avalonia.Reporting.ReportTextListStyle`](../../api/en/TheOne.Avalonia.Reporting.ReportTextListStyle.md) | 3 |
+| [`TheOne.Avalonia.Reporting.ReportValueFormat`](../../api/en/TheOne.Avalonia.Reporting.ReportValueFormat.md) | 5 |
+| [`TheOne.Avalonia.Reporting.ReportValueKind`](../../api/en/TheOne.Avalonia.Reporting.ReportValueKind.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

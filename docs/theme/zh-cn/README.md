@@ -6,7 +6,7 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 
 ## 官方模板
 
-完整声明见 [API 与内置模型](../../api/zh-cn/README.md)，每个控件指南末尾均列出额外属性和样式选择器。PreviewHost 在对应控件页完整展示示例，提供本页样式选择、属性编辑、事件观察与模型查看。`one-*` 等模板内部类仍由主题自动维护。
+每个[控件指南](../../controls/zh-cn/README.md)只列专属属性、公开 Classes 用法、实际业务动作和关联模型。PreviewHost 用标签样例直接展示 Classes，属性与业务动作说明附短用法代码，不展示选择器／Setter 明细。构造、附加属性访问器、公开标识符等精确声明另见[完整源码契约](../../api/zh-cn/README.md)。`one-*` 等模板内部类由主题自动维护。
 
 运行时配色选择与独立明暗开关见 [ThemeColorPicker / ThemeButton](theme-color-picker.md)，包含 PreviewHost 代码高亮与专项入口。
 
@@ -77,7 +77,7 @@ PreviewHost 的 `--verify-input-appearance [output]` 专项覆盖明暗主题、
 
 ## 通用主题配置
 
-以下为跨控件通用的项目扩展。PreviewHost 在 Home 统一说明；各控件页只关注本控件附加的 Classes、属性、扩展 API 与关联模型，不列原生 Avalonia 继承 API。
+以下为跨控件通用的项目扩展。PreviewHost 在 Home 统一说明；各控件页只关注本控件专属属性、Classes 标签样例、实际业务动作与关联模型，不列原生 Avalonia 继承 API。
 
 | 配置 | 契约 |
 | --- | --- |

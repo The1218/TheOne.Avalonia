@@ -1,6 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Windows.Input;
 
 namespace TheOne.DesignPreview.Reference;
 
@@ -29,6 +28,37 @@ internal static class ContractCatalog
     internal static ContractSet Current => Data.Value;
     internal static IEnumerable<PropertyContract> ControlProperties(TypeContract owner) =>
         owner.Properties.Where(property => !owner.IsControl || !NativeAppearance.Contains(property.Name));
+    internal static string MethodName(MemberContract member)
+    {
+        var end = member.Signature.IndexOf('(');
+        if (end < 0) return "";
+        var qualified = member.Signature[..end];
+        var name = qualified[(qualified.LastIndexOf('.') + 1)..];
+        var generic = name.IndexOf('<');
+        return generic >= 0 ? name[..generic] : name;
+    }
+    internal static IEnumerable<MemberContract> BusinessMethods(TypeContract owner) => owner.Methods.Where(member =>
+    {
+        var name = MethodName(member);
+        if (name.Length == 0 || name == owner.Name || name is "Render" or "Convert" or "ConvertBack" or "ToString" or "Dispose"
+            or "Register" or "RegisterCollection" or "PreserveRowType" || name.StartsWith("Create", StringComparison.Ordinal)) return false;
+        if (name.EndsWith("Handler", StringComparison.Ordinal) && (name.StartsWith("Add", StringComparison.Ordinal) || name.StartsWith("Remove", StringComparison.Ordinal))) return false;
+        return !owner.Properties.Any(property => name == "Get" + property.Name || name == "Set" + property.Name);
+    }).OrderBy(member => MethodName(member) switch
+    {
+        "Save" or "SaveTemplate" => 0,
+        "Load" or "LoadAsync" or "LoadTemplate" or "LoadTemplateAsync" => 1,
+        "ExportPng" or "ExportPdfAsync" => 2,
+        "PrintAsync" => 3,
+        "ValidateAsync" or "SubmitAsync" => 4,
+        _ => 5
+    });
+    internal static IReadOnlyList<TypeContract> BusinessOwners(string name)
+    {
+        var owners = Owners(name);
+        return name == "WorkflowEditor" ? owners.Concat(Current.Types.Where(type => type.Name == "WorkflowDocument"))
+            .DistinctBy(type => type.Id).OrderBy(type => type.Name == "WorkflowSerializer" ? 0 : 1).ToArray() : owners;
+    }
     internal static TypeContract? Find(string name) => Current.Types.FirstOrDefault(t => t.Name == (name switch
     { "Toast" => "OneToast", "Dialog" => "OneDialog", "MessageBox" => "OneMessageBox", _ => name }));
     internal static IReadOnlyList<TypeContract> Owners(string name)
@@ -47,6 +77,7 @@ internal static class ContractCatalog
             "RefreshContainer" or "RefreshVisualizer" => new[] { "RefreshOptions", "RefreshMotion" },
             "NotificationCard" => new[] { "NotificationMotion" },
             "TransitioningContentControl" => new[] { "ContentTransitionOptions" },
+            "WorkflowEditor" => new[] { "WorkflowSerializer" },
             _ => Array.Empty<string>()
         }) names.Add(extra);
         return Current.Types.Where(t => names.Contains(t.Name)).ToArray();
@@ -72,16 +103,4 @@ internal static class ContractCatalog
         }
         return Current.Types.Where(t => ids.Contains(t.Id) && !t.IsControl && t.Name is not "ControlSizing" and not "ControlSize" and not "Motion").ToArray();
     }
-}
-
-internal sealed class ExplorerCommand(Action action) : ICommand
-{
-    public bool CanExecute(object? parameter) => true;
-    public void Execute(object? parameter) => action();
-    public event EventHandler? CanExecuteChanged { add { } remove { } }
-}
-internal sealed class ExplorerSubscription(Action dispose) : IDisposable
-{
-    private Action? _dispose = dispose;
-    public void Dispose() => Interlocked.Exchange(ref _dispose, null)?.Invoke();
 }

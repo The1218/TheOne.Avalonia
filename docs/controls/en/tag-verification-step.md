@@ -156,19 +156,19 @@ Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_
 Run `dotnet run --project design/PreviewHost -- --verify-verification-step` for VerificationStep-only checks (including real Tab / Shift+Tab input), or use `--render-controls .preview/verification-step VerificationStep` to render this control. The published NativeAotSmoke consumer runs the same checks with `--require-aot --verify-verification-step`.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### IStepValidator
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### StepCompareAttribute
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -176,7 +176,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### StepField
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepField.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.StepField.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -186,13 +186,13 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### StepValidation
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidation.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.StepValidation.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### StepValidationError
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -201,7 +201,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### Tag
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.Tag.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.Tag.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -214,7 +214,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### VerificationStep
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -242,35 +242,41 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Tag | `one-large` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-large => MinHeight=32; FontSize=15; Padding=11,4 |
-| Tag | `one-normal` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0 |
-| Tag | `one-small` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-small => MinHeight=24; FontSize=11; Padding=7,2 |
-| Tag | `step-indicator` | automatic template class; do not bind manually | one&#124;Tag.step-indicator => Width=36; Height=36; one&#124;Tag.step-indicator.one-small => Width=30; Height=30; one&#124;Tag.step-indicator.one-large => Width=42; Height=42 |
-| VerificationStep | `one-large` | automatic template class; do not bind manually | one&#124;Tag.step-indicator.one-large => Width=42; Height=42; ^.one-large => FontSize=16; Padding=24 |
-| VerificationStep | `one-small` | automatic template class; do not bind manually | one&#124;Tag.step-indicator.one-small => Width=30; Height=30; ^.one-small => FontSize=12; Padding=16 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`IStepValidator`](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md) | `Task<IReadOnlyList<StepValidationError>> IStepValidator.ValidateAsync(CancellationToken cancellationToken)` | Validates model rules and native conversion errors; returns `false` on failure, cancellation, detachment, disabled state, or pending validation |
+| [`StepValidation`](../../api/en/TheOne.Avalonia.Controls.StepValidation.md) | `static IStepValidator StepValidation.For<T>(T model, params string[] memberNames) where T : class` | Creates a typed step validator for the supplied model/member set. |
+| [`VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | `void VerificationStep.Reset()` | Resets progress / selection, preserving business data and uncorrected drafts |
+| [`VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | `bool VerificationStep.GoBack()` | Returns to previous steps; forward moves only to the adjacent validated step, with no skipping |
+| [`VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | `Task<bool> VerificationStep.GoToAsync(int index, CancellationToken cancellationToken = default(CancellationToken))` | Backward navigation is free; forward navigation is limited to the immediate next step and validates the current one. |
+| [`VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | `Task<bool> VerificationStep.GoNextAsync(CancellationToken cancellationToken = default(CancellationToken))` | Validates current bound model attributes and native input errors; returns false on invalid, busy or cancelled transitions. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepField`](../../api/en/TheOne.Avalonia.Controls.StepField.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepItem`](../../api/en/TheOne.Avalonia.Controls.StepItem.md) | Class | 13 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.StepItem<T>`](../../api/en/TheOne.Avalonia.Controls.StepItem_T_.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepState`](../../api/en/TheOne.Avalonia.Controls.StepState.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidation`](../../api/en/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.Tag`](../../api/en/TheOne.Avalonia.Controls.Tag.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.TagStatus`](../../api/en/TheOne.Avalonia.Controls.TagStatus.md) | Enum | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.TagVariant`](../../api/en/TheOne.Avalonia.Controls.TagVariant.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | Class | 21 | 5 | 1 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`StepItem`](../../api/en/TheOne.Avalonia.Controls.StepItem.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | `ValidationFailed` | Bubbling failure event; completion uses CompletedCommand |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md) | 1 |
+| [`TheOne.Avalonia.Controls.StepItem`](../../api/en/TheOne.Avalonia.Controls.StepItem.md) | 13 |
+| [`TheOne.Avalonia.Controls.StepState`](../../api/en/TheOne.Avalonia.Controls.StepState.md) | 4 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md) | 2 |
+| [`TheOne.Avalonia.Controls.TagStatus`](../../api/en/TheOne.Avalonia.Controls.TagStatus.md) | 6 |
+| [`TheOne.Avalonia.Controls.TagVariant`](../../api/en/TheOne.Avalonia.Controls.TagVariant.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

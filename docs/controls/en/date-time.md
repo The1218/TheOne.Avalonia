@@ -69,13 +69,13 @@ Item / selection-strip heights are 32 / 40 / 48 px, popup fonts 12 / 14 / 16 px,
 PickerScroll.Enabled is enabled internally: wheel scrolling snaps to whole rows after 140 ms of inactivity; gesture completion aligns immediately; confirm / Enter aligns before committing. Non-looping lists remain within range. Separate clipping inside and outside the selection strip prevents fractional scrolling from showing state text on the wrong background. Native selection is unchanged; unloading stops timers and subscriptions. See [preview entry points](../../../design/PreviewHost/Program.cs) for checks and rendering.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### CalendarInput
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.CalendarInput.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.CalendarInput.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -83,7 +83,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### CalendarOptions
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.CalendarOptions.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.CalendarOptions.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -96,7 +96,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### PickerScroll
 
-[API / model reference](../../api/en/TheOne.Avalonia.Styling.PickerScroll.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Styling.PickerScroll.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -105,7 +105,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### PickerSizing
 
-[API / model reference](../../api/en/TheOne.Avalonia.Styling.PickerSizing.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Styling.PickerSizing.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -115,37 +115,26 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Calendar | `one-large` | automatic template class; do not bind manually | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| Calendar | `one-normal` | automatic template class; do not bind manually | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| Calendar | `one-small` | automatic template class; do not bind manually | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| CalendarDatePicker | `filled` | explicit Classes; combine with density | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| CalendarDatePicker | `one-large` | automatic template class; do not bind manually | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16; :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, CalendarDatePicker.one-large, ListBoxItem.one-large, MenuItem.one-large => Padding=16,10; CalendarDatePicker.one-large /template/ Button#PART_Button => Width=44 |
-| CalendarDatePicker | `one-normal` | automatic template class; do not bind manually | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14; :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, CalendarDatePicker.one-normal, ListBoxItem.one-normal, MenuItem.one-normal => Padding=12,7; CalendarDatePicker.one-normal /template/ Button#PART_Button => Width=36 |
-| CalendarDatePicker | `one-small` | automatic template class; do not bind manually | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12; :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, CalendarDatePicker.one-small, ListBoxItem.one-small, MenuItem.one-small => Padding=10,4; CalendarDatePicker.one-small /template/ Button#PART_Button => Width=30 |
-| DatePicker | `filled` | explicit Classes; combine with density | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| DatePicker | `one-large` | automatic template class; do not bind manually | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| DatePicker | `one-normal` | automatic template class; do not bind manually | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| DatePicker | `one-small` | automatic template class; do not bind manually | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
-| TimePicker | `filled` | explicit Classes; combine with density | TextBox.filled, ComboBox.filled, NumericUpDown.filled, AutoCompleteBox.filled, CalendarDatePicker.filled, DatePicker.filled, TimePicker.filled => Background={DynamicResource One.Subtle} |
-| TimePicker | `one-large` | automatic template class; do not bind manually | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| TimePicker | `one-normal` | automatic template class; do not bind manually | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| TimePicker | `one-small` | automatic template class; do not bind manually | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
+- `CalendarDatePicker`: `Classes="filled"`
+- `DatePicker`: `Classes="filled"`
+- `TimePicker`: `Classes="filled"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.CalendarInput`](../../api/en/TheOne.Avalonia.Controls.CalendarInput.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.CalendarOptions`](../../api/en/TheOne.Avalonia.Controls.CalendarOptions.md) | Class | 6 | 12 | 0 |
-| [`TheOne.Avalonia.Controls.DateInputDisplayStyle`](../../api/en/TheOne.Avalonia.Controls.DateInputDisplayStyle.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Styling.PickerScroll`](../../api/en/TheOne.Avalonia.Styling.PickerScroll.md) | Class | 2 | 5 | 0 |
-| [`TheOne.Avalonia.Styling.PickerSizing`](../../api/en/TheOne.Avalonia.Styling.PickerSizing.md) | Class | 3 | 7 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.CalendarInput`](../../api/en/TheOne.Avalonia.Controls.CalendarInput.md) | 1 |
+| [`TheOne.Avalonia.Controls.CalendarOptions`](../../api/en/TheOne.Avalonia.Controls.CalendarOptions.md) | 6 |
+| [`TheOne.Avalonia.Controls.DateInputDisplayStyle`](../../api/en/TheOne.Avalonia.Controls.DateInputDisplayStyle.md) | 4 |
+| [`TheOne.Avalonia.Styling.PickerScroll`](../../api/en/TheOne.Avalonia.Styling.PickerScroll.md) | 2 |
+| [`TheOne.Avalonia.Styling.PickerSizing`](../../api/en/TheOne.Avalonia.Styling.PickerSizing.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

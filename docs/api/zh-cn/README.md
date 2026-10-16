@@ -1,6 +1,6 @@
 # 完整公共 API 与内置模型
 
-由同版本源码与主题选择器生成，包含主库全部公开类型及 DataGrid fork 的新增 API；原生 Avalonia 的继承 API 不重复声明。
+这是同版本完整源码契约，供接入审查与精确查阅：包含主库全部公开类型及 DataGrid fork 新增声明，也保留构造、附加属性访问器和公开标识符；原生 Avalonia 继承 API 不重复声明。日常使用请先看[控件用法](../../controls/zh-cn/README.md)，其中只列专属属性、业务动作与关联模型，不列模板选择器或属性访问器清单。
 
 [English](../en/README.md) · [简体中文](../zh-cn/README.md)
 

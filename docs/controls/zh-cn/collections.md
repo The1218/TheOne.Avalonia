@@ -217,13 +217,13 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 `ListBox Classes="cards"` 使用独立圆角条目与选中边框，`borderless` 用于嵌入布局。`TabControl Classes="pills"` 使用胶囊式标题，现有 `card` 仍提供连续外框。均保留原生面板及有界视口，集合使用 ItemsSource 与编译模板；每个控件选择一种外观类。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### TabFeatures
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -236,7 +236,7 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 
 ### Virtualization
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -244,43 +244,30 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| DataGrid | `borderless` | 显式 Classes，可与尺寸类组合 | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| DataGrid | `one-large` | 模板自动类；不手动绑定 | DataGrid.one-large => FontSize=16 |
-| DataGrid | `one-normal` | 模板自动类；不手动绑定 | DataGrid.one-normal => FontSize=14 |
-| DataGrid | `one-small` | 模板自动类；不手动绑定 | DataGrid.one-small => FontSize=12 |
-| ListBox | `borderless` | 显式 Classes，可与尺寸类组合 | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| ListBox | `cards` | 显式 Classes，可与尺寸类组合 | ListBox.cards => Background={DynamicResource One.Subtle}; BorderThickness=0; Padding=8; ListBox.cards > ListBoxItem => Margin=0,3; CornerRadius={DynamicResource One.Radius.Control}; BorderThickness=1; BorderBrush={DynamicResource One.Line}; ListBox.cards > ListBoxItem /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.Surface}; ListBox.cards > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.Subtle}; ListBox.cards > ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.AccentSoft}; BorderBrush={DynamicResource One.Accent}; Foreground={DynamicResource One.Text}; ListBox.cards > ListBoxItem:disabled /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.DisabledSurface}; Foreground={DynamicResource One.DisabledText}; BorderBrush={DynamicResource One.Line} |
-| ListBox | `one-large` | 模板自动类；不手动绑定 | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| ListBox | `one-normal` | 模板自动类；不手动绑定 | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| ListBox | `one-small` | 模板自动类；不手动绑定 | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TabControl | `card` | 显式 Classes，可与尺寸类组合 | ^.card => BorderBrush={DynamicResource One.CardTabBorder}; BorderThickness=1; CornerRadius={DynamicResource One.Radius.TabContent}; Padding=16; ItemContainerTheme={StaticResource One.CardTabItem}; ItemsPanel=template/resource; Template={StaticResource One.CardTabControlTemplate}; TabControl.card => one:TabFeatures.CanClose=True; one:TabFeatures.CanReorder=True |
-| TabControl | `one-large` | 模板自动类；不手动绑定 | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| TabControl | `one-normal` | 模板自动类；不手动绑定 | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| TabControl | `one-small` | 模板自动类；不手动绑定 | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TabControl | `pills` | 显式 Classes，可与尺寸类组合 | TabControl.pills > TabItem => CornerRadius=999; Margin=0,0,8,0; TabControl.pills > TabItem /template/ Border#PART_SelectedPipe => IsVisible=False; TabControl.pills > TabItem:selected /template/ Border#PART_LayoutRoot => Background={DynamicResource One.Accent}; TabControl.pills > TabItem:selected /template/ ContentPresenter#PART_ContentPresenter => Foreground={DynamicResource One.OnAccent}; TabControl.pills > TabItem:selected:pointerover /template/ Border#PART_LayoutRoot => Background={DynamicResource One.AccentHover}; TabControl.pills > TabItem:selected:pressed /template/ Border#PART_LayoutRoot => Background={DynamicResource One.AccentPressed}; TabControl.pills > TabItem:disabled /template/ Border#PART_LayoutRoot => Background={DynamicResource One.DisabledSurface}; TabControl.pills > TabItem:disabled /template/ ContentPresenter#PART_ContentPresenter => Foreground={DynamicResource One.DisabledText} |
-| TabStrip | `one-large` | 模板自动类；不手动绑定 | TabStrip.one-large, TabStripItem.one-large => FontSize=16 |
-| TabStrip | `one-normal` | 模板自动类；不手动绑定 | TabStrip.one-normal, TabStripItem.one-normal => FontSize=14 |
-| TabStrip | `one-small` | 模板自动类；不手动绑定 | TabStrip.one-small, TabStripItem.one-small => FontSize=12 |
-| TreeView | `one-large` | 模板自动类；不手动绑定 | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| TreeView | `one-normal` | 模板自动类；不手动绑定 | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| TreeView | `one-small` | 模板自动类；不手动绑定 | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TreeViewItem | `one-large` | 模板自动类；不手动绑定 | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16; TreeViewItem.one-large => Padding=0,4,14,4; TreeViewItem.one-large /template/ ToggleButton#PART_ExpandCollapseChevron => Width=44; Height=44 |
-| TreeViewItem | `one-no-motion` | 模板自动类；不手动绑定 | ToggleSwitch.one-no-motion /template/ Thumb, Expander.one-no-motion /template/ Path, TreeViewItem.one-no-motion /template/ Path, one&#124;NavMenuItem.one-no-motion /template/ Path => Transitions={x:Null} |
-| TreeViewItem | `one-normal` | 模板自动类；不手动绑定 | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14; TreeViewItem.one-normal => Padding=0,4,10,4; TreeViewItem.one-normal /template/ ToggleButton#PART_ExpandCollapseChevron => Width=36; Height=36 |
-| TreeViewItem | `one-small` | 模板自动类；不手动绑定 | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12; TreeViewItem.one-small => Padding=0,4,10,4; TreeViewItem.one-small /template/ ToggleButton#PART_ExpandCollapseChevron => Width=30; Height=30 |
+- `DataGrid`: `Classes="borderless"`
+- `ListBox`: `Classes="borderless"` / `Classes="cards"`
+- `TabControl`: `Classes="card"` / `Classes="pills"`
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | Class | 6 | 22 | 0 |
-| [`TheOne.Avalonia.Controls.Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | Class | 1 | 5 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabStripItem item)` | 尝试关闭容器对应的数据项 |
+| [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabItem item)` | 尝试关闭容器对应的数据项 |
+| [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Move(TabControl tabs, int from, int to)` | 按零基索引尝试重排 |
+| [`Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | `static TreeViewItem? Virtualization.BringIntoView(TreeView tree, params int[] path)` | Materializes only the ancestor path and target of a large tree. |
+| [`Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | `static void Virtualization.SelectAll(TreeView tree)` | Selects all nodes exposed by expanded branches without creating their containers. |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | 6 |
+| [`TheOne.Avalonia.Controls.Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | 1 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

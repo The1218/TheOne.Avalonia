@@ -112,13 +112,13 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 `design/PreviewHost/Consumers/NativeAotSmoke` 复用同一专项。绑定／元数据变化时发布并执行原生程序的 `--require-aot --verify-form`。托管专项与跨 RID 构建不代表目标平台原生运行或读屏器实测通过。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### Form
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -139,7 +139,7 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 
 ### FormItem
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FormItem.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FormItem.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -155,13 +155,13 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 
 ### IStepValidator
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### StepCompareAttribute
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -169,13 +169,13 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 
 ### StepValidation
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### StepValidationError
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -184,23 +184,37 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | Class | 14 | 5 | 1 |
-| [`TheOne.Avalonia.Controls.FormItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FormItem.md) | Class | 9 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidation`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | `void Form.ClearValidation()` | Cancels pending validation and clears form messages, retaining model values and native input drafts. |
+| [`Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | `Task<bool> Form.ValidateAsync(CancellationToken cancellationToken = default(CancellationToken))` | Runs attribute/custom validation and native conversion validation. Invalid, busy, detached or cancelled calls return false. |
+| [`Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | `Task<bool> Form.SubmitAsync(CancellationToken cancellationToken = default(CancellationToken))` | Validates before executing the host command, checking CanExecute again after asynchronous validation. |
+| [`Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | `bool Form.FocusFirstError()` | 滚动并聚焦首个可见、可用的错误输入；无目标返回 `false` |
+| [`IStepValidator`](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md) | `Task<IReadOnlyList<StepValidationError>> IStepValidator.ValidateAsync(CancellationToken cancellationToken)` | 校验模型规则与原生输入转换错误；失败、取消、未挂载、禁用或忙碌时返回 `false` |
+| [`StepValidation`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md) | `static IStepValidator StepValidation.For<T>(T model, params string[] memberNames) where T : class` | 为指定模型／属性集合创建类型化步骤校验器。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | `ValidationFailed` | 冒泡事件；模型、转换或校验器异常导致失败时触发，取消不触发 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md) | 1 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md) | 2 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

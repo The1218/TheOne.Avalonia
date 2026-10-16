@@ -51,30 +51,26 @@ The official package supplies all control logic and base templates:
 [Avalonia ColorPicker documentation](https://docs.avaloniaui.net/controls/input/selectors/colorpicker).
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 These native controls have no same-name TheOne wrappers; project-added capabilities come from the styles below.
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| ColorPicker | `one-large` | automatic template class; do not bind manually | ColorPicker.one-large => MinHeight=44; FontSize=16; ColorPicker.one-large /template/ DropDownButton => MinHeight=44 |
-| ColorPicker | `one-normal` | automatic template class; do not bind manually | ColorPicker.one-normal /template/ DropDownButton => MinHeight=36 |
-| ColorPicker | `one-small` | automatic template class; do not bind manually | ColorPicker.one-small => MinHeight=30; FontSize=12; ColorPicker.one-small /template/ DropDownButton => MinHeight=30 |
-| ColorView | `one-large` | automatic template class; do not bind manually | :is(ColorView).one-large /template/ TextBox#PART_HexTextBox, :is(ColorView).one-large /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-large TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-large NumericUpDown => MinHeight=44; MaxHeight=44; FontSize=16; :is(ColorView).one-large /template/ TextBox#PART_HexTextBox, :is(ColorView).one-large /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-large TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-large NumericUpDown => MinHeight=44; MaxHeight=44; FontSize=16; :is(ColorView).one-large /template/ Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker-large Grid#HexInputGrid > Border => MinHeight=44; MaxHeight=44 |
-| ColorView | `one-small` | automatic template class; do not bind manually | :is(ColorView).one-small /template/ TextBox#PART_HexTextBox, :is(ColorView).one-small /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-small TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-small NumericUpDown => MinHeight=30; MaxHeight=30; FontSize=12; :is(ColorView).one-small /template/ TextBox#PART_HexTextBox, :is(ColorView).one-small /template/ NumericUpDown, FlyoutPresenter.one-colorpicker-small TextBox#PART_HexTextBox, FlyoutPresenter.one-colorpicker-small NumericUpDown => MinHeight=30; MaxHeight=30; FontSize=12; :is(ColorView).one-small /template/ Grid#HexInputGrid > Border, FlyoutPresenter.one-colorpicker-small Grid#HexInputGrid > Border => MinHeight=30; MaxHeight=30 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+No additional related data models.
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

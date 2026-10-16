@@ -7,6 +7,7 @@ public partial class ShowcasePage : UserControl
 {
     private readonly Dictionary<int, UserControl> _views = [];
     private readonly Dictionary<int, Border> _sections = [];
+    private readonly List<Control> _sourceViews = [];
     public event EventHandler<int>? ControlRequested;
 
     public ShowcasePage() => InitializeComponent();
@@ -14,15 +15,15 @@ public partial class ShowcasePage : UserControl
     public ShowcasePage(PreviewPageDescriptor page) : this()
     {
         DataContext = page;
-        // The catalogue has a fixed, small number of sections. Each growing sample owns a bounded viewport.
+        // Original instances remain cached for source lookup; content policy decides what is actually presented.
         foreach (var id in page.ControlIds!)
         {
             var descriptor = PreviewPageCatalog.Controls.First(control => control.Id == id);
             var view = PreviewPageCatalog.CreateControl(id);
-            var content = new StackPanel { Spacing = 24 };
-            if (ControlStyleShowcase.Create(descriptor.Title) is { } styles) content.Children.Add(styles);
-            content.Children.Add(PreviewSection.Create(descriptor.Title + " · 完整用法", view));
-            content.Children.Add(new ControlDetailsView(descriptor.Title, view));
+            var content = PreviewPageContentPolicy.CreateContent(descriptor.Title, view);
+            if (PreviewPageContentPolicy.For(descriptor.Title).ShowOriginalDemo) _sourceViews.Add(view);
+            _sourceViews.AddRange(content.Children.OfType<NativeThemePreview>());
+            content.Children.Add(new ControlDetailsView(descriptor.Title));
             var section = new Border { Classes = { "section" }, Child = content };
             _views.Add(id, view);
             _sections.Add(id, section);
@@ -34,5 +35,5 @@ public partial class ShowcasePage : UserControl
     }
     public UserControl GetControlView(int id) => _views[id];
     public Border GetSection(int id) => _sections[id];
-    internal IEnumerable<Control> SourceViews => _views.Values;
+    internal IEnumerable<Control> SourceViews => _sourceViews;
 }

@@ -83,13 +83,13 @@ HTTP 请求成功后，从响应体中查找路径以允许文件后缀结尾的
 选择器返回不支持类型或超限文件时，保留旧文件并报告错误。直接绑定损坏或不可读图片时，保留文件信息，显示错误并禁用上传；可替换、移除或调用 `ReloadPreview` 重试。替换、清除、移出可视树会取消旧预览，过期的文件选择和解码结果不会覆盖新数据。重新加入可视树会加载保留的文件。缩略图采用解码后的首帧，不负责动画播放或多文件列表。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### Upload
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ HTTP 请求成功后，从响应体中查找路径以允许文件后缀结尾的
 
 ### UploadFile
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -138,26 +138,33 @@ HTTP 请求成功后，从响应体中查找路径以允许文件后缀结尾的
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Upload | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16; Padding=20 |
-| Upload | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12; Padding=12 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.IUploadFilePicker`](../../api/zh-cn/TheOne.Avalonia.Controls.IUploadFilePicker.md) | Interface | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.Upload`](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md) | Class | 31 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.UploadFile`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md) | Class | 4 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.UploadHttp`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadHttp.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.UploadHttpResult`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadHttpResult.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.UploadModel`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadModel.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.UploadRequestType`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadRequestType.md) | Enum | 3 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`IUploadFilePicker`](../../api/zh-cn/TheOne.Avalonia.Controls.IUploadFilePicker.md) | `Task<UploadFile?> IUploadFilePicker.PickAsync(TopLevel owner, CancellationToken cancellationToken)` | 异步打开文件选择；由宿主文件选择器实现，取消时按返回集合处理。 |
+| [`Upload`](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md) | `Task Upload.UploadAsync(CancellationToken cancellationToken = default(CancellationToken))` | Uploads explicitly. A supplied UploadCommand takes precedence over built-in HTTP. Errors are exposed through ErrorMessage; cancellation and stale responses never publish a URL. |
+| [`Upload`](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md) | `Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))` | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
+| [`Upload`](../../api/zh-cn/TheOne.Avalonia.Controls.Upload.md) | `void Upload.ReloadPreview()` | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
+| [`UploadFile`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md) | `Task<Stream> UploadFile.OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))` | 异步打开上传文件的只读流；调用方在使用后释放流。 |
+| [`UploadFile`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md) | `static Task<UploadFile> UploadFile.FromStorageFileAsync(IStorageFile file, CancellationToken cancellationToken = default(CancellationToken), bool ownsStorageFile = false)` | The storage file must remain usable for as long as this selection is used. |
+| [`UploadHttp`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadHttp.md) | `static Task<UploadHttpResult> UploadHttp.SendAsync(HttpClient client, string uploadApi, UploadRequestType requestType, UploadModel model, string allowedExtensions, IProgress<double>? progress = null, CancellationToken cancellationToken = default(CancellationToken))` | Sends from the stream's current position and closes it when the request finishes. The caller owns the client. Progress is the file transfer percentage (0–100); an unknown-length stream reports its start and completion. Responses larger than 1 MiB are rejected. Only successful HTTP responses are inspected for file URLs. |
+| [`UploadHttp`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadHttp.md) | `static string? UploadHttp.ExtractFileUrl(string responseBody, string allowedExtensions)` | Returns the first absolute HTTP(S) file URL matching the extension filter, without contacting that URL. |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.UploadFile`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadFile.md) | 4 |
+| [`TheOne.Avalonia.Controls.UploadHttpResult`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadHttpResult.md) | 3 |
+| [`TheOne.Avalonia.Controls.UploadModel`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadModel.md) | 3 |
+| [`TheOne.Avalonia.Controls.UploadRequestType`](../../api/zh-cn/TheOne.Avalonia.Controls.UploadRequestType.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

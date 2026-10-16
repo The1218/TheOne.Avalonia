@@ -24,38 +24,28 @@ small / normal / large 正文字号为 12 / 14 / 16 px，Label 与输入行共�
 预览位于文本／数据展示组合页；`--verify-text-alignment` 验证字段关联、实际选择、范围校正和主题／尺寸切换。复制访问系统剪贴板的行为仍需在目标桌面宿主验证。输入控件见[基础控件](basic.md)。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 本页的原生控件没有同名 TheOne 包装类；本项目增加的能力来自下列样式。
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Label | `accent` | 显式 Classes，可与尺寸类组合 | ^.accent => Foreground={DynamicResource One.Accent}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText} |
-| Label | `muted` | 显式 Classes，可与尺寸类组合 | ^.muted => Foreground={DynamicResource One.Muted}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText} |
-| Label | `one-large` | 模板自动类；不手动绑定 | Label.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| Label | `one-normal` | 模板自动类；不手动绑定 | Label.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| Label | `one-small` | 模板自动类；不手动绑定 | Label.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
-| SelectableTextBlock | `accent` | 显式 Classes，可与尺寸类组合 | ^.accent => Foreground={DynamicResource One.Accent}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText}; Cursor=Arrow |
-| SelectableTextBlock | `muted` | 显式 Classes，可与尺寸类组合 | ^.muted => Foreground={DynamicResource One.Muted}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText}; Cursor=Arrow |
-| SelectableTextBlock | `one-large` | 模板自动类；不手动绑定 | SelectableTextBlock.one-large => FontSize=16; LineHeight={DynamicResource One.Text.Large.LineHeight} |
-| SelectableTextBlock | `one-normal` | 模板自动类；不手动绑定 | SelectableTextBlock.one-normal => FontSize=14; LineHeight={DynamicResource One.Text.LineHeight} |
-| SelectableTextBlock | `one-small` | 模板自动类；不手动绑定 | SelectableTextBlock.one-small => FontSize=12; LineHeight={DynamicResource One.Text.Small.LineHeight} |
-| TextBlock | `flow-state` | 模板自动类；不手动绑定 | TextBlock.flow-state => Foreground={DynamicResource One.Muted}; TextBlock.flow-state.completed => Foreground={DynamicResource One.Success}; TextBlock.flow-state.current => Foreground={DynamicResource One.Accent}; StackPanel.vertical > StackPanel.flow-title, StackPanel.vertical > TextBlock.flow-state => IsVisible=False |
-| TextBlock | `one-color-component-label` | 模板自动类；不手动绑定 | TextBlock.one-color-component-label, Border.one-color-component-label TextBlock => Foreground={DynamicResource One.Muted}; FontSize=12 |
-| TextBlock | `reached` | 模板自动类；不手动绑定 | TextBlock.reached => Foreground={DynamicResource One.Text}; FontWeight=SemiBold |
+- `Label`: `Classes="accent"` / `Classes="muted"`
+- `SelectableTextBlock`: `Classes="accent"` / `Classes="muted"`
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+没有额外关联数据模型。
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

@@ -80,13 +80,13 @@ dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --r
 Checks use actual pointer / keyboard input and Skia pixels for themes, sizes, wide / narrow layout, bounds, jumping, atomic notifications, focus, template reapplication, compiled bindings and Int64 extremes. NativeAotSmoke supports --verify-pagination --require-aot; publish and execute a real native binary.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### Pagination
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.Pagination.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.Pagination.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -130,25 +130,37 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Pagination | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16; ItemHeight=44 |
-| Pagination | `one-normal` | automatic template class; do not bind manually | ^.one-normal => FontSize=14; ItemHeight=36 |
-| Pagination | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12; ItemHeight=30 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoToPage(long page)` | Navigates to a requested page; paging/report contracts define indexing and range handling. |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoPrevious()` | Moves to the previous page without producing an invalid boundary page. |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoNext()` | Moves to the next page without producing an invalid boundary page. |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoFirst()` | Navigates to the first page. |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoLast()` | Navigates to the last page. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | Class | 37 | 6 | 1 |
-| [`TheOne.Avalonia.Controls.PaginationLayout`](../../api/en/TheOne.Avalonia.Controls.PaginationLayout.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageChangedEventArgs`](../../api/en/TheOne.Avalonia.Controls.PaginationPageChangedEventArgs.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageItem`](../../api/en/TheOne.Avalonia.Controls.PaginationPageItem.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageSize`](../../api/en/TheOne.Avalonia.Controls.PaginationPageSize.md) | Class | 2 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`Pagination`](../../api/en/TheOne.Avalonia.Controls.Pagination.md) | `PageChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.PaginationLayout`](../../api/en/TheOne.Avalonia.Controls.PaginationLayout.md) | 2 |
+| [`TheOne.Avalonia.Controls.PaginationPageChangedEventArgs`](../../api/en/TheOne.Avalonia.Controls.PaginationPageChangedEventArgs.md) | 4 |
+| [`TheOne.Avalonia.Controls.PaginationPageItem`](../../api/en/TheOne.Avalonia.Controls.PaginationPageItem.md) | 6 |
+| [`TheOne.Avalonia.Controls.PaginationPageSize`](../../api/en/TheOne.Avalonia.Controls.PaginationPageSize.md) | 2 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

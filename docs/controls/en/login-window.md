@@ -70,13 +70,13 @@ Use `dotnet run --project design/PreviewHost -- --login --trace-login` to inspec
 Lifecycle references: [Avalonia desktop lifetimes](https://docs.avaloniaui.net/docs/fundamentals/application-lifetimes) and [12.1.4 Window sources](https://github.com/AvaloniaUI/Avalonia/blob/12.1.4/src/Avalonia.Controls/Window.cs).
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### LoginWindow
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -84,7 +84,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### OneWindow
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneWindow.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneWindow.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -101,27 +101,29 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| LoginWindow | `one-large` | automatic template class; do not bind manually | one&#124;LoginWindow.one-large => FontSize=16 |
-| LoginWindow | `one-normal` | automatic template class; do not bind manually | one&#124;LoginWindow.one-normal => FontSize=14 |
-| LoginWindow | `one-small` | automatic template class; do not bind manually | one&#124;LoginWindow.one-small => FontSize=12 |
-| OneWindow | `one-large` | automatic template class; do not bind manually | one&#124;OneWindow.one-large => TitleBarHeight=56; FontSize=16 |
-| OneWindow | `one-normal` | automatic template class; do not bind manually | one&#124;OneWindow.one-normal => TitleBarHeight=48; FontSize=14 |
-| OneWindow | `one-small` | automatic template class; do not bind manually | one&#124;OneWindow.one-small => TitleBarHeight=42; FontSize=12 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `void LoginWindow.ShowErrorToast(string message, TimeSpan? expiration = null)` | Shows an error toast in this login window on the UI thread. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `void LoginWindow.ShowErrorNotification(string message, string title = "登录失败", TimeSpan? expiration = null)` | Shows an error notification in this login window on the UI thread. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<OneDialogResult> LoginWindow.ShowErrorDialog(string message, string title = "登录失败", CancellationToken cancellationToken = default(CancellationToken))` | Shows an error dialog in this login window; dispatches to the UI thread. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `bool LoginWindow.CompleteLogin(OneWindow mainWindow)` | Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes login. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<bool> LoginWindow.CompleteLoginAsync(OneWindow mainWindow)` | Dispatches the handoff of the supplied OneWindow to the UI thread. Construct the window on the UI thread. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `bool LoginWindow.CompleteLogin(Func<OneWindow> mainWindowFactory)` | After successful authentication, replaces this desktop MainWindow with a fresh OneWindow. Returns false if Closing cancels the transition or a completion is already in progress. Repeated calls after success return true without invoking the factory again. |
+| [`LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<bool> LoginWindow.CompleteLoginAsync(Func<OneWindow> mainWindowFactory)` | Dispatches completion, including window construction, to the UI thread. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.LoginWindow`](../../api/en/TheOne.Avalonia.Controls.LoginWindow.md) | Class | 1 | 8 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/en/TheOne.Avalonia.Controls.OneDialogResult.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneWindow`](../../api/en/TheOne.Avalonia.Controls.OneWindow.md) | Class | 10 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/en/TheOne.Avalonia.Controls.OneDialogResult.md) | 5 |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | 2 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

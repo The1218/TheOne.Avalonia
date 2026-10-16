@@ -115,19 +115,19 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 初版为直接绘制圆角正交线与拓扑分层排列，不提供完整障碍避让、折点编辑或节点虚拟化。业务规则执行与输出求值由宿主负责。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### WorkflowCanvas
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowCanvas.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowCanvas.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### WorkflowEditor
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -178,7 +178,7 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 
 ### WorkflowMiniMap
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowMiniMap.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowMiniMap.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -186,41 +186,76 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| WorkflowEditor | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16 |
-| WorkflowEditor | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.WorkflowCanvas`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowCanvas.md) | Class | 0 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | Class | 44 | 10 | 1 |
-| [`TheOne.Avalonia.Controls.WorkflowMiniMap`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowMiniMap.md) | Class | 1 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowConnection.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | Class | 6 | 14 | 1 |
-| [`TheOne.Avalonia.Workflow.WorkflowNode`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNode.md) | Class | 14 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeDefinition`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeDefinition.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | Class | 5 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeGroup`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeGroup.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeShape`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeShape.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeState`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeState.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowObservable`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowObservable.md) | Class | 0 | 0 | 1 |
-| [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPort.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowProperty.md) | Class | 8 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | Class | 7 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowSerializer`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | Enum | 3 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`WorkflowCanvas`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowCanvas.md) | `Point WorkflowCanvas.ToWorld(Point point)` | 将画布视口坐标换算为文档世界坐标，计入缩放和平移。 |
+| [`WorkflowCanvas`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowCanvas.md) | `void WorkflowCanvas.CancelGesture()` | 取消当前画布手势并清理拖动／连线预览。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)` | 向当前工作流文档加入节点；通过文档历史入口保存可撤销操作。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)` | 选择指定的原始流程节点；与连线选择按编辑器规则协调。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)` | 尝试创建节点端口连接，复用文档连接校验和历史。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.DeleteSelection()` | 删除当前选中的节点／连线，并参与撤销历史。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.FitToView()` | 调整缩放和平移以容纳文档节点，保留模型坐标。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.Locate(string? nodeId)` | 定位目标节点／校验问题，使其进入当前视口。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.ArrangeNodes()` | 自动整理节点布局，通过文档编辑历史记录坐标变更。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.CopySelection()` | 复制当前选择为编辑器支持的片段，保持序列化边界。 |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.PasteSelection()` | 粘贴已复制片段，创建独立标识并记录可撤销编辑。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Edit(string title, Action redo, Action undo)` | Apply a host edit to the same history as graph edits. Actions must be deterministic and not throw. |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Undo()` | 撤销最近一次可撤销的文档编辑。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Redo()` | 重做最近撤销的文档编辑。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.ClearHistory()` | 清空撤销与重做记录，保留当前文档数据。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.AddNode(WorkflowNode node)` | 向当前工作流文档加入节点；通过文档历史入口保存可撤销操作。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Remove(IEnumerable<WorkflowNode> nodes, WorkflowConnection? connection = null)` | 删除指定工作流对象及关联关系，通过文档编辑历史执行。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.MoveNodes(IEnumerable<(WorkflowNode Node, double X, double Y)> positions)` | 批量更新节点坐标并记录一次可撤销移动。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)` | 通过文档修改流程属性的固定值／引用，以保持撤销与通知。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)` | 校验候选端口连接，返回失败原因而不创建连线。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)` | 校验并尝试创建连接；返回是否成功及相关结果。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.IsReachable(string from, string to)` | 判断流程图中目标节点是否可从起点到达，用于连线与循环判断。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowReferenceOption> WorkflowDocument.GetReferenceOptions(WorkflowNode target, WorkflowProperty property)` | 为当前节点属性列出兼容的上游数据引用选项。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)` | 校验工作流结构、端口与属性引用，返回可定位的问题集合。 |
+| [`WorkflowNodeEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | `void WorkflowNodeEditor.Refresh()` | Refresh after document edits, including undo and upstream metadata changes. |
+| [`WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.Refresh()` | 从底层模型与文档重新同步属性检查器，包含撤销后及上游变化。 |
+| [`WorkflowSerializer`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static string WorkflowSerializer.Save(WorkflowDocument document)` | 将业务文档保存为可移植 JSON；不包含运行期凭据、视觉对象或非持久化状态。 |
+| [`WorkflowSerializer`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static WorkflowDocument WorkflowSerializer.Load(string json)` | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `DocumentEdited` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `Changed` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`WorkflowObservable`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowObservable.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowConnection.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowNode`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNode.md) | 14 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeDefinition`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeDefinition.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | 5 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeGroup`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeGroup.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeShape`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeShape.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeState`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeState.md) | 5 |
+| [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPort.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 8 |
+| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 7 |
+| [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

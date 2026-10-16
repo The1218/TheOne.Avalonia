@@ -73,19 +73,19 @@ Set `SortMemberPath` explicitly for path sorting and a finite `MaxColumnWidth` b
 This library replaces the official DataGrid package while preserving native assembly identity, types, and presenters. Do not also reference official `Avalonia.Controls.DataGrid`. Sources and licenses: [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md). Independent compiled-binding / native consumption: [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs). Package-only consumption: [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs).
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### DataGridCollectionView
 
-[API / model reference](../../api/en/Avalonia.Collections.DataGridCollectionView_T_.md)
+[Complete source contract](../../api/en/Avalonia.Collections.DataGridCollectionView_T_.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### DataGridColumn
 
-[API / model reference](../../api/en/Avalonia.Controls.DataGridColumn.md)
+[Complete source contract](../../api/en/Avalonia.Controls.DataGridColumn.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -93,19 +93,19 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridRowMetadata
 
-[API / model reference](../../api/en/Avalonia.Controls.DataGridRowMetadata.md)
+[Complete source contract](../../api/en/Avalonia.Controls.DataGridRowMetadata.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### DataGridAot
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridAot.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridAot.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### DataGridColumnOptions
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -120,7 +120,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridSortButton
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridSortButton.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridSortButton.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -129,38 +129,35 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridValueAccessor
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridValueAccessor.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridValueAccessor.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| DataGrid | `borderless` | explicit Classes; combine with density | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| DataGrid | `one-large` | automatic template class; do not bind manually | DataGrid.one-large => FontSize=16 |
-| DataGrid | `one-normal` | automatic template class; do not bind manually | DataGrid.one-normal => FontSize=14 |
-| DataGrid | `one-small` | automatic template class; do not bind manually | DataGrid.one-small => FontSize=12 |
+- `DataGrid`: `Classes="borderless"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`DataGridColumn`](../../api/en/Avalonia.Controls.DataGridColumn.md) | `void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)` | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |
+| [`DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | `abstract bool DataGridFilterCondition.Matches(object? value)` | Checks a value against this filter; null/comparison semantics follow the condition type. |
+| [`IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | `object? IDataGridValueAccessor.GetValue(object item)` | Reads an original-row value through an explicit field key/typed getter, without reflection paths. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`Avalonia.Collections.DataGridCollectionView<T>`](../../api/en/Avalonia.Collections.DataGridCollectionView_T_.md) | Class | 0 | 2 | 0 |
-| [`Avalonia.Controls.DataGridColumn`](../../api/en/Avalonia.Controls.DataGridColumn.md) | Class | 1 | 1 | 0 |
-| [`Avalonia.Controls.DataGridRowMetadata`](../../api/en/Avalonia.Controls.DataGridRowMetadata.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridAot`](../../api/en/TheOne.Avalonia.Controls.DataGridAot.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | Class | 8 | 16 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterKind.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSortButton`](../../api/en/TheOne.Avalonia.Controls.DataGridSortButton.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.DataGridValueAccessor.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | Interface | 1 | 1 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`Avalonia.Controls.DataGridColumn`](../../api/en/Avalonia.Controls.DataGridColumn.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | 8 |
+| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterKind.md) | 4 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | 5 |
+| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | 1 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

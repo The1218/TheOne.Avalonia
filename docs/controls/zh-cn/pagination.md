@@ -80,13 +80,13 @@ dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --r
 专项使用真实指针／键盘输入和 Skia 绘制像素，检查明暗主题、三档尺寸、宽窄布局、边界、跳页、原子通知、焦点、模板重新应用、编译绑定和 Int64 极值。独立 NativeAotSmoke 支持 `--verify-pagination --require-aot`，需要发布并执行真正的原生程序。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### Pagination
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -130,25 +130,38 @@ dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --r
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Pagination | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16; ItemHeight=44 |
-| Pagination | `one-normal` | 模板自动类；不手动绑定 | ^.one-normal => FontSize=14; ItemHeight=36 |
-| Pagination | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12; ItemHeight=30 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | Class | 37 | 6 | 1 |
-| [`TheOne.Avalonia.Controls.PaginationLayout`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationLayout.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageChangedEventArgs`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageChangedEventArgs.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageItem`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageItem.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.PaginationPageSize`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageSize.md) | Class | 2 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoToPage(long page)` | 切换到指定页码；分页器与报表的页码／越界处理分别见其契约。 |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoPrevious()` | 切换到上一页，边界时不产生无效页号。 |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoNext()` | 切换到下一页，边界时不产生无效页号。 |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoFirst()` | 切换到第一页。 |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `bool Pagination.GoLast()` | 切换到最后一页。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`Pagination`](../../api/zh-cn/TheOne.Avalonia.Controls.Pagination.md) | `PageChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.PaginationLayout`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationLayout.md) | 2 |
+| [`TheOne.Avalonia.Controls.PaginationPageChangedEventArgs`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageChangedEventArgs.md) | 4 |
+| [`TheOne.Avalonia.Controls.PaginationPageItem`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageItem.md) | 6 |
+| [`TheOne.Avalonia.Controls.PaginationPageSize`](../../api/zh-cn/TheOne.Avalonia.Controls.PaginationPageSize.md) | 2 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

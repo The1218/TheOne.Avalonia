@@ -176,19 +176,19 @@ if (await login.CompleteLoginAsync(mainWindow))
 实现参考：[服务与 owner 解析](../../../TheOne.Avalonia/Controls/OneMessages.cs)、[Dialog 生命周期](../../../TheOne.Avalonia/Controls/DialogCoordinator.cs)、[登录交接](../../../TheOne.Avalonia/Controls/LoginWindow.cs)。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### DialogContext
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### LoginWindow
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -196,7 +196,7 @@ if (await login.CompleteLoginAsync(mainWindow))
 
 ### OneDialog
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -204,7 +204,7 @@ if (await login.CompleteLoginAsync(mainWindow))
 
 ### OneNotification
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -212,7 +212,7 @@ if (await login.CompleteLoginAsync(mainWindow))
 
 ### OneToast
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -220,7 +220,7 @@ if (await login.CompleteLoginAsync(mainWindow))
 
 ### OneWindow
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.OneWindow.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.OneWindow.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -237,35 +237,55 @@ if (await login.CompleteLoginAsync(mainWindow))
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| LoginWindow | `one-large` | 模板自动类；不手动绑定 | one&#124;LoginWindow.one-large => FontSize=16 |
-| LoginWindow | `one-normal` | 模板自动类；不手动绑定 | one&#124;LoginWindow.one-normal => FontSize=14 |
-| LoginWindow | `one-small` | 模板自动类；不手动绑定 | one&#124;LoginWindow.one-small => FontSize=12 |
-| OneWindow | `one-large` | 模板自动类；不手动绑定 | one&#124;OneWindow.one-large => TitleBarHeight=56; FontSize=16 |
-| OneWindow | `one-normal` | 模板自动类；不手动绑定 | one&#124;OneWindow.one-normal => TitleBarHeight=48; FontSize=14 |
-| OneWindow | `one-small` | 模板自动类；不手动绑定 | one&#124;OneWindow.one-small => TitleBarHeight=42; FontSize=12 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DialogContext`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md) | Class | 0 | 1 | 2 |
-| [`TheOne.Avalonia.Controls.DialogOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogOptions.md) | Class | 9 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | Class | 1 | 8 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialog`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogButtons`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialogButtons.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialogResult.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneNotification`](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.OneToast`](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.OneWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.OneWindow.md) | Class | 10 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Styling.ControlSize`](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSize.md) | Enum | 3 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`DialogContext`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md) | `void DialogContext.RequestClose(OneDialogResult result = OneDialogResult.Ok)` | Requests completion of this dialog, including when it is still queued. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `void LoginWindow.ShowErrorToast(string message, TimeSpan? expiration = null)` | Shows an error toast in this login window on the UI thread. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `void LoginWindow.ShowErrorNotification(string message, string title = "登录失败", TimeSpan? expiration = null)` | Shows an error notification in this login window on the UI thread. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<OneDialogResult> LoginWindow.ShowErrorDialog(string message, string title = "登录失败", CancellationToken cancellationToken = default(CancellationToken))` | Shows an error dialog in this login window; dispatches to the UI thread. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `bool LoginWindow.CompleteLogin(OneWindow mainWindow)` | Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes login. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<bool> LoginWindow.CompleteLoginAsync(OneWindow mainWindow)` | Dispatches the handoff of the supplied OneWindow to the UI thread. Construct the window on the UI thread. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `bool LoginWindow.CompleteLogin(Func<OneWindow> mainWindowFactory)` | After successful authentication, replaces this desktop MainWindow with a fresh OneWindow. Returns false if Closing cancels the transition or a completion is already in progress. Repeated calls after success return true without invoking the factory again. |
+| [`LoginWindow`](../../api/zh-cn/TheOne.Avalonia.Controls.LoginWindow.md) | `Task<bool> LoginWindow.CompleteLoginAsync(Func<OneWindow> mainWindowFactory)` | Dispatches completion, including window construction, to the UI thread. |
+| [`OneDialog`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowAsync<TView, TViewModel>(TViewModel viewModel, DialogOptions? options = null, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken)) where TView : UserControl, new() where TViewModel : class` | Creates a typed view lazily on the UI thread; compiled bindings and NativeAOT are supported. |
+| [`OneDialog`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowAsync(string title, string message, OneDialogButtons buttons = OneDialogButtons.Ok, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken))` | 内部调度至 UI 线程。 |
+| [`OneDialog`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowContentAsync(object? content, string? title = null, OneDialogButtons buttons = OneDialogButtons.OkCancel, IDataTemplate? contentTemplate = null, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken))` | 内部调度至 UI 线程。 |
+| [`OneNotification`](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.Show(string title, string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | Shows on the UI thread. The owner is optional; the registered default owner or most recently activated visible themed window is used. |
+| [`OneNotification`](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.Show(INotification notification, Window? owner = null)` | UI 线程。 |
+| [`OneNotification`](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md) | `static Task OneNotification.ShowAsync(string title, string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | 内部调度至 UI 线程。 |
+| [`OneNotification`](../../api/zh-cn/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.CloseAll(Window? owner = null)` | UI 线程。 |
+| [`OneToast`](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.Show(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | UI 线程。 |
+| [`OneToast`](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.Show(INotification notification, Window? owner = null)` | Shows the notification's message and status icon, ignoring Title, while retaining expiration and click/close callbacks. |
+| [`OneToast`](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md) | `static Task OneToast.ShowAsync(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | 内部调度至 UI 线程。 |
+| [`OneToast`](../../api/zh-cn/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.CloseAll(Window? owner = null)` | UI 线程。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`DialogContext`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`DialogContext`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogContext.md) | `CloseRequested` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs.md) | 1 |
+| [`TheOne.Avalonia.Controls.DialogOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.DialogOptions.md) | 9 |
+| [`TheOne.Avalonia.Controls.OneDialogButtons`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialogButtons.md) | 4 |
+| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/zh-cn/TheOne.Avalonia.Controls.OneDialogResult.md) | 5 |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButtonScope.md) | 2 |
+| [`TheOne.Avalonia.Styling.ControlSize`](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSize.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

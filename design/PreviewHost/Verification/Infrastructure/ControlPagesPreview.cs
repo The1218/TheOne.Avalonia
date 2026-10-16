@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Headless;
 using Avalonia.Input;
+using Avalonia.LogicalTree;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
@@ -25,6 +26,10 @@ internal static class ControlPagesPreview
                 $"Control pages/services/{pair.Item1}: page aliases show the real static API instead of control-only properties");
         check(ContractCatalog.Owners("TreeView").All(owner => owner.Name is not "ControlSizing" and not "Motion"),
             "Control pages/contracts: shared sizing and motion do not appear in control-specific contracts");
+        check(PreviewPageContentPolicy.All.Count == PreviewPageCatalog.Controls.Count && PreviewPageContentPolicy.All.Select(plan => plan.Name).Distinct().Count() == PreviewPageCatalog.Controls.Count,
+            "Control pages/policy: every control has one explicit content decision");
+        check(!ContractCatalog.Owners("Button").SelectMany(ContractCatalog.BusinessMethods).Any(),
+            "Control pages/API: ButtonLoading accessors and constructor are not business actions");
         foreach (var id in new[] { 309, 308, 118, 9, 7, 18, 24, 23, 201, 202, 205, 206, 27, 307, 315, 318, 319 })
             check(PreviewPageCatalog.Find(id).Id == id, $"Control pages/catalog/{id}: control has its own complete preview page");
 
@@ -37,8 +42,19 @@ internal static class ControlPagesPreview
             {
                 shell.NavigateToCategory(page.Id); Flush();
                 var view = gallery.CurrentView!;
-                check(view is not null && view.Bounds.Width > 0 && view.Bounds.Height > 0,
-                    $"Control pages/render/{page.Title}: original complete demo renders in its page");
+                var presentation = (Control)Part<ContentControl>(gallery, "PageHost").Content!;
+                check(presentation.Bounds.Width > 0 && presentation.Bounds.Height > 0,
+                    $"Control pages/render/{page.Title}: the selected deduplicated presentation renders");
+                foreach (var id in page.ControlIds ?? new[] { page.Id })
+                {
+                    var descriptor = PreviewPageCatalog.Controls.Single(control => control.Id == id);
+                    var plan = PreviewPageContentPolicy.For(descriptor.Title);
+                    var original = view is ShowcasePage grouped ? grouped.GetControlView(id) : view;
+                    check(original.GetVisualAncestors().Contains(gallery) == plan.ShowOriginalDemo,
+                        $"Control pages/content/{descriptor.Title}: original business sample appears only when the policy needs it");
+                }
+                check(!presentation.GetVisualDescendants().OfType<TextBlock>().Any(text => text.Text?.EndsWith(" · 完整用法", StringComparison.Ordinal) == true),
+                    $"Control pages/content/{page.Title}: no duplicate complete-usage wrapper remains");
                 check(gallery.GetVisualDescendants().OfType<ControlDetailsView>().Any() || gallery.GetVisualDescendants().OfType<ControlPreviewPage>().Any(p => p.UsesViewport && p.Details.ControlName == page.Title),
                     $"Control pages/details/{page.Title}: styles, properties and models belong to this page");
                 var descriptions = gallery.GetVisualDescendants().OfType<ControlDetailsView>().ToArray();
@@ -54,6 +70,12 @@ internal static class ControlPagesPreview
                         $"Control pages/Description/{description.ControlName}: native common attributes and empty sections are omitted");
                     check(!description.GetVisualDescendants().OfType<Expander>().Any() && !description.GetVisualDescendants().OfType<ComboBox>().Any(),
                         $"Control pages/Description/{description.ControlName}: no collapsed inspector or property/model picker hides the contracts");
+                    check(!description.GetVisualDescendants().OfType<Description>().Any(table => table.Name == "StyleContracts") &&
+                        description.PropertyTable.Items.OfType<DescriptionItem>().All(row => HasExample(row, "PropertyExample")) &&
+                        description.ApiTable.Items.OfType<DescriptionItem>().All(row => HasExample(row, "BusinessApiExample")),
+                        $"Control pages/examples/{description.ControlName}: every property and action has short inline code, without a Classes implementation table");
+                    check(description.ApiTable.ItemCount == ContractCatalog.BusinessOwners(description.ControlName).Sum(owner => ContractCatalog.BusinessMethods(owner).Count()),
+                        $"Control pages/API/{description.ControlName}: business actions exclude constructors, attached accessors and fields");
                 }
             }
             shell.NavigateToCategory(309); Flush();
@@ -62,7 +84,7 @@ internal static class ControlPagesPreview
             check(gantt.Model.Items == chart.ItemsSource && chart.SelectedTask == gantt.Model.SelectedTask,
                 "Control pages/Gantt: original data, selection and toolbar context remain together");
             var details = gallery.GetVisualDescendants().OfType<ControlDetailsView>().First(d => d.ControlName == "GanttChart");
-            check(ReferenceEquals(details.Target, chart), "Control pages/Gantt: descriptions observe the real chart without reparenting it");
+            check(chart.GetVisualAncestors().Contains(gantt), "Control pages/Gantt: the original chart remains in its business view");
             var previousHeight = chart.Bounds.Height;
             shell.Height = 1200; Flush();
             check(chart.Bounds.Height > previousHeight, "Control pages/Gantt: virtual viewport adapts to window height instead of a fixed 300/520px sample");
@@ -89,17 +111,18 @@ internal static class ControlPagesPreview
             check(ReferenceEquals(multi.SelectedItems, multiView.Model.Selected), "Control pages/property: original selection binding is retained");
             check(multiDetails.PropertyTable.Items.OfType<DescriptionItem>().Any(row => Equals(row.Header, "MultiSelectBox.MaxVisibleTags")),
                 "Control pages/property: MaxVisibleTags is directly listed without choosing a property");
-            multi.ToggleItem(multi.ItemsSource!.Cast<object>().Last()); Flush();
-            check(multiDetails.EventCount > 0, "Control pages/events: original demo interactions feed its visible event section");
+            var selected = multi.ItemsSource!.Cast<object>().Last();
+            multi.ToggleItem(selected); Flush();
+            check(multiView.Model.Selected.Contains(selected), "Control pages/business: selection still updates the original model");
             shell.NavigateToCategory(25); Flush();
             var menuView = (NavMenuDemoView)gallery.CurrentView!;
-            var menuDetails = gallery.GetVisualDescendants().OfType<ControlDetailsView>().Single(d => d.ControlName == "NavMenu");
-            var menu = (NavMenu)menuDetails.Target;
+            var menu = menuView.FindControl<NavMenu>("DemoMenu")!;
             menuView.Model.IsCollapsed = true; Flush();
             check(menu.IsCollapsed, "Control pages/binding: descriptions preserve the original two-way model");
             menuView.Model.IsCollapsed = false; Flush();
             check(!menu.IsCollapsed, "Control pages/binding: later model updates still reach the original control after editing");
             shell.NavigateToCategory(315); Flush();
+            shell.Width = 1280; Flush();
             check(outer.VerticalScrollBarVisibility == global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled,
                 "Control pages/editor: workflow editor retains a finite native viewport");
             var editorPage = gallery.GetVisualDescendants().OfType<ControlPreviewPage>().Single();
@@ -109,6 +132,11 @@ internal static class ControlPagesPreview
             check(gallery.CurrentView.Bounds.Height > editorHeight, "Control pages/editor: workspace grows with its window");
             tabs.SelectedIndex = 1; Flush();
             check(gallery.GetVisualDescendants().OfType<ControlDetailsView>().Any(), "Control pages/editor: documentation has its own scrollable tab without covering the canvas");
+            var workflow = gallery.GetVisualDescendants().OfType<ControlDetailsView>().Single();
+            check(workflow.ApiTable.Items.OfType<DescriptionItem>().Any(row => Equals(row.Header, "WorkflowSerializer.Save")) &&
+                workflow.ApiTable.Items.OfType<DescriptionItem>().Any(row => Equals(row.Header, "WorkflowSerializer.Load")),
+                "Control pages/business API: workflow saving and loading use the real serializer entry points");
+            Capture(workflow.ApiTable, output, "workflow-business-api.png");
             tabs.SelectedIndex = 0; Flush();
             check(ReferenceEquals(gallery.CurrentView, editorPage.Demo), "Control pages/editor: switching tabs preserves the complete original editor instance");
             foreach (var id in new[] { 22, 326 })
@@ -120,8 +148,8 @@ internal static class ControlPagesPreview
                 check(first.IsVisible && ReferenceEquals(first.Owner, shell), $"Control pages/window/{id}: real open button creates an owned demo window");
                 first.Close(); Flush(); Click(Part<Button>(demo, "OpenOwnedWindow"));
                 var windowDetails = gallery.GetVisualDescendants().OfType<ControlDetailsView>().Single();
-                check(demo.Sample.IsVisible && !ReferenceEquals(first, demo.Sample) && ReferenceEquals(windowDetails.Target, demo.Sample),
-                    $"Control pages/window/{id}: reopening reconnects descriptions to the new window");
+                check(demo.Sample.IsVisible && !ReferenceEquals(first, demo.Sample) && windowDetails.ControlName == PreviewPageCatalog.Controls.Single(control => control.Id == id).Title,
+                    $"Control pages/window/{id}: reopening preserves business behavior and static usage documentation");
                 shell.NavigateToCategory(0); Flush();
                 check(!demo.Sample.IsVisible, $"Control pages/window/{id}: leaving the page closes its owned window");
             }
@@ -132,6 +160,12 @@ internal static class ControlPagesPreview
                 "Control pages/styles: every public Button style has a simultaneous real example");
             check(PreviewSourcePanel.ReadSources(((ShowcasePage)gallery.CurrentView!).SourceViews, true).Any(source => source.Name.EndsWith("ControlStyleShowcase.cs", StringComparison.Ordinal)),
                 "Control pages/source: labelled style examples include their matching embedded C# implementation");
+            check(!PreviewSourcePanel.ReadSources(((ShowcasePage)gallery.CurrentView!).SourceViews, true).Any(source => source.Name.Contains("ButtonPage.axaml", StringComparison.Ordinal)),
+                "Control pages/source: hidden native capability pages are not shown as current example code");
+            var buttonDetails = gallery.GetVisualDescendants().OfType<ControlDetailsView>().Single(detail => detail.ControlName == "Button");
+            check(buttonDetails.ApiTable.ItemCount == 0 && buttonDetails.PropertyTable.ItemCount == 1,
+                "Control pages/Button: only ButtonLoading.IsLoading is described, with no accessor API section");
+            Capture(buttonDetails.PropertyTable, output, "button-property-example.png");
             check(buttonExamples.GetVisualDescendants().OfType<TextBlock>().All(label => label.Text?.Contains("ControlSizing.Size=") != true && label.Text?.Contains("IsEnabled=") != true),
                 "Control pages/styles: shared size and native disabled-state demonstrations are not duplicated");
             var toggleExamples = gallery.GetVisualDescendants().OfType<StackPanel>().Single(p => p.Name == "StyleShowcase_ToggleButton");
@@ -150,6 +184,15 @@ internal static class ControlPagesPreview
             }
         }
         finally { shell.Close(); Flush(); }
+    }
+    private static bool HasExample(DescriptionItem row, string name) => row.Content is Control control &&
+        control.GetLogicalDescendants().OfType<SelectableTextBlock>().Any(text => text.Name == name && !string.IsNullOrWhiteSpace(text.Text));
+    private static void Capture(Control control, string? output, string file)
+    {
+        if (output is null) return;
+        Directory.CreateDirectory(output);
+        using var bitmap = new global::Avalonia.Media.Imaging.RenderTargetBitmap(new PixelSize((int)Math.Ceiling(control.Bounds.Width), (int)Math.Ceiling(control.Bounds.Height)), new Vector(96, 96));
+        bitmap.Render(control); bitmap.Save(Path.Combine(output, file), global::Avalonia.Media.Imaging.PngBitmapEncoderOptions.Default);
     }
     private static T Part<T>(Control root, string name) where T : Control => root.GetVisualDescendants().Prepend(root).OfType<T>().Single(c => c.Name == name);
     private static void Click(Control control)

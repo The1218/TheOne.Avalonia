@@ -62,13 +62,13 @@ details.Items.Add(new DescriptionItem { Header = "API", Content = "Native Header
 ```
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### Description
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.Description.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.Description.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -77,7 +77,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### DescriptionItem
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DescriptionItem.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DescriptionItem.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -86,24 +86,18 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Description | `borderless` | explicit Classes; combine with density | ^.borderless => BorderThickness=0; CornerRadius=0 |
-| Description | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16 |
-| Description | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12 |
-| DescriptionItem | `one-large` | automatic template class; do not bind manually | ^.one-large => Padding=14,13 |
-| DescriptionItem | `one-small` | automatic template class; do not bind manually | ^.one-small => Padding=10,7 |
+- `Description`: `Classes="borderless"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.Description`](../../api/en/TheOne.Avalonia.Controls.Description.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DescriptionItem`](../../api/en/TheOne.Avalonia.Controls.DescriptionItem.md) | Class | 2 | 1 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+No additional related data models.
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

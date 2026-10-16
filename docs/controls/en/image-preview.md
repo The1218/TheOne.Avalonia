@@ -57,13 +57,13 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 The suite uses a local HTTP server to verify real requests, retry and cancellation races without external network dependencies. It also checks local paths, Bitmap ownership, collection changes, compiled bindings, full-screen behavior, both themes, three densities, narrow viewports and rendered pixels.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### ImagePreview
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -92,7 +92,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### ImagePreviewSurface
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ImagePreviewSurface.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ImagePreviewSurface.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -101,22 +101,35 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| ImagePreview | `one-large` | automatic template class; do not bind manually | one&#124;ImagePreview.one-large => ChromeHeight=52; FontSize=16 |
-| ImagePreview | `one-normal` | automatic template class; do not bind manually | one&#124;ImagePreview.one-normal => ChromeHeight=44; FontSize=14 |
-| ImagePreview | `one-small` | automatic template class; do not bind manually | one&#124;ImagePreview.one-small => ChromeHeight=36; FontSize=12 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Previous()` | Moves to the previous available preview image. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Next()` | Moves to the next available preview image. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.Reload()` | Reloads the current image under its source/error loading contract. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.FitToWindow()` | Fits the image into the viewport without modifying source pixels. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ActualSize()` | Displays the image at actual pixel scale, potentially creating scrollable overflow. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ZoomIn()` | Zooms the current preview in within supported limits. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ZoomOut()` | Zooms the current preview out within supported limits. |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `void ImagePreview.ToggleFullScreen()` | Toggles image-preview fullscreen presentation. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | Class | 22 | 9 | 1 |
-| [`TheOne.Avalonia.Controls.ImagePreviewSurface`](../../api/en/TheOne.Avalonia.Controls.ImagePreviewSurface.md) | Class | 2 | 2 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`ImagePreview`](../../api/en/TheOne.Avalonia.Controls.ImagePreview.md) | `CloseRequested` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+No additional related data models.
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

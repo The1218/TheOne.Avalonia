@@ -84,13 +84,13 @@ Checks cover light / dark themes and all sizes, realized-container counts, dista
 See the [preview entry points](../../../design/PreviewHost/Program.cs) for verification and native scenarios.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### NavMenu
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NavMenu.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NavMenu.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -132,13 +132,13 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### NavMenuFilterBox
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterBox.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterBox.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### NavMenuFilterResult
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterResult.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterResult.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -149,7 +149,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### NavMenuItem
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NavMenuItem.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NavMenuItem.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -160,7 +160,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### NavMenuSearchText
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NavMenuSearchText.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NavMenuSearchText.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -169,27 +169,36 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| NavMenu | `one-large` | automatic template class; do not bind manually | one&#124;NavMenu.one-large => CollapsedWidth=60; SubmenuWidth=320; SubmenuMaxHeight=400; FontSize=16; IconSize=20; IconSpacing=12; ItemHeight=44; Indent=20 |
-| NavMenu | `one-normal` | automatic template class; do not bind manually | one&#124;NavMenu.one-normal => CollapsedWidth=52; SubmenuWidth=280; SubmenuMaxHeight=320; FontSize=14; IconSize=18; IconSpacing=10; ItemHeight=36; Indent=16 |
-| NavMenu | `one-small` | automatic template class; do not bind manually | one&#124;NavMenu.one-small => CollapsedWidth=44; SubmenuWidth=240; SubmenuMaxHeight=240; FontSize=12; IconSize=16; IconSpacing=8; ItemHeight=30; Indent=12 |
-| NavMenuItem | `one-no-motion` | automatic template class; do not bind manually | ToggleSwitch.one-no-motion /template/ Thumb, Expander.one-no-motion /template/ Path, TreeViewItem.one-no-motion /template/ Path, one&#124;NavMenuItem.one-no-motion /template/ Path => Transitions={x:Null} |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `bool NavMenu.OpenSubmenu(int rootIndex)` | Open a collapsed root's children without selecting or expanding its model. |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `void NavMenu.CloseSubmenu()` | Closes the current cascading submenu and clears popup state while retaining selection. |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `bool NavMenu.OpenFilter()` | Focuses the inline filter, or opens its compact search popup. |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `void NavMenu.CloseFilter()` | Dismisses compact search and restores the pre-search navigation state. |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `bool NavMenu.SelectPath(params int[] path)` | Realize only an ancestor path, then select its target data item. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | Class | 35 | 8 | 1 |
-| [`TheOne.Avalonia.Controls.NavMenuFilterBox`](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterBox.md) | Class | 0 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.NavMenuFilterResult`](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterResult.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.NavMenuItem`](../../api/en/TheOne.Avalonia.Controls.NavMenuItem.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs`](../../api/en/TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.NavMenuSearchText`](../../api/en/TheOne.Avalonia.Controls.NavMenuSearchText.md) | Class | 2 | 3 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`NavMenu`](../../api/en/TheOne.Avalonia.Controls.NavMenu.md) | `ItemInvoked` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`NavMenuFilterBox`](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterBox.md) | `ResultCommitted` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.NavMenuFilterResult`](../../api/en/TheOne.Avalonia.Controls.NavMenuFilterResult.md) | 4 |
+| [`TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs`](../../api/en/TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs.md) | 1 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

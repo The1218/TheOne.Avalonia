@@ -65,7 +65,7 @@ internal static class PreviewCodePreview
                 var files = picker.ItemsSource!.Cast<PreviewSourceFile>().ToArray();
                 check(files.Length > 0 && files.All(file => file.Text.Length > 0), $"PreviewCode/source/{id}: embedded source is available without repository paths");
                 check(files.Any(file => file.Language == CodeType.CSharp), $"PreviewCode/source/{id}: C# source is included");
-                if (id != 319) check(files.Any(file => file.Language == CodeType.Axaml), $"PreviewCode/source/{id}: AXAML source is included");
+                if (id is 0 or 322) check(files.Any(file => file.Language == CodeType.Axaml), $"PreviewCode/source/{id}: AXAML source is included");
                 picker.SelectedIndex = files.Length - 1; ThemeAppearancePreview.Flush();
                 var editor = panel.GetVisualDescendants().OfType<CodeEditor>().Single();
                 check(editor.Text == files[^1].Text,

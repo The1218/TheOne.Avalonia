@@ -217,13 +217,13 @@ See [Carousel / Refresh](collection-content.md), and [preview entry points](../.
 `ListBox Classes="cards"` uses separate rounded items and selected borders; `borderless` suits embedded layouts. `TabControl Classes="pills"` uses pill headers; `card` keeps a continuous outline. Native panels and bounded viewports remain, with ItemsSource / compiled templates. Choose one appearance per control.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### TabFeatures
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -236,7 +236,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### Virtualization
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.Virtualization.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.Virtualization.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -244,43 +244,29 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| DataGrid | `borderless` | explicit Classes; combine with density | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| DataGrid | `one-large` | automatic template class; do not bind manually | DataGrid.one-large => FontSize=16 |
-| DataGrid | `one-normal` | automatic template class; do not bind manually | DataGrid.one-normal => FontSize=14 |
-| DataGrid | `one-small` | automatic template class; do not bind manually | DataGrid.one-small => FontSize=12 |
-| ListBox | `borderless` | explicit Classes; combine with density | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| ListBox | `cards` | explicit Classes; combine with density | ListBox.cards => Background={DynamicResource One.Subtle}; BorderThickness=0; Padding=8; ListBox.cards > ListBoxItem => Margin=0,3; CornerRadius={DynamicResource One.Radius.Control}; BorderThickness=1; BorderBrush={DynamicResource One.Line}; ListBox.cards > ListBoxItem /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.Surface}; ListBox.cards > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.Subtle}; ListBox.cards > ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.AccentSoft}; BorderBrush={DynamicResource One.Accent}; Foreground={DynamicResource One.Text}; ListBox.cards > ListBoxItem:disabled /template/ ContentPresenter#PART_ContentPresenter => Background={DynamicResource One.DisabledSurface}; Foreground={DynamicResource One.DisabledText}; BorderBrush={DynamicResource One.Line} |
-| ListBox | `one-large` | automatic template class; do not bind manually | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| ListBox | `one-normal` | automatic template class; do not bind manually | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| ListBox | `one-small` | automatic template class; do not bind manually | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TabControl | `card` | explicit Classes; combine with density | ^.card => BorderBrush={DynamicResource One.CardTabBorder}; BorderThickness=1; CornerRadius={DynamicResource One.Radius.TabContent}; Padding=16; ItemContainerTheme={StaticResource One.CardTabItem}; ItemsPanel=template/resource; Template={StaticResource One.CardTabControlTemplate}; TabControl.card => one:TabFeatures.CanClose=True; one:TabFeatures.CanReorder=True |
-| TabControl | `one-large` | automatic template class; do not bind manually | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| TabControl | `one-normal` | automatic template class; do not bind manually | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| TabControl | `one-small` | automatic template class; do not bind manually | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TabControl | `pills` | explicit Classes; combine with density | TabControl.pills > TabItem => CornerRadius=999; Margin=0,0,8,0; TabControl.pills > TabItem /template/ Border#PART_SelectedPipe => IsVisible=False; TabControl.pills > TabItem:selected /template/ Border#PART_LayoutRoot => Background={DynamicResource One.Accent}; TabControl.pills > TabItem:selected /template/ ContentPresenter#PART_ContentPresenter => Foreground={DynamicResource One.OnAccent}; TabControl.pills > TabItem:selected:pointerover /template/ Border#PART_LayoutRoot => Background={DynamicResource One.AccentHover}; TabControl.pills > TabItem:selected:pressed /template/ Border#PART_LayoutRoot => Background={DynamicResource One.AccentPressed}; TabControl.pills > TabItem:disabled /template/ Border#PART_LayoutRoot => Background={DynamicResource One.DisabledSurface}; TabControl.pills > TabItem:disabled /template/ ContentPresenter#PART_ContentPresenter => Foreground={DynamicResource One.DisabledText} |
-| TabStrip | `one-large` | automatic template class; do not bind manually | TabStrip.one-large, TabStripItem.one-large => FontSize=16 |
-| TabStrip | `one-normal` | automatic template class; do not bind manually | TabStrip.one-normal, TabStripItem.one-normal => FontSize=14 |
-| TabStrip | `one-small` | automatic template class; do not bind manually | TabStrip.one-small, TabStripItem.one-small => FontSize=12 |
-| TreeView | `one-large` | automatic template class; do not bind manually | ToolTip.one-large, TabControl.one-large, TreeView.one-large, ListBox.one-large, Menu.one-large, ContextMenu.one-large, Calendar.one-large => FontSize=16 |
-| TreeView | `one-normal` | automatic template class; do not bind manually | ToolTip.one-normal, TabControl.one-normal, TreeView.one-normal, ListBox.one-normal, Menu.one-normal, ContextMenu.one-normal, Calendar.one-normal => FontSize=14 |
-| TreeView | `one-small` | automatic template class; do not bind manually | ToolTip.one-small, TabControl.one-small, TreeView.one-small, ListBox.one-small, Menu.one-small, ContextMenu.one-small, Calendar.one-small => FontSize=12 |
-| TreeViewItem | `one-large` | automatic template class; do not bind manually | :is(Button).one-large, ToggleButton.one-large, RepeatButton.one-large, TextBox.one-large, ComboBox.one-large, ComboBoxItem.one-large, AutoCompleteBox.one-large, NumericUpDown.one-large, ButtonSpinner.one-large, CheckBox.one-large, RadioButton.one-large, ToggleSwitch.one-large, ListBoxItem.one-large, TreeViewItem.one-large, MenuItem.one-large, TabItem.one-large, CalendarDatePicker.one-large, DatePicker.one-large, TimePicker.one-large, Expander.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16; TreeViewItem.one-large => Padding=0,4,14,4; TreeViewItem.one-large /template/ ToggleButton#PART_ExpandCollapseChevron => Width=44; Height=44 |
-| TreeViewItem | `one-no-motion` | automatic template class; do not bind manually | ToggleSwitch.one-no-motion /template/ Thumb, Expander.one-no-motion /template/ Path, TreeViewItem.one-no-motion /template/ Path, one&#124;NavMenuItem.one-no-motion /template/ Path => Transitions={x:Null} |
-| TreeViewItem | `one-normal` | automatic template class; do not bind manually | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14; TreeViewItem.one-normal => Padding=0,4,10,4; TreeViewItem.one-normal /template/ ToggleButton#PART_ExpandCollapseChevron => Width=36; Height=36 |
-| TreeViewItem | `one-small` | automatic template class; do not bind manually | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12; TreeViewItem.one-small => Padding=0,4,10,4; TreeViewItem.one-small /template/ ToggleButton#PART_ExpandCollapseChevron => Width=30; Height=30 |
+- `DataGrid`: `Classes="borderless"`
+- `ListBox`: `Classes="borderless"` / `Classes="cards"`
+- `TabControl`: `Classes="card"` / `Classes="pills"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabStripItem item)` | Attempts to close the container's data item |
+| [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabItem item)` | Attempts to close the container's data item |
+| [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Move(TabControl tabs, int from, int to)` | Attempts reordering by zero-based indices |
+| [`Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | `static TreeViewItem? Virtualization.BringIntoView(TreeView tree, params int[] path)` | Materializes only the ancestor path and target of a large tree. |
+| [`Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | `static void Virtualization.SelectAll(TreeView tree)` | Selects all nodes exposed by expanded branches without creating their containers. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | Class | 6 | 22 | 0 |
-| [`TheOne.Avalonia.Controls.Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | Class | 1 | 5 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | 6 |
+| [`TheOne.Avalonia.Controls.Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | 1 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

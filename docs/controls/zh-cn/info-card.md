@@ -172,13 +172,13 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 原生产物按现有 NativeAotSmoke 消费端编译，使用 macOS xcrun 的 clang 与 SDK。专项涵盖明暗主题、三档尺寸、鼠标进出、组合类、禁用、本地值覆盖和阴影实际像素。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### InfoCard
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.InfoCard.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.InfoCard.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -203,26 +203,19 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| InfoCard | `flat` | 显式 Classes，可与尺寸类组合 | one&#124;InfoCard.flat => BorderThickness=0; HeaderBackground=Transparent; FooterBackground=Transparent; ShowHeaderSeparator=False; ShowFooterSeparator=False; one&#124;InfoCard.glow:disabled, one&#124;InfoCard.flat:disabled => HeaderBackground={DynamicResource One.DisabledSurface}; FooterBackground={DynamicResource One.DisabledSurface} |
-| InfoCard | `glow` | 显式 Classes，可与尺寸类组合 | one&#124;InfoCard.glow => HeaderBackground={DynamicResource One.Gradient.Glow}; one&#124;InfoCard.glow:disabled, one&#124;InfoCard.flat:disabled => HeaderBackground={DynamicResource One.DisabledSurface}; FooterBackground={DynamicResource One.DisabledSurface} |
-| InfoCard | `hove` | 显式 Classes，可与尺寸类组合 | ^.hove:pointerover:not(:disabled) => BorderBrush={DynamicResource One.Accent}; Background={DynamicResource One.SurfaceHover}; BoxShadow={DynamicResource One.InfoCard.HoverShadow} |
-| InfoCard | `one-large` | 模板自动类；不手动绑定 | one&#124;InfoCard.one-large => Padding=24; FontSize=16; HeaderFontSize=18; HeaderSpacing=16; HeaderIconSize=20; HeaderContentSpacing=12; FooterSpacing=16 |
-| InfoCard | `one-normal` | 模板自动类；不手动绑定 | one&#124;InfoCard.one-normal => Padding=20; FontSize=14; HeaderFontSize=16; HeaderSpacing=12; HeaderIconSize=18; HeaderContentSpacing=10; FooterSpacing=12 |
-| InfoCard | `one-small` | 模板自动类；不手动绑定 | one&#124;InfoCard.one-small => Padding=16; FontSize=12; HeaderFontSize=14; HeaderSpacing=8; HeaderIconSize=16; HeaderContentSpacing=8; FooterSpacing=8 |
-| InfoCard | `outlined` | 显式 Classes，可与尺寸类组合 | one&#124;InfoCard.outlined => BorderBrush={DynamicResource One.Accent}; HeaderBackground={DynamicResource One.AccentSoft}; one&#124;InfoCard.outlined:disabled => BorderBrush={DynamicResource One.Line}; HeaderBackground={DynamicResource One.DisabledSurface} |
-| InfoCard | `shadow` | 显式 Classes，可与尺寸类组合 | ^.shadow:not(:disabled) => BoxShadow={DynamicResource One.InfoCard.Shadow} |
+- `InfoCard`: `Classes="flat"` / `Classes="glow"` / `Classes="hove"` / `Classes="outlined"` / `Classes="shadow"`
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.InfoCard`](../../api/zh-cn/TheOne.Avalonia.Controls.InfoCard.md) | Class | 18 | 1 | 0 |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+没有额外关联数据模型。
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

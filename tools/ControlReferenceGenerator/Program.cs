@@ -14,7 +14,7 @@ internal static class Program
 
     public static int Main(string[] args)
     {
-        if (args.Length < 3) throw new ArgumentException("Arguments: repository-root library-project.assets.json output.json [--generate|--check]");
+        if (args.Length < 3) throw new ArgumentException("Arguments: repository-root library-project.assets.json output.json [--generate|--check] [--verify-examples]");
         var root = Path.GetFullPath(args[0]);
         var files = Directory.GetFiles(Path.Combine(root, "TheOne.Avalonia"), "*.cs", SearchOption.AllDirectories)
             .Where(p => !p.Split(Path.DirectorySeparatorChar).Any(s => s is "bin" or "obj")).OrderBy(p => p, StringComparer.Ordinal);
@@ -80,14 +80,18 @@ internal static class Program
         var data = new ContractSet(types, styles);
         File.WriteAllText(args[2], JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }));
         Console.WriteLine($"Exported {types.Length} public types, {types.Sum(t => t.Properties.Length)} properties, {types.Sum(t => t.Methods.Length)} methods/constructors, {styles.Length} style-class contracts.");
+        var exampleResult = args.Contains("--verify-examples") ? ExampleVerifier.Verify(compilation, data) : 0;
+        // Standalone snippet checks report only diagnostics from snippet trees;
+        // the analysis project intentionally has no generated XAML code-behind.
+        if (args.Contains("--verify-examples") && !args.Contains("--generate") && !args.Contains("--check")) return exampleResult;
         var errors = compilation.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error && d.Id is "CS0246" or "CS0234" or "CS0012").ToArray();
         if (errors.Length > 0) { Console.Error.WriteLine(string.Join(Environment.NewLine, errors.Take(8))); return 1; }
         if (args.Contains("--generate") || args.Contains("--check"))
         {
             var result = ReferenceWriter.Write(root, data, args.Contains("--check"));
-            return Math.Max(result, AccessorWriter.Write(root, data, args.Contains("--check")));
+            return Math.Max(exampleResult, result);
         }
-        return 0;
+        return exampleResult;
     }
 
     private static bool Exported(INamedTypeSymbol type) => type.DeclaredAccessibility == Accessibility.Public &&

@@ -83,13 +83,13 @@ The built-in UI follows inherited Small / Normal / Large density and light/dark 
 Unsupported types and oversized picker results preserve the previous selection and report an error. A malformed or unreadable bound image keeps its file metadata, displays an error and disables the upload action until the source is replaced, removed or successfully reloaded with `ReloadPreview`. Replacing, clearing or detaching cancels pending preview work; stale picker or decoder results cannot overwrite newer data. Reattaching reloads the preserved selection. The first decoded image frame is used for thumbnails; animation playback and multiple files are outside this control's scope.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### Upload
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.Upload.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.Upload.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### UploadFile
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.UploadFile.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.UploadFile.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -138,26 +138,32 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Upload | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16; Padding=20 |
-| Upload | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12; Padding=12 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`IUploadFilePicker`](../../api/en/TheOne.Avalonia.Controls.IUploadFilePicker.md) | `Task<UploadFile?> IUploadFilePicker.PickAsync(TopLevel owner, CancellationToken cancellationToken)` | Asynchronously picks files via the host picker; interpret cancellation through its returned collection. |
+| [`Upload`](../../api/en/TheOne.Avalonia.Controls.Upload.md) | `Task Upload.UploadAsync(CancellationToken cancellationToken = default(CancellationToken))` | Uploads explicitly. A supplied UploadCommand takes precedence over built-in HTTP. Errors are exposed through ErrorMessage; cancellation and stale responses never publish a URL. |
+| [`Upload`](../../api/en/TheOne.Avalonia.Controls.Upload.md) | `Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))` | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
+| [`Upload`](../../api/en/TheOne.Avalonia.Controls.Upload.md) | `void Upload.ReloadPreview()` | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
+| [`UploadFile`](../../api/en/TheOne.Avalonia.Controls.UploadFile.md) | `Task<Stream> UploadFile.OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))` | Asynchronously opens an upload file's readable stream; the caller disposes it after use. |
+| [`UploadFile`](../../api/en/TheOne.Avalonia.Controls.UploadFile.md) | `static Task<UploadFile> UploadFile.FromStorageFileAsync(IStorageFile file, CancellationToken cancellationToken = default(CancellationToken), bool ownsStorageFile = false)` | The storage file must remain usable for as long as this selection is used. |
+| [`UploadHttp`](../../api/en/TheOne.Avalonia.Controls.UploadHttp.md) | `static Task<UploadHttpResult> UploadHttp.SendAsync(HttpClient client, string uploadApi, UploadRequestType requestType, UploadModel model, string allowedExtensions, IProgress<double>? progress = null, CancellationToken cancellationToken = default(CancellationToken))` | Sends from the stream's current position and closes it when the request finishes. The caller owns the client. Progress is the file transfer percentage (0–100); an unknown-length stream reports its start and completion. Responses larger than 1 MiB are rejected. Only successful HTTP responses are inspected for file URLs. |
+| [`UploadHttp`](../../api/en/TheOne.Avalonia.Controls.UploadHttp.md) | `static string? UploadHttp.ExtractFileUrl(string responseBody, string allowedExtensions)` | Returns the first absolute HTTP(S) file URL matching the extension filter, without contacting that URL. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.IUploadFilePicker`](../../api/en/TheOne.Avalonia.Controls.IUploadFilePicker.md) | Interface | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.Upload`](../../api/en/TheOne.Avalonia.Controls.Upload.md) | Class | 31 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.UploadFile`](../../api/en/TheOne.Avalonia.Controls.UploadFile.md) | Class | 4 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.UploadHttp`](../../api/en/TheOne.Avalonia.Controls.UploadHttp.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.UploadHttpResult`](../../api/en/TheOne.Avalonia.Controls.UploadHttpResult.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.UploadModel`](../../api/en/TheOne.Avalonia.Controls.UploadModel.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.UploadRequestType`](../../api/en/TheOne.Avalonia.Controls.UploadRequestType.md) | Enum | 3 | 1 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.UploadFile`](../../api/en/TheOne.Avalonia.Controls.UploadFile.md) | 4 |
+| [`TheOne.Avalonia.Controls.UploadHttpResult`](../../api/en/TheOne.Avalonia.Controls.UploadHttpResult.md) | 3 |
+| [`TheOne.Avalonia.Controls.UploadModel`](../../api/en/TheOne.Avalonia.Controls.UploadModel.md) | 3 |
+| [`TheOne.Avalonia.Controls.UploadRequestType`](../../api/en/TheOne.Avalonia.Controls.UploadRequestType.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

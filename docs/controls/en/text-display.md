@@ -24,38 +24,27 @@ Body font sizes for small / normal / large are 12 / 14 / 16 px. Label shares the
 The preview is on the combined text / data-display page. `--verify-text-alignment` checks field association, real selection, range correction, and theme / size changes. Copying through the system clipboard still requires verification on the target desktop host. See [basic controls](basic.md) for input controls.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 These native controls have no same-name TheOne wrappers; project-added capabilities come from the styles below.
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| Label | `accent` | explicit Classes; combine with density | ^.accent => Foreground={DynamicResource One.Accent}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText} |
-| Label | `muted` | explicit Classes; combine with density | ^.muted => Foreground={DynamicResource One.Muted}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText} |
-| Label | `one-large` | automatic template class; do not bind manually | Label.one-large => MinHeight={DynamicResource One.Size.Large.Height}; FontSize=16 |
-| Label | `one-normal` | automatic template class; do not bind manually | Label.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14 |
-| Label | `one-small` | automatic template class; do not bind manually | Label.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12 |
-| SelectableTextBlock | `accent` | explicit Classes; combine with density | ^.accent => Foreground={DynamicResource One.Accent}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText}; Cursor=Arrow |
-| SelectableTextBlock | `muted` | explicit Classes; combine with density | ^.muted => Foreground={DynamicResource One.Muted}; ^:disabled, ^.muted:disabled, ^.accent:disabled => Foreground={DynamicResource One.DisabledText}; Cursor=Arrow |
-| SelectableTextBlock | `one-large` | automatic template class; do not bind manually | SelectableTextBlock.one-large => FontSize=16; LineHeight={DynamicResource One.Text.Large.LineHeight} |
-| SelectableTextBlock | `one-normal` | automatic template class; do not bind manually | SelectableTextBlock.one-normal => FontSize=14; LineHeight={DynamicResource One.Text.LineHeight} |
-| SelectableTextBlock | `one-small` | automatic template class; do not bind manually | SelectableTextBlock.one-small => FontSize=12; LineHeight={DynamicResource One.Text.Small.LineHeight} |
-| TextBlock | `flow-state` | automatic template class; do not bind manually | TextBlock.flow-state => Foreground={DynamicResource One.Muted}; TextBlock.flow-state.completed => Foreground={DynamicResource One.Success}; TextBlock.flow-state.current => Foreground={DynamicResource One.Accent}; StackPanel.vertical > StackPanel.flow-title, StackPanel.vertical > TextBlock.flow-state => IsVisible=False |
-| TextBlock | `one-color-component-label` | automatic template class; do not bind manually | TextBlock.one-color-component-label, Border.one-color-component-label TextBlock => Foreground={DynamicResource One.Muted}; FontSize=12 |
-| TextBlock | `reached` | automatic template class; do not bind manually | TextBlock.reached => Foreground={DynamicResource One.Text}; FontWeight=SemiBold |
+- `Label`: `Classes="accent"` / `Classes="muted"`
+- `SelectableTextBlock`: `Classes="accent"` / `Classes="muted"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+No additional related data models.
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

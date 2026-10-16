@@ -1,45 +1,42 @@
 using Avalonia.Controls;
-using TheOne.Avalonia.Controls;
 
 namespace TheOne.DesignPreview;
 
 internal sealed class ControlPreviewPage : UserControl
 {
+    private readonly List<Control> _sourceViews = [];
     internal UserControl Demo { get; }
     internal ControlDetailsView Details { get; }
     internal bool UsesViewport { get; }
+    internal IEnumerable<Control> SourceViews => _sourceViews;
     internal ControlPreviewPage(PreviewPageDescriptor descriptor, UserControl demo)
     {
-        Demo = demo; UsesViewport = demo is WorkflowEditorDemoView or ReportDesign or ReportPreview;
-        Details = new ControlDetailsView(descriptor.Title, demo, UsesViewport);
+        Demo = demo;
+        var plan = PreviewPageContentPolicy.For(descriptor.Title);
+        if (plan.ShowOriginalDemo) _sourceViews.Add(demo);
+        UsesViewport = plan.UsesViewport;
+        Details = new ControlDetailsView(descriptor.Title);
         var supplements = new StackPanel { Spacing = 24 };
-        var styles = ControlStyleShowcase.Create(descriptor.Title);
-        if (UsesViewport && styles is not null) supplements.Children.Add(styles);
+        if (UsesViewport && ControlStyleShowcase.Create(descriptor.Title) is { } styles) supplements.Children.Add(styles);
         supplements.Children.Add(Details);
         foreach (var name in descriptor.Title switch
         {
             "Form" => new[] { "FormItem" }, "FlowStep" => new[] { "FlowNode" }, "LoadingContainer" => new[] { "LoadingIndicator" },
             "ColorPicker" => new[] { "ColorView" }, "RefreshContainer" => new[] { "RefreshVisualizer" },
             "Description" => new[] { "DescriptionItem" }, _ => Array.Empty<string>()
-        }) supplements.Children.Add(new ControlDetailsView(name, demo));
-        if (UsesViewport)
-        {
-            AttachedToVisualTree += (_, _) => Details.Observe();
-            DetachedFromVisualTree += (_, _) => Details.StopObserving();
-        }
+        }) supplements.Children.Add(new ControlDetailsView(name));
         // Canvas editors own the remaining viewport; documentation has a separate
         // scroll surface and cannot steal height from or overlap the live editor.
         Content = UsesViewport ? new TabControl { Items =
         {
-            new TabItem { Header = "完整示例", Content = demo },
+            new TabItem { Header = "工作区", Content = demo },
             new TabItem { Header = "样式、属性与 API", Content = new ScrollViewer { Content = supplements, HorizontalScrollBarVisibility = global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled } }
-        } } : Presentation(descriptor.Title, demo, styles, supplements);
+        } } : Presentation(descriptor.Title, demo, supplements);
     }
-    private static Control Presentation(string name, UserControl demo, Control? styles, Control supplements)
+    private Control Presentation(string name, UserControl demo, Control supplements)
     {
-        var page = new StackPanel { Spacing = 24 };
-        if (styles is not null) page.Children.Add(styles);
-        page.Children.Add(PreviewSection.Create(name + " · 完整用法", demo));
+        var page = PreviewPageContentPolicy.CreateContent(name, demo);
+        _sourceViews.AddRange(page.Children.OfType<NativeThemePreview>());
         page.Children.Add(supplements);
         return page;
     }

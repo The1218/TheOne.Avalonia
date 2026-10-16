@@ -8,6 +8,7 @@
   </PropertyGroup>
   <!-- Authoring tool only: use Roslyn shipped with the selected .NET SDK. -->
   <ItemGroup>
+    <Compile Include="../../design/PreviewHost/Reference/ControlUsageExamples.cs" Link="Reference/ControlUsageExamples.cs" />
     <Reference Include="Microsoft.CodeAnalysis" HintPath="$(MSBuildSDKsPath)/../Roslyn/bincore/Microsoft.CodeAnalysis.dll" />
     <Reference Include="Microsoft.CodeAnalysis.CSharp" HintPath="$(MSBuildSDKsPath)/../Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll" />
   </ItemGroup>

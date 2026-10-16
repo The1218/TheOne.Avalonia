@@ -143,17 +143,19 @@
                     TextWrapping="Wrap" />
                 <one:Description Name="SharedConfigurationDetails" LabelWidth="210" StackWidth="620">
                     <one:DescriptionItem
-                        Header="ControlSizing.Size"
-                        Content="ControlSize 枚举，默认 Normal，可绑定。Small / Normal / Large 分别提供紧凑、标准、宽松三档密度，统一调整支持控件的字号、内边距、最小尺寸和图标尺寸。值沿控件树继承；子控件显式设置后覆盖该分支，清除本地值后恢复继承。" />
+                        Header="ControlSizing.Size">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="ControlSize 枚举，默认 Normal，可绑定并沿控件树继承。Small / Normal / Large 提供紧凑、标准、宽松三档密度；子控件显式设置可覆盖该分支。" TextWrapping="Wrap" />
+                            <SelectableTextBlock FontFamily="Menlo, Consolas, monospace" FontSize="12" Text="&lt;StackPanel styling:ControlSizing.Size=&quot;{Binding ControlSize}&quot; /&gt;" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </one:DescriptionItem>
                     <one:DescriptionItem
-                        Header="尺寸 API"
-                        Content="ControlSizing.GetSize(Control control) → ControlSize&#10;ControlSizing.SetSize(Control control, ControlSize value)&#10;命名空间：TheOne.Avalonia.Styling。设置容器即可同时影响其子控件。" />
-                    <one:DescriptionItem
-                        Header="Motion.Enabled"
-                        Content="Boolean，默认 True，可绑定并沿控件树继承。False 关闭该分支的主题过渡及遵循 Motion 设置的控件动效；子分支可显式覆盖。它是唯一通用的 Motion 附加属性，通知、刷新和内容切换的专用动效参数在各自页面说明。" />
-                    <one:DescriptionItem
-                        Header="动效 API"
-                        Content="Motion.GetEnabled(Control control) → Boolean&#10;Motion.SetEnabled(Control control, Boolean value)&#10;命名空间：TheOne.Avalonia.Styling。可绑定到应用设置，并在创建窗口时恢复用户偏好。" />
+                        Header="Motion.Enabled">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Boolean，默认 True，可绑定并沿控件树继承。False 关闭该分支遵循 Motion 设置的动效。通知、刷新和内容切换的专用参数在各自页面说明。" TextWrapping="Wrap" />
+                            <SelectableTextBlock FontFamily="Menlo, Consolas, monospace" FontSize="12" Text="&lt;StackPanel styling:Motion.Enabled=&quot;{Binding EnableMotion}&quot; /&gt;" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </one:DescriptionItem>
                 </one:Description>
                 <TextBlock
                     FontWeight="SemiBold"
@@ -198,7 +200,6 @@
                         </StackPanel>
                     </Border>
                 </Grid>
-                <local:PreviewCodeBlock Text="&lt;StackPanel styling:ControlSizing.Size=&quot;Small&quot;&#10;            styling:Motion.Enabled=&quot;False&quot;&gt;&#10;  &lt;Button Classes=&quot;primary&quot; Content=&quot;保存&quot; /&gt;&#10;  &lt;TextBox PlaceholderText=&quot;继承容器的配置&quot; /&gt;&#10;&lt;/StackPanel&gt;&#10;&lt;!-- styling: using:TheOne.Avalonia.Styling --&gt;" />
             </StackPanel>
         </Border>
         <Border

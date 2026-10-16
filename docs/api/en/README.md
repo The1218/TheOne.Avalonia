@@ -1,6 +1,6 @@
 # Public API and built-in model reference
 
-Generated from same-version source and theme selectors, covering every main-library public type and added DataGrid fork APIs. Inherited native Avalonia APIs are not redeclared.
+This is the complete same-version source contract for integration review and precise lookup. It includes every main-library public type and added DataGrid fork declaration, retaining constructors, attached-property accessors and public identifiers. Inherited native Avalonia APIs are not redeclared. Start with [control usage](../../controls/en/README.md) for control-specific properties, business actions and related models without template-selector or property-accessor inventories.
 
 [English](../en/README.md) · [简体中文](../zh-cn/README.md)
 

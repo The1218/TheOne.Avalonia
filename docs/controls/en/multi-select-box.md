@@ -96,13 +96,13 @@ The check runs only MultiSelectBox: real key/pointer input, search, locked tags,
 `NativeAotSmoke` reuses the same check. Publish and execute the native program with `--require-aot --verify-multiselect` to verify getters, compiled templates, and bindings. Managed checks or cross-RID builds do not establish native execution on other platforms.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### MultiSelectBox
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -134,7 +134,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### MultiSelectBoxItem
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.MultiSelectBoxItem.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.MultiSelectBoxItem.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -151,29 +151,43 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### MultiSelectItemAdapter
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.MultiSelectItemAdapter.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.MultiSelectItemAdapter.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| MultiSelectBox | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16 |
-| MultiSelectBox | `one-normal` | automatic template class; do not bind manually | ^.one-normal => FontSize=14 |
-| MultiSelectBox | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `bool MultiSelectBox.OpenDropDown()` | Opens and focuses search, or closes and returns focus to the field; opening requires attachment and enabled state |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `void MultiSelectBox.CloseDropDown()` | Opens and focuses search, or closes and returns focus to the field; opening requires attachment and enabled state |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `void MultiSelectBox.RefreshItems()` | Refreshes plain collections and models that do not provide change notifications. |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `bool MultiSelectBox.ToggleItem(object item)` | Toggles an editable value; adding requires source membership, removal also supports selected external values; returns `false` if unchanged |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `bool MultiSelectBox.ClearSelection()` | Removes editable selections, retaining selected disabled items. |
+| [`MultiSelectItemAdapter`](../../api/en/TheOne.Avalonia.Controls.MultiSelectItemAdapter.md) | `abstract string MultiSelectItemAdapter.GetText(object item)` | Reads original-model display/search text through the configured typed adapter. |
+| [`MultiSelectItemAdapter`](../../api/en/TheOne.Avalonia.Controls.MultiSelectItemAdapter.md) | `virtual bool MultiSelectItemAdapter.IsEnabled(object item)` | Uses the adapter to determine whether an original model permits user selection. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | Class | 25 | 6 | 1 |
-| [`TheOne.Avalonia.Controls.MultiSelectBoxItem`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBoxItem.md) | Class | 10 | 0 | 1 |
-| [`TheOne.Avalonia.Controls.MultiSelectItemAdapter`](../../api/en/TheOne.Avalonia.Controls.MultiSelectItemAdapter.md) | Class | 0 | 3 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`MultiSelectBox`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBox.md) | `SelectionChanged` | Bubbling event with original models in AddedItems / RemovedItems; batch user edits produce one event |
+| [`MultiSelectBoxItem`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBoxItem.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.MultiSelectBoxItem`](../../api/en/TheOne.Avalonia.Controls.MultiSelectBoxItem.md) | 10 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

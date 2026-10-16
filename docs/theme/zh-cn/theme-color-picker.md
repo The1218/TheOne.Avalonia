@@ -114,13 +114,13 @@ dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized
 原生消费可在既有 NativeAotSmoke 项目设置 `ThemeOnlyPreview=true`、`PublishAot=true`、`PublishTrimmed=true`，发布后传入 `--require-aot`，只执行枚举选择器及编译绑定专项，不执行其他控件回归。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### ThemeButton
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButton.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButton.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -128,7 +128,7 @@ dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized
 
 ### ThemeColorPicker
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeColorPicker.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeColorPicker.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -137,7 +137,7 @@ dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized
 
 ### OneTheme
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -146,31 +146,31 @@ dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized
 
 ### ThemeColor
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| ThemeButton | `one-large` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-large => Width=44; Height=44 |
-| ThemeButton | `one-normal` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-normal => Width=36; Height=36 |
-| ThemeButton | `one-small` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-small => Width=30; Height=30 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ThemeButton`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButton.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeColorPicker`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeColorPicker.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Themes.OneTheme`](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md) | Class | 2 | 2 | 0 |
-| [`TheOne.Avalonia.Themes.ThemeColor`](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md) | Enum | 10 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`OneTheme`](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md) | `static void OneTheme.SetColor(ThemeColor color)` | Switches the application's OneTheme palette on the UI thread, preserving Light / Dark and property bindings. |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButtonScope.md) | 2 |
+| [`TheOne.Avalonia.Themes.OneTheme`](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md) | 2 |
+| [`TheOne.Avalonia.Themes.ThemeColor`](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md) | 10 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

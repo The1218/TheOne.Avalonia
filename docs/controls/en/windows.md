@@ -136,19 +136,19 @@ Completion, cancellation, and host closure detach events, allowing sequential Vi
 NativeAotSmoke provides the Toast-only `--verify-toast` check for both themes, three densities, four states, multiline alignment in narrow windows, callbacks and expiration. Omit `--require-aot` for managed execution. Publish and execute a native artifact with `--require-aot` only for affected AOT/binding/metadata changes. Build only the required consumer project with task-specific output directories; see [integration and validation](../../integration/en/README.md#6-implementation-and-acceptance). PreviewHost's `--verify-buttons-messages` covers buttons and messages together rather than Toast alone.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### DialogContext
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DialogContext.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DialogContext.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### DialogOptions
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DialogOptions.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DialogOptions.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -164,7 +164,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### OneDialog
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneDialog.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneDialog.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -172,7 +172,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### OneDialogPresenter
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneDialogPresenter.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneDialogPresenter.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -184,7 +184,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### OneNotification
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneNotification.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneNotification.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -192,7 +192,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### OneToast
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneToast.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneToast.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -200,7 +200,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### OneWindow
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.OneWindow.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.OneWindow.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -217,7 +217,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### ThemeButton
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -225,39 +225,47 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| OneDialogPresenter | `one-large` | automatic template class; do not bind manually | one&#124;OneDialogPresenter.one-large => FontSize=16; Padding=32 |
-| OneDialogPresenter | `one-normal` | automatic template class; do not bind manually | one&#124;OneDialogPresenter.one-normal => FontSize=14; Padding=24 |
-| OneDialogPresenter | `one-small` | automatic template class; do not bind manually | one&#124;OneDialogPresenter.one-small => FontSize=12; Padding=16 |
-| OneWindow | `one-large` | automatic template class; do not bind manually | one&#124;OneWindow.one-large => TitleBarHeight=56; FontSize=16 |
-| OneWindow | `one-normal` | automatic template class; do not bind manually | one&#124;OneWindow.one-normal => TitleBarHeight=48; FontSize=14 |
-| OneWindow | `one-small` | automatic template class; do not bind manually | one&#124;OneWindow.one-small => TitleBarHeight=42; FontSize=12 |
-| ThemeButton | `one-large` | automatic template class; do not bind manually | one&#124;ThemeButton.one-large => Width=44; Height=44 |
-| ThemeButton | `one-normal` | automatic template class; do not bind manually | one&#124;ThemeButton.one-normal => Width=36; Height=36 |
-| ThemeButton | `one-small` | automatic template class; do not bind manually | one&#124;ThemeButton.one-small => Width=30; Height=30 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`DialogContext`](../../api/en/TheOne.Avalonia.Controls.DialogContext.md) | `void DialogContext.RequestClose(OneDialogResult result = OneDialogResult.Ok)` | Requests completion of this dialog, including when it is still queued. |
+| [`OneDialog`](../../api/en/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowAsync<TView, TViewModel>(TViewModel viewModel, DialogOptions? options = null, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken)) where TView : UserControl, new() where TViewModel : class` | Creates a typed view lazily on the UI thread; compiled bindings and NativeAOT are supported. |
+| [`OneDialog`](../../api/en/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowAsync(string title, string message, OneDialogButtons buttons = OneDialogButtons.Ok, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken))` | Dispatches to the UI thread internally. |
+| [`OneDialog`](../../api/en/TheOne.Avalonia.Controls.OneDialog.md) | `static Task<OneDialogResult> OneDialog.ShowContentAsync(object? content, string? title = null, OneDialogButtons buttons = OneDialogButtons.OkCancel, IDataTemplate? contentTemplate = null, Window? owner = null, CancellationToken cancellationToken = default(CancellationToken))` | Dispatches to the UI thread internally. |
+| [`OneNotification`](../../api/en/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.Show(string title, string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | Shows on the UI thread. The owner is optional; the registered default owner or most recently activated visible themed window is used. |
+| [`OneNotification`](../../api/en/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.Show(INotification notification, Window? owner = null)` | UI thread. |
+| [`OneNotification`](../../api/en/TheOne.Avalonia.Controls.OneNotification.md) | `static Task OneNotification.ShowAsync(string title, string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | Dispatches to the UI thread internally. |
+| [`OneNotification`](../../api/en/TheOne.Avalonia.Controls.OneNotification.md) | `static void OneNotification.CloseAll(Window? owner = null)` | UI thread. |
+| [`OneToast`](../../api/en/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.Show(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | UI thread. |
+| [`OneToast`](../../api/en/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.Show(INotification notification, Window? owner = null)` | Shows the notification's message and status icon, ignoring Title, while retaining expiration and click/close callbacks. |
+| [`OneToast`](../../api/en/TheOne.Avalonia.Controls.OneToast.md) | `static Task OneToast.ShowAsync(string message, NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Window? owner = null)` | Dispatches to the UI thread internally. |
+| [`OneToast`](../../api/en/TheOne.Avalonia.Controls.OneToast.md) | `static void OneToast.CloseAll(Window? owner = null)` | UI thread. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs`](../../api/en/TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DialogContext`](../../api/en/TheOne.Avalonia.Controls.DialogContext.md) | Class | 0 | 1 | 2 |
-| [`TheOne.Avalonia.Controls.DialogOptions`](../../api/en/TheOne.Avalonia.Controls.DialogOptions.md) | Class | 9 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialog`](../../api/en/TheOne.Avalonia.Controls.OneDialog.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogButtons`](../../api/en/TheOne.Avalonia.Controls.OneDialogButtons.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogPresenter`](../../api/en/TheOne.Avalonia.Controls.OneDialogPresenter.md) | Class | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/en/TheOne.Avalonia.Controls.OneDialogResult.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.OneNotification`](../../api/en/TheOne.Avalonia.Controls.OneNotification.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.OneToast`](../../api/en/TheOne.Avalonia.Controls.OneToast.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.OneWindow`](../../api/en/TheOne.Avalonia.Controls.OneWindow.md) | Class | 10 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButton`](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Styling.ControlSize`](../../api/en/TheOne.Avalonia.Styling.ControlSize.md) | Enum | 3 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`DialogContext`](../../api/en/TheOne.Avalonia.Controls.DialogContext.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`DialogContext`](../../api/en/TheOne.Avalonia.Controls.DialogContext.md) | `CloseRequested` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs`](../../api/en/TheOne.Avalonia.Controls.DialogCloseRequestedEventArgs.md) | 1 |
+| [`TheOne.Avalonia.Controls.DialogOptions`](../../api/en/TheOne.Avalonia.Controls.DialogOptions.md) | 9 |
+| [`TheOne.Avalonia.Controls.OneDialogButtons`](../../api/en/TheOne.Avalonia.Controls.OneDialogButtons.md) | 4 |
+| [`TheOne.Avalonia.Controls.OneDialogResult`](../../api/en/TheOne.Avalonia.Controls.OneDialogResult.md) | 5 |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | 2 |
+| [`TheOne.Avalonia.Styling.ControlSize`](../../api/en/TheOne.Avalonia.Styling.ControlSize.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

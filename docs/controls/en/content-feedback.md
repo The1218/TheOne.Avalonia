@@ -76,13 +76,13 @@ Motion.Enabled inherits from the window, manager, or card. Entry defaults to 200
 Notifications are temporary messages, not history lists. Limit active cards with finite MaxItems; exiting cards can remain briefly during animation. PreviewHost delivers 1,000 notifications and checks at most four active cards and release on close. Use a separate bounded, model-bound virtualized ListBox for history. The Notification page exposes four types, auto-close delays, manual close, six positions, motion, callback counts, and reset, using global theme / size settings.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### ContentTransitionOptions
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -90,7 +90,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### NotificationMotion
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -100,26 +100,21 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| NotificationCard | `one-large` | automatic template class; do not bind manually | n&#124;NotificationCard.one-large => Width={DynamicResource One.Notification.Large.Width}; FontSize=13; Padding={DynamicResource One.Notification.Large.Padding}; n&#124;NotificationCard.one-large /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Large.BadgeSize}; Height={DynamicResource One.Notification.Large.BadgeSize}; n&#124;NotificationCard.one-large /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Large.IconSize}; Height={DynamicResource One.Notification.Large.IconSize}; n&#124;NotificationCard.one-large /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Large.CloseSize}; Height={DynamicResource One.Notification.Large.CloseSize} |
-| NotificationCard | `one-normal` | automatic template class; do not bind manually | n&#124;NotificationCard.one-normal => Width={DynamicResource One.Notification.Width}; FontSize=12; Padding={DynamicResource One.Notification.Padding} |
-| NotificationCard | `one-small` | automatic template class; do not bind manually | n&#124;NotificationCard.one-small => Width={DynamicResource One.Notification.Small.Width}; FontSize=11; Padding={DynamicResource One.Notification.Small.Padding}; n&#124;NotificationCard.one-small /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Small.BadgeSize}; Height={DynamicResource One.Notification.Small.BadgeSize}; n&#124;NotificationCard.one-small /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Small.IconSize}; Height={DynamicResource One.Notification.Small.IconSize}; n&#124;NotificationCard.one-small /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Small.CloseSize}; Height={DynamicResource One.Notification.Small.CloseSize} |
-| NotificationCard | `one-toast` | automatic template class; do not bind manually | n&#124;NotificationCard.one-toast.one-small => Width=NaN; MaxWidth={DynamicResource One.Notification.Small.Width}; FontSize=12; Padding=12,8; MinHeight=40; n&#124;NotificationCard.one-toast.one-normal => Width=NaN; MaxWidth={DynamicResource One.Notification.Width}; FontSize=14; Padding=16,10; MinHeight=48; n&#124;NotificationCard.one-toast.one-large => Width=NaN; MaxWidth={DynamicResource One.Notification.Large.Width}; FontSize=16; Padding=20,12; MinHeight=56; n&#124;NotificationCard.one-toast.one-small /template/ PathIcon#PART_StatusIcon => Width=16; Height=16; n&#124;NotificationCard.one-toast.one-normal /template/ PathIcon#PART_StatusIcon => Width=18; Height=18; n&#124;NotificationCard.one-toast.one-large /template/ PathIcon#PART_StatusIcon => Width=20; Height=20; n&#124;NotificationCard.one-toast => Theme={StaticResource One.ToastCard} |
-| TransitioningContentControl | `one-large` | automatic template class; do not bind manually | TransitioningContentControl.one-large => FontSize=16; Padding={DynamicResource One.ContentTransition.Large.Padding} |
-| TransitioningContentControl | `one-normal` | automatic template class; do not bind manually | TransitioningContentControl.one-normal => FontSize=14; Padding={DynamicResource One.ContentTransition.Padding} |
-| TransitioningContentControl | `one-small` | automatic template class; do not bind manually | TransitioningContentControl.one-small => FontSize=12; Padding={DynamicResource One.ContentTransition.Small.Padding} |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ContentTransitionOptions`](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.NotificationMotion`](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md) | Class | 3 | 7 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.ContentTransitionOptions`](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md) | 1 |
+| [`TheOne.Avalonia.Controls.NotificationMotion`](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

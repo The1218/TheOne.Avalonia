@@ -73,19 +73,19 @@ PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回
 本库替代官方 DataGrid 包，保留原生程序集身份、类型和 Presenter；不要同时引用官方 `Avalonia.Controls.DataGrid` 包。源码与许可见 [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md)。独立编译绑定及原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)，仅引用包的示例见 [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs)。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### DataGridCollectionView
 
-[API / model reference](../../api/zh-cn/Avalonia.Collections.DataGridCollectionView_T_.md)
+[完整源码契约](../../api/zh-cn/Avalonia.Collections.DataGridCollectionView_T_.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### DataGridColumn
 
-[API / model reference](../../api/zh-cn/Avalonia.Controls.DataGridColumn.md)
+[完整源码契约](../../api/zh-cn/Avalonia.Controls.DataGridColumn.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -93,19 +93,19 @@ PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回
 
 ### DataGridRowMetadata
 
-[API / model reference](../../api/zh-cn/Avalonia.Controls.DataGridRowMetadata.md)
+[完整源码契约](../../api/zh-cn/Avalonia.Controls.DataGridRowMetadata.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### DataGridAot
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridAot.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridAot.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### DataGridColumnOptions
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -120,7 +120,7 @@ PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回
 
 ### DataGridSortButton
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridSortButton.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridSortButton.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -129,38 +129,36 @@ PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回
 
 ### DataGridValueAccessor
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridValueAccessor.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridValueAccessor.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| DataGrid | `borderless` | 显式 Classes，可与尺寸类组合 | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| DataGrid | `one-large` | 模板自动类；不手动绑定 | DataGrid.one-large => FontSize=16 |
-| DataGrid | `one-normal` | 模板自动类；不手动绑定 | DataGrid.one-normal => FontSize=14 |
-| DataGrid | `one-small` | 模板自动类；不手动绑定 | DataGrid.one-small => FontSize=12 |
+- `DataGrid`: `Classes="borderless"`
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`Avalonia.Collections.DataGridCollectionView<T>`](../../api/zh-cn/Avalonia.Collections.DataGridCollectionView_T_.md) | Class | 0 | 2 | 0 |
-| [`Avalonia.Controls.DataGridColumn`](../../api/zh-cn/Avalonia.Controls.DataGridColumn.md) | Class | 1 | 1 | 0 |
-| [`Avalonia.Controls.DataGridRowMetadata`](../../api/zh-cn/Avalonia.Controls.DataGridRowMetadata.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridAot`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridAot.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | Class | 8 | 16 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridFilterKind.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSortButton`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridSortButton.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridValueAccessor`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridValueAccessor.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/zh-cn/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | Interface | 1 | 1 | 0 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`DataGridColumn`](../../api/zh-cn/Avalonia.Controls.DataGridColumn.md) | `void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)` | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |
+| [`DataGridFilterCondition`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | `abstract bool DataGridFilterCondition.Matches(object? value)` | 判断输入值是否符合此筛选条件；具体空值和比较规则见条件类型。 |
+| [`IDataGridValueAccessor`](../../api/zh-cn/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | `object? IDataGridValueAccessor.GetValue(object item)` | 通过显式字段键／类型化 getter 从原始行读取值；不使用反射路径。 |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`Avalonia.Controls.DataGridColumn`](../../api/zh-cn/Avalonia.Controls.DataGridColumn.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | 8 |
+| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridFilterKind.md) | 4 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/zh-cn/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | 5 |
+| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/zh-cn/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | 1 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

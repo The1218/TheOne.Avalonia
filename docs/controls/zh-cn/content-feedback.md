@@ -76,13 +76,13 @@ Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离�
 通知是短时消息，不是历史列表。使用有限 MaxItems 控制活动卡片数量；离场动画期间可能短暂保留正在关闭的卡片。PreviewHost 连续投递 1,000 条通知，验证最多 4 条活动卡片和关闭后的释放；需要长期通知历史时，另用绑定模型的有界虚拟化 ListBox。侧栏“Notification”提供四种类型、自动关闭延迟、手动关闭、六种位置、动效切换、回调计数与重置，沿用全局主题和三档尺寸。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### ContentTransitionOptions
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ContentTransitionOptions.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.ContentTransitionOptions.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -90,7 +90,7 @@ Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离�
 
 ### NotificationMotion
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.NotificationMotion.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.NotificationMotion.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -100,26 +100,22 @@ Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离�
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| NotificationCard | `one-large` | 模板自动类；不手动绑定 | n&#124;NotificationCard.one-large => Width={DynamicResource One.Notification.Large.Width}; FontSize=13; Padding={DynamicResource One.Notification.Large.Padding}; n&#124;NotificationCard.one-large /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Large.BadgeSize}; Height={DynamicResource One.Notification.Large.BadgeSize}; n&#124;NotificationCard.one-large /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Large.IconSize}; Height={DynamicResource One.Notification.Large.IconSize}; n&#124;NotificationCard.one-large /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Large.CloseSize}; Height={DynamicResource One.Notification.Large.CloseSize} |
-| NotificationCard | `one-normal` | 模板自动类；不手动绑定 | n&#124;NotificationCard.one-normal => Width={DynamicResource One.Notification.Width}; FontSize=12; Padding={DynamicResource One.Notification.Padding} |
-| NotificationCard | `one-small` | 模板自动类；不手动绑定 | n&#124;NotificationCard.one-small => Width={DynamicResource One.Notification.Small.Width}; FontSize=11; Padding={DynamicResource One.Notification.Small.Padding}; n&#124;NotificationCard.one-small /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Small.BadgeSize}; Height={DynamicResource One.Notification.Small.BadgeSize}; n&#124;NotificationCard.one-small /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Small.IconSize}; Height={DynamicResource One.Notification.Small.IconSize}; n&#124;NotificationCard.one-small /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Small.CloseSize}; Height={DynamicResource One.Notification.Small.CloseSize} |
-| NotificationCard | `one-toast` | 模板自动类；不手动绑定 | n&#124;NotificationCard.one-toast.one-small => Width=NaN; MaxWidth={DynamicResource One.Notification.Small.Width}; FontSize=12; Padding=12,8; MinHeight=40; n&#124;NotificationCard.one-toast.one-normal => Width=NaN; MaxWidth={DynamicResource One.Notification.Width}; FontSize=14; Padding=16,10; MinHeight=48; n&#124;NotificationCard.one-toast.one-large => Width=NaN; MaxWidth={DynamicResource One.Notification.Large.Width}; FontSize=16; Padding=20,12; MinHeight=56; n&#124;NotificationCard.one-toast.one-small /template/ PathIcon#PART_StatusIcon => Width=16; Height=16; n&#124;NotificationCard.one-toast.one-normal /template/ PathIcon#PART_StatusIcon => Width=18; Height=18; n&#124;NotificationCard.one-toast.one-large /template/ PathIcon#PART_StatusIcon => Width=20; Height=20; n&#124;NotificationCard.one-toast => Theme={StaticResource One.ToastCard} |
-| TransitioningContentControl | `one-large` | 模板自动类；不手动绑定 | TransitioningContentControl.one-large => FontSize=16; Padding={DynamicResource One.ContentTransition.Large.Padding} |
-| TransitioningContentControl | `one-normal` | 模板自动类；不手动绑定 | TransitioningContentControl.one-normal => FontSize=14; Padding={DynamicResource One.ContentTransition.Padding} |
-| TransitioningContentControl | `one-small` | 模板自动类；不手动绑定 | TransitioningContentControl.one-small => FontSize=12; Padding={DynamicResource One.ContentTransition.Small.Padding} |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ContentTransitionOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.ContentTransitionOptions.md) | Class | 1 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.NotificationMotion`](../../api/zh-cn/TheOne.Avalonia.Controls.NotificationMotion.md) | Class | 3 | 7 | 0 |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.ContentTransitionOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.ContentTransitionOptions.md) | 1 |
+| [`TheOne.Avalonia.Controls.NotificationMotion`](../../api/zh-cn/TheOne.Avalonia.Controls.NotificationMotion.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

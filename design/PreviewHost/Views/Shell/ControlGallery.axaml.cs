@@ -43,7 +43,7 @@ public partial class ControlGallery : UserControl
         _currentView=page; PageHost.Content=presentation; ResetScroll(); UpdateViewport();
         var hasStyleExamples = descriptor.ControlIds?.Any(controlId => ControlStyleShowcase.Supports(PreviewPageCatalog.Controls.First(control => control.Id == controlId).Title))
             ?? ControlStyleShowcase.Supports(descriptor.Title);
-        SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page }, hasStyleExamples);
+        SourcePanel.SetViews(presentation is ControlPreviewPage standalone ? standalone.SourceViews : page is ShowcasePage grouped ? grouped.SourceViews : new[] { page }, hasStyleExamples);
     }
     private void UpdateViewport()
     {

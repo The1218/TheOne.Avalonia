@@ -95,13 +95,13 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 The targeted checks cover both themes, three sizes, narrow viewports, actual connector pixels, collection / model changes, template priority and a custom button command. The independent NativeAotSmoke consumer supports `--verify-flow-step --require-aot`. Publish and run a real PublishAot executable for native verification; a managed run does not replace it.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### FlowNode
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.FlowNode.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.FlowNode.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -118,7 +118,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### FlowNodePanel
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.FlowNodePanel.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.FlowNodePanel.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### FlowStep
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.FlowStep.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.FlowStep.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -138,7 +138,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### FlowStepConnectors
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.FlowStepConnectors.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.FlowStepConnectors.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -148,7 +148,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### FlowStepPanel
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.FlowStepPanel.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.FlowStepPanel.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -159,31 +159,31 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| FlowNode | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16; IndicatorSize=36; ContentSpacing=16 |
-| FlowNode | `one-normal` | automatic template class; do not bind manually | ^.one-normal => FontSize=14; IndicatorSize=30; ContentSpacing=12 |
-| FlowNode | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12; IndicatorSize=24; ContentSpacing=10 |
-| FlowStep | `one-large` | automatic template class; do not bind manually | ^.one-large => NodeSpacing=32; MinNodeWidth=210 |
-| FlowStep | `one-normal` | automatic template class; do not bind manually | ^.one-normal => NodeSpacing=24; MinNodeWidth=180 |
-| FlowStep | `one-small` | automatic template class; do not bind manually | ^.one-small => NodeSpacing=20; MinNodeWidth=150 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.FlowNode`](../../api/en/TheOne.Avalonia.Controls.FlowNode.md) | Class | 10 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowNodeContent`](../../api/en/TheOne.Avalonia.Controls.FlowNodeContent.md) | Class | 7 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.FlowNodeItem`](../../api/en/TheOne.Avalonia.Controls.FlowNodeItem.md) | Class | 3 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.FlowNodePanel`](../../api/en/TheOne.Avalonia.Controls.FlowNodePanel.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowNodeStatus`](../../api/en/TheOne.Avalonia.Controls.FlowNodeStatus.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStep`](../../api/en/TheOne.Avalonia.Controls.FlowStep.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStepConnectors`](../../api/en/TheOne.Avalonia.Controls.FlowStepConnectors.md) | Class | 3 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStepPanel`](../../api/en/TheOne.Avalonia.Controls.FlowStepPanel.md) | Class | 4 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`FlowNodeContent`](../../api/en/TheOne.Avalonia.Controls.FlowNodeContent.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`FlowNodeItem`](../../api/en/TheOne.Avalonia.Controls.FlowNodeItem.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.FlowNodeContent`](../../api/en/TheOne.Avalonia.Controls.FlowNodeContent.md) | 7 |
+| [`TheOne.Avalonia.Controls.FlowNodeItem`](../../api/en/TheOne.Avalonia.Controls.FlowNodeItem.md) | 3 |
+| [`TheOne.Avalonia.Controls.FlowNodeStatus`](../../api/en/TheOne.Avalonia.Controls.FlowNodeStatus.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

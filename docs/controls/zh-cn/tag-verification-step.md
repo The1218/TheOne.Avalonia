@@ -156,19 +156,19 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 只验证 VerificationStep 时运行 `dotnet run --project design/PreviewHost -- --verify-verification-step`，包含真实 Tab / Shift+Tab 按键检查；渲染入口使用 `--render-controls .preview/verification-step VerificationStep`。发布后的 NativeAotSmoke 原生消费程序使用 `--require-aot --verify-verification-step` 执行相同验证。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### IStepValidator
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### StepCompareAttribute
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -176,7 +176,7 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 ### StepField
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepField.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepField.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -186,13 +186,13 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 ### StepValidation
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md)
 
 没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
 
 ### StepValidationError
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -201,7 +201,7 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 ### Tag
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Tag.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.Tag.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -214,7 +214,7 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 ### VerificationStep
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -242,35 +242,42 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Tag | `one-large` | 模板自动类；不手动绑定 | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-large => MinHeight=32; FontSize=15; Padding=11,4 |
-| Tag | `one-normal` | 模板自动类；不手动绑定 | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0 |
-| Tag | `one-small` | 模板自动类；不手动绑定 | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-small => MinHeight=24; FontSize=11; Padding=7,2 |
-| Tag | `step-indicator` | 模板自动类；不手动绑定 | one&#124;Tag.step-indicator => Width=36; Height=36; one&#124;Tag.step-indicator.one-small => Width=30; Height=30; one&#124;Tag.step-indicator.one-large => Width=42; Height=42 |
-| VerificationStep | `one-large` | 模板自动类；不手动绑定 | one&#124;Tag.step-indicator.one-large => Width=42; Height=42; ^.one-large => FontSize=16; Padding=24 |
-| VerificationStep | `one-small` | 模板自动类；不手动绑定 | one&#124;Tag.step-indicator.one-small => Width=30; Height=30; ^.one-small => FontSize=12; Padding=16 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepField`](../../api/zh-cn/TheOne.Avalonia.Controls.StepField.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepItem`](../../api/zh-cn/TheOne.Avalonia.Controls.StepItem.md) | Class | 13 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.StepItem<T>`](../../api/zh-cn/TheOne.Avalonia.Controls.StepItem_T_.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepState`](../../api/zh-cn/TheOne.Avalonia.Controls.StepState.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidation`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.Tag`](../../api/zh-cn/TheOne.Avalonia.Controls.Tag.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.TagStatus`](../../api/zh-cn/TheOne.Avalonia.Controls.TagStatus.md) | Enum | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.TagVariant`](../../api/zh-cn/TheOne.Avalonia.Controls.TagVariant.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | Class | 21 | 5 | 1 |
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`IStepValidator`](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md) | `Task<IReadOnlyList<StepValidationError>> IStepValidator.ValidateAsync(CancellationToken cancellationToken)` | 校验模型规则与原生输入转换错误；失败、取消、未挂载、禁用或忙碌时返回 `false` |
+| [`StepValidation`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md) | `static IStepValidator StepValidation.For<T>(T model, params string[] memberNames) where T : class` | 为指定模型／属性集合创建类型化步骤校验器。 |
+| [`VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | `void VerificationStep.Reset()` | 重置进度与选择，不清空业务数据或尚未修正的输入草稿 |
+| [`VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | `bool VerificationStep.GoBack()` | 可返回先前步骤；前进仅限相邻下一步并验证，不能跳步 |
+| [`VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | `Task<bool> VerificationStep.GoToAsync(int index, CancellationToken cancellationToken = default(CancellationToken))` | Backward navigation is free; forward navigation is limited to the immediate next step and validates the current one. |
+| [`VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | `Task<bool> VerificationStep.GoNextAsync(CancellationToken cancellationToken = default(CancellationToken))` | Validates current bound model attributes and native input errors; returns false on invalid, busy or cancelled transitions. |
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`StepItem`](../../api/zh-cn/TheOne.Avalonia.Controls.StepItem.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`VerificationStep`](../../api/zh-cn/TheOne.Avalonia.Controls.VerificationStep.md) | `ValidationFailed` | 失败的冒泡事件；完成使用 CompletedCommand |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md) | 1 |
+| [`TheOne.Avalonia.Controls.StepItem`](../../api/zh-cn/TheOne.Avalonia.Controls.StepItem.md) | 13 |
+| [`TheOne.Avalonia.Controls.StepState`](../../api/zh-cn/TheOne.Avalonia.Controls.StepState.md) | 4 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md) | 2 |
+| [`TheOne.Avalonia.Controls.TagStatus`](../../api/zh-cn/TheOne.Avalonia.Controls.TagStatus.md) | 6 |
+| [`TheOne.Avalonia.Controls.TagVariant`](../../api/zh-cn/TheOne.Avalonia.Controls.TagVariant.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

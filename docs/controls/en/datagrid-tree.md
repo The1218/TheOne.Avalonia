@@ -89,13 +89,13 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 This is the native consumer entry point for the current macOS host; it does not establish Windows/Linux runtime coverage. Existing ordinary-grid regression entry points remain in [Program.cs](../../../design/PreviewHost/Program.cs).
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### DataGridTreeChangingEventArgs
 
-[API / model reference](../../api/en/Avalonia.Collections.DataGridTreeChangingEventArgs.md)
+[Complete source contract](../../api/en/Avalonia.Collections.DataGridTreeChangingEventArgs.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -104,7 +104,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### DataGridTreeCollectionView
 
-[API / model reference](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md)
+[Complete source contract](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -122,7 +122,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### DataGridTreeNodeState
 
-[API / model reference](../../api/en/Avalonia.Collections.DataGridTreeNodeState.md)
+[Complete source contract](../../api/en/Avalonia.Collections.DataGridTreeNodeState.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -135,13 +135,13 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### IDataGridTreeCollectionView
 
-[API / model reference](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md)
+[Complete source contract](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### IDataGridTreeQueryView
 
-[API / model reference](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md)
+[Complete source contract](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -149,7 +149,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridColumnOptions
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -164,7 +164,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridFeatures
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -178,7 +178,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### DataGridTreeFeatures
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridTreeFeatures.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.DataGridTreeFeatures.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -186,36 +186,63 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| DataGrid | `borderless` | explicit Classes; combine with density | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
-| DataGrid | `one-large` | automatic template class; do not bind manually | DataGrid.one-large => FontSize=16 |
-| DataGrid | `one-normal` | automatic template class; do not bind manually | DataGrid.one-normal => FontSize=14 |
-| DataGrid | `one-small` | automatic template class; do not bind manually | DataGrid.one-small => FontSize=12 |
+- `DataGrid`: `Classes="borderless"`
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `override IDisposable DataGridTreeCollectionView<T>.DeferRefresh()` | Defers collection refresh to batch changes; dispose the returned token at the end of a using scope. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `bool DataGridTreeCollectionView<T>.IsFilterMatch(object item)` | Checks whether an original node directly matches the current filter. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `bool DataGridTreeCollectionView<T>.IsLeaf(object item)` | Checks whether an original node is a leaf with no children. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `bool DataGridTreeCollectionView<T>.TryGetNodeState(object item, out DataGridTreeNodeState state)` | Attempts to read hierarchy/parent/expansion state; false means the node was not found. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `bool DataGridTreeCollectionView<T>.TrySetExpanded(object item, bool expanded)` | Attempts to change original-node expansion; the result indicates success under tree-state restrictions. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `bool DataGridTreeCollectionView<T>.RefreshTree()` | Refreshes plain collections or reconnects replaced child collections. Returns false when an edit or a cancellable presentation change prevents refresh. |
+| [`IDataGridTreeCollectionView`](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md) | `bool IDataGridTreeCollectionView.TryGetNodeState(object item, out DataGridTreeNodeState state)` | Attempts to read hierarchy/parent/expansion state; false means the node was not found. |
+| [`IDataGridTreeCollectionView`](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md) | `bool IDataGridTreeCollectionView.TrySetExpanded(object item, bool expanded)` | Attempts to change original-node expansion; the result indicates success under tree-state restrictions. |
+| [`IDataGridTreeQueryView`](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md) | `bool IDataGridTreeQueryView.IsFilterMatch(object item)` | Checks whether an original node directly matches the current filter. |
+| [`IDataGridTreeQueryView`](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md) | `bool IDataGridTreeQueryView.IsLeaf(object item)` | Checks whether an original node is a leaf with no children. |
+| [`DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | `static DataGridSummaryResult? DataGridFeatures.GetSummaryResult(DataGrid grid, DataGridColumn column)` | Reads current column aggregates, including valid count, result and errors. |
+| [`DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | `static DataGridFilterApplyResult DataGridFeatures.ApplyFilter(DataGrid grid, DataGridColumn column, DataGridFilterCondition? condition)` | Applies a column filter and returns its result; inspect result/filter-error state on failure. |
+| [`DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | `static DataGridFilterApplyResult DataGridFeatures.ClearFilter(DataGrid grid, DataGridColumn column)` | Clears the specified column filter while preserving other conditions. |
+| [`DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | `static DataGridFilterApplyResult DataGridFeatures.ClearAllFilters(DataGrid grid)` | Clears all column filters and refreshes visible rows. |
+| [`DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | `abstract bool DataGridFilterCondition.Matches(object? value)` | Checks a value against this filter; null/comparison semantics follow the condition type. |
+| [`IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | `object? IDataGridValueAccessor.GetValue(object item)` | Reads an original-row value through an explicit field key/typed getter, without reflection paths. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`Avalonia.Collections.DataGridTreeChangingEventArgs`](../../api/en/Avalonia.Collections.DataGridTreeChangingEventArgs.md) | Class | 2 | 1 | 0 |
-| [`Avalonia.Collections.DataGridTreeCollectionView<T>`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | Class | 11 | 8 | 3 |
-| [`Avalonia.Collections.DataGridTreeNodeState`](../../api/en/Avalonia.Collections.DataGridTreeNodeState.md) | Struct | 6 | 2 | 0 |
-| [`Avalonia.Collections.IDataGridTreeCollectionView`](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md) | Interface | 0 | 2 | 2 |
-| [`Avalonia.Collections.IDataGridTreeQueryView`](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md) | Interface | 1 | 2 | 1 |
-| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | Class | 8 | 16 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | Class | 7 | 19 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterApplyResult`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterApplyResult.md) | Struct | 2 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterKind.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSummaryResult`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryResult.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridSummaryScope`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryScope.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.DataGridTreeFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridTreeFeatures.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | Interface | 1 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `TreeChanging` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `TreeChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`DataGridTreeCollectionView`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | `LoadedItemsChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`IDataGridTreeCollectionView`](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md) | `TreeChanging` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`IDataGridTreeCollectionView`](../../api/en/Avalonia.Collections.IDataGridTreeCollectionView.md) | `TreeChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`IDataGridTreeQueryView`](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md) | `LoadedItemsChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`Avalonia.Collections.DataGridTreeChangingEventArgs`](../../api/en/Avalonia.Collections.DataGridTreeChangingEventArgs.md) | 2 |
+| [`Avalonia.Collections.DataGridTreeCollectionView<T>`](../../api/en/Avalonia.Collections.DataGridTreeCollectionView_T_.md) | 11 |
+| [`Avalonia.Collections.DataGridTreeNodeState`](../../api/en/Avalonia.Collections.DataGridTreeNodeState.md) | 6 |
+| [`Avalonia.Collections.IDataGridTreeQueryView`](../../api/en/Avalonia.Collections.IDataGridTreeQueryView.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | 8 |
+| [`TheOne.Avalonia.Controls.DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | 7 |
+| [`TheOne.Avalonia.Controls.DataGridFilterApplyResult`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterApplyResult.md) | 2 |
+| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | 1 |
+| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterKind.md) | 4 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | 5 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryResult`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryResult.md) | 3 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryScope`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryScope.md) | 3 |
+| [`TheOne.Avalonia.Controls.DataGridTreeFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridTreeFeatures.md) | 1 |
+| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | 1 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

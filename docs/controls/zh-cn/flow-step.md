@@ -95,13 +95,13 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 专项包含明暗主题、三档尺寸、窄视口、实际连接线像素、集合与模型变化、模板优先级和自定义按钮交互。独立 NativeAotSmoke 消费端支持 `--verify-flow-step --require-aot`；原生消费需要真实 PublishAot 发布后执行，不能用托管运行替代。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### FlowNode
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNode.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNode.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -118,7 +118,7 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 
 ### FlowNodePanel
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodePanel.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodePanel.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -127,7 +127,7 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 
 ### FlowStep
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStep.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStep.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -138,7 +138,7 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 
 ### FlowStepConnectors
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepConnectors.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepConnectors.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -148,7 +148,7 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 
 ### FlowStepPanel
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepPanel.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepPanel.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -159,31 +159,32 @@ dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --ren
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| FlowNode | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16; IndicatorSize=36; ContentSpacing=16 |
-| FlowNode | `one-normal` | 模板自动类；不手动绑定 | ^.one-normal => FontSize=14; IndicatorSize=30; ContentSpacing=12 |
-| FlowNode | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12; IndicatorSize=24; ContentSpacing=10 |
-| FlowStep | `one-large` | 模板自动类；不手动绑定 | ^.one-large => NodeSpacing=32; MinNodeWidth=210 |
-| FlowStep | `one-normal` | 模板自动类；不手动绑定 | ^.one-normal => NodeSpacing=24; MinNodeWidth=180 |
-| FlowStep | `one-small` | 模板自动类；不手动绑定 | ^.one-small => NodeSpacing=20; MinNodeWidth=150 |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.FlowNode`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNode.md) | Class | 10 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowNodeContent`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeContent.md) | Class | 7 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.FlowNodeItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeItem.md) | Class | 3 | 1 | 1 |
-| [`TheOne.Avalonia.Controls.FlowNodePanel`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodePanel.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowNodeStatus`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeStatus.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStep`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStep.md) | Class | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStepConnectors`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepConnectors.md) | Class | 3 | 2 | 0 |
-| [`TheOne.Avalonia.Controls.FlowStepPanel`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepPanel.md) | Class | 4 | 1 | 0 |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`FlowNodeContent`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeContent.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`FlowNodeItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeItem.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.FlowNodeContent`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeContent.md) | 7 |
+| [`TheOne.Avalonia.Controls.FlowNodeItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeItem.md) | 3 |
+| [`TheOne.Avalonia.Controls.FlowNodeStatus`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeStatus.md) | 3 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

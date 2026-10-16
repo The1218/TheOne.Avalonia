@@ -32,13 +32,13 @@ Native Button and IconButton share primary/accent, soft, gradient, outline, ghos
 Declare the view's x:DataType for compiled bindings and the icon data type on data IconTemplate instances. Implementation uses StyledProperty, TemplateBinding, and compiled templates without reflection-based icon creation. See [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs) for independent compiled-binding and native consumption examples.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### ButtonLoading
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ButtonLoading.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ButtonLoading.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -46,7 +46,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### IconButton
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.IconButton.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.IconButton.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -62,7 +62,7 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 ### ThemeButton
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -70,27 +70,22 @@ This section lists only Classes, properties, extension APIs/events and related m
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| IconButton | `one-large` | automatic template class; do not bind manually | ^.one-large:icon-only => MinWidth=44; ^.one-large => IconSize=19; IconSpacing=10 |
-| IconButton | `one-small` | automatic template class; do not bind manually | ^.one-small:icon-only => MinWidth=30; ^.one-small => IconSize=13; IconSpacing=6 |
-| ThemeButton | `one-large` | automatic template class; do not bind manually | one&#124;ThemeButton.one-large => Width=44; Height=44 |
-| ThemeButton | `one-normal` | automatic template class; do not bind manually | one&#124;ThemeButton.one-normal => Width=36; Height=36 |
-| ThemeButton | `one-small` | automatic template class; do not bind manually | one&#124;ThemeButton.one-small => Width=30; Height=30 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+No additional business methods; configure the control-specific properties above.
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.ButtonLoading`](../../api/en/TheOne.Avalonia.Controls.ButtonLoading.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.IconButton`](../../api/en/TheOne.Avalonia.Controls.IconButton.md) | Class | 9 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.IconPlacement`](../../api/en/TheOne.Avalonia.Controls.IconPlacement.md) | Enum | 4 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButton`](../../api/en/TheOne.Avalonia.Controls.ThemeButton.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
+### Related models
 
-[Complete public API index](../../api/en/README.md)
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.ButtonLoading`](../../api/en/TheOne.Avalonia.Controls.ButtonLoading.md) | 1 |
+| [`TheOne.Avalonia.Controls.IconPlacement`](../../api/en/TheOne.Avalonia.Controls.IconPlacement.md) | 4 |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/en/TheOne.Avalonia.Controls.ThemeButtonScope.md) | 2 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

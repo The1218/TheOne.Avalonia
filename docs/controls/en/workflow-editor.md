@@ -115,19 +115,19 @@ NativeAotSmoke supports --verify-workflow. Checks cover contracts, JSON, compile
 Initial routing uses directly drawn rounded orthogonal edges and layered arrangement. Full obstacle routing, bend editing and node virtualization are not included. The host owns rule execution and output evaluation.
 
 <!-- generated-contracts:start -->
-## Additional properties, styles and complete API
+## Control-specific properties, Classes usage and business APIs
 
-This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists project-added control-specific properties, public Classes usage, practical business actions and related models, without repeating inherited native APIs, constructors, property Get/Set wrappers or public identifiers. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost shows Classes through labeled examples rather than template-selector/setter inventories; properties and business actions in Description include short usage snippets. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### WorkflowCanvas
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.WorkflowCanvas.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.WorkflowCanvas.md)
 
 No additional CLR/attached properties are declared on this type; see its base for inherited members.
 
 ### WorkflowEditor
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -178,7 +178,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 ### WorkflowMiniMap
 
-[API / model reference](../../api/en/TheOne.Avalonia.Controls.WorkflowMiniMap.md)
+[Complete source contract](../../api/en/TheOne.Avalonia.Controls.WorkflowMiniMap.md)
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
@@ -186,41 +186,75 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
-### Style classes and automatic state
+### Classes usage
 
-| Control | Class | Scope | Effective setters/resources |
-| --- | --- | --- | --- |
-| WorkflowEditor | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16 |
-| WorkflowEditor | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12 |
+No added public appearance classes; use the default theme and control-specific properties.
+These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
-`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
+### Business APIs
 
-### APIs, events and built-in models
+| Type | Action signature | Purpose |
+| --- | --- | --- |
+| [`WorkflowCanvas`](../../api/en/TheOne.Avalonia.Controls.WorkflowCanvas.md) | `Point WorkflowCanvas.ToWorld(Point point)` | Converts viewport coordinates into document-world coordinates, accounting for zoom/pan. |
+| [`WorkflowCanvas`](../../api/en/TheOne.Avalonia.Controls.WorkflowCanvas.md) | `void WorkflowCanvas.CancelGesture()` | Cancels the current canvas gesture and clears drag/connection previews. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)` | Adds a workflow node through document history so the edit can be undone. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)` | Selects an original workflow node under the editor's connection-selection rules. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)` | Attempts a port connection using document validation/history. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.DeleteSelection()` | Deletes selected nodes/connections through undo history. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.FitToView()` | Adjusts zoom/pan to fit document nodes without changing model coordinates. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.Locate(string? nodeId)` | Locates a node/validation issue in the current viewport. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.ArrangeNodes()` | Arranges node layout while recording coordinate changes in document history. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.CopySelection()` | Copies the selection into a supported editor fragment under serialization boundaries. |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.PasteSelection()` | Pastes a copied fragment with independent identities and undoable edits. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Edit(string title, Action redo, Action undo)` | Apply a host edit to the same history as graph edits. Actions must be deterministic and not throw. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Undo()` | Undoes the most recent undoable document edit. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Redo()` | Redoes the most recently undone document edit. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.ClearHistory()` | Clears undo/redo history while retaining current document data. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.AddNode(WorkflowNode node)` | Adds a workflow node through document history so the edit can be undone. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Remove(IEnumerable<WorkflowNode> nodes, WorkflowConnection? connection = null)` | Removes a workflow object/associated relationships through document history. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.MoveNodes(IEnumerable<(WorkflowNode Node, double X, double Y)> positions)` | Updates node coordinates in a batch recorded as an undoable move. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)` | Edits workflow literal/reference properties through the document to preserve undo/notifications. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)` | Validates a candidate port connection and reports failures without creating it. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)` | Validates and attempts a connection, returning success and associated results. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.IsReachable(string from, string to)` | Checks graph reachability for connection/cycle decisions. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowReferenceOption> WorkflowDocument.GetReferenceOptions(WorkflowNode target, WorkflowProperty property)` | Lists compatible upstream references for the current node property. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)` | Validates workflow structure, ports and references, returning locatable issues. |
+| [`WorkflowNodeEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | `void WorkflowNodeEditor.Refresh()` | Refresh after document edits, including undo and upstream metadata changes. |
+| [`WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.Refresh()` | Resynchronizes the inspector from its model/document, including undo and upstream changes. |
+| [`WorkflowSerializer`](../../api/en/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static string WorkflowSerializer.Save(WorkflowDocument document)` | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
+| [`WorkflowSerializer`](../../api/en/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static WorkflowDocument WorkflowSerializer.Load(string json)` | Loads a typed business document from JSON under its version/field/structure validation contract. |
 
-| Type | Kind | Properties/enum values | Methods/constructors | Events |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.WorkflowCanvas`](../../api/en/TheOne.Avalonia.Controls.WorkflowCanvas.md) | Class | 0 | 4 | 0 |
-| [`TheOne.Avalonia.Controls.WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | Class | 44 | 10 | 1 |
-| [`TheOne.Avalonia.Controls.WorkflowMiniMap`](../../api/en/TheOne.Avalonia.Controls.WorkflowMiniMap.md) | Class | 1 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowConnection.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | Class | 6 | 14 | 1 |
-| [`TheOne.Avalonia.Workflow.WorkflowNode`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNode.md) | Class | 14 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeDefinition`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeDefinition.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | Class | 5 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeGroup`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeGroup.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeShape`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeShape.md) | Enum | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowNodeState`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeState.md) | Enum | 5 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowObservable`](../../api/en/TheOne.Avalonia.Workflow.WorkflowObservable.md) | Class | 0 | 0 | 1 |
-| [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/en/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPort.md) | Class | 6 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | Enum | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/en/TheOne.Avalonia.Workflow.WorkflowProperty.md) | Class | 8 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | Class | 7 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/en/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | Class | 2 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowSerializer`](../../api/en/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | Class | 0 | 2 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | Class | 3 | 1 | 0 |
-| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | Enum | 3 | 1 | 0 |
+### Event subscriptions
 
-[Complete public API index](../../api/en/README.md)
+Subscribe when needed and detach when the host is disposed. These are event entry points, not routed-event identifier fields.
+
+| Type | Event | Purpose |
+| --- | --- | --- |
+| [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `DocumentEdited` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `Changed` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`WorkflowObservable`](../../api/en/TheOne.Avalonia.Workflow.WorkflowObservable.md) | `PropertyChanged` | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+
+### Related models
+
+| Model | Properties/enum values |
+| --- | ---: |
+| [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowConnection.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowNode`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNode.md) | 14 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeDefinition`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeDefinition.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | 5 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeGroup`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeGroup.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeShape`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeShape.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowNodeState`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeState.md) | 5 |
+| [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/en/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPort.md) | 6 |
+| [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/en/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 8 |
+| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 7 |
+| [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/en/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | 2 |
+| [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 3 |
+
+[Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

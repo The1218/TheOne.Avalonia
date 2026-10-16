@@ -73,13 +73,13 @@ PreviewHost 的“下拉刷新 Refresh”页提供千条虚拟数据、真实下
 PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内置指示器参与下拉、刷新和 Motion 切换验证，仍提供公共主题与自定义 Visualizer API。
 
 <!-- generated-contracts:start -->
-## 额外属性、样式与完整 API
+## 专属属性、Classes 用法与业务 API
 
-本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
 
 ### CarouselOptions
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.CarouselOptions.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.CarouselOptions.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -87,7 +87,7 @@ PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内�
 
 ### RefreshMotion
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshMotion.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshMotion.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -95,7 +95,7 @@ PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内�
 
 ### RefreshOptions
 
-[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshOptions.md)
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshOptions.md)
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
@@ -104,34 +104,23 @@ PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内�
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
-### Style 类与自动状态
+### Classes 用法
 
-| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
-| --- | --- | --- | --- |
-| Carousel | `one-large` | 模板自动类；不手动绑定 | Carousel.one-large => FontSize=16; Padding={DynamicResource One.Carousel.Large.Padding}; MinHeight={DynamicResource One.Carousel.Large.MinHeight} |
-| Carousel | `one-no-motion` | 模板自动类；不手动绑定 | ^.one-no-motion => PageTransition={x:Null} |
-| Carousel | `one-normal` | 模板自动类；不手动绑定 | Carousel.one-normal => FontSize=14; Padding={DynamicResource One.Carousel.Padding}; MinHeight={DynamicResource One.Carousel.MinHeight} |
-| Carousel | `one-small` | 模板自动类；不手动绑定 | Carousel.one-small => FontSize=12; Padding={DynamicResource One.Carousel.Small.Padding}; MinHeight={DynamicResource One.Carousel.Small.MinHeight} |
-| RefreshContainer | `one-large` | 模板自动类；不手动绑定 | RefreshContainer.one-large, RefreshVisualizer.one-large => FontSize=16 |
-| RefreshContainer | `one-normal` | 模板自动类；不手动绑定 | RefreshContainer.one-normal, RefreshVisualizer.one-normal => FontSize=14 |
-| RefreshContainer | `one-small` | 模板自动类；不手动绑定 | RefreshContainer.one-small, RefreshVisualizer.one-small => FontSize=12 |
-| RefreshVisualizer | `one-large` | 模板自动类；不手动绑定 | RefreshContainer.one-large, RefreshVisualizer.one-large => FontSize=16; RefreshVisualizer.one-large => Height={DynamicResource One.Refresh.Large.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.Large.IndicatorSize}; RefreshVisualizer.one-large.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Large.Height} |
-| RefreshVisualizer | `one-normal` | 模板自动类；不手动绑定 | RefreshContainer.one-normal, RefreshVisualizer.one-normal => FontSize=14; RefreshVisualizer.one-normal => Height={DynamicResource One.Refresh.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.IndicatorSize}; RefreshVisualizer.one-normal.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Height} |
-| RefreshVisualizer | `one-refresh-bottom` | 模板自动类；不手动绑定 | ^.one-refresh-bottom => BorderThickness=0,1,0,0 |
-| RefreshVisualizer | `one-refresh-horizontal` | 模板自动类；不手动绑定 | ^.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Height} |
-| RefreshVisualizer | `one-refresh-left` | 模板自动类；不手动绑定 | ^.one-refresh-left => BorderThickness=0,0,1,0 |
-| RefreshVisualizer | `one-refresh-right` | 模板自动类；不手动绑定 | ^.one-refresh-right => BorderThickness=1,0,0,0 |
-| RefreshVisualizer | `one-small` | 模板自动类；不手动绑定 | RefreshContainer.one-small, RefreshVisualizer.one-small => FontSize=12; RefreshVisualizer.one-small => Height={DynamicResource One.Refresh.Small.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.Small.IndicatorSize}; RefreshVisualizer.one-small.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Small.Height} |
+没有额外公开外观类，使用默认主题及专属属性。
 
-`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
-### API、事件与内置模型
+### 业务 API
 
-| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
-| --- | --- | ---: | ---: | ---: |
-| [`TheOne.Avalonia.Controls.CarouselOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.CarouselOptions.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.RefreshMotion`](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshMotion.md) | Class | 1 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.RefreshOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshOptions.md) | Class | 2 | 5 | 0 |
+没有额外业务方法；通过本节专属属性配置。
 
-[Complete public API index](../../api/zh-cn/README.md)
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.CarouselOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.CarouselOptions.md) | 1 |
+| [`TheOne.Avalonia.Controls.RefreshMotion`](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshMotion.md) | 1 |
+| [`TheOne.Avalonia.Controls.RefreshOptions`](../../api/zh-cn/TheOne.Avalonia.Controls.RefreshOptions.md) | 2 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->
