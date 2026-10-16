@@ -35,7 +35,7 @@ internal static class AccessorWriter
         {
             var variable = "instance" + i++;
             var target = "global::" + (p.Attached ? p.Target : owner.Id);
-            var setter = p.Attached ? $"global::{owner.Id}.Set{p.Name}({variable}, {Parse(p)})" : $"{variable}.{p.Name} = {Parse(p)}";
+            var setter = Assign(owner, p, variable, Parse(p)!);
             b.AppendLine($"            case {Literal(owner.Id + "." + p.Name)} when target is {target} {variable}: {setter}; return true;");
         }
         b.AppendLine("            default: return false;\n        }\n    }\n");
@@ -45,7 +45,7 @@ internal static class AccessorWriter
             var variable = "instance" + i++;
             var target = "global::" + (p.Attached ? p.Target : owner.Id);
             var cast = $"({Qualify(p.Type)})value!";
-            var setter = p.Attached ? $"global::{owner.Id}.Set{p.Name}({variable}, {cast})" : $"{variable}.{p.Name} = {cast}";
+            var setter = Assign(owner, p, variable, cast);
             b.AppendLine($"            case {Literal(owner.Id + "." + p.Name)} when target is {target} {variable}: {setter}; return true;");
         }
         b.AppendLine("            default: return false;\n        }\n    }\n");
@@ -64,7 +64,8 @@ internal static class AccessorWriter
             }
             b.AppendLine("        }");
         }
-        b.AppendLine("        return new ExplorerSubscription(() => detach.ForEach(action => action()));\n    }\n}");
+        b.AppendLine("        return new ExplorerSubscription(() => detach.ForEach(action => action()));\n    }");
+        b.AppendLine("    private static void SetCurrent<T>(global::Avalonia.AvaloniaObject target, global::Avalonia.StyledProperty<T> property, T value)\n    {\n        if (property.ValidateValue is { } validate && !validate(value)) throw new System.ArgumentOutOfRangeException(nameof(value), value, property.Name + \" rejected this value.\");\n        target.SetCurrentValue(property, value);\n    }\n}");
         var path = Path.Combine(root, "design/PreviewHost/Reference/ContractAccessors.g.cs");
         var text = b.ToString();
         var equal = File.Exists(path) && File.ReadAllText(path) == text;
@@ -100,6 +101,13 @@ internal static class AccessorWriter
         if (expression is not null && p.Type.EndsWith('?') && type != "string" && type != "Avalonia.Controls.Templates.IDataTemplate" && type != "System.Windows.Input.ICommand")
             expression = $"string.IsNullOrWhiteSpace(value) ? ({(type.Contains('.') ? "global::" : "") + type}?)null : {expression}";
         return expression;
+    }
+    private static string Assign(TypeContract owner, PropertyContract p, string target, string value)
+    {
+        var field = owner.Fields.FirstOrDefault(f => f.Signature.EndsWith("." + p.Identifier, StringComparison.Ordinal));
+        if (field is not null && (field.Signature.Contains("StyledProperty<", StringComparison.Ordinal) || field.Signature.Contains("AttachedProperty<", StringComparison.Ordinal)))
+            return $"SetCurrent({target}, global::{owner.Id}.{p.Identifier}, {value})";
+        return p.Attached ? $"global::{owner.Id}.Set{p.Name}({target}, {value})" : $"{target}.{p.Name} = {value}";
     }
     private static string Literal(string value) => JsonSerializer.Serialize(value);
     private static string Qualify(string value) => Regex.Replace(value, @"(?<![\w.])(?:TheOne\.Avalonia|Avalonia|System)\.", "global::$0");

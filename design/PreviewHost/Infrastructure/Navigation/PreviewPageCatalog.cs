@@ -6,7 +6,6 @@ public sealed record PreviewPageDescriptor(int Id,string Title,string Group, IRe
 internal static class PreviewPageCatalog
 {
     public static PreviewPageDescriptor Home { get; } = new(0, "Home 首页", "开始使用");
-    public static PreviewPageDescriptor Reference { get; } = new(500, "控件能力实验室", "基础控件");
     public static IReadOnlyList<PreviewPageDescriptor> Controls { get; } =
     [
         new(1,"Button","基础控件"),
@@ -23,6 +22,10 @@ internal static class PreviewPageCatalog
         new(321,"Upload","扩展控件"),
         new(322,"Form","扩展控件"),
         new(323,"MultiSelectBox","扩展控件"),
+        new(324,"ThemeColorPicker","基础控件"),
+        new(325,"ThemeButton","基础控件"),
+        new(22,"OneWindow","消息与对话框"),
+        new(326,"LoginWindow","消息与对话框"),
         new(101,"ToggleButton","基础控件"),
         new(16,"RepeatButton","基础控件"),
         new(2,"TextBox","基础控件"),
@@ -90,25 +93,12 @@ internal static class PreviewPageCatalog
     private static readonly PreviewPageDescriptor[] CombinedPages =
     [
         new(400,"按钮","基础控件", [1,101,16,12,130,305]),
-        new(401,"文本与输入","基础控件", [2,110,111]),
-        new(402,"选择与开关","基础控件", [3,15,106]),
-        new(403,"数值与进度","基础控件", [4,108,109]),
-        new(404,"日期与时间","基础控件", [5,113,114,115]),
-        new(405,"数据展示","数据展示", [118,9,7,18,24,13,117]),
-        new(406,"标签与内容切换","导航与布局", [6,17,20]),
-        new(407,"菜单与浮层","导航与布局", [122,123,128,14]),
-        new(408,"滚动与分隔","导航与布局", [125,126,127,132]),
-        new(409,"趋势图","图表控件", [23,201,204]),
-        new(410,"柱状图","图表控件", [202,208,211]),
-        new(411,"条形图","图表控件", [203,209,212]),
-        new(412,"堆叠面积图","图表控件", [210,213]),
-        new(413,"饼图与环形图","图表控件", [205,206]),
-        new(414,"仪表图","图表控件", [207]),
-        new(415,"Step","扩展控件", [27,307]),
+        new(401,"输入 Input","基础控件", [2,4,111]),
+        new(402,"选择 Select","基础控件", [110,3,15,106]),
     ];
-    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home, Reference }.Concat(CombinedPages)
+    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home }.Concat(CombinedPages)
         .Concat(Controls.Where(control => !CombinedPages.Any(page => page.ControlIds!.Contains(control.Id)))).ToArray();
-    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = new[] { Home, Reference }.Concat(CombinedPages)
+    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = new[] { Home }.Concat(CombinedPages)
         .Concat(Controls.Select(control => control with { Group = SearchGroup(control.Id) })).ToArray();
     private static string SearchGroup(int id)
     {
@@ -124,7 +114,10 @@ internal static class PreviewPageCatalog
     internal static UserControl CreateControl(int id) => id switch
     {
         0 => new HomePage(),
-        500 => new ControlExplorerView(),
+        324 => new ThemeControlDemoView(false),
+        325 => new ThemeControlDemoView(true),
+        22 => new WindowControlDemoView(false),
+        326 => new WindowControlDemoView(true),
         1 => new ButtonPage(),
         305 => new IconButtonPage(),
         306 => new LoadingContainerPage(),

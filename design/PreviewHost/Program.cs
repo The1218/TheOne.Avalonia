@@ -26,12 +26,12 @@ internal static class Program
             else PreviewCodePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }
-        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-explorer")
+        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-pages")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
             void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
             if (args[0] == "--verify-home") HomePreview.Verify(Check, args.Length > 1 ? args[1] : null);
-            else if (args[0] == "--verify-control-explorer") ControlExplorerPreview.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-control-pages") ControlPagesPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             else PreviewPrintingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }

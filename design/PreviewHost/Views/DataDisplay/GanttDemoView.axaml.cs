@@ -8,7 +8,14 @@ public partial class GanttDemoView : UserControl
 {
     public GanttDemoViewModel Model { get; } = new();
     private GanttChart Chart => this.FindControl<GanttChart>("Schedule")!;
-    public GanttDemoView() { DataContext = Model; global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this); }
+    public GanttDemoView() { DataContext = Model; global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this); SetViewportHeight(720); }
+    internal void SetViewportHeight(double height)
+    {
+        if (!double.IsFinite(height) || height <= 0) return;
+        // Bound only the virtual task viewport. The full demo and its toolbar,
+        // status, details and documentation keep their natural height.
+        Chart.Height = Math.Max(Chart.HeaderHeight + Chart.RowHeight * 3, height * .65);
+    }
     private void TodayClick(object? sender, RoutedEventArgs e) => Chart.ScrollToToday();
     private void FitClick(object? sender, RoutedEventArgs e) => Chart.FitToProject();
     private void DayClick(object? sender, RoutedEventArgs e) => Model.DayWidth = 48;

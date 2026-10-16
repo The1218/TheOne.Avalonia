@@ -15,6 +15,6 @@ The integration guide contains a portable coding-agent brief. It does not depend
 
 Baseline / 文档基线：TheOne.Avalonia + TheOne.Avalonia.DataGrid **1.0.0-preview.3**, **.NET 10**, **Avalonia 12.1.4**. Package versions, upstream DataGrid version and assembly identities are separate; see the integration guide.
 
-The API reference and laboratory follow the checked-out source; preview.3 predates these additions. In PreviewHost, open **基础控件 → 控件能力实验室**, or use the top-right action on any page. Styles have independent real samples; property editing, event observation and model contracts share the generated catalog. See [reference maintenance](../tools/ControlReferenceGenerator/README.md) for regeneration and drift checks.
+The API reference and per-control previews follow the checked-out source; preview.3 predates these additions. Use each control's own navigation page. Only Button, Input and Select share comparison pages. Complete demos retain their original data and layout; local style/property/API/model sections share the generated catalog. Canvas editors keep their full viewport with reference content in a separate tab. See [reference maintenance](../tools/ControlReferenceGenerator/README.md) for regeneration and drift checks.
 
-API 清单与实验室跟随当前源码，preview.3 发布包早于本轮新增内容。PreviewHost 中进入 **基础控件 → 控件能力实验室**，或点击任意页右上的入口。样式使用独立的实际控件，属性编辑、事件观察和模型说明共用生成清单。更新与检查方法见[文档维护工具](../tools/ControlReferenceGenerator/README.md)。
+API 清单与各控件预览跟随当前源码，preview.3 发布包早于本轮新增内容。PreviewHost 中直接进入相应控件页；仅 Button、Input、Select 合并比较。完整示例保留原始数据与布局，本页补充样式、属性、API／事件和内置模型。画布编辑器保留完整视口，说明位于单独的页内标签。更新与检查方法见[文档维护工具](../tools/ControlReferenceGenerator/README.md)。

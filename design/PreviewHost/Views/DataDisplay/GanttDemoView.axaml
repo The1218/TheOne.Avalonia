@@ -17,7 +17,7 @@
       <Button Content="月" Click="MonthClick" Margin="0,0,12,8" />
       <Button Content="−" Click="ZoomOutClick" Margin="0,0,4,8" /><Button Content="＋" Click="ZoomInClick" Margin="0,0,8,8" />
     </WrapPanel>
-    <one:GanttChart Name="Schedule" Height="520" ItemsSource="{Binding Items}" SelectedTask="{Binding SelectedTask, Mode=TwoWay}"
+    <one:GanttChart Name="Schedule" ItemsSource="{Binding Items}" SelectedTask="{Binding SelectedTask, Mode=TwoWay}"
                     ViewStart="{Binding ViewStart, Mode=TwoWay}" ViewEnd="{Binding ViewEnd, Mode=TwoWay}" Today="{Binding Today}"
                     DayWidth="{Binding DayWidth, Mode=TwoWay}" TaskHeader="任务名称" OwnerHeader="负责人" ProgressHeader="进度" EmptyText="没有匹配的任务" />
     <WrapPanel>

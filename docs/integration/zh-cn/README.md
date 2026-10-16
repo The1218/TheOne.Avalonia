@@ -164,7 +164,7 @@ dotnet .preview/migration/artifacts/bin/PreviewHost/release/PreviewHost.dll --ve
 
 换用其他功能时，从对应控件页及 [Program.cs](../../../design/PreviewHost/Program.cs)选择实际存在的专项入口，不顺带跑全部控件。外部目标项目只构建其必需的项目；产物使用任务自己的目录。包消费参考 [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer)，不依赖本地发布日志或二进制目录。
 
-完成后报告：修改了什么、公开契约是否改变、实际构建／交互／目标 OS 验证、剩余限制及下一步。未运行的检查不能写成通过。[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出本库全部公开类型、属性、构造、方法、事件和枚举，并链接声明；控件指南同时列出额外属性和样式。PreviewHost 的“控件能力实验室”按样式、属性、API／事件和模型分类展示，支持编辑常用值及观察事件。当前发布包尚未附带完整 XML API 说明，仓库新增文档及演示以当前源码为准；消费 preview.3 时仍核对包的提交版本。
+完成后报告：修改了什么、公开契约是否改变、实际构建／交互／目标 OS 验证、剩余限制及下一步。未运行的检查不能写成通过。[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出本库全部公开类型、属性、构造、方法、事件和枚举，并链接声明；控件指南同时列出额外属性和样式。PreviewHost 在各控件独立页面展示完整示例，附本页样式、属性、API／事件与内置模型；仅 Button、Input、Select 合并比较。画布编辑器使用完整视口，说明单独放在页内标签中。当前发布包尚未附带完整 XML API 说明，仓库新增文档及演示以当前源码为准；消费 preview.3 时仍核对包的提交版本。
 
 ## 7. 可复制给其他 Codex 的任务说明
 

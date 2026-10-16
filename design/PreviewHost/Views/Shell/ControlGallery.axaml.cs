@@ -9,20 +9,16 @@ public partial class ControlGallery : UserControl
 {
     private GalleryViewModel? _model;
     private readonly Dictionary<int, UserControl> _pages = [];
+    private readonly Dictionary<int, Control> _presentations = [];
+    private UserControl? _currentView;
     private int _scrollRequest;
     public ControlGallery()
     {
         InitializeComponent(); DataContextChanged += (_,_) => ObserveModel(); DetachedFromVisualTree += (_,_) => Unsubscribe(); AttachedToVisualTree += (_,_) => ObserveModel();
-        SizeChanged += (_, _) => SourcePanel.SetViewportHeight(Bounds.Height);
-        ExplorerButton.Click += (_, _) =>
-        {
-            var descriptor = _model?.CurrentPage;
-            var id = descriptor?.ControlIds?.FirstOrDefault() ?? descriptor?.Id ?? 1;
-            _model?.Select(PreviewPageCatalog.Reference.Id);
-            if (CurrentView is ControlExplorerView explorer) explorer.SelectControl(id == 0 ? 1 : id);
-        };
+        SizeChanged += (_, _) => { SourcePanel.SetViewportHeight(Bounds.Height); UpdateViewport(); };
+        PageScroll.PropertyChanged += (_, args) => { if (args.Property == ScrollViewer.ViewportProperty) UpdateViewport(); };
     }
-    public UserControl? CurrentView => PageHost.Content as UserControl;
+    public UserControl? CurrentView => _currentView;
     public int CreatedPageCount => _pages.Count;
     private void Unsubscribe() { if(_model is not null) { _model.PropertyChanged -= ModelChanged; _model.ControlRequested -= ControlRequested; } }
     private void ObserveModel() { Unsubscribe(); _model=DataContext as GalleryViewModel; if(_model is not null) { _model.PropertyChanged += ModelChanged; _model.ControlRequested += ControlRequested; } ShowPage(); }
@@ -35,17 +31,21 @@ public partial class ControlGallery : UserControl
             _pages.Add(descriptor.Id,page=PreviewPageCatalog.Create(descriptor.Id));
             if(page is ShowcasePage showcase) showcase.ControlRequested += ControlRequested;
             if(page is HomePage home) home.ControlRequested += (_, id) => _model?.Select(id);
-            if(page is ControlExplorerView explorer) explorer.ControlRequested += (_, id) => _model?.Select(id);
+            _presentations.Add(descriptor.Id, page is HomePage or ShowcasePage ? page : new ControlPreviewPage(descriptor, page));
         }
         // Editors own a bounded viewport; do not measure their canvas at infinite height.
+        var presentation = _presentations[descriptor.Id];
         var isReportDesigner=page is TheOne.Avalonia.Controls.ReportDesign or TheOne.Avalonia.Controls.ReportPreview;
-        var fillsViewport=isReportDesigner || page is WorkflowEditorDemoView or ControlExplorerView;
+        var fillsViewport=presentation is ControlPreviewPage { UsesViewport: true };
         PageScroll.VerticalScrollBarVisibility=fillsViewport ? global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled : global::Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
         PageHost.VerticalContentAlignment=fillsViewport ? global::Avalonia.Layout.VerticalAlignment.Stretch : global::Avalonia.Layout.VerticalAlignment.Top;
         PageFrame.Padding=new Thickness(isReportDesigner ? 0 : 28);
-        PageHost.Content=page; ResetScroll();
-        ExplorerButton.IsVisible = page is not ControlExplorerView;
+        _currentView=page; PageHost.Content=presentation; ResetScroll(); UpdateViewport();
         SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page });
+    }
+    private void UpdateViewport()
+    {
+        if (PageHost.Content is ControlPreviewPage page) page.SetViewportHeight(PageScroll.Viewport.Height);
     }
     private void ControlRequested(object? sender,int id) => ScrollToControl(id);
     public UserControl GetControlView(int id) => CurrentView is ShowcasePage showcase ? showcase.GetControlView(id) : CurrentView!;

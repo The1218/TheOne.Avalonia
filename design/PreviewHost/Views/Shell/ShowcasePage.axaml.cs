@@ -19,7 +19,7 @@ public partial class ShowcasePage : UserControl
         {
             var descriptor = PreviewPageCatalog.Controls.First(control => control.Id == id);
             var view = PreviewPageCatalog.CreateControl(id);
-            var section = new Border { Classes = { "section" }, Child = view };
+            var section = new Border { Classes = { "section" }, Child = new StackPanel { Spacing = 20, Children = { view, new ControlDetailsView(descriptor.Title, view) } } };
             _views.Add(id, view);
             _sections.Add(id, section);
             Sections.Children.Add(section);

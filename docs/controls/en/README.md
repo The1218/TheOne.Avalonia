@@ -6,7 +6,7 @@ TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, pl
 
 ## Documentation
 
-[Complete public API and built-in models](../../api/en/README.md) includes every declared member, default, binding mode, validation condition, style selector and source link. Each guide below includes its additional-property/style inventory. PreviewHost's **基础控件 → 控件能力实验室** groups live examples by styles, properties, APIs/events and models; every page has a shortcut. Complex collections/models use the full business examples; rebuilding a sample restores its original bindings.
+[Complete public API and built-in models](../../api/en/README.md) includes every declared member, default, binding mode, validation condition, style selector and source link. Each guide below includes its additional-property/style inventory. PreviewHost presents each complete control demo on its own page, followed by styles, additional properties, APIs/events and built-in models. Only Button, Input and Select share comparison pages. Property edits use typed accessors and preserve StyledProperty bindings.
 
 For adoption or migration in an external project, start with [integration and migration](../../integration/en/README.md), including version/dependency requirements, platform boundaries and a portable Codex brief.
 
