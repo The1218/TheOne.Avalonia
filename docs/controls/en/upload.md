@@ -85,7 +85,7 @@ Unsupported types and oversized picker results preserve the previous selection a
 <!-- generated-contracts:start -->
 ## Additional properties, styles and complete API
 
-This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost labels example Classes, sizes and states directly on each control page. Description components explain public properties, APIs/events and model fields, including property types, defaults, binding modes, validation and API signatures. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### Upload
 
@@ -136,19 +136,7 @@ This section enumerates declarations added by this library; native inherited mem
 | [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 | [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L17) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
-### Shared attached properties
-
-[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
-
-[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
 ### Style classes and automatic state
 
@@ -157,7 +145,7 @@ This section enumerates declarations added by this library; native inherited mem
 | Upload | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16; Padding=20 |
 | Upload | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12; Padding=12 |
 
-`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
 
 ### APIs, events and built-in models
 

@@ -59,6 +59,10 @@ public partial class HomePage : UserControl
         Examples.ColumnDefinitions = new ColumnDefinitions(split ? "*,*" : "*");
         Examples.RowDefinitions = new RowDefinitions(split ? "Auto" : "Auto,Auto");
         Grid.SetColumn(QuickStart, split ? 1 : 0); Grid.SetRow(QuickStart, split ? 0 : 1);
+        var densityColumns = Bounds.Width >= 950 ? 3 : Bounds.Width >= 620 ? 2 : 1;
+        DensitySamples.ColumnDefinitions = new ColumnDefinitions(string.Join(',', Enumerable.Repeat("*", densityColumns)));
+        DensitySamples.RowDefinitions = new RowDefinitions(string.Join(',', Enumerable.Repeat("Auto", (DensitySamples.Children.Count + densityColumns - 1) / densityColumns)));
+        for (var i = 0; i < DensitySamples.Children.Count; i++) { Grid.SetColumn(DensitySamples.Children[i], i % densityColumns); Grid.SetRow(DensitySamples.Children[i], i / densityColumns); }
     }
     private void NavigateClicked(object? sender, RoutedEventArgs args)
     { if (sender is Button { Tag: string id } && int.TryParse(id, out var value)) ControlRequested?.Invoke(this, value); }

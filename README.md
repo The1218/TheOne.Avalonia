@@ -71,7 +71,7 @@ Target `net10.0` and use Avalonia 12.1.4 consistently. Load the theme in `App.ax
 
 - [Integration and migration](docs/integration/en/README.md): existing-project adoption, platform boundaries, and a portable brief for Codex.
 - [Documentation index](docs/README.md): choose a task and language.
-- [Complete public API and models](docs/api/en/README.md): declared properties, defaults, styles, methods, events and built-in models. PreviewHost labels style comparisons with actual Classes and property values; Description components explain properties, API signatures and model fields on each control page.
+- [Complete public API and models](docs/api/en/README.md): project-added properties, defaults, styles, extension APIs/events and models. PreviewHost uses labeled comparisons and Description components for each control's additions; inherited native APIs are omitted, and shared ControlSizing / Motion settings are explained on Home.
 - [Control documentation](docs/controls/en/README.md): properties, behavior, and usage examples.
 - [Theme documentation](docs/theme/en/README.md): colors, styles, sizes, and motion.
 

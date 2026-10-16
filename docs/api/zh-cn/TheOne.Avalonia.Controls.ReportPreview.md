@@ -43,7 +43,7 @@ Standalone read-only report viewer. Parses document JSON and loads its optional 
 
 ## 样式与密度
 
-所有控件可使用 `small` / `normal` / `large` 或继承的 `ControlSizing.Size`。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。
+尺寸、动效等所有控件通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 统一演示。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。
 
 没有额外公开外观类；通过公开属性和默认主题配置。
 

@@ -30,7 +30,7 @@ Keyboard-accessible sort entry using the native column's edit and sorting pipeli
 
 ## 样式与密度
 
-所有控件可使用 `small` / `normal` / `large` 或继承的 `ControlSizing.Size`。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。
+尺寸、动效等所有控件通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 统一演示。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。
 
 | 类名 | 选择器 | Setter／资源 |
 | --- | --- | --- |

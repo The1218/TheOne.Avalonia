@@ -34,7 +34,7 @@ Preview: Extensions / Avatar. Run `dotnet run --project design/PreviewHost -- --
 <!-- generated-contracts:start -->
 ## Additional properties, styles and complete API
 
-This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost labels example Classes, sizes and states directly on each control page. Description components explain public properties, APIs/events and model fields, including property types, defaults, binding modes, validation and API signatures. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### Avatar
 
@@ -53,19 +53,7 @@ This section enumerates declarations added by this library; native inherited mem
 | [`Stretch`](../../../TheOne.Avalonia/Controls/Avatar.cs#L33) | `Avalonia.Media.Stretch` | writable; OneWay | `Stretch.UniformToFill` | Native image stretch; default `UniformToFill` crops to fill the avatar Validation: `Enum.IsDefined` Values: `None`, `Fill`, `Uniform`, `UniformToFill` |
 | [`Text`](../../../TheOne.Avalonia/Controls/Avatar.cs#L31) | `string?` | writable; OneWay | `null` | Fallback text; trims whitespace and displays at most two graphemes without splitting emoji; blank text uses a person icon |
 
-### Shared attached properties
-
-[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
-
-[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
 ### Style classes and automatic state
 
@@ -75,7 +63,7 @@ This section enumerates declarations added by this library; native inherited mem
 | Avatar | `one-normal` | automatic template class; do not bind manually | one&#124;Avatar.one-normal => Width=40; Height=40; FontSize=14 |
 | Avatar | `one-small` | automatic template class; do not bind manually | one&#124;Avatar.one-small => Width=32; Height=32; FontSize=12 |
 
-`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
 
 ### APIs, events and built-in models
 

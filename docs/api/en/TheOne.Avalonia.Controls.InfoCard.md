@@ -62,7 +62,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 ## Styles and density
 
-Controls accept `small` / `normal` / `large` or inherited `ControlSizing.Size`. `one-*` classes are template-owned; pseudoclasses follow real input/state rather than manual assignment.
+See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home. `one-*` classes are template-owned; pseudoclasses follow real input/state rather than manual assignment.
 
 | Class | Selector | Setters/resources |
 | --- | --- | --- |

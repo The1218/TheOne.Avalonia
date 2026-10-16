@@ -20,6 +20,7 @@ internal sealed class ControlDetailsView : UserControl
     private readonly StackPanel _events = new() { Spacing = 4 };
     private IDisposable? _subscription;
     private bool _hasEvents;
+    private readonly bool _observesEvents;
     internal AvaloniaObject Target { get; private set; }
     internal string ControlName => _name;
     internal int EventCount => _hasEvents ? _events.Children.Count : 0;
@@ -33,18 +34,14 @@ internal sealed class ControlDetailsView : UserControl
         Target = FindTarget(demo, name);
         var owners = ContractCatalog.Owners(name);
         var body = new StackPanel { Spacing = 24 };
-        var styles = ContractCatalog.Current.Styles.Where(s => ContractCatalog.StyleTargets(name).Contains(s.Target) && !s.Internal)
+        var styles = ContractCatalog.Current.Styles.Where(s => s.Target != "Control" && ContractCatalog.StyleTargets(name).Contains(s.Target) && !s.Internal)
             .DistinctBy(s => (s.Target, s.Name)).ToArray();
         var styleTable = new Description { Name = "StyleContracts" };
         foreach (var style in styles)
             styleTable.Items.Add(Row(style.Target + "." + style.Name, "Classes=\"" + style.Name + "\"", style.Effect.Length > 0 ? style.Effect : style.Selector));
-        if (styles.Length == 0) styleTable.Items.Add(Row("默认样式", "使用控件默认主题；没有额外公开的外观 Classes。"));
-        body.Children.Add(Section(name + " · Style 样式", styleTable));
-        var common = new Description { Name = "CommonProperties" };
-        foreach (var row in PreviewNativeContracts.Properties(name)) common.Items.Add(Row(row.Name, row.Detail));
-        body.Children.Add(Section(name + " · 公共属性", common));
+        if (styles.Length > 0) body.Children.Add(Section(name + " · 附加 Classes", styleTable));
         foreach (var owner in owners)
-        foreach (var property in owner.Properties)
+        foreach (var property in ContractCatalog.ControlProperties(owner))
         {
             var live = Text("");
             var description = new StackPanel { Spacing = 4, Children =
@@ -54,13 +51,10 @@ internal sealed class ControlDetailsView : UserControl
             } };
             if (property.Choices.Length > 0) description.Children.Add(Text("可选值：" + string.Join(" / ", property.Choices)));
             if (property.Validation.Length > 0) description.Children.Add(Text("校验：" + property.Validation));
-            if (property.Identifier.Length > 0) description.Children.Add(Text("属性标识：" + property.Identifier));
             PropertyTable.Items.Add(new DescriptionItem { Header = owner.Name + "." + property.Name, Content = description });
             _live.Add((owner, property, live));
         }
-        if (PropertyTable.ItemCount == 0) PropertyTable.Items.Add(Row("额外属性", "没有额外属性；使用上面的原生公共属性。"));
-        body.Children.Add(Section(name + " · 额外属性", PropertyTable));
-        foreach (var native in PreviewNativeContracts.Api(name)) ApiTable.Items.Add(Row(native.Name, native.Detail));
+        if (PropertyTable.ItemCount > 0) body.Children.Add(Section(name + " · 额外属性", PropertyTable));
         foreach (var owner in owners)
         {
             foreach (var member in owner.Methods) ApiTable.Items.Add(Row(owner.Name + " · 方法", member.Signature, member.Summary));
@@ -68,8 +62,7 @@ internal sealed class ControlDetailsView : UserControl
             foreach (var member in owner.Fields.Where(f => !f.ValueType.Contains("Property", StringComparison.Ordinal)))
                 ApiTable.Items.Add(Row(owner.Name + " · 字段", member.Signature, member.Summary));
         }
-        if (ApiTable.ItemCount == 0) ApiTable.Items.Add(Row("API / 事件", "使用原生继承的交互与事件；没有新增方法或事件。"));
-        body.Children.Add(Section(name + " · API / 事件", ApiTable));
+        if (ApiTable.ItemCount > 0) body.Children.Add(Section(name + " · 扩展 API / 事件", ApiTable));
         var modelTables = new List<Description>();
         var modelBody = new StackPanel { Spacing = 16 };
         var ownerIds = owners.Select(o => o.Id).ToHashSet();
@@ -86,14 +79,15 @@ internal sealed class ControlDetailsView : UserControl
             modelTables.Add(table);
         }
         ModelTables = modelTables;
-        if (modelTables.Count == 0)
+        if (modelTables.Count > 0) body.Children.Add(Section(name + " · Model 内置模型", modelBody));
+        _observesEvents = owners.Any(owner => owner.Events.Length > 0);
+        if (_observesEvents)
         {
-            var table = new Description(); table.Items.Add(Row("Model", PreviewNativeContracts.Model(name))); modelBody.Children.Add(table);
+            _events.Children.Add(Text("操作上方示例，观察本库扩展事件。"));
+            body.Children.Add(Section(name + " · 扩展事件记录", _events));
         }
-        body.Children.Add(Section(name + " · Model 内置模型", modelBody));
-        _events.Children.Add(Text("操作上方完整示例后，这里显示该实例触发的事件。"));
-        body.Children.Add(Section(name + " · 实时事件", _events));
         Content = body;
+        IsVisible = body.Children.Count > 0;
         AttachedToVisualTree += (_, _) => { if (!_pageOwnsObservation) Observe(); };
         DetachedFromVisualTree += (_, _) => { if (!_pageOwnsObservation) StopObserving(); };
     }
@@ -109,7 +103,7 @@ internal sealed class ControlDetailsView : UserControl
     internal void Observe()
     {
         StopObserving(); Target = FindTarget(_demo, _name);
-        _subscription = ContractAccessors.Watch(Target, Log); Target.PropertyChanged += Changed;
+        _subscription = _observesEvents ? ContractAccessors.Watch(Target, Log) : null; Target.PropertyChanged += Changed;
         if (_demo is WindowControlDemoView windows) windows.SampleChanged += SampleReplaced;
         foreach (var entry in _live) Update(entry);
     }

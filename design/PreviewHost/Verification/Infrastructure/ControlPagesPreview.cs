@@ -23,8 +23,8 @@ internal static class ControlPagesPreview
             check(ContractCatalog.Owners(pair.Item1).Any(owner => owner.Name == pair.Item2 && owner.Methods.Length > 0)
                 && ContractCatalog.Owners(pair.Item1).All(owner => owner.Name != "ControlSizing"),
                 $"Control pages/services/{pair.Item1}: page aliases show the real static API instead of control-only properties");
-        check(PreviewNativeContracts.Properties("TreeView").All(row => !row.Name.Contains("SelectedIndex")),
-            "Control pages/native contracts: TreeView documents item selection without a nonexistent index property");
+        check(ContractCatalog.Owners("TreeView").All(owner => owner.Name is not "ControlSizing" and not "Motion"),
+            "Control pages/contracts: shared sizing and motion do not appear in control-specific contracts");
         foreach (var id in new[] { 309, 308, 118, 9, 7, 18, 24, 23, 201, 202, 205, 206, 27, 307, 315, 318, 319 })
             check(PreviewPageCatalog.Find(id).Id == id, $"Control pages/catalog/{id}: control has its own complete preview page");
 
@@ -44,8 +44,14 @@ internal static class ControlPagesPreview
                 var descriptions = gallery.GetVisualDescendants().OfType<ControlDetailsView>().ToArray();
                 foreach (var description in descriptions)
                 {
-                    check(description.PropertyTable.ItemCount > 0 && description.ApiTable.ItemCount > 0,
-                        $"Control pages/Description/{description.ControlName}: public properties and API are visible tables");
+                    var owners = ContractCatalog.Owners(description.ControlName);
+                    check(owners.All(owner => owner.Name is not "ControlSizing" and not "Motion") &&
+                        description.PropertyTable.ItemCount == owners.Sum(owner => ContractCatalog.ControlProperties(owner).Count()),
+                        $"Control pages/Description/{description.ControlName}: only control-specific project additions are listed");
+                    check(description.GetVisualDescendants().OfType<Description>().All(table => table.ItemCount > 0 && table.Name != "CommonProperties") &&
+                        (description.PropertyTable.ItemCount > 0 || description.PropertyTable.Parent is null) &&
+                        (description.ApiTable.ItemCount > 0 || description.ApiTable.Parent is null),
+                        $"Control pages/Description/{description.ControlName}: native common attributes and empty sections are omitted");
                     check(!description.GetVisualDescendants().OfType<Expander>().Any() && !description.GetVisualDescendants().OfType<ComboBox>().Any(),
                         $"Control pages/Description/{description.ControlName}: no collapsed inspector or property/model picker hides the contracts");
                 }
@@ -126,8 +132,8 @@ internal static class ControlPagesPreview
                 "Control pages/styles: every public Button style has a simultaneous real example");
             check(PreviewSourcePanel.ReadSources(((ShowcasePage)gallery.CurrentView!).SourceViews, true).Any(source => source.Name.EndsWith("ControlStyleShowcase.cs", StringComparison.Ordinal)),
                 "Control pages/source: labelled style examples include their matching embedded C# implementation");
-            check(buttons.Any(button => !button.IsEnabled) && Enum.GetValues<ControlSize>().All(size => buttons.Any(button => ControlSizing.GetSize(button) == size)),
-                "Control pages/styles: disabled state and three explicit sizes are visible together");
+            check(buttonExamples.GetVisualDescendants().OfType<TextBlock>().All(label => label.Text?.Contains("ControlSizing.Size=") != true && label.Text?.Contains("IsEnabled=") != true),
+                "Control pages/styles: shared size and native disabled-state demonstrations are not duplicated");
             var toggleExamples = gallery.GetVisualDescendants().OfType<StackPanel>().Single(p => p.Name == "StyleShowcase_ToggleButton");
             var toggle = toggleExamples.GetVisualDescendants().OfType<global::Avalonia.Controls.Primitives.ToggleButton>().First(button => button.IsEnabled && button.IsChecked == true);
             toggle.BringIntoView(); Flush(); Click(toggle);

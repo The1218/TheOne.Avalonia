@@ -7,6 +7,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
+using TheOne.Avalonia.Controls;
 using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
@@ -18,18 +19,21 @@ internal static class ControlStyleShowcasePreview
     [
         "Button", "RepeatButton", "ToggleButton", "IconButton", "SplitButton", "ToggleSplitButton",
         "TextBox", "NumericUpDown", "AutoCompleteBox", "ComboBox", "ListBox", "MultiSelectBox",
-        "CheckBox", "RadioButton", "ToggleSwitch", "Slider", "ProgressBar", "DatePicker", "CalendarDatePicker", "TimePicker",
+        "ProgressBar", "DatePicker", "CalendarDatePicker", "TimePicker",
         "Label", "SelectableTextBlock", "InfoCard", "TabControl", "Tag", "Description", "DataGrid"
     ];
 
     internal static void Verify(Action<bool, string> check, string? output = null)
     {
         if (output is not null) Directory.CreateDirectory(output);
-        check(ControlStyleShowcase.Create("GanttChart") is null && ControlStyleShowcase.Create("WorkflowEditor") is null,
-            "Style showcase/scope: complex controls retain their complete original demonstrations");
+        foreach (var name in new[] { "CheckBox", "RadioButton", "ToggleSwitch", "Slider", "GanttChart", "WorkflowEditor" })
+            check(!ControlStyleShowcase.Supports(name) && ControlStyleShowcase.Create(name) is null,
+                $"Style showcase/scope/{name}: a page without extension comparisons has no generic native-property shell");
         foreach (var name in Names)
         {
             var root = (StackPanel)ControlStyleShowcase.Create(name)!;
+            check(ControlStyleShowcase.Supports(name) && root.Children.Count > 0,
+                $"Style showcase/{name}/scope: supported controls contain actual extension comparisons");
             var scroll = new ScrollViewer
             {
                 HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
@@ -47,14 +51,13 @@ internal static class ControlStyleShowcasePreview
             {
                 var samples = root.GetVisualDescendants().OfType<Control>()
                     .Where(control => control.Name?.StartsWith("Variant_", StringComparison.Ordinal) == true).ToArray();
-                check(samples.Length >= 3 && samples.All(sample => sample.Name!.StartsWith("Variant_" + name + "_", StringComparison.Ordinal)),
+                check(samples.Length > 0 && samples.All(sample => sample.Name!.StartsWith("Variant_" + name + "_", StringComparison.Ordinal)),
                     $"Style showcase/{name}/identity: comparison cells contain the named real control type");
                 check(samples.All(ConfigurationMatches) && ControlStyleShowcase.PublicStyles(name).All(style =>
                     samples.Any(sample => sample.Classes.Contains(style.Name) && Configuration(sample) == "Classes=\"" + style.Name + "\"")),
                     $"Style showcase/{name}/classes: each public class is directly labelled on its real independent example");
-                check(Enum.GetValues<ControlSize>().All(size => samples.Any(sample =>
-                        Configuration(sample) == "ControlSizing.Size=\"" + size + "\"" && ControlSizing.GetSize(sample) == size)),
-                    $"Style showcase/{name}/sizes: Small, Normal and Large are simultaneously present with explicit size values");
+                check(samples.All(sample => IsExtensionConfiguration(sample) && !Configuration(sample).Contains("ControlSizing.Size", StringComparison.Ordinal)),
+                    $"Style showcase/{name}/extensions: labels show only public Classes or actual TheOne extra properties");
 
                 foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
                 foreach (var size in Enum.GetValues<ControlSize>())
@@ -70,10 +73,8 @@ internal static class ControlStyleShowcasePreview
                         label + ": comparison cards determine natural height without caps or overlapping sections");
                     check(Fits(root, scroll, height: false) && sections.All(section => Fits(section, root)) && samples.All(SampleFits),
                         label + ": every sample and wrapping cell stays inside its measured page width and height");
-                    check(samples.All(sample => sample.Bounds.Width > 0 && sample.Bounds.Height > 0) &&
-                        Enum.GetValues<ControlSize>().All(explicitSize => samples.Any(sample =>
-                            Configuration(sample) == "ControlSizing.Size=\"" + explicitSize + "\"" && ControlSizing.GetSize(sample) == explicitSize)),
-                        label + ": all variants have visible bounds and explicit sizes survive inherited density changes");
+                    check(samples.All(sample => sample.Bounds.Width > 0 && sample.Bounds.Height > 0 && ControlSizing.GetSize(sample) == size),
+                        label + ": every extension sample has visible bounds in the inherited density environment");
                     using var frame = window.CaptureRenderedFrame();
                     check(frame is not null && PreviewRenderedPixels.UniqueColors(frame) > 24,
                         label + ": comparison labels and actual examples draw themed pixels");
@@ -94,6 +95,25 @@ internal static class ControlStyleShowcasePreview
         if (!text.StartsWith("Classes=\"", StringComparison.Ordinal)) return true;
         var name = text[9..^1];
         return name.Length == 0 || sample.Classes.Contains(name);
+    }
+
+    private static bool IsExtensionConfiguration(Control sample)
+    {
+        var configuration = Configuration(sample);
+        if (configuration.StartsWith("Classes=\"", StringComparison.Ordinal)) return true;
+        return configuration switch
+        {
+            "ButtonLoading.IsLoading=\"True\"" => sample is Button button && ButtonLoading.GetIsLoading(button),
+            "MaxVisibleTags=\"1\"" => sample is MultiSelectBox { MaxVisibleTags: 1 },
+            "MaxVisibleTags=\"0\"" => sample is MultiSelectBox { MaxVisibleTags: 0 },
+            "SearchText=\"Development\"" => sample is MultiSelectBox { SearchText: "Development" },
+            "HeaderActions · Footer" => sample is InfoCard { HeaderActions: not null, Footer: not null },
+            "LabelWidth=\"80\" · StackWidth=\"0\"" => sample is Description { LabelWidth: 80, StackWidth: 0 },
+            "StackWidth=\"520\"" => sample is Description { StackWidth: 520 },
+            _ when sample is IconButton icon => configuration == "IconPlacement=\"" + icon.IconPlacement + "\"",
+            _ when sample is Tag tag => configuration == $"Variant=\"{tag.Variant}\" · Status=\"{tag.Status}\"",
+            _ => false
+        };
     }
 
     private static bool SampleFits(Control sample)

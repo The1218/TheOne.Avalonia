@@ -6,7 +6,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 
 ## 文档导航
 
-[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出每个声明成员、初值、绑定模式、校验条件、样式选择器及源码链接。下列每个指南均补充对应的额外属性和样式清单。PreviewHost 在每个控件页直接并列展示样式、尺寸及状态，示例标明实际 `Classes` 和属性值；公共属性、API／事件、内置模型使用 `Description` 组件说明。属性说明包含类型、默认值、绑定模式、读写边界和校验，API 保留完整签名，模型按字段列出用途。仅 Button、Input、Select 合并比较，其余控件使用独立完整页面；页面随内容自然增高。
+[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出本项目的声明成员、初值、绑定模式、校验条件、样式选择器及源码链接。每个控件指南和预览页只展示本项目附加的 `Classes`、专属属性、扩展 API／事件及关联模型，不列 Avalonia 原生继承属性或 API。PreviewHost 标明示例的实际类名与属性值，并用 `Description` 说明类型、默认值、绑定、校验、API 签名及模型字段用途。`ControlSizing`、`Motion` 等通用配置统一在 Home 演示，文档见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)；ButtonLoading、DataGridFeatures 等专属扩展仍在对应页完整列出。仅 Button、Input、Select 合并比较，其余控件保留独立完整页面，页面随内容自然增高。
 
 外部项目首次接入或迁移，先读[项目接入与迁移](../../integration/zh-cn/README.md)，其中包含版本、依赖、跨平台边界及可复制给 Codex 的任务说明。
 

@@ -219,7 +219,7 @@ See [Carousel / Refresh](collection-content.md), and [preview entry points](../.
 <!-- generated-contracts:start -->
 ## Additional properties, styles and complete API
 
-This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost labels example Classes, sizes and states directly on each control page. Description components explain public properties, APIs/events and model fields, including property types, defaults, binding modes, validation and API signatures. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
+This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.
 
 ### TabFeatures
 
@@ -242,19 +242,7 @@ This section enumerates declarations added by this library; native inherited mem
 | --- | --- | --- | --- | --- |
 | [`Enabled`](../../../TheOne.Avalonia/Controls/Virtualization.cs#L15) | `bool` | writable; OneWay; attached | `false` | Enables supported virtualization; still requires a bounded viewport and model source rather than precreated controls. |
 
-### Shared attached properties
-
-[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
-
-[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
-
-| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
-| --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
 ### Style classes and automatic state
 
@@ -285,7 +273,7 @@ This section enumerates declarations added by this library; native inherited mem
 | TreeViewItem | `one-normal` | automatic template class; do not bind manually | :is(Button).one-normal, ToggleButton.one-normal, RepeatButton.one-normal, TextBox.one-normal, ComboBox.one-normal, ComboBoxItem.one-normal, AutoCompleteBox.one-normal, NumericUpDown.one-normal, ButtonSpinner.one-normal, CheckBox.one-normal, RadioButton.one-normal, ToggleSwitch.one-normal, ListBoxItem.one-normal, TreeViewItem.one-normal, MenuItem.one-normal, TabItem.one-normal, CalendarDatePicker.one-normal, DatePicker.one-normal, TimePicker.one-normal, Expander.one-normal => MinHeight={DynamicResource One.Size.Height}; FontSize=14; TreeViewItem.one-normal => Padding=0,4,10,4; TreeViewItem.one-normal /template/ ToggleButton#PART_ExpandCollapseChevron => Width=36; Height=36 |
 | TreeViewItem | `one-small` | automatic template class; do not bind manually | :is(Button).one-small, ToggleButton.one-small, RepeatButton.one-small, TextBox.one-small, ComboBox.one-small, ComboBoxItem.one-small, AutoCompleteBox.one-small, NumericUpDown.one-small, ButtonSpinner.one-small, CheckBox.one-small, RadioButton.one-small, ToggleSwitch.one-small, ListBoxItem.one-small, TreeViewItem.one-small, MenuItem.one-small, TabItem.one-small, CalendarDatePicker.one-small, DatePicker.one-small, TimePicker.one-small, Expander.one-small => MinHeight={DynamicResource One.Size.Small.Height}; FontSize=12; TreeViewItem.one-small => Padding=0,4,10,4; TreeViewItem.one-small /template/ ToggleButton#PART_ExpandCollapseChevron => Width=30; Height=30 |
 
-`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.
 
 ### APIs, events and built-in models
 

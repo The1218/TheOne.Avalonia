@@ -90,11 +90,11 @@ internal static class ReferenceWriter
                 if (type.IsControl)
                 {
                     text.AppendLine(zh ? "## 样式与密度\n" : "## Styles and density\n");
-                    text.AppendLine(zh ? "所有控件可使用 `small` / `normal` / `large` 或继承的 `ControlSizing.Size`。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。\n" : "Controls accept `small` / `normal` / `large` or inherited `ControlSizing.Size`. `one-*` classes are template-owned; pseudoclasses follow real input/state rather than manual assignment.\n");
+                    text.AppendLine(zh ? "尺寸、动效等所有控件通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 统一演示。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。\n" : "See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home. `one-*` classes are template-owned; pseudoclasses follow real input/state rather than manual assignment.\n");
                     var targets = new HashSet<string> { type.Name };
                     for (var current = type; current is not null; current = data.Types.FirstOrDefault(t => t.Id == current.Base))
                         targets.Add(current.Base.Split('.').Last());
-                    var ownStyles = data.Styles.Where(s => targets.Contains(s.Target) && !s.Internal).ToArray();
+                    var ownStyles = data.Styles.Where(s => targets.Contains(s.Target) && s.Target != "Control" && !s.Internal).ToArray();
                     if (ownStyles.Length > 0)
                     {
                         text.AppendLine(zh ? "| 类名 | 选择器 | Setter／资源 |\n| --- | --- | --- |" : "| Class | Selector | Setters/resources |\n| --- | --- | --- |");
@@ -115,24 +115,19 @@ internal static class ReferenceWriter
                 if (!Topics.TryGetValue(topic, out var names)) continue;
                 var content = new StringBuilder(original[(lang, topic)].TrimEnd() + "\n\n" + Start + "\n");
                 content.AppendLine(zh ? "## 额外属性、样式与完整 API\n" : "## Additional properties, styles and complete API\n");
-                content.AppendLine(zh ? "本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 在各控件页直接标明示例的 Classes、尺寸及状态；公共属性、API／事件和模型字段使用 Description 组件说明，包含属性类型、默认值、绑定模式、校验条件及 API 签名。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。\n" : "This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost labels example Classes, sizes and states directly on each control page. Description components explain public properties, APIs/events and model fields, including property types, defaults, binding modes, validation and API signatures. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.\n");
-                var owners = data.Types.Where(t => names.Contains(t.Name)).ToArray();
+                content.AppendLine(zh ? "本节只列出本项目增加的 Classes、属性、扩展 API／事件及关联模型，不重复 Avalonia 原生继承 API。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用可见示例对照本项目附加样式，用 Description 组件说明专属属性、API 签名与模型字段；ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。\n" : "This section lists only Classes, properties, extension APIs/events and related models added by this project, without repeating inherited Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. PreviewHost visibly compares project-added styles and uses Description components for control-specific properties, API signatures and model fields. Shared ControlSizing and Motion settings are centralized on Home. Only Button, Input and Select share comparison pages; other controls retain independent complete demos.\n");
+                var owners = data.Types.Where(t => names.Contains(t.Name) && t.Name is not "ControlSizing" and not "Motion").ToArray();
                 foreach (var owner in owners)
                 {
                     content.AppendLine($"### {owner.Name}\n\n[API / model reference](../../api/{lang}/{FileName(owner)})\n");
                     AppendProperties(content, owner, owner.Properties, lang, root, file, original);
                 }
-                if (owners.Length == 0) content.AppendLine(zh ? "本页的原生控件没有同名 TheOne 包装类；额外能力来自以下样式及公共附加属性。\n" : "These native controls have no same-name TheOne wrappers; additional behavior comes from the styles and shared attached properties below.\n");
-                content.AppendLine(zh ? "### 公共附加属性\n" : "### Shared attached properties\n");
-                foreach (var common in data.Types.Where(t => t.Name is "ControlSizing" or "Motion"))
-                {
-                    content.AppendLine($"[{common.Name}](../../api/{lang}/{FileName(common)})\n");
-                    AppendProperties(content, common, common.Properties, lang, root, file, original);
-                }
-                var styles = data.Styles.Where(s => names.Contains(s.Target)).ToArray();
+                if (owners.Length == 0) content.AppendLine(zh ? "本页的原生控件没有同名 TheOne 包装类；本项目增加的能力来自下列样式。\n" : "These native controls have no same-name TheOne wrappers; project-added capabilities come from the styles below.\n");
+                content.AppendLine(zh ? "尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。\n" : "See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.\n");
+                var styles = data.Styles.Where(s => names.Contains(s.Target) && s.Target != "Control").ToArray();
                 content.AppendLine(zh ? "### Style 类与自动状态\n\n| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |\n| --- | --- | --- | --- |" : "### Style classes and automatic state\n\n| Control | Class | Scope | Effective setters/resources |\n| --- | --- | --- | --- |");
                 foreach (var style in styles) content.AppendLine($"| {style.Target} | {Code(style.Name)} | {(style.Internal ? zh ? "模板自动类；不手动绑定" : "automatic template class; do not bind manually" : zh ? "显式 Classes，可与尺寸类组合" : "explicit Classes; combine with density")} | {Cell(style.Effect)} |");
-                content.AppendLine(zh ? "\n`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。\n" : "\n`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.\n");
+                content.AppendLine(zh ? "\n`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出附加外观类的控件使用默认主题及其专属属性。\n" : "\n`:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without added appearance classes use their default theme and control-specific properties.\n");
                 var family = Related(data, owners, topic);
                 content.AppendLine(zh ? "### API、事件与内置模型\n\n| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |\n| --- | --- | ---: | ---: | ---: |" : "### APIs, events and built-in models\n\n| Type | Kind | Properties/enum values | Methods/constructors | Events |\n| --- | --- | ---: | ---: | ---: |");
                 foreach (var t in family) content.AppendLine($"| [{Code(t.Id)}](../../api/{lang}/{FileName(t)}) | {t.Kind} | {t.Properties.Length + t.Values.Length} | {t.Methods.Length} | {t.Events.Length} |");

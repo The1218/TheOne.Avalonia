@@ -73,6 +73,18 @@ PreviewHost 的 `--verify-input-appearance [output]` 专项覆盖明暗主题、
 
 画刷使用 DynamicResource，可由宿主覆盖。调整强调色需同步 One.Accent、AccentHover、AccentPressed、AccentSoft、OnAccent。正文对比度至少 4.5:1，焦点至少 3:1。Nova 原色有边框及按下文字对比度例外，见[配色说明](theme-colors.md)；报告为 [contrast-report.json](../contrast-report.json)。
 
+<a id="shared-configuration"></a>
+
+## 通用主题配置
+
+以下为跨控件通用的项目扩展。PreviewHost 在 Home 统一说明；各控件页只关注本控件附加的 Classes、属性、扩展 API 与关联模型，不列原生 Avalonia 继承 API。
+
+| 配置 | 契约 |
+| --- | --- |
+| `Classes="small"`、`normal`、`large` | 公开尺寸快捷入口；`one-small`、`one-normal`、`one-large` 是模板自动类。 |
+| `styling:ControlSizing.Size` | `ControlSize`，默认 `Normal`；向后代继承，可局部覆盖。枚举值：`Small`、`Normal`、`Large`。[完整契约](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)。 |
+| `styling:Motion.Enabled` | `bool`，默认 `true`；向后代继承，可局部覆盖。设为 `False` 关闭子树动效。[完整契约](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)。 |
+
 Classes="small|normal|large" 或 ControlSizing.Size 向后代继承，单控件可覆盖。标准交互高度 30／36／44 px；ProgressBar 厚度 4／6／8 px，日历日期格 32／40／48 px。多行文本和展开内容按实际布局；显式 Height、MinHeight、Padding 遵循属性优先级。尺寸资源可覆盖 One.Size.Height、One.Size.Small.Height、One.Size.Large.Height；图表另有[尺寸参数](../../controls/zh-cn/chart-rendering.md#主题与三档尺寸)。
 
 ## 动效与模板合约

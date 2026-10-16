@@ -32,9 +32,9 @@ internal sealed class DescriptionDemoView : UserControl
         Items =
         {
             new DescriptionItem { Header = "Style", Content = "默认有边框；borderless 去掉外框。" },
-            new DescriptionItem { Header = "公共属性", Content = "Header / Content 接受文本、控件与类型化模板。" },
+            new DescriptionItem { Header = "LabelWidth", Content = "本库新增：名称列宽，默认 180 DIP；可继承到行，也可单行覆盖。" },
             new DescriptionItem { Header = "长内容", Content = "控件不固定行高，较长说明会自动换行。窄于 StackWidth 时，标签在上、内容在下，适合属性、API 和模型文档。" },
-            new DescriptionItem { Header = "Model", Content = new TextBlock { Text = "ItemsSource 可绑定 DescriptionItem 集合；Header 和 Content 可分别使用类型明确的数据模板。", TextWrapping = TextWrapping.Wrap } }
+            new DescriptionItem { Header = "StackWidth", Content = new TextBlock { Text = "本库新增：窄于此宽度时上下排布，默认 520 DIP；设置为 0 保持双列。", TextWrapping = TextWrapping.Wrap } }
         }
     };
 }

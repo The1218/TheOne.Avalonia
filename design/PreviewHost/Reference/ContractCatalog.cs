@@ -17,6 +17,8 @@ internal partial class ContractJsonContext : JsonSerializerContext;
 
 internal static class ContractCatalog
 {
+    // Native appearance aliases do not add a new control capability.
+    private static readonly HashSet<string> NativeAppearance = ["Background", "Foreground", "FontFamily", "FontSize", "FontWeight", "Padding", "BorderBrush", "BorderThickness", "CornerRadius"];
     private static readonly Lazy<ContractSet> Data = new(() =>
     {
         using var stream = typeof(ContractCatalog).Assembly.GetManifestResourceStream("PreviewHost.Reference.ControlContracts.json")
@@ -25,12 +27,13 @@ internal static class ContractCatalog
             ?? throw new InvalidOperationException("Embedded control contracts are empty.");
     });
     internal static ContractSet Current => Data.Value;
+    internal static IEnumerable<PropertyContract> ControlProperties(TypeContract owner) =>
+        owner.Properties.Where(property => !owner.IsControl || !NativeAppearance.Contains(property.Name));
     internal static TypeContract? Find(string name) => Current.Types.FirstOrDefault(t => t.Name == (name switch
     { "Toast" => "OneToast", "Dialog" => "OneDialog", "MessageBox" => "OneMessageBox", _ => name }));
     internal static IReadOnlyList<TypeContract> Owners(string name)
     {
         var names = new HashSet<string> { name };
-        if (Find(name)?.IsStatic != true) { names.Add("ControlSizing"); names.Add("Motion"); }
         for (var type = Find(name); type is not null; type = Find(type.Base.Split('.').Last()))
         { names.Add(type.Name); if (type.Base == type.Id) break; }
         foreach (var extra in name switch
@@ -67,7 +70,7 @@ internal static class ContractCatalog
             foreach (var type in Current.Types.Where(t => ids.Contains(t.Id)).ToArray())
             foreach (var id in type.Related) changed |= ids.Add(id);
         }
-        return Current.Types.Where(t => ids.Contains(t.Id) && !t.IsControl).ToArray();
+        return Current.Types.Where(t => ids.Contains(t.Id) && !t.IsControl && t.Name is not "ControlSizing" and not "ControlSize" and not "Motion").ToArray();
     }
 }
 

@@ -71,7 +71,7 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 
 - [项目接入与迁移](docs/integration/zh-cn/README.md)：外部项目改造、跨平台边界及可复制给 Codex 的任务说明。
 - [文档总入口](docs/README.md)：按任务和语言选择文档。
-- [完整公共 API 与模型](docs/api/zh-cn/README.md)：所有额外属性、初值、样式、方法、事件与内置模型。PreviewHost 在各控件页标明样式示例的实际 Classes 和属性值，并用 Description 组件说明公共属性、API 签名与模型字段。
+- [完整公共 API 与模型](docs/api/zh-cn/README.md)：本项目附加属性、初值、样式、扩展 API／事件与关联模型。PreviewHost 各控件页用标注示例与 Description 展示本项目扩展，不列原生继承 API；ControlSizing、Motion 等通用配置集中在 Home 说明。
 - [控件文档](docs/controls/zh-cn/README.md)：控件属性、行为与接入示例。
 - [主题文档](docs/theme/zh-cn/README.md)：配色、样式、尺寸与动效。
 

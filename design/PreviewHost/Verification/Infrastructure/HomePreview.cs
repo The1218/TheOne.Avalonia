@@ -7,6 +7,7 @@ using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using TheOne.Avalonia.Styling;
+using TheOne.Avalonia.Controls;
 
 namespace TheOne.DesignPreview;
 
@@ -30,6 +31,17 @@ internal static class HomePreview
                 check(features.Children.All(c => c.Bounds.Right <= features.Bounds.Width + 1), $"{label}: featured examples fit without horizontal clipping");
                 var quick = home.FindControl<Border>("QuickStart")!;
                 check(Grid.GetRow(quick) == (width == 360 ? 1 : 0), $"{label}: quick-start content stacks on narrow viewports");
+                var shared = home.FindControl<Description>("SharedConfigurationDetails")!;
+                check(shared.Items.OfType<DescriptionItem>().Any(row => Equals(row.Header, "ControlSizing.Size")) &&
+                    shared.Items.OfType<DescriptionItem>().Any(row => Equals(row.Header, "Motion.Enabled")),
+                    $"{label}: shared project configuration is explained centrally with Description");
+                var density = home.FindControl<Grid>("DensitySamples")!;
+                check(density.Children.Count == 3 && density.ColumnDefinitions.Count == (width == 360 ? 1 : 3) &&
+                    density.Children.All(child => child.Bounds.Right <= density.Bounds.Width + 1),
+                    $"{label}: shared size comparisons adapt without horizontal clipping");
+                check(Enum.GetValues<ControlSize>().All(explicitSize => ControlSizing.GetSize(home.FindControl<Button>(explicitSize + "DensityButton")!) == explicitSize &&
+                    ControlSizing.GetSize(home.FindControl<TextBox>(explicitSize + "DensityInput")!) == explicitSize),
+                    $"{label}: explicit Small Normal Large examples survive the inherited environment");
                 var input = home.FindControl<TextBox>("WorkspaceInput")!;
                 input.BringIntoView(); Flush(); input.Focus(); input.SelectAll(); window.KeyTextInput("首页验证"); Flush();
                 var save = home.GetVisualDescendants().OfType<Button>().Single(b => b.Content as string == "保存设置");

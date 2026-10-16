@@ -7,7 +7,6 @@ using Avalonia.Layout;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
 using TheOne.Avalonia.Controls;
-using TheOne.Avalonia.Styling;
 using TheOne.DesignPreview.Reference;
 
 namespace TheOne.DesignPreview;
@@ -16,12 +15,12 @@ namespace TheOne.DesignPreview;
 internal static class ControlStyleShowcase
 {
     private static readonly string[] Options = ["设计 Design", "开发 Development", "测试 Quality"];
-    internal static bool Supports(string name) => Factory(name) is not null;
+    internal static bool Supports(string name) => Factory(name) is not null && (PublicStyles(name).Length > 0 || HasExtraExamples(name));
 
     internal static Control? Create(string name)
     {
         var factory = Factory(name);
-        if (factory is null) return null;
+        if (factory is null || !Supports(name)) return null;
 
         var sections = new StackPanel { Name = "StyleShowcase_" + name, Spacing = 16 };
         var styles = PublicStyles(name);
@@ -39,18 +38,9 @@ internal static class ControlStyleShowcase
             sections.Children.Add(Section(name + " · Style 样式", "每个样例直接标注实际 Classes；点击或移入查看原生交互。", variants));
         }
 
-        var states = StateExamples(name, factory);
-        if (states.Count > 0)
-            sections.Children.Add(Section(name + " · 公共属性与状态", "属性值写在样例上方，各实例互相独立。", states));
-
-        var sizes = new List<Example>();
-        foreach (var size in Enum.GetValues<ControlSize>())
-        {
-            var sample = factory();
-            ControlSizing.SetSize(sample, size);
-            sizes.Add(new(size.ToString(), "ControlSizing.Size=\"" + size + "\"", sample));
-        }
-        sections.Children.Add(Section(name + " · Size 尺寸", "使用继承式 ControlSizing.Size；下列三个样例显式指定尺寸，便于同时比较。", sizes));
+        var extras = ExtraExamples(name, factory);
+        if (extras.Count > 0)
+            sections.Children.Add(Section(name + " · TheOne 额外属性", "仅展示本库扩展的属性；配置值直接标在独立样例上方。", extras));
         return sections;
     }
 
@@ -92,10 +82,6 @@ internal static class ControlStyleShowcase
             Width = 280,
             MaxDropDownHeight = 200
         },
-        "CheckBox" => () => new CheckBox { Content = "接收通知", IsChecked = true },
-        "RadioButton" => () => new RadioButton { Content = "默认选项", GroupName = Guid.NewGuid().ToString(), IsChecked = true },
-        "ToggleSwitch" => () => new ToggleSwitch { Content = "自动更新", IsChecked = true },
-        "Slider" => () => new Slider { Minimum = 0, Maximum = 100, Value = 60, Width = 220 },
         "ProgressBar" => () => new ProgressBar { Minimum = 0, Maximum = 100, Value = 60, Width = 220 },
         "DatePicker" => () => new DatePicker { SelectedDate = new DateTimeOffset(2026, 10, 16, 0, 0, 0, TimeSpan.Zero), Width = 300 },
         "CalendarDatePicker" => () => new CalendarDatePicker { SelectedDate = new DateTime(2026, 10, 16), Width = 220 },
@@ -109,22 +95,17 @@ internal static class ControlStyleShowcase
         _ => null
     };
 
-    private static List<Example> StateExamples(string name, Func<Control> factory)
+    private static bool HasExtraExamples(string name) => name is
+        "Button" or "RepeatButton" or "ToggleButton" or "IconButton" or "MultiSelectBox" or "InfoCard" or "Tag" or "Description";
+
+    private static List<Example> ExtraExamples(string name, Func<Control> factory)
     {
         var result = new List<Example>();
-        if (name is "Button" or "RepeatButton" or "IconButton" or "ToggleButton" or "SplitButton" or "ToggleSplitButton"
-            or "TextBox" or "NumericUpDown" or "AutoCompleteBox" or "ComboBox" or "ListBox" or "MultiSelectBox"
-            or "CheckBox" or "RadioButton" or "ToggleSwitch" or "Slider" or "DatePicker" or "CalendarDatePicker" or "TimePicker")
-        {
-            result.Add(new("正常", "IsEnabled=\"True\"", factory()));
-            var disabled = factory(); disabled.IsEnabled = false;
-            result.Add(new("禁用", "IsEnabled=\"False\"", disabled));
-        }
-
         switch (name)
         {
             case "Button":
             case "RepeatButton":
+            case "ToggleButton":
             case "IconButton":
                 var loading = factory();
                 ButtonLoading.SetIsLoading((Button)loading, true);
@@ -136,64 +117,19 @@ internal static class ControlStyleShowcase
                         result.Add(new(placement.ToString(), "IconPlacement=\"" + placement + "\"", icon));
                     }
                 break;
-            case "ToggleButton":
-                result.Add(new("未选中", "IsChecked=\"False\"", new ToggleButton { Content = "切换状态", IsChecked = false }));
-                result.Add(new("三态", "IsThreeState=\"True\" · IsChecked=\"{x:Null}\"", new ToggleButton { Content = "未确定", IsThreeState = true, IsChecked = null }));
-                break;
-            case "ToggleSplitButton":
-                result.Add(new("未选中", "IsChecked=\"False\"", new ToggleSplitButton { Content = "固定视图", IsChecked = false, Flyout = Actions() }));
-                break;
-            case "TextBox":
-                result.Add(new("只读", "IsReadOnly=\"True\"", new TextBox { Text = "此内容可选择复制", IsReadOnly = true, Width = 220 }));
-                result.Add(new("占位提示", "PlaceholderText=\"请输入内容\"", new TextBox { PlaceholderText = "请输入内容", Width = 220 }));
-                result.Add(new("密码", "PasswordChar=\"●\"", new TextBox { Text = "TheOne", PasswordChar = '●', Width = 220 }));
-                result.Add(new("多行", "AcceptsReturn=\"True\"", new TextBox { Text = "第一行\n第二行", AcceptsReturn = true, MinHeight = 80, Width = 220 }));
-                break;
-            case "NumericUpDown":
-                result.Add(new("隐藏步进按钮", "ShowButtonSpinner=\"False\"", new NumericUpDown { Value = 28, ShowButtonSpinner = false, Width = 220 }));
-                result.Add(new("精度与步长", "Increment=\"0.25\" · FormatString=\"0.00\"", new NumericUpDown { Value = 28.25m, Increment = .25m, FormatString = "0.00", Width = 220 }));
-                break;
-            case "AutoCompleteBox":
-                result.Add(new("建议过滤", "MinimumPrefixLength=\"0\"", new AutoCompleteBox { ItemsSource = Options, MinimumPrefixLength = 0, PlaceholderText = "聚焦后输入以筛选", Width = 220 }));
-                break;
-            case "ComboBox":
-                result.Add(new("未选择", "SelectedIndex=\"-1\" · PlaceholderText=\"请选择\"", new ComboBox { ItemsSource = Options, SelectedIndex = -1, PlaceholderText = "请选择", Width = 220 }));
-                break;
-            case "ListBox":
-                var multiple = (ListBox)factory();
-                multiple.SelectionMode = SelectionMode.Multiple | SelectionMode.Toggle;
-                multiple.SelectedItems?.Add(Options[1]);
-                result.Add(new("多选", "SelectionMode=\"Multiple, Toggle\"", multiple));
-                break;
             case "MultiSelectBox":
-                var readOnly = (MultiSelectBox)factory(); readOnly.IsReadOnly = true;
-                result.Add(new("只读", "IsReadOnly=\"True\"", readOnly));
                 var bounded = (MultiSelectBox)factory(); bounded.MaxVisibleTags = 1;
                 result.Add(new("限制可见标签", "MaxVisibleTags=\"1\"", bounded));
-                result.Add(new("空选择", "PlaceholderText=\"请选择工作阶段\"", new MultiSelectBox { ItemsSource = Options, PlaceholderText = "请选择工作阶段", Width = 280 }));
-                break;
-            case "CheckBox":
-                result.Add(new("未选中", "IsChecked=\"False\"", new CheckBox { Content = "接收通知", IsChecked = false }));
-                result.Add(new("三态", "IsThreeState=\"True\" · IsChecked=\"{x:Null}\"", new CheckBox { Content = "部分选中", IsThreeState = true, IsChecked = null }));
-                break;
-            case "RadioButton":
-                result.Add(new("未选中", "IsChecked=\"False\"", new RadioButton { Content = "备选项", GroupName = Guid.NewGuid().ToString(), IsChecked = false }));
-                break;
-            case "ToggleSwitch":
-                result.Add(new("关闭", "IsChecked=\"False\"", new ToggleSwitch { Content = "自动更新", IsChecked = false }));
-                break;
-            case "Slider":
-                result.Add(new("离散刻度", "TickFrequency=\"25\" · IsSnapToTickEnabled=\"True\"", new Slider { Minimum = 0, Maximum = 100, Value = 50, TickFrequency = 25, IsSnapToTickEnabled = true, Width = 220 }));
-                break;
-            case "ProgressBar":
-                result.Add(new("确定进度", "Value=\"60\" · ShowProgressText=\"True\"", new ProgressBar { Value = 60, ShowProgressText = true, Width = 220 }));
-                result.Add(new("不确定进度", "IsIndeterminate=\"True\"", new ProgressBar { IsIndeterminate = true, Width = 220 }));
+                var countOnly = (MultiSelectBox)factory(); countOnly.MaxVisibleTags = 0;
+                result.Add(new("仅显示选中数量", "MaxVisibleTags=\"0\"", countOnly));
+                var searched = (MultiSelectBox)factory(); searched.SearchText = "Development";
+                result.Add(new("预设搜索条件", "SearchText=\"Development\"", searched, "展开后查看已筛选的选项；已选值保留。"));
                 break;
             case "InfoCard":
-                result.Add(new("完整区域", "Header · HeaderActions · Content · Footer", new InfoCard
+                result.Add(new("操作与页脚区域", "HeaderActions · Footer", new InfoCard
                 {
                     Header = "项目进度", HeaderActions = new Button { Content = "详情" }, Width = 280,
-                    Content = new TextBlock { Text = "标题、正文、操作区和页脚独立配置。", TextWrapping = TextWrapping.Wrap },
+                    Content = new TextBlock { Text = "操作区域与页脚通过本库额外属性配置。", TextWrapping = TextWrapping.Wrap },
                     Footer = new TextBlock { Text = "更新于今天", TextWrapping = TextWrapping.Wrap }
                 }));
                 break;
@@ -201,6 +137,18 @@ internal static class ControlStyleShowcase
                 foreach (var variant in Enum.GetValues<TagVariant>())
                 foreach (var status in Enum.GetValues<TagStatus>())
                     result.Add(new(status.ToString(), $"Variant=\"{variant}\" · Status=\"{status}\"", new Tag { Content = status.ToString(), Variant = variant, Status = status }));
+                break;
+            case "Description":
+                result.Add(new("紧凑标签列", "LabelWidth=\"80\" · StackWidth=\"0\"", new Description
+                {
+                    Width = 300, LabelWidth = 80, StackWidth = 0,
+                    Items = { new DescriptionItem { Header = "标签", Content = "明确设置标签宽度，保持两列展示。" } }
+                }));
+                result.Add(new("上下排列", "StackWidth=\"520\"", new Description
+                {
+                    Width = 300, StackWidth = 520,
+                    Items = { new DescriptionItem { Header = "标签", Content = "可用宽度小于阈值时，说明自然排列在标签下方。" } }
+                }));
                 break;
         }
         return result;

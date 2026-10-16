@@ -73,6 +73,18 @@ Run `--verify-input-appearance [output]` in PreviewHost for input border pixels,
 
 Brushes use DynamicResource and can be overridden by the host. When changing the accent color, update One.Accent, AccentHover, AccentPressed, AccentSoft, and OnAccent together. Body text needs at least 4.5:1 contrast; focus indicators need at least 3:1. Nova's original colors have exceptions for borders and pressed text; see [color details](theme-colors.md) and [contrast-report.json](../contrast-report.json).
 
+<a id="shared-configuration"></a>
+
+## Shared theme configuration
+
+These project-added settings apply across controls. PreviewHost explains them once on Home; individual control pages focus on their own added Classes, properties, extension APIs and models. Inherited Avalonia APIs are outside these per-control references.
+
+| Setting | Contract |
+| --- | --- |
+| `Classes="small"`, `normal`, `large` | Public size shortcuts; `one-small`, `one-normal`, `one-large` are automatic template classes. |
+| `styling:ControlSizing.Size` | `ControlSize`, default `Normal`; inherited and locally overridable. Values: `Small`, `Normal`, `Large`. [Full contract](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md). |
+| `styling:Motion.Enabled` | `bool`, default `true`; inherited and locally overridable. Set `False` to disable motion for a subtree. [Full contract](../../api/en/TheOne.Avalonia.Styling.Motion.md). |
+
 Classes="small|normal|large" or ControlSizing.Size inherits to descendants and can be overridden locally. Standard interaction heights are 30 / 36 / 44 px; ProgressBar thickness is 4 / 6 / 8 px; calendar date cells are 32 / 40 / 48 px. Multiline text and expanded content follow their actual layout. Explicit Height, MinHeight, and Padding follow property priority. Override One.Size.Height, One.Size.Small.Height, and One.Size.Large.Height for sizing; charts have their own [size parameters](../../controls/en/chart-rendering.md#theme-and-three-sizes).
 
 ## Motion and template contracts
