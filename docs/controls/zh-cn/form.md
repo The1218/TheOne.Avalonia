@@ -110,3 +110,109 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 专项仅验证 Form / FormItem：编译绑定、属性与转换错误、标签关联、真实按键／指针、取消与过期结果、命令可用性、嵌套归属、模板替换、重新挂载，以及明暗 × 三档尺寸 × 宽窄视口绘制和像素。共享字段改动另跑 `--verify-verification-step`，不跑 Tag 或全库回归。
 
 `design/PreviewHost/Consumers/NativeAotSmoke` 复用同一专项。绑定／元数据变化时发布并执行原生程序的 `--require-aot --verify-form`。托管专项与跨 RID 构建不代表目标平台原生运行或读屏器实测通过。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### Form
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`CanSubmit`](../../../TheOne.Avalonia/Controls/Form.cs#L56) | `bool` | 只读; OneWay | `computed / state` | 只读，允许尝试提交，不表示模型已经有效 |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L51) | `bool` | 只读; OneWay | `computed / state` | 只读，最近一次校验的去重错误与是否失败 |
+| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L53) | `bool` | 只读; OneWay | `computed / state` | 只读，无对应字段的错误及其状态；用于顶部摘要，不重复字段提示 |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Form.cs#L54) | `bool` | 只读; OneWay | `computed / state` | 只读，正在校验；内容暂时禁用，重复校验或提交返回 `false` |
+| [`IsValidated`](../../../TheOne.Avalonia/Controls/Form.cs#L55) | `bool` | 只读; OneWay | `computed / state` | 只读，最近校验成功；相关模型通知、清除、卸载或替换内容／校验器后复位 |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/Form.cs#L48) | `Avalonia.Layout.Orientation` | 可写; OneWay | `inherited registration` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 可选值：`Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Form.cs#L49) | `double` | 可写; OneWay | `inherited registration` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 |
+| [`ShowErrorSummary`](../../../TheOne.Avalonia/Controls/Form.cs#L47) | `bool` | 可写; OneWay | `true` | 默认 `true`，仅显示模型级和无对应字段的错误；已映射错误只在字段下方显示 |
+| [`SubmitCommand`](../../../TheOne.Avalonia/Controls/Form.cs#L45) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 保存命令与参数；异步校验前后均检查 `CanExecute` |
+| [`SubmitCommandParameter`](../../../TheOne.Avalonia/Controls/Form.cs#L46) | `object?` | 可写; OneWay | `null` | 保存命令与参数；异步校验前后均检查 `CanExecute` |
+| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L52) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 只读，无对应字段的错误及其状态；用于顶部摘要，不重复字段提示 |
+| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L50) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 只读，最近一次校验的去重错误与是否失败 |
+| [`ValidationModel`](../../../TheOne.Avalonia/Controls/Form.cs#L44) | `object?` | 可写; OneWay | `null` | 自定义校验器的可选通知来源；属性校验器优先使用其注册模型 |
+| [`Validator`](../../../TheOne.Avalonia/Controls/Form.cs#L42) | `TheOne.Avalonia.Controls.IStepValidator?` | 可写; OneWay | `null` | `IStepValidator?`；可复用步骤校验器，或用 `StepValidation.For(model, memberNames)` 限定字段 |
+
+### FormItem
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FormItem.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L37) | `double` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L39) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L38) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L31) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
+| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L33) | `bool` | 可写; OneWay | `false` | 默认 `false`，仅展示标记；实际必填规则由校验器提供 |
+| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L30) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
+| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L36) | `Avalonia.Controls.Dock` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 可选值：`Left`, `Bottom`, `Right`, `Top` |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L34) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Vertical` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L35) | `double` | 可写; OneWay; 向后代继承 | `120` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`value => double.IsFinite(value) && value > 0` |
+
+### IStepValidator
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### StepCompareAttribute
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L10) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+
+### StepValidation
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### StepValidationError
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`MemberName`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | 可写; CLR / init-only | `required constructor argument` | 继承自 `StepField`，匹配错误中的属性名，如 `Name`；不会作为反射路径执行 |
+| [`Message`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | 可写; CLR / init-only | `required constructor argument` | 可供用户或诊断展示的结果说明；操作结果仍以状态字段为准。 |
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.Form`](../../api/zh-cn/TheOne.Avalonia.Controls.Form.md) | Class | 14 | 5 | 1 |
+| [`TheOne.Avalonia.Controls.FormItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FormItem.md) | Class | 9 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/zh-cn/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/zh-cn/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidation`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/zh-cn/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

@@ -47,10 +47,88 @@ ShowHeader 默认 true；Title 可覆盖路径推导的名称，Bitmap 默认显
 PreviewHost 的“数据展示 → ImagePreview”包含 Bitmap 和透明图片、网络地址输入、本地文件选择、混合来源集合和 SelectedIndex 编译绑定。网络示例需要自行输入地址，不自动请求外部服务。内置山湖示例图由 ImageGen 生成。
 
 ```bash
-dotnet build TheOne.Avalonia.slnx
-dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-image-preview .preview/image-preview/managed
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/image-preview/native
+dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/image-preview/artifacts
+dotnet .preview/image-preview/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-image-preview .preview/image-preview/managed
+# macOS：仅在涉及 AOT／绑定／元数据时执行原生专项。
+SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/image-preview/native-artifacts -o .preview/image-preview/native
 .preview/image-preview/native/NativeAotSmoke --require-aot --verify-image-preview .preview/image-preview/native-pixels
 ```
 
 专项使用本地 HTTP 服务验证真实网络加载、失败重试及取消竞争，无外部网络依赖；同时检查本地路径、Bitmap 所有权、集合变化、编译绑定、全屏、明暗三档尺寸、窄视口与实际像素。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### ImagePreview
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`CanNext`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L56) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CanPrevious`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L55) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ChromeHeight`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L49) | `double` | 可写; OneWay | `44` | 图片预览工具栏／装饰区高度，单位 DIP。 校验：`value => double.IsFinite(value) && value > 0` |
+| [`CurrentImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L64) | `Avalonia.Media.IImage?` | 只读; CLR / n/a | `null` | The currently decoded image. Images created from paths are owned by the viewer. |
+| [`DisplayTitle`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L59) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L58) | `string?` | 只读; OneWay | `computed / state` | 当前失败／校验说明；展示错误状态，不能据此假定操作已经成功完成。 |
+| [`HasError`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L53) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L52) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ImageCount`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L50) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsFitToWindow`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L47) | `bool` | 可写; TwoWay | `true` | 启用适合视口的图片缩放；手动缩放与此状态的关系见图片预览交互约定。 |
+| [`IsFullScreen`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L57) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L51) | `bool` | 只读; OneWay | `computed / state` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`IsMultiple`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L54) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L42) | `System.Collections.IEnumerable?` | 可写; OneWay | `null` | 绑定原始模型集合，不预建大量 Control；动态增删使用带通知的集合，并提供有限视口。 |
+| [`PageText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L60) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L43) | `int` | 可写; TwoWay | `0` | 当前显示项的零基索引；越界处理遵循所属控件的选择契约。 |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L46) | `bool` | 可写; OneWay | `false` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
+| [`ShowHeader`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L45) | `bool` | 可写; OneWay | `true` | 显示标题区域；不删除模型中的标题内容。 |
+| [`Source`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L41) | `object?` | 可写; OneWay | `null` | 源对象／地址；按控件支持的类型提供，外部资源的所有权与加载限制见用法章节。 |
+| [`Title`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L44) | `string?` | 可写; OneWay | `null` | 显示标题；不等于业务主键或本地化资源键。 |
+| [`ZoomFactor`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L48) | `double` | 可写; TwoWay | `1` | 图片显示缩放倍率；改变视图，不改写源图片像素。 校验：`value => double.IsFinite(value) && value is >= .001 and <= 64` |
+| [`ZoomText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L61) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+
+### ImagePreviewSurface
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreviewSurface.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`AlternateCheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L15) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 透明棋盘第二格画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`CheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L14) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 透明棋盘第一格画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+| ImagePreview | `one-large` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-large => ChromeHeight=52; FontSize=16 |
+| ImagePreview | `one-normal` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-normal => ChromeHeight=44; FontSize=14 |
+| ImagePreview | `one-small` | 模板自动类；不手动绑定 | one&#124;ImagePreview.one-small => ChromeHeight=36; FontSize=12 |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.ImagePreview`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreview.md) | Class | 22 | 9 | 1 |
+| [`TheOne.Avalonia.Controls.ImagePreviewSurface`](../../api/zh-cn/TheOne.Avalonia.Controls.ImagePreviewSurface.md) | Class | 2 | 2 | 0 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

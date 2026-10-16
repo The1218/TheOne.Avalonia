@@ -5,7 +5,7 @@
 基于 Avalonia 官方控件的跨平台主题与控件库，内置明暗主题、三档尺寸、多种控件外观与渐变配色。PreviewHost 提供可交互的控件示例。
 
 - 为按钮、输入、选择、日期时间、列表、树、菜单和布局控件提供统一主题。
-- 提供 14 种图表，以及 NavMenu、InfoCard、Tag、VerificationStep、窗口与消息扩展。
+- 提供 14 种图表，以及 Form/FormItem、MultiSelectBox、NavMenu、InfoCard、Tag、VerificationStep、窗口与消息扩展。
 - DataGrid 支持编译绑定、自动实体属性筛选、左右冻结列与底部数值统计。
 
 ## 环境与版本
@@ -69,6 +69,9 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 
 ## 文档
 
+- [项目接入与迁移](docs/integration/zh-cn/README.md)：外部项目改造、跨平台边界及可复制给 Codex 的任务说明。
+- [文档总入口](docs/README.md)：按任务和语言选择文档。
+- [完整公共 API 与模型](docs/api/zh-cn/README.md)：所有额外属性、初值、样式、方法、事件与内置模型；PreviewHost 提供按能力分类的控件实验室。
 - [控件文档](docs/controls/zh-cn/README.md)：控件属性、行为与接入示例。
 - [主题文档](docs/theme/zh-cn/README.md)：配色、样式、尺寸与动效。
 
@@ -79,7 +82,7 @@ dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.cspr
 | `TheOne.Avalonia.CodeEditor` | 独立代码编辑器，提供语法高亮、补全、诊断和格式化 | `CodeEditorTheme` |
 | `TheOne.PrintingTools.Avalonia` | 桌面打印预览、打印机设置、PDF 导出及 Windows / macOS / Linux 打印后端 | `PrintingToolsTheme` |
 
-这两个包均为**按需单独引入**，不会随 TheOne.Avalonia 自动安装。源码、预览、版本与发布文档在各自项目中独立维护；使用时在 App.axaml 显式注册对应主题。本仓库及其 PreviewHost 不再依赖这两个包或相邻项目目录。
+这两个包均为**按需单独引入**，不会随 TheOne.Avalonia 自动安装，源码、版本与文档各自维护。PreviewHost 显式引用 CodeEditor 1.0.0-preview.2 展示源码高亮、PrintingTools 1.0.0-preview.3 展示打印：前者在 App.axaml 注册主题，后者在打印窗口局部注册主题。普通消费应用不必引入这些预览依赖，也不依赖相邻仓库，详见[接入指南](docs/integration/zh-cn/README.md#主库与预览程序的依赖不同)。
 
 ## 仓库结构
 

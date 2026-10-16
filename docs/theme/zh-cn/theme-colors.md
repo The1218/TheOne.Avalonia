@@ -118,3 +118,54 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。对比度报告见 [contrast-report.json](../contrast-report.json)。
 
 `underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger，禁用底线保留 InputLine。可编辑 ComboBox 只使用外层底线，不再出现内部编辑器边框；焦点和校验覆盖层使用同一底线颜色。NumericUpDown 的步进按钮在此变体中不绘制边框。PreviewHost 的 `--verify-underlined-inputs [output]` 仅验证 TextBox、可编辑／不可编辑 ComboBox 与 AutoCompleteBox。`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### OneTheme
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`ColorTheme`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L14) | `TheOne.Avalonia.Themes.ThemeColor` | 可写; OneWay | `0 / default` | Color palette; changing this does not change the requested Light / Dark variant. 校验：`value => Enum.IsDefined(value)` 可选值：`Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`ColorThemes`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L15) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Themes.ThemeColor>` | 只读; CLR / n/a | `Array.AsReadOnly(Enum.GetValues<ThemeColor>())` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+
+### ThemeColor
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Themes.OneTheme`](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md) | Class | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Themes.ThemeColor`](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md) | Enum | 10 | 1 | 0 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

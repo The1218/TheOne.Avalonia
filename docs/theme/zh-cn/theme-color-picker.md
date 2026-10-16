@@ -112,3 +112,77 @@ dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized
 专项范围为配色选择器、ThemeButton、代码面板及 Home 导航，检查原生键鼠、资源实时更新、明暗／尺寸／窄视口与实际绘制。不会触发其他控件的全量回归。
 
 原生消费可在既有 NativeAotSmoke 项目设置 `ThemeOnlyPreview=true`、`PublishAot=true`、`PublishTrimmed=true`，发布后传入 `--require-aot`，只执行枚举选择器及编译绑定专项，不执行其他控件回归。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### ThemeButton
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButton.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L16) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 主题按钮切换的作用域；影响 Light/Dark，不切换 ThemeColor 颜色枚举。 可选值：`Window`, `Application` |
+
+### ThemeColorPicker
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeColorPicker.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`SelectThemeColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L17) | `TheOne.Avalonia.Themes.ThemeColor` | 可写; TwoWay | `0 / default` | The selected palette, suitable for a persisted two-way enum binding. 校验：`value => Enum.IsDefined(value)` 可选值：`Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`SelectedColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L25) | `TheOne.Avalonia.Themes.ThemeColor` | 可写; TwoWay | `0 / default` | SelectedThemeColor 的兼容别名；两者表示同一颜色枚举，优先绑定 SelectedThemeColor。 校验：`value => Enum.IsDefined(value)` 可选值：`Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+
+### OneTheme
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`ColorTheme`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L14) | `TheOne.Avalonia.Themes.ThemeColor` | 可写; OneWay | `0 / default` | Color palette; changing this does not change the requested Light / Dark variant. 校验：`value => Enum.IsDefined(value)` 可选值：`Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`ColorThemes`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L15) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Themes.ThemeColor>` | 只读; CLR / n/a | `Array.AsReadOnly(Enum.GetValues<ThemeColor>())` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+
+### ThemeColor
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+| ThemeButton | `one-large` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-large => Width=44; Height=44 |
+| ThemeButton | `one-normal` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-normal => Width=36; Height=36 |
+| ThemeButton | `one-small` | 模板自动类；不手动绑定 | one&#124;ThemeButton.one-small => Width=30; Height=30 |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.ThemeButton`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButton.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.ThemeButtonScope`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeButtonScope.md) | Enum | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.ThemeColorPicker`](../../api/zh-cn/TheOne.Avalonia.Controls.ThemeColorPicker.md) | Class | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Themes.OneTheme`](../../api/zh-cn/TheOne.Avalonia.Themes.OneTheme.md) | Class | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Themes.ThemeColor`](../../api/zh-cn/TheOne.Avalonia.Themes.ThemeColor.md) | Enum | 10 | 1 | 0 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

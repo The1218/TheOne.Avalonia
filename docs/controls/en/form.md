@@ -110,3 +110,109 @@ dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-fo
 The check runs only Form / FormItem: compiled bindings, attributes and conversion errors, label association, real key/pointer input, cancellation and stale results, command availability, nested ownership, template replacement, reattachment, and rendering/pixels across light/dark × three densities × wide/narrow viewports. Shared field changes additionally run `--verify-verification-step`, without Tag or full-library regression.
 
 `design/PreviewHost/Consumers/NativeAotSmoke` reuses this check. For binding/metadata changes, publish and execute the native program with `--require-aot --verify-form`. Managed checks and cross-RID builds do not establish target-platform native execution or screen-reader validation.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### Form
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.Form.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`CanSubmit`](../../../TheOne.Avalonia/Controls/Form.cs#L56) | `bool` | read-only; OneWay | `computed / state` | Read-only; a submission attempt is currently allowed, not a guarantee of valid data |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L51) | `bool` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
+| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L53) | `bool` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Form.cs#L54) | `bool` | read-only; OneWay | `computed / state` | Read-only; validation is running, content is disabled, duplicate validation/submission returns `false` |
+| [`IsValidated`](../../../TheOne.Avalonia/Controls/Form.cs#L55) | `bool` | read-only; OneWay | `computed / state` | Read-only; last validation succeeded, reset by relevant notifications, clearing, detachment, or replacing content/validator |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/Form.cs#L48) | `Avalonia.Layout.Orientation` | writable; OneWay | `inherited registration` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Values: `Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Form.cs#L49) | `double` | writable; OneWay | `inherited registration` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite |
+| [`ShowErrorSummary`](../../../TheOne.Avalonia/Controls/Form.cs#L47) | `bool` | writable; OneWay | `true` | Defaults to `true`; displays model-level and unmapped errors only; mapped errors remain below their fields |
+| [`SubmitCommand`](../../../TheOne.Avalonia/Controls/Form.cs#L45) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
+| [`SubmitCommandParameter`](../../../TheOne.Avalonia/Controls/Form.cs#L46) | `object?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
+| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L52) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
+| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L50) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
+| [`ValidationModel`](../../../TheOne.Avalonia/Controls/Form.cs#L44) | `object?` | writable; OneWay | `null` | Optional notification source for custom validators; attribute validators use their registered model instead |
+| [`Validator`](../../../TheOne.Avalonia/Controls/Form.cs#L42) | `TheOne.Avalonia.Controls.IStepValidator?` | writable; OneWay | `null` | Optional `IStepValidator`; reuse step validators or scope attributes with `StepValidation.For(model, memberNames)` |
+
+### FormItem
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.FormItem.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L37) | `double` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L39) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L38) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L31) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
+| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L33) | `bool` | writable; OneWay | `false` | Defaults to `false`; visual marker only, with actual rules owned by the validator |
+| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L30) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
+| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L36) | `Avalonia.Controls.Dock` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width Values: `Left`, `Bottom`, `Right`, `Top` |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L34) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Vertical` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L35) | `double` | writable; OneWay; inherits | `120` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `value => double.IsFinite(value) && value > 0` |
+
+### IStepValidator
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### StepCompareAttribute
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L10) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+
+### StepValidation
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidation.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### StepValidationError
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`MemberName`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | writable; CLR / init-only | `required constructor argument` | Inherited from `StepField`; matches error member names such as `Name`, never executed as a reflection binding path |
+| [`Message`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | writable; CLR / init-only | `required constructor argument` | Result message for users/diagnostics; status fields still determine the operation outcome. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.Form`](../../api/en/TheOne.Avalonia.Controls.Form.md) | Class | 14 | 5 | 1 |
+| [`TheOne.Avalonia.Controls.FormItem`](../../api/en/TheOne.Avalonia.Controls.FormItem.md) | Class | 9 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidation`](../../api/en/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

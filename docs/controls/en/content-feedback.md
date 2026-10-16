@@ -74,3 +74,64 @@ small / normal / large use compact message density: fonts 11 / 12 / 13, padding 
 Motion.Enabled inherits from the window, manager, or card. Entry defaults to 200 ms and exit to 140 ms, animating opacity and position only. Disabling motion restores displayed state immediately; closing notifications are removed immediately. Automatic timing and manual close still work. Re-enabling animates later notifications / closes without replaying entry on existing cards. Override durations with One.Motion.Notification.Enter / Exit dynamic resources or NotificationMotion.EnterDuration / ExitDuration.
 
 Notifications are temporary messages, not history lists. Limit active cards with finite MaxItems; exiting cards can remain briefly during animation. PreviewHost delivers 1,000 notifications and checks at most four active cards and release on close. Use a separate bounded, model-bound virtualized ListBox for history. The Notification page exposes four types, auto-close delays, manual close, six positions, motion, callback counts, and reset, using global theme / size settings.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### ContentTransitionOptions
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L17) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+
+### NotificationMotion
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`EnterDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L26) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(200)` | Notification entrance duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
+| [`ExitDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L28) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(140)` | Notification exit duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L24) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| NotificationCard | `one-large` | automatic template class; do not bind manually | n&#124;NotificationCard.one-large => Width={DynamicResource One.Notification.Large.Width}; FontSize=13; Padding={DynamicResource One.Notification.Large.Padding}; n&#124;NotificationCard.one-large /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Large.BadgeSize}; Height={DynamicResource One.Notification.Large.BadgeSize}; n&#124;NotificationCard.one-large /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Large.IconSize}; Height={DynamicResource One.Notification.Large.IconSize}; n&#124;NotificationCard.one-large /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Large.CloseSize}; Height={DynamicResource One.Notification.Large.CloseSize} |
+| NotificationCard | `one-normal` | automatic template class; do not bind manually | n&#124;NotificationCard.one-normal => Width={DynamicResource One.Notification.Width}; FontSize=12; Padding={DynamicResource One.Notification.Padding} |
+| NotificationCard | `one-small` | automatic template class; do not bind manually | n&#124;NotificationCard.one-small => Width={DynamicResource One.Notification.Small.Width}; FontSize=11; Padding={DynamicResource One.Notification.Small.Padding}; n&#124;NotificationCard.one-small /template/ Border#PART_StatusBadge => Width={DynamicResource One.Notification.Small.BadgeSize}; Height={DynamicResource One.Notification.Small.BadgeSize}; n&#124;NotificationCard.one-small /template/ PathIcon#PART_StatusIcon => Width={DynamicResource One.Notification.Small.IconSize}; Height={DynamicResource One.Notification.Small.IconSize}; n&#124;NotificationCard.one-small /template/ Button#PART_CloseButton => Width={DynamicResource One.Notification.Small.CloseSize}; Height={DynamicResource One.Notification.Small.CloseSize} |
+| NotificationCard | `one-toast` | automatic template class; do not bind manually | n&#124;NotificationCard.one-toast.one-small => Width=NaN; MaxWidth={DynamicResource One.Notification.Small.Width}; FontSize=12; Padding=12,8; MinHeight=40; n&#124;NotificationCard.one-toast.one-normal => Width=NaN; MaxWidth={DynamicResource One.Notification.Width}; FontSize=14; Padding=16,10; MinHeight=48; n&#124;NotificationCard.one-toast.one-large => Width=NaN; MaxWidth={DynamicResource One.Notification.Large.Width}; FontSize=16; Padding=20,12; MinHeight=56; n&#124;NotificationCard.one-toast.one-small /template/ PathIcon#PART_StatusIcon => Width=16; Height=16; n&#124;NotificationCard.one-toast.one-normal /template/ PathIcon#PART_StatusIcon => Width=18; Height=18; n&#124;NotificationCard.one-toast.one-large /template/ PathIcon#PART_StatusIcon => Width=20; Height=20; n&#124;NotificationCard.one-toast => Theme={StaticResource One.ToastCard} |
+| TransitioningContentControl | `one-large` | automatic template class; do not bind manually | TransitioningContentControl.one-large => FontSize=16; Padding={DynamicResource One.ContentTransition.Large.Padding} |
+| TransitioningContentControl | `one-normal` | automatic template class; do not bind manually | TransitioningContentControl.one-normal => FontSize=14; Padding={DynamicResource One.ContentTransition.Padding} |
+| TransitioningContentControl | `one-small` | automatic template class; do not bind manually | TransitioningContentControl.one-small => FontSize=12; Padding={DynamicResource One.ContentTransition.Small.Padding} |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.ContentTransitionOptions`](../../api/en/TheOne.Avalonia.Controls.ContentTransitionOptions.md) | Class | 1 | 4 | 0 |
+| [`TheOne.Avalonia.Controls.NotificationMotion`](../../api/en/TheOne.Avalonia.Controls.NotificationMotion.md) | Class | 3 | 7 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

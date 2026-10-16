@@ -170,3 +170,71 @@ SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHos
 ```
 
 Build the native executable through the existing NativeAotSmoke consumer, using macOS xcrun clang and SDK. The suite covers light/dark, three densities, pointer entry/exit, combined classes, disabling, local overrides and actual shadow pixels.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### InfoCard
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.InfoCard.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`BoxShadow`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L50) | `Avalonia.Media.BoxShadows` | writable; OneWay | `inherited registration` | Outer shadow, supplied by the shadow and hove theme classes. |
+| [`Footer`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L56) | `object?` | writable; OneWay | `null` | Footer content, customized independently of body/header. |
+| [`FooterBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L61) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Footer background, default `One.InfoCard.Footer` |
+| [`FooterPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L65) | `Avalonia.Thickness` | read-only; OneWay | `computed / state` | Computed footer insets: horizontal Padding and vertical FooterSpacing. |
+| [`FooterSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L74) | `double` | writable; OneWay | `12` | Footer vertical padding Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`FooterTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L57) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`HeaderActions`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L54) | `object?` | writable; OneWay | `null` | Action content beside the header, such as business buttons with native command/focus behavior. |
+| [`HeaderActionsTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L55) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`HeaderBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L59) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Header background, default `One.Subtle` |
+| [`HeaderContentSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L69) | `double` | writable; OneWay | `10` | 8 ; 10 ; 12 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L67) | `double` | writable; OneWay | `16` | 14 ; 16 ; 18 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`HeaderIcon`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L52) | `object?` | writable; OneWay | `null` | Header icon content, customized independently of its text. |
+| [`HeaderIconSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L68) | `double` | writable; OneWay | `18` | 16 ; 18 ; 20 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`HeaderIconTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L53) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`HeaderPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L63) | `Avalonia.Thickness` | read-only; OneWay | `computed / state` | Computed header insets: horizontal Padding and vertical HeaderSpacing. |
+| [`HeaderSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L66) | `double` | writable; OneWay | `12` | Header vertical padding Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`ShowFooterSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L73) | `bool` | writable; OneWay | `true` | Shows a divider before an existing footer when another region precedes it. |
+| [`ShowHeaderSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L71) | `bool` | writable; OneWay | `true` | Shows an edge-to-edge divider between the header and body. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| InfoCard | `flat` | explicit Classes; combine with density | one&#124;InfoCard.flat => BorderThickness=0; HeaderBackground=Transparent; FooterBackground=Transparent; ShowHeaderSeparator=False; ShowFooterSeparator=False; one&#124;InfoCard.glow:disabled, one&#124;InfoCard.flat:disabled => HeaderBackground={DynamicResource One.DisabledSurface}; FooterBackground={DynamicResource One.DisabledSurface} |
+| InfoCard | `glow` | explicit Classes; combine with density | one&#124;InfoCard.glow => HeaderBackground={DynamicResource One.Gradient.Glow}; one&#124;InfoCard.glow:disabled, one&#124;InfoCard.flat:disabled => HeaderBackground={DynamicResource One.DisabledSurface}; FooterBackground={DynamicResource One.DisabledSurface} |
+| InfoCard | `hove` | explicit Classes; combine with density | ^.hove:pointerover:not(:disabled) => BorderBrush={DynamicResource One.Accent}; Background={DynamicResource One.SurfaceHover}; BoxShadow={DynamicResource One.InfoCard.HoverShadow} |
+| InfoCard | `one-large` | automatic template class; do not bind manually | one&#124;InfoCard.one-large => Padding=24; FontSize=16; HeaderFontSize=18; HeaderSpacing=16; HeaderIconSize=20; HeaderContentSpacing=12; FooterSpacing=16 |
+| InfoCard | `one-normal` | automatic template class; do not bind manually | one&#124;InfoCard.one-normal => Padding=20; FontSize=14; HeaderFontSize=16; HeaderSpacing=12; HeaderIconSize=18; HeaderContentSpacing=10; FooterSpacing=12 |
+| InfoCard | `one-small` | automatic template class; do not bind manually | one&#124;InfoCard.one-small => Padding=16; FontSize=12; HeaderFontSize=14; HeaderSpacing=8; HeaderIconSize=16; HeaderContentSpacing=8; FooterSpacing=8 |
+| InfoCard | `outlined` | explicit Classes; combine with density | one&#124;InfoCard.outlined => BorderBrush={DynamicResource One.Accent}; HeaderBackground={DynamicResource One.AccentSoft}; one&#124;InfoCard.outlined:disabled => BorderBrush={DynamicResource One.Line}; HeaderBackground={DynamicResource One.DisabledSurface} |
+| InfoCard | `shadow` | explicit Classes; combine with density | ^.shadow:not(:disabled) => BoxShadow={DynamicResource One.InfoCard.Shadow} |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.InfoCard`](../../api/en/TheOne.Avalonia.Controls.InfoCard.md) | Class | 18 | 1 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

@@ -22,11 +22,11 @@ using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
 
-internal static class MultiSelectBoxPreview
+internal static partial class MultiSelectBoxPreview
 {
     public static void Verify(Action<bool, string> check, string? output = null)
     {
-        VerifySelection(check); VerifyKeyboard(check); VerifyLifecycle(check); VerifyVirtualization(check);
+        VerifySelection(check); VerifyKeyboard(check); VerifyLifecycle(check); VerifyVirtualization(check); VerifyPopupScroll(check);
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
         foreach (var size in Enum.GetValues<ControlSize>())
         foreach (var width in new[] { 760, 320 }) VerifyAppearance(theme, size, width, check, output);
@@ -39,6 +39,8 @@ internal static class MultiSelectBoxPreview
         ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false); window.Show(); Flush(); return window;
     }
     private static T Part<T>(Control root, string name) where T : Control => root.GetVisualDescendants().OfType<T>().Single(control => control.Name == name);
+
+    static partial void VerifyPopupScroll(Action<bool, string> check);
     private static Popup Popup(MultiSelectBox box) => Part<Popup>(box, "PART_Popup");
     private static T PopupPart<T>(MultiSelectBox box, string name) where T : Control => Part<T>(Popup(box).Child!, name);
     private static ListBox Results(MultiSelectBox box) => PopupPart<ListBox>(box, "PART_Results");

@@ -118,3 +118,54 @@ Default chart brushes map to `One.Chart.Series1..6`, cycling after six. For many
 Appearances are shown on their existing control pages, with no separate theme-preview page. Checks / targeted rendering: [preview entry points](../../../design/PreviewHost/Program.cs). Contrast results: [contrast-report.json](../contrast-report.json).
 
 `underlined` input focus uses a 2 px bottom line; validation still uses Danger and disabled baselines retain InputLine. Editable ComboBox uses one outer baseline, with no separate editor outline; its focus and validation overlays share the baseline color. NumericUpDown spin buttons stay borderless in this variant. PreviewHost's `--verify-underlined-inputs [output]` checks TextBox, editable/noneditable ComboBox, and AutoCompleteBox independently of other controls. Selected `pills` headers use Accent / OnAccent. `cards` only changes ListBox native container spacing, radii, and borders, retaining VirtualizingStackPanel. `outlined` cards keep content slots, separators, and subtle footer color differences.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### OneTheme
+
+[API / model reference](../../api/en/TheOne.Avalonia.Themes.OneTheme.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`ColorTheme`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L14) | `TheOne.Avalonia.Themes.ThemeColor` | writable; OneWay | `0 / default` | Color palette; changing this does not change the requested Light / Dark variant. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`ColorThemes`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L15) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Themes.ThemeColor>` | read-only; CLR / n/a | `Array.AsReadOnly(Enum.GetValues<ThemeColor>())` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+
+### ThemeColor
+
+[API / model reference](../../api/en/TheOne.Avalonia.Themes.ThemeColor.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Themes.OneTheme`](../../api/en/TheOne.Avalonia.Themes.OneTheme.md) | Class | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Themes.ThemeColor`](../../api/en/TheOne.Avalonia.Themes.ThemeColor.md) | Enum | 10 | 1 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

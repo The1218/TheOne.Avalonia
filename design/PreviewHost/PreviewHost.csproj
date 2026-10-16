@@ -14,6 +14,7 @@
     <AvaloniaResource Include="Assets/**" />
     <EmbeddedResource Include="Views/**/*.axaml;Views/**/*.cs;ViewModels/**/*.cs" />
     <EmbeddedResource Include="Infrastructure/Printing/PreviewPrinting.cs" />
+    <EmbeddedResource Include="Reference/ControlContracts.json" />
     <EmbeddedResource Include="Verification/Fixtures/DataGridTreeFixture.axaml;Verification/Fixtures/DataGridTreeFixture.axaml.cs" />
     <Compile Remove="Consumers/**/*.cs" />
     <AvaloniaResource Remove="Consumers/**/*.axaml" />

@@ -87,9 +87,115 @@ Orientation 默认 Horizontal，也可在独立 FlowNode 上设置。局部属�
 PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三种状态、单节点模板、共享模板、集合增删、流程推进与长文本切换。
 
 ```sh
-dotnet build TheOne.Avalonia.slnx
-dotnet run --project design/PreviewHost --no-build -- --verify-flow-step .preview/flowstep/render
-dotnet run --project design/PreviewHost --no-build -- --render-controls .preview/flowstep/render FlowStep
+dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/flowstep/artifacts
+dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-flow-step .preview/flowstep/render
+dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --render-controls .preview/flowstep/render FlowStep
 ```
 
 专项包含明暗主题、三档尺寸、窄视口、实际连接线像素、集合与模型变化、模板优先级和自定义按钮交互。独立 NativeAotSmoke 消费端支持 `--verify-flow-step --require-aot`；原生消费需要真实 PublishAot 发布后执行，不能用托管运行替代。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### FlowNode
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNode.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L40) | `double` | 可写; OneWay | `12` | 10 / 12 / 16 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L42) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
+| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L43) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; OneWay | `computed / state` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L44) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L39) | `double` | 可写; OneWay | `30` | 24 / 30 / 36 校验：`value => double.IsFinite(value) && value > 0` |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L46) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L47) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L45) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L38) | `Avalonia.Layout.Orientation` | 可写; OneWay | `inherited registration` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 可选值：`Horizontal`, `Vertical` |
+| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L37) | `TheOne.Avalonia.Controls.FlowNodeStatus` | 可写; OneWay | `FlowNodeStatus.Pending` | 标记 校验：`Enum.IsDefined` 可选值：`Pending`, `InProgress`, `Completed` |
+
+### FlowNodePanel
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodePanel.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L64) | `double` | 可写; OneWay | `inherited registration` | 10 / 12 / 16 |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L63) | `Avalonia.Layout.Orientation` | 可写; OneWay | `inherited registration` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 可选值：`Horizontal`, `Vertical` |
+
+### FlowStep
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStep.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L38) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L37) | `double` | 可写; OneWay; 向后代继承 | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L36) | `double` | 可写; OneWay; 向后代继承 | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L35) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+
+### FlowStepConnectors
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepConnectors.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`CompletedConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L17) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 已完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L16) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 未完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L18) | `double` | 可写; OneWay | `2` | 连接线描边宽度，单位 DIP；不改变节点的业务状态。 校验：`value => double.IsFinite(value) && value >= 0` |
+
+### FlowStepPanel
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepPanel.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L23) | `double` | 可写; OneWay | `inherited registration` | 150 / 180 / 210 |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L22) | `double` | 可写; OneWay | `inherited registration` | 20 / 24 / 32 |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L21) | `Avalonia.Layout.Orientation` | 可写; OneWay | `inherited registration` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 可选值：`Horizontal`, `Vertical` |
+| [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L24) | `double` | 可写; OneWay | `0` | 宿主提供给流程布局的可用宽度；用于节点排布，通常由模板维护。 校验：`value => double.IsFinite(value) && value >= 0` |
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+| FlowNode | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16; IndicatorSize=36; ContentSpacing=16 |
+| FlowNode | `one-normal` | 模板自动类；不手动绑定 | ^.one-normal => FontSize=14; IndicatorSize=30; ContentSpacing=12 |
+| FlowNode | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12; IndicatorSize=24; ContentSpacing=10 |
+| FlowStep | `one-large` | 模板自动类；不手动绑定 | ^.one-large => NodeSpacing=32; MinNodeWidth=210 |
+| FlowStep | `one-normal` | 模板自动类；不手动绑定 | ^.one-normal => NodeSpacing=24; MinNodeWidth=180 |
+| FlowStep | `one-small` | 模板自动类；不手动绑定 | ^.one-small => NodeSpacing=20; MinNodeWidth=150 |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.FlowNode`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNode.md) | Class | 10 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.FlowNodeContent`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeContent.md) | Class | 7 | 1 | 1 |
+| [`TheOne.Avalonia.Controls.FlowNodeItem`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeItem.md) | Class | 3 | 1 | 1 |
+| [`TheOne.Avalonia.Controls.FlowNodePanel`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodePanel.md) | Class | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.FlowNodeStatus`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowNodeStatus.md) | Enum | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.FlowStep`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStep.md) | Class | 4 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.FlowStepConnectors`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepConnectors.md) | Class | 3 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.FlowStepPanel`](../../api/zh-cn/TheOne.Avalonia.Controls.FlowStepPanel.md) | Class | 4 | 1 | 0 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

@@ -6,6 +6,8 @@ OneTheme is the library's default theme. It uses shared `One.*` resources and in
 
 ## Native control templates
 
+See the [complete API/model reference](../../api/en/README.md) and each control guide's generated style inventory for all added declarations and selectors. PreviewHost's Control Laboratory groups real variants by public class and supports property editing, event observation and model inspection. Template-only `one-*` classes remain automatic.
+
 See [ThemeColorPicker / ThemeButton](theme-color-picker.md) for runtime palettes, independent Light / Dark switching, PreviewHost code highlighting, and scoped verification.
 
 | Group | Controls |

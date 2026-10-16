@@ -154,3 +154,135 @@ VerificationStep defaults to maximum height 720; built-in forms max at width 640
 Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_NextButton, PART_ValidationErrors, with PART_FormFields for built-in forms. Extensions / Step / VerificationStep demonstrates auto forms, attribute validation, completion commands, reset, and thousand-step recycling. Commands: [preview entry points](../../../design/PreviewHost/Program.cs).
 
 Run `dotnet run --project design/PreviewHost -- --verify-verification-step` for VerificationStep-only checks (including real Tab / Shift+Tab input), or use `--render-controls .preview/verification-step VerificationStep` to render this control. The published NativeAotSmoke consumer runs the same checks with `--require-aot --verify-verification-step`.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### IStepValidator
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### StepCompareAttribute
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L10) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+
+### StepField
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepField.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Errors`](../../../TheOne.Avalonia/Controls/StepField.cs#L16) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/StepField.cs#L17) | `bool` | read-only; OneWay | `computed / state` | All validation errors |
+| [`MemberName`](../../../TheOne.Avalonia/Controls/StepField.cs#L15) | `string` | writable; OneWay | `""` | Exact model member name used to map validation errors to a field, separate from its display label. |
+
+### StepValidation
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidation.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### StepValidationError
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`MemberName`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | writable; CLR / init-only | `required constructor argument` | Inherited from `StepField`; matches error member names such as `Name`, never executed as a reflection binding path |
+| [`Message`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L7) | `string` | writable; CLR / init-only | `required constructor argument` | Result message for users/diagnostics; status fields still determine the operation outcome. |
+
+### Tag
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.Tag.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Icon`](../../../TheOne.Avalonia/Controls/Tag.cs#L23) | `object?` | writable; OneWay | `null` | Optional PathIcon, Image, or model template; retains logical-tree / DataContext behavior |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/Tag.cs#L21) | `double` | writable; OneWay | `13` | Scaled side length, default 13 px, one step below the former 14 px baseline; shared across densities and overridable without changing caller icon dimensions Validation: `value => double.IsFinite(value) && value > 0` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/Tag.cs#L24) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Optional PathIcon, Image, or model template; retains logical-tree / DataContext behavior |
+| [`Spacing`](../../../TheOne.Avalonia/Controls/Tag.cs#L27) | `double` | writable; OneWay | `6` | Icon / content gap, default 6; absent icon / text leaves no gap Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Status`](../../../TheOne.Avalonia/Controls/Tag.cs#L25) | `TheOne.Avalonia.Controls.TagStatus` | writable; OneWay | `0 / default` | `Default`, `Information`, `Success`, `Warning`, `Error`, `Processing` Validation: `Enum.IsDefined` Values: `Default`, `Information`, `Success`, `Warning`, `Error`, `Processing` |
+| [`Variant`](../../../TheOne.Avalonia/Controls/Tag.cs#L26) | `TheOne.Avalonia.Controls.TagVariant` | writable; OneWay | `0 / default` | `Soft` background, `Outline` border, `Solid` fill Validation: `Enum.IsDefined` Values: `Soft`, `Outline`, `Solid` |
+
+### VerificationStep
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`CanGoBack`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L73) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`CanGoNext`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L74) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`CompleteText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L66) | `string` | writable; OneWay | `"完成"` | Defaults “下一步” / “上一步” / “完成” (next / previous / complete) |
+| [`CompletedCommand`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L78) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`CompletedCommandParameter`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L79) | `object?` | writable; OneWay | `null` | Business argument passed to CompletedCommand when validation succeeds and the step completes. |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L62) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Text, controls, or typed data templates |
+| [`CurrentContent`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L69) | `object?` | read-only; OneWay | `computed / state` | Read-only position, model / content, resolved template; cannot bypass validation by setting index |
+| [`CurrentContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L70) | `Avalonia.Controls.Templates.IDataTemplate?` | read-only; OneWay | `computed / state` | Read-only position, model / content, resolved template; cannot bypass validation by setting index |
+| [`ForwardText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L75) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L77) | `bool` | read-only; OneWay | `computed / state` | All validation errors |
+| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L81) | `bool` | read-only; OneWay | `computed / state` | Whole-step errors or those without mapped inputs |
+| [`HeaderHorizontalAlignment`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L64) | `Avalonia.Layout.HorizontalAlignment` | writable; OneWay | `HorizontalAlignment.Center` | Default Center aligned with content; Stretch divides width; Left / Right supported Validation: `Enum.IsDefined` Values: `Stretch`, `Left`, `Center`, `Right` |
+| [`HeaderMaxWidth`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L63) | `double` | writable; OneWay | `960` | Header viewport maximum, default 960, finite and positive Validation: `value => double.IsFinite(value) && value > 0` |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L71) | `bool` | read-only; OneWay | `computed / state` | Validation / final completion state |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L72) | `bool` | read-only; OneWay | `computed / state` | Validation / final completion state |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L61) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Controls.StepItem>?` | writable; OneWay | `null` | IEnumerable&lt;StepItem&gt;, normally StepItem&lt;concrete model type&gt;; use ObservableCollection for changes and distinct item identities |
+| [`NextText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L65) | `string` | writable; OneWay | `"下一步"` | Defaults “下一步” / “上一步” / “完成” (next / previous / complete) |
+| [`PreviousText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L67) | `string` | writable; OneWay | `"上一步"` | Defaults “下一步” / “上一步” / “完成” (next / previous / complete) |
+| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L68) | `int` | read-only; OneWay | `computed / state` | Read-only position, model / content, resolved template; cannot bypass validation by setting index |
+| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L80) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Whole-step errors or those without mapped inputs |
+| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L76) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | All validation errors |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| Tag | `one-large` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-large => MinHeight=32; FontSize=15; Padding=11,4 |
+| Tag | `one-normal` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0 |
+| Tag | `one-small` | automatic template class; do not bind manually | one&#124;Tag.one-small, one&#124;Tag.one-normal, one&#124;Tag.one-large => MinHeight=0; Padding=4,0; ^.one-small => MinHeight=24; FontSize=11; Padding=7,2 |
+| Tag | `step-indicator` | automatic template class; do not bind manually | one&#124;Tag.step-indicator => Width=36; Height=36; one&#124;Tag.step-indicator.one-small => Width=30; Height=30; one&#124;Tag.step-indicator.one-large => Width=42; Height=42 |
+| VerificationStep | `one-large` | automatic template class; do not bind manually | one&#124;Tag.step-indicator.one-large => Width=42; Height=42; ^.one-large => FontSize=16; Padding=24 |
+| VerificationStep | `one-small` | automatic template class; do not bind manually | one&#124;Tag.step-indicator.one-small => Width=30; Height=30; ^.one-small => FontSize=12; Padding=16 |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.IStepValidator`](../../api/en/TheOne.Avalonia.Controls.IStepValidator.md) | Interface | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepCompareAttribute`](../../api/en/TheOne.Avalonia.Controls.StepCompareAttribute.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepField`](../../api/en/TheOne.Avalonia.Controls.StepField.md) | Class | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepItem`](../../api/en/TheOne.Avalonia.Controls.StepItem.md) | Class | 13 | 1 | 1 |
+| [`TheOne.Avalonia.Controls.StepItem<T>`](../../api/en/TheOne.Avalonia.Controls.StepItem_T_.md) | Class | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepState`](../../api/en/TheOne.Avalonia.Controls.StepState.md) | Enum | 4 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidation`](../../api/en/TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.StepValidationError`](../../api/en/TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.Tag`](../../api/en/TheOne.Avalonia.Controls.Tag.md) | Class | 6 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.TagStatus`](../../api/en/TheOne.Avalonia.Controls.TagStatus.md) | Enum | 6 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.TagVariant`](../../api/en/TheOne.Avalonia.Controls.TagVariant.md) | Enum | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.VerificationStep`](../../api/en/TheOne.Avalonia.Controls.VerificationStep.md) | Class | 21 | 5 | 1 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

@@ -72,10 +72,88 @@ public ObservableCollection<GanttTask> Tasks { get; } =
 PreviewHost 的“数据展示 / GanttChart”页面包含设计稿任务、筛选、缩放、全部展开／折叠，以及 1,500 条任务和末行定位。
 
 ```bash
-dotnet build TheOne.Avalonia.slnx
-dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-gantt .preview/gantt/managed
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/gantt/native
+dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/gantt/artifacts
+dotnet .preview/gantt/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-gantt .preview/gantt/managed
+# macOS：仅在涉及 AOT／绑定／元数据时执行原生专项。
+SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/gantt/native-artifacts -o .preview/gantt/native
 .preview/gantt/native/NativeAotSmoke --require-aot --verify-gantt .preview/gantt/native-pixels
 ```
 
 专项检查明暗主题、三档尺寸、窄窗口、实际任务与今天线像素、层级与选择、只读拖动、数据校验、重新挂载、编译绑定和远距离虚拟滚动。NativeAOT 命令必须执行原生产物，不能用托管运行替代。
+
+<!-- generated-contracts:start -->
+## 额外属性、样式与完整 API
+
+本节按源码声明列出本库增加的成员；原生控件继承属性仍使用 Avalonia API。注册默认值与主题生效值不同，显式局部值优先。模型、方法、事件、枚举的完整签名可从下表的类型链接查看。PreviewHost 的“控件能力实验室”（各页右上入口）按样式、属性、API／事件和模型分类演示；复杂模型使用原业务示例。
+
+### GanttChart
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.GanttChart.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`DayWidth`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L57) | `double` | 可写; OneWay | `48` | 甘特时间轴每一天的 DIP 宽度；改变横向缩放，不修改任务日期。 校验：`v => double.IsFinite(v) && v >= 4 && v <= 240` |
+| [`EmptyText`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L72) | `string` | 可写; OneWay | `"No tasks"` | 没有可显示数据时的提示文本；由应用覆盖以进行本地化。 |
+| [`GridBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L61) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 绘图区网格线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`HeaderBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L62) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 甘特表头背景画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`HeaderHeight`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L60) | `double` | 可写; OneWay | `72` | 标题区高度；图表使用 DIP，报表布局使用其布局坐标，勿与毫米源模型混用。 校验：`Positive` |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L52) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Controls.GanttTask>?` | 可写; OneWay | `null` | 绑定原始模型集合，不预建大量 Control；动态增删使用带通知的集合，并提供有限视口。 |
+| [`MutedBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L67) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 次要文字与辅助标记画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`OnTaskBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L68) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 任务条上方的对比文字画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`OwnerHeader`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L70) | `string` | 可写; OneWay | `"Owner"` | 甘特左侧负责人列的标题文本。 |
+| [`ProgressBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L65) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 甘特已完成进度区画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`ProgressHeader`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L71) | `string` | 可写; OneWay | `"Progress"` | 甘特左侧完成进度列的标题文本。 |
+| [`RowHeight`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L58) | `double` | 可写; OneWay | `44` | 每一行的 DIP 高度；与视口和回收／直接绘制布局一起决定可见行数。 校验：`Positive` |
+| [`SelectedTask`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L53) | `TheOne.Avalonia.Controls.GanttTask?` | 可写; TwoWay | `null` | 当前选中的原始甘特任务；空值清除选择，保持模型对象身份。 |
+| [`Selection`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L75) | `TheOne.Avalonia.Controls.GanttSelection?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`SelectionBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L66) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 当前选中任务的强调背景画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`TaskBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L64) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 甘特任务条底色画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`TaskHeader`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L69) | `string` | 可写; OneWay | `"Task"` | 甘特左侧任务名称列的标题文本。 |
+| [`TaskListWidth`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L59) | `double` | 可写; OneWay | `420` | 甘特左侧任务信息区的 DIP 宽度；剩余区域分配给时间轴。 校验：`Positive` |
+| [`Today`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L56) | `System.DateOnly` | 可写; OneWay | `DateOnly.FromDateTime(DateTime.Today)` | 时间轴上“今天”标记的日期；可显式设置以演示或固定业务日期。 |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L73) | `string?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ViewEnd`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L55) | `System.DateOnly` | 可写; OneWay | `DateOnly.FromDateTime(DateTime.Today).AddDays(31)` | Exclusive right boundary of the time axis. |
+| [`ViewStart`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L54) | `System.DateOnly` | 可写; OneWay | `DateOnly.FromDateTime(DateTime.Today)` | 甘特可见日期范围起点；与终点共同定义时间轴，不修改任务模型。 |
+| [`VisibleTaskCount`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L74) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`WeekendBrush`](../../../TheOne.Avalonia/Controls/GanttChart.cs#L63) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 时间轴周末区域画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+
+### GanttHeaderPresenter
+
+[API / model reference](../../api/zh-cn/TheOne.Avalonia.Controls.GanttHeaderPresenter.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### 公共附加属性
+
+[ControlSizing](../../api/zh-cn/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | 可写; OneWay; 附加属性; 向后代继承 | `ControlSize.Normal` | Small / Normal / Large 共享密度，向后代继承；显式单控件值或尺寸类可覆盖。 可选值：`Small`, `Normal`, `Large` |
+
+[Motion](../../api/zh-cn/TheOne.Avalonia.Styling.Motion.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+
+### Style 类与自动状态
+
+| 控件 | 类名 | 使用边界 | 生效 Setter／资源 |
+| --- | --- | --- | --- |
+| GanttChart | `one-large` | 模板自动类；不手动绑定 | ^.one-large => FontSize=16; RowHeight=52; HeaderHeight=80 |
+| GanttChart | `one-small` | 模板自动类；不手动绑定 | ^.one-small => FontSize=12; RowHeight=36; HeaderHeight=64 |
+
+`small` / `normal` / `large` 是公开密度入口；`one-small` / `one-normal` / `one-large` 为自动生成的内部类。`:pointerover`、`:pressed`、`:disabled`、`:selected`、`:error` 等是由输入或状态驱动的伪类，不是手工添加的 Classes。未列出额外外观类的控件使用默认主题及其属性。
+
+### API、事件与内置模型
+
+| 类型 | 类别 | 属性／枚举值 | 方法／构造 | 事件 |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.GanttChart`](../../api/zh-cn/TheOne.Avalonia.Controls.GanttChart.md) | Class | 24 | 5 | 1 |
+| [`TheOne.Avalonia.Controls.GanttHeaderPresenter`](../../api/zh-cn/TheOne.Avalonia.Controls.GanttHeaderPresenter.md) | Class | 0 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.GanttSelection`](../../api/zh-cn/TheOne.Avalonia.Controls.GanttSelection.md) | Class | 6 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.GanttTask`](../../api/zh-cn/TheOne.Avalonia.Controls.GanttTask.md) | Class | 9 | 1 | 1 |
+
+[Complete public API index](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

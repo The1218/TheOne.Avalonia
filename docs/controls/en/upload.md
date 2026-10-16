@@ -81,3 +81,95 @@ The built-in UI follows inherited Small / Normal / Large density and light/dark 
 ```
 
 Unsupported types and oversized picker results preserve the previous selection and report an error. A malformed or unreadable bound image keeps its file metadata, displays an error and disables the upload action until the source is replaced, removed or successfully reloaded with `ReloadPreview`. Replacing, clearing or detaching cancels pending preview work; stale picker or decoder results cannot overwrite newer data. Reattaching reloads the preserved selection. The first decoded image frame is used for thumbnails; animation playback and multiple files are outside this control's scope.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### Upload
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.Upload.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`ActionsTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L59) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`AllowedExtensions`](../../../TheOne.Avalonia/Controls/Upload.cs#L55) | `string` | writable; OneWay | `".png,.jpg,.jpeg,.webp,.bmp,.gif"` | Comma/semicolon/space separated extensions. Defaults to PNG, JPEG, WebP, BMP and GIF. Empty accepts any extension. Explicitly allowed non-image files use a file icon and can be uploaded without thumbnail decoding. |
+| [`Description`](../../../TheOne.Avalonia/Controls/Upload.cs#L50) | `string` | writable; OneWay | `"PNG、JPG、WebP 等图片 · 单文件"` | Localizable captions. |
+| [`EmptyTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L57) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Upload.cs#L65) | `string?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`FilePicker`](../../../TheOne.Avalonia/Controls/Upload.cs#L45) | `TheOne.Avalonia.Controls.IUploadFilePicker?` | writable; OneWay | `null` | Optional `IUploadFilePicker` host service. `PickAsync` returns one `UploadFile` or null on cancellation. |
+| [`FileTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L58) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`HasFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L61) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`HasPreview`](../../../TheOne.Avalonia/Controls/Upload.cs#L62) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`HttpClient`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L24) | `System.Net.Http.HttpClient?` | writable; OneWay | `null` | Optional consumer-owned client for the built-in transport. |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Upload.cs#L46) | `bool` | writable; OneWay | `false` | Upload-in-progress state maintained by the async operation; business submissions should respect it. |
+| [`IsPreviewLoading`](../../../TheOne.Avalonia/Controls/Upload.cs#L63) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`IsSelecting`](../../../TheOne.Avalonia/Controls/Upload.cs#L64) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`IsUploading`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L25) | `bool` | read-only; OneWay | `computed / state` | Read-only state for an active built-in request. |
+| [`MaxFileSize`](../../../TheOne.Avalonia/Controls/Upload.cs#L56) | `long` | writable; OneWay | `10 * 1024 * 1024` | Default 10 MiB; zero disables the declared-size limit. Thumbnail reads are capped at 64 MiB independently. Actual read size is checked when metadata is unavailable. Validation: `value => value >= 0` |
+| [`PreviewImage`](../../../TheOne.Avalonia/Controls/Upload.cs#L60) | `Avalonia.Media.IImage?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`Progress`](../../../TheOne.Avalonia/Controls/Upload.cs#L47) | `double` | writable; OneWay | `0` | Progress value with range/unit defined by its upload/Gantt model, distinct from a success flag. Validation: `value => double.IsFinite(value) && value is >= 0 and <= 100` |
+| [`RemoveCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L67) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Clears the selection, thumbnail and errors. |
+| [`RemoveText`](../../../TheOne.Avalonia/Controls/Upload.cs#L53) | `string` | writable; OneWay | `"移除"` | Localizable captions. |
+| [`ReplaceText`](../../../TheOne.Avalonia/Controls/Upload.cs#L52) | `string` | writable; OneWay | `"替换"` | Localizable captions. |
+| [`RequestType`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L20) | `TheOne.Avalonia.Controls.UploadRequestType` | writable; OneWay | `UploadRequestType.Post` | HTTP request verb, default `Post`; uses one-way binding by default. Validation: `value => Enum.IsDefined(value)` Values: `Post`, `Put`, `Patch` |
+| [`RequestUploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L68) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Checks enabled, busy, preview and validation state, then uses the host command or the built-in upload. |
+| [`SelectCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L66) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Native single-file picker; cancellation preserves the current selection. |
+| [`SelectText`](../../../TheOne.Avalonia/Controls/Upload.cs#L51) | `string` | writable; OneWay | `"选择图片"` | Localizable captions. |
+| [`SelectedFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L43) | `TheOne.Avalonia.Controls.UploadFile?` | writable; TwoWay | `null` | Selected original upload-file model; null clears the current selection. |
+| [`StatusText`](../../../TheOne.Avalonia/Controls/Upload.cs#L48) | `string?` | writable; OneWay | `null` | Display text for operation status; business logic should use state/results rather than parse this text. |
+| [`SuccessFileUrl`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L22) | `string?` | writable; TwoWay | `null` | Parsed result URL string with two-way binding by default. |
+| [`Title`](../../../TheOne.Avalonia/Controls/Upload.cs#L49) | `string` | writable; OneWay | `"上传图片"` | Localizable captions. |
+| [`UploadApi`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L19) | `string?` | writable; TwoWay | `null` | Endpoint string with two-way binding by default. |
+| [`UploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L44) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`UploadText`](../../../TheOne.Avalonia/Controls/Upload.cs#L54) | `string` | writable; OneWay | `"上传文件"` | Localizable captions. |
+
+### UploadFile
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.UploadFile.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L16) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L14) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Name used for presentation/identity; keep it consistent with templates and keys. |
+| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L17) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| Upload | `one-large` | automatic template class; do not bind manually | ^.one-large => FontSize=16; Padding=20 |
+| Upload | `one-small` | automatic template class; do not bind manually | ^.one-small => FontSize=12; Padding=12 |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.IUploadFilePicker`](../../api/en/TheOne.Avalonia.Controls.IUploadFilePicker.md) | Interface | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.Upload`](../../api/en/TheOne.Avalonia.Controls.Upload.md) | Class | 31 | 4 | 0 |
+| [`TheOne.Avalonia.Controls.UploadFile`](../../api/en/TheOne.Avalonia.Controls.UploadFile.md) | Class | 4 | 4 | 0 |
+| [`TheOne.Avalonia.Controls.UploadHttp`](../../api/en/TheOne.Avalonia.Controls.UploadHttp.md) | Class | 0 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.UploadHttpResult`](../../api/en/TheOne.Avalonia.Controls.UploadHttpResult.md) | Class | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.UploadModel`](../../api/en/TheOne.Avalonia.Controls.UploadModel.md) | Class | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.UploadRequestType`](../../api/en/TheOne.Avalonia.Controls.UploadRequestType.md) | Enum | 3 | 1 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

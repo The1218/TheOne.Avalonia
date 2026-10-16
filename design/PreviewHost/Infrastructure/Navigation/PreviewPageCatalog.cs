@@ -6,6 +6,7 @@ public sealed record PreviewPageDescriptor(int Id,string Title,string Group, IRe
 internal static class PreviewPageCatalog
 {
     public static PreviewPageDescriptor Home { get; } = new(0, "Home 首页", "开始使用");
+    public static PreviewPageDescriptor Reference { get; } = new(500, "控件能力实验室", "基础控件");
     public static IReadOnlyList<PreviewPageDescriptor> Controls { get; } =
     [
         new(1,"Button","基础控件"),
@@ -105,9 +106,9 @@ internal static class PreviewPageCatalog
         new(414,"仪表图","图表控件", [207]),
         new(415,"Step","扩展控件", [27,307]),
     ];
-    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home }.Concat(CombinedPages)
+    public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home, Reference }.Concat(CombinedPages)
         .Concat(Controls.Where(control => !CombinedPages.Any(page => page.ControlIds!.Contains(control.Id)))).ToArray();
-    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = new[] { Home }.Concat(CombinedPages)
+    public static IReadOnlyList<PreviewPageDescriptor> SearchEntries { get; } = new[] { Home, Reference }.Concat(CombinedPages)
         .Concat(Controls.Select(control => control with { Group = SearchGroup(control.Id) })).ToArray();
     private static string SearchGroup(int id)
     {
@@ -123,6 +124,7 @@ internal static class PreviewPageCatalog
     internal static UserControl CreateControl(int id) => id switch
     {
         0 => new HomePage(),
+        500 => new ControlExplorerView(),
         1 => new ButtonPage(),
         305 => new IconButtonPage(),
         306 => new LoadingContainerPage(),

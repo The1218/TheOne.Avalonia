@@ -15,6 +15,7 @@ namespace TheOne.Avalonia.Controls;
 public partial class MultiSelectBox
 {
     private Popup? _popup;
+    private Control? _popupContent;
     private ListBox? _results;
     private TextBox? _search;
     private Button? _open, _clear;
@@ -26,6 +27,8 @@ public partial class MultiSelectBox
     {
         CloseDropDown(false);
         if (_popup is not null) { _popup.Opened -= PopupOpened; _popup.Closed -= PopupClosed; }
+        _popupContent?.RemoveHandler(PointerWheelChangedEvent, ContainPopupWheel);
+        _popupContent = null;
         if (_results is not null) { _results.SelectionChanged -= ResultsSelectionChanged; _results.RemoveHandler(KeyDownEvent, PopupKeyDown); }
         if (_search is not null) _search.RemoveHandler(KeyDownEvent, PopupKeyDown);
         if (_open is not null) _open.Click -= OpenClicked;
@@ -39,6 +42,8 @@ public partial class MultiSelectBox
         _tags = args.NameScope.Find<ItemsControl>("PART_Tags");
         if (_popup is not null)
         {
+            _popupContent = _popup.Child;
+            _popupContent?.AddHandler(PointerWheelChangedEvent, ContainPopupWheel, RoutingStrategies.Bubble);
             _popup.PlacementTarget = _input ?? (Control)this; _popup.OverlayInputPassThroughElement = _input ?? (Control)this;
             _popup.Opened += PopupOpened; _popup.Closed += PopupClosed;
         }
@@ -50,6 +55,9 @@ public partial class MultiSelectBox
         if (_input is not null) _input.PointerPressed += InputPressed;
         RefreshItems();
     }
+    // Native scrolling runs first. Short/empty lists and boundary wheel input must
+    // stop here instead of bubbling through Popup's logical parent into the page.
+    private static void ContainPopupWheel(object? sender, PointerWheelEventArgs args) => args.Handled = true;
     private void InputPressed(object? sender, PointerPressedEventArgs args)
     {
         if (!args.GetCurrentPoint(this).Properties.IsLeftButtonPressed || args.Source is not Control source

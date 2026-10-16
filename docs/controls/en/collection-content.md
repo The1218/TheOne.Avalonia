@@ -71,3 +71,79 @@ RefreshOptions.UseThemeVisualizerSizing defaults to enabled and handles native c
 PreviewHost's Refresh page has thousand-item virtual data, real pulling, manual / automatic completion, failure / retry, distant navigation, and container counts. The refresh-motion switch can toggle repeatedly during refresh. Global controls select theme and size; reset restores inherited global motion.
 
 PreviewHost keeps only a RefreshContainer page. Its built-in RefreshVisualizer participates in pulling, refresh, and Motion checks while retaining public themes and custom Visualizer APIs.
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### CarouselOptions
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.CarouselOptions.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`IsMouseSwipeEnabled`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L11) | `bool` | writable; OneWay; attached | `false` | Allows mouse dragging to swipe the carousel, while touch/native navigation follow Carousel semantics. |
+
+### RefreshMotion
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.RefreshMotion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/RefreshMotion.cs#L22) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+
+### RefreshOptions
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.RefreshOptions.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L12) | `double` | writable; OneWay; attached; inherits | `22` | Refresh-indicator size in DIPs, independent of the pull threshold. |
+| [`UseThemeVisualizerSizing`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L14) | `bool` | writable; OneWay; attached | `false` | Makes the refresh visualizer follow shared theme density; disable for explicit sizing. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| Carousel | `one-large` | automatic template class; do not bind manually | Carousel.one-large => FontSize=16; Padding={DynamicResource One.Carousel.Large.Padding}; MinHeight={DynamicResource One.Carousel.Large.MinHeight} |
+| Carousel | `one-no-motion` | automatic template class; do not bind manually | ^.one-no-motion => PageTransition={x:Null} |
+| Carousel | `one-normal` | automatic template class; do not bind manually | Carousel.one-normal => FontSize=14; Padding={DynamicResource One.Carousel.Padding}; MinHeight={DynamicResource One.Carousel.MinHeight} |
+| Carousel | `one-small` | automatic template class; do not bind manually | Carousel.one-small => FontSize=12; Padding={DynamicResource One.Carousel.Small.Padding}; MinHeight={DynamicResource One.Carousel.Small.MinHeight} |
+| RefreshContainer | `one-large` | automatic template class; do not bind manually | RefreshContainer.one-large, RefreshVisualizer.one-large => FontSize=16 |
+| RefreshContainer | `one-normal` | automatic template class; do not bind manually | RefreshContainer.one-normal, RefreshVisualizer.one-normal => FontSize=14 |
+| RefreshContainer | `one-small` | automatic template class; do not bind manually | RefreshContainer.one-small, RefreshVisualizer.one-small => FontSize=12 |
+| RefreshVisualizer | `one-large` | automatic template class; do not bind manually | RefreshContainer.one-large, RefreshVisualizer.one-large => FontSize=16; RefreshVisualizer.one-large => Height={DynamicResource One.Refresh.Large.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.Large.IndicatorSize}; RefreshVisualizer.one-large.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Large.Height} |
+| RefreshVisualizer | `one-normal` | automatic template class; do not bind manually | RefreshContainer.one-normal, RefreshVisualizer.one-normal => FontSize=14; RefreshVisualizer.one-normal => Height={DynamicResource One.Refresh.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.IndicatorSize}; RefreshVisualizer.one-normal.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Height} |
+| RefreshVisualizer | `one-refresh-bottom` | automatic template class; do not bind manually | ^.one-refresh-bottom => BorderThickness=0,1,0,0 |
+| RefreshVisualizer | `one-refresh-horizontal` | automatic template class; do not bind manually | ^.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Height} |
+| RefreshVisualizer | `one-refresh-left` | automatic template class; do not bind manually | ^.one-refresh-left => BorderThickness=0,0,1,0 |
+| RefreshVisualizer | `one-refresh-right` | automatic template class; do not bind manually | ^.one-refresh-right => BorderThickness=1,0,0,0 |
+| RefreshVisualizer | `one-small` | automatic template class; do not bind manually | RefreshContainer.one-small, RefreshVisualizer.one-small => FontSize=12; RefreshVisualizer.one-small => Height={DynamicResource One.Refresh.Small.Height}; one:RefreshOptions.IndicatorSize={DynamicResource One.Refresh.Small.IndicatorSize}; RefreshVisualizer.one-small.one-refresh-horizontal => Height=NaN; Width={DynamicResource One.Refresh.Small.Height} |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`TheOne.Avalonia.Controls.CarouselOptions`](../../api/en/TheOne.Avalonia.Controls.CarouselOptions.md) | Class | 1 | 3 | 0 |
+| [`TheOne.Avalonia.Controls.RefreshMotion`](../../api/en/TheOne.Avalonia.Controls.RefreshMotion.md) | Class | 1 | 3 | 0 |
+| [`TheOne.Avalonia.Controls.RefreshOptions`](../../api/en/TheOne.Avalonia.Controls.RefreshOptions.md) | Class | 2 | 5 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->

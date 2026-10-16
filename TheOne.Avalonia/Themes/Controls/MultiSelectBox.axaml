@@ -52,7 +52,7 @@
             <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="6" Padding="6">
               <Grid RowDefinitions="Auto,*" RowSpacing="6">
                 <TextBox Name="PART_SearchBox" Text="{TemplateBinding SearchText, Mode=TwoWay}" PlaceholderText="{TemplateBinding SearchPlaceholderText}" AutomationProperties.Name="{TemplateBinding SearchPlaceholderText}" />
-                <ListBox Name="PART_Results" Grid.Row="1" SelectionMode="Multiple,Toggle" MinHeight="0" BorderThickness="0" Background="Transparent" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox Name="PART_Results" Grid.Row="1" SelectionMode="Multiple,Toggle" MinHeight="0" BorderThickness="0" Background="Transparent" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.IsScrollChainingEnabled="False">
                   <ListBox.Styles>
                     <Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large"><Setter Property="Padding" Value="8,2" /></Style>
                     <Style Selector="CheckBox.one-small, CheckBox.one-normal, CheckBox.one-large"><Setter Property="MinHeight" Value="20" /><Setter Property="Padding" Value="8,0,0,0" /></Style>

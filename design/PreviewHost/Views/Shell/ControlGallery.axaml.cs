@@ -14,6 +14,13 @@ public partial class ControlGallery : UserControl
     {
         InitializeComponent(); DataContextChanged += (_,_) => ObserveModel(); DetachedFromVisualTree += (_,_) => Unsubscribe(); AttachedToVisualTree += (_,_) => ObserveModel();
         SizeChanged += (_, _) => SourcePanel.SetViewportHeight(Bounds.Height);
+        ExplorerButton.Click += (_, _) =>
+        {
+            var descriptor = _model?.CurrentPage;
+            var id = descriptor?.ControlIds?.FirstOrDefault() ?? descriptor?.Id ?? 1;
+            _model?.Select(PreviewPageCatalog.Reference.Id);
+            if (CurrentView is ControlExplorerView explorer) explorer.SelectControl(id == 0 ? 1 : id);
+        };
     }
     public UserControl? CurrentView => PageHost.Content as UserControl;
     public int CreatedPageCount => _pages.Count;
@@ -28,14 +35,16 @@ public partial class ControlGallery : UserControl
             _pages.Add(descriptor.Id,page=PreviewPageCatalog.Create(descriptor.Id));
             if(page is ShowcasePage showcase) showcase.ControlRequested += ControlRequested;
             if(page is HomePage home) home.ControlRequested += (_, id) => _model?.Select(id);
+            if(page is ControlExplorerView explorer) explorer.ControlRequested += (_, id) => _model?.Select(id);
         }
         // Editors own a bounded viewport; do not measure their canvas at infinite height.
         var isReportDesigner=page is TheOne.Avalonia.Controls.ReportDesign or TheOne.Avalonia.Controls.ReportPreview;
-        var fillsViewport=isReportDesigner || page is WorkflowEditorDemoView;
+        var fillsViewport=isReportDesigner || page is WorkflowEditorDemoView or ControlExplorerView;
         PageScroll.VerticalScrollBarVisibility=fillsViewport ? global::Avalonia.Controls.Primitives.ScrollBarVisibility.Disabled : global::Avalonia.Controls.Primitives.ScrollBarVisibility.Auto;
         PageHost.VerticalContentAlignment=fillsViewport ? global::Avalonia.Layout.VerticalAlignment.Stretch : global::Avalonia.Layout.VerticalAlignment.Top;
         PageFrame.Padding=new Thickness(isReportDesigner ? 0 : 28);
         PageHost.Content=page; ResetScroll();
+        ExplorerButton.IsVisible = page is not ControlExplorerView;
         SourcePanel.SetViews(page is ShowcasePage grouped ? grouped.SourceViews : new[] { page });
     }
     private void ControlRequested(object? sender,int id) => ScrollToControl(id);

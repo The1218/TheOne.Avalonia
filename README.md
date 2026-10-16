@@ -5,7 +5,7 @@
 A cross-platform theme and control library built on Avalonia's native controls. It includes light and dark themes, three control sizes, multiple control styles, and gradient palettes. PreviewHost provides interactive examples.
 
 - Consistent themes for buttons, inputs, selectors, date and time pickers, lists, trees, menus, and layout controls.
-- Fourteen chart types, plus NavMenu, InfoCard, Tag, VerificationStep, window, and messaging extensions.
+- Fourteen chart types, plus Form/FormItem, MultiSelectBox, NavMenu, InfoCard, Tag, VerificationStep, window, and messaging extensions.
 - DataGrid with compiled bindings, automatic entity-property filters, frozen columns on both sides, and numeric summaries.
 
 ## Requirements and versions
@@ -69,6 +69,9 @@ Target `net10.0` and use Avalonia 12.1.4 consistently. Load the theme in `App.ax
 
 ## Documentation
 
+- [Integration and migration](docs/integration/en/README.md): existing-project adoption, platform boundaries, and a portable brief for Codex.
+- [Documentation index](docs/README.md): choose a task and language.
+- [Complete public API and models](docs/api/en/README.md): declared properties, defaults, styles, methods, events and built-in models; PreviewHost includes a categorized Control Laboratory.
 - [Control documentation](docs/controls/en/README.md): properties, behavior, and usage examples.
 - [Theme documentation](docs/theme/en/README.md): colors, styles, sizes, and motion.
 
@@ -79,7 +82,7 @@ Target `net10.0` and use Avalonia 12.1.4 consistently. Load the theme in `App.ax
 | `TheOne.Avalonia.CodeEditor` | Standalone code editor with syntax highlighting, completion, diagnostics and formatting | `CodeEditorTheme` |
 | `TheOne.PrintingTools.Avalonia` | Desktop print preview, printer settings, PDF export and Windows / macOS / Linux printing backends | `PrintingToolsTheme` |
 
-Reference these packages **only when needed**. Neither is automatically included by TheOne.Avalonia; each has independent source, previews, versions and release documentation. Register the selected package's theme explicitly in App.axaml. This repository and its PreviewHost do not require either package or a sibling checkout.
+Reference these packages **only when needed**. Neither is automatically included by TheOne.Avalonia; each has independent source, versions and documentation. PreviewHost explicitly references both NuGet packages: CodeEditor 1.0.0-preview.2 for source highlighting and PrintingTools 1.0.0-preview.3 for print examples. It registers CodeEditorTheme in App.axaml and PrintingToolsTheme locally in print windows. Consumer applications do not need these preview dependencies or sibling checkouts; see the [integration guide](docs/integration/en/README.md#library-dependencies-differ-from-preview-dependencies).
 
 ## Repository layout
 

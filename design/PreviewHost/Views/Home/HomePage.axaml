@@ -31,6 +31,11 @@
             </WrapPanel>
             <WrapPanel>
                 <Button
+                    Click="NavigateClicked"
+                    Content="按样式与属性探索"
+                    Margin="0,0,10,8"
+                    Tag="500" />
+                <Button
                     Classes="primary"
                     Click="NavigateClicked"
                     Content="从表单开始"

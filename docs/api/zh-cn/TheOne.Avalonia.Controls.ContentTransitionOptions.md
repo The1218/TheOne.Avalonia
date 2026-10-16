@@ -1,0 +1,30 @@
+# ContentTransitionOptions
+
+[English](../en/TheOne.Avalonia.Controls.ContentTransitionOptions.md) · [简体中文](../zh-cn/TheOne.Avalonia.Controls.ContentTransitionOptions.md) · [API index](README.md)
+
+`TheOne.Avalonia.Controls.ContentTransitionOptions` · Class · `Avalonia.AvaloniaObject`
+
+Connects native content transitions, including consumer-provided transitions, to Motion.Enabled.
+
+[Source / 声明](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L15)
+
+以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L17) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+
+## 方法与构造
+
+| 完整签名／值 | 说明 |
+| --- | --- |
+| [`static bool ContentTransitionOptions.GetUseMotionSettings(TransitioningContentControl control)`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L25) | 读取附加属性。使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+| [`static void ContentTransitionOptions.SetUseMotionSettings(TransitioningContentControl control, bool value)`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L26) | 设置附加属性。使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+| [`static IPageTransition? ContentTransitionOptions.GetConfiguredTransition(TransitioningContentControl control)`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L27) | 读取内容切换的已配置过渡；是否播放仍由动效开关决定。 |
+| [`ContentTransitionOptions.ContentTransitionOptions()`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L15) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+
+## 公开字段
+
+| 完整签名／值 | 说明 |
+| --- | --- |
+| [`static readonly AttachedProperty<bool> ContentTransitionOptions.UseMotionSettingsProperty`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L17) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |

@@ -6,6 +6,8 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 
 ## 官方模板
 
+完整声明见 [API 与内置模型](../../api/zh-cn/README.md)，每个控件指南末尾均列出额外属性和样式选择器。PreviewHost 的“控件能力实验室”按公开样式类展示真实变体，并支持属性编辑、事件观察与模型查看。`one-*` 等模板内部类仍由主题自动维护。
+
 运行时配色选择与独立明暗开关见 [ThemeColorPicker / ThemeButton](theme-color-picker.md)，包含 PreviewHost 代码高亮与专项入口。
 
 | 分组 | 控件 |

@@ -135,3 +135,122 @@ All 11 basic numeric types and Nullable are supported. null, NaN, and Infinity a
 `DataGridFeatures.GetSummaryResult(grid, column)` returns Value, ValidCount, and Error. SummaryUpdatedEvent publishes coalesced updates. Filtering, editing, unrealized-row PropertyChanged, collection changes / replacement, and nested-object updates recalculate results. Hidden columns stop calculation / listening and recalculate when restored. Summaries do not participate in selection, editing, sorting, or ItemsSource. Widths, reordering, scrolling, and frozen regions share native layout descriptions, retaining narrow-window clipping rules.
 
 Only locally loaded models are summarized, not unloaded server data. Fully custom DataGrid templates must embed DataGridSummaryPresenter; OneTheme already includes it. PreviewHost toggles summaries. `--verify-datagrid-summary` checks aggregates, automatic filters, frozen regions, and native behavior; render targets are DataGridSummary / DataGridFilters. See [preview entry points](../../../design/PreviewHost/Program.cs).
+
+<!-- generated-contracts:start -->
+## Additional properties, styles and complete API
+
+This section enumerates declarations added by this library; native inherited members remain Avalonia APIs. Registration defaults differ from themed values, and explicit local values take precedence. Type links provide full model, method, event and enum signatures. PreviewHost's Control Laboratory (top-right action on each page) groups live examples by styles, properties, APIs/events and models; complex models use the complete business samples.
+
+### DataGridCollectionView
+
+[API / model reference](../../api/en/Avalonia.Collections.DataGridCollectionView_T_.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### DataGridColumn
+
+[API / model reference](../../api/en/Avalonia.Controls.DataGridColumn.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L743) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
+
+### DataGridColumnOptions
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`FilterCondition`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L14) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | writable; TwoWay; attached | `null` | DataGridFilterCondition? / null ; Applied immutable condition; TwoWay supported; null means none; popup drafts are separate |
+| [`FilterEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L12) | `bool` | writable; OneWay; attached | `true` | bool / true ; Disable an individual entry point after grid filtering is enabled; disabling filtering clears that column's condition |
+| [`FilterError`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L15) | `string?` | read-only; OneWay; attached | `null` | string? / null ; Read-only phase-2 query property describing condition / field errors; read with GetFilterError |
+| [`FilterKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L13) | `TheOne.Avalonia.Controls.DataGridFilterKind` | writable; OneWay; attached | `DataGridFilterKind.Auto` | DataGridFilterKind / Auto ; `Auto`, `Text`, `Number`, `None`; Auto uses ValueAccessor's raw field type Values: `Auto`, `Text`, `Number`, `None` |
+| [`SummaryEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L16) | `bool` | writable; OneWay; attached | `false` | bool / false ; Explicitly enable the column; numeric or nullable numeric properties only |
+| [`SummaryFormat`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L18) | `string?` | writable; OneWay; attached | `null` | string? / null ; .NET numeric format, independent of display Converter, using the view Culture |
+| [`SummaryKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L17) | `TheOne.Avalonia.Controls.DataGridSummaryKind` | writable; OneWay; attached | `DataGridSummaryKind.Sum` | DataGridSummaryKind / Sum ; Sum, Average, Min, Max, Count; one per column Validation: `Enum.IsDefined` Values: `Sum`, `Average`, `Min`, `Max`, `Count` |
+| [`ValueAccessor`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L11) | `TheOne.Avalonia.Controls.IDataGridValueAccessor?` | writable; OneWay; attached | `null` | IDataGridValueAccessor? / null ; Optional override; ordinary bound columns infer it, while template columns or computed fields can supply a typed delegate |
+
+### DataGridFeatures
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`FrozenRightColumnCount`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L29) | `int` | writable; OneWay; attached | `inherited registration` | Number of frozen columns on the right, sharing available width with left-frozen columns. |
+| [`ShowColumnFilters`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L33) | `bool` | writable; OneWay; attached | `false` | Enables column-filter entry points; each column must also permit filtering. |
+| [`ShowSummaryRow`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L36) | `bool` | writable; OneWay; attached | `false` | bool / false ; Separate summary row; disabling stops calculation / subscriptions but retains column settings |
+| [`SummaryEmptyText`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L40) | `string` | writable; OneWay; attached | `"—"` | string / — ; Sum / Average / Min / Max text when no numeric values exist; Count is 0 |
+| [`SummaryLabel`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L39) | `string` | writable; OneWay; attached | `"合计"` | string / 合计 ; Default label means total; shown in the native row-header slot when visible, without replacing the first result |
+| [`SummaryLeavesOnly`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L38) | `bool` | writable; OneWay; attached | `false` | bool / false ; Only structural tree leaves, preventing parent/child double counting; ordinary rows are all leaves |
+| [`SummaryScope`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L37) | `TheOne.Avalonia.Controls.DataGridSummaryScope` | writable; OneWay; attached | `DataGridSummaryScope.FilteredItems` | DataGridSummaryScope / FilteredItems ; Locally loaded models after business / column filters and before paging; SourceItems ignores filters, VisibleItems enumerates the current view; tree FilteredItems counts direct matches only Validation: `Enum.IsDefined` Values: `FilteredItems`, `SourceItems`, `VisibleItems` |
+
+### DataGridFilterButton
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridFilterButton.md)
+
+No additional CLR/attached properties are declared on this type; see its base for inherited members.
+
+### DataGridSortButton
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridSortButton.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Direction`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L40) | `System.ComponentModel.ListSortDirection?` | read-only; OneWay | `computed / state` | Reveal/port direction enum; choices are defined by its concrete enum type. Values: `Ascending`, `Descending` |
+| [`SortPriority`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L41) | `int` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+
+### DataGridSummaryPresenter
+
+[API / model reference](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryPresenter.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Background`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L22) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Background brush; use DynamicResource for theme-dependent surfaces. |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L23) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Foreground brush; retain text, status and disabled contrast when overriding. |
+
+### Shared attached properties
+
+[ControlSizing](../../api/en/TheOne.Avalonia.Styling.ControlSizing.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Size`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L11) | `TheOne.Avalonia.Styling.ControlSize` | writable; OneWay; attached; inherits | `ControlSize.Normal` | Shared Small/Normal/Large density inherited by descendants; explicit local values/classes can override it. Values: `Small`, `Normal`, `Large` |
+
+[Motion](../../api/en/TheOne.Avalonia.Styling.Motion.md)
+
+| Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
+| --- | --- | --- | --- | --- |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+
+### Style classes and automatic state
+
+| Control | Class | Scope | Effective setters/resources |
+| --- | --- | --- | --- |
+| DataGrid | `borderless` | explicit Classes; combine with density | ListBox.borderless, DataGrid.borderless => BorderThickness=0 |
+| DataGrid | `one-large` | automatic template class; do not bind manually | DataGrid.one-large => FontSize=16 |
+| DataGrid | `one-normal` | automatic template class; do not bind manually | DataGrid.one-normal => FontSize=14 |
+| DataGrid | `one-small` | automatic template class; do not bind manually | DataGrid.one-small => FontSize=12 |
+
+`small` / `normal` / `large` are public density inputs; `one-small` / `one-normal` / `one-large` are automatic internal classes. `:pointerover`, `:pressed`, `:disabled`, `:selected`, `:error` etc. are input/state pseudoclasses, not manually assigned Classes. Controls without additional appearance classes use their default theme and properties.
+
+### APIs, events and built-in models
+
+| Type | Kind | Properties/enum values | Methods/constructors | Events |
+| --- | --- | ---: | ---: | ---: |
+| [`Avalonia.Collections.DataGridCollectionView<T>`](../../api/en/Avalonia.Collections.DataGridCollectionView_T_.md) | Class | 0 | 2 | 0 |
+| [`Avalonia.Controls.DataGridColumn`](../../api/en/Avalonia.Controls.DataGridColumn.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridColumnOptions`](../../api/en/TheOne.Avalonia.Controls.DataGridColumnOptions.md) | Class | 8 | 16 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridFeatures`](../../api/en/TheOne.Avalonia.Controls.DataGridFeatures.md) | Class | 7 | 19 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridFilterApplyResult`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterApplyResult.md) | Struct | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridFilterButton`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterButton.md) | Class | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridFilterCondition`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterCondition.md) | Class | 1 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridFilterKind`](../../api/en/TheOne.Avalonia.Controls.DataGridFilterKind.md) | Enum | 4 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridSortButton`](../../api/en/TheOne.Avalonia.Controls.DataGridSortButton.md) | Class | 2 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryKind`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryKind.md) | Enum | 5 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryPresenter`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryPresenter.md) | Class | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryResult`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryResult.md) | Class | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.DataGridSummaryScope`](../../api/en/TheOne.Avalonia.Controls.DataGridSummaryScope.md) | Enum | 3 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.IDataGridValueAccessor`](../../api/en/TheOne.Avalonia.Controls.IDataGridValueAccessor.md) | Interface | 1 | 1 | 0 |
+
+[Complete public API index](../../api/en/README.md)
+<!-- generated-contracts:end -->
