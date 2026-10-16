@@ -83,7 +83,7 @@
     <Style Selector="ItemsControl">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel />
+                <one:VirtualizingItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
     </Style>

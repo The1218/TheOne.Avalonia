@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:sys="using:System"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -17,7 +18,7 @@
     <ControlTheme TargetType="ComboBox" x:Key="{x:Type ComboBox}">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel />
+                <one:VirtualizingItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Padding" Value="{DynamicResource One.ComboBoxPadding}" />

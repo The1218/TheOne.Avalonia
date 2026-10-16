@@ -1,10 +1,11 @@
 <!-- Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md. -->
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:one="using:TheOne.Avalonia.Controls"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     x:CompileBindings="True">
 
   <ControlTheme x:Key="{x:Type TreeView}" TargetType="TreeView">
-    <Setter Property="ItemsPanel"><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></Setter>
+    <Setter Property="ItemsPanel"><ItemsPanelTemplate><one:VirtualizingItemsPanel /></ItemsPanelTemplate></Setter>
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />

@@ -13,6 +13,22 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        if (args.Length > 0 && args[0] is "--verify-virtualized-items-reinsert" or "--verify-virtualized-hierarchy-reinsert" or "--verify-carousel-reinsert")
+        {
+            BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
+            var failures = new List<string>();
+            void Check(bool condition, string message)
+            {
+                Console.WriteLine((condition ? "PASS: " : "FAIL: ") + message);
+                if (!condition) failures.Add(message);
+            }
+            var output = args.Length > 1 ? args[1] : null;
+            if (args[0] == "--verify-virtualized-items-reinsert") VirtualizedItemsReinsertPreview.Verify(Check, output);
+            else if (args[0] == "--verify-virtualized-hierarchy-reinsert") VirtualizedHierarchyReinsertPreview.Verify(Check, output);
+            else CarouselReinsertPreview.Verify(Check, output);
+            if (failures.Count > 0) throw new InvalidOperationException($"Virtualized item reinsertion: {failures.Count} failed checks.");
+            return;
+        }
         if (args.Length > 0 && args[0] is "--verify-theme-colors" or "--verify-preview-code" or "--verify-theme-performance" or "--verify-theme-api" or "--verify-theme-refresh" or "--verify-navmenu-scroll" or "--verify-navmenu-fling")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
@@ -200,6 +216,9 @@ internal static class Program
                 --verify-style-showcase [output] = labelled style/state/size examples and responsive drawing only
                 --verify-native-theme-preview [output] = compact native theme samples, project TabFeatures and responsive drawing only
                 --verify-tab-end-drop [output] = TabControl release past the last header, collection identity and drag cleanup only
+                --verify-virtualized-items-reinsert [output] = virtualized list, selector and item reinsertion checks only
+                --verify-virtualized-hierarchy-reinsert [output] = virtualized tree and menu reinsertion checks only
+                --verify-carousel-reinsert [output] = carousel item removal and reinsertion checks only
                 --verify-preview-printing [output] = report PDF snapshot, package preview and fake queue submission only
                 --verify-colorpicker-model-spacing [output] = RGB / HSV spacing, pointer, keyboard and gap pixels only
                 --verify-workflow [output] = WorkflowEditor contracts, binding, editing, persistence and rendering

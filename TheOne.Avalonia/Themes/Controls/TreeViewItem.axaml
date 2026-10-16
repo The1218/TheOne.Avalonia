@@ -57,7 +57,7 @@
     <ControlTheme TargetType="TreeViewItem" x:Key="{x:Type TreeViewItem}">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel />
+                <one:VirtualizingItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Padding" Value="0,4,10,4" />

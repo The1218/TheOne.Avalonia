@@ -2,6 +2,7 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Thickness x:Key="MenuFlyoutPresenterThemePadding">6</Thickness>
@@ -9,7 +10,7 @@
     <ControlTheme TargetType="MenuFlyoutPresenter" x:Key="{x:Type MenuFlyoutPresenter}">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel />
+                <one:VirtualizingItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
@@ -53,7 +54,7 @@
         <Setter Property="MinWidth" Value="{DynamicResource HorizontalMenuFlyoutThemeMinWidth}" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel Orientation="Horizontal" />
+                <one:VirtualizingItemsPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </Setter>
     </ControlTheme>

@@ -111,14 +111,19 @@ public partial class NavMenu : TreeView
             if (bindings.HeaderTemplate?.Template != navigation) bindings.HeaderTemplate = new RowHeaderTemplate(navigation);
             node.SetCurrentValue(TreeViewItem.HeaderTemplateProperty, bindings.HeaderTemplate);
         }
-        if (item is not null)
+        // An own NavMenuItem must stay a logical child of the menu. Putting it in
+        // the automatic tooltip would instead parent it to an unattached ContentControl.
+        if (!ReferenceEquals(item, node))
         {
-            var tip = bindings.ToolTip ??= new ContentControl();
-            tip.Content = item;
-            bindings.Add(tip.Bind(ContentControl.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this)));
-            node.SetCurrentValue(ToolTip.TipProperty, tip);
+            if (item is not null)
+            {
+                var tip = bindings.ToolTip ??= new ContentControl();
+                tip.Content = item;
+                bindings.Add(tip.Bind(ContentControl.ContentTemplateProperty, CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.ContentTemplate, source: this)));
+                node.SetCurrentValue(ToolTip.TipProperty, tip);
+            }
+            else node.SetCurrentValue(ToolTip.TipProperty, null);
         }
-        else node.SetCurrentValue(ToolTip.TipProperty, null);
         if (ActiveSearch is not null) node.SetCurrentValue(TreeViewItem.IsExpandedProperty, node.ItemCount > 0);
         else if (ExpandedBinding is { } expanded) bindings.Add(node.Bind(TreeViewItem.IsExpandedProperty, expanded));
         if (IsGroupBinding is { } group) bindings.Add(node.Bind(NavMenuItem.IsGroupProperty, group));

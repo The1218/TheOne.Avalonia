@@ -2,6 +2,7 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:conv="using:Avalonia.Controls.Converters"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -15,7 +16,7 @@
     <ControlTheme TargetType="MenuItem" x:Key="{x:Type MenuItem}">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel />
+                <one:VirtualizingItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />

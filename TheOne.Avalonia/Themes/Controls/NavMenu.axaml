@@ -68,7 +68,7 @@
   </ControlTheme>
   <ControlTheme x:Key="{x:Type one:NavMenuItem}" TargetType="one:NavMenuItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
     <!-- Retain one viewport on either side so reversing a fling reuses nearby rows. -->
-    <Setter Property="ItemsPanel"><ItemsPanelTemplate><VirtualizingStackPanel CacheLength="1" /></ItemsPanelTemplate></Setter>
+    <Setter Property="ItemsPanel"><ItemsPanelTemplate><one:VirtualizingItemsPanel CacheLength="1" /></ItemsPanelTemplate></Setter>
     <Setter Property="Padding" Value="0,4,10,4" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Style Selector="^:compact"><Setter Property="Padding" Value="0" /></Style>
