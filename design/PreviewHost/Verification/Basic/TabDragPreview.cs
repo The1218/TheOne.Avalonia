@@ -18,6 +18,211 @@ namespace TheOne.DesignPreview;
 
 internal static class TabDragPreview
 {
+    public static void VerifyEndDrop(Action<bool, string> check, string? output = null)
+    {
+        if (output is not null) Directory.CreateDirectory(output);
+        foreach (var directItems in new[] { true, false })
+        foreach (var motion in new[] { true, false })
+        foreach (var firstToEnd in new[] { true, false })
+        foreach (var layout in new[] { "stretched", "auto", "auto-variable" })
+        foreach (var farBlank in new[] { false, true })
+            VerifyEndDropCase(directItems, motion, firstToEnd, layout, farBlank, check, output);
+        foreach (var motion in new[] { true, false })
+        foreach (var firstToEnd in new[] { true, false })
+            VerifyEndDropCase(true, motion, firstToEnd, "auto-variable", true, check, output, ownItemSource: true);
+        VerifyOwnContainerMoves(check, output);
+    }
+
+    private static void VerifyEndDropCase(bool directItems, bool motion, bool firstToEnd, string layout, bool farBlank, Action<bool, string> check, string? output, bool ownItemSource = false)
+    {
+        var tabs = new TabControl { SelectedIndex = 0 };
+        tabs.Classes.Add("card");
+        TabFeatures.SetCanClose(tabs, true); TabFeatures.SetCanReorder(tabs, true); Motion.SetEnabled(tabs, motion);
+        Virtualization.SetEnabled(tabs, true);
+        var variableHeight = layout == "auto-variable";
+        var models = new ObservableCollection<EndDropModel>
+        {
+            new("需求", "需求内容", variableHeight ? 64 : 100),
+            new("开发", "开发内容", variableHeight ? 260 : 100),
+            new("验收", "验收内容", variableHeight ? 140 : 100)
+        };
+        ObservableCollection<TabItem>? ownItems = null;
+        if (directItems)
+        {
+            ownItems = new ObservableCollection<TabItem>(models.Select(model => new TabItem
+            {
+                Header = model.Title,
+                Content = new TextBlock { Name = "EndDropSelectedContent", Text = model.Content, MinHeight = model.ContentHeight, Margin = new Thickness(20) }
+            }));
+            if (ownItemSource) tabs.ItemsSource = ownItems;
+            else foreach (var item in ownItems) tabs.Items.Add(item);
+        }
+        else
+        {
+            tabs.ItemsSource = models;
+            tabs.ItemTemplate = new FuncDataTemplate<EndDropModel>((model, _) => new TextBlock { Text = model?.Title });
+            tabs.ContentTemplate = new FuncDataTemplate<EndDropModel>((model, _) =>
+                new TextBlock { Name = "EndDropSelectedContent", Text = model?.Content, MinHeight = model?.ContentHeight ?? 0, Margin = new Thickness(20) });
+        }
+        Control host;
+        if (layout == "stretched") host = new Border { Padding = new Thickness(24), Child = tabs };
+        else
+            host = new ScrollViewer
+            {
+                HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+                Content = new Border { Padding = new Thickness(24), Child = new StackPanel { Spacing = 16, Children =
+                {
+                    new TextBlock { Text = "TabControl 项目扩展", FontSize = 22 },
+                    PreviewSection.Create("TabControl · TabFeatures 关闭与重排", new StackPanel { Spacing = 12, Children =
+                    {
+                        new TextBlock { Text = "Classes=\"card\" · CanClose / CanReorder", TextWrapping = TextWrapping.Wrap }, tabs
+                    } }),
+                    new TextBlock { Text = "说明区域位于自动高度的控件之后。" }
+                } } }
+            };
+        var window = new Window
+        {
+            Title = "Tab end-drop regression", Width = 860, Height = layout == "stretched" ? 420 : 720, RequestedThemeVariant = ThemeVariant.Light,
+            Content = host
+        };
+        window.Show(); ControlPreview.Flush();
+        var label = $"TabDrag/end-drop/{(ownItemSource ? "ObservableTabItems" : directItems ? "TabItems" : "ItemsSource")}/motion-{motion}/{layout}/{(farBlank ? "far-blank" : "near-blank")}/{(firstToEnd ? "first-to-end-blank" : "last-to-own-end-blank")}";
+        try
+        {
+            var before = tabs.Items.Cast<object>().ToArray();
+            var sourceIndex = firstToEnd ? 0 : 2;
+            var source = before[sourceIndex];
+            tabs.SelectedIndex = sourceIndex; ControlPreview.Flush();
+            var initialHeaders = tabs.GetRealizedContainers().OfType<TabItem>().ToDictionary(item => item, item => item.RenderTransform);
+            var sourceHeader = Item(tabs, sourceIndex);
+            var scroll = HeaderScroll(tabs);
+            var last = Item(tabs, 2);
+            var lastRight = last.TranslatePoint(new Point(last.Bounds.Width, last.Bounds.Height / 2), window)!.Value;
+            var viewportRight = scroll.TranslatePoint(new Point(scroll.Bounds.Width, scroll.Bounds.Height / 2), window)!.Value.X;
+            var blank = new Point(farBlank ? viewportRight - 24 : Math.Min(lastRight.X + 72, viewportRight - 24), lastRight.Y);
+            check(tabs.Items.Count == 3 && tabs.GetRealizedContainers().Count() == 3 && blank.X > lastRight.X + (farBlank ? 240 : 20) &&
+                Virtualization.GetEnabled(tabs) && (layout == "stretched" || tabs.Bounds.Height < window.Bounds.Height - 100),
+                label + ": three real headers leave the requested trailing release area in the virtualized stretched or natural-height fixture");
+            SaveEndDrop(window, output, label, "before");
+            var start = Center(sourceHeader, window);
+            Down(window, start); Move(window, start + new Vector(24, 0));
+            check(Ghost(window) is not null && sourceHeader.Opacity == 0,
+                label + ": real pointer movement starts a lifted card header drag");
+            var trailing = last.TranslatePoint(new Point(last.Bounds.Width - 3, last.Bounds.Height / 2), window)!.Value;
+            Move(window, trailing);
+            if (motion) Pump(80);
+            Move(window, blank);
+            if (motion) Pump(160);
+            Up(window, blank);
+            Pump(240);
+            SaveEndDrop(window, output, label, "after");
+
+            var expected = firstToEnd ? new[] { before[1], before[2], before[0] } : before;
+            var actual = tabs.Items.Cast<object>().ToArray();
+            check(actual.Length == 3 && actual.Zip(expected).All(pair => ReferenceEquals(pair.First, pair.Second)),
+                label + ": release keeps every item identity and commits only the requested final position");
+            if (ownItemSource)
+                check(ReferenceEquals(tabs.ItemsSource, ownItems) && ownItems!.Count == 3 && ownItems.Zip(expected).All(pair => ReferenceEquals(pair.First, pair.Second)),
+                    label + ": the explicit ObservableCollection<TabItem> source retains its identity and final order");
+            check(tabs.GetRealizedContainers().Count() == 3 && Clean(window, tabs) &&
+                tabs.GetRealizedContainers().OfType<TabItem>().All(item => item.Opacity == 1 &&
+                    (!initialHeaders.TryGetValue(item, out var transform) || ReferenceEquals(item.RenderTransform, transform))),
+                label + ": every header restores opacity, its original transform and temporary state after release");
+            var expectedContent = directItems ? ((TextBlock)((TabItem)source).Content!).Text : ((EndDropModel)source).Content;
+            check(ReferenceEquals(tabs.SelectedItem, source) && tabs.SelectedIndex == 2 &&
+                tabs.GetVisualDescendants().OfType<TextBlock>().Any(text => text.Name == "EndDropSelectedContent" && text.Text == expectedContent &&
+                    text.IsEffectivelyVisible && text.Bounds.Width > 0 && text.Bounds.Height > 0),
+                label + ": the moved or unchanged selected item retains its visible original content");
+            check(tabs.GetRealizedContainers().OfType<TabItem>().All(item => item.IsAttachedToVisualTree() &&
+                item.GetVisualAncestors().Contains(tabs) && item.Bounds.Width > 0 && item.Bounds.Height > 0 &&
+                item.GetVisualDescendants().OfType<TextBlock>().Any(text => text.Text is "需求" or "开发" or "验收" &&
+                    text.IsEffectivelyVisible && text.Bounds.Width > 0 && text.Bounds.Height > 0)),
+                label + ": all three card titles remain present and visibly laid out after the end-area drop");
+        }
+        finally { window.Close(); ControlPreview.Flush(); }
+    }
+
+    private static void VerifyOwnContainerMoves(Action<bool, string> check, string? output)
+    {
+        foreach (var appearance in new[] { "card", "pills", "" })
+        foreach (var placement in new[] { Dock.Top, Dock.Bottom, Dock.Left, Dock.Right })
+            VerifyOwnContainerMoveCase(appearance, placement, ThemeVariant.Light, ControlSize.Normal, 860, check, null);
+        foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })
+        foreach (var size in Enum.GetValues<ControlSize>())
+            VerifyOwnContainerMoveCase("card", Dock.Top, theme, size, 360, check, output);
+    }
+
+    private static void VerifyOwnContainerMoveCase(string appearance, Dock placement, ThemeVariant theme, ControlSize size, int width,
+        Action<bool, string> check, string? output)
+    {
+        var original = new[]
+        {
+            new TabItem { Header = "需求", Content = new TextBlock { Text = "需求内容", Margin = new Thickness(16) } },
+            new TabItem { Header = "开发", Content = new TextBlock { Text = "开发内容", Margin = new Thickness(16) } },
+            new TabItem { Header = "验收", Content = new TextBlock { Text = "验收内容", Margin = new Thickness(16) } }
+        };
+        var tabs = new TabControl { SelectedIndex = 0, TabStripPlacement = placement };
+        if (appearance.Length > 0) tabs.Classes.Add(appearance);
+        foreach (var item in original) tabs.Items.Add(item);
+        TabFeatures.SetCanClose(tabs, true); TabFeatures.SetCanReorder(tabs, true); Virtualization.SetEnabled(tabs, true);
+        Motion.SetEnabled(tabs, false);
+        var window = new Window
+        {
+            Width = width, Height = 420, RequestedThemeVariant = theme,
+            Content = new Border { Padding = new Thickness(24), Child = tabs }
+        };
+        ControlSizing.SetSize(window, size); window.Show(); ControlPreview.Flush();
+        var label = $"TabDrag/own-container/{(appearance.Length > 0 ? appearance : "default")}/{placement}/{theme.Key}/{size}/{width}";
+        try
+        {
+            if (output is not null && size == ControlSize.Normal) SaveEndDrop(window, output, label, "before");
+            check(TabFeatures.Move(tabs, 0, 2), label + ": the public Move API accepts an own-container reorder");
+            ControlPreview.Flush();
+            check(ReferenceEquals(tabs.Items[2], original[0]) && ReferenceEquals(tabs.SelectedItem, original[0]) && tabs.SelectedIndex == 2 &&
+                MountedOwnHeaders(tabs) && OwnContentVisible(original[0], window),
+                label + ": Move remounts every original header and preserves the selected content");
+            Item(tabs, 2).Focus(); ControlPreview.Flush();
+            window.KeyPress(Key.Left, RawInputModifiers.Control | RawInputModifiers.Shift, PhysicalKey.ArrowLeft, null);
+            window.KeyRelease(Key.Left, RawInputModifiers.Control | RawInputModifiers.Shift, PhysicalKey.ArrowLeft, null); ControlPreview.Flush();
+            check(ReferenceEquals(tabs.Items[0], original[1]) && ReferenceEquals(tabs.Items[1], original[0]) && ReferenceEquals(tabs.Items[2], original[2]) &&
+                ReferenceEquals(tabs.SelectedItem, original[0]) && tabs.SelectedIndex == 1 && MountedOwnHeaders(tabs) && OwnContentVisible(original[0], window),
+                label + ": real Ctrl+Shift+Left restores order, visual attachment and selection after a preceding Move");
+            if (width == 360)
+            {
+                using var frame = window.CaptureRenderedFrame();
+                check(frame is not null && PreviewRenderedPixels.UniqueColors(frame) > 24 && tabs.GetRealizedContainers().OfType<TabItem>().All(item => ControlSizing.GetSize(item) == size),
+                    label + ": real narrow themed headers render in the inherited density after both reorder paths");
+                if (output is not null && size == ControlSize.Normal) SaveEndDrop(window, output, label, "after");
+            }
+            if (appearance == "card")
+            {
+                var close = Item(tabs, 1).GetVisualDescendants().OfType<Button>().Single(button => button.Name == "PART_CloseButton");
+                var point = Center(close, window); Down(window, point); Up(window, point);
+                check(tabs.Items.Count == 2 && !tabs.Items.Contains(original[0]) && ReferenceEquals(tabs.Items[0], original[1]) && ReferenceEquals(tabs.Items[1], original[2]) &&
+                    MountedOwnHeaders(tabs) && tabs.SelectedItem is TabItem selected && OwnContentVisible(selected, window),
+                    label + ": the real close button remains usable on a reordered own card header");
+            }
+        }
+        finally { window.Close(); ControlPreview.Flush(); }
+    }
+
+    private static bool MountedOwnHeaders(TabControl tabs) => tabs.GetRealizedContainers().Count() == tabs.Items.Count &&
+        tabs.Items.Cast<TabItem>().All(item => ReferenceEquals(tabs.ContainerFromIndex(tabs.Items.IndexOf(item)), item) &&
+            item.IsAttachedToVisualTree() && item.GetVisualAncestors().Contains(tabs) && item.Opacity == 1 &&
+            (item.RenderTransform is null || item.RenderTransform.Value == Matrix.Identity) && item.Bounds.Width > 0 && item.Bounds.Height > 0);
+
+    private static bool OwnContentVisible(TabItem item, Window window) => item.Content is Control content && content.IsAttachedToVisualTree() &&
+        ReferenceEquals(TopLevel.GetTopLevel(content), window) && content.IsEffectivelyVisible && content.Bounds.Width > 0 && content.Bounds.Height > 0;
+
+    private sealed record EndDropModel(string Title, string Content, double ContentHeight);
+
+    private static void SaveEndDrop(Window window, string? output, string label, string phase)
+    {
+        if (output is null) return;
+        using var frame = window.CaptureRenderedFrame();
+        frame?.Save(Path.Combine(output, label.Replace('/', '-') + "-" + phase + ".png"), PngBitmapEncoderOptions.Default);
+    }
+
     public static void Verify(Action<bool, string> check)
     {
         foreach (var theme in new[] { ThemeVariant.Light, ThemeVariant.Dark })

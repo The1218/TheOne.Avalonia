@@ -26,7 +26,7 @@ internal static class Program
             else PreviewCodePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }
-        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-pages" or "--verify-description" or "--verify-style-showcase" or "--verify-native-theme-preview")
+        if (args.Length > 0 && args[0] is "--verify-home" or "--verify-preview-printing" or "--verify-control-pages" or "--verify-description" or "--verify-style-showcase" or "--verify-native-theme-preview" or "--verify-tab-end-drop")
         {
             BuildAvaloniaApp(true).SetupWithLifetime(new ClassicDesktopStyleApplicationLifetime { ShutdownMode = ShutdownMode.OnExplicitShutdown });
             void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); Console.WriteLine("PASS: " + message); }
@@ -35,6 +35,7 @@ internal static class Program
             else if (args[0] == "--verify-description") DescriptionPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             else if (args[0] == "--verify-style-showcase") ControlStyleShowcasePreview.Verify(Check, args.Length > 1 ? args[1] : null);
             else if (args[0] == "--verify-native-theme-preview") NativeThemePreviewVerification.Verify(Check, args.Length > 1 ? args[1] : null);
+            else if (args[0] == "--verify-tab-end-drop") TabDragPreview.VerifyEndDrop(Check, args.Length > 1 ? args[1] : null);
             else PreviewPrintingPreview.Verify(Check, args.Length > 1 ? args[1] : null);
             return;
         }
@@ -198,6 +199,7 @@ internal static class Program
                 --verify-description [output] = Description layout, templates, themes, density and drawing only
                 --verify-style-showcase [output] = labelled style/state/size examples and responsive drawing only
                 --verify-native-theme-preview [output] = compact native theme samples, project TabFeatures and responsive drawing only
+                --verify-tab-end-drop [output] = TabControl release past the last header, collection identity and drag cleanup only
                 --verify-preview-printing [output] = report PDF snapshot, package preview and fake queue submission only
                 --verify-colorpicker-model-spacing [output] = RGB / HSV spacing, pointer, keyboard and gap pixels only
                 --verify-workflow [output] = WorkflowEditor contracts, binding, editing, persistence and rendering
