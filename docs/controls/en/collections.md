@@ -34,6 +34,14 @@
 
 The theme gives ordinary ItemsControl a scrolling viewport, and both default to VirtualizingStackPanel. Lists need bounded visible areas. Avoid large lists in infinite-height outer StackPanel / ScrollViewer and do not replace ItemsPanel with ordinary StackPanel / WrapPanel.
 
+## Dynamic collections and container lifetime
+
+The default theme fixes caller-owned item controls disappearing after reorder or removal/reinsertion, and stale data after Replace, a single Reset or switching ItemsSource. Prefer model collections with compiled templates for dynamic applications. Use ObservableCollection or correct collection notifications; mutating a non-notifying backing list does not refresh the UI automatically.
+
+After a source change, selection may refer only to items in the current collection. To preserve business selection across reloads, resolve a stable business identifier to an instance in the new collection from the ViewModel; do not retain old containers or model references. Keep tree expansion and selection in models so recycled containers rebind correctly.
+
+Dropping a TabControl heading beyond the last heading moves it to the end. Release/cancel clears drag-preview offsets. Closing, reordering or resetting a collection requires no manual visual-tree removal of TabItem, and generated containers should not become the data source.
+
 ## TreeView
 
 ```xml

@@ -34,6 +34,14 @@
 
 主题为普通 ItemsControl 提供滚动视口，两者默认使用 VirtualizingStackPanel。列表必须有有限可视区域；不要用外层无限高度 StackPanel / ScrollViewer 承载大列表，也不要把 ItemsPanel 替换为普通 StackPanel 或 WrapPanel。
 
+## 动态集合与容器生命周期
+
+默认主题修复了调用方拥有的 Item 控件重排、移除后重新插入时的挂载问题，以及 Replace、单次 Reset 和切换 ItemsSource 后的旧数据残留。动态业务仍推荐绑定模型与编译模板，使用 ObservableCollection 或正确实现集合通知；直接修改不通知的底层列表不会自动刷新 UI。
+
+替换数据源后，选择只能指向当前集合中的项。需要跨重载保留业务选择时，由 ViewModel 按稳定业务标识找到新集合中的实例再选中，不依赖旧容器或旧模型引用。树节点的展开与选择状态应保存在模型中，回收后会重新绑定。
+
+TabControl 重排到最后一个标题之后会提交到末尾；松开或取消拖动后清理预览位移。关闭、重排或重置集合时无需先手动从视觉树移除 TabItem，也不要把生成容器缓存为数据源。
+
 ## TreeView
 
 ```xml

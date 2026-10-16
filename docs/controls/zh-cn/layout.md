@@ -54,7 +54,11 @@ macOS 的 ⌘ 对应 Meta。菜单保留方向键导航、Enter 执行、Esc 关
 
 弹层中的命令应绑定到明确的数据上下文，不依赖弹层内查找 Window 祖先。树或列表的右键操作如需先选择目标，由宿主在 PointerPressed 中更新业务选择；参考 [ControlGallery.axaml.cs](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml.cs)。
 
-少量固定菜单可像示例声明子项。动态或可增长菜单使用 ItemsSource、按需模板与模型，避免预创建大量 MenuItem；菜单标题、子菜单、右键菜单和 MenuFlyoutPresenter 使用虚拟化布局。长弹层默认高度上限为 `One.DataFlyoutMaxHeight`（360 px）。
+少量固定菜单可像示例声明子项。动态或可增长菜单使用 ItemsSource、按需模板与模型，避免预创建大量 MenuItem。主题按集合大小选择原生布局：当前不超过 32 项的短菜单完整测量，包括 Separator、不同项高和较宽标题；更大的菜单使用虚拟化布局。菜单栏、子菜单、ContextMenu 和 MenuFlyoutPresenter 均采用这项策略，无需业务代码配置。
+
+短菜单首次打开即按真实内容定高，不需要关闭重开来修正尺寸。内容可完整放下时不显示上下滚动按钮；超过可用屏幕空间或显式 MaxHeight 时，显示高 16 DIP 的紧凑按钮，继续使用原生滚动命令、滚轮和键盘。长弹层默认高度上限为 `One.DataFlyoutMaxHeight`（360 DIP）。显式替换 ItemsPanel 或整个模板会覆盖这些默认行为，需自行保证首测量和长列表性能。
+
+集合增删、Replace、Reset 或切换 ItemsSource 时，默认面板会同步容器、选中项和数据归属；跨越短／长菜单边界时先清理旧面板再重新准备容器。模型属性变化仍需通知，业务命令继续绑定当前数据上下文，不需要手动搬移 MenuItem 或强制刷新弹窗。
 
 ## Expander 与动画
 

@@ -11,7 +11,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageDescription>TheOne source extension of Avalonia.Controls.DataGrid 12.1.2 for Avalonia 12.1.4. Preserves the native assembly identity, presenters and keyboard behavior.</PackageDescription>
-    <PackageReleaseNotes>Coordinated 1.0.0-preview.3 release with TheOne.Avalonia. Retains the existing DataGrid implementation, compiled row metadata and NativeAOT compatibility. Based on DataGrid 12.1.2 for Avalonia 12.1.4; AssemblyVersion remains 12.1.2.0. Upgrade both packages together.</PackageReleaseNotes>
+    <PackageReleaseNotes>Coordinated 1.0.0-preview.4 release with TheOne.Avalonia. Retains the existing DataGrid implementation, compiled row metadata and NativeAOT compatibility. Based on DataGrid 12.1.2 for Avalonia 12.1.4; AssemblyVersion remains 12.1.2.0. Upgrade both packages together.</PackageReleaseNotes>
     <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
     <AssemblyVersion>12.1.2.0</AssemblyVersion>
     <FileVersion>12.1.2.0</FileVersion>

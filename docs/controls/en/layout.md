@@ -54,7 +54,11 @@ macOS ⌘ is Meta. Menus retain arrow navigation, Enter execution, Esc closure, 
 
 Popup commands should bind explicit data contexts rather than finding Window ancestors inside popups. For tree / list context actions that must select first, update business selection in PointerPressed; see [ControlGallery.axaml.cs](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml.cs).
 
-Declare children directly for small static menus. Dynamic / growing menus use ItemsSource, on-demand templates, and models instead of prebuilt MenuItem lists. Menu headings, submenus, context menus, and MenuFlyoutPresenter use virtualized layout. Long popups default to `One.DataFlyoutMaxHeight` (360 px).
+Declare children directly for small static menus. Dynamic / growing menus use ItemsSource, on-demand templates, and models instead of prebuilt MenuItem lists. The theme selects a native panel by collection size: short menus of up to 32 items currently measure all content, including separators, different row heights and wide headings; larger menus retain virtualization. Menu bars, submenus, ContextMenu and MenuFlyoutPresenter use this policy without application configuration.
+
+Short menus use their actual content size on the first opening; closing and reopening is unnecessary. Scroll buttons stay hidden when content fits. Screen constraints or an explicit MaxHeight can require compact 16-DIP buttons, with native commands, wheel input and keyboard behavior preserved. Long popups default to `One.DataFlyoutMaxHeight` (360 DIP). Replacing ItemsPanel or the whole template overrides this behavior; custom layouts must provide accurate first measurement and large-list performance.
+
+Add/remove, Replace, Reset and ItemsSource changes synchronize containers, selection and data ownership. Crossing the short/large menu boundary releases the old panel before preparing new containers. Models still need property notifications, and commands bind to the current data context; applications need not move MenuItem controls manually or force popup refreshes.
 
 ## Expander and motion
 

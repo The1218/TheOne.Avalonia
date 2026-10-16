@@ -2,7 +2,7 @@
 
 **English** · [简体中文](../zh-cn/README.md) · [Documentation index](../../README.md)
 
-Use this guide when integrating an existing project on another machine, including work delegated to Codex. The baseline is TheOne.Avalonia / TheOne.Avalonia.DataGrid **1.0.0-preview.3**, **.NET 10**, and **Avalonia 12.1.4**. Identify the target stack before changing it. Running PreviewHost is not a prerequisite for consuming the library.
+Use this guide when integrating an existing project on another machine, including work delegated to Codex. The baseline is TheOne.Avalonia / TheOne.Avalonia.DataGrid **1.0.0-preview.4**, **.NET 10**, and **Avalonia 12.1.4**. Identify the target stack before changing it. Running PreviewHost is not a prerequisite for consuming the library.
 
 ## 1. Inspect the target project first
 
@@ -22,7 +22,7 @@ Read the target project's instructions and run `git status --short`. Make SDK/fr
 For an existing compatible Avalonia project:
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.3
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.4
 ```
 
 This is a fragment of an existing application project, not a complete new project:
@@ -33,11 +33,11 @@ This is a fragment of an existing application project, not a complete new projec
   <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 </PropertyGroup>
 <ItemGroup>
-  <PackageReference Include="TheOne.Avalonia" Version="1.0.0-preview.3" />
+  <PackageReference Include="TheOne.Avalonia" Version="1.0.0-preview.4" />
 </ItemGroup>
 ```
 
-Keep the application's desktop/single-view startup and required Avalonia platform packages, aligning its Avalonia dependencies with the 12.1.4 baseline. The main package brings `TheOne.Avalonia.DataGrid >= 1.0.0-preview.3`; upgrade any explicit reference to the companion package together. Remove the official `Avalonia.Controls.DataGrid` reference: this fork retains assembly name `Avalonia.Controls.DataGrid`, version `12.1.2.0` and strong-name identity, so the two implementations cannot coexist. The main assembly version remains `1.0.0.0`; it is distinct from its NuGet version.
+Keep the application's desktop/single-view startup and required Avalonia platform packages, aligning its Avalonia dependencies with the 12.1.4 baseline. The main package brings `TheOne.Avalonia.DataGrid >= 1.0.0-preview.4`; upgrade any explicit reference to the companion package together. Remove the official `Avalonia.Controls.DataGrid` reference: this fork retains assembly name `Avalonia.Controls.DataGrid`, version `12.1.2.0` and strong-name identity, so the two implementations cannot coexist. The main assembly version remains `1.0.0.0`; it is distinct from its NuGet version.
 
 Replace the old base theme registration with one `OneTheme` in `App.axaml`, retaining the actual `x:Class`, DataTemplates and business resources:
 
@@ -58,7 +58,7 @@ Keep the existing App XAML loading and ViewModel initialization. `OneTheme` alre
 
 A source reference is an alternative: see [quick start](../../../README.en.md#quick-start). Do not reference both the source project and its NuGet package in the same application.
 
-Check APIs against the repository commit recorded in the package's nuspec. Current preview.3 corresponds to [88938f5](https://github.com/The1218/TheOne.Avalonia/tree/88938f55e44c60a38a03ac8665352a32a3a7f0df); do not assume later main-branch APIs exist in this package. Use current migration guidance while checking member declarations against the target package version.
+Check APIs against the repository commit recorded in the package's nuspec, rather than a later main branch. Preview.4 includes the control/documentation and item-lifecycle updates described in the [release notes](../../releases/en/1.0.0-preview.4.md). Use current migration guidance while checking member declarations against the target package version.
 
 ### Library dependencies differ from preview dependencies
 
@@ -162,14 +162,14 @@ dotnet .preview/migration/artifacts/bin/PreviewHost/release/PreviewHost.dll --ve
 
 For other features, select an existing entry point from its control document and [Program.cs](../../../design/PreviewHost/Program.cs). Do not expand to every control. In an external application, build only the required projects using task-specific output directories. The [package-only consumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer) is a reference that does not depend on local release logs/binaries.
 
-Report changes, public contract changes, actual builds/interactions/OS execution, limitations and next steps. Do not report unrun checks as passed. The [complete public API and model reference](../../api/en/README.md) lists every library public type, property, constructor, method, event and enum with declaration links; control guides also enumerate added properties and styles. PreviewHost includes per-control complete demos with local style/property/API/model sections; only Button, Input and Select share comparison pages. Canvas editors keep their full viewport and place reference content in a separate tab. Published packages still lack complete XML API documentation. New repository documentation/demos describe current source; consumers of preview.3 must still check its recorded commit.
+Report changes, public contract changes, actual builds/interactions/OS execution, limitations and next steps. Do not report unrun checks as passed. The [complete public API and model reference](../../api/en/README.md) lists every library public type, property, constructor, method, event and enum with declaration links; control guides also enumerate added properties and styles. PreviewHost includes per-control complete demos with local style/property/API/model sections; only Button, Input and Select share comparison pages. Canvas editors keep their full viewport and place reference content in a separate tab. Published packages still lack complete XML API documentation. New repository documentation/demos describe current source; consumers must check the commit recorded in their target package.
 
 ## 7. Portable brief for another Codex session
 
 Replace placeholders and provide this repository URL or guide. These instructions are distributed with the docs and do not require a maintainer's ignored local AGENTS.md / skill files.
 
 ```text
-Goal: integrate TheOne.Avalonia 1.0.0-preview.3 into [project / specific pages].
+Goal: integrate TheOne.Avalonia 1.0.0-preview.4 into [project / specific pages].
 Target OS/RID: [fill in]. Existing framework/SDK: [fill in]. Scope: [fill in].
 Preserve authentication, models, commands, DI, routing and existing user changes.
 
@@ -177,7 +177,7 @@ Read the target project's instructions, git status --short and
 docs/integration/en/README.md, then only relevant control/theme documents.
 Identify version/theme/DataGrid/lifetime conflicts before phased implementation.
 
-Baseline: net10.0, Avalonia 12.1.4, main and companion DataGrid packages preview.3.
+Baseline: net10.0, Avalonia 12.1.4, main and companion DataGrid packages preview.4.
 Load one OneTheme. Keep native controls; do not invent TheOne wrapper classes.
 Do not copy preview authentication or make optional editor/printing packages mandatory.
 Use correct x:DataType / compiled bindings; register concrete DataGrid row/nested types.

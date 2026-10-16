@@ -13886,7 +13886,7 @@
       "IsStatic": false,
       "Base": "Avalonia.Interactivity.RoutedEventArgs",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Controls/NavMenu.cs:377",
+      "Source": "TheOne.Avalonia/Controls/NavMenu.cs:382",
       "Properties": [
         {
           "Name": "Item",
@@ -13898,7 +13898,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:379",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:384",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13909,7 +13909,7 @@
         {
           "Signature": "NavMenuItemInvokedEventArgs.NavMenuItemInvokedEventArgs(RoutedEvent routedEvent, object item)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:377",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:382",
           "ValueType": ""
         }
       ],
