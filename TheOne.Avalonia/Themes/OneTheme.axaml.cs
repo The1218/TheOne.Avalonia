@@ -30,6 +30,7 @@ public partial class OneTheme : Styles
         _ = Styling.ControlSizing.SizeProperty;
         _ = Styling.Motion.EnabledProperty;
         Styling.ColorPickerStyling.Initialize();
+        Styling.MenuFlyoutItems.Initialize();
         AvaloniaXamlLoader.Load(this);
         _colorResources = new ThemePaletteResources(ColorTheme, Resources.MergedDictionaries.ToArray());
         Resources.MergedDictionaries.Add(_colorResources);

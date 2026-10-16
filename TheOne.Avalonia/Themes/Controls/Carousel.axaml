@@ -23,7 +23,7 @@
         <Setter Property="ItemContainerTheme" Value="{StaticResource One.CarouselItem}" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <VirtualizingCarouselPanel />
+                <one:VirtualizingCarouselItemsPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="PageTransition">
