@@ -16,7 +16,9 @@ internal static class LoginDemo
         if (trace is not null)
         {
             window.Opened += (_, _) => trace("login opened");
-            window.Closed += (_, _) => trace($"login closed validationStarts={validationStarts} completionRequests={completionRequests} mainFactoryCalls={mainFactoryCalls}");
+            window.Closed += (_, _) =>
+                trace(
+                    $"login closed validationStarts={validationStarts} completionRequests={completionRequests} mainFactoryCalls={mainFactoryCalls}");
             model.PropertyChanged += (_, args) =>
             {
                 if (args.PropertyName != nameof(LoginDemoViewModel.IsBusy)) return;
@@ -24,6 +26,7 @@ internal static class LoginDemo
                 trace($"validation busy={model.IsBusy} starts={validationStarts}");
             };
         }
+
         return window;
 
         Task<bool> Complete()

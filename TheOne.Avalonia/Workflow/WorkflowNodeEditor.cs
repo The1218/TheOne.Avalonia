@@ -5,15 +5,35 @@ namespace TheOne.Avalonia.Workflow;
 /// <summary>Undo-aware presentation for the default inspector; usable in custom templates.</summary>
 public sealed class WorkflowNodeEditor : WorkflowObservable
 {
+    public WorkflowNodeEditor(WorkflowDocument document, WorkflowNode node)
+    {
+        Document = document;
+        Node = node;
+        Refresh();
+    }
+
     public WorkflowDocument Document { get; }
     public WorkflowNode Node { get; }
     public ObservableCollection<WorkflowPropertyEditor> Fields { get; } = [];
-    public string Title { get => Node.Title; set { var old = Node.Title; if (old != value) Document.Edit("修改标题", () => Node.Title = value, () => Node.Title = old); } }
-    public string Description { get => Node.Description; set { var old = Node.Description; if (old != value) Document.Edit("修改说明", () => Node.Description = value, () => Node.Description = old); } }
 
-    public WorkflowNodeEditor(WorkflowDocument document, WorkflowNode node)
+    public string Title
     {
-        Document = document; Node = node; Refresh();
+        get => Node.Title;
+        set
+        {
+            var old = Node.Title;
+            if (old != value) Document.Edit("修改标题", () => Node.Title = value, () => Node.Title = old);
+        }
+    }
+
+    public string Description
+    {
+        get => Node.Description;
+        set
+        {
+            var old = Node.Description;
+            if (old != value) Document.Edit("修改说明", () => Node.Description = value, () => Node.Description = old);
+        }
     }
 
     /// <summary>Refresh after document edits, including undo and upstream metadata changes.</summary>
@@ -22,10 +42,12 @@ public sealed class WorkflowNodeEditor : WorkflowObservable
         if (!Fields.Select(f => f.Property).SequenceEqual(Node.Properties))
         {
             Fields.Clear();
-            foreach (var property in Node.Properties) Fields.Add(new(Document, Node, property));
+            foreach (var property in Node.Properties) Fields.Add(new WorkflowPropertyEditor(Document, Node, property));
         }
+
         foreach (var field in Fields) field.Refresh();
-        Notify(nameof(Title)); Notify(nameof(Description));
+        Notify(nameof(Title));
+        Notify(nameof(Description));
     }
 }
 
@@ -34,12 +56,31 @@ public sealed class WorkflowPropertyEditor : WorkflowObservable
 {
     private readonly WorkflowDocument _document;
     private readonly WorkflowNode _node;
+
+    public WorkflowPropertyEditor(WorkflowDocument document, WorkflowNode node, WorkflowProperty property)
+    {
+        _document = document;
+        _node = node;
+        Property = property;
+        Refresh();
+    }
+
     public WorkflowProperty Property { get; }
     public string Title => Property.Title + (Property.IsRequired ? " *" : "");
     public string TypeHint => Property.Kind + " · " + Property.DataType;
-    public string Literal { get => Property.Value; set { if (Property.Value != value) _document.SetProperty(Property, value ?? "", Property.Reference); } }
+
+    public string Literal
+    {
+        get => Property.Value;
+        set
+        {
+            if (Property.Value != value) _document.SetProperty(Property, value ?? "", Property.Reference);
+        }
+    }
+
     public bool IsLiteral => Property.Reference == null;
     public ObservableCollection<WorkflowReferenceOption> Options { get; } = [];
+
     public WorkflowReferenceOption? SelectedOption
     {
         get => Options.FirstOrDefault(o => o.Reference == Property.Reference) ?? Options.FirstOrDefault();
@@ -50,15 +91,21 @@ public sealed class WorkflowPropertyEditor : WorkflowObservable
             if (Property.Reference != reference) _document.SetProperty(Property, Property.Value, reference);
         }
     }
-    public WorkflowPropertyEditor(WorkflowDocument document, WorkflowNode node, WorkflowProperty property)
-    {
-        _document = document; _node = node; Property = property; Refresh();
-    }
+
     public void Refresh()
     {
-        var options = _document.GetReferenceOptions(_node, Property).Prepend(new WorkflowReferenceOption("固定值", new("", "", ""))).ToList();
-        if (Property.Reference is { } reference && options.All(o => o.Reference != reference)) options.Add(new("无效引用：" + Property.DisplayValue, reference));
-        if (!Options.SequenceEqual(options)) { Options.Clear(); foreach (var option in options) Options.Add(option); }
-        Notify(nameof(Literal)); Notify(nameof(SelectedOption)); Notify(nameof(IsLiteral));
+        var options = _document.GetReferenceOptions(_node, Property)
+            .Prepend(new WorkflowReferenceOption("固定值", new WorkflowDataReference("", ""))).ToList();
+        if (Property.Reference is { } reference && options.All(o => o.Reference != reference))
+            options.Add(new WorkflowReferenceOption("无效引用：" + Property.DisplayValue, reference));
+        if (!Options.SequenceEqual(options))
+        {
+            Options.Clear();
+            foreach (var option in options) Options.Add(option);
+        }
+
+        Notify(nameof(Literal));
+        Notify(nameof(SelectedOption));
+        Notify(nameof(IsLiteral));
     }
 }

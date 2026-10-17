@@ -1,5 +1,5 @@
 using System.Windows.Input;
-using global::Avalonia.Controls;
+using Avalonia.Controls;
 using TheOne.Avalonia.Styling;
 
 namespace TheOne.Avalonia.Controls;
@@ -10,6 +10,7 @@ public sealed record MessageBoxOptions
     public string ConfirmText { get; init; } = "确认";
     public string CancelText { get; init; } = "取消";
     public bool IsDangerous { get; init; }
+
     /// <summary>Overrides the owner window's inherited density when specified.</summary>
     public ControlSize? Size { get; init; }
 }
@@ -18,8 +19,8 @@ public sealed record MessageBoxOptions
 public static class OneMessageBox
 {
     /// <summary>
-    /// Returns true only after explicit confirmation. Cancel, Escape and owner closure return false.
-    /// Cancellation of <paramref name="cancellationToken"/> cancels the returned task.
+    ///     Returns true only after explicit confirmation. Cancel, Escape and owner closure return false.
+    ///     Cancellation of <paramref name="cancellationToken" /> cancels the returned task.
     /// </summary>
     public static async Task<bool> ConfirmAsync(string title, string message, MessageBoxOptions? options = null,
         Window? owner = null, CancellationToken cancellationToken = default)
@@ -47,11 +48,15 @@ internal sealed class MessageBoxContext : DialogContext
 {
     public MessageBoxContext(string title, string message, MessageBoxOptions options)
     {
-        Title = title; Message = message; ConfirmText = options.ConfirmText; CancelText = options.CancelText;
+        Title = title;
+        Message = message;
+        ConfirmText = options.ConfirmText;
+        CancelText = options.CancelText;
         IsDangerous = options.IsDangerous;
-        ConfirmCommand = new MessageBoxCommand(() => RequestClose(OneDialogResult.Ok));
+        ConfirmCommand = new MessageBoxCommand(() => RequestClose());
         CancelCommand = new MessageBoxCommand(() => RequestClose(OneDialogResult.Cancel));
     }
+
     public string Title { get; }
     public string Message { get; }
     public string ConfirmText { get; }
@@ -63,8 +68,20 @@ internal sealed class MessageBoxContext : DialogContext
 
     private sealed class MessageBoxCommand(Action execute) : ICommand
     {
-        public bool CanExecute(object? parameter) => true;
-        public void Execute(object? parameter) => execute();
-        public event EventHandler? CanExecuteChanged { add { } remove { } }
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            execute();
+        }
+
+        public event EventHandler? CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
     }
 }

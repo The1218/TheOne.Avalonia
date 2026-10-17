@@ -1,7 +1,6 @@
 <Styles
     xmlns="https://github.com/avaloniaui"
     xmlns:one="using:TheOne.Avalonia.Controls"
-    xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style Selector="Button /template/ ContentPresenter#PART_ContentPresenter, ToggleButton /template/ ContentPresenter#PART_ContentPresenter, RepeatButton /template/ ContentPresenter#PART_ContentPresenter, ComboBox /template/ Border, CheckBox /template/ Border, RadioButton /template/ Border, ToggleButton /template/ Border#ToggleButtonBackground, TextBox /template/ Border#PART_BorderElement, NumericUpDown /template/ ButtonSpinner /template/ Border#PART_Border, TabItem /template/ Border#PART_LayoutRoot, TabStripItem /template/ Border#PART_LayoutRoot, ListBoxItem /template/ Border, TreeViewItem /template/ Border#PART_LayoutRoot, one|NavMenuItem /template/ Border#PART_LayoutRoot, MenuItem /template/ Border#PART_LayoutRoot, CalendarDatePicker /template/ Border#Background, CalendarDayButton /template/ ContentPresenter, CalendarButton /template/ ContentPresenter, GridSplitter /template/ Border#SplitterSurface">
         <Setter Property="Transitions">

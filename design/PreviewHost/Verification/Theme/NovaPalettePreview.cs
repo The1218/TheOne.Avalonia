@@ -56,7 +56,7 @@ internal static class NovaPalettePreview
         ("One.Chart.Background", "#FFFFFF", "#000000"),
         ("One.Chart.Text", "#385252", "#DBE6E6"),
         ("One.Chart.Grid", "#CADADA", "#707575"),
-        ("One.Placeholder", "#626A6A", "#B2B8B8"),
+        ("One.Placeholder", "#626A6A", "#B2B8B8")
     ];
 
     public static void Verify(Control owner, ThemeVariant theme, string label, Action<bool, string> check)
@@ -64,6 +64,6 @@ internal static class NovaPalettePreview
         foreach (var (key, light, dark) in Reference)
             check(owner.TryFindResource(key, theme, out var value) && value is ISolidColorBrush brush &&
                   brush.Color == Color.Parse(theme == ThemeVariant.Dark ? dark : light),
-                  $"{label}: {key} matches the original Eremex Nova resource");
+                $"{label}: {key} matches the original Eremex Nova resource");
     }
 }

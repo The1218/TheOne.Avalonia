@@ -1,86 +1,249 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="One.PaginationButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Padding" Value="8,0" />
-    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
-    <Setter Property="CornerRadius" Value="6" />
-  </ControlTheme>
-  <ControlTheme x:Key="One.PaginationPages" TargetType="ItemsControl">
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="ItemsPanel"><ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6" /></ItemsPanelTemplate></Setter>
-    <Setter Property="Template"><ControlTemplate><ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" /></ControlTemplate></Setter>
-  </ControlTheme>
-  <ControlTheme x:Key="{x:Type one:Pagination}" TargetType="one:Pagination">
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="FontSize" Value="14" />
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
-          <StackPanel Spacing="10">
-            <StackPanel.Styles>
-              <Style Selector="Button.pagination-navigation"><Setter Property="Padding" Value="8,0" /><Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" /></Style>
-              <Style Selector="Button.pagination-action"><Setter Property="Padding" Value="12,0" /><Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" /></Style>
-              <Style Selector="ComboBox.pagination-size"><Setter Property="Padding" Value="10,0,6,0" /><Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" /></Style>
-              <Style Selector="TextBox.pagination-input"><Setter Property="Padding" Value="8,0" /><Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" /></Style>
-            </StackPanel.Styles>
-            <one:PaginationPanel Name="PART_Layout" IsCompact="{TemplateBinding IsCompact}">
-              <Grid Name="PART_Summary" ColumnDefinitions="*,Auto" ColumnSpacing="12" IsVisible="{TemplateBinding HasSummary}">
-                <TextBlock Name="PART_Total" Text="{TemplateBinding TotalText}" IsVisible="{TemplateBinding ShowTotal}" TextWrapping="Wrap" VerticalAlignment="Center" />
-                <ComboBox Name="PART_PageSizes" Classes="pagination-size" Grid.Column="1" MinWidth="112" Padding="10,0,6,0" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" VerticalAlignment="Center" ItemsSource="{TemplateBinding PageSizes}"
-                          IsVisible="{TemplateBinding ShowPageSizeSelector}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}" AutomationProperties.Name="每页条数">
-                  <ComboBox.ItemTemplate><DataTemplate x:DataType="one:PaginationPageSize"><TextBlock Text="{Binding Text}" /></DataTemplate></ComboBox.ItemTemplate>
-                </ComboBox>
-              </Grid>
-              <Grid Name="PART_Navigation" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
-                <Button Name="PART_PreviousButton" Classes="pagination-navigation" Padding="8,0" Theme="{StaticResource One.PaginationButton}" MinWidth="{TemplateBinding ItemHeight}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
-                        IsEnabled="{TemplateBinding CanGoPrevious}" AutomationProperties.Name="{TemplateBinding PreviousText}">
-                  <Grid>
-                    <PathIcon Name="PART_PreviousIcon" Data="M 11,2 L 5,8 L 11,14 L 9,14 L 3,8 L 9,2 Z" Width="14" Height="14" />
-                    <TextBlock Name="PART_PreviousText" Margin="4,0" Text="{TemplateBinding PreviousText}" IsVisible="False" />
-                  </Grid>
-                </Button>
-                <ItemsControl Name="PART_Pages" Grid.Column="1" Theme="{StaticResource One.PaginationPages}" ItemsSource="{TemplateBinding PageItems}" VerticalAlignment="Center" AutomationProperties.Name="页码导航">
-                  <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="one:PaginationPageItem">
-                      <Grid>
-                        <Button Theme="{StaticResource One.PaginationButton}" Padding="6,0" Classes.primary="{Binding IsCurrent}" Content="{Binding Text}" IsVisible="{Binding IsPage}"
-                                MinWidth="{Binding $parent[one:Pagination].ItemHeight}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}" AutomationProperties.Name="{Binding AccessibleName}" />
-                        <TextBlock Text="…" IsVisible="{Binding IsEllipsis}" Margin="6,0" VerticalAlignment="Center" IsHitTestVisible="False" />
-                      </Grid>
-                    </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <TextBlock Name="PART_CurrentPage" Grid.Column="1" Text="{TemplateBinding CurrentPageText}" IsVisible="False" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" />
-                <Button Name="PART_NextButton" Classes="pagination-navigation" Grid.Column="2" Padding="8,0" Theme="{StaticResource One.PaginationButton}" MinWidth="{TemplateBinding ItemHeight}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
-                        IsEnabled="{TemplateBinding CanGoNext}" AutomationProperties.Name="{TemplateBinding NextText}">
-                  <Grid>
-                    <PathIcon Name="PART_NextIcon" Data="M 3,2 L 9,8 L 3,14 L 5,14 L 11,8 L 5,2 Z" Width="14" Height="14" />
-                    <TextBlock Name="PART_NextText" Margin="4,0" Text="{TemplateBinding NextText}" IsVisible="False" />
-                  </Grid>
-                </Button>
-              </Grid>
-              <StackPanel Name="PART_Jump" Orientation="Horizontal" Spacing="8" IsVisible="{TemplateBinding ShowJump}" IsEnabled="{TemplateBinding HasPages}">
-                <TextBlock Text="{TemplateBinding JumpPrefixText}" VerticalAlignment="Center" />
-                <TextBox Name="PART_JumpInput" Classes="pagination-input" Width="64" Padding="8,0" Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}" TextAlignment="Center" AutomationProperties.Name="跳转页码" />
-                <TextBlock Text="{TemplateBinding PageUnitText}" VerticalAlignment="Center" />
-                <Button Name="PART_JumpButton" Classes="pagination-action" Padding="12,0" Theme="{StaticResource One.PaginationButton}" MinHeight="{Binding $parent[one:Pagination].ItemHeight}" Content="{TemplateBinding JumpText}" />
-              </StackPanel>
-            </one:PaginationPanel>
-            <TextBlock Name="PART_Range" Text="{TemplateBinding RangeText}" IsVisible="{TemplateBinding ShowRange}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-            <TextBlock Name="PART_JumpError" Text="{TemplateBinding JumpError}" IsVisible="{TemplateBinding HasJumpError}" Foreground="{DynamicResource One.Danger}" TextWrapping="Wrap" />
-          </StackPanel>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:compact /template/ ItemsControl#PART_Pages, ^:compact /template/ PathIcon#PART_PreviousIcon, ^:compact /template/ PathIcon#PART_NextIcon, ^:compact /template/ StackPanel#PART_Jump, ^:compact /template/ TextBlock#PART_Range"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:compact /template/ TextBlock#PART_CurrentPage, ^:compact /template/ TextBlock#PART_PreviousText, ^:compact /template/ TextBlock#PART_NextText"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:invalid-jump /template/ TextBox#PART_JumpInput"><Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" /></Style>
-    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="ItemHeight" Value="30" /></Style>
-    <Style Selector="^.one-normal"><Setter Property="FontSize" Value="14" /><Setter Property="ItemHeight" Value="36" /></Style>
-    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="ItemHeight" Value="44" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button"
+        x:Key="One.PaginationButton">
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="CornerRadius" Value="6" />
+    </ControlTheme>
+    <ControlTheme TargetType="ItemsControl" x:Key="One.PaginationPages">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" Spacing="6" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+    <ControlTheme TargetType="one:Pagination" x:Key="{x:Type one:Pagination}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Padding="{TemplateBinding Padding}">
+                    <StackPanel Spacing="10">
+                        <StackPanel.Styles>
+                            <Style Selector="Button.pagination-navigation">
+                                <Setter Property="Padding" Value="8,0" />
+                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                            </Style>
+                            <Style Selector="Button.pagination-action">
+                                <Setter Property="Padding" Value="12,0" />
+                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                            </Style>
+                            <Style Selector="ComboBox.pagination-size">
+                                <Setter Property="Padding" Value="10,0,6,0" />
+                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                            </Style>
+                            <Style Selector="TextBox.pagination-input">
+                                <Setter Property="Padding" Value="8,0" />
+                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                            </Style>
+                        </StackPanel.Styles>
+                        <one:PaginationPanel IsCompact="{TemplateBinding IsCompact}" Name="PART_Layout">
+                            <Grid
+                                ColumnDefinitions="*,Auto"
+                                ColumnSpacing="12"
+                                IsVisible="{TemplateBinding HasSummary}"
+                                Name="PART_Summary">
+                                <TextBlock
+                                    IsVisible="{TemplateBinding ShowTotal}"
+                                    Name="PART_Total"
+                                    Text="{TemplateBinding TotalText}"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center" />
+                                <ComboBox
+                                    AutomationProperties.Name="每页条数"
+                                    Background="{DynamicResource One.Surface}"
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    Classes="pagination-size"
+                                    Grid.Column="1"
+                                    IsVisible="{TemplateBinding ShowPageSizeSelector}"
+                                    ItemsSource="{TemplateBinding PageSizes}"
+                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinWidth="112"
+                                    Name="PART_PageSizes"
+                                    Padding="10,0,6,0"
+                                    VerticalAlignment="Center">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="one:PaginationPageSize">
+                                            <TextBlock Text="{Binding Text}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                            <Grid
+                                ColumnDefinitions="Auto,*,Auto"
+                                ColumnSpacing="6"
+                                Name="PART_Navigation">
+                                <Button
+                                    AutomationProperties.Name="{TemplateBinding PreviousText}"
+                                    Classes="pagination-navigation"
+                                    IsEnabled="{TemplateBinding CanGoPrevious}"
+                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinWidth="{TemplateBinding ItemHeight}"
+                                    Name="PART_PreviousButton"
+                                    Padding="8,0"
+                                    Theme="{StaticResource One.PaginationButton}">
+                                    <Grid>
+                                        <PathIcon
+                                            Data="M 11,2 L 5,8 L 11,14 L 9,14 L 3,8 L 9,2 Z"
+                                            Height="14"
+                                            Name="PART_PreviousIcon"
+                                            Width="14" />
+                                        <TextBlock
+                                            IsVisible="False"
+                                            Margin="4,0"
+                                            Name="PART_PreviousText"
+                                            Text="{TemplateBinding PreviousText}" />
+                                    </Grid>
+                                </Button>
+                                <ItemsControl
+                                    AutomationProperties.Name="页码导航"
+                                    Grid.Column="1"
+                                    ItemsSource="{TemplateBinding PageItems}"
+                                    Name="PART_Pages"
+                                    Theme="{StaticResource One.PaginationPages}"
+                                    VerticalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="6" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="one:PaginationPageItem">
+                                            <Grid>
+                                                <Button
+                                                    AutomationProperties.Name="{Binding AccessibleName}"
+                                                    Classes.primary="{Binding IsCurrent}"
+                                                    Content="{Binding Text}"
+                                                    IsVisible="{Binding IsPage}"
+                                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                                    MinWidth="{Binding $parent[one:Pagination].ItemHeight}"
+                                                    Padding="6,0"
+                                                    Theme="{StaticResource One.PaginationButton}" />
+                                                <TextBlock
+                                                    IsHitTestVisible="False"
+                                                    IsVisible="{Binding IsEllipsis}"
+                                                    Margin="6,0"
+                                                    Text="…"
+                                                    VerticalAlignment="Center" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    IsVisible="False"
+                                    Name="PART_CurrentPage"
+                                    Text="{TemplateBinding CurrentPageText}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    VerticalAlignment="Center" />
+                                <Button
+                                    AutomationProperties.Name="{TemplateBinding NextText}"
+                                    Classes="pagination-navigation"
+                                    Grid.Column="2"
+                                    IsEnabled="{TemplateBinding CanGoNext}"
+                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinWidth="{TemplateBinding ItemHeight}"
+                                    Name="PART_NextButton"
+                                    Padding="8,0"
+                                    Theme="{StaticResource One.PaginationButton}">
+                                    <Grid>
+                                        <PathIcon
+                                            Data="M 3,2 L 9,8 L 3,14 L 5,14 L 11,8 L 5,2 Z"
+                                            Height="14"
+                                            Name="PART_NextIcon"
+                                            Width="14" />
+                                        <TextBlock
+                                            IsVisible="False"
+                                            Margin="4,0"
+                                            Name="PART_NextText"
+                                            Text="{TemplateBinding NextText}" />
+                                    </Grid>
+                                </Button>
+                            </Grid>
+                            <StackPanel
+                                IsEnabled="{TemplateBinding HasPages}"
+                                IsVisible="{TemplateBinding ShowJump}"
+                                Name="PART_Jump"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <TextBlock Text="{TemplateBinding JumpPrefixText}" VerticalAlignment="Center" />
+                                <TextBox
+                                    AutomationProperties.Name="跳转页码"
+                                    Background="{DynamicResource One.Surface}"
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    Classes="pagination-input"
+                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    Name="PART_JumpInput"
+                                    Padding="8,0"
+                                    TextAlignment="Center"
+                                    Width="64" />
+                                <TextBlock Text="{TemplateBinding PageUnitText}" VerticalAlignment="Center" />
+                                <Button
+                                    Classes="pagination-action"
+                                    Content="{TemplateBinding JumpText}"
+                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    Name="PART_JumpButton"
+                                    Padding="12,0"
+                                    Theme="{StaticResource One.PaginationButton}" />
+                            </StackPanel>
+                        </one:PaginationPanel>
+                        <TextBlock
+                            Foreground="{DynamicResource One.Muted}"
+                            IsVisible="{TemplateBinding ShowRange}"
+                            Name="PART_Range"
+                            Text="{TemplateBinding RangeText}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Foreground="{DynamicResource One.Danger}"
+                            IsVisible="{TemplateBinding HasJumpError}"
+                            Name="PART_JumpError"
+                            Text="{TemplateBinding JumpError}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:compact /template/ ItemsControl#PART_Pages, ^:compact /template/ PathIcon#PART_PreviousIcon, ^:compact /template/ PathIcon#PART_NextIcon, ^:compact /template/ StackPanel#PART_Jump, ^:compact /template/ TextBlock#PART_Range">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:compact /template/ TextBlock#PART_CurrentPage, ^:compact /template/ TextBlock#PART_PreviousText, ^:compact /template/ TextBlock#PART_NextText">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:invalid-jump /template/ TextBox#PART_JumpInput">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^.one-small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="ItemHeight" Value="30" />
+        </Style>
+        <Style Selector="^.one-normal">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="ItemHeight" Value="36" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="ItemHeight" Value="44" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -1,61 +1,91 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview" xmlns:styling="using:TheOne.Avalonia.Styling" x:Class="TheOne.DesignPreview.UploadDemoView" x:DataType="local:UploadDemoViewModel" x:CompileBindings="True">
-  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-    <StackPanel Spacing="24" Margin="24" MaxWidth="880" HorizontalAlignment="Stretch">
-      <StackPanel Spacing="8">
-        <TextBlock Text="Upload · 上传" FontSize="24" FontWeight="SemiBold" />
-        <TextBlock Text="单个文件、即时缩略图预览。可直接配置上传接口，也可通过 ViewModel 命令接入业务。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-      </StackPanel>
-      <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="12" Padding="20">
-        <StackPanel Spacing="14">
-          <TextBlock Text="单图上传" FontWeight="SemiBold" FontSize="16" />
-          <one:Upload Name="UploadSample" SelectedFile="{Binding File}" UploadCommand="{Binding ReadCommand}" IsBusy="{Binding IsBusy}" Progress="{Binding Progress}" StatusText="{Binding Status}" UploadText="读取文件" Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440" HorizontalAlignment="Stretch" />
-          <Button Content="使用内置示例图片" Command="{Binding ExampleCommand}" />
-          <TextBlock Text="点击“读取文件”演示宿主获取 UploadFile 并打开流；不连接服务器、不模拟网络成功。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-        </StackPanel>
-      </Border>
-      <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="12" Padding="20">
-        <StackPanel Spacing="14">
-          <TextBlock Text="内置 API 上传" FontWeight="SemiBold" FontSize="16" />
-          <TextBlock Text="填写支持 multipart/form-data 的真实接口，选好图片后点击“上传文件”。接口地址默认留空，选择文件不会发送请求。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-          <TextBlock Text="UploadApi · 上传地址" FontWeight="SemiBold" />
-          <TextBox Name="UploadApiInput" Text="{Binding UploadApi, Mode=TwoWay}" PlaceholderText="https://your-server.example/api/upload" />
-          <WrapPanel>
-            <StackPanel Spacing="6" Margin="0,0,16,8">
-              <TextBlock Text="RequestType · 请求方式" />
-              <ComboBox Name="UploadRequestTypeInput" ItemsSource="{Binding RequestTypes}" SelectedItem="{Binding RequestType, Mode=TwoWay}" MinWidth="140" />
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             xmlns:styling="using:TheOne.Avalonia.Styling" x:Class="TheOne.DesignPreview.UploadDemoView"
+             x:DataType="local:UploadDemoViewModel" x:CompileBindings="True">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Spacing="24" Margin="24" MaxWidth="880" HorizontalAlignment="Stretch">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Upload · 上传" FontSize="24" FontWeight="SemiBold" />
+                <TextBlock Text="单个文件、即时缩略图预览。可直接配置上传接口，也可通过 ViewModel 命令接入业务。" TextWrapping="Wrap"
+                           Foreground="{DynamicResource One.Muted}" />
             </StackPanel>
-            <Button Content="使用内置示例图片" Command="{Binding ApiExampleCommand}" VerticalAlignment="Bottom" Margin="0,0,0,8" />
-          </WrapPanel>
-          <one:Upload Name="ApiUploadSample" SelectedFile="{Binding ApiFile, Mode=TwoWay}" UploadApi="{Binding UploadApi, Mode=TwoWay}" RequestType="{Binding RequestType}" SuccessFileUrl="{Binding SuccessFileUrl, Mode=TwoWay}" Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440" HorizontalAlignment="Stretch" />
-          <TextBlock Text="SuccessFileUrl · 上传成功后的网络路径" FontWeight="SemiBold" />
-          <TextBox Name="UploadSuccessFileUrl" Text="{Binding SuccessFileUrl, Mode=OneWay}" IsReadOnly="True" PlaceholderText="有效响应解析后显示，可选中复制" />
-          <TextBlock Text="请求包含 filename 文本字段和 filedata 文件字段。响应需包含带有受支持文件后缀的 HTTP(S) 绝对 URL；仅返回 2xx 状态码不代表上传完成。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-        </StackPanel>
-      </Border>
-      <StackPanel Spacing="12">
-        <TextBlock Text="默认状态与禁用状态" FontSize="16" FontWeight="SemiBold" />
-        <WrapPanel>
-          <one:Upload Width="280" Margin="0,0,16,16" styling:ControlSizing.Size="Small" Title="选择封面图片" Description="单张图片 · 默认 Small" />
-          <one:Upload Width="280" Margin="0,0,0,16" styling:ControlSizing.Size="Small" SelectedFile="{Binding ExampleFile}" IsEnabled="False" StatusText="此图片当前不可编辑" />
-        </WrapPanel>
-      </StackPanel>
-      <StackPanel Spacing="12">
-        <TextBlock Text="自定义文件模板" FontSize="16" FontWeight="SemiBold" />
-        <one:Upload MaxWidth="360" HorizontalAlignment="Stretch" SelectedFile="{Binding ExampleFile}" UploadCommand="{Binding ReadCommand}" IsBusy="{Binding IsBusy}" UploadText="读取文件">
-          <one:Upload.FileTemplate>
-            <DataTemplate x:DataType="one:Upload">
-              <Grid ColumnDefinitions="72,*" ColumnSpacing="14">
-                <Border Height="72" Width="72" CornerRadius="8" ClipToBounds="True" Background="{DynamicResource One.Subtle}"><Image Source="{Binding PreviewImage}" Stretch="UniformToFill" /></Border>
-                <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
-                  <TextBlock Text="{Binding SelectedFile.Name}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
-                  <TextBlock Text="自定义横向布局" Foreground="{DynamicResource One.Muted}" />
+            <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}"
+                    BorderThickness="1" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="单图上传" FontWeight="SemiBold" FontSize="16" />
+                    <one:Upload Name="UploadSample" SelectedFile="{Binding File}" UploadCommand="{Binding ReadCommand}"
+                                IsBusy="{Binding IsBusy}" Progress="{Binding Progress}" StatusText="{Binding Status}"
+                                UploadText="读取文件" Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440"
+                                HorizontalAlignment="Stretch" />
+                    <Button Content="使用内置示例图片" Command="{Binding ExampleCommand}" />
+                    <TextBlock Text="点击“读取文件”演示宿主获取 UploadFile 并打开流；不连接服务器、不模拟网络成功。" TextWrapping="Wrap"
+                               Foreground="{DynamicResource One.Muted}" />
                 </StackPanel>
-              </Grid>
-            </DataTemplate>
-          </one:Upload.FileTemplate>
-        </one:Upload>
-      </StackPanel>
-      <TextBlock Text="支持 EmptyTemplate / FileTemplate / ActionsTemplate。模板上下文是 Upload，可直接绑定预览、选择、移除与上传命令。内置上传可注入 HttpClient 配置认证；自定义 UploadCommand 可完全接管上传。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-    </StackPanel>
-  </ScrollViewer>
+            </Border>
+            <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.Line}"
+                    BorderThickness="1" CornerRadius="12" Padding="20">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="内置 API 上传" FontWeight="SemiBold" FontSize="16" />
+                    <TextBlock Text="填写支持 multipart/form-data 的真实接口，选好图片后点击“上传文件”。接口地址默认留空，选择文件不会发送请求。"
+                               TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+                    <TextBlock Text="UploadApi · 上传地址" FontWeight="SemiBold" />
+                    <TextBox Name="UploadApiInput" Text="{Binding UploadApi, Mode=TwoWay}"
+                             PlaceholderText="https://your-server.example/api/upload" />
+                    <WrapPanel>
+                        <StackPanel Spacing="6" Margin="0,0,16,8">
+                            <TextBlock Text="RequestType · 请求方式" />
+                            <ComboBox Name="UploadRequestTypeInput" ItemsSource="{Binding RequestTypes}"
+                                      SelectedItem="{Binding RequestType, Mode=TwoWay}" MinWidth="140" />
+                        </StackPanel>
+                        <Button Content="使用内置示例图片" Command="{Binding ApiExampleCommand}" VerticalAlignment="Bottom"
+                                Margin="0,0,0,8" />
+                    </WrapPanel>
+                    <one:Upload Name="ApiUploadSample" SelectedFile="{Binding ApiFile, Mode=TwoWay}"
+                                UploadApi="{Binding UploadApi, Mode=TwoWay}" RequestType="{Binding RequestType}"
+                                SuccessFileUrl="{Binding SuccessFileUrl, Mode=TwoWay}"
+                                Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440"
+                                HorizontalAlignment="Stretch" />
+                    <TextBlock Text="SuccessFileUrl · 上传成功后的网络路径" FontWeight="SemiBold" />
+                    <TextBox Name="UploadSuccessFileUrl" Text="{Binding SuccessFileUrl, Mode=OneWay}" IsReadOnly="True"
+                             PlaceholderText="有效响应解析后显示，可选中复制" />
+                    <TextBlock
+                        Text="请求包含 filename 文本字段和 filedata 文件字段。响应需包含带有受支持文件后缀的 HTTP(S) 绝对 URL；仅返回 2xx 状态码不代表上传完成。"
+                        TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+                </StackPanel>
+            </Border>
+            <StackPanel Spacing="12">
+                <TextBlock Text="默认状态与禁用状态" FontSize="16" FontWeight="SemiBold" />
+                <WrapPanel>
+                    <one:Upload Width="280" Margin="0,0,16,16" styling:ControlSizing.Size="Small" Title="选择封面图片"
+                                Description="单张图片 · 默认 Small" />
+                    <one:Upload Width="280" Margin="0,0,0,16" styling:ControlSizing.Size="Small"
+                                SelectedFile="{Binding ExampleFile}" IsEnabled="False" StatusText="此图片当前不可编辑" />
+                </WrapPanel>
+            </StackPanel>
+            <StackPanel Spacing="12">
+                <TextBlock Text="自定义文件模板" FontSize="16" FontWeight="SemiBold" />
+                <one:Upload MaxWidth="360" HorizontalAlignment="Stretch" SelectedFile="{Binding ExampleFile}"
+                            UploadCommand="{Binding ReadCommand}" IsBusy="{Binding IsBusy}" UploadText="读取文件">
+                    <one:Upload.FileTemplate>
+                        <DataTemplate x:DataType="one:Upload">
+                            <Grid ColumnDefinitions="72,*" ColumnSpacing="14">
+                                <Border Height="72" Width="72" CornerRadius="8" ClipToBounds="True"
+                                        Background="{DynamicResource One.Subtle}">
+                                    <Image Source="{Binding PreviewImage}" Stretch="UniformToFill" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding SelectedFile.Name}" FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="自定义横向布局" Foreground="{DynamicResource One.Muted}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </one:Upload.FileTemplate>
+                </one:Upload>
+            </StackPanel>
+            <TextBlock
+                Text="支持 EmptyTemplate / FileTemplate / ActionsTemplate。模板上下文是 Upload，可直接绑定预览、选择、移除与上传命令。内置上传可注入 HttpClient 配置认证；自定义 UploadCommand 可完全接管上传。"
+                Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

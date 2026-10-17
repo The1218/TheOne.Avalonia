@@ -6,5 +6,9 @@ public sealed class LineChart : CartesianChartBase
     public override ChartKind Kind => ChartKind.Line;
     private protected override bool DrawsLineCartesian => true;
     private protected override bool SupportsSmooth => true;
-    private protected override ChartBase CreateExportSnapshot() => new LineChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new LineChart();
+    }
 }

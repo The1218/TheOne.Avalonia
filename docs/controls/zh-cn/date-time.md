@@ -68,6 +68,8 @@ DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTi
 
 内部 PickerScroll.Enabled 默认启用：滚轮停止 140 ms 后吸附整数行，手势结束立即对齐，确定／Enter 对齐后提交；非循环列表限制有效范围。选中条内外文字分层裁剪，避免小数滚动时状态文字落在错误背景上；不改变原生选择模型，卸载时停止计时并解除订阅。专项和定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
+日期／时间弹层会隔离未被内部消费的细粒度横向、纵向和斜向滚动及手势惯性／结束阶段，空白区域或滚动边界不会带动外层容器。内部日期切换、滚轮列滚动、惯性与结束对齐仍由原生控件处理；关闭后来自旧弹层的尾帧不影响外层，新页面滚动正常。
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

@@ -23,22 +23,33 @@
             Content="☰"
             Name="NavigationToggle" />
     </one:OneWindow.LeftContent>
-    <Grid ColumnDefinitions="256,*" Name="Shell">
+    <Grid ColumnDefinitions="Auto,*" Name="Shell">
         <Border
             Background="{DynamicResource One.Surface}"
             BorderBrush="{DynamicResource One.Line}"
             BorderThickness="0,0,1,0"
             Name="Sidebar"
             Padding="12,20">
-            <Grid RowDefinitions="Auto,*">
-                <StackPanel Orientation="Horizontal" Spacing="12" Margin="12,0,0,20">
-                    <local:PreviewBrandIcon Name="BrandIcon" Width="32" Height="32"
-                        AutomationProperties.Name="The One 应用图标" />
-                    <TextBlock Name="BrandWordmark" FontSize="20" FontWeight="SemiBold"
-                        VerticalAlignment="Center" IsVisible="{Binding !EffectiveNavigationCollapsed}"
-                        Text="THE ONE" />
+            <Grid RowDefinitions="Auto,*" Width="{Binding #Navigation.DisplayWidth}" ClipToBounds="True">
+                <StackPanel
+                    Margin="12,0,0,20"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <local:PreviewBrandIcon
+                        AutomationProperties.Name="The One 应用图标"
+                        Height="32"
+                        Name="BrandIcon"
+                        Width="32" />
+                    <TextBlock
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        IsVisible="{Binding !EffectiveNavigationCollapsed}"
+                        Name="BrandWordmark"
+                        Text="THE ONE"
+                        VerticalAlignment="Center" />
                 </StackPanel>
                 <one:NavMenu
+                    ExpandedWidth="232"
                     ChildrenBinding="{Binding Entries}"
                     ExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
                     Grid.Row="1"

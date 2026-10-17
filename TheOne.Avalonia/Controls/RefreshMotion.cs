@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
-using global::Avalonia;
-using global::Avalonia.Animation.Easings;
-using global::Avalonia.Controls;
-using global::Avalonia.Input;
-using global::Avalonia.Interactivity;
-using global::Avalonia.Media;
-using global::Avalonia.Rendering.Composition;
-using global::Avalonia.Rendering.Composition.Animations;
-using global::Avalonia.Threading;
-using global::Avalonia.VisualTree;
+using Avalonia;
+using Avalonia.Animation.Easings;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using Avalonia.Rendering.Composition;
+using Avalonia.Rendering.Composition.Animations;
+using Avalonia.Threading;
+using Avalonia.VisualTree;
 using TheOne.Avalonia.Styling;
 
 namespace TheOne.Avalonia.Controls;
@@ -21,24 +19,33 @@ public sealed class RefreshMotion : AvaloniaObject
 {
     public static readonly AttachedProperty<bool> UseMotionSettingsProperty =
         AvaloniaProperty.RegisterAttached<RefreshMotion, RefreshVisualizer, bool>("UseMotionSettings");
+
     private static readonly ConditionalWeakTable<RefreshVisualizer, State> States = new();
+
     static RefreshMotion()
     {
         UseMotionSettingsProperty.Changed.AddClassHandler<RefreshVisualizer>((control, change) =>
             States.GetValue(control, visualizer => new State(visualizer)).Enable(change.GetNewValue<bool>()));
     }
-    public static bool GetUseMotionSettings(RefreshVisualizer control) => control.GetValue(UseMotionSettingsProperty);
-    public static void SetUseMotionSettings(RefreshVisualizer control, bool value) => control.SetValue(UseMotionSettingsProperty, value);
+
+    public static bool GetUseMotionSettings(RefreshVisualizer control)
+    {
+        return control.GetValue(UseMotionSettingsProperty);
+    }
+
+    public static void SetUseMotionSettings(RefreshVisualizer control, bool value)
+    {
+        control.SetValue(UseMotionSettingsProperty, value);
+    }
 
     private sealed class State(RefreshVisualizer visualizer)
     {
-        private sealed record SavedAnimations(ImplicitAnimationCollection Original, ImplicitAnimationCollection? Suppressed);
         private readonly Dictionary<CompositionVisual, SavedAnimations> _saved = new();
         private RefreshContainer? _container;
         private Control? _content;
-        private CompositionVisual? _resumedSpinner;
         private bool _enabled;
         private bool _queued;
+        private CompositionVisual? _resumedSpinner;
         private bool _suppressed;
 
         public void Enable(bool enabled)
@@ -57,31 +64,67 @@ public sealed class RefreshMotion : AvaloniaObject
                 visualizer.PropertyChanged -= Changed;
                 visualizer.Loaded -= Loaded;
                 visualizer.DetachedFromVisualTree -= Detached;
-                StopResumedSpinner(); Restore(); Unhook();
+                StopResumedSpinner();
+                Restore();
+                Unhook();
             }
         }
-        private void Loaded(object? sender, RoutedEventArgs args) => Queue();
-        private void Detached(object? sender, VisualTreeAttachmentEventArgs args) { StopResumedSpinner(); Restore(); Unhook(); }
+
+        private void Loaded(object? sender, RoutedEventArgs args)
+        {
+            Queue();
+        }
+
+        private void Detached(object? sender, VisualTreeAttachmentEventArgs args)
+        {
+            StopResumedSpinner();
+            Restore();
+            Unhook();
+        }
+
         private void Changed(object? sender, AvaloniaPropertyChangedEventArgs args)
         {
             // State notifications precede the native UpdateContent call. Reconcile after it has run.
             if (args.Property == Motion.EnabledProperty)
             {
-                Apply(); Queue();
+                Apply();
+                Queue();
             }
-            else if (args.Property == RefreshVisualizer.ContentProperty || args.Property == RefreshVisualizer.RefreshVisualizerStateProperty ||
+            else if (args.Property == RefreshVisualizer.ContentProperty ||
+                     args.Property == RefreshVisualizer.RefreshVisualizerStateProperty ||
                      args.Property == RefreshVisualizer.OrientationProperty || args.Property == Visual.BoundsProperty ||
-                     args.Property == RefreshVisualizer.TemplateProperty) Queue();
+                     args.Property == RefreshVisualizer.TemplateProperty)
+            {
+                Queue();
+            }
         }
-        private void ContentLoaded(object? sender, RoutedEventArgs args) => Queue();
-        private void ContainerChanged(object? sender, AvaloniaPropertyChangedEventArgs args) => Queue();
-        private void Pull(object? sender, RoutedEventArgs args) => Queue();
+
+        private void ContentLoaded(object? sender, RoutedEventArgs args)
+        {
+            Queue();
+        }
+
+        private void ContainerChanged(object? sender, AvaloniaPropertyChangedEventArgs args)
+        {
+            Queue();
+        }
+
+        private void Pull(object? sender, RoutedEventArgs args)
+        {
+            Queue();
+        }
+
         private void Queue()
         {
             if (_queued) return;
             _queued = true;
-            Dispatcher.UIThread.Post(() => { _queued = false; Apply(); }, DispatcherPriority.Loaded);
+            Dispatcher.UIThread.Post(() =>
+            {
+                _queued = false;
+                Apply();
+            }, DispatcherPriority.Loaded);
         }
+
         private void Unhook()
         {
             if (_content is not null) _content.Loaded -= ContentLoaded;
@@ -92,6 +135,7 @@ public sealed class RefreshMotion : AvaloniaObject
             _container.RemoveHandler(InputElement.PullGestureEndedEvent, Pull);
             _container = null;
         }
+
         private void Apply()
         {
             if (!_enabled || !visualizer.IsAttachedToVisualTree()) return;
@@ -99,19 +143,25 @@ public sealed class RefreshMotion : AvaloniaObject
             var container = visualizer.GetVisualAncestors().OfType<RefreshContainer>().FirstOrDefault();
             if (content != _content || container != _container)
             {
-                StopResumedSpinner(); Restore(); Unhook(); _content = content; _container = container;
+                StopResumedSpinner();
+                Restore();
+                Unhook();
+                _content = content;
+                _container = container;
                 if (_content is not null) _content.Loaded += ContentLoaded;
                 if (_container is not null)
                 {
                     _container.PropertyChanged += ContainerChanged;
-                    _container.AddHandler(InputElement.PullGestureEvent, Pull, RoutingStrategies.Bubble, handledEventsToo: true);
-                    _container.AddHandler(InputElement.PullGestureEndedEvent, Pull, RoutingStrategies.Bubble, handledEventsToo: true);
+                    _container.AddHandler(InputElement.PullGestureEvent, Pull, RoutingStrategies.Bubble, true);
+                    _container.AddHandler(InputElement.PullGestureEndedEvent, Pull, RoutingStrategies.Bubble, true);
                 }
             }
+
             var glyph = _content is null ? null : ElementComposition.GetElementVisual(_content);
             if (glyph is null) return;
             var state = visualizer.GetValue(RefreshVisualizer.RefreshVisualizerStateProperty);
-            var scroll = (_container?.Content as Visual)?.GetSelfAndVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
+            var scroll = (_container?.Content as Visual)?.GetSelfAndVisualDescendants().OfType<ScrollViewer>()
+                .FirstOrDefault();
             var indicator = ElementComposition.GetElementVisual(visualizer);
             var provider = scroll?.Content is Visual rows ? ElementComposition.GetElementVisual(rows) : null;
             if (state == RefreshVisualizerState.Refreshing && indicator is not null && provider is not null &&
@@ -122,8 +172,10 @@ public sealed class RefreshMotion : AvaloniaObject
                 // the native hide transform, and preserve the provider's underlying offset.
                 var target = indicator.Offset with { X = -hidden.X, Y = -hidden.Y };
                 var delta = target - indicator.Offset;
-                indicator.Offset = target; provider.Offset += delta;
+                indicator.Offset = target;
+                provider.Offset += delta;
             }
+
             if (Motion.GetEnabled(visualizer))
             {
                 var resume = _suppressed;
@@ -138,11 +190,17 @@ public sealed class RefreshMotion : AvaloniaObject
                     spin.Duration = TimeSpan.FromMilliseconds(500);
                     spin.IterationBehavior = AnimationIterationBehavior.Forever;
                     spin.StopBehavior = AnimationStopBehavior.LeaveCurrentValue;
-                    glyph.StartAnimation("RotationAngle", spin); _resumedSpinner = glyph;
+                    glyph.StartAnimation("RotationAngle", spin);
+                    _resumedSpinner = glyph;
                 }
-                else if (state != RefreshVisualizerState.Refreshing) StopResumedSpinner();
+                else if (state != RefreshVisualizerState.Refreshing)
+                {
+                    StopResumedSpinner();
+                }
+
                 return;
             }
+
             _suppressed = true;
             StopResumedSpinner();
             Suppress(glyph, true);
@@ -154,6 +212,7 @@ public sealed class RefreshMotion : AvaloniaObject
                 if (provider is not null) Suppress(provider, false);
             }
         }
+
         private void Suppress(CompositionVisual visual, bool glyph)
         {
             if (visual.ImplicitAnimations is { } animations &&
@@ -161,15 +220,19 @@ public sealed class RefreshMotion : AvaloniaObject
             {
                 var remaining = visual.Compositor.CreateImplicitAnimationCollection();
                 foreach (var (property, animation) in animations)
-                    if (property != "Offset" && (!glyph || property is not ("RotationAngle" or "Scale" or "Opacity"))) remaining[property] = animation;
+                    if (property != "Offset" && (!glyph || property is not ("RotationAngle" or "Scale" or "Opacity")))
+                        remaining[property] = animation;
                 var suppressed = remaining.Count == 0 ? null : remaining;
                 _saved[visual] = new SavedAnimations(animations, suppressed);
                 visual.ImplicitAnimations = suppressed;
             }
+
             // Stop interpolation, retaining native target offsets so the gesture still follows the pointer.
             SettleVector(visual, "Offset", visual.Offset);
             if (!glyph) return;
-            visual.StopAnimation("RotationAngle"); visual.StopAnimation("Scale"); visual.StopAnimation("Opacity");
+            visual.StopAnimation("RotationAngle");
+            visual.StopAnimation("Scale");
+            visual.StopAnimation("Opacity");
             visual.Scale = new Vector3D(1, 1, 1);
             visual.RotationAngle = visualizer.Orientation switch
             {
@@ -186,6 +249,7 @@ public sealed class RefreshMotion : AvaloniaObject
             SettleScalar(visual, "Opacity", visual.Opacity);
             SettleScalar(visual, "RotationAngle", visual.RotationAngle);
         }
+
         // Avalonia 12.1.4 StopAnimation removes the server animation but leaves a pending
         // StartAnimation in the client batch. Replace that pending entry with a constant,
         // single-tick settlement: there is no visible interpolation or continuing loop.
@@ -193,28 +257,41 @@ public sealed class RefreshMotion : AvaloniaObject
         {
             visual.StopAnimation(property);
             var settle = visual.Compositor.CreateScalarKeyFrameAnimation();
-            settle.Target = property; settle.InsertKeyFrame(1, value);
-            settle.Duration = TimeSpan.FromTicks(1); settle.StopBehavior = AnimationStopBehavior.SetToFinalValue;
+            settle.Target = property;
+            settle.InsertKeyFrame(1, value);
+            settle.Duration = TimeSpan.FromTicks(1);
+            settle.StopBehavior = AnimationStopBehavior.SetToFinalValue;
             visual.StartAnimation(property, settle);
         }
+
         private static void SettleVector(CompositionVisual visual, string property, Vector3D value)
         {
             visual.StopAnimation(property);
             var settle = visual.Compositor.CreateVector3KeyFrameAnimation();
-            settle.Target = property; settle.InsertKeyFrame(1, new System.Numerics.Vector3((float)value.X, (float)value.Y, (float)value.Z));
-            settle.Duration = TimeSpan.FromTicks(1); settle.StopBehavior = AnimationStopBehavior.SetToFinalValue;
+            settle.Target = property;
+            settle.InsertKeyFrame(1, new Vector3((float)value.X, (float)value.Y, (float)value.Z));
+            settle.Duration = TimeSpan.FromTicks(1);
+            settle.StopBehavior = AnimationStopBehavior.SetToFinalValue;
             visual.StartAnimation(property, settle);
         }
+
         private void StopResumedSpinner()
         {
             if (_resumedSpinner is { } spinner) SettleScalar(spinner, "RotationAngle", spinner.RotationAngle);
             _resumedSpinner = null;
         }
+
         private void Restore()
         {
             foreach (var (visual, animations) in _saved)
-                if (visual.ImplicitAnimations == animations.Suppressed) visual.ImplicitAnimations = animations.Original;
-            _saved.Clear(); _suppressed = false;
+                if (visual.ImplicitAnimations == animations.Suppressed)
+                    visual.ImplicitAnimations = animations.Original;
+            _saved.Clear();
+            _suppressed = false;
         }
+
+        private sealed record SavedAnimations(
+            ImplicitAnimationCollection Original,
+            ImplicitAnimationCollection? Suppressed);
     }
 }

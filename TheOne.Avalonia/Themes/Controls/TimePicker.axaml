@@ -9,7 +9,6 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
-    xmlns:sys="using:System"
     xmlns:one="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -209,58 +208,116 @@
                         <Grid Name="ContentPanel" RowDefinitions="*,Auto">
                             <Grid Name="PART_PickerContainer">
                                 <Grid.Styles>
-                                    <Style Selector="DateTimePickerPanel"><Setter Property="one:PickerScroll.Enabled" Value="True" /></Style>
+                                    <Style Selector="DateTimePickerPanel">
+                                        <Setter Property="one:PickerScroll.Enabled" Value="True" />
+                                    </Style>
                                     <Style Selector="DateTimePickerPanel &gt; ListBoxItem">
                                         <Setter Property="Theme" Value="{StaticResource One.DateTimePickerItem}" />
                                     </Style>
                                 </Grid.Styles>
                                 <!--  Ignore col defs here, set in code  -->
-                                <Grid Grid.Column="0" Name="PART_HourHost" RowDefinitions="Auto,*,Auto">
-                                    <ScrollViewer Grid.Row="1" VerticalAlignment="Center" MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                <Grid
+                                    Grid.Column="0"
+                                    Name="PART_HourHost"
+                                    RowDefinitions="Auto,*,Auto">
+                                    <ScrollViewer
+                                        Grid.Row="1"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        VerticalAlignment="Center"
+                                        VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
                                             ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_HourSelector"
                                             PanelType="Hour"
                                             ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Grid.Row="0" Name="PART_HourUpButton" Theme="{StaticResource One.DateTimePickerUpButton}" />
-                                    <RepeatButton Grid.Row="2" Name="PART_HourDownButton" Theme="{StaticResource One.DateTimePickerDownButton}" />
+                                    <RepeatButton
+                                        Grid.Row="0"
+                                        Name="PART_HourUpButton"
+                                        Theme="{StaticResource One.DateTimePickerUpButton}" />
+                                    <RepeatButton
+                                        Grid.Row="2"
+                                        Name="PART_HourDownButton"
+                                        Theme="{StaticResource One.DateTimePickerDownButton}" />
                                 </Grid>
 
-                                <Grid Grid.Column="2" Name="PART_MinuteHost" RowDefinitions="Auto,*,Auto">
-                                    <ScrollViewer Grid.Row="1" VerticalAlignment="Center" MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                <Grid
+                                    Grid.Column="2"
+                                    Name="PART_MinuteHost"
+                                    RowDefinitions="Auto,*,Auto">
+                                    <ScrollViewer
+                                        Grid.Row="1"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        VerticalAlignment="Center"
+                                        VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
                                             ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_MinuteSelector"
                                             PanelType="Minute"
                                             ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Grid.Row="0" Name="PART_MinuteUpButton" Theme="{StaticResource One.DateTimePickerUpButton}" />
-                                    <RepeatButton Grid.Row="2" Name="PART_MinuteDownButton" Theme="{StaticResource One.DateTimePickerDownButton}" />
+                                    <RepeatButton
+                                        Grid.Row="0"
+                                        Name="PART_MinuteUpButton"
+                                        Theme="{StaticResource One.DateTimePickerUpButton}" />
+                                    <RepeatButton
+                                        Grid.Row="2"
+                                        Name="PART_MinuteDownButton"
+                                        Theme="{StaticResource One.DateTimePickerDownButton}" />
                                 </Grid>
 
-                                <Grid Grid.Column="4" Name="PART_SecondHost" RowDefinitions="Auto,*,Auto">
-                                    <ScrollViewer Grid.Row="1" VerticalAlignment="Center" MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                <Grid
+                                    Grid.Column="4"
+                                    Name="PART_SecondHost"
+                                    RowDefinitions="Auto,*,Auto">
+                                    <ScrollViewer
+                                        Grid.Row="1"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        VerticalAlignment="Center"
+                                        VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
                                             ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_SecondSelector"
                                             PanelType="Second"
                                             ShouldLoop="True" />
                                     </ScrollViewer>
-                                    <RepeatButton Grid.Row="0" Name="PART_SecondUpButton" Theme="{StaticResource One.DateTimePickerUpButton}" />
-                                    <RepeatButton Grid.Row="2" Name="PART_SecondDownButton" Theme="{StaticResource One.DateTimePickerDownButton}" />
+                                    <RepeatButton
+                                        Grid.Row="0"
+                                        Name="PART_SecondUpButton"
+                                        Theme="{StaticResource One.DateTimePickerUpButton}" />
+                                    <RepeatButton
+                                        Grid.Row="2"
+                                        Name="PART_SecondDownButton"
+                                        Theme="{StaticResource One.DateTimePickerDownButton}" />
                                 </Grid>
 
-                                <Grid Grid.Column="6" Name="PART_PeriodHost" RowDefinitions="Auto,*,Auto">
-                                    <ScrollViewer Grid.Row="1" VerticalAlignment="Center" MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+                                <Grid
+                                    Grid.Column="6"
+                                    Name="PART_PeriodHost"
+                                    RowDefinitions="Auto,*,Auto">
+                                    <ScrollViewer
+                                        Grid.Row="1"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        VerticalAlignment="Center"
+                                        VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
                                             ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_PeriodSelector"
                                             PanelType="TimePeriod"
                                             ShouldLoop="False" />
                                     </ScrollViewer>
-                                    <RepeatButton Grid.Row="0" Name="PART_PeriodUpButton" Theme="{StaticResource One.DateTimePickerUpButton}" />
-                                    <RepeatButton Grid.Row="2" Name="PART_PeriodDownButton" Theme="{StaticResource One.DateTimePickerDownButton}" />
+                                    <RepeatButton
+                                        Grid.Row="0"
+                                        Name="PART_PeriodUpButton"
+                                        Theme="{StaticResource One.DateTimePickerUpButton}" />
+                                    <RepeatButton
+                                        Grid.Row="2"
+                                        Name="PART_PeriodDownButton"
+                                        Theme="{StaticResource One.DateTimePickerDownButton}" />
                                 </Grid>
 
                                 <Border
@@ -269,26 +326,33 @@
                                     Grid.Column="0"
                                     Grid.ColumnSpan="7"
                                     Height="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
+                                    IsHitTestVisible="False"
                                     VerticalAlignment="Center"
-                                    IsHitTestVisible="False" ZIndex="-1"
+                                    ZIndex="-1"
                                     x:Name="HighlightRect" />
                                 <Rectangle
                                     Fill="{DynamicResource One.Line}"
                                     Grid.Column="1"
-                                    HorizontalAlignment="Center" IsHitTestVisible="False" Opacity="0.5"
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
                                     Name="PART_FirstSpacer"
+                                    Opacity="0.5"
                                     Width="{DynamicResource One.TimePickerSpacerThemeWidth}" />
                                 <Rectangle
                                     Fill="{DynamicResource One.Line}"
                                     Grid.Column="3"
-                                    HorizontalAlignment="Center" IsHitTestVisible="False" Opacity="0.5"
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
                                     Name="PART_SecondSpacer"
+                                    Opacity="0.5"
                                     Width="{DynamicResource One.TimePickerSpacerThemeWidth}" />
                                 <Rectangle
                                     Fill="{DynamicResource One.Line}"
                                     Grid.Column="5"
-                                    HorizontalAlignment="Center" IsHitTestVisible="False" Opacity="0.5"
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
                                     Name="PART_ThirdSpacer"
+                                    Opacity="0.5"
                                     Width="{DynamicResource One.TimePickerSpacerThemeWidth}" />
                             </Grid>
 
@@ -307,7 +371,8 @@
                                     HorizontalAlignment="Stretch"
                                     Name="PART_AcceptButton"
                                     Theme="{StaticResource One.DateTimePickerButton}"
-                                    VerticalAlignment="Stretch"><TextBlock Text="确定" />
+                                    VerticalAlignment="Stretch">
+                                    <TextBlock Text="确定" />
                                 </Button>
                                 <Button
                                     FontSize="16"
@@ -316,7 +381,8 @@
                                     HorizontalAlignment="Stretch"
                                     Name="PART_DismissButton"
                                     Theme="{StaticResource One.DateTimePickerButton}"
-                                    VerticalAlignment="Stretch"><TextBlock Text="取消" />
+                                    VerticalAlignment="Stretch">
+                                    <TextBlock Text="取消" />
                                 </Button>
                             </Grid>
                         </Grid>

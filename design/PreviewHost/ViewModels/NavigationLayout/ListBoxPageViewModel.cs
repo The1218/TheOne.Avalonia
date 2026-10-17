@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ListBoxPageViewModel : BasicControlViewModel { }
+
+public sealed class ListBoxPageViewModel : BasicControlViewModel
+{
+}

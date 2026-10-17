@@ -1,23 +1,31 @@
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.VisualTree;
+using Avalonia.Interactivity;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
+using TheOne.Avalonia.Controls;
+using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
 
 public partial class LegacyControlGallery : UserControl
 {
     private int _category;
+    private TreeView? _hugeTree;
     private string _search = "";
     private DispatcherTimer? _treeReverseTimer;
     private DispatcherTimer? _virtualTimer;
-    private TreeView? _hugeTree;
 
     public LegacyControlGallery()
     {
         InitializeComponent();
-        DetachedFromVisualTree += (_, _) => { StopTreeReverse(); _virtualTimer?.Stop(); };
+        DetachedFromVisualTree += (_, _) =>
+        {
+            StopTreeReverse();
+            _virtualTimer?.Stop();
+        };
         SizeChanged += (_, args) =>
         {
             var available = Math.Max(0, args.NewSize.Width - 64);
@@ -25,10 +33,10 @@ public partial class LegacyControlGallery : UserControl
         };
     }
 
-    private void OnMotionChanged(object? sender, global::Avalonia.Interactivity.RoutedEventArgs args)
+    private void OnMotionChanged(object? sender, RoutedEventArgs args)
     {
         if (sender is CheckBox toggle && TopLevel.GetTopLevel(this) is { } topLevel)
-            TheOne.Avalonia.Styling.Motion.SetEnabled(topLevel, toggle.IsChecked == true);
+            Motion.SetEnabled(topLevel, toggle.IsChecked == true);
     }
 
     private void OnExpandDirectionChanged(object? sender, SelectionChangedEventArgs args)
@@ -43,13 +51,13 @@ public partial class LegacyControlGallery : UserControl
         _treeReverseTimer = null;
     }
 
-    private void OnTreeToggle(object? sender, global::Avalonia.Interactivity.RoutedEventArgs args)
+    private void OnTreeToggle(object? sender, RoutedEventArgs args)
     {
         StopTreeReverse();
         MotionTreeRoot.IsExpanded = !MotionTreeRoot.IsExpanded;
     }
 
-    private void OnTreeReverse(object? sender, global::Avalonia.Interactivity.RoutedEventArgs args)
+    private void OnTreeReverse(object? sender, RoutedEventArgs args)
     {
         StopTreeReverse();
         MotionTreeRoot.IsExpanded = false;
@@ -64,7 +72,10 @@ public partial class LegacyControlGallery : UserControl
         timer.Start();
     }
 
-    public void ResetScroll() => CatalogScroll.Offset = new Vector(0, 0);
+    public void ResetScroll()
+    {
+        CatalogScroll.Offset = new Vector(0, 0);
+    }
 
     private void OnTreePointerPressed(object? sender, PointerPressedEventArgs args)
     {
@@ -84,18 +95,22 @@ public partial class LegacyControlGallery : UserControl
         if (category == 12 && SplitButtonsCard.Child is null) SplitButtonsCard.Child = new SplitButtonDemoView();
         if (category == 13 && TextControlsCard.Child is null) TextControlsCard.Child = new TextControlsDemoView();
         if (category == 14 && FlyoutCard.Child is null) FlyoutCard.Child = new FlyoutDemoView();
-        if (category == 15 && SelectionControlsCard.Child is null) SelectionControlsCard.Child = new SelectionControlsDemoView();
+        if (category == 15 && SelectionControlsCard.Child is null)
+            SelectionControlsCard.Child = new SelectionControlsDemoView();
         if (category == 16 && ButtonControlsCard.Child is null) ButtonControlsCard.Child = new ButtonControlsDemoView();
         if (category == 17 && TabStripCard.Child is null) TabStripCard.Child = new TabStripDemoView();
         if (category == 18 && CarouselCard.Child is null) CarouselCard.Child = new CarouselDemoView();
         if (category == 19 && RefreshCard.Child is null) RefreshCard.Child = new RefreshDemoView();
-        if (category == 20 && ContentTransitionCard.Child is null) ContentTransitionCard.Child = new ContentTransitionDemoView();
-        if (category == 21 && NotificationCardPreview.Child is null) NotificationCardPreview.Child = new NotificationDemoView();
+        if (category == 20 && ContentTransitionCard.Child is null)
+            ContentTransitionCard.Child = new ContentTransitionDemoView();
+        if (category == 21 && NotificationCardPreview.Child is null)
+            NotificationCardPreview.Child = new NotificationDemoView();
         if (category == 22 && OneWindowCard.Child is null) OneWindowCard.Child = new OneWindowDemoView();
         if (category == 23 && ChartCard.Child is null) ChartCard.Child = new ChartDemoView();
         if (category == 25 && NavMenuPreviewHost.Child is null) NavMenuPreviewHost.Child = new NavMenuDemoView();
         if (category == 24 && InfoCardPreviewHost.Child is null) InfoCardPreviewHost.Child = new InfoCardDemoView();
-        if (category == 9) _virtualTimer?.Start(); else _virtualTimer?.Stop();
+        if (category == 9) _virtualTimer?.Start();
+        else _virtualTimer?.Stop();
         ApplyFilter();
     }
 
@@ -105,7 +120,7 @@ public partial class LegacyControlGallery : UserControl
         HugeList.ItemsSource = VirtualizationPreview.Rows;
         HugeCombo.ItemsSource = VirtualizationPreview.Rows;
         HugeAuto.ItemsSource = VirtualizationPreview.Rows;
-        HugeTabs.ItemsSource = new System.Collections.ObjectModel.ObservableCollection<string>(VirtualizationPreview.Rows);
+        HugeTabs.ItemsSource = new ObservableCollection<string>(VirtualizationPreview.Rows);
         HugeMenuTarget.ContextMenu = new ContextMenu { ItemsSource = VirtualizationPreview.Rows, MaxHeight = 300 };
         _hugeTree = VirtualizationPreview.CreateTree();
         HugeTreeHost.Child = _hugeTree;
@@ -113,21 +128,31 @@ public partial class LegacyControlGallery : UserControl
         _virtualTimer.Tick += (_, _) => UpdateVirtualCounts();
         UpdateVirtualCounts();
     }
+
     private void UpdateVirtualCounts()
     {
         var branch = _hugeTree?.GetRealizedContainers().OfType<TreeViewItem>().FirstOrDefault(node => node.IsExpanded);
-        VirtualCounts.Text = $"列表 {HugeList.GetRealizedContainers().Count()} / 10,000 · 树根 {_hugeTree?.GetRealizedContainers().Count()} / 10,000 · 子节点 {branch?.GetRealizedContainers().Count() ?? 0} / 10,000 · 标签 {HugeTabs.GetRealizedContainers().Count()} / {HugeTabs.ItemCount:N0}";
+        VirtualCounts.Text =
+            $"列表 {HugeList.GetRealizedContainers().Count()} / 10,000 · 树根 {_hugeTree?.GetRealizedContainers().Count()} / 10,000 · 子节点 {branch?.GetRealizedContainers().Count() ?? 0} / 10,000 · 标签 {HugeTabs.GetRealizedContainers().Count()} / {HugeTabs.ItemCount:N0}";
     }
-    private void OnHugeJump(object? sender, global::Avalonia.Interactivity.RoutedEventArgs args)
+
+    private void OnHugeJump(object? sender, RoutedEventArgs args)
     {
-        HugeList.SelectedIndex = 9999; HugeList.ScrollIntoView(9999);
-        if (_hugeTree is { } tree && TheOne.Avalonia.Controls.Virtualization.BringIntoView(tree, 0, 9000) is { } node)
+        HugeList.SelectedIndex = 9999;
+        HugeList.ScrollIntoView(9999);
+        if (_hugeTree is { } tree && Virtualization.BringIntoView(tree, 0, 9000) is { } node)
         {
-            tree.SelectedItem = ((ItemsControl)node.Parent!).ItemFromContainer(node); node.Focus();
+            tree.SelectedItem = ((ItemsControl)node.Parent!).ItemFromContainer(node);
+            node.Focus();
         }
+
         UpdateVirtualCounts();
     }
-    private void OnHugeTabJump(object? sender, global::Avalonia.Interactivity.RoutedEventArgs args) => HugeTabs.SelectedIndex = 9000;
+
+    private void OnHugeTabJump(object? sender, RoutedEventArgs args)
+    {
+        HugeTabs.SelectedIndex = 9000;
+    }
 
     public void Search(string search)
     {
@@ -138,11 +163,22 @@ public partial class LegacyControlGallery : UserControl
     private void ApplyFilter()
     {
         var visible = 0;
-        foreach (var card in Cards.Children.OfType<Border>().Append(DataGridCard).Append(LayoutControlsCard).Append(SplitButtonsCard).Append(TextControlsCard).Append(FlyoutCard).Append(SelectionControlsCard).Append(ButtonControlsCard).Append(TabStripCard).Append(CarouselCard).Append(RefreshCard).Append(ContentTransitionCard).Append(NotificationCardPreview).Append(OneWindowCard).Append(ChartCard).Append(InfoCardPreviewHost).Append(NavMenuPreviewHost))
+        foreach (var card in Cards.Children.OfType<Border>().Append(DataGridCard).Append(LayoutControlsCard)
+                     .Append(SplitButtonsCard).Append(TextControlsCard).Append(FlyoutCard).Append(SelectionControlsCard)
+                     .Append(ButtonControlsCard).Append(TabStripCard).Append(CarouselCard).Append(RefreshCard)
+                     .Append(ContentTransitionCard).Append(NotificationCardPreview).Append(OneWindowCard)
+                     .Append(ChartCard).Append(InfoCardPreviewHost).Append(NavMenuPreviewHost))
         {
             var metadata = (card.Tag as string ?? "").Split('|', 2);
-            card.IsVisible = (_category == 0 && (metadata[0] is not ("9" or "10" or "11" or "12" or "13" or "14" or "15" or "16" or "17" or "18" or "19" or "20" or "21" or "22" or "23" or "24" or "25") || _search.Length > 0 && metadata[0] is ("10" or "11" or "12" or "13" or "14" or "15" or "16" or "17" or "18" or "19" or "20" or "21" or "22" or "23" or "24" or "25")) || metadata[0] == _category.ToString())
-                && (metadata.Length > 1 && metadata[1].Contains(_search, StringComparison.OrdinalIgnoreCase));
+            card.IsVisible = ((_category == 0 &&
+                               (metadata[0] is not ("9" or "10" or "11" or "12" or "13" or "14" or "15" or "16" or "17"
+                                    or "18" or "19" or "20" or "21" or "22" or "23" or "24" or "25") ||
+                                (_search.Length > 0 && metadata[0] is "10" or "11" or "12" or "13" or "14" or "15"
+                                    or "16" or "17" or "18" or "19" or "20" or "21" or "22" or "23" or "24"
+                                    or "25"))) ||
+                              metadata[0] == _category.ToString())
+                             && metadata.Length > 1 &&
+                             metadata[1].Contains(_search, StringComparison.OrdinalIgnoreCase);
             if (card.IsVisible)
             {
                 if (card == DataGridCard && card.Child is null) card.Child = new DataGridDemoView();
@@ -164,6 +200,7 @@ public partial class LegacyControlGallery : UserControl
                 visible++;
             }
         }
+
         NoResults.IsVisible = visible == 0;
         CatalogScroll.Offset = new Vector(0, 0);
     }

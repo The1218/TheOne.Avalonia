@@ -27,7 +27,9 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^.one-small"><Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Item.Small}" /></Style>
+        <Style Selector="^.one-small">
+            <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Item.Small}" />
+        </Style>
         <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
         </Style>
@@ -70,6 +72,8 @@
                 <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
             </Style>
         </Style>
-        <Style Selector="^:selected:disabled /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /></Style>
+        <Style Selector="^:selected:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        </Style>
     </ControlTheme>
 </ResourceDictionary>

@@ -1,8 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-labelledby="title desc">
-  <title id="title">The One</title>
-  <desc id="desc">A pale teal numeral one within a white rounded O, on a deep teal rounded square.</desc>
-  <rect width="512" height="512" rx="112" fill="#006061"/>
-  <rect x="112" y="104" width="288" height="304" rx="72" fill="#F7F8F8"/>
-  <rect x="160" y="152" width="192" height="208" rx="24" fill="#006061"/>
-  <path d="M208 208 264 164H300V360H248V228L208 258Z" fill="#C1DCDC"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img"
+     aria-labelledby="title desc">
+    <title id="title">The One</title>
+    <desc id="desc">A pale teal numeral one within a white rounded O, on a deep teal rounded square.</desc>
+    <rect width="512" height="512" rx="112" fill="#006061"/>
+    <rect x="112" y="104" width="288" height="304" rx="72" fill="#F7F8F8"/>
+    <rect x="160" y="152" width="192" height="208" rx="24" fill="#006061"/>
+    <path d="M208 208 264 164H300V360H248V228L208 258Z" fill="#C1DCDC"/>
 </svg>

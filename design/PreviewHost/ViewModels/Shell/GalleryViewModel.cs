@@ -131,6 +131,7 @@ public sealed class GalleryViewModel : ReactiveObject
             Search = "";
             return;
         }
+
         foreach (var group in NavigationRoots)
         foreach (var page in group.Entries)
             if (page.Category == destination.Id)

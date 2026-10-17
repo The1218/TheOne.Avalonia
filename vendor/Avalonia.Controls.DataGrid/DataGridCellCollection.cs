@@ -8,63 +8,54 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Avalonia.Controls
+namespace Avalonia.Controls;
+
+internal class DataGridCellCollection
 {
-    internal class DataGridCellCollection
+    private readonly List<DataGridCell> _cells;
+    private readonly DataGridRow _owningRow;
+
+    public DataGridCellCollection(DataGridRow owningRow)
     {
-        private List<DataGridCell> _cells;
-        private DataGridRow _owningRow;
+        _owningRow = owningRow;
+        _cells = new List<DataGridCell>();
+    }
 
-        internal event EventHandler<DataGridCellEventArgs>? CellAdded;
-        internal event EventHandler<DataGridCellEventArgs>? CellRemoved;
+    public int Count => _cells.Count;
 
-        public DataGridCellCollection(DataGridRow owningRow)
+    public DataGridCell this[int index]
+    {
+        get
         {
-            _owningRow = owningRow;
-            _cells = new List<DataGridCell>();
+            if (index < 0 || index >= _cells.Count)
+                throw DataGridError.DataGrid.ValueMustBeBetween("index", "Index", 0, true, _cells.Count, false);
+            return _cells[index];
         }
+    }
 
-        public int Count
-        {
-            get
-            {
-                return _cells.Count;
-            }
-        }
+    internal event EventHandler<DataGridCellEventArgs>? CellAdded;
+    internal event EventHandler<DataGridCellEventArgs>? CellRemoved;
 
-        public IEnumerator GetEnumerator()
-        {
-            return _cells.GetEnumerator();
-        }
+    public IEnumerator GetEnumerator()
+    {
+        return _cells.GetEnumerator();
+    }
 
-        public void Insert(int cellIndex, DataGridCell cell)
-        {
-            Debug.Assert(cellIndex >= 0 && cellIndex <= _cells.Count);
+    public void Insert(int cellIndex, DataGridCell cell)
+    {
+        Debug.Assert(cellIndex >= 0 && cellIndex <= _cells.Count);
 
-            cell.OwningRow = _owningRow;
-            _cells.Insert(cellIndex, cell);
+        cell.OwningRow = _owningRow;
+        _cells.Insert(cellIndex, cell);
 
-            CellAdded?.Invoke(this, new DataGridCellEventArgs(cell));
-        }
+        CellAdded?.Invoke(this, new DataGridCellEventArgs(cell));
+    }
 
-        public void RemoveAt(int cellIndex)
-        {
-            DataGridCell dataGridCell = _cells[cellIndex];
-            _cells.RemoveAt(cellIndex);
-            dataGridCell.OwningRow = null;
-            CellRemoved?.Invoke(this, new DataGridCellEventArgs(dataGridCell));
-        }
-
-        public DataGridCell this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= _cells.Count)
-                {
-                    throw DataGridError.DataGrid.ValueMustBeBetween("index", "Index", 0, true, _cells.Count, false);
-                }
-                return _cells[index];
-            }
-        }
+    public void RemoveAt(int cellIndex)
+    {
+        var dataGridCell = _cells[cellIndex];
+        _cells.RemoveAt(cellIndex);
+        dataGridCell.OwningRow = null;
+        CellRemoved?.Invoke(this, new DataGridCellEventArgs(dataGridCell));
     }
 }

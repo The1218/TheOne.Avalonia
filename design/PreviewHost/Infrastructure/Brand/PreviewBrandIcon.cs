@@ -12,7 +12,10 @@ public sealed class PreviewBrandIcon : Control
     private static readonly IBrush AccentSoft = new SolidColorBrush(Color.Parse("#C1DCDC"));
     private static readonly Geometry One = Geometry.Parse("M208,208 L264,164 H300 V360 H248 V228 L208,258 Z");
 
-    protected override Size MeasureOverride(Size availableSize) => new(32, 32);
+    protected override Size MeasureOverride(Size availableSize)
+    {
+        return new Size(32, 32);
+    }
 
     public override void Render(DrawingContext context)
     {
@@ -20,7 +23,7 @@ public sealed class PreviewBrandIcon : Control
         var side = Math.Min(Bounds.Width, Bounds.Height);
         if (side <= 0) return;
         using (context.PushTransform(Matrix.CreateScale(side / 512, side / 512)
-            * Matrix.CreateTranslation((Bounds.Width - side) / 2, (Bounds.Height - side) / 2)))
+                                     * Matrix.CreateTranslation((Bounds.Width - side) / 2, (Bounds.Height - side) / 2)))
         {
             context.DrawRectangle(Accent, null, new Rect(0, 0, 512, 512), 112, 112);
             context.DrawRectangle(OnAccent, null, new Rect(112, 104, 288, 304), 72, 72);

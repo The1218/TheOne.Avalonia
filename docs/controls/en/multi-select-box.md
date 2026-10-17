@@ -1,6 +1,6 @@
 # MultiSelectBox
 
-The popup owns a bounded viewport: overflow displays a native vertical scrollbar, while a short list correctly has none. Wheel input over results, search, empty results and either scroll boundary stays inside the popup without moving an outer page such as Home. Closing restores ordinary page scrolling.
+The popup owns a bounded viewport: overflow displays a native vertical scrollbar, while a short list correctly has none. Wheel input, fractional vertical/horizontal/diagonal touchpad deltas, and gesture inertia/end phases stay inside the popup over results, search, empty results and scroll boundaries. Native internal scrolling remains available. Closing restores ordinary page scrolling while tails originating in the old popup remain isolated.
 
 `MultiSelectBox` combines local search, selected-item tags, clearing, and a native virtualized results list. Selection contains model objects and survives filtering, including queries that hide every selected item. Load `OneTheme` to use it.
 
@@ -58,6 +58,8 @@ Declare `xmlns:one="using:TheOne.Avalonia.Controls"` and the view's concrete `x:
 | `SelectionChanged` | Bubbling event with original models in AddedItems / RemovedItems; batch user edits produce one event |
 
 Use `INotifyCollectionChanged` and model `INotifyPropertyChanged` for automatic updates, raised on the UI thread. Detaching releases subscriptions; reattaching reads current data. Call `RefreshItems()` for changes without notifications. Custom templates change presentation only; search and availability still use the adapter.
+
+Search filters cached entry text without enumerating `ItemsSource` or `SelectedItems`, calling adapter getters, or rebuilding model subscriptions. Filtering remains synchronous and linear over loaded data. A model notification refreshes that entry's text and availability; collection changes reconcile entries and update model subscriptions only for added or removed models. If a getter depends on external state that does not raise notifications, call `RefreshItems()` explicitly instead of relying on a search edit to refresh models.
 
 ## Keyboard and focus
 

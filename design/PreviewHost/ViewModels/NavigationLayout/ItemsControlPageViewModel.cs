@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ItemsControlPageViewModel : BasicControlViewModel { }
+
+public sealed class ItemsControlPageViewModel : BasicControlViewModel
+{
+}

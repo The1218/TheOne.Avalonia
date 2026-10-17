@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ExpanderPageViewModel : BasicControlViewModel { }
+
+public sealed class ExpanderPageViewModel : BasicControlViewModel
+{
+}

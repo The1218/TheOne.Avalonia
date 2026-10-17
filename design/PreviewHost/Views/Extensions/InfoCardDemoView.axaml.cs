@@ -4,6 +4,7 @@ using Avalonia.Controls.Templates;
 using Avalonia.Data;
 using Avalonia.Data.Converters;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 
 namespace TheOne.DesignPreview;
@@ -11,22 +12,31 @@ namespace TheOne.DesignPreview;
 public sealed class InfoCardTemplateVisibilityConverter : IValueConverter
 {
     public static InfoCardTemplateVisibilityConverter Instance { get; } = new();
-    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture) => value is true ? parameter as IDataTemplate : null;
-    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => BindingOperations.DoNothing;
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return value is true ? parameter as IDataTemplate : null;
+    }
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        return BindingOperations.DoNothing;
+    }
 }
 
 public partial class InfoCardDemoView : UserControl
 {
-    private bool _initialized;
-    public InfoCardDemoViewModel Model { get; } = new();
+    private readonly bool _initialized;
 
     public InfoCardDemoView()
     {
         DataContext = Model;
-        global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this);
+        AvaloniaXamlLoader.Load(this);
         _initialized = true;
         Loaded += (_, _) => UpdateListMetrics();
     }
+
+    public InfoCardDemoViewModel Model { get; } = new();
 
     private void OnJumpLast(object? sender, RoutedEventArgs args)
     {
@@ -40,7 +50,10 @@ public partial class InfoCardDemoView : UserControl
         }, DispatcherPriority.Background);
     }
 
-    private void OnMemberChanged(object? sender, SelectionChangedEventArgs args) => UpdateListMetrics();
+    private void OnMemberChanged(object? sender, SelectionChangedEventArgs args)
+    {
+        UpdateListMetrics();
+    }
 
     public void UpdateListMetrics()
     {
@@ -48,6 +61,7 @@ public partial class InfoCardDemoView : UserControl
         var list = this.FindControl<ListBox>("InfoCardMembers");
         var metrics = this.FindControl<TextBlock>("InfoCardListMetrics");
         if (list is null || metrics is null) return;
-        metrics.Text = $"已创建 {list.GetRealizedContainers().Count()} / {Model.Members.Count:N0} · {(list.SelectedItem ?? "尚未选择成员")}";
+        metrics.Text =
+            $"已创建 {list.GetRealizedContainers().Count()} / {Model.Members.Count:N0} · {list.SelectedItem ?? "尚未选择成员"}";
     }
 }

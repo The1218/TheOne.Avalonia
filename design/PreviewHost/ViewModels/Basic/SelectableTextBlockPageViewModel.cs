@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class SelectableTextBlockPageViewModel : BasicControlViewModel { }
+
+public sealed class SelectableTextBlockPageViewModel : BasicControlViewModel
+{
+}

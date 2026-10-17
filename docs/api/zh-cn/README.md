@@ -103,12 +103,14 @@
 | [`TheOne.Avalonia.Controls.MultiSelectBox`](TheOne.Avalonia.Controls.MultiSelectBox.md) | Class／控件 | 25 | 6 | 1 |
 | [`TheOne.Avalonia.Controls.MultiSelectBoxItem`](TheOne.Avalonia.Controls.MultiSelectBoxItem.md) | Class | 10 | 0 | 1 |
 | [`TheOne.Avalonia.Controls.MultiSelectItemAdapter`](TheOne.Avalonia.Controls.MultiSelectItemAdapter.md) | Class | 0 | 3 | 0 |
-| [`TheOne.Avalonia.Controls.NavMenu`](TheOne.Avalonia.Controls.NavMenu.md) | Class／控件 | 35 | 8 | 1 |
+| [`TheOne.Avalonia.Controls.NavMenu`](TheOne.Avalonia.Controls.NavMenu.md) | Class／控件 | 37 | 8 | 1 |
 | [`TheOne.Avalonia.Controls.NavMenuFilterBox`](TheOne.Avalonia.Controls.NavMenuFilterBox.md) | Class／控件 | 0 | 1 | 1 |
 | [`TheOne.Avalonia.Controls.NavMenuFilterResult`](TheOne.Avalonia.Controls.NavMenuFilterResult.md) | Class | 4 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.NavMenuItem`](TheOne.Avalonia.Controls.NavMenuItem.md) | Class／控件 | 4 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs`](TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs.md) | Class | 1 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.NavMenuSearchText`](TheOne.Avalonia.Controls.NavMenuSearchText.md) | Class／控件 | 2 | 3 | 0 |
+| [`TheOne.Avalonia.Controls.NavPageModel`](TheOne.Avalonia.Controls.NavPageModel.md) | Class | 6 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.NavPage`](TheOne.Avalonia.Controls.NavPage.md) | Class／控件 | 19 | 4 | 0 |
 | [`TheOne.Avalonia.Controls.NotificationMotion`](TheOne.Avalonia.Controls.NotificationMotion.md) | Class | 3 | 7 | 0 |
 | [`TheOne.Avalonia.Controls.NumericFilterCondition<TNumber>`](TheOne.Avalonia.Controls.NumericFilterCondition_TNumber_.md) | Class | 5 | 2 | 0 |
 | [`TheOne.Avalonia.Controls.NumericFilterMode`](TheOne.Avalonia.Controls.NumericFilterMode.md) | Enum | 0 | 1 | 0 |
@@ -152,7 +154,7 @@
 | [`TheOne.Avalonia.Controls.StepValidation`](TheOne.Avalonia.Controls.StepValidation.md) | Class | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.StepValidationError`](TheOne.Avalonia.Controls.StepValidationError.md) | Class | 2 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.TabClosingEventArgs`](TheOne.Avalonia.Controls.TabClosingEventArgs.md) | Class | 1 | 1 | 0 |
-| [`TheOne.Avalonia.Controls.TabFeatures`](TheOne.Avalonia.Controls.TabFeatures.md) | Class | 6 | 22 | 0 |
+| [`TheOne.Avalonia.Controls.TabFeatures`](TheOne.Avalonia.Controls.TabFeatures.md) | Class | 12 | 35 | 0 |
 | [`TheOne.Avalonia.Controls.Tag`](TheOne.Avalonia.Controls.Tag.md) | Class／控件 | 6 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.TagStatus`](TheOne.Avalonia.Controls.TagStatus.md) | Enum | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.TagVariant`](TheOne.Avalonia.Controls.TagVariant.md) | Enum | 0 | 1 | 0 |

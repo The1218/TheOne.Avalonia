@@ -1,88 +1,233 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <StreamGeometry x:Key="One.ImagePreview.Previous">M 10,2 L 4,8 L 10,14 L 12,12 L 8,8 L 12,4 Z</StreamGeometry>
-  <StreamGeometry x:Key="One.ImagePreview.Next">M 4,2 L 10,8 L 4,14 L 2,12 L 6,8 L 2,4 Z</StreamGeometry>
-  <StreamGeometry x:Key="One.ImagePreview.Minus">M 2,7 H 14 V 9 H 2 Z</StreamGeometry>
-  <StreamGeometry x:Key="One.ImagePreview.Plus">M 7,2 H 9 V 7 H 14 V 9 H 9 V 14 H 7 V 9 H 2 V 7 H 7 Z</StreamGeometry>
-  <StreamGeometry x:Key="One.ImagePreview.Close">M 3,2 L 8,7 L 13,2 L 14,3 L 9,8 L 14,13 L 13,14 L 8,9 L 3,14 L 2,13 L 7,8 L 2,3 Z</StreamGeometry>
-  <StreamGeometry x:Key="One.ImagePreview.FullScreen">M 1,1 H 6 V 3 H 3 V 6 H 1 Z M 10,1 H 15 V 6 H 13 V 3 H 10 Z M 1,10 H 3 V 13 H 6 V 15 H 1 Z M 13,10 H 15 V 15 H 10 V 13 H 13 Z</StreamGeometry>
-  <ControlTheme x:Key="{x:Type one:ImagePreview}" TargetType="one:ImagePreview">
-    <Setter Property="Background" Value="{DynamicResource One.Canvas}" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
-    <Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="8" />
-    <Setter Property="Focusable" Value="True" /><Setter Property="ClipToBounds" Value="True" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
-          <Grid RowDefinitions="Auto,*,Auto">
-            <Border Name="PART_Header" Background="{DynamicResource One.Subtle}" MinHeight="{TemplateBinding ChromeHeight}"
-                    IsVisible="{TemplateBinding ShowHeader}" Padding="12,4" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,0,1">
-              <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                <TextBlock Text="{TemplateBinding DisplayTitle}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
-                <TextBlock Grid.Column="1" Name="PART_Page" Text="{TemplateBinding PageText}" VerticalAlignment="Center"
-                           Foreground="{DynamicResource One.Muted}" IsVisible="{TemplateBinding IsMultiple}" />
-                <Button Classes="ghost" Grid.Column="2" Name="PART_Close" IsVisible="{TemplateBinding ShowCloseButton}" Padding="8"
-                        AutomationProperties.Name="关闭预览" ToolTip.Tip="关闭预览">
-                  <PathIcon Data="{StaticResource One.ImagePreview.Close}" Width="14" Height="14" />
-                </Button>
-              </Grid>
-            </Border>
-            <Grid Grid.Row="1">
-              <one:ImagePreviewSurface Name="PART_Viewport" CheckerBrush="{DynamicResource One.Surface}"
-                                       AlternateCheckerBrush="{DynamicResource One.Subtle}" />
-              <StackPanel Name="PART_Empty" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
-                <TextBlock Text="暂无图片" Foreground="{DynamicResource One.Muted}" />
-              </StackPanel>
-              <StackPanel Name="PART_Loading" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12" IsHitTestVisible="False">
-                <one:LoadingIndicator Width="24" Height="24" />
-                <TextBlock Text="正在加载图片…" Foreground="{DynamicResource One.Muted}" />
-              </StackPanel>
-              <StackPanel Name="PART_Error" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12" MaxWidth="240" Margin="44,8">
-                <TextBlock Text="图片加载失败" Foreground="{DynamicResource One.Muted}" HorizontalAlignment="Center" />
-                <Button Classes="ghost" Name="PART_Retry" Content="重试" HorizontalAlignment="Center" />
-              </StackPanel>
-              <Button Classes="ghost" Name="PART_Previous" IsVisible="{TemplateBinding IsMultiple}" IsEnabled="{TemplateBinding CanPrevious}"
-                      HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8" Padding="8" CornerRadius="20"
-                      AutomationProperties.Name="上一张" ToolTip.Tip="上一张（←）">
-                <PathIcon Data="{StaticResource One.ImagePreview.Previous}" Width="16" Height="16" />
-              </Button>
-              <Button Classes="ghost" Name="PART_Next" IsVisible="{TemplateBinding IsMultiple}" IsEnabled="{TemplateBinding CanNext}"
-                      HorizontalAlignment="Right" VerticalAlignment="Center" Margin="8" Padding="8" CornerRadius="20"
-                      AutomationProperties.Name="下一张" ToolTip.Tip="下一张（→）">
-                <PathIcon Data="{StaticResource One.ImagePreview.Next}" Width="16" Height="16" />
-              </Button>
-            </Grid>
-            <Border Grid.Row="2" Background="{DynamicResource One.Subtle}" MinHeight="{TemplateBinding ChromeHeight}"
-                    Padding="6" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,1,0,0">
-              <Grid ColumnDefinitions="*,Auto">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="4">
-                  <Button Classes="ghost" Name="PART_ZoomOut" Padding="8" IsEnabled="{TemplateBinding HasImage}" AutomationProperties.Name="缩小" ToolTip.Tip="缩小">
-                    <PathIcon Data="{StaticResource One.ImagePreview.Minus}" Width="14" Height="14" />
-                  </Button>
-                  <Button Classes="ghost" Name="PART_Fit" Content="{TemplateBinding ZoomText}" Padding="8,4" IsEnabled="{TemplateBinding HasImage}" ToolTip.Tip="适应窗口" />
-                  <Button Classes="ghost" Name="PART_ZoomIn" Padding="8" IsEnabled="{TemplateBinding HasImage}" AutomationProperties.Name="放大" ToolTip.Tip="放大">
-                    <PathIcon Data="{StaticResource One.ImagePreview.Plus}" Width="14" Height="14" />
-                  </Button>
-                  <Button Classes="ghost" Name="PART_Actual" Content="1:1" Padding="8,4" IsEnabled="{TemplateBinding HasImage}" ToolTip.Tip="原始尺寸（一个图片像素对应一个屏幕像素）" />
-                </StackPanel>
-                <Button Classes="ghost" Grid.Column="1" Name="PART_FullScreen" Padding="8" AutomationProperties.Name="切换全屏" ToolTip.Tip="切换全屏">
-                  <PathIcon Data="{StaticResource One.ImagePreview.FullScreen}" Width="16" Height="16" />
-                </Button>
-              </Grid>
-            </Border>
-          </Grid>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:has-image /template/ StackPanel#PART_Empty"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:loading /template/ StackPanel#PART_Empty"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:loading /template/ StackPanel#PART_Loading"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:error /template/ StackPanel#PART_Empty"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:error /template/ StackPanel#PART_Error"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:compact /template/ Button#PART_Actual"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:fullscreen"><Setter Property="CornerRadius" Value="0" /></Style>
-    <Style Selector="^:disabled"><Setter Property="Opacity" Value=".55" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StreamGeometry x:Key="One.ImagePreview.Previous">M 10,2 L 4,8 L 10,14 L 12,12 L 8,8 L 12,4 Z</StreamGeometry>
+    <StreamGeometry x:Key="One.ImagePreview.Next">M 4,2 L 10,8 L 4,14 L 2,12 L 6,8 L 2,4 Z</StreamGeometry>
+    <StreamGeometry x:Key="One.ImagePreview.Minus">M 2,7 H 14 V 9 H 2 Z</StreamGeometry>
+    <StreamGeometry x:Key="One.ImagePreview.Plus">M 7,2 H 9 V 7 H 14 V 9 H 9 V 14 H 7 V 9 H 2 V 7 H 7 Z</StreamGeometry>
+    <StreamGeometry x:Key="One.ImagePreview.Close">M 3,2 L 8,7 L 13,2 L 14,3 L 9,8 L 14,13 L 13,14 L 8,9 L 3,14 L 2,13 L 7,8 L 2,3 Z</StreamGeometry>
+    <StreamGeometry x:Key="One.ImagePreview.FullScreen">M 1,1 H 6 V 3 H 3 V 6 H 1 Z M 10,1 H 15 V 6 H 13 V 3 H 10 Z M 1,10 H 3 V 13 H 6 V 15 H 1 Z M 13,10 H 15 V 15 H 10 V 13 H 13 Z</StreamGeometry>
+    <ControlTheme TargetType="one:ImagePreview" x:Key="{x:Type one:ImagePreview}">
+        <Setter Property="Background" Value="{DynamicResource One.Canvas}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid RowDefinitions="Auto,*,Auto">
+                        <Border
+                            Background="{DynamicResource One.Subtle}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0,0,0,1"
+                            IsVisible="{TemplateBinding ShowHeader}"
+                            MinHeight="{TemplateBinding ChromeHeight}"
+                            Name="PART_Header"
+                            Padding="12,4">
+                            <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                                <TextBlock
+                                    Text="{TemplateBinding DisplayTitle}"
+                                    TextTrimming="CharacterEllipsis"
+                                    VerticalAlignment="Center" />
+                                <TextBlock
+                                    Foreground="{DynamicResource One.Muted}"
+                                    Grid.Column="1"
+                                    IsVisible="{TemplateBinding IsMultiple}"
+                                    Name="PART_Page"
+                                    Text="{TemplateBinding PageText}"
+                                    VerticalAlignment="Center" />
+                                <Button
+                                    AutomationProperties.Name="关闭预览"
+                                    Classes="ghost"
+                                    Grid.Column="2"
+                                    IsVisible="{TemplateBinding ShowCloseButton}"
+                                    Name="PART_Close"
+                                    Padding="8"
+                                    ToolTip.Tip="关闭预览">
+                                    <PathIcon
+                                        Data="{StaticResource One.ImagePreview.Close}"
+                                        Height="14"
+                                        Width="14" />
+                                </Button>
+                            </Grid>
+                        </Border>
+                        <Grid Grid.Row="1">
+                            <one:ImagePreviewSurface
+                                AlternateCheckerBrush="{DynamicResource One.Subtle}"
+                                CheckerBrush="{DynamicResource One.Surface}"
+                                Name="PART_Viewport" />
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
+                                Name="PART_Empty"
+                                VerticalAlignment="Center">
+                                <TextBlock Foreground="{DynamicResource One.Muted}" Text="暂无图片" />
+                            </StackPanel>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
+                                IsVisible="False"
+                                Name="PART_Loading"
+                                Spacing="12"
+                                VerticalAlignment="Center">
+                                <one:LoadingIndicator Height="24" Width="24" />
+                                <TextBlock Foreground="{DynamicResource One.Muted}" Text="正在加载图片…" />
+                            </StackPanel>
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                IsVisible="False"
+                                Margin="44,8"
+                                MaxWidth="240"
+                                Name="PART_Error"
+                                Spacing="12"
+                                VerticalAlignment="Center">
+                                <TextBlock
+                                    Foreground="{DynamicResource One.Muted}"
+                                    HorizontalAlignment="Center"
+                                    Text="图片加载失败" />
+                                <Button
+                                    Classes="ghost"
+                                    Content="重试"
+                                    HorizontalAlignment="Center"
+                                    Name="PART_Retry" />
+                            </StackPanel>
+                            <Button
+                                AutomationProperties.Name="上一张"
+                                Classes="ghost"
+                                CornerRadius="20"
+                                HorizontalAlignment="Left"
+                                IsEnabled="{TemplateBinding CanPrevious}"
+                                IsVisible="{TemplateBinding IsMultiple}"
+                                Margin="8"
+                                Name="PART_Previous"
+                                Padding="8"
+                                ToolTip.Tip="上一张（←）"
+                                VerticalAlignment="Center">
+                                <PathIcon
+                                    Data="{StaticResource One.ImagePreview.Previous}"
+                                    Height="16"
+                                    Width="16" />
+                            </Button>
+                            <Button
+                                AutomationProperties.Name="下一张"
+                                Classes="ghost"
+                                CornerRadius="20"
+                                HorizontalAlignment="Right"
+                                IsEnabled="{TemplateBinding CanNext}"
+                                IsVisible="{TemplateBinding IsMultiple}"
+                                Margin="8"
+                                Name="PART_Next"
+                                Padding="8"
+                                ToolTip.Tip="下一张（→）"
+                                VerticalAlignment="Center">
+                                <PathIcon
+                                    Data="{StaticResource One.ImagePreview.Next}"
+                                    Height="16"
+                                    Width="16" />
+                            </Button>
+                        </Grid>
+                        <Border
+                            Background="{DynamicResource One.Subtle}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0,1,0,0"
+                            Grid.Row="2"
+                            MinHeight="{TemplateBinding ChromeHeight}"
+                            Padding="6">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <StackPanel
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <Button
+                                        AutomationProperties.Name="缩小"
+                                        Classes="ghost"
+                                        IsEnabled="{TemplateBinding HasImage}"
+                                        Name="PART_ZoomOut"
+                                        Padding="8"
+                                        ToolTip.Tip="缩小">
+                                        <PathIcon
+                                            Data="{StaticResource One.ImagePreview.Minus}"
+                                            Height="14"
+                                            Width="14" />
+                                    </Button>
+                                    <Button
+                                        Classes="ghost"
+                                        Content="{TemplateBinding ZoomText}"
+                                        IsEnabled="{TemplateBinding HasImage}"
+                                        Name="PART_Fit"
+                                        Padding="8,4"
+                                        ToolTip.Tip="适应窗口" />
+                                    <Button
+                                        AutomationProperties.Name="放大"
+                                        Classes="ghost"
+                                        IsEnabled="{TemplateBinding HasImage}"
+                                        Name="PART_ZoomIn"
+                                        Padding="8"
+                                        ToolTip.Tip="放大">
+                                        <PathIcon
+                                            Data="{StaticResource One.ImagePreview.Plus}"
+                                            Height="14"
+                                            Width="14" />
+                                    </Button>
+                                    <Button
+                                        Classes="ghost"
+                                        Content="1:1"
+                                        IsEnabled="{TemplateBinding HasImage}"
+                                        Name="PART_Actual"
+                                        Padding="8,4"
+                                        ToolTip.Tip="原始尺寸（一个图片像素对应一个屏幕像素）" />
+                                </StackPanel>
+                                <Button
+                                    AutomationProperties.Name="切换全屏"
+                                    Classes="ghost"
+                                    Grid.Column="1"
+                                    Name="PART_FullScreen"
+                                    Padding="8"
+                                    ToolTip.Tip="切换全屏">
+                                    <PathIcon
+                                        Data="{StaticResource One.ImagePreview.FullScreen}"
+                                        Height="16"
+                                        Width="16" />
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:has-image /template/ StackPanel#PART_Empty">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:loading /template/ StackPanel#PART_Empty">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:loading /template/ StackPanel#PART_Loading">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:error /template/ StackPanel#PART_Empty">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:error /template/ StackPanel#PART_Error">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:compact /template/ Button#PART_Actual">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:fullscreen">
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value=".55" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -1,43 +1,96 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Styling" x:CompileBindings="True">
-  <!-- Native DateTimePickerPanel owns selection and recycles these items. -->
-  <ControlTheme x:Key="One.DateTimePickerItem" TargetType="ListBoxItem">
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
-    <Setter Property="Padding" Value="8,0" />
-    <Setter Property="MinHeight" Value="0" />
-    <Setter Property="HorizontalContentAlignment" Value="Center" />
-    <Setter Property="VerticalContentAlignment" Value="Center" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Panel Background="Transparent">
-          <ContentPresenter Name="PART_NormalPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Foreground="{DynamicResource One.Muted}" FontWeight="{TemplateBinding FontWeight}"
-                            Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Foreground="{DynamicResource One.OnAccent}" FontWeight="{TemplateBinding FontWeight}" IsHitTestVisible="False"
-                            Clip="{Binding $parent[ListBoxItem].(one:PickerScroll.HighlightClip)}"
-                            Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-        </Panel>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:selected"><Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" /><Setter Property="FontWeight" Value="SemiBold" /></Style>
-    <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
-  </ControlTheme>
-  <ControlTheme x:Key="One.DateTimePickerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Background" Value="{DynamicResource One.Surface}" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="BorderThickness" Value="0" /><Setter Property="MinHeight" Value="0" /><Setter Property="MinWidth" Value="0" />
-    <Setter Property="Padding" Value="8,0" /><Setter Property="Margin" Value="4" />
-    <Setter Property="HorizontalContentAlignment" Value="Center" /><Setter Property="VerticalContentAlignment" Value="Center" />
-  </ControlTheme>
-  <ControlTheme x:Key="One.DateTimePickerUpButton" TargetType="RepeatButton" BasedOn="{StaticResource One.DateTimePickerButton}">
-    <Setter Property="Height" Value="24" /><Setter Property="Margin" Value="4,2" />
-    <Setter Property="VerticalAlignment" Value="Top" /><Setter Property="HorizontalAlignment" Value="Stretch" />
-    <Setter Property="Focusable" Value="False" /><Setter Property="ClickMode" Value="Press" /><Setter Property="IsVisible" Value="True" />
-    <Setter Property="Content"><Template><PathIcon Width="10" Height="6" Data="M0,5 L5,0 L10,5 L9,6 L5,2 L1,6 Z" /></Template></Setter>
-  </ControlTheme>
-  <ControlTheme x:Key="One.DateTimePickerDownButton" TargetType="RepeatButton" BasedOn="{StaticResource One.DateTimePickerUpButton}">
-    <Setter Property="VerticalAlignment" Value="Bottom" />
-    <Setter Property="Content"><Template><PathIcon Width="10" Height="6" Data="M0,1 L1,0 L5,4 L9,0 L10,1 L5,6 Z" /></Template></Setter>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Styling"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Native DateTimePickerPanel owns selection and recycles these items.  -->
+    <ControlTheme TargetType="ListBoxItem" x:Key="One.DateTimePickerItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel Background="Transparent">
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        Foreground="{DynamicResource One.Muted}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Name="PART_NormalPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <ContentPresenter
+                        Clip="{Binding $parent[ListBoxItem].(one:PickerScroll.HighlightClip)}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        FontWeight="{TemplateBinding FontWeight}"
+                        Foreground="{DynamicResource One.OnAccent}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        IsHitTestVisible="False"
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:selected">
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="Button"
+        x:Key="One.DateTimePickerButton">
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </ControlTheme>
+    <ControlTheme
+        BasedOn="{StaticResource One.DateTimePickerButton}"
+        TargetType="RepeatButton"
+        x:Key="One.DateTimePickerUpButton">
+        <Setter Property="Height" Value="24" />
+        <Setter Property="Margin" Value="4,2" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="IsVisible" Value="True" />
+        <Setter Property="Content">
+            <Template>
+                <PathIcon
+                    Data="M0,5 L5,0 L10,5 L9,6 L5,2 L1,6 Z"
+                    Height="6"
+                    Width="10" />
+            </Template>
+        </Setter>
+    </ControlTheme>
+    <ControlTheme
+        BasedOn="{StaticResource One.DateTimePickerUpButton}"
+        TargetType="RepeatButton"
+        x:Key="One.DateTimePickerDownButton">
+        <Setter Property="VerticalAlignment" Value="Bottom" />
+        <Setter Property="Content">
+            <Template>
+                <PathIcon
+                    Data="M0,1 L1,0 L5,4 L9,0 L10,1 L5,6 Z"
+                    Height="6"
+                    Width="10" />
+            </Template>
+        </Setter>
+    </ControlTheme>
 </ResourceDictionary>

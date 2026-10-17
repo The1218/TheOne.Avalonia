@@ -5,12 +5,14 @@ namespace TheOne.DesignPreview;
 
 public partial class ShowcasePage : UserControl
 {
-    private readonly Dictionary<int, UserControl> _views = [];
     private readonly Dictionary<int, Border> _sections = [];
     private readonly List<Control> _sourceViews = [];
-    public event EventHandler<int>? ControlRequested;
+    private readonly Dictionary<int, UserControl> _views = [];
 
-    public ShowcasePage() => InitializeComponent();
+    public ShowcasePage()
+    {
+        InitializeComponent();
+    }
 
     public ShowcasePage(PreviewPageDescriptor page) : this()
     {
@@ -33,7 +35,17 @@ public partial class ShowcasePage : UserControl
             SectionLinks.Children.Add(link);
         }
     }
-    public UserControl GetControlView(int id) => _views[id];
-    public Border GetSection(int id) => _sections[id];
+
     internal IEnumerable<Control> SourceViews => _sourceViews;
+    public event EventHandler<int>? ControlRequested;
+
+    public UserControl GetControlView(int id)
+    {
+        return _views[id];
+    }
+
+    public Border GetSection(int id)
+    {
+        return _sections[id];
+    }
 }

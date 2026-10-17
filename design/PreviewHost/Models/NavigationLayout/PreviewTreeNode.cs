@@ -2,7 +2,11 @@ using ReactiveUI;
 
 namespace TheOne.DesignPreview;
 
-public sealed class PreviewTreeNode(string name, string description, bool isEnabled = true, params PreviewTreeNode[] children) : ReactiveObject
+public sealed class PreviewTreeNode(
+    string name,
+    string description,
+    bool isEnabled = true,
+    params PreviewTreeNode[] children) : ReactiveObject
 {
     public string Name
     {

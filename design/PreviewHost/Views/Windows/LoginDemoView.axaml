@@ -5,38 +5,45 @@
              x:Class="TheOne.DesignPreview.LoginDemoView"
              x:DataType="local:LoginDemoViewModel"
              x:CompileBindings="True">
-  <Grid RowDefinitions="Auto,*" RowSpacing="20">
-    <Grid ColumnDefinitions="*,Auto">
-      <StackPanel Spacing="4">
-        <TextBlock Text="THEONE" Foreground="{DynamicResource One.Accent}" FontWeight="SemiBold" />
-        <TextBlock Text="登录工作区" FontSize="24" FontWeight="SemiBold" />
-      </StackPanel>
-      <one:ThemeButton Grid.Column="1" Scope="Application" VerticalAlignment="Top" />
-    </Grid>
-    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-      <StackPanel Spacing="16">
-        <TextBlock Text="此表单由应用定义，LoginWindow 只负责窗口与主窗体交接。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-        <StackPanel Spacing="6" IsEnabled="{Binding CanEdit}">
-          <Label Content="账号 (_A)" Target="{Binding #LoginAccount}" />
-          <TextBox Name="LoginAccount" Text="{Binding Account, Mode=TwoWay}" PlaceholderText="输入演示账号" AutomationProperties.Name="登录账号" />
-          <Label Content="密码 (_P)" Target="{Binding #LoginPassword}" />
-          <TextBox Name="LoginPassword" Text="{Binding Password, Mode=TwoWay}" PasswordChar="●" PlaceholderText="输入演示密码" AutomationProperties.Name="登录密码" />
-        </StackPanel>
-        <TextBlock Name="LoginStatus" Text="{Binding Status}" TextWrapping="Wrap" MinHeight="40" AutomationProperties.Name="登录状态" />
-        <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Height="4" />
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-          <Button Name="LoginSubmit" Classes="primary" Content="登录" Command="{Binding LoginCommand}" HorizontalAlignment="Stretch" IsDefault="True" />
-          <Button Name="LoginCancel" Grid.Column="1" Content="取消" Command="{Binding CancelCommand}" IsCancel="True" />
+    <Grid RowDefinitions="Auto,*" RowSpacing="20">
+        <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4">
+                <TextBlock Text="THEONE" Foreground="{DynamicResource One.Accent}" FontWeight="SemiBold" />
+                <TextBlock Text="登录工作区" FontSize="24" FontWeight="SemiBold" />
+            </StackPanel>
+            <one:ThemeButton Grid.Column="1" Scope="Application" VerticalAlignment="Top" />
         </Grid>
-        <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="12">
-          <TextBlock Text="仅用于演示：账号、密码非空即通过本地校验，不连接认证服务。正式应用应替换为自己的登录验证。" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-        </Border>
-        <WrapPanel Orientation="Horizontal">
-          <Button Content="错误 Toast" Click="ShowErrorToast" Margin="0,0,8,8" />
-          <Button Content="错误通知" Click="ShowErrorNotification" Margin="0,0,8,8" />
-          <Button Content="错误对话框" Click="ShowErrorDialog" Margin="0,0,0,8" />
-        </WrapPanel>
-      </StackPanel>
-    </ScrollViewer>
-  </Grid>
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="16">
+                <TextBlock Text="此表单由应用定义，LoginWindow 只负责窗口与主窗体交接。" Foreground="{DynamicResource One.Muted}"
+                           TextWrapping="Wrap" />
+                <StackPanel Spacing="6" IsEnabled="{Binding CanEdit}">
+                    <Label Content="账号 (_A)" Target="{Binding #LoginAccount}" />
+                    <TextBox Name="LoginAccount" Text="{Binding Account, Mode=TwoWay}" PlaceholderText="输入演示账号"
+                             AutomationProperties.Name="登录账号" />
+                    <Label Content="密码 (_P)" Target="{Binding #LoginPassword}" />
+                    <TextBox Name="LoginPassword" Text="{Binding Password, Mode=TwoWay}" PasswordChar="●"
+                             PlaceholderText="输入演示密码" AutomationProperties.Name="登录密码" />
+                </StackPanel>
+                <TextBlock Name="LoginStatus" Text="{Binding Status}" TextWrapping="Wrap" MinHeight="40"
+                           AutomationProperties.Name="登录状态" />
+                <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Height="4" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Button Name="LoginSubmit" Classes="primary" Content="登录" Command="{Binding LoginCommand}"
+                            HorizontalAlignment="Stretch" IsDefault="True" />
+                    <Button Name="LoginCancel" Grid.Column="1" Content="取消" Command="{Binding CancelCommand}"
+                            IsCancel="True" />
+                </Grid>
+                <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="12">
+                    <TextBlock Text="仅用于演示：账号、密码非空即通过本地校验，不连接认证服务。正式应用应替换为自己的登录验证。"
+                               Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+                </Border>
+                <WrapPanel Orientation="Horizontal">
+                    <Button Content="错误 Toast" Click="ShowErrorToast" Margin="0,0,8,8" />
+                    <Button Content="错误通知" Click="ShowErrorNotification" Margin="0,0,8,8" />
+                    <Button Content="错误对话框" Click="ShowErrorDialog" Margin="0,0,0,8" />
+                </WrapPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

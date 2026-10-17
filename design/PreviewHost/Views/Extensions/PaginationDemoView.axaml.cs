@@ -1,13 +1,15 @@
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace TheOne.DesignPreview;
 
 public partial class PaginationDemoView : UserControl
 {
-    public PaginationDemoViewModel Model { get; } = new();
     public PaginationDemoView()
     {
         DataContext = Model;
-        global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this);
+        AvaloniaXamlLoader.Load(this);
     }
+
+    public PaginationDemoViewModel Model { get; } = new();
 }

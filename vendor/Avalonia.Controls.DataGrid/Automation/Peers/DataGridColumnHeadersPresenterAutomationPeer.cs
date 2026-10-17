@@ -6,7 +6,7 @@ namespace Avalonia.Controls.Automation.Peers;
 #if !DATAGRID_INTERNAL
 public
 #endif
-class DataGridColumnHeadersPresenterAutomationPeer : ControlAutomationPeer
+    class DataGridColumnHeadersPresenterAutomationPeer : ControlAutomationPeer
 {
     public DataGridColumnHeadersPresenterAutomationPeer(DataGridColumnHeadersPresenter owner)
         : base(owner)
@@ -20,7 +20,13 @@ class DataGridColumnHeadersPresenterAutomationPeer : ControlAutomationPeer
         return AutomationControlType.Header;
     }
 
-    protected override bool IsContentElementCore() => false;
+    protected override bool IsContentElementCore()
+    {
+        return false;
+    }
 
-    protected override bool IsControlElementCore() => true;
+    protected override bool IsControlElementCore()
+    {
+        return true;
+    }
 }

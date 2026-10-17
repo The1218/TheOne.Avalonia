@@ -3,7 +3,6 @@
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
     xmlns:one="clr-namespace:TheOne.Avalonia.Controls;assembly=TheOne.Avalonia"
-    xmlns:sys="using:System"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 

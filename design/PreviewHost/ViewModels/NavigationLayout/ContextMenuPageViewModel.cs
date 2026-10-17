@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ContextMenuPageViewModel : BasicControlViewModel { }
+
+public sealed class ContextMenuPageViewModel : BasicControlViewModel
+{
+}

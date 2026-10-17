@@ -2,7 +2,6 @@
     x:Class="TheOne.DesignPreview.OneWindowDemoView"
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
-    xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Spacing="20">
         <TextBlock
@@ -56,10 +55,22 @@
         <TextBlock Text="登录按钮打开独立 LoginWindow 内容示例。运行 PreviewHost --login 可验证完整启动流程：登录通过后交接 MainWindow，关闭登录窗口并显示 OneWindow 主窗体。" TextWrapping="Wrap" />
         <StackPanel Spacing="8">
             <TextBlock FontWeight="SemiBold" Text="自定义表单选项（点击上方自定义表单验证）" />
-            <CheckBox Name="DialogTitleVisible" Content="显示对话框标题" IsChecked="True" />
-            <CheckBox Name="DialogCloseVisible" Content="显示关闭按钮" IsChecked="True" />
-            <CheckBox Name="DialogOverlayClose" Content="点击蒙层关闭" IsChecked="False" />
-            <CheckBox Name="DialogEscapeClose" Content="Escape 关闭" IsChecked="True" />
+            <CheckBox
+                Content="显示对话框标题"
+                IsChecked="True"
+                Name="DialogTitleVisible" />
+            <CheckBox
+                Content="显示关闭按钮"
+                IsChecked="True"
+                Name="DialogCloseVisible" />
+            <CheckBox
+                Content="点击蒙层关闭"
+                IsChecked="False"
+                Name="DialogOverlayClose" />
+            <CheckBox
+                Content="Escape 关闭"
+                IsChecked="True"
+                Name="DialogEscapeClose" />
             <TextBlock Text="Toast 默认顶部居中；表单默认不显示通用底部按钮，使用内部 VM 的保存和取消命令。" TextWrapping="Wrap" />
         </StackPanel>
         <Border

@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ProgressBarPageViewModel : BasicControlViewModel { }
+
+public sealed class ProgressBarPageViewModel : BasicControlViewModel
+{
+}

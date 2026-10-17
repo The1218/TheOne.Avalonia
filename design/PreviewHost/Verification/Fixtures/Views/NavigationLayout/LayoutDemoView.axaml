@@ -1,98 +1,256 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:TheOne.DesignPreview" Name="LayoutRoot" x:Class="TheOne.DesignPreview.LayoutDemoView" x:DataType="local:LayoutDemoView">
-  <UserControl.Styles>
-    <!-- Vertical panes use shorter demo lengths to leave a usable content workspace. -->
-    <Style Selector="SplitView.one-small[PanePlacement=Top], SplitView.one-small[PanePlacement=Bottom]"><Setter Property="OpenPaneLength" Value="120" /></Style>
-    <Style Selector="SplitView.one-normal[PanePlacement=Top], SplitView.one-normal[PanePlacement=Bottom]"><Setter Property="OpenPaneLength" Value="128" /></Style>
-    <Style Selector="SplitView.one-large[PanePlacement=Top], SplitView.one-large[PanePlacement=Bottom]"><Setter Property="OpenPaneLength" Value="132" /></Style>
-    <Style Selector="TextBlock.note"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
-    <Style Selector="Border.region"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="14" /></Style>
-  </UserControl.Styles>
-  <Grid RowDefinitions="Auto,Auto,320,Auto,190,Auto" RowSpacing="12">
-    <StackPanel Spacing="5">
-      <TextBlock Text="20  侧栏与分隔 / SplitView · GridSplitter" FontWeight="SemiBold" />
-      <TextBlock Classes="note" Text="四种展开模式与四个方向 · 原生拖动及键盘调整 · 跟随全局尺寸与主题" />
-    </StackPanel>
-    <WrapPanel Grid.Row="1">
-      <Button Name="TogglePane" Content="展开 / 收起侧栏" Click="OnTogglePane" Margin="0,0,12,4" />
-      <ComboBox Name="PaneMode" SelectedIndex="3" SelectionChanged="OnModeChanged" Width="196" Margin="0,0,8,4" AutomationProperties.Name="侧栏展开模式">
-        <ComboBoxItem Content="Overlay" /><ComboBoxItem Content="Inline" /><ComboBoxItem Content="CompactOverlay" /><ComboBoxItem Content="CompactInline" />
-      </ComboBox>
-      <ComboBox Name="PaneDirection" SelectedIndex="0" SelectionChanged="OnPlacementChanged" Width="110" Margin="0,0,12,4" AutomationProperties.Name="侧栏方向">
-        <ComboBoxItem Content="左侧" /><ComboBoxItem Content="右侧" /><ComboBoxItem Content="顶部" /><ComboBoxItem Content="底部" />
-      </ComboBox>
-      <CheckBox Name="DismissShade" Content="遮罩" IsChecked="True" Margin="0,0,12,4" />
-      <CheckBox Name="KeepPane" Content="阻止关闭" Margin="0,0,0,4" />
-    </WrapPanel>
-    <SplitView Name="PaneSample" Grid.Row="2" DisplayMode="CompactInline" IsPaneOpen="True"
-               UseLightDismissOverlayMode="{Binding IsChecked, ElementName=DismissShade}" PaneClosing="OnPaneClosing">
-      <SplitView.Pane>
-        <Grid RowDefinitions="Auto,*,Auto" Margin="4" RowSpacing="4">
-          <Grid ColumnDefinitions="36,*" Margin="4,8">
-            <Border Width="26" Height="26" Background="{DynamicResource One.Accent}" CornerRadius="7">
-              <TextBlock Text="W" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12" FontWeight="SemiBold" />
-            </Border>
-            <TextBlock Name="PaneTitle" IsVisible="{Binding IsPaneOpen, ElementName=PaneSample}" Grid.Column="1" Text="工作区目录" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" />
-          </Grid>
-          <ListBox Name="PaneList" Grid.Row="1" ItemsSource="{Binding NavigationItems, ElementName=LayoutRoot}" SelectedIndex="0" Background="Transparent" BorderThickness="0" SelectionChanged="OnPaneSelectionChanged">
-            <ListBox.ItemTemplate>
-              <DataTemplate x:DataType="x:String">
-                <Grid ColumnDefinitions="24,*">
-                  <PathIcon Data="M2,3 L8,3 L10,5 L18,5 L18,17 L2,17 Z" Width="14" Height="14" HorizontalAlignment="Left" />
-                  <TextBlock Name="WorkspaceLabel" IsVisible="{Binding $parent[SplitView].IsPaneOpen}" Grid.Column="1" Text="{Binding}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+<UserControl
+    Name="LayoutRoot"
+    x:Class="TheOne.DesignPreview.LayoutDemoView"
+    x:DataType="local:LayoutDemoView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <!--  Vertical panes use shorter demo lengths to leave a usable content workspace.  -->
+        <Style Selector="SplitView.one-small[PanePlacement=Top], SplitView.one-small[PanePlacement=Bottom]">
+            <Setter Property="OpenPaneLength" Value="120" />
+        </Style>
+        <Style Selector="SplitView.one-normal[PanePlacement=Top], SplitView.one-normal[PanePlacement=Bottom]">
+            <Setter Property="OpenPaneLength" Value="128" />
+        </Style>
+        <Style Selector="SplitView.one-large[PanePlacement=Top], SplitView.one-large[PanePlacement=Bottom]">
+            <Setter Property="OpenPaneLength" Value="132" />
+        </Style>
+        <Style Selector="TextBlock.note">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="Border.region">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="14" />
+        </Style>
+    </UserControl.Styles>
+    <Grid RowDefinitions="Auto,Auto,320,Auto,190,Auto" RowSpacing="12">
+        <StackPanel Spacing="5">
+            <TextBlock FontWeight="SemiBold" Text="20  侧栏与分隔 / SplitView · GridSplitter" />
+            <TextBlock Classes="note" Text="四种展开模式与四个方向 · 原生拖动及键盘调整 · 跟随全局尺寸与主题" />
+        </StackPanel>
+        <WrapPanel Grid.Row="1">
+            <Button
+                Click="OnTogglePane"
+                Content="展开 / 收起侧栏"
+                Margin="0,0,12,4"
+                Name="TogglePane" />
+            <ComboBox
+                AutomationProperties.Name="侧栏展开模式"
+                Margin="0,0,8,4"
+                Name="PaneMode"
+                SelectedIndex="3"
+                SelectionChanged="OnModeChanged"
+                Width="196">
+                <ComboBoxItem Content="Overlay" />
+                <ComboBoxItem Content="Inline" />
+                <ComboBoxItem Content="CompactOverlay" />
+                <ComboBoxItem Content="CompactInline" />
+            </ComboBox>
+            <ComboBox
+                AutomationProperties.Name="侧栏方向"
+                Margin="0,0,12,4"
+                Name="PaneDirection"
+                SelectedIndex="0"
+                SelectionChanged="OnPlacementChanged"
+                Width="110">
+                <ComboBoxItem Content="左侧" />
+                <ComboBoxItem Content="右侧" />
+                <ComboBoxItem Content="顶部" />
+                <ComboBoxItem Content="底部" />
+            </ComboBox>
+            <CheckBox
+                Content="遮罩"
+                IsChecked="True"
+                Margin="0,0,12,4"
+                Name="DismissShade" />
+            <CheckBox
+                Content="阻止关闭"
+                Margin="0,0,0,4"
+                Name="KeepPane" />
+        </WrapPanel>
+        <SplitView
+            DisplayMode="CompactInline"
+            Grid.Row="2"
+            IsPaneOpen="True"
+            Name="PaneSample"
+            PaneClosing="OnPaneClosing"
+            UseLightDismissOverlayMode="{Binding IsChecked, ElementName=DismissShade}">
+            <SplitView.Pane>
+                <Grid
+                    Margin="4"
+                    RowDefinitions="Auto,*,Auto"
+                    RowSpacing="4">
+                    <Grid ColumnDefinitions="36,*" Margin="4,8">
+                        <Border
+                            Background="{DynamicResource One.Accent}"
+                            CornerRadius="7"
+                            Height="26"
+                            Width="26">
+                            <TextBlock
+                                FontSize="12"
+                                FontWeight="SemiBold"
+                                Foreground="{DynamicResource One.OnAccent}"
+                                HorizontalAlignment="Center"
+                                Text="W"
+                                VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock
+                            FontWeight="SemiBold"
+                            Grid.Column="1"
+                            IsVisible="{Binding IsPaneOpen, ElementName=PaneSample}"
+                            Name="PaneTitle"
+                            Text="工作区目录"
+                            TextTrimming="CharacterEllipsis"
+                            VerticalAlignment="Center" />
+                    </Grid>
+                    <ListBox
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Grid.Row="1"
+                        ItemsSource="{Binding NavigationItems, ElementName=LayoutRoot}"
+                        Name="PaneList"
+                        SelectedIndex="0"
+                        SelectionChanged="OnPaneSelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Grid ColumnDefinitions="24,*">
+                                    <PathIcon
+                                        Data="M2,3 L8,3 L10,5 L18,5 L18,17 L2,17 Z"
+                                        Height="14"
+                                        HorizontalAlignment="Left"
+                                        Width="14" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        IsVisible="{Binding $parent[SplitView].IsPaneOpen}"
+                                        Name="WorkspaceLabel"
+                                        Text="{Binding}"
+                                        TextTrimming="CharacterEllipsis"
+                                        VerticalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button
+                        Classes="ghost"
+                        Click="OnPaneLast"
+                        Content="末项"
+                        Grid.Row="2"
+                        IsVisible="{Binding IsPaneOpen, ElementName=PaneSample}"
+                        Margin="4,0"
+                        Name="PaneLast" />
                 </Grid>
-              </DataTemplate>
-            </ListBox.ItemTemplate>
-          </ListBox>
-          <Button Name="PaneLast" IsVisible="{Binding IsPaneOpen, ElementName=PaneSample}" Grid.Row="2" Content="末项" Classes="ghost" Click="OnPaneLast" Margin="4,0" />
+            </SplitView.Pane>
+            <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10">
+                <StackPanel Spacing="6">
+                    <TextBlock
+                        FontSize="18"
+                        FontWeight="SemiBold"
+                        Text="内容工作区" />
+                    <TextBlock Classes="note" Name="PaneStatus" />
+                </StackPanel>
+                <Border Classes="region" Grid.Row="1">
+                    <StackPanel Spacing="8" VerticalAlignment="Center">
+                        <TextBlock
+                            Name="SelectedWorkspace"
+                            Text="已选择：条目 00001"
+                            TextWrapping="Wrap" />
+                        <TextBlock Classes="note" Text="Inline 为侧栏预留空间；Overlay 覆盖内容。覆盖模式下，点击内容区或按 Esc 可关闭侧栏。" />
+                    </StackPanel>
+                </Border>
+                <TextBlock
+                    Classes="note"
+                    Grid.Row="2"
+                    Name="PaneMetrics" />
+            </Grid>
+        </SplitView>
+        <WrapPanel Grid.Row="3">
+            <TextBlock
+                FontWeight="SemiBold"
+                Margin="0,0,20,0"
+                Text="分隔条"
+                VerticalAlignment="Center" />
+            <CheckBox
+                Content="松开后调整"
+                Margin="0,0,16,0"
+                Name="ResizePreview" />
+            <CheckBox
+                Content="启用拖动"
+                IsChecked="True"
+                Margin="0,0,16,0"
+                Name="ResizeEnabled" />
+            <Button
+                Classes="ghost"
+                Click="OnResetLayout"
+                Content="重置布局"
+                Name="ResetLayout" />
+        </WrapPanel>
+        <Grid
+            Grid.Row="4"
+            Name="ResizableGrid"
+            SizeChanged="OnLayoutChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="120" Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition MinWidth="160" Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Border Classes="region" Margin="0,0,6,0">
+                <StackPanel Spacing="6" VerticalAlignment="Center">
+                    <TextBlock FontWeight="SemiBold" Text="目录区域" />
+                    <TextBlock Classes="note" Text="拖动中间竖条调整列宽。Tab 聚焦后使用 ← / →，最小宽度 120 px。" />
+                </StackPanel>
+            </Border>
+            <GridSplitter
+                AutomationProperties.Name="调整目录与内容的宽度"
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                IsEnabled="{Binding IsChecked, ElementName=ResizeEnabled}"
+                Name="ColumnSplitter"
+                ResizeBehavior="PreviousAndNext"
+                ResizeDirection="Columns"
+                ShowsPreview="{Binding IsChecked, ElementName=ResizePreview}"
+                SizeChanged="OnLayoutChanged"
+                VerticalAlignment="Stretch" />
+            <Grid
+                Grid.Column="2"
+                Margin="6,0,0,0"
+                Name="RowGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*" MinHeight="64" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" MinHeight="52" />
+                </Grid.RowDefinitions>
+                <Border Classes="region" Margin="0,0,0,6">
+                    <StackPanel Spacing="4" VerticalAlignment="Center">
+                        <TextBlock FontWeight="SemiBold" Text="编辑区域" />
+                        <TextBlock Classes="note" Text="横条支持 ↑ / ↓ 调整行高。" />
+                    </StackPanel>
+                </Border>
+                <GridSplitter
+                    AutomationProperties.Name="调整编辑与输出区域的高度"
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    IsEnabled="{Binding IsChecked, ElementName=ResizeEnabled}"
+                    Name="RowSplitter"
+                    ResizeBehavior="PreviousAndNext"
+                    ResizeDirection="Rows"
+                    ShowsPreview="{Binding IsChecked, ElementName=ResizePreview}"
+                    SizeChanged="OnLayoutChanged"
+                    VerticalAlignment="Stretch" />
+                <Border
+                    Classes="region"
+                    Grid.Row="2"
+                    Margin="0,6,0,0">
+                    <TextBlock Text="输出区域" VerticalAlignment="Center" />
+                </Border>
+            </Grid>
         </Grid>
-      </SplitView.Pane>
-      <Grid RowDefinitions="Auto,*,Auto" RowSpacing="10">
-        <StackPanel Spacing="6">
-          <TextBlock Text="内容工作区" FontSize="18" FontWeight="SemiBold" />
-          <TextBlock Name="PaneStatus" Classes="note" />
-        </StackPanel>
-        <Border Grid.Row="1" Classes="region">
-          <StackPanel Spacing="8" VerticalAlignment="Center">
-            <TextBlock Name="SelectedWorkspace" Text="已选择：条目 00001" TextWrapping="Wrap" />
-            <TextBlock Classes="note" Text="Inline 为侧栏预留空间；Overlay 覆盖内容。覆盖模式下，点击内容区或按 Esc 可关闭侧栏。" />
-          </StackPanel>
-        </Border>
-        <TextBlock Name="PaneMetrics" Grid.Row="2" Classes="note" />
-      </Grid>
-    </SplitView>
-    <WrapPanel Grid.Row="3">
-      <TextBlock Text="分隔条" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,20,0" />
-      <CheckBox Name="ResizePreview" Content="松开后调整" Margin="0,0,16,0" />
-      <CheckBox Name="ResizeEnabled" Content="启用拖动" IsChecked="True" Margin="0,0,16,0" />
-      <Button Name="ResetLayout" Content="重置布局" Click="OnResetLayout" Classes="ghost" />
-    </WrapPanel>
-    <Grid Name="ResizableGrid" Grid.Row="4" SizeChanged="OnLayoutChanged">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="2*" MinWidth="120" /><ColumnDefinition Width="Auto" /><ColumnDefinition Width="3*" MinWidth="160" />
-      </Grid.ColumnDefinitions>
-      <Border Classes="region" Margin="0,0,6,0">
-        <StackPanel Spacing="6" VerticalAlignment="Center">
-          <TextBlock Text="目录区域" FontWeight="SemiBold" />
-          <TextBlock Classes="note" Text="拖动中间竖条调整列宽。Tab 聚焦后使用 ← / →，最小宽度 120 px。" />
-        </StackPanel>
-      </Border>
-      <GridSplitter Name="ColumnSplitter" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                    ShowsPreview="{Binding IsChecked, ElementName=ResizePreview}" IsEnabled="{Binding IsChecked, ElementName=ResizeEnabled}"
-                    AutomationProperties.Name="调整目录与内容的宽度" SizeChanged="OnLayoutChanged" />
-      <Grid Name="RowGrid" Grid.Column="2" Margin="6,0,0,0">
-        <Grid.RowDefinitions><RowDefinition Height="3*" MinHeight="64" /><RowDefinition Height="Auto" /><RowDefinition Height="2*" MinHeight="52" /></Grid.RowDefinitions>
-        <Border Classes="region" Margin="0,0,0,6">
-          <StackPanel Spacing="4" VerticalAlignment="Center">
-            <TextBlock Text="编辑区域" FontWeight="SemiBold" /><TextBlock Classes="note" Text="横条支持 ↑ / ↓ 调整行高。" />
-          </StackPanel>
-        </Border>
-        <GridSplitter Name="RowSplitter" Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                      ShowsPreview="{Binding IsChecked, ElementName=ResizePreview}" IsEnabled="{Binding IsChecked, ElementName=ResizeEnabled}"
-                      AutomationProperties.Name="调整编辑与输出区域的高度" SizeChanged="OnLayoutChanged" />
-        <Border Grid.Row="2" Classes="region" Margin="0,6,0,0"><TextBlock Text="输出区域" VerticalAlignment="Center" /></Border>
-      </Grid>
+        <TextBlock
+            Classes="note"
+            Grid.Row="5"
+            Name="LayoutStatus" />
     </Grid>
-    <TextBlock Name="LayoutStatus" Grid.Row="5" Classes="note" />
-  </Grid>
 </UserControl>

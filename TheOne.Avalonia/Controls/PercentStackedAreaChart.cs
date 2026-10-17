@@ -7,5 +7,9 @@ public sealed class PercentStackedAreaChart : CartesianChartBase
     private protected override bool IsAreaCartesian => true;
     private protected override bool IsStackedCartesian => true;
     private protected override bool IsPercentCartesian => true;
-    private protected override ChartBase CreateExportSnapshot() => new PercentStackedAreaChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new PercentStackedAreaChart();
+    }
 }

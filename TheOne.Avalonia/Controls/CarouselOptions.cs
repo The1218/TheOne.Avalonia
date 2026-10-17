@@ -1,7 +1,7 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Input.GestureRecognizers;
-using global::Avalonia.Threading;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input.GestureRecognizers;
+using Avalonia.Threading;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -24,10 +24,21 @@ public sealed class CarouselOptions : AvaloniaObject
         Control.LoadedEvent.AddClassHandler<Carousel>((carousel, _) => Apply(carousel));
     }
 
-    public static bool GetIsMouseSwipeEnabled(Carousel carousel) => carousel.GetValue(IsMouseSwipeEnabledProperty);
-    public static void SetIsMouseSwipeEnabled(Carousel carousel, bool value) => carousel.SetValue(IsMouseSwipeEnabledProperty, value);
+    public static bool GetIsMouseSwipeEnabled(Carousel carousel)
+    {
+        return carousel.GetValue(IsMouseSwipeEnabledProperty);
+    }
 
-    private static void QueueApply(Carousel carousel) => Dispatcher.UIThread.Post(() => Apply(carousel), DispatcherPriority.Loaded);
+    public static void SetIsMouseSwipeEnabled(Carousel carousel, bool value)
+    {
+        carousel.SetValue(IsMouseSwipeEnabledProperty, value);
+    }
+
+    private static void QueueApply(Carousel carousel)
+    {
+        Dispatcher.UIThread.Post(() => Apply(carousel), DispatcherPriority.Loaded);
+    }
+
     private static void Apply(Carousel carousel)
     {
         if (carousel.ItemsPanelRoot is not VirtualizingCarouselPanel panel) return;

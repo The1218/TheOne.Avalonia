@@ -1,5 +1,5 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
+using Avalonia;
+using Avalonia.Controls;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -7,25 +7,38 @@ namespace TheOne.Avalonia.Controls;
 public class Description : ItemsControl
 {
     public static readonly StyledProperty<double> LabelWidthProperty =
-        AvaloniaProperty.Register<Description, double>(nameof(LabelWidth), 180, inherits: true,
+        AvaloniaProperty.Register<Description, double>(nameof(LabelWidth), 180, true,
             validate: value => double.IsFinite(value) && value >= 0);
 
     public static readonly StyledProperty<double> StackWidthProperty =
-        AvaloniaProperty.Register<Description, double>(nameof(StackWidth), 520, inherits: true,
+        AvaloniaProperty.Register<Description, double>(nameof(StackWidth), 520, true,
             validate: value => double.IsFinite(value) && value >= 0);
 
     /// <summary>Label column width in DIPs. Individual rows may override the inherited value.</summary>
-    public double LabelWidth { get => GetValue(LabelWidthProperty); set => SetValue(LabelWidthProperty, value); }
+    public double LabelWidth
+    {
+        get => GetValue(LabelWidthProperty);
+        set => SetValue(LabelWidthProperty, value);
+    }
 
     /// <summary>Rows narrower than this width place their label above the value. Zero keeps two columns.</summary>
-    public double StackWidth { get => GetValue(StackWidthProperty); set => SetValue(StackWidthProperty, value); }
+    public double StackWidth
+    {
+        get => GetValue(StackWidthProperty);
+        set => SetValue(StackWidthProperty, value);
+    }
 
     protected override Type StyleKeyOverride => typeof(Description);
 
-    protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey) => new DescriptionItem();
+    protected override Control CreateContainerForItemOverride(object? item, int index, object? recycleKey)
+    {
+        return new DescriptionItem();
+    }
 
-    protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey) =>
-        NeedsContainer<DescriptionItem>(item, out recycleKey);
+    protected override bool NeedsContainerOverride(object? item, int index, out object? recycleKey)
+    {
+        return NeedsContainer<DescriptionItem>(item, out recycleKey);
+    }
 
     protected override void PrepareContainerForItemOverride(Control container, object? item, int index)
     {

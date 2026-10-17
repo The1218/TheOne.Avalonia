@@ -1,10 +1,10 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Data;
-using global::Avalonia.Layout;
-using global::Avalonia.Threading;
-using global::Avalonia.VisualTree;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Data;
+using Avalonia.Layout;
+using Avalonia.Threading;
+using Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Styling;
 
@@ -17,7 +17,8 @@ internal static class ColorPickerStyling
         Control.LoadedEvent.AddClassHandler<TabControl>((tabs, _) =>
         {
             if (tabs.Name == "PART_TabControl" && tabs.TemplatedParent is ColorView &&
-                tabs.Items.OfType<TabItem>().FirstOrDefault()?.Content is Grid grid && grid.Children.OfType<ColorSpectrum>().FirstOrDefault() is { } spectrum)
+                tabs.Items.OfType<TabItem>().FirstOrDefault()?.Content is Grid grid &&
+                grid.Children.OfType<ColorSpectrum>().FirstOrDefault() is { } spectrum)
                 Dispatcher.UIThread.Post(() => ApplyLayout(spectrum, tabs));
         });
         Control.BoundsProperty.Changed.AddClassHandler<ColorSpectrum>((spectrum, _) =>
@@ -36,13 +37,16 @@ internal static class ColorPickerStyling
         });
     }
 
-    internal static void Initialize() { }
+    internal static void Initialize()
+    {
+    }
 
     private static void ApplyLayout(ColorSpectrum spectrum, TabControl? tabs = null)
     {
         // Keep the original template instances and name scope, including native Hex handlers.
         if (spectrum.TemplatedParent is not ColorView || spectrum.GetVisualParent() is not Grid grid ||
-            !grid.Children.OfType<ColorSlider>().Any(slider => slider.Name == "ColorSpectrumThirdComponentSlider")) return;
+            !grid.Children.OfType<ColorSlider>()
+                .Any(slider => slider.Name == "ColorSpectrumThirdComponentSlider")) return;
         if (grid.ColumnDefinitions.Count == 3)
         {
             grid.ColumnDefinitions.Clear();
@@ -55,6 +59,7 @@ internal static class ColorPickerStyling
             foreach (var slider in grid.Children.OfType<ColorSlider>())
                 slider.SetCurrentValue(Grid.RowProperty, slider.Name == "ColorSpectrumThirdComponentSlider" ? 2 : 3);
         }
+
         tabs ??= spectrum.GetVisualAncestors().OfType<TabControl>().FirstOrDefault();
         if (tabs?.Items.Count == 3 && tabs.Items[2] is TabItem values && values.Content is Grid components)
         {
@@ -62,10 +67,13 @@ internal static class ColorPickerStyling
             ArrangeComponents(components);
             grid.Children.Add(components);
             components.SetCurrentValue(Grid.RowProperty, 1);
-            components.Bind(Visual.IsVisibleProperty, new TemplateBinding { Property = ColorView.IsColorComponentsVisibleProperty });
+            components.Bind(Visual.IsVisibleProperty,
+                new TemplateBinding { Property = ColorView.IsColorComponentsVisibleProperty });
             tabs.Items.Remove(values);
         }
-        if (grid.ColumnDefinitions.Count == 1 && grid.RowDefinitions.Count == 4 && (!spectrum.IsVisible || spectrum.Bounds.Width > 0))
+
+        if (grid.ColumnDefinitions.Count == 1 && grid.RowDefinitions.Count == 4 &&
+            (!spectrum.IsVisible || spectrum.Bounds.Width > 0))
             grid.RowDefinitions[0].Height = new GridLength(spectrum.IsVisible ? spectrum.Bounds.Width : 0);
     }
 
@@ -77,46 +85,57 @@ internal static class ColorPickerStyling
         var model = header.Children.OfType<Grid>().First();
         model.ColumnSpacing = 4;
         var hex = header.Children.OfType<Grid>().Single(g => g.Name == "HexInputGrid");
-        header.Children.Remove(model); header.Children.Remove(hex); components.Children.Remove(header);
+        header.Children.Remove(model);
+        header.Children.Remove(hex);
+        components.Children.Remove(header);
         var labels = components.Children.OfType<Border>().OrderBy(Grid.GetRow).ToArray();
         var inputs = components.Children.OfType<NumericUpDown>().OrderBy(Grid.GetRow).ToArray();
         components.ColumnDefinitions.Clear();
         foreach (var column in new ColumnDefinitions("80,6,*,6,*,6,*,6,*")) components.ColumnDefinitions.Add(column);
         components.RowDefinitions.Clear();
         foreach (var row in new RowDefinitions("16,4,Auto,8,Auto")) components.RowDefinitions.Add(row);
-        foreach (var slider in components.Children.OfType<ColorSlider>()) slider.SetValue(Visual.IsVisibleProperty, false);
+        foreach (var slider in components.Children.OfType<ColorSlider>())
+            slider.SetValue(Visual.IsVisibleProperty, false);
         for (var i = 0; i < inputs.Length; i++)
         {
             var label = labels[i];
             label.Classes.Add("one-color-component-label");
             label.SetValue(TemplatedControl.WidthProperty, double.NaN);
             label.SetValue(TemplatedControl.HeightProperty, 16d);
-            label.SetValue(Border.BorderThicknessProperty, default(Thickness));
-            label.SetValue(Border.CornerRadiusProperty, default(CornerRadius));
-            label.SetCurrentValue(Grid.RowProperty, 0); label.SetCurrentValue(Grid.ColumnProperty, 2 + i * 2);
+            label.SetValue(Border.BorderThicknessProperty, default);
+            label.SetValue(Border.CornerRadiusProperty, default);
+            label.SetCurrentValue(Grid.RowProperty, 0);
+            label.SetCurrentValue(Grid.ColumnProperty, 2 + i * 2);
             var input = inputs[i];
             // Replace only template geometry; keep Value, ranges and editing bindings untouched.
             input.SetValue(TemplatedControl.WidthProperty, double.NaN);
             input.SetValue(Layoutable.MinWidthProperty, 0d);
             input.SetValue(TemplatedControl.PaddingProperty, new Thickness(4, 0));
             input.SetValue(TemplatedControl.CornerRadiusProperty, new CornerRadius(5));
-            input.SetValue(Layoutable.MarginProperty, default(Thickness));
+            input.SetValue(Layoutable.MarginProperty, default);
             input.SetValue(Layoutable.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
-            input.SetCurrentValue(Grid.RowProperty, 2); input.SetCurrentValue(Grid.ColumnProperty, 2 + i * 2);
+            input.SetCurrentValue(Grid.RowProperty, 2);
+            input.SetCurrentValue(Grid.ColumnProperty, 2 + i * 2);
         }
+
         var modelLabel = new TextBlock { Text = "Model", HorizontalAlignment = HorizontalAlignment.Center };
         modelLabel.Classes.Add("one-color-component-label");
         modelLabel.Bind(Visual.IsVisibleProperty, model.GetObservable(Visual.IsVisibleProperty));
-        components.Children.Add(modelLabel); components.Children.Add(model); components.Children.Add(hex);
-        model.SetCurrentValue(Grid.RowProperty, 2); model.SetCurrentValue(Grid.ColumnProperty, 0);
+        components.Children.Add(modelLabel);
+        components.Children.Add(model);
+        components.Children.Add(hex);
+        model.SetCurrentValue(Grid.RowProperty, 2);
+        model.SetCurrentValue(Grid.ColumnProperty, 0);
         model.SetCurrentValue(Grid.ColumnSpanProperty, 1);
-        hex.SetCurrentValue(Grid.RowProperty, 4); hex.SetCurrentValue(Grid.ColumnProperty, 0);
+        hex.SetCurrentValue(Grid.RowProperty, 4);
+        hex.SetCurrentValue(Grid.ColumnProperty, 0);
         hex.SetCurrentValue(Grid.ColumnSpanProperty, 9);
     }
 
     private static void Apply(DropDownButton button)
     {
-        if (button.TemplatedParent is not ColorPicker owner || button.Flyout is not Flyout flyout || !flyout.FlyoutPresenterClasses.Contains("nopadding")) return;
+        if (button.TemplatedParent is not ColorPicker owner || button.Flyout is not Flyout flyout ||
+            !flyout.FlyoutPresenterClasses.Contains("nopadding")) return;
         var size = ControlSizing.GetSize(owner);
         ApplyClasses(flyout.FlyoutPresenterClasses, size);
         if (flyout.Content is Control content)
@@ -130,7 +149,12 @@ internal static class ColorPickerStyling
     private static void ApplyClasses(IList<string> classes, ControlSize size)
     {
         if (!classes.Contains("one-colorpicker")) classes.Add("one-colorpicker");
-        foreach (var name in new[] { "one-colorpicker-small", "one-colorpicker-normal", "one-colorpicker-large" }) classes.Remove(name);
-        classes.Add(size switch { ControlSize.Small => "one-colorpicker-small", ControlSize.Large => "one-colorpicker-large", _ => "one-colorpicker-normal" });
+        foreach (var name in new[] { "one-colorpicker-small", "one-colorpicker-normal", "one-colorpicker-large" })
+            classes.Remove(name);
+        classes.Add(size switch
+        {
+            ControlSize.Small => "one-colorpicker-small", ControlSize.Large => "one-colorpicker-large",
+            _ => "one-colorpicker-normal"
+        });
     }
 }

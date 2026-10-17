@@ -97,6 +97,7 @@
                                     <TextBlock
                                         FontSize="10"
                                         Foreground="#E04455"
+                                        Grid.Column="0"
                                         IsVisible="{Binding HasWarning}"
                                         Text="{Binding Warning}" />
                                     <TextBlock
@@ -175,7 +176,10 @@
             </ItemsControl>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="4" RowDefinitions="*,Auto" RowSpacing="6">
+    <Grid
+        Margin="4"
+        RowDefinitions="*,Auto"
+        RowSpacing="6">
         <Grid.Styles>
             <Style Selector="Button.workflow-header">
                 <Setter Property="Background" Value="{DynamicResource One.Surface}" />
@@ -213,123 +217,130 @@
             NodeDefinitionTemplate="{StaticResource WorkflowPaletteTemplate}"
             NodeDefinitions="{Binding NodeDefinitions}"
             NodeTemplate="{StaticResource DesignedNodeTemplate}"
-            SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
             SaveCommand="{Binding SaveCommand}"
+            SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
             ShowRuntimePreview="True">
-          <one:WorkflowEditor.HeaderTemplate><DataTemplate x:DataType="one:WorkflowEditor">
-            <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}"><ContentControl.ContentTemplate><DataTemplate x:DataType="local:WorkflowEditorDemoViewModel">
-        <Border
-            Background="{DynamicResource One.Surface}"
-            BorderBrush="{DynamicResource One.Line}"
-            BorderThickness="1"
-            CornerRadius="6"
-            Padding="14,6"
-            TextElement.FontSize="12"
-            styling:ControlSizing.Size="Small">
-            <Grid ColumnDefinitions="Auto,Auto,*,Auto">
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="8"
-                    VerticalAlignment="Center">
-                    <icons:MaterialIcon
-                        Foreground="{DynamicResource One.Accent}"
-                        Height="24"
-                        Kind="VectorCombine"
-                        Width="24" />
-                    <TextBlock
-                        FontSize="12"
-                        FontWeight="Bold"
-                        Text="TheOne" />
-                    <Border
-                        Background="{DynamicResource One.Line}"
-                        Height="20"
-                        Margin="7,0"
-                        Width="1" />
-                    <TextBlock
-                        FontSize="12"
-                        FontWeight="SemiBold"
-                        Text="WorkflowEditor" />
-                </StackPanel>
-                <StackPanel
-                    Grid.Column="1"
-                    Margin="20,0"
-                    Name="HeaderBreadcrumb"
-                    Orientation="Horizontal"
-                    Spacing="10"
-                    VerticalAlignment="Center">
-                    <TextBlock
-                        FontSize="12"
-                        Foreground="{DynamicResource One.Muted}"
-                        Text="工作流 / 采购审批" />
-                    <TextBlock
-                        FontSize="12"
-                        FontWeight="SemiBold"
-                        Text="{Binding Document.Title}" />
-                </StackPanel>
-                <StackPanel
-                    Grid.Column="2"
-                    Name="HeaderSaveState"
-                    Orientation="Horizontal"
-                    Spacing="8"
-                    VerticalAlignment="Center">
-                    <Border
-                        BorderBrush="{DynamicResource One.Line}"
-                        BorderThickness="1"
-                        CornerRadius="3"
-                        Padding="5,2">
-                        <TextBlock FontSize="10" Text="草稿" />
-                    </Border>
-                    <TextBlock
-                        FontSize="11"
-                        Foreground="{DynamicResource One.Muted}"
-                        Text="{Binding SaveStateText}" />
-                </StackPanel>
-                <StackPanel
-                    Grid.Column="3"
-                    Orientation="Horizontal"
-                    Spacing="8">
-                    <Button Classes="workflow-header" Command="{Binding $parent[one:WorkflowEditor].ValidateCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="5">
-                            <icons:MaterialIcon Kind="FileCheckOutline" Width="15" />
-                            <TextBlock Text="校验流程" />
-                        </StackPanel>
-                    </Button>
-                    <Button
-                        Classes="workflow-header"
-                        Command="{Binding ExportCommand}">
-                        <StackPanel Orientation="Horizontal" Spacing="5">
-                            <icons:MaterialIcon Kind="TrayArrowDown" Width="15" />
-                            <TextBlock Text="导出 JSON" />
-                        </StackPanel>
-                    </Button>
-                    <Button
-                        Classes="primary"
-                        Name="SaveWorkflowButton"
-                        Command="{Binding $parent[one:WorkflowEditor].SaveCommand}"
-                        CommandParameter="{Binding Document}"
-                        Content="保存"
-                        FontSize="12"
-                        MinHeight="30"
-                        Padding="14,4" />
-                    <Button
-                        Classes="workflow-header"
-                        Command="{Binding PreviewStateCommand}"
-                        ToolTip.Tip="宿主提供的运行状态演示">
-                        <StackPanel Orientation="Horizontal" Spacing="5">
-                            <icons:MaterialIcon Kind="Play" Width="16" />
-                            <TextBlock Text="试运行" />
-                        </StackPanel>
-                    </Button>
-                    <TextBlock
-                        FontSize="10"
-                        Foreground="{DynamicResource One.Muted}"
-                        Text="（宿主能力）"
-                        VerticalAlignment="Center" />
-                </StackPanel>
-            </Grid>
-        </Border>
-            </DataTemplate></ContentControl.ContentTemplate></ContentControl>
-          </DataTemplate></one:WorkflowEditor.HeaderTemplate>
+            <one:WorkflowEditor.HeaderTemplate>
+                <DataTemplate x:DataType="one:WorkflowEditor">
+                    <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}">
+                        <ContentControl.ContentTemplate>
+                            <DataTemplate x:DataType="local:WorkflowEditorDemoViewModel">
+                                <Border
+                                    Background="{DynamicResource One.Surface}"
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    BorderThickness="1"
+                                    CornerRadius="6"
+                                    Padding="14,6"
+                                    TextElement.FontSize="12"
+                                    styling:ControlSizing.Size="Small">
+                                    <Grid ColumnDefinitions="Auto,Auto,*,Auto">
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Spacing="8"
+                                            VerticalAlignment="Center">
+                                            <icons:MaterialIcon
+                                                Foreground="{DynamicResource One.Accent}"
+                                                Height="24"
+                                                Kind="VectorCombine"
+                                                Width="24" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                Text="TheOne"
+                                                VerticalAlignment="Center" />
+                                            <Border
+                                                Background="{DynamicResource One.Line}"
+                                                Height="20"
+                                                Margin="7,0"
+                                                Width="1" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                FontWeight="SemiBold"
+                                                Text="WorkflowEditor"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="20,0"
+                                            Name="HeaderBreadcrumb"
+                                            Orientation="Horizontal"
+                                            Spacing="10"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="12"
+                                                Foreground="{DynamicResource One.Muted}"
+                                                Text="工作流 / 采购审批" />
+                                            <TextBlock
+                                                FontSize="12"
+                                                FontWeight="SemiBold"
+                                                Text="{Binding Document.Title}" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Column="2"
+                                            Name="HeaderSaveState"
+                                            Orientation="Horizontal"
+                                            Spacing="8"
+                                            VerticalAlignment="Center">
+                                            <Border
+                                                BorderBrush="{DynamicResource One.Line}"
+                                                BorderThickness="1"
+                                                CornerRadius="3"
+                                                Padding="5,2">
+                                                <TextBlock FontSize="10" Text="草稿" />
+                                            </Border>
+                                            <TextBlock
+                                                FontSize="11"
+                                                Foreground="{DynamicResource One.Muted}"
+                                                Text="{Binding SaveStateText}"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        <StackPanel
+                                            Grid.Column="3"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <Button Classes="workflow-header" Command="{Binding $parent[one:WorkflowEditor].ValidateCommand}">
+                                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                                    <icons:MaterialIcon Kind="FileCheckOutline" Width="15" />
+                                                    <TextBlock Text="校验流程" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Classes="workflow-header" Command="{Binding ExportCommand}">
+                                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                                    <icons:MaterialIcon Kind="TrayArrowDown" Width="15" />
+                                                    <TextBlock Text="导出 JSON" />
+                                                </StackPanel>
+                                            </Button>
+                                            <Button
+                                                Classes="primary"
+                                                Command="{Binding $parent[one:WorkflowEditor].SaveCommand}"
+                                                CommandParameter="{Binding Document}"
+                                                Content="保存"
+                                                FontSize="12"
+                                                MinHeight="30"
+                                                Name="SaveWorkflowButton"
+                                                Padding="14,4" />
+                                            <Button
+                                                Classes="workflow-header"
+                                                Command="{Binding PreviewStateCommand}"
+                                                ToolTip.Tip="宿主提供的运行状态演示">
+                                                <StackPanel Orientation="Horizontal" Spacing="5">
+                                                    <icons:MaterialIcon Kind="Play" Width="16" />
+                                                    <TextBlock Text="试运行" />
+                                                </StackPanel>
+                                            </Button>
+                                            <TextBlock
+                                                FontSize="10"
+                                                Foreground="{DynamicResource One.Muted}"
+                                                Text="（宿主能力）"
+                                                VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ContentControl.ContentTemplate>
+                    </ContentControl>
+                </DataTemplate>
+            </one:WorkflowEditor.HeaderTemplate>
             <one:WorkflowEditor.PropertyTemplate>
                 <DataTemplate x:DataType="w:WorkflowNode">
                     <DockPanel IsEnabled="{Binding !$parent[one:WorkflowEditor].IsReadOnly}">
@@ -633,121 +644,121 @@
         </one:WorkflowEditor>
         <Expander
             FontSize="12"
-            Header="消费端接入示例 · 数据配置、关联及保存加载"
-            Name="ConsumerExamples"
             Grid.Row="1"
-            MaxHeight="420"
+            Header="消费端接入示例 · 数据配置、关联及保存加载"
             IsExpanded="{Binding ShowConsumerExamples, Mode=TwoWay}"
+            MaxHeight="420"
+            Name="ConsumerExamples"
             styling:ControlSizing.Size="Small">
-          <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="12" Spacing="12">
-                <TextBlock
-                    Foreground="{DynamicResource One.Muted}"
-                    Text="{Binding Message}"
-                    TextWrapping="Wrap" />
-                <WrapPanel>
-                    <Button
-                        Command="{Binding ResetCommand}"
-                        Content="恢复设计图示例"
-                        Margin="0,0,8,8" />
-                    <Button
-                        Command="{Binding ExportCommand}"
-                        Content="生成 JSON"
-                        Margin="0,0,8,8" />
-                    <Button
-                        Command="{Binding LoadCommand}"
-                        Content="从 JSON 加载"
-                        Margin="0,0,8,8" />
-                    <Button
-                        Command="{Binding OpenCommand}"
-                        Content="打开文件"
-                        Margin="0,0,8,8" />
-                    <Button
-                        Command="{Binding ResolveDataCommand}"
-                        Content="解析数据关联"
-                        Margin="0,0,8,8" />
-                </WrapPanel>
-                <WrapPanel>
-                    <CheckBox
-                        Content="只读"
-                        IsChecked="{Binding #Editor.IsReadOnly, Mode=TwoWay}"
-                        Margin="0,0,12,0" />
-                    <CheckBox
-                        Content="节点库"
-                        IsChecked="{Binding #Editor.ShowNodeLibrary, Mode=TwoWay}"
-                        Margin="0,0,12,0" />
-                    <CheckBox Content="属性面板" IsChecked="{Binding #Editor.ShowProperties, Mode=TwoWay}" />
-                </WrapPanel>
-                <TextBox
-                    AcceptsReturn="True"
-                    FontFamily="monospace"
-                    Height="220"
-                    Name="JsonInput"
-                    Text="{Binding Json, Mode=TwoWay}"
-                    TextWrapping="NoWrap" />
-                <TextBlock FontWeight="SemiBold" Text="默认模板 · 独立只读视图绑定同一文档" />
-                <one:WorkflowEditor
-                    Document="{Binding Document}"
-                    Height="300"
-                    IsReadOnly="True"
-                    Name="DefaultEditor"
-                    ShowNodeLibrary="False"
-                    styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}" />
-                <TextBlock FontWeight="SemiBold" Text="数据关联示例 · 宿主提供申请数据、审批配置和通知收件人" />
-                <WrapPanel>
-                    <Button
-                        Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ResolveDataCommand}"
-                        Content="解析上游数据"
-                        Margin="0,0,8,0" />
-                    <Button
-                        Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ExportCommand}"
-                        Content="保存关联 JSON"
-                        Margin="0,0,8,0" />
-                    <Button Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.LoadCommand}" Content="加载关联 JSON" />
-                </WrapPanel>
-                <TextBlock
-                    FontSize="12"
-                    Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Message}"
-                    TextWrapping="Wrap" />
-                <one:WorkflowEditor
-                    Document="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Document}"
-                    Height="340"
-                    Name="AssociationEditor"
-                    SelectedNode="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.SelectedNode, Mode=TwoWay}"
-                    ShowNodeLibrary="False"
-                    styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}">
-                    <one:WorkflowEditor.ContentTemplate>
-                        <DataTemplate x:DataType="local:WorkflowBusinessSummary">
-                            <Border
-                                BorderBrush="{DynamicResource One.Line}"
-                                BorderThickness="0,1,0,0"
-                                Padding="0,6,0,0">
-                                <StackPanel Spacing="4">
-                                    <TextBlock
-                                        FontSize="11"
-                                        Foreground="{DynamicResource One.Accent}"
-                                        Text="{Binding Caption}" />
-                                    <TextBlock
-                                        FontSize="10"
-                                        Text="{Binding Detail}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </one:WorkflowEditor.ContentTemplate>
-                    <one:WorkflowEditor.PropertyTemplate>
-                        <DataTemplate x:DataType="w:WorkflowNode">
-                            <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel}" ContentTemplate="{StaticResource BusinessFields}" />
-                        </DataTemplate>
-                    </one:WorkflowEditor.PropertyTemplate>
-                </one:WorkflowEditor>
-                <TextBox
-                    AcceptsReturn="True"
-                    FontFamily="monospace"
-                    Height="160"
-                    Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Json, Mode=TwoWay}" />
-            </StackPanel>
-          </ScrollViewer>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="12" Spacing="12">
+                    <TextBlock
+                        Foreground="{DynamicResource One.Muted}"
+                        Text="{Binding Message}"
+                        TextWrapping="Wrap" />
+                    <WrapPanel>
+                        <Button
+                            Command="{Binding ResetCommand}"
+                            Content="恢复设计图示例"
+                            Margin="0,0,8,8" />
+                        <Button
+                            Command="{Binding ExportCommand}"
+                            Content="生成 JSON"
+                            Margin="0,0,8,8" />
+                        <Button
+                            Command="{Binding LoadCommand}"
+                            Content="从 JSON 加载"
+                            Margin="0,0,8,8" />
+                        <Button
+                            Command="{Binding OpenCommand}"
+                            Content="打开文件"
+                            Margin="0,0,8,8" />
+                        <Button
+                            Command="{Binding ResolveDataCommand}"
+                            Content="解析数据关联"
+                            Margin="0,0,8,8" />
+                    </WrapPanel>
+                    <WrapPanel>
+                        <CheckBox
+                            Content="只读"
+                            IsChecked="{Binding #Editor.IsReadOnly, Mode=TwoWay}"
+                            Margin="0,0,12,0" />
+                        <CheckBox
+                            Content="节点库"
+                            IsChecked="{Binding #Editor.ShowNodeLibrary, Mode=TwoWay}"
+                            Margin="0,0,12,0" />
+                        <CheckBox Content="属性面板" IsChecked="{Binding #Editor.ShowProperties, Mode=TwoWay}" />
+                    </WrapPanel>
+                    <TextBox
+                        AcceptsReturn="True"
+                        FontFamily="monospace"
+                        Height="220"
+                        Name="JsonInput"
+                        Text="{Binding Json, Mode=TwoWay}"
+                        TextWrapping="NoWrap" />
+                    <TextBlock FontWeight="SemiBold" Text="默认模板 · 独立只读视图绑定同一文档" />
+                    <one:WorkflowEditor
+                        Document="{Binding Document}"
+                        Height="300"
+                        IsReadOnly="True"
+                        Name="DefaultEditor"
+                        ShowNodeLibrary="False"
+                        styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}" />
+                    <TextBlock FontWeight="SemiBold" Text="数据关联示例 · 宿主提供申请数据、审批配置和通知收件人" />
+                    <WrapPanel>
+                        <Button
+                            Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ResolveDataCommand}"
+                            Content="解析上游数据"
+                            Margin="0,0,8,0" />
+                        <Button
+                            Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ExportCommand}"
+                            Content="保存关联 JSON"
+                            Margin="0,0,8,0" />
+                        <Button Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.LoadCommand}" Content="加载关联 JSON" />
+                    </WrapPanel>
+                    <TextBlock
+                        FontSize="12"
+                        Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Message}"
+                        TextWrapping="Wrap" />
+                    <one:WorkflowEditor
+                        Document="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Document}"
+                        Height="340"
+                        Name="AssociationEditor"
+                        SelectedNode="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.SelectedNode, Mode=TwoWay}"
+                        ShowNodeLibrary="False"
+                        styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}">
+                        <one:WorkflowEditor.ContentTemplate>
+                            <DataTemplate x:DataType="local:WorkflowBusinessSummary">
+                                <Border
+                                    BorderBrush="{DynamicResource One.Line}"
+                                    BorderThickness="0,1,0,0"
+                                    Padding="0,6,0,0">
+                                    <StackPanel Spacing="4">
+                                        <TextBlock
+                                            FontSize="11"
+                                            Foreground="{DynamicResource One.Accent}"
+                                            Text="{Binding Caption}" />
+                                        <TextBlock
+                                            FontSize="10"
+                                            Text="{Binding Detail}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </one:WorkflowEditor.ContentTemplate>
+                        <one:WorkflowEditor.PropertyTemplate>
+                            <DataTemplate x:DataType="w:WorkflowNode">
+                                <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel}" ContentTemplate="{StaticResource BusinessFields}" />
+                            </DataTemplate>
+                        </one:WorkflowEditor.PropertyTemplate>
+                    </one:WorkflowEditor>
+                    <TextBox
+                        AcceptsReturn="True"
+                        FontFamily="monospace"
+                        Height="160"
+                        Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Json, Mode=TwoWay}" />
+                </StackPanel>
+            </ScrollViewer>
         </Expander>
     </Grid>
 </UserControl>

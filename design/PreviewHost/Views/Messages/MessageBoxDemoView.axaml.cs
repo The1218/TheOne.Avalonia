@@ -1,9 +1,15 @@
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 
 namespace TheOne.DesignPreview;
 
 public partial class MessageBoxDemoView : UserControl
 {
+    public MessageBoxDemoView()
+    {
+        DataContext = Model;
+        AvaloniaXamlLoader.Load(this);
+    }
+
     public MessageBoxDemoViewModel Model { get; } = new();
-    public MessageBoxDemoView() { DataContext = Model; global::Avalonia.Markup.Xaml.AvaloniaXamlLoader.Load(this); }
 }

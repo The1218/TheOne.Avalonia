@@ -7,5 +7,9 @@ public sealed class StackedHorizontalBarChart : CartesianChartBase
     private protected override bool IsCategoricalCartesian => true;
     private protected override bool IsStackedCartesian => true;
     private protected override bool IsHorizontalCartesian => true;
-    private protected override ChartBase CreateExportSnapshot() => new StackedHorizontalBarChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new StackedHorizontalBarChart();
+    }
 }

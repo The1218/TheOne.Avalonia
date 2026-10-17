@@ -1,8 +1,19 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="{x:Type one:LoadingIndicator}" TargetType="one:LoadingIndicator">
-    <Setter Property="Width" Value="16" /><Setter Property="Height" Value="16" />
-    <Setter Property="IsHitTestVisible" Value="False" />
-    <Style Selector="^.one-small"><Setter Property="Width" Value="14" /><Setter Property="Height" Value="14" /></Style>
-    <Style Selector="^.one-large"><Setter Property="Width" Value="20" /><Setter Property="Height" Value="20" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="one:LoadingIndicator" x:Key="{x:Type one:LoadingIndicator}">
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Style Selector="^.one-small">
+            <Setter Property="Width" Value="14" />
+            <Setter Property="Height" Value="14" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -46,8 +46,6 @@ public partial class MainWindow : OneWindow
     private void UpdateSidebarLayout()
     {
         Model.CompactViewport = Bounds.Width < 1000;
-        var collapsed = Model.EffectiveNavigationCollapsed;
-        Shell.ColumnDefinitions = new ColumnDefinitions(collapsed ? $"{Navigation.CollapsedWidth + 24},*" : "256,*");
     }
 
     public void NavigateToCategory(int category)
@@ -60,6 +58,7 @@ public partial class MainWindow : OneWindow
             Navigation.CloseSubmenu();
             return;
         }
+
         for (var root = 0; root < Model.NavigationRoots.Count; root++)
         for (var index = 0; index < Model.NavigationRoots[root].Entries.Count; index++)
             if (Model.NavigationRoots[root].Entries[index].Category == destination.Id)

@@ -3,7 +3,6 @@
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
     xmlns:converters="using:Avalonia.Controls.Converters"
-    xmlns:sys="using:System"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <converters:MarginMultiplierConverter
@@ -118,7 +117,6 @@
                                 <ContentPresenter
                                     Content="{TemplateBinding Content}"
                                     ContentTemplate="{TemplateBinding ContentTemplate}"
-                                    Grid.Column="1"
                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     Name="PART_ContentPresenter"
                                     Padding="{TemplateBinding Padding}"

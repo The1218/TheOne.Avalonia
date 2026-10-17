@@ -6,7 +6,7 @@ namespace Avalonia.Controls.Automation.Peers;
 #if !DATAGRID_INTERNAL
 public
 #endif
-class DataGridDetailsPresenterAutomationPeer : ControlAutomationPeer
+    class DataGridDetailsPresenterAutomationPeer : ControlAutomationPeer
 {
     public DataGridDetailsPresenterAutomationPeer(DataGridDetailsPresenter owner)
         : base(owner)

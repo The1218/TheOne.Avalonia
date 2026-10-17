@@ -1,11 +1,12 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
-             xmlns:one="using:TheOne.Avalonia.Themes"
-             x:Class="TheOne.DesignPreview.App">
-  <Application.Styles>
-    <one:CodeEditorTheme />
-    <one:OneTheme />
-    <material:MaterialIconStyles />
-  </Application.Styles>
+<Application
+    x:Class="TheOne.DesignPreview.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:material="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+    xmlns:one="using:TheOne.Avalonia.Themes"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Styles>
+        <one:CodeEditorTheme />
+        <one:OneTheme />
+        <material:MaterialIconStyles />
+    </Application.Styles>
 </Application>

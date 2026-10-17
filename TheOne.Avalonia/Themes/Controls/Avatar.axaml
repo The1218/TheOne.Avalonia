@@ -1,31 +1,77 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="{x:Type one:Avatar}" TargetType="one:Avatar">
-    <Setter Property="Width" Value="40" /><Setter Property="Height" Value="40" />
-    <Setter Property="FontSize" Value="14" /><Setter Property="FontWeight" Value="SemiBold" />
-    <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
-    <Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="8" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Name="PART_Surface" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding EffectiveCornerRadius}" ClipToBounds="True">
-          <Grid>
-            <Viewbox Name="PART_Fallback" Margin="4" Stretch="Uniform" StretchDirection="DownOnly">
-              <Grid>
-                <PathIcon Name="PART_Icon" Width="22" Height="22" Foreground="{TemplateBinding Foreground}" Data="M12,2 A5,5 0 1 1 12,12 A5,5 0 1 1 12,2 M3,22 C3,12 21,12 21,22 Z" />
-                <TextBlock Name="PART_Text" Text="{TemplateBinding DisplayText}" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" HorizontalAlignment="Center" VerticalAlignment="Center" IsVisible="False" />
-              </Grid>
-            </Viewbox>
-            <Image Name="PART_Image" Source="{TemplateBinding CurrentImage}" Stretch="{TemplateBinding Stretch}" IsVisible="False" />
-          </Grid>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:has-text /template/ PathIcon#PART_Icon"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:has-text /template/ TextBlock#PART_Text"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:has-image /template/ Viewbox#PART_Fallback"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:has-image /template/ Image#PART_Image"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:loading /template/ Viewbox#PART_Fallback"><Setter Property="Opacity" Value="0.55" /></Style>
-    <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="one:Avatar" x:Key="{x:Type one:Avatar}">
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding EffectiveCornerRadius}"
+                    Name="PART_Surface">
+                    <Grid>
+                        <Viewbox
+                            Margin="4"
+                            Name="PART_Fallback"
+                            Stretch="Uniform"
+                            StretchDirection="DownOnly">
+                            <Grid>
+                                <PathIcon
+                                    Data="M12,2 A5,5 0 1 1 12,12 A5,5 0 1 1 12,2 M3,22 C3,12 21,12 21,22 Z"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Height="22"
+                                    Name="PART_Icon"
+                                    Width="22" />
+                                <TextBlock
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    HorizontalAlignment="Center"
+                                    IsVisible="False"
+                                    Name="PART_Text"
+                                    Text="{TemplateBinding DisplayText}"
+                                    VerticalAlignment="Center" />
+                            </Grid>
+                        </Viewbox>
+                        <Image
+                            IsVisible="False"
+                            Name="PART_Image"
+                            Source="{TemplateBinding CurrentImage}"
+                            Stretch="{TemplateBinding Stretch}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:has-text /template/ PathIcon#PART_Icon">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:has-text /template/ TextBlock#PART_Text">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:has-image /template/ Viewbox#PART_Fallback">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:has-image /template/ Image#PART_Image">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:loading /template/ Viewbox#PART_Fallback">
+            <Setter Property="Opacity" Value="0.55" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.5" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -19,15 +19,27 @@
         <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
             <StackPanel Spacing="6">
                 <TextBlock Text="状态 / 类型" />
-                <ComboBox Name="MessageType" HorizontalAlignment="Stretch" ItemsSource="{Binding Types}" SelectedItem="{Binding Type, Mode=TwoWay}" />
+                <ComboBox
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding Types}"
+                    Name="MessageType"
+                    SelectedItem="{Binding Type, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="6">
                 <TextBlock Text="显示尺寸" />
-                <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Sizes}" SelectedItem="{Binding Size, Mode=TwoWay}" />
+                <ComboBox
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{Binding Sizes}"
+                    SelectedItem="{Binding Size, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-        <TextBox Name="MessageText" AcceptsReturn="True" MinHeight="76" PlaceholderText="提示内容"
-                 Text="{Binding Message, Mode=TwoWay}" TextWrapping="Wrap" />
+        <TextBox
+            AcceptsReturn="True"
+            MinHeight="76"
+            Name="MessageText"
+            PlaceholderText="提示内容"
+            Text="{Binding Message, Mode=TwoWay}"
+            TextWrapping="Wrap" />
         <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
             <StackPanel Spacing="6">

@@ -1,8 +1,9 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
+<ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
     xmlns:converters="using:Avalonia.Controls.Converters"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -76,16 +77,16 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Classes="TreeViewItemLayoutRoot"
-                        Margin="4,2"
                         CornerRadius="{TemplateBinding CornerRadius}"
                         Focusable="True"
+                        Margin="4,2"
                         MinHeight="{TemplateBinding MinHeight}"
                         Name="PART_LayoutRoot"
                         TemplatedControl.IsTemplateFocusTarget="True">
                         <Grid ColumnDefinitions="Auto, *" Name="PART_Header">
                             <Grid.Margin>
                                 <MultiBinding Converter="{x:Static converters:TreeViewItemIndentConverter.Instance}">
-                                    <markup:CompiledBindingExtension Path="$self.((TreeViewItem)TemplatedParent).Level"  />
+                                    <markup:CompiledBindingExtension Path="$self.((TreeViewItem)TemplatedParent).Level" />
                                     <DynamicResource ResourceKey="One.TreeViewItemIndent" />
                                 </MultiBinding>
                             </Grid.Margin>

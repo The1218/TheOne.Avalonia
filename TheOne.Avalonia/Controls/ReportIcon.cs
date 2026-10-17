@@ -1,18 +1,19 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Documents;
+using Avalonia.Media;
 
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>Small, consistent stroke icons for the report editor command bar.</summary>
 internal sealed class ReportIcon : Control
 {
-    public static readonly StyledProperty<string> KindProperty = AvaloniaProperty.Register<ReportIcon, string>(nameof(Kind), "Pointer");
-    public static readonly StyledProperty<IBrush?> ForegroundProperty = global::Avalonia.Controls.Documents.TextElement.ForegroundProperty.AddOwner<ReportIcon>();
-    public string Kind { get => GetValue(KindProperty); set => SetValue(KindProperty, value); }
-    public IBrush? Foreground { get => GetValue(ForegroundProperty); set => SetValue(ForegroundProperty, value); }
-    static ReportIcon() => AffectsRender<ReportIcon>(KindProperty, ForegroundProperty);
-    public ReportIcon() { Width = 20; Height = 20; IsHitTestVisible = false; }
+    public static readonly StyledProperty<string> KindProperty =
+        AvaloniaProperty.Register<ReportIcon, string>(nameof(Kind), "Pointer");
+
+    public static readonly StyledProperty<IBrush?> ForegroundProperty =
+        TextElement.ForegroundProperty.AddOwner<ReportIcon>();
+
     private static readonly IReadOnlyDictionary<string, Geometry> Icons = new Dictionary<string, string>
     {
         ["Pointer"] = "M5,3 L19,13 L12,14 L9,21 Z M12,14 L16,20",
@@ -54,16 +55,49 @@ internal sealed class ReportIcon : Control
         ["Info"] = "M12,2 A10,10 0 1 0 12,22 A10,10 0 1 0 12,2 M12,10 V17 M12,6 V7",
         ["Logo"] = "M4,3 H20 V21 H4 Z M8,17 V7 H11 L13,17 M15,7 H17 L15,17"
     }.ToDictionary(p => p.Key, p => Geometry.Parse(p.Value), StringComparer.Ordinal);
+
+    static ReportIcon()
+    {
+        AffectsRender<ReportIcon>(KindProperty, ForegroundProperty);
+    }
+
+    public ReportIcon()
+    {
+        Width = 20;
+        Height = 20;
+        IsHitTestVisible = false;
+    }
+
+    public string Kind
+    {
+        get => GetValue(KindProperty);
+        set => SetValue(KindProperty, value);
+    }
+
+    public IBrush? Foreground
+    {
+        get => GetValue(ForegroundProperty);
+        set => SetValue(ForegroundProperty, value);
+    }
+
     public override void Render(DrawingContext context)
     {
-        base.Render(context); if (!Icons.TryGetValue(Kind, out var geometry)) return;
+        base.Render(context);
+        if (!Icons.TryGetValue(Kind, out var geometry)) return;
         var brush = Foreground ?? Brushes.Black;
         using (context.PushTransform(Matrix.CreateScale(Bounds.Width / 24, Bounds.Height / 24)))
         {
-            context.DrawGeometry(Kind == "Disclosure" ? brush : null, Kind == "Disclosure" ? null : new Pen(brush, Kind == "Bold" ? 2.6 : 1.7, lineCap: PenLineCap.Round, lineJoin: PenLineJoin.Round), geometry);
+            context.DrawGeometry(Kind == "Disclosure" ? brush : null,
+                Kind == "Disclosure"
+                    ? null
+                    : new Pen(brush, Kind == "Bold" ? 2.6 : 1.7, lineCap: PenLineCap.Round,
+                        lineJoin: PenLineJoin.Round), geometry);
             if (Kind == "Fill")
             {
-                var accent = this.TryFindResource("One.Accent", ActualThemeVariant, out var value) && value is IBrush color ? color : brush;
+                var accent =
+                    this.TryFindResource("One.Accent", ActualThemeVariant, out var value) && value is IBrush color
+                        ? color
+                        : brush;
                 context.DrawLine(new Pen(accent, 1.8), new Point(3, 24), new Point(22, 24));
             }
         }

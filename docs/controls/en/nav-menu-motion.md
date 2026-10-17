@@ -6,11 +6,16 @@ See [NavMenu](nav-menu.md) for basic setup.
 
 ## Expanding, collapsing, and switching the sidebar
 
-`TransitionDuration` is a styleable TimeSpan that supports compiled binding. The theme defaults to `One.Motion.Expand` (200 ms); collapse takes 70% of that duration. Zero switches immediately. `Motion.Enabled=False` immediately reaches the current target even during animation; re-enabling it does not replay prior actions.
+`TransitionDuration` is a styleable TimeSpan that supports compiled binding. The theme defaults to `One.Motion.Expand` (200 ms); node collapse takes 70% of that duration. Zero switches immediately. `Motion.Enabled=False` immediately reaches the current target even during animation; re-enabling it does not replay prior actions.
 
 Inline expansion of a thousand children travels across a bounded viewport while reusing the full child layout. It does not animate tens of thousands of list pixels, avoiding abrupt first-screen appearance or delayed completion. The full native scrolling range returns when complete; child hit testing is disabled immediately during collapse. Rapid reversals continue from current progress. Explicit SelectPath / distant keyboard navigation completes ancestor transitions before locating the item. Read-only TransitionExtent reports the menu's bounded viewport height without changing the final list extent.
 
-Sidebar sizing and navigation mode update together. Icons already in view translate from their current rendered position to the new one; labels fade in on expansion. Page Width / Height do not animate per frame, and icons / text do not scale. A single progress animation drives the change; recycled items do not replay entry animations. Size changes, disabling motion, unloading, and recycling clear temporary transforms and opacity while preserving selection and business expansion state.
+Sidebar width transitions between ExpandedWidth (default 280) and CollapsedWidth using CubicEaseOut and TransitionDuration. Use ExpandedWidth instead of a fixed local Width, and place the menu in an Auto Grid column so content follows its width. Visible icons translate and labels fade in; recycled off-screen rows do not replay motion. Node expansion continues using bounded RevealHost without scaling icons or text. Disabled motion or zero duration switches immediately; rapid reversals continue from the current width and preserve selection and business expansion state.
+
+```xml
+<one:NavMenu ExpandedWidth="280" CollapsedWidth="56"
+             IsCollapsed="{Binding Compact, Mode=TwoWay}" TransitionDuration="0:0:0.2" />
+```
 
 PreviewHost's dedicated NavMenu page provides actions to expand / collapse a thousand children, expand / collapse three levels, and rapidly reverse the sidebar. The top motion switch tests disabling motion midway. Verification uses real Dispatcher frames and Skia advancement, covering Light / Dark × three sizes, actual thousand-item recycling, intermediate frames, reversal, full extent restoration, focus / selection, and unload cleanup:
 

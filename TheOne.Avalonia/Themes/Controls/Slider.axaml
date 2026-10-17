@@ -2,7 +2,6 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
-    xmlns:sys="using:System"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
@@ -181,7 +180,6 @@
                             CornerRadius="{TemplateBinding CornerRadius}">
                             <Grid
                                 Background="{DynamicResource One.Transparent}"
-                                Grid.Row="1"
                                 Margin="{TemplateBinding Padding}"
                                 x:Name="SliderContainer">
                                 <Grid.Styles>
@@ -231,7 +229,6 @@
                                         Width="{DynamicResource SliderOutsideTickBarThemeHeight}" />
                                     <Track
                                         Grid.Column="1"
-                                        Grid.ColumnSpan="1"
                                         Grid.RowSpan="3"
                                         IsDirectionReversed="{TemplateBinding IsDirectionReversed}"
                                         Maximum="{TemplateBinding Maximum}"

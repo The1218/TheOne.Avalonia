@@ -38,8 +38,6 @@ public sealed record RelationGraphSlotSample(string Label, RelationGraphNode Nod
 
 public sealed class RelationGraphDemoViewModel : ReactiveObject
 {
-    public RelationGraphNode? SelectedNode { get; set => this.RaiseAndSetIfChanged(ref field, value); }
-    public RelationUnit? SelectedUnit { get; set => this.RaiseAndSetIfChanged(ref field, value); }
     public RelationGraphDemoViewModel()
     {
         AddChildCommand = ReactiveCommand.Create(() =>
@@ -48,6 +46,18 @@ public sealed class RelationGraphDemoViewModel : ReactiveObject
         {
             if (Root.Children!.Count > 3) Root.Children.RemoveAt(Root.Children.Count - 1);
         });
+    }
+
+    public RelationGraphNode? SelectedNode
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public RelationUnit? SelectedUnit
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
     }
 
     public static Geometry CenterIcon { get; } = StreamGeometry.Parse(

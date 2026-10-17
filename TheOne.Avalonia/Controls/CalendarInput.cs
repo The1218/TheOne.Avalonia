@@ -1,10 +1,10 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Input;
-using global::Avalonia.Interactivity;
-using global::Avalonia.Threading;
-using global::Avalonia.VisualTree;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Interactivity;
+using Avalonia.Threading;
+using Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -13,8 +13,13 @@ public sealed class CalendarInput : AvaloniaObject
 {
     public static readonly AttachedProperty<bool> OpenOnClickProperty =
         AvaloniaProperty.RegisterAttached<CalendarInput, CalendarDatePicker, bool>("OpenOnClick");
-    private static readonly AttachedProperty<DateTime?> OpenedDateProperty = AvaloniaProperty.RegisterAttached<CalendarInput, CalendarDatePicker, DateTime?>("OpenedDate");
-    private static readonly AttachedProperty<Control[]?> PartsProperty = AvaloniaProperty.RegisterAttached<CalendarInput, CalendarDatePicker, Control[]?>("Parts");
+
+    private static readonly AttachedProperty<DateTime?> OpenedDateProperty =
+        AvaloniaProperty.RegisterAttached<CalendarInput, CalendarDatePicker, DateTime?>("OpenedDate");
+
+    private static readonly AttachedProperty<Control[]?> PartsProperty =
+        AvaloniaProperty.RegisterAttached<CalendarInput, CalendarDatePicker, Control[]?>("Parts");
+
     static CalendarInput()
     {
         OpenOnClickProperty.Changed.AddClassHandler<CalendarDatePicker>((picker, change) =>
@@ -28,35 +33,52 @@ public sealed class CalendarInput : AvaloniaObject
                 picker.AddHandler(InputElement.PointerReleasedEvent, OnReleased, RoutingStrategies.Bubble, true);
                 picker.CalendarOpened += OnOpened;
                 picker.TemplateApplied += OnTemplate;
-                HookParts(picker, picker.GetVisualDescendants().OfType<Control>().Where(part => part.TemplatedParent == picker && part.Name is "PART_TextBox" or "PART_Calendar").ToArray());
+                HookParts(picker,
+                    picker.GetVisualDescendants().OfType<Control>().Where(part =>
+                        part.TemplatedParent == picker && part.Name is "PART_TextBox" or "PART_Calendar").ToArray());
             }
         });
     }
-    public static bool GetOpenOnClick(CalendarDatePicker picker) => picker.GetValue(OpenOnClickProperty);
-    public static void SetOpenOnClick(CalendarDatePicker picker, bool value) => picker.SetValue(OpenOnClickProperty, value);
+
+    public static bool GetOpenOnClick(CalendarDatePicker picker)
+    {
+        return picker.GetValue(OpenOnClickProperty);
+    }
+
+    public static void SetOpenOnClick(CalendarDatePicker picker, bool value)
+    {
+        picker.SetValue(OpenOnClickProperty, value);
+    }
+
     private static void OnOpened(object? sender, EventArgs args)
     {
-        if (sender is CalendarDatePicker picker)
-        {
-            picker.SetValue(OpenedDateProperty, picker.SelectedDate);
-        }
+        if (sender is CalendarDatePicker picker) picker.SetValue(OpenedDateProperty, picker.SelectedDate);
     }
+
     private static void OnTemplate(object? sender, TemplateAppliedEventArgs args)
     {
         if (sender is CalendarDatePicker picker)
-            HookParts(picker, new Control?[] { args.NameScope.Find<TextBox>("PART_TextBox"), args.NameScope.Find<Calendar>("PART_Calendar") }.OfType<Control>().ToArray());
+            HookParts(picker,
+                new Control?[]
+                        { args.NameScope.Find<TextBox>("PART_TextBox"), args.NameScope.Find<Calendar>("PART_Calendar") }
+                    .OfType<Control>().ToArray());
     }
+
     private static void ClearParts(CalendarDatePicker picker)
     {
-        foreach (var part in picker.GetValue(PartsProperty) ?? []) part.RemoveHandler(InputElement.KeyDownEvent, OnKeyDown);
+        foreach (var part in picker.GetValue(PartsProperty) ?? [])
+            part.RemoveHandler(InputElement.KeyDownEvent, OnKeyDown);
         picker.SetValue(PartsProperty, null);
     }
+
     private static void HookParts(CalendarDatePicker picker, Control[] parts)
     {
         ClearParts(picker);
         picker.SetValue(PartsProperty, parts);
-        foreach (var part in parts) part.AddHandler(InputElement.KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel, true);
+        foreach (var part in parts)
+            part.AddHandler(InputElement.KeyDownEvent, OnKeyDown, RoutingStrategies.Tunnel, true);
     }
+
     private static void OnKeyDown(object? sender, KeyEventArgs args)
     {
         if (sender is not Control { TemplatedParent: CalendarDatePicker picker } || !picker.IsDropDownOpen) return;
@@ -73,9 +95,11 @@ public sealed class CalendarInput : AvaloniaObject
             Dispatcher.UIThread.Post(() => picker.SetCurrentValue(CalendarDatePicker.IsDropDownOpenProperty, false));
         }
     }
+
     private static void OnReleased(object? sender, PointerReleasedEventArgs args)
     {
-        if (sender is not CalendarDatePicker picker || !picker.IsEffectivelyEnabled || args.InitialPressMouseButton != MouseButton.Left || args.Source is not Control source) return;
+        if (sender is not CalendarDatePicker picker || !picker.IsEffectivelyEnabled ||
+            args.InitialPressMouseButton != MouseButton.Left || args.Source is not Control source) return;
         var editor = source as TextBox ?? source.GetVisualAncestors().OfType<TextBox>().FirstOrDefault();
         if (editor?.Name != "PART_TextBox" || editor.TemplatedParent != picker) return;
         Dispatcher.UIThread.Post(() =>

@@ -68,6 +68,8 @@ Item / selection-strip heights are 32 / 40 / 48 px, popup fonts 12 / 14 / 16 px,
 
 PickerScroll.Enabled is enabled internally: wheel scrolling snaps to whole rows after 140 ms of inactivity; gesture completion aligns immediately; confirm / Enter aligns before committing. Non-looping lists remain within range. Separate clipping inside and outside the selection strip prevents fractional scrolling from showing state text on the wrong background. Native selection is unchanged; unloading stops timers and subscriptions. See [preview entry points](../../../design/PreviewHost/Program.cs) for checks and rendering.
 
+Date/time popups contain unconsumed fractional horizontal, vertical and diagonal input plus gesture inertia/end phases, including blank areas and scroll boundaries. Native calendar navigation, picker scrolling, inertia and completion snapping remain active. Tails originating in a closed popup stay isolated, while new page scrolling works normally.
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

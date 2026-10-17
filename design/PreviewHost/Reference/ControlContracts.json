@@ -12801,19 +12801,19 @@
       "IsStatic": false,
       "Base": "Avalonia.Controls.TreeView",
       "Summary": "A native virtualized navigation tree with separately templated icons and labels.",
-      "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:19",
+      "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:16",
       "Properties": [
         {
           "Name": "ChildrenBinding",
           "Type": "Avalonia.Data.BindingBase?",
-          "Summary": "\u8BFB\u53D6\u83DC\u5355\u5B50\u96C6\u5408\u7684\u539F\u751F\u7ED1\u5B9A\uFF1B\u987B\u4F7F\u7528\u5177\u4F53\u6A21\u578B\u7684\u7F16\u8BD1\u7ED1\u5B9A\uFF0C\u4E0D\u7528\u53CD\u5C04\u8DEF\u5F84\u3002",
+          "Summary": "\u8bfb\u53d6\u83dc\u5355\u5b50\u96c6\u5408\u7684\u539f\u751f\u7ed1\u5b9a\uff1b\u987b\u4f7f\u7528\u5177\u4f53\u6a21\u578b\u7684\u7f16\u8bd1\u7ed1\u5b9a\uff0c\u4e0d\u7528\u53cd\u5c04\u8def\u5f84\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "ChildrenBindingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:68",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:119",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12829,7 +12829,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "CollapsedWidthProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:53",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:89",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12838,14 +12838,14 @@
         {
           "Name": "ContentTemplate",
           "Type": "Avalonia.Controls.Templates.IDataTemplate?",
-          "Summary": "\u539F\u751F\u6570\u636E\u6A21\u677F\u6269\u5C55\u70B9\uFF1B\u4FDD\u6301\u6B63\u786E x:DataType\uFF0C\u6A21\u677F\u6570\u636E\u4F5C\u7528\u57DF\u89C1\u672C\u63A7\u4EF6\u63A5\u5165\u7AE0\u8282\u3002",
+          "Summary": "\u539f\u751f\u6570\u636e\u6a21\u677f\u6269\u5c55\u70b9\uff1b\u4fdd\u6301\u6b63\u786e x:DataType\uff0c\u6a21\u677f\u6570\u636e\u4f5c\u7528\u57df\u89c1\u672c\u63a7\u4ef6\u63a5\u5165\u7ae0\u8282\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "ContentTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:67",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:111",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12861,7 +12861,23 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "DisplayIconTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:60",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:113",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "DisplayWidth",
+          "Type": "double",
+          "Summary": "\u53ea\u8bfb\u7684\u5f53\u524d\u4fa7\u680f\u8fc7\u6e21\u5bbd\u5ea6\uff0c\u4f9b\u5bbf\u4e3b\u5e03\u5c40\u8ddf\u968f\u3002",
+          "Default": "computed / state",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "DisplayWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:31",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12870,14 +12886,30 @@
         {
           "Name": "ExpandedBinding",
           "Type": "Avalonia.Data.BindingBase?",
-          "Summary": "\u83DC\u5355\u9879\u5C55\u5F00\u72B6\u6001\u7684\u7ED1\u5B9A\uFF1B\u7ED1\u5B9A\u5230\u7A33\u5B9A\u6A21\u578B\u53EF\u8DE8\u56DE\u6536\u4FDD\u7559\u5C55\u5F00\u3002",
+          "Summary": "\u83dc\u5355\u9879\u5c55\u5f00\u72b6\u6001\u7684\u7ed1\u5b9a\uff1b\u7ed1\u5b9a\u5230\u7a33\u5b9a\u6a21\u578b\u53ef\u8de8\u56de\u6536\u4fdd\u7559\u5c55\u5f00\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "ExpandedBindingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:69",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:127",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ExpandedWidth",
+          "Type": "double",
+          "Summary": "\u5c55\u5f00\u4fa7\u680f\u5bbd\u5ea6\uff0c\u9ed8\u8ba4 280 DIP\uff1b\u914d\u5408 IsCollapsed \u548c TransitionDuration \u8fc7\u6e21\u3002",
+          "Default": "280",
+          "Binding": "OneWay",
+          "Validation": "Positive",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ExpandedWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:17",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12886,14 +12918,14 @@
         {
           "Name": "FilterBox",
           "Type": "TheOne.Avalonia.Controls.NavMenuFilterBox?",
-          "Summary": "The template\u0027s native auto-complete input, available after template application.",
-          "Default": "null",
+          "Summary": "The template's native auto-complete input, available after template application.",
+          "Default": "accessor-defined / state",
           "Binding": "CLR / n/a",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:21",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:46",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12902,14 +12934,14 @@
         {
           "Name": "FilterPlaceholder",
           "Type": "string",
-          "Summary": "\u83DC\u5355\u5185\u7F6E\u7B5B\u9009\u8F93\u5165\u7684\u5360\u4F4D\u63D0\u793A\u6587\u672C\u3002",
-          "Default": "\u0022\u641C\u7D22\u83DC\u5355\u0022",
+          "Summary": "\u83dc\u5355\u5185\u7f6e\u7b5b\u9009\u8f93\u5165\u7684\u5360\u4f4d\u63d0\u793a\u6587\u672c\u3002",
+          "Default": "\"\u641c\u7d22\u83dc\u5355\"",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "FilterPlaceholderProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:18",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:37",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12918,14 +12950,14 @@
         {
           "Name": "FilterResults",
           "Type": "System.Collections.Generic.IReadOnlyList\u003CTheOne.Avalonia.Controls.NavMenuFilterResult\u003E",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "FilterResultsProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:19",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:43",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12934,14 +12966,14 @@
         {
           "Name": "HoverCloseDelay",
           "Type": "System.TimeSpan",
-          "Summary": "00:00:00.300 ;  \u79BB\u5F00\u951A\u70B9\u4E0E\u5F39\u5C42\u94FE\u540E\u5EF6\u8FDF\u5173\u95ED\uFF0C\u8FDB\u5165\u4EFB\u4E00\u7EA7\u5F39\u5C42\u6216\u8FD4\u56DE\u951A\u70B9\u53D6\u6D88\u5F85\u5173\u95ED\u64CD\u4F5C\u3002",
+          "Summary": "00:00:00.300 ;  \u79bb\u5f00\u951a\u70b9\u4e0e\u5f39\u5c42\u94fe\u540e\u5ef6\u8fdf\u5173\u95ed\uff0c\u8fdb\u5165\u4efb\u4e00\u7ea7\u5f39\u5c42\u6216\u8fd4\u56de\u951a\u70b9\u53d6\u6d88\u5f85\u5173\u95ed\u64cd\u4f5c\u3002",
           "Default": "TimeSpan.FromMilliseconds(300)",
           "Binding": "OneWay",
           "Validation": "ValidDelay",
           "Writable": true,
           "Attached": false,
           "Identifier": "HoverCloseDelayProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:23",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:40",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12950,14 +12982,14 @@
         {
           "Name": "HoverOpenDelay",
           "Type": "System.TimeSpan",
-          "Summary": "00:00:00.100 ;  \u5FEB\u901F\u7ECF\u8FC7\u56FE\u6807\u4E0D\u6253\u5F00\uFF0C\u505C\u7559\u540E\u624D\u6253\u5F00\uFF1B\u53EF\u8BBE\u4E3A\u96F6\u3002",
+          "Summary": "00:00:00.100 ;  \u5feb\u901f\u7ecf\u8fc7\u56fe\u6807\u4e0d\u6253\u5f00\uff0c\u505c\u7559\u540e\u624d\u6253\u5f00\uff1b\u53ef\u8bbe\u4e3a\u96f6\u3002",
           "Default": "TimeSpan.FromMilliseconds(100)",
           "Binding": "OneWay",
           "Validation": "ValidDelay",
           "Writable": true,
           "Attached": false,
           "Identifier": "HoverOpenDelayProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:22",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:34",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12966,14 +12998,14 @@
         {
           "Name": "IconSize",
           "Type": "double",
-          "Summary": "\u56FE\u6807\u7ED8\u5236\u5C3A\u5BF8\uFF0C\u5355\u4F4D DIP\uFF1B\u72EC\u7ACB\u4E8E\u6587\u672C\u5B57\u53F7\u4E0E\u6309\u94AE\u70B9\u51FB\u533A\u57DF\u3002",
+          "Summary": "\u56fe\u6807\u7ed8\u5236\u5c3a\u5bf8\uff0c\u5355\u4f4d DIP\uff1b\u72ec\u7acb\u4e8e\u6587\u672c\u5b57\u53f7\u4e0e\u6309\u94ae\u70b9\u51fb\u533a\u57df\u3002",
           "Default": "18",
           "Binding": "OneWay",
           "Validation": "Positive",
           "Writable": true,
           "Attached": false,
           "Identifier": "IconSizeProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:73",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:155",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12982,14 +13014,14 @@
         {
           "Name": "IconSpacing",
           "Type": "double",
-          "Summary": "\u56FE\u6807\u4E0E\u76F8\u90BB\u6587\u672C\uFF0F\u5185\u5BB9\u7684 DIP \u95F4\u8DDD\u3002",
+          "Summary": "\u56fe\u6807\u4e0e\u76f8\u90bb\u6587\u672c\uff0f\u5185\u5bb9\u7684 DIP \u95f4\u8ddd\u3002",
           "Default": "10",
           "Binding": "OneWay",
           "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "IconSpacingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:74",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:161",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -12998,14 +13030,14 @@
         {
           "Name": "IconTemplate",
           "Type": "Avalonia.Controls.Templates.IDataTemplate?",
-          "Summary": "\u539F\u751F\u6570\u636E\u6A21\u677F\u6269\u5C55\u70B9\uFF1B\u4FDD\u6301\u6B63\u786E x:DataType\uFF0C\u6A21\u677F\u6570\u636E\u4F5C\u7528\u57DF\u89C1\u672C\u63A7\u4EF6\u63A5\u5165\u7AE0\u8282\u3002",
+          "Summary": "\u539f\u751f\u6570\u636e\u6a21\u677f\u6269\u5c55\u70b9\uff1b\u4fdd\u6301\u6b63\u786e x:DataType\uff0c\u6a21\u677f\u6570\u636e\u4f5c\u7528\u57df\u89c1\u672c\u63a7\u4ef6\u63a5\u5165\u7ae0\u8282\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "IconTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:65",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:104",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13014,14 +13046,14 @@
         {
           "Name": "Indent",
           "Type": "double",
-          "Summary": "\u6BCF\u4E00\u7EA7\u5C42\u6B21\u589E\u52A0\u7684 DIP \u7F29\u8FDB\uFF1B\u4E0D\u6539\u53D8\u7236\u5B50\u5173\u7CFB\u3002",
+          "Summary": "\u6bcf\u4e00\u7ea7\u5c42\u6b21\u589e\u52a0\u7684 DIP \u7f29\u8fdb\uff1b\u4e0d\u6539\u53d8\u7236\u5b50\u5173\u7cfb\u3002",
           "Default": "16",
           "Binding": "OneWay",
           "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
           "Writable": true,
           "Attached": false,
           "Identifier": "IndentProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:75",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:167",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13030,14 +13062,14 @@
         {
           "Name": "IsCollapsed",
           "Type": "bool",
-          "Summary": "\u5207\u6362\u83DC\u5355\u4E3A\u7D27\u51D1\u56FE\u6807\u680F\uFF1B\u5B50\u83DC\u5355\u901A\u8FC7\u60AC\u6D6E\u5F39\u5C42\u5C55\u793A\uFF0C\u4FDD\u7559\u5F53\u524D\u9009\u62E9\u3002",
+          "Summary": "\u5207\u6362\u83dc\u5355\u4e3a\u7d27\u51d1\u56fe\u6807\u680f\uff1b\u5b50\u83dc\u5355\u901a\u8fc7\u60ac\u6d6e\u5f39\u5c42\u5c55\u793a\uff0c\u4fdd\u7559\u5f53\u524d\u9009\u62e9\u3002",
           "Default": "false",
           "Binding": "TwoWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "IsCollapsedProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:52",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:83",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13046,14 +13078,14 @@
         {
           "Name": "IsCompactSubmenu",
           "Type": "bool",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "IsCompactSubmenuProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:48",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:71",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13062,14 +13094,14 @@
         {
           "Name": "IsFilterOpen",
           "Type": "bool",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "IsFilterOpenProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:15",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:22",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13078,14 +13110,14 @@
         {
           "Name": "IsGroupBinding",
           "Type": "Avalonia.Data.BindingBase?",
-          "Summary": "\u8BFB\u53D6\u83DC\u5355\u9879\u662F\u5426\u4E3A\u5206\u7EC4\u7684\u7ED1\u5B9A\uFF1B\u5206\u7EC4\u4E0E\u666E\u901A\u53EF\u5BFC\u822A\u9879\u884C\u4E3A\u4E0D\u540C\u3002",
+          "Summary": "\u8bfb\u53d6\u83dc\u5355\u9879\u662f\u5426\u4e3a\u5206\u7ec4\u7684\u7ed1\u5b9a\uff1b\u5206\u7ec4\u4e0e\u666e\u901a\u53ef\u5bfc\u822a\u9879\u884c\u4e3a\u4e0d\u540c\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "IsGroupBindingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:70",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:135",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13094,14 +13126,14 @@
         {
           "Name": "IsItemEnabledBinding",
           "Type": "Avalonia.Data.BindingBase?",
-          "Summary": "\u8BFB\u53D6\u5355\u9879\u53EF\u7528\u6027\u7684\u7ED1\u5B9A\uFF1B\u7981\u7528\u9879\u4E0D\u54CD\u5E94\u7528\u6237\u5BFC\u822A\u9009\u62E9\u3002",
+          "Summary": "\u8bfb\u53d6\u5355\u9879\u53ef\u7528\u6027\u7684\u7ed1\u5b9a\uff1b\u7981\u7528\u9879\u4e0d\u54cd\u5e94\u7528\u6237\u5bfc\u822a\u9009\u62e9\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "IsItemEnabledBindingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:71",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:143",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13110,14 +13142,14 @@
         {
           "Name": "IsSearching",
           "Type": "bool",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "IsSearchingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:26",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:53",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13126,14 +13158,14 @@
         {
           "Name": "IsSubmenuOpen",
           "Type": "bool",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "IsSubmenuOpenProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:56",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:107",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13142,14 +13174,14 @@
         {
           "Name": "ItemHeight",
           "Type": "double",
-          "Summary": "\u5355\u9879\uFF0F\u6EDA\u8F6E\u5355\u5143\u7684 DIP \u9AD8\u5EA6\uFF1B\u4E3B\u9898\u5BC6\u5EA6\u548C\u663E\u5F0F\u5C40\u90E8\u503C\u53EF\u80FD\u8986\u76D6\u6CE8\u518C\u521D\u503C\u3002",
+          "Summary": "\u5355\u9879\uff0f\u6eda\u8f6e\u5355\u5143\u7684 DIP \u9ad8\u5ea6\uff1b\u4e3b\u9898\u5bc6\u5ea6\u548c\u663e\u5f0f\u5c40\u90e8\u503c\u53ef\u80fd\u8986\u76d6\u6ce8\u518c\u521d\u503c\u3002",
           "Default": "36",
           "Binding": "OneWay",
           "Validation": "Positive",
           "Writable": true,
           "Attached": false,
           "Identifier": "ItemHeightProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:72",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:149",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13158,14 +13190,14 @@
         {
           "Name": "ItemInvokedCommand",
           "Type": "System.Windows.Input.ICommand?",
-          "Summary": "\u5BBF\u4E3B\u63D0\u4F9B\u7684\u547D\u4EE4\u5165\u53E3\uFF1B\u5177\u4F53\u64CD\u4F5C\u4E0E\u6743\u9650\u7531\u4E1A\u52A1\u5B9E\u73B0\uFF0C\u914D\u5BF9\u7684 CommandParameter \u4F5C\u4E3A\u547D\u4EE4\u53C2\u6570\u3002",
+          "Summary": "\u5bbf\u4e3b\u63d0\u4f9b\u7684\u547d\u4ee4\u5165\u53e3\uff1b\u5177\u4f53\u64cd\u4f5c\u4e0e\u6743\u9650\u7531\u4e1a\u52a1\u5b9e\u73b0\uff0c\u914d\u5bf9\u7684 CommandParameter \u4f5c\u4e3a\u547d\u4ee4\u53c2\u6570\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "ItemInvokedCommandProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:76",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:173",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13174,14 +13206,14 @@
         {
           "Name": "OpenOnHover",
           "Type": "bool",
-          "Summary": "true ;  \u6298\u53E0\u6839\u56FE\u6807\u548C\u5404\u7EA7\u5F39\u5C42\u4E2D\u7684\u5206\u652F\u652F\u6301\u60AC\u505C\u6253\u5F00\uFF1Bfalse \u65F6\u4ECD\u53EF\u70B9\u51FB\u3001\u952E\u76D8\u6216\u8C03\u7528 API\u3002",
+          "Summary": "true ;  \u6298\u53e0\u6839\u56fe\u6807\u548c\u5404\u7ea7\u5f39\u5c42\u4e2d\u7684\u5206\u652f\u652f\u6301\u60ac\u505c\u6253\u5f00\uff1bfalse \u65f6\u4ecd\u53ef\u70b9\u51fb\u3001\u952e\u76d8\u6216\u8c03\u7528 API\u3002",
           "Default": "true",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "OpenOnHoverProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:21",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:28",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13190,14 +13222,14 @@
         {
           "Name": "SearchMatchCount",
           "Type": "int",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "SearchMatchCountProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:27",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:54",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13206,7 +13238,7 @@
         {
           "Name": "SearchOwner",
           "Type": "TheOne.Avalonia.Controls.NavMenu?",
-          "Summary": "\u641C\u7D22\u7ED3\u679C\u5173\u8054\u7684\u83DC\u5355\u5B9E\u4F8B\uFF1B\u4F9B\u7B5B\u9009\u5F39\u5C42\u5B9A\u4F4D\u5E76\u6FC0\u6D3B\u539F\u59CB\u83DC\u5355\u9879\u3002",
+          "Summary": "\u641c\u7d22\u7ed3\u679c\u5173\u8054\u7684\u83dc\u5355\u5b9e\u4f8b\uff1b\u4f9b\u7b5b\u9009\u5f39\u5c42\u5b9a\u4f4d\u5e76\u6fc0\u6d3b\u539f\u59cb\u83dc\u5355\u9879\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
@@ -13222,14 +13254,14 @@
         {
           "Name": "SearchText",
           "Type": "string?",
-          "Summary": "\u5F53\u524D\u641C\u7D22\u6587\u672C\uFF1B\u641C\u7D22\u4E0E\u9009\u4E2D\u72B6\u6001\u72EC\u7ACB\uFF0C\u4E0D\u7528\u67E5\u8BE2\u5B57\u7B26\u4E32\u5145\u5F53\u6A21\u578B\u4E3B\u952E\u3002",
+          "Summary": "\u5f53\u524d\u641c\u7d22\u6587\u672c\uff1b\u641c\u7d22\u4e0e\u9009\u4e2d\u72b6\u6001\u72ec\u7acb\uff0c\u4e0d\u7528\u67e5\u8be2\u5b57\u7b26\u4e32\u5145\u5f53\u6a21\u578b\u4e3b\u952e\u3002",
           "Default": "null",
           "Binding": "TwoWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "SearchTextProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:24",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:39",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13238,14 +13270,14 @@
         {
           "Name": "SearchTextBinding",
           "Type": "Avalonia.Data.BindingBase?",
-          "Summary": "\u8BFB\u53D6\u5355\u9879\u641C\u7D22\u6587\u672C\u7684\u7F16\u8BD1\u7ED1\u5B9A\uFF1B\u5C55\u793A\u6A21\u677F\u4ECD\u53EF\u72EC\u7ACB\u5B9A\u5236\u3002",
+          "Summary": "\u8bfb\u53d6\u5355\u9879\u641c\u7d22\u6587\u672c\u7684\u7f16\u8bd1\u7ed1\u5b9a\uff1b\u5c55\u793a\u6a21\u677f\u4ecd\u53ef\u72ec\u7acb\u5b9a\u5236\u3002",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "SearchTextBindingProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:25",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:47",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13254,14 +13286,14 @@
         {
           "Name": "ShowFilter",
           "Type": "bool",
-          "Summary": "\u663E\u793A\u83DC\u5355\u5185\u7F6E\u7B5B\u9009\u6846\uFF1B\u5173\u95ED\u540E\u4ECD\u53EF\u7531\u5BBF\u4E3B\u63D0\u4F9B\u72EC\u7ACB\u641C\u7D22\u5165\u53E3\u3002",
+          "Summary": "\u663e\u793a\u83dc\u5355\u5185\u7f6e\u7b5b\u9009\u6846\uff1b\u5173\u95ed\u540e\u4ecd\u53ef\u7531\u5bbf\u4e3b\u63d0\u4f9b\u72ec\u7acb\u641c\u7d22\u5165\u53e3\u3002",
           "Default": "false",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": false,
           "Identifier": "ShowFilterProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:17",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:31",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13277,7 +13309,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "SubmenuProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:58",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:110",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13293,7 +13325,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SubmenuMaxHeightProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:55",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:101",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13302,14 +13334,14 @@
         {
           "Name": "SubmenuOpensLeft",
           "Type": "bool",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "SubmenuOpensLeftProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:49",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:77",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13325,7 +13357,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SubmenuWidthProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:54",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:95",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13334,14 +13366,14 @@
         {
           "Name": "TransitionDuration",
           "Type": "System.TimeSpan",
-          "Summary": "\u5C55\u5F00\uFF0F\u5207\u6362\u8FC7\u6E21\u65F6\u957F\uFF1BMotion.Enabled=False \u65F6\u4E0D\u6267\u884C\u52A8\u753B\u3002",
+          "Summary": "\u5c55\u5f00\uff0f\u5207\u6362\u8fc7\u6e21\u65f6\u957f\uff1bMotion.Enabled=False \u65f6\u4e0d\u6267\u884c\u52a8\u753b\u3002",
           "Default": "TimeSpan.FromMilliseconds(200)",
           "Binding": "OneWay",
           "Validation": "value =\u003E value \u003E= TimeSpan.Zero",
           "Writable": true,
           "Attached": false,
           "Identifier": "TransitionDurationProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:19",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:88",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13350,14 +13382,14 @@
         {
           "Name": "TransitionExtent",
           "Type": "double",
-          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Summary": "\u53ea\u8bfb\u8fd0\u884c\u72b6\u6001\u6216\u6d3e\u751f\u7ed3\u679c\uff1b\u7531\u5bf9\u5e94\u63a7\u4ef6\uff0f\u6a21\u578b\u66f4\u65b0\uff0c\u4f9b\u5c55\u793a\u548c\u547d\u4ee4\u6761\u4ef6\u8bfb\u53d6\uff0c\u4e0d\u4f5c\u4e3a\u53cc\u5411\u8f93\u5165\u3002",
           "Default": "computed / state",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "TransitionExtentProperty",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:20",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:94",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -13367,58 +13399,58 @@
       "Methods": [
         {
           "Signature": "bool NavMenu.OpenSubmenu(int rootIndex)",
-          "Summary": "Open a collapsed root\u0027s children without selecting or expanding its model.",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:63",
+          "Summary": "Open a collapsed root's children without selecting or expanding its model.",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:116",
           "ValueType": ""
         },
         {
           "Signature": "void NavMenu.CloseSubmenu()",
-          "Summary": "\u5173\u95ED\u5F53\u524D\u7EA7\u8054\u5B50\u83DC\u5355\u5E76\u6E05\u7406\u5176\u5F39\u51FA\u72B6\u6001\uFF0C\u4FDD\u7559\u4E1A\u52A1\u9009\u62E9\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:69",
+          "Summary": "\u5173\u95ed\u5f53\u524d\u7ea7\u8054\u5b50\u83dc\u5355\u5e76\u6e05\u7406\u5176\u5f39\u51fa\u72b6\u6001\uff0c\u4fdd\u7559\u4e1a\u52a1\u9009\u62e9\u3002",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:125",
           "ValueType": ""
         },
         {
           "Signature": "bool NavMenu.OpenFilter()",
           "Summary": "Focuses the inline filter, or opens its compact search popup.",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:64",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:67",
           "ValueType": ""
         },
         {
           "Signature": "void NavMenu.CloseFilter()",
           "Summary": "Dismisses compact search and restores the pre-search navigation state.",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:87",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.FilterPopup.cs:97",
           "ValueType": ""
         },
         {
           "Signature": "static NavMenu? NavMenu.GetSearchOwner(TextBox input)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u641C\u7D22\u7ED3\u679C\u5173\u8054\u7684\u83DC\u5355\u5B9E\u4F8B\uFF1B\u4F9B\u7B5B\u9009\u5F39\u5C42\u5B9A\u4F4D\u5E76\u6FC0\u6D3B\u539F\u59CB\u83DC\u5355\u9879\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.SearchInput.cs:12",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u641c\u7d22\u7ed3\u679c\u5173\u8054\u7684\u83dc\u5355\u5b9e\u4f8b\uff1b\u4f9b\u7b5b\u9009\u5f39\u5c42\u5b9a\u4f4d\u5e76\u6fc0\u6d3b\u539f\u59cb\u83dc\u5355\u9879\u3002",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.SearchInput.cs:14",
           "ValueType": ""
         },
         {
           "Signature": "static void NavMenu.SetSearchOwner(TextBox input, NavMenu? menu)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u641C\u7D22\u7ED3\u679C\u5173\u8054\u7684\u83DC\u5355\u5B9E\u4F8B\uFF1B\u4F9B\u7B5B\u9009\u5F39\u5C42\u5B9A\u4F4D\u5E76\u6FC0\u6D3B\u539F\u59CB\u83DC\u5355\u9879\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.SearchInput.cs:13",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u641c\u7d22\u7ed3\u679c\u5173\u8054\u7684\u83dc\u5355\u5b9e\u4f8b\uff1b\u4f9b\u7b5b\u9009\u5f39\u5c42\u5b9a\u4f4d\u5e76\u6fc0\u6d3b\u539f\u59cb\u83dc\u5355\u9879\u3002",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.SearchInput.cs:19",
           "ValueType": ""
         },
         {
           "Signature": "bool NavMenu.SelectPath(params int[] path)",
           "Summary": "Realize only an ancestor path, then select its target data item.",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:81",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:188",
           "ValueType": ""
         },
         {
           "Signature": "NavMenu.NavMenu()",
-          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:45",
+          "Summary": "\u521b\u5efa\u8be5\u7c7b\u578b\u5b9e\u4f8b\uff1b\u6784\u9020\u53c2\u6570\u53ca\u53ef\u9009\u521d\u503c\u89c1\u5b8c\u6574\u7b7e\u540d\u3002\u5171\u4eab\u6a21\u578b\u4e0e\u8d44\u6e90\u7684\u6240\u6709\u6743\u7531\u8c03\u7528\u65b9\u7ef4\u62a4\u3002",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:71",
           "ValueType": ""
         }
       ],
       "Events": [
         {
           "Signature": "event EventHandler\u003CNavMenuItemInvokedEventArgs\u003E? NavMenu.ItemInvoked",
-          "Summary": "\u72B6\u6001\uFF0F\u64CD\u4F5C\u901A\u77E5\uFF1B\u5728\u5BBF\u4E3B\u751F\u547D\u5468\u671F\u5185\u8BA2\u9605\u5E76\u5728\u91CA\u653E\u65F6\u89E3\u9664\uFF0C\u4E8B\u4EF6\u53C2\u6570\u7C7B\u578B\u89C1\u7B7E\u540D\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:77",
+          "Summary": "\u72b6\u6001\uff0f\u64cd\u4f5c\u901a\u77e5\uff1b\u5728\u5bbf\u4e3b\u751f\u547d\u5468\u671f\u5185\u8ba2\u9605\u5e76\u5728\u91ca\u653e\u65f6\u89e3\u9664\uff0c\u4e8b\u4ef6\u53c2\u6570\u7c7b\u578b\u89c1\u7b7e\u540d\u3002",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:181",
           "ValueType": "System.EventHandler\u003CTheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs\u003E?"
         }
       ],
@@ -13432,55 +13464,55 @@
         {
           "Signature": "static readonly StyledProperty\u003Cbool\u003E NavMenu.IsCollapsedProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:21",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:18",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.CollapsedWidthProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:22",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:21",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.SubmenuWidthProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:23",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:24",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.SubmenuMaxHeightProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:24",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:27",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, bool\u003E NavMenu.IsSubmenuOpenProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:25",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:30",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, NavMenu?\u003E NavMenu.SubmenuProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:26",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:33",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, IDataTemplate?\u003E NavMenu.DisplayIconTemplateProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:27",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:36",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, bool\u003E NavMenu.IsCompactSubmenuProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:45",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:46",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, bool\u003E NavMenu.SubmenuOpensLeftProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:46",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Collapsed.cs:49",
           "ValueType": ""
         },
         {
@@ -13492,13 +13524,13 @@
         {
           "Signature": "static readonly StyledProperty\u003Cstring\u003E NavMenu.FilterPlaceholderProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:15",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:17",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, IReadOnlyList\u003CNavMenuFilterResult\u003E\u003E NavMenu.FilterResultsProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:16",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Filter.cs:20",
           "ValueType": ""
         },
         {
@@ -13510,55 +13542,67 @@
         {
           "Signature": "static readonly StyledProperty\u003Cbool\u003E NavMenu.OpenOnHoverProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:11",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:10",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CTimeSpan\u003E NavMenu.HoverOpenDelayProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:12",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:13",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CTimeSpan\u003E NavMenu.HoverCloseDelayProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:13",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Hover.cs:17",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.ExpandedWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:15",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CNavMenu, double\u003E NavMenu.DisplayWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:23",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CTimeSpan\u003E NavMenu.TransitionDurationProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:16",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:73",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, double\u003E NavMenu.TransitionExtentProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:17",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Motion.cs:77",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cstring?\u003E NavMenu.SearchTextProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:16",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:15",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavMenu.SearchTextBindingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:17",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:18",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, bool\u003E NavMenu.IsSearchingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:18",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:21",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CNavMenu, int\u003E NavMenu.SearchMatchCountProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:19",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.Search.cs:24",
           "ValueType": ""
         },
         {
@@ -13576,67 +13620,67 @@
         {
           "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E NavMenu.ContentTemplateProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:27",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:29",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavMenu.ChildrenBindingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:28",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:32",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavMenu.ExpandedBindingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:29",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:35",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavMenu.IsGroupBindingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:30",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:38",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavMenu.IsItemEnabledBindingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:31",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:41",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.ItemHeightProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:32",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:44",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.IconSizeProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:33",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:47",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.IconSpacingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:34",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:50",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavMenu.IndentProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:35",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:54",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CICommand?\u003E NavMenu.ItemInvokedCommandProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:36",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:58",
           "ValueType": ""
         },
         {
           "Signature": "static readonly RoutedEvent\u003CNavMenuItemInvokedEventArgs\u003E NavMenu.ItemInvokedEvent",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:37",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:61",
           "ValueType": ""
         }
       ]
@@ -19334,7 +19378,7 @@
         {
           "Name": "CanClose",
           "Type": "bool",
-          "Summary": "\u5141\u8BB8\u5173\u95ED\uFF1B\u53EF\u663E\u5F0F\u8BBE\u4E3A False",
+          "Summary": "\u5141\u8bb8\u5173\u95ed\uff1b\u53ef\u663e\u5f0f\u8bbe\u4e3a False",
           "Default": "false",
           "Binding": "OneWay",
           "Validation": "",
@@ -19350,14 +19394,14 @@
         {
           "Name": "CanReorder",
           "Type": "bool",
-          "Summary": "\u5141\u8BB8\u5F53\u524D TabControl \u5185\u62D6\u52A8\u4E0E\u952E\u76D8\u6392\u5E8F",
+          "Summary": "\u5141\u8bb8\u5f53\u524d TabControl \u5185\u62d6\u52a8\u4e0e\u952e\u76d8\u6392\u5e8f",
           "Default": "false",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": true,
           "Identifier": "CanReorderProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:22",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:24",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -19366,7 +19410,7 @@
         {
           "Name": "CloseCommand",
           "Type": "System.Windows.Input.ICommand?",
-          "Summary": "\u5BBF\u4E3B\u5173\u95ED\u547D\u4EE4\uFF0C\u53C2\u6570\u4E3A\u6570\u636E\u9879\uFF1B\u6307\u5B9A\u540E\u7531\u547D\u4EE4\u8D1F\u8D23\u66F4\u65B0\u96C6\u5408",
+          "Summary": "\u5bbf\u4e3b\u5173\u95ed\u547d\u4ee4\uff0c\u53c2\u6570\u4e3a\u6570\u636e\u9879\uff1b\u6307\u5b9a\u540e\u7531\u547d\u4ee4\u8d1f\u8d23\u66f4\u65b0\u96c6\u5408",
           "Default": "null",
           "Binding": "OneWay",
           "Validation": "",
@@ -19382,182 +19426,356 @@
         {
           "Name": "CloseTabCommand",
           "Type": "System.Windows.Input.ICommand",
-          "Summary": "\u5BBF\u4E3B\u63D0\u4F9B\u7684\u547D\u4EE4\u5165\u53E3\uFF1B\u5177\u4F53\u64CD\u4F5C\u4E0E\u6743\u9650\u7531\u4E1A\u52A1\u5B9E\u73B0\uFF0C\u914D\u5BF9\u7684 CommandParameter \u4F5C\u4E3A\u547D\u4EE4\u53C2\u6570\u3002",
+          "Summary": "\u5bbf\u4e3b\u63d0\u4f9b\u7684\u547d\u4ee4\u5165\u53e3\uff1b\u5177\u4f53\u64cd\u4f5c\u4e0e\u6743\u9650\u7531\u4e1a\u52a1\u5b9e\u73b0\uff0c\u914d\u5bf9\u7684 CommandParameter \u4f5c\u4e3a\u547d\u4ee4\u53c2\u6570\u3002",
           "Default": "new CloseTab()",
           "Binding": "CLR / n/a",
           "Validation": "",
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:35",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:64",
           "Inherits": false,
           "Static": true,
           "Choices": [],
           "Target": ""
         },
         {
+          "Name": "EnableContextMenu",
+          "Type": "bool",
+          "Summary": "OneTheme \u9ed8\u8ba4\u5f00\u542f\u9875\u7b7e\u83dc\u5355\uff1bFalse \u5173\u95ed\u5185\u7f6e\u83dc\u5355\uff0c\u81ea\u5b9a\u4e49 ContextMenu \u4fdd\u7559\u3002",
+          "Default": "false",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": true,
+          "Identifier": "EnableContextMenuProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:12",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabControl"
+        },
+        {
+          "Name": "Icon",
+          "Type": "object?",
+          "Summary": "\u5355\u4e2a\u9875\u7b7e\u56fe\u6807\uff0c\u9ed8\u8ba4\u652f\u6301 Geometry \u6216\u6587\u672c\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": true,
+          "Identifier": "IconProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:18",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabItem"
+        },
+        {
+          "Name": "IconTemplate",
+          "Type": "Avalonia.Controls.Templates.IDataTemplate?",
+          "Summary": "\u81ea\u5b9a\u4e49\u9875\u7b7e\u56fe\u6807\u7684\u6570\u636e\u6a21\u677f\u3002",
+          "Default": "DefaultIconTemplate",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": true,
+          "Identifier": "IconTemplateProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:20",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabItem"
+        },
+        {
           "Name": "IsClosable",
           "Type": "bool",
-          "Summary": "\u8BBE\u7F6E\u5728\u5355\u4E2A TabItem \u4E0A\uFF0CFalse \u53EF\u56FA\u5B9A\u6807\u7B7E",
+          "Summary": "\u5355\u4e2a\u9875\u7b7e\u662f\u5426\u5141\u8bb8\u5173\u95ed\uff1bFalse \u7981\u6b62\u5173\u95ed\u4f46\u4ecd\u53ef\u6392\u5e8f\uff0c\u4e0d\u7b49\u540c\u4e8e\u56fa\u5b9a\u3002",
           "Default": "true",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": true,
           "Identifier": "IsClosableProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:23",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:27",
           "Inherits": false,
           "Static": true,
           "Choices": [],
           "Target": "Avalonia.Controls.Primitives.TabStripItem"
         },
         {
+          "Name": "IsIconVisible",
+          "Type": "bool",
+          "Summary": "\u53ea\u8bfb\u7684\u5b9e\u9645\u56fe\u6807\u53ef\u89c1\u72b6\u6001\uff0c\u7531\u56fe\u6807\u6570\u636e\u4e0e ShowItemIcon \u8ba1\u7b97\u3002",
+          "Default": "false",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": false,
+          "Attached": true,
+          "Identifier": "IsIconVisibleProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabItem"
+        },
+        {
+          "Name": "IsPinned",
+          "Type": "bool",
+          "Summary": "\u56fa\u5b9a\u5230\u5de6\u4fa7\u5e76\u7981\u6b62\u5173\u95ed\uff1b\u53d6\u6d88\u56fa\u5b9a\u540e\u4ecd\u9075\u5faa IsClosable\u3002",
+          "Default": "false",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": true,
+          "Identifier": "IsPinnedProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabItem"
+        },
+        {
           "Name": "ShowCloseButton",
           "Type": "bool",
-          "Summary": "\u663E\u793A\u5173\u95ED\u6309\u94AE\uFF1B\u5173\u95ED\u884C\u4E3A\u548C\u6743\u9650\u4ECD\u7531\u5BBF\u4E3B\u53CA\u76F8\u5173\u547D\u4EE4\u51B3\u5B9A\u3002",
+          "Summary": "\u663e\u793a\u5173\u95ed\u6309\u94ae\uff1b\u5173\u95ed\u884c\u4e3a\u548c\u6743\u9650\u4ecd\u7531\u5bbf\u4e3b\u53ca\u76f8\u5173\u547d\u4ee4\u51b3\u5b9a\u3002",
           "Default": "false",
           "Binding": "OneWay",
           "Validation": "",
           "Writable": true,
           "Attached": true,
           "Identifier": "ShowCloseButtonProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:24",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:30",
           "Inherits": false,
           "Static": true,
           "Choices": [],
           "Target": "Avalonia.Controls.Primitives.TabStripItem"
+        },
+        {
+          "Name": "ShowItemIcon",
+          "Type": "bool",
+          "Summary": "\u7edf\u4e00\u63a7\u5236 TabControl \u7684\u9875\u7b7e\u56fe\u6807\u663e\u793a\uff0c\u9ed8\u8ba4 True\u3002",
+          "Default": "true",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": true,
+          "Identifier": "ShowItemIconProperty",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:16",
+          "Inherits": false,
+          "Static": true,
+          "Choices": [],
+          "Target": "Avalonia.Controls.TabControl"
         }
       ],
       "Methods": [
         {
           "Signature": "static bool TabFeatures.GetCanClose(TabStrip tabs)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5173\u95ED\uFF1B\u53EF\u663E\u5F0F\u8BBE\u4E3A False",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:17",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static void TabFeatures.SetCanClose(TabStrip tabs, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5173\u95ED\uFF1B\u53EF\u663E\u5F0F\u8BBE\u4E3A False",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:18",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static bool TabFeatures.GetIsClosable(TabStripItem item)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u8BBE\u7F6E\u5728\u5355\u4E2A TabItem \u4E0A\uFF0CFalse \u53EF\u56FA\u5B9A\u6807\u7B7E",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:19",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static void TabFeatures.SetIsClosable(TabStripItem item, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u8BBE\u7F6E\u5728\u5355\u4E2A TabItem \u4E0A\uFF0CFalse \u53EF\u56FA\u5B9A\u6807\u7B7E",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:20",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static bool TabFeatures.GetShowCloseButton(TabStripItem item)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u663E\u793A\u5173\u95ED\u6309\u94AE\uFF1B\u5173\u95ED\u884C\u4E3A\u548C\u6743\u9650\u4ECD\u7531\u5BBF\u4E3B\u53CA\u76F8\u5173\u547D\u4EE4\u51B3\u5B9A\u3002",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5173\u95ed\uff1b\u53ef\u663e\u5f0f\u8bbe\u4e3a False",
           "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:21",
           "ValueType": ""
         },
         {
+          "Signature": "static void TabFeatures.SetCanClose(TabStrip tabs, bool value)",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5173\u95ed\uff1b\u53ef\u663e\u5f0f\u8bbe\u4e3a False",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:26",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetIsClosable(TabStripItem item)",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u8bbe\u7f6e\u5728\u5355\u4e2a TabItem \u4e0a\uff0cFalse \u7981\u6b62\u5173\u95ed\uff0c\u6392\u5e8f\u4ecd\u5141\u8bb8",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:31",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetIsClosable(TabStripItem item, bool value)",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u8bbe\u7f6e\u5728\u5355\u4e2a TabItem \u4e0a\uff0cFalse \u7981\u6b62\u5173\u95ed\uff0c\u6392\u5e8f\u4ecd\u5141\u8bb8",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:36",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetShowCloseButton(TabStripItem item)",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u663e\u793a\u5173\u95ed\u6309\u94ae\uff1b\u5173\u95ed\u884c\u4e3a\u548c\u6743\u9650\u4ecd\u7531\u5bbf\u4e3b\u53ca\u76f8\u5173\u547d\u4ee4\u51b3\u5b9a\u3002",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:41",
+          "ValueType": ""
+        },
+        {
           "Signature": "static void TabFeatures.SetShowCloseButton(TabStripItem item, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u663E\u793A\u5173\u95ED\u6309\u94AE\uFF1B\u5173\u95ED\u884C\u4E3A\u548C\u6743\u9650\u4ECD\u7531\u5BBF\u4E3B\u53CA\u76F8\u5173\u547D\u4EE4\u51B3\u5B9A\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:22",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u663e\u793a\u5173\u95ed\u6309\u94ae\uff1b\u5173\u95ed\u884c\u4e3a\u548c\u6743\u9650\u4ecd\u7531\u5bbf\u4e3b\u53ca\u76f8\u5173\u547d\u4ee4\u51b3\u5b9a\u3002",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:46",
           "ValueType": ""
         },
         {
           "Signature": "static ICommand? TabFeatures.GetCloseCommand(TabStrip tabs)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u5BBF\u4E3B\u5173\u95ED\u547D\u4EE4\uFF0C\u53C2\u6570\u4E3A\u6570\u636E\u9879\uFF1B\u6307\u5B9A\u540E\u7531\u547D\u4EE4\u8D1F\u8D23\u66F4\u65B0\u96C6\u5408",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:23",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u5bbf\u4e3b\u5173\u95ed\u547d\u4ee4\uff0c\u53c2\u6570\u4e3a\u6570\u636e\u9879\uff1b\u6307\u5b9a\u540e\u7531\u547d\u4ee4\u8d1f\u8d23\u66f4\u65b0\u96c6\u5408",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:51",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetCloseCommand(TabStrip tabs, ICommand? value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u5BBF\u4E3B\u5173\u95ED\u547D\u4EE4\uFF0C\u53C2\u6570\u4E3A\u6570\u636E\u9879\uFF1B\u6307\u5B9A\u540E\u7531\u547D\u4EE4\u8D1F\u8D23\u66F4\u65B0\u96C6\u5408",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:24",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u5bbf\u4e3b\u5173\u95ed\u547d\u4ee4\uff0c\u53c2\u6570\u4e3a\u6570\u636e\u9879\uff1b\u6307\u5b9a\u540e\u7531\u547d\u4ee4\u8d1f\u8d23\u66f4\u65b0\u96c6\u5408",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:56",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.Close(TabStripItem item)",
-          "Summary": "\u5C1D\u8BD5\u5173\u95ED\u5BB9\u5668\u5BF9\u5E94\u7684\u6570\u636E\u9879",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:55",
+          "Summary": "\u5c1d\u8bd5\u5173\u95ed\u5bb9\u5668\u5bf9\u5e94\u7684\u6570\u636e\u9879",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:109",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetShowItemIcon(TabControl tabs)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:31",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetEnableContextMenu(TabControl tabs)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:32",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetEnableContextMenu(TabControl tabs, bool value)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:33",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetShowItemIcon(TabControl tabs, bool value)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:34",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static object? TabFeatures.GetIcon(TabItem item)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:35",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetIcon(TabItem item, object? value)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:36",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static IDataTemplate? TabFeatures.GetIconTemplate(TabItem item)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:37",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetIconTemplate(TabItem item, IDataTemplate? value)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:38",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetIsPinned(TabItem item)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:39",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static void TabFeatures.SetIsPinned(TabItem item, bool value)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:40",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.GetIsIconVisible(TabItem item)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:41",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static bool TabFeatures.Pin(TabItem item, bool pinned = true)",
+          "Summary": "Pins a page before all unpinned pages, preserving selection. Does not require drag reordering.",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:130",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static int TabFeatures.CloseAll(TabControl tabs)",
+          "Summary": "Closes a snapshot of closable pages, honoring cancellation, commands and pin state.",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:149",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetShowCloseButton(TabItem item)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u663E\u793A\u5173\u95ED\u6309\u94AE\uFF1B\u5173\u95ED\u884C\u4E3A\u548C\u6743\u9650\u4ECD\u7531\u5BBF\u4E3B\u53CA\u76F8\u5173\u547D\u4EE4\u51B3\u5B9A\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:25",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u663e\u793a\u5173\u95ed\u6309\u94ae\uff1b\u5173\u95ed\u884c\u4e3a\u548c\u6743\u9650\u4ecd\u7531\u5bbf\u4e3b\u53ca\u76f8\u5173\u547d\u4ee4\u51b3\u5b9a\u3002",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:66",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetShowCloseButton(TabItem item, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u663E\u793A\u5173\u95ED\u6309\u94AE\uFF1B\u5173\u95ED\u884C\u4E3A\u548C\u6743\u9650\u4ECD\u7531\u5BBF\u4E3B\u53CA\u76F8\u5173\u547D\u4EE4\u51B3\u5B9A\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:26",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u663e\u793a\u5173\u95ed\u6309\u94ae\uff1b\u5173\u95ed\u884c\u4e3a\u548c\u6743\u9650\u4ecd\u7531\u5bbf\u4e3b\u53ca\u76f8\u5173\u547d\u4ee4\u51b3\u5b9a\u3002",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:71",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetCanClose(TabControl tabs)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5173\u95ED\uFF1B\u53EF\u663E\u5F0F\u8BBE\u4E3A False",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:50",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5173\u95ed\uff1b\u53ef\u663e\u5f0f\u8bbe\u4e3a False",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:83",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetCanClose(TabControl tabs, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5173\u95ED\uFF1B\u53EF\u663E\u5F0F\u8BBE\u4E3A False",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:51",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5173\u95ed\uff1b\u53ef\u663e\u5f0f\u8bbe\u4e3a False",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:88",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetCanReorder(TabControl tabs)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5F53\u524D TabControl \u5185\u62D6\u52A8\u4E0E\u952E\u76D8\u6392\u5E8F",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:52",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5f53\u524d TabControl \u5185\u62d6\u52a8\u4e0e\u952e\u76d8\u6392\u5e8f",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:93",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetCanReorder(TabControl tabs, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u5141\u8BB8\u5F53\u524D TabControl \u5185\u62D6\u52A8\u4E0E\u952E\u76D8\u6392\u5E8F",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:53",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u5141\u8bb8\u5f53\u524d TabControl \u5185\u62d6\u52a8\u4e0e\u952e\u76d8\u6392\u5e8f",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:98",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetIsClosable(TabItem item)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u8BBE\u7F6E\u5728\u5355\u4E2A TabItem \u4E0A\uFF0CFalse \u53EF\u56FA\u5B9A\u6807\u7B7E",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:54",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u8bbe\u7f6e\u5728\u5355\u4e2a TabItem \u4e0a\uff0cFalse \u7981\u6b62\u5173\u95ed\uff0c\u6392\u5e8f\u4ecd\u5141\u8bb8",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:103",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetIsClosable(TabItem item, bool value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u8BBE\u7F6E\u5728\u5355\u4E2A TabItem \u4E0A\uFF0CFalse \u53EF\u56FA\u5B9A\u6807\u7B7E",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:55",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u8bbe\u7f6e\u5728\u5355\u4e2a TabItem \u4e0a\uff0cFalse \u7981\u6b62\u5173\u95ed\uff0c\u6392\u5e8f\u4ecd\u5141\u8bb8",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:108",
           "ValueType": ""
         },
         {
           "Signature": "static ICommand? TabFeatures.GetCloseCommand(TabControl tabs)",
-          "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u5BBF\u4E3B\u5173\u95ED\u547D\u4EE4\uFF0C\u53C2\u6570\u4E3A\u6570\u636E\u9879\uFF1B\u6307\u5B9A\u540E\u7531\u547D\u4EE4\u8D1F\u8D23\u66F4\u65B0\u96C6\u5408",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:56",
+          "Summary": "\u8bfb\u53d6\u9644\u52a0\u5c5e\u6027\u3002\u5bbf\u4e3b\u5173\u95ed\u547d\u4ee4\uff0c\u53c2\u6570\u4e3a\u6570\u636e\u9879\uff1b\u6307\u5b9a\u540e\u7531\u547d\u4ee4\u8d1f\u8d23\u66f4\u65b0\u96c6\u5408",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:113",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetCloseCommand(TabControl tabs, ICommand? value)",
-          "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u5BBF\u4E3B\u5173\u95ED\u547D\u4EE4\uFF0C\u53C2\u6570\u4E3A\u6570\u636E\u9879\uFF1B\u6307\u5B9A\u540E\u7531\u547D\u4EE4\u8D1F\u8D23\u66F4\u65B0\u96C6\u5408",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:57",
+          "Summary": "\u8bbe\u7f6e\u9644\u52a0\u5c5e\u6027\u3002\u5bbf\u4e3b\u5173\u95ed\u547d\u4ee4\uff0c\u53c2\u6570\u4e3a\u6570\u636e\u9879\uff1b\u6307\u5b9a\u540e\u7531\u547d\u4ee4\u8d1f\u8d23\u66f4\u65b0\u96c6\u5408",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:118",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.Close(TabItem item)",
-          "Summary": "\u5C1D\u8BD5\u5173\u95ED\u5BB9\u5668\u5BF9\u5E94\u7684\u6570\u636E\u9879",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:91",
+          "Summary": "\u5c1d\u8bd5\u5173\u95ed\u5bb9\u5668\u5bf9\u5e94\u7684\u6570\u636e\u9879",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:180",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.Move(TabControl tabs, int from, int to)",
-          "Summary": "\u6309\u96F6\u57FA\u7D22\u5F15\u5C1D\u8BD5\u91CD\u6392",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:119",
+          "Summary": "\u6309\u96f6\u57fa\u7d22\u5f15\u5c1d\u8bd5\u91cd\u6392",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:222",
           "ValueType": ""
         },
         {
           "Signature": "TabFeatures.TabFeatures()",
-          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Summary": "\u521b\u5efa\u8be5\u7c7b\u578b\u5b9e\u4f8b\uff1b\u6784\u9020\u53c2\u6570\u53ca\u53ef\u9009\u521d\u503c\u89c1\u5b8c\u6574\u7b7e\u540d\u3002\u5171\u4eab\u6a21\u578b\u4e0e\u8d44\u6e90\u7684\u6240\u6709\u6743\u7531\u8c03\u7528\u65b9\u7ef4\u62a4\u3002",
           "Source": "TheOne.Avalonia/Controls/TabFeatures.Close.cs:13",
           "ValueType": ""
         }
@@ -19567,6 +19785,42 @@
       "Related": [],
       "Fields": [
         {
+          "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.EnableContextMenuProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:12",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.ShowItemIconProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:16",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly AttachedProperty\u003Cobject?\u003E TabFeatures.IconProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:18",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly AttachedProperty\u003CIDataTemplate?\u003E TabFeatures.IconTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:20",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.IsPinnedProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.IsIconVisibleProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
+          "ValueType": ""
+        },
+        {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.CanCloseProperty",
           "Summary": "",
           "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:21",
@@ -19575,19 +19829,19 @@
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.CanReorderProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:22",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:24",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.IsClosableProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:23",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:27",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.ShowCloseButtonProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:24",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:30",
           "ValueType": ""
         },
         {
@@ -19599,7 +19853,7 @@
         {
           "Signature": "static readonly RoutedEvent\u003CTabClosingEventArgs\u003E TabFeatures.TabClosingEvent",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:34",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.cs:36",
           "ValueType": ""
         }
       ]
@@ -29038,6 +29292,622 @@
       ],
       "Related": [],
       "Fields": []
+    },
+    {
+      "Id": "TheOne.Avalonia.Controls.NavPage",
+      "Name": "NavPage",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": true,
+      "IsStatic": false,
+      "Base": "Avalonia.Controls.Primitives.TemplatedControl",
+      "Summary": "Navigation shell with retained, closable card pages and a collapsible sidebar.",
+      "Source": "TheOne.Avalonia/Controls/NavPage.cs:16",
+      "Properties": [
+        {
+          "Name": "ChildrenBinding",
+          "Type": "Avalonia.Data.BindingBase?",
+          "Summary": "\u81ea\u5b9a\u4e49\u5bfc\u822a\u6a21\u578b\u5b50\u7ea7\u7684\u7f16\u8bd1\u7ed1\u5b9a\uff0c\u9ed8\u8ba4\u8bfb\u53d6 NavPageModel.Children\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ChildrenBindingProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:57",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "CollapsedWidth",
+          "Type": "double",
+          "Summary": "\u6536\u7f29\u4fa7\u680f\u5bbd\u5ea6\uff0c\u9ed8\u8ba4 64 DIP\u3002",
+          "Default": "64",
+          "Binding": "OneWay",
+          "Validation": "v =\u003E v \u003E 0 \u0026\u0026 double.IsFinite(v)",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "CollapsedWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:68",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "DefaultHome",
+          "Type": "TheOne.Avalonia.Controls.NavPageModel?",
+          "Summary": "\u9ed8\u8ba4\u9996\u9875\u6a21\u578b\uff0c\u6a21\u677f\u51c6\u5907\u597d\u540e\u81ea\u52a8\u6253\u5f00\uff0c\u5176\u6a21\u578b\u63a7\u5236\u5173\u95ed\u6743\u9650\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "DefaultHomeProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:49",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ExpandedWidth",
+          "Type": "double",
+          "Summary": "\u5c55\u5f00\u4fa7\u680f\u5bbd\u5ea6\uff0c\u9ed8\u8ba4 260 DIP\u3002",
+          "Default": "260",
+          "Binding": "OneWay",
+          "Validation": "v =\u003E v \u003E 0 \u0026\u0026 double.IsFinite(v)",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ExpandedWidthProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:67",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "FooterTemplate",
+          "Type": "Avalonia.Controls.Templates.IDataTemplate?",
+          "Summary": "\u4fa7\u680f\u5e95\u680f\u6a21\u677f\uff0c\u6570\u636e\u4e0a\u4e0b\u6587\u4e3a NavPage\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "FooterTemplateProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:60",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "HeaderIcon",
+          "Type": "object?",
+          "Summary": "\u9ed8\u8ba4\u54c1\u724c\u680f\u56fe\u6807\uff0c\u70b9\u51fb\u5207\u6362 IsCollapsed\uff0c\u9ed8\u8ba4\u652f\u6301 Geometry \u6216\u6587\u672c\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "HeaderIconProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:64",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "HeaderTemplate",
+          "Type": "Avalonia.Controls.Templates.IDataTemplate?",
+          "Summary": "\u4fa7\u680f\u9876\u680f\u6a21\u677f\uff0c\u6570\u636e\u4e0a\u4e0b\u6587\u4e3a NavPage\uff1b\u81ea\u5b9a\u4e49\u6a21\u677f\u9700\u63d0\u4f9b\u5207\u6362\u5165\u53e3\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "HeaderTemplateProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:59",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "HeaderTitle",
+          "Type": "string",
+          "Summary": "\u9ed8\u8ba4\u54c1\u724c\u680f\u6587\u5b57\uff0c\u6536\u7f29\u65f6\u9690\u85cf\u6587\u5b57\u3002",
+          "Default": "\"THE ONE\"",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "HeaderTitleProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:63",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IconBinding",
+          "Type": "Avalonia.Data.BindingBase?",
+          "Summary": "\u81ea\u5b9a\u4e49\u5bfc\u822a\u6a21\u578b\u56fe\u6807\u7684\u7f16\u8bd1\u7ed1\u5b9a\uff0c\u9ed8\u8ba4\u8bfb\u53d6 NavPageModel.Icon\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "IconBindingProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:55",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IsCollapsed",
+          "Type": "bool",
+          "Summary": "\u4fa7\u680f\u6536\u7f29\u72b6\u6001\uff0c\u652f\u6301 TwoWay \u7ed1\u5b9a\u3002",
+          "Default": "false",
+          "Binding": "TwoWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "IsCollapsedProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:65",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ItemsSource",
+          "Type": "System.Collections.IEnumerable?",
+          "Summary": "\u5bfc\u822a\u6570\u636e\u96c6\u5408\uff0c\u9ed8\u8ba4\u4f7f\u7528 NavPageModel\uff1b\u5207\u6362\u96c6\u5408\u4fdd\u7559\u5df2\u6253\u5f00\u9875\u9762\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ItemsSourceProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:48",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "PageTemplate",
+          "Type": "Avalonia.Controls.Templates.IDataTemplate?",
+          "Summary": "\u9875\u9762 ViewModel \u7684\u89c6\u56fe\u6a21\u677f\uff0c\u672a\u6307\u5b9a\u65f6\u4f7f\u7528\u5bbf\u4e3b DataTemplates\uff1b\u5df2\u6253\u5f00\u89c6\u56fe\u4fdd\u7559\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "PageTemplateProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:58",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "RightHeader",
+          "Type": "object?",
+          "Summary": "Right-side custom header content or template data; null lets RightBody fill the right side.",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "RightHeaderProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:61",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "RightHeaderTemplate",
+          "Type": "Avalonia.Controls.Templates.IDataTemplate?",
+          "Summary": "Template for RightHeader data; no header height is reserved when RightHeader is null.",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "RightHeaderTemplateProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:62",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SelectedPage",
+          "Type": "object?",
+          "Summary": "\u53ea\u8bfb\u5f53\u524d\u5bfc\u822a\u6e90\u6a21\u578b\uff0c\u5173\u95ed\u5168\u90e8\u9875\u9762\u540e\u4e3a null\u3002",
+          "Default": "computed / state",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "SelectedPageProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:70",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ShowItemIcon",
+          "Type": "bool",
+          "Summary": "\u662f\u5426\u663e\u793a\u9875\u7b7e\u56fe\u6807\uff0c\u9ed8\u8ba4 True\u3002",
+          "Default": "true",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ShowItemIconProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:66",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "TitleBinding",
+          "Type": "Avalonia.Data.BindingBase?",
+          "Summary": "\u81ea\u5b9a\u4e49\u5bfc\u822a\u6a21\u578b\u6807\u9898\u7684\u7f16\u8bd1\u7ed1\u5b9a\uff0c\u9ed8\u8ba4\u8bfb\u53d6 NavPageModel.Title\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "TitleBindingProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:53",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "TransitionDuration",
+          "Type": "System.TimeSpan",
+          "Summary": "\u4fa7\u680f\u8fc7\u6e21\u65f6\u957f\uff1b\u4e3b\u9898\u9ed8\u8ba4 One.Motion.Expand\uff0c\u96f6\u65f6\u957f\u7acb\u5373\u5b8c\u6210\u3002",
+          "Default": "TimeSpan.FromMilliseconds(200)",
+          "Binding": "OneWay",
+          "Validation": "v =\u003E v \u003E= TimeSpan.Zero",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "TransitionDurationProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:69",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ViewModelBinding",
+          "Type": "Avalonia.Data.BindingBase?",
+          "Summary": "\u81ea\u5b9a\u4e49\u5bfc\u822a\u6a21\u578b\u7684 ViewModel \u7f16\u8bd1\u7ed1\u5b9a\uff1b\u7a7a ViewModel \u4e0d\u6253\u5f00\u9875\u9762\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ViewModelBindingProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:51",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "bool NavPage.OpenPage(object source)",
+          "Summary": "Opens once per model identity and activates the retained page. Null view models are ignored.",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:233",
+          "ValueType": ""
+        },
+        {
+          "Signature": "bool NavPage.ClosePage(object source)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:279",
+          "ValueType": ""
+        },
+        {
+          "Signature": "int NavPage.CloseAllPages()",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:280",
+          "ValueType": ""
+        },
+        {
+          "Signature": "NavPage.NavPage()",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:16",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [
+        "TheOne.Avalonia.Controls.NavPageModel"
+      ],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003CIEnumerable?\u003E NavPage.ItemsSourceProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:18",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CNavPageModel?\u003E NavPage.DefaultHomeProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:19",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavPage.ViewModelBindingProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:20",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavPage.TitleBindingProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:21",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavPage.IconBindingProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:22",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CBindingBase?\u003E NavPage.ChildrenBindingProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:23",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E NavPage.PageTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:24",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E NavPage.HeaderTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:25",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E NavPage.FooterTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:26",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cobject?\u003E NavPage.RightHeaderProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:27",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E NavPage.RightHeaderTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:28",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring\u003E NavPage.HeaderTitleProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:29",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cobject?\u003E NavPage.HeaderIconProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:30",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E NavPage.IsCollapsedProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:31",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E NavPage.ShowItemIconProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:32",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavPage.ExpandedWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:33",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E NavPage.CollapsedWidthProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:34",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CTimeSpan\u003E NavPage.TransitionDurationProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:35",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CNavPage, object?\u003E NavPage.SelectedPageProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPage.cs:36",
+          "ValueType": ""
+        }
+      ]
+    },
+    {
+      "Id": "TheOne.Avalonia.Controls.NavPageModel",
+      "Name": "NavPageModel",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": false,
+      "IsStatic": false,
+      "Base": "Avalonia.AvaloniaObject",
+      "Summary": "Default navigation data. ViewModel is resolved by the host's data templates.",
+      "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:7",
+      "Properties": [
+        {
+          "Name": "Children",
+          "Type": "System.Collections.ObjectModel.ObservableCollection\u003CTheOne.Avalonia.Controls.NavPageModel\u003E",
+          "Summary": "\u53ef\u89c2\u5bdf\u5b50\u7ea7\u96c6\u5408\uff0c\u5206\u7ec4\u4e00\u822c\u4e0d\u8bbe\u7f6e ViewModel\u3002",
+          "Default": "[]",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:19",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Icon",
+          "Type": "object?",
+          "Summary": "\u5bfc\u822a\u4e0e\u9875\u7b7e\u56fe\u6807\uff0c\u9ed8\u8ba4\u652f\u6301 Geometry \u6216\u6587\u672c\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "IconProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:15",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IsClosable",
+          "Type": "bool",
+          "Summary": "\u662f\u5426\u5141\u8bb8\u5173\u95ed\uff0c\u9ed8\u8ba4 True\uff1b\u56fa\u5b9a\u65f6\u4ecd\u7981\u6b62\u5173\u95ed\u3002",
+          "Default": "true",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "IsClosableProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:17",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IsPinned",
+          "Type": "bool",
+          "Summary": "\u662f\u5426\u56fa\u5b9a\u5728\u5de6\u4fa7\uff0c\u9ed8\u8ba4 False\uff1b\u56fa\u5b9a\u65f6\u7981\u6b62\u5173\u95ed\uff0c\u53f3\u952e\u64cd\u4f5c\u56de\u5199\u6b64\u5c5e\u6027\u3002",
+          "Default": "false",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "IsPinnedProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:18",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Title",
+          "Type": "string",
+          "Summary": "\u5bfc\u822a\u4e0e\u9875\u7b7e\u6807\u9898\u3002",
+          "Default": "\"\"",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "TitleProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:14",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ViewModel",
+          "Type": "object?",
+          "Summary": "\u9875\u9762 ViewModel\uff0c\u7531\u5bbf\u4e3b DataTemplates \u6216 PageTemplate \u5448\u73b0\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ViewModelProperty",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:16",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "NavPageModel.NavPageModel()",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:7",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring\u003E NavPageModel.TitleProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:9",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cobject?\u003E NavPageModel.IconProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:10",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cobject?\u003E NavPageModel.ViewModelProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:11",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E NavPageModel.IsClosableProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:12",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E NavPageModel.IsPinnedProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/NavPageModel.cs:13",
+          "ValueType": ""
+        }
+      ]
     }
   ],
   "Styles": [

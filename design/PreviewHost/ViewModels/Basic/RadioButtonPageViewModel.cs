@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class RadioButtonPageViewModel : BasicControlViewModel { }
+
+public sealed class RadioButtonPageViewModel : BasicControlViewModel
+{
+}

@@ -5,5 +5,9 @@ public sealed class DoughnutChart : RadialChartBase
 {
     public override ChartKind Kind => ChartKind.Doughnut;
     private protected override bool HasRadialHole => true;
-    private protected override ChartBase CreateExportSnapshot() => new DoughnutChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new DoughnutChart();
+    }
 }

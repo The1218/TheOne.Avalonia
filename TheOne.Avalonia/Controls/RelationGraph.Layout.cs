@@ -1,13 +1,13 @@
-using global::Avalonia;
-using global::Avalonia.Layout;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Layout;
+using Avalonia.Media;
 
 namespace TheOne.Avalonia.Controls;
 
 public partial class RelationGraph
 {
-    private Size _extent;
     private double[] _depthOffsets = [];
+    private Size _extent;
     private bool Horizontal => Orientation == Orientation.Horizontal;
 
     protected override Size MeasureOverride(Size availableSize)
@@ -18,12 +18,16 @@ public partial class RelationGraph
 
     private Size MeasureTree()
     {
-        if (_nodes.Count == 0) { _extent = default; return new Size(Padding.Left + Padding.Right, Padding.Top + Padding.Bottom); }
+        if (_nodes.Count == 0)
+        {
+            _extent = default;
+            return new Size(Padding.Left + Padding.Right, Padding.Top + Padding.Bottom);
+        }
+
         var depths = new double[_nodes.Max(node => node.Depth) + 1];
         foreach (var node in _nodes)
-        {
-            depths[node.Depth] = Math.Max(depths[node.Depth], Horizontal ? node.View.DesiredSize.Width : node.View.DesiredSize.Height);
-        }
+            depths[node.Depth] = Math.Max(depths[node.Depth],
+                Horizontal ? node.View.DesiredSize.Width : node.View.DesiredSize.Height);
         _depthOffsets = new double[depths.Length];
         for (var i = 1; i < depths.Length; i++) _depthOffsets[i] = _depthOffsets[i - 1] + depths[i - 1] + LevelSpacing;
         for (var i = _nodes.Count - 1; i >= 0; i--)
@@ -32,17 +36,25 @@ public partial class RelationGraph
             var childSpan = node.Children.Sum(child => child.Span) + Math.Max(0, node.Children.Count - 1) * NodeSpacing;
             node.Span = Math.Max(Horizontal ? node.View.DesiredSize.Height : node.View.DesiredSize.Width, childSpan);
         }
+
         _nodes[0].CrossStart = 0;
         foreach (var node in _nodes)
         {
             var size = node.View.DesiredSize;
             var primary = _depthOffsets[node.Depth];
             var cross = node.CrossStart + (node.Span - (Horizontal ? size.Height : size.Width)) / 2;
-            node.Layout = Horizontal ? new Rect(primary, cross, size.Width, size.Height) : new Rect(cross, primary, size.Width, size.Height);
+            node.Layout = Horizontal
+                ? new Rect(primary, cross, size.Width, size.Height)
+                : new Rect(cross, primary, size.Width, size.Height);
             var childSpan = node.Children.Sum(child => child.Span) + Math.Max(0, node.Children.Count - 1) * NodeSpacing;
             var start = node.CrossStart + (node.Span - childSpan) / 2;
-            foreach (var child in node.Children) { child.CrossStart = start; start += child.Span + NodeSpacing; }
+            foreach (var child in node.Children)
+            {
+                child.CrossStart = start;
+                start += child.Span + NodeSpacing;
+            }
         }
+
         var length = _depthOffsets[^1] + depths[^1];
         _extent = Horizontal ? new Size(length, _nodes[0].Span) : new Size(_nodes[0].Span, length);
         return new Size(_extent.Width + Padding.Left + Padding.Right, _extent.Height + Padding.Top + Padding.Bottom);
@@ -72,7 +84,8 @@ public partial class RelationGraph
         foreach (var node in _nodes)
         {
             if (node.Parent is not { } parent) continue;
-            var p = parent.View.Bounds; var c = node.View.Bounds;
+            var p = parent.View.Bounds;
+            var c = node.View.Bounds;
             var a = Horizontal ? new Point(p.Right, p.Center.Y) : new Point(p.Center.X, p.Bottom);
             var d = Horizontal ? new Point(c.Left, c.Center.Y) : new Point(c.Center.X, c.Top);
             // Use the common inter-level gap even when one parent's content is taller.
@@ -85,8 +98,10 @@ public partial class RelationGraph
                 path.BeginFigure(a, false);
                 Corner(path, a, b, end);
                 Corner(path, b, end, d);
-                path.LineTo(d); path.EndFigure(false);
+                path.LineTo(d);
+                path.EndFigure(false);
             }
+
             context.DrawGeometry(null, pen, geometry);
             if (PortRadius > 0)
             {
@@ -101,7 +116,12 @@ public partial class RelationGraph
         var incoming = new Vector(corner.X - before.X, corner.Y - before.Y);
         var outgoing = new Vector(after.X - corner.X, after.Y - corner.Y);
         var radius = Math.Min(ConnectorCornerRadius, Math.Min(incoming.Length, outgoing.Length) / 2);
-        if (radius <= 0) { path.LineTo(corner); return; }
+        if (radius <= 0)
+        {
+            path.LineTo(corner);
+            return;
+        }
+
         path.LineTo(corner - incoming / incoming.Length * radius);
         path.QuadraticBezierTo(corner, corner + outgoing / outgoing.Length * radius);
     }

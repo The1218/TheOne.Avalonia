@@ -1,26 +1,79 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="{x:Type one:IconButton}" TargetType="one:IconButton" BasedOn="{StaticResource {x:Type Button}}">
-    <Setter Property="Template">
-      <ControlTemplate>
-        <ContentPresenter Name="PART_ContentPresenter" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-          <one:IconButtonPanel IconPlacement="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconPlacement}" Spacing="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSpacing}">
-            <Viewbox Name="PART_IconSizer" Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" Stretch="Uniform" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}">
-            <ContentPresenter Name="PART_IconPresenter" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}" Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Icon}" ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconTemplate}" VerticalAlignment="Center">
-              <ContentPresenter.DataTemplates>
-                <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry"><PathIcon Data="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" /></DataTemplate>
-              </ContentPresenter.DataTemplates>
-            </ContentPresenter>
-            </Viewbox>
-            <ContentPresenter Name="PART_LabelPresenter" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasLabel}" Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Content}" ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ContentTemplate}" RecognizesAccessKey="True" VerticalAlignment="Center" />
-          <one:LoadingIndicator Name="PART_LoadingIndicator" IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IsLoading}" Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" />
-          </one:IconButtonPanel>
-        </ContentPresenter>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:icon-only"><Setter Property="Padding" Value="0" /><Setter Property="MinWidth" Value="36" /></Style>
-    <Style Selector="^.one-small:icon-only"><Setter Property="MinWidth" Value="30" /></Style>
-    <Style Selector="^.one-large:icon-only"><Setter Property="MinWidth" Value="44" /></Style>
-    <Style Selector="^.one-small"><Setter Property="IconSize" Value="13" /><Setter Property="IconSpacing" Value="6" /></Style>
-    <Style Selector="^.one-large"><Setter Property="IconSize" Value="19" /><Setter Property="IconSpacing" Value="10" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type Button}}"
+        TargetType="one:IconButton"
+        x:Key="{x:Type one:IconButton}">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    Name="PART_ContentPresenter"
+                    Padding="{TemplateBinding Padding}"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <one:IconButtonPanel IconPlacement="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconPlacement}" Spacing="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSpacing}">
+                        <Viewbox
+                            Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
+                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
+                            Name="PART_IconSizer"
+                            Stretch="Uniform"
+                            Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}">
+                            <ContentPresenter
+                                Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Icon}"
+                                ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconTemplate}"
+                                IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
+                                Name="PART_IconPresenter"
+                                VerticalAlignment="Center">
+                                <ContentPresenter.DataTemplates>
+                                    <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
+                                        <PathIcon
+                                            Data="{Binding}"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch" />
+                                    </DataTemplate>
+                                </ContentPresenter.DataTemplates>
+                            </ContentPresenter>
+                        </Viewbox>
+                        <ContentPresenter
+                            Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Content}"
+                            ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ContentTemplate}"
+                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasLabel}"
+                            Name="PART_LabelPresenter"
+                            RecognizesAccessKey="True"
+                            VerticalAlignment="Center" />
+                        <one:LoadingIndicator
+                            Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
+                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IsLoading}"
+                            Name="PART_LoadingIndicator"
+                            Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" />
+                    </one:IconButtonPanel>
+                </ContentPresenter>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:icon-only">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="MinWidth" Value="36" />
+        </Style>
+        <Style Selector="^.one-small:icon-only">
+            <Setter Property="MinWidth" Value="30" />
+        </Style>
+        <Style Selector="^.one-large:icon-only">
+            <Setter Property="MinWidth" Value="44" />
+        </Style>
+        <Style Selector="^.one-small">
+            <Setter Property="IconSize" Value="13" />
+            <Setter Property="IconSpacing" Value="6" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="IconSize" Value="19" />
+            <Setter Property="IconSpacing" Value="10" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

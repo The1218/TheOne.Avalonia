@@ -84,7 +84,19 @@ Drag output to input or use Tab/Enter on native port buttons. Escape cancels. Sp
 
 IsPanMode selects the canvas tool; alignment moves selected nodes to a common top coordinate. Click/drag the minimap to navigate. FitPadding reserves space when fitting, including room for the demo runtime badge. Validation opens a list with clickable issue navigation. IsAnnotation nodes are excluded from the execution-node count.
 
-IsReadOnly blocks editor writes while permitting selection and viewport interaction. Hosts must disable custom inspector writes, as demonstrated; host model updates remain allowed. ShowNodeLibrary / ShowProperties let the host collapse panels for narrow views.
+IsReadOnly blocks editor writes while permitting selection and viewport interaction. Hosts must disable custom inspector writes, as demonstrated; host model updates remain allowed. ShowNodeLibrary / ShowProperties let the host collapse panels for narrow views. After the library's collapse button hides the panel, a persistent "节点库" (node library) toggle in the canvas toolbar reopens it with a pointer or keyboard. Its two-way binding updates ShowNodeLibrary without replacing the host binding.
+
+The document indexes node IDs, connection adjacency, endpoint counts and cycle components. Only collection structure changes invalidate the corresponding index; title, position, runtime state and edge-label updates retain it. Node and endpoint IDs are init-only, so replace the model to change an ID. Reset, Replace, Move and replacing Document resolve against the current models; invalid duplicate IDs still resolve to the first collection item and produce validation errors. Node removal and selection matching use set lookups, and the canvas and minimap share the document indexes.
+
+## Canvas caching and offscreen nodes
+
+The canvas caches full-graph node sizes, port endpoints and connection routes, reusing world-coordinate results during pan and zoom. Node size, port, position and connection changes update the affected results. Offscreen connections are culled using their route bounds; a connection crossing the viewport remains drawn and selectable even when both endpoints are offscreen. FitToView, the minimap and validation always use the full document rather than only attached node views.
+
+The first layout still measures every node to capture actual wrapped-text heights and port positions. These changes primarily improve subsequent panning, repainting and steady-state default-view retention, rather than first-layout cost. At most 64 inactive default views are cached; older views are released. A cached view is reused only for the same model, never rebound to another node. Custom templates and editor content prioritize state preservation and are not subject to this limit. Models, metrics and edge caches still grow with the full document; this is not business-data virtualization. Pure panning reuses edge geometry and labels; zooming rebuilds the corresponding geometry while preserving screen-sized corners and text. Font and density changes remeasure nodes.
+
+Default stateless nodes can be unloaded outside the viewport and its overscan area, then reused or rebuilt from the current model on return. Selection belongs to models and survives offscreen recycling. Custom NodeTemplate / ContentTemplate views may contain drafts, caret positions or other local state, so their view identity is retained. Nodes with active editing, keyboard focus, pointer capture or an open context menu also remain attached throughout the interaction. Removing a node, replacing it with a new object, or switching Document releases the previous view so a new model with the same ID cannot inherit its drafts or selection. Explicitly replacing a template rebuilds its content; local drafts are not preserved across template replacement.
+
+These behaviors add no public switches and preserve the existing binding API. State preservation takes priority over unloading custom templates; hosts with many stateful nodes still own their business data and editing scope.
 
 Connections reject missing endpoints, wrong direction/type, duplicates, self-edges, capacity overflow and cycles. AllowCycles explicitly permits cycles; ConnectionValidator adds host constraints. Validate(allowCycles) checks structure, properties and references. Domain validation and permissions belong to the host; no specific business start/end node types are mandatory.
 
@@ -112,7 +124,7 @@ dotnet .preview/workflow-editor/artifacts/bin/PreviewHost/debug/PreviewHost.dll 
 
 NativeAotSmoke supports --verify-workflow. Checks cover contracts, JSON, compiled templates, actual pointer/keyboard input, light/dark, three densities and narrow views with panels folded. Native file dialogs require desktop verification; headless checks cover their shared JSON path.
 
-Initial routing uses directly drawn rounded orthogonal edges and layered arrangement. Full obstacle routing, bend editing and node virtualization are not included. The host owns rule execution and output evaluation.
+Routing uses directly drawn rounded orthogonal edges and layered arrangement, with offscreen culling and safe node-view recycling. Full obstacle routing and bend editing are not included. The host owns rule execution and output evaluation.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

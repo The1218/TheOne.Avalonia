@@ -7,15 +7,35 @@ namespace TheOne.Avalonia.Controls;
 /// <summary>The default model for a single-root relation tree.</summary>
 public class RelationGraphNode : INotifyPropertyChanged
 {
+    private IList<RelationGraphNode>? _children = new ObservableCollection<RelationGraphNode>();
+    private object? _content;
     private object? _icon;
     private object? _title;
-    private object? _content;
-    private IList<RelationGraphNode>? _children = new ObservableCollection<RelationGraphNode>();
 
-    public object? Icon { get => _icon; set => Set(ref _icon, value); }
-    public object? Title { get => _title; set => Set(ref _title, value); }
-    public object? Content { get => _content; set => Set(ref _content, value); }
-    public IList<RelationGraphNode>? Children { get => _children; set => Set(ref _children, value); }
+    public object? Icon
+    {
+        get => _icon;
+        set => Set(ref _icon, value);
+    }
+
+    public object? Title
+    {
+        get => _title;
+        set => Set(ref _title, value);
+    }
+
+    public object? Content
+    {
+        get => _content;
+        set => Set(ref _content, value);
+    }
+
+    public IList<RelationGraphNode>? Children
+    {
+        get => _children;
+        set => Set(ref _children, value);
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected void Set<T>(ref T field, T value, [CallerMemberName] string? name = null)

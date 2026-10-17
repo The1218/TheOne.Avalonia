@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class SplitButtonPageViewModel : BasicControlViewModel { }
+
+public sealed class SplitButtonPageViewModel : BasicControlViewModel
+{
+}

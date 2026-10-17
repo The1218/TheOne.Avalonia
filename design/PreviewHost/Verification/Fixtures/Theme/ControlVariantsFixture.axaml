@@ -1,82 +1,155 @@
 <UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
              x:Class="TheOne.DesignPreview.ControlVariantsFixture" x:DataType="local:ControlVariantsFixtureModel">
-  <StackPanel Spacing="18">
-    <TextBlock Text="控件外观验证" FontSize="24" FontWeight="SemiBold" />
-    <TextBlock Text="统一画布、输入、操作、反馈与图表配色。纯色承担日常交互，渐变用于重点操作和局部背景。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-    <WrapPanel>
-      <Border Background="{DynamicResource One.Accent}" Width="112" Height="46"><TextBlock Text="主色" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <Border Background="{DynamicResource One.Info}" Width="112" Height="46"><TextBlock Text="信息" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <Border Background="{DynamicResource One.Success}" Width="112" Height="46"><TextBlock Text="成功" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <Border Background="{DynamicResource One.Warning}" Width="112" Height="46"><TextBlock Text="警告" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <Border Background="{DynamicResource One.Danger}" Width="112" Height="46"><TextBlock Text="错误" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-    </WrapPanel>
-    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
-      <Border Background="{DynamicResource One.Gradient.Brand}" Height="48" CornerRadius="8"><TextBlock Text="品牌渐变" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <Border Grid.Column="1" Background="{DynamicResource One.Gradient.Glow}" CornerRadius="8"><TextBlock Text="柔光背景" Foreground="{DynamicResource One.Text}" HorizontalAlignment="Center" VerticalAlignment="Center" /></Border>
-      <StackPanel Grid.Column="2" Spacing="4"><Border Background="{DynamicResource One.Gradient.Data}" Height="26" CornerRadius="6" /><TextBlock Text="数据填充资源" FontSize="12" Foreground="{DynamicResource One.Muted}" /></StackPanel>
-    </Grid>
-    <TextBlock Text="操作层次" FontWeight="SemiBold" />
-    <WrapPanel>
-      <Button Content="主操作" Classes="primary" Command="{Binding InvokeCommand}" CommandParameter="主操作" Margin="0,0,10,8" />
-      <Button Name="ThemeGradientButton" Content="渐变操作" Classes="gradient" Command="{Binding InvokeCommand}" CommandParameter="渐变操作" Margin="0,0,10,8" />
-      <Button Name="ThemeSoftButton" Content="柔和操作" Classes="soft" Command="{Binding InvokeCommand}" Margin="0,0,10,8" />
-      <one:IconButton Name="ThemeIconButton" Content="图标操作" Classes="gradient" Command="{Binding InvokeCommand}" Margin="0,0,10,8">
-        <one:IconButton.Icon><PathIcon Data="M 2,8 L 6,12 L 14,3" /></one:IconButton.Icon>
-      </one:IconButton>
-      <SplitButton Name="ThemeSplitButton" Content="分裂操作" Classes="gradient" Command="{Binding InvokeCommand}" Margin="0,0,10,8">
-        <SplitButton.Flyout><Flyout><TextBlock Text="原生 Flyout 与键盘操作保持可用" /></Flyout></SplitButton.Flyout>
-      </SplitButton>
-      <Button Content="轮廓" Classes="outline" Margin="0,0,10,8" />
-      <Button Content="危险操作" Classes="danger" Margin="0,0,10,8" />
-      <Button Name="ThemeDisabledButton" Content="禁用渐变" Classes="gradient" IsEnabled="False" Margin="0,0,10,8" />
-      <ToggleButton Name="ThemeSoftToggle" Content="柔和切换" Classes="soft" Margin="0,0,10,8" />
-      <ToggleSplitButton Name="ThemeToggleSplit" Content="渐变切换" Classes="gradient" Margin="0,0,10,8">
-        <ToggleSplitButton.Flyout><Flyout><TextBlock Text="切换状态与下拉独立" /></Flyout></ToggleSplitButton.Flyout>
-      </ToggleSplitButton>
-    </WrapPanel>
-    <TextBlock Name="ThemeCommandStatus" Text="{Binding Status}" Foreground="{DynamicResource One.Muted}" />
-    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="12">
-      <TextBox Name="ThemeFilledInput" Classes="filled" Text="{Binding Text, Mode=TwoWay}" PlaceholderText="填充输入 · 点击检查焦点" />
-      <ComboBox Name="ThemeFilledCombo" Grid.Column="1" Classes="filled" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" HorizontalAlignment="Stretch" />
-      <TextBox Name="ThemeErrorInput" Grid.Row="1" Classes="filled error" Text="校验错误仍清晰" />
-      <NumericUpDown Name="ThemeFilledNumber" Grid.Column="1" Grid.Row="1" Classes="filled" Value="{Binding Number, Mode=TwoWay}" />
-      <AutoCompleteBox Name="ThemeFilledAutoComplete" Grid.Row="2" Grid.ColumnSpan="2" Classes="filled" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" />
-    </Grid>
-    <WrapPanel>
-      <one:Tag Name="ThemeInformationTag" Content="信息" Status="Information" Margin="0,0,8,0" />
-      <one:Tag Content="成功" Status="Success" Margin="0,0,8,0" />
-      <one:Tag Content="警告" Status="Warning" Variant="Outline" Margin="0,0,8,0" />
-      <one:Tag Content="错误" Status="Error" Variant="Solid" />
-    </WrapPanel>
-    <StackPanel Spacing="10">
-      <TextBlock Text="进度与状态" FontWeight="SemiBold" />
-      <ProgressBar Name="ThemeGradientProgress" Classes="gradient" Value="68" />
-      <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12"><ProgressBar Classes="success" Value="100" /><ProgressBar Grid.Column="1" Classes="info" Value="70" /><ProgressBar Grid.Column="2" Classes="warning" Value="48" /><ProgressBar Grid.Column="3" Classes="danger" Value="24" /></Grid>
+    <StackPanel Spacing="18">
+        <TextBlock Text="控件外观验证" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock Text="统一画布、输入、操作、反馈与图表配色。纯色承担日常交互，渐变用于重点操作和局部背景。" TextWrapping="Wrap"
+                   Foreground="{DynamicResource One.Muted}" />
+        <WrapPanel>
+            <Border Background="{DynamicResource One.Accent}" Width="112" Height="46">
+                <TextBlock Text="主色" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Border Background="{DynamicResource One.Info}" Width="112" Height="46">
+                <TextBlock Text="信息" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Border Background="{DynamicResource One.Success}" Width="112" Height="46">
+                <TextBlock Text="成功" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Border Background="{DynamicResource One.Warning}" Width="112" Height="46">
+                <TextBlock Text="警告" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Border Background="{DynamicResource One.Danger}" Width="112" Height="46">
+                <TextBlock Text="错误" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+        </WrapPanel>
+        <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12">
+            <Border Background="{DynamicResource One.Gradient.Brand}" Height="48" CornerRadius="8">
+                <TextBlock Text="品牌渐变" Foreground="{DynamicResource One.OnAccent}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <Border Grid.Column="1" Background="{DynamicResource One.Gradient.Glow}" CornerRadius="8">
+                <TextBlock Text="柔光背景" Foreground="{DynamicResource One.Text}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Grid.Column="2" Spacing="4">
+                <Border Background="{DynamicResource One.Gradient.Data}" Height="26" CornerRadius="6" />
+                <TextBlock Text="数据填充资源" FontSize="12" Foreground="{DynamicResource One.Muted}" />
+            </StackPanel>
+        </Grid>
+        <TextBlock Text="操作层次" FontWeight="SemiBold" />
+        <WrapPanel>
+            <Button Content="主操作" Classes="primary" Command="{Binding InvokeCommand}" CommandParameter="主操作"
+                    Margin="0,0,10,8" />
+            <Button Name="ThemeGradientButton" Content="渐变操作" Classes="gradient" Command="{Binding InvokeCommand}"
+                    CommandParameter="渐变操作" Margin="0,0,10,8" />
+            <Button Name="ThemeSoftButton" Content="柔和操作" Classes="soft" Command="{Binding InvokeCommand}"
+                    Margin="0,0,10,8" />
+            <one:IconButton Name="ThemeIconButton" Content="图标操作" Classes="gradient" Command="{Binding InvokeCommand}"
+                            Margin="0,0,10,8">
+                <one:IconButton.Icon>
+                    <PathIcon Data="M 2,8 L 6,12 L 14,3" />
+                </one:IconButton.Icon>
+            </one:IconButton>
+            <SplitButton Name="ThemeSplitButton" Content="分裂操作" Classes="gradient" Command="{Binding InvokeCommand}"
+                         Margin="0,0,10,8">
+                <SplitButton.Flyout>
+                    <Flyout>
+                        <TextBlock Text="原生 Flyout 与键盘操作保持可用" />
+                    </Flyout>
+                </SplitButton.Flyout>
+            </SplitButton>
+            <Button Content="轮廓" Classes="outline" Margin="0,0,10,8" />
+            <Button Content="危险操作" Classes="danger" Margin="0,0,10,8" />
+            <Button Name="ThemeDisabledButton" Content="禁用渐变" Classes="gradient" IsEnabled="False" Margin="0,0,10,8" />
+            <ToggleButton Name="ThemeSoftToggle" Content="柔和切换" Classes="soft" Margin="0,0,10,8" />
+            <ToggleSplitButton Name="ThemeToggleSplit" Content="渐变切换" Classes="gradient" Margin="0,0,10,8">
+                <ToggleSplitButton.Flyout>
+                    <Flyout>
+                        <TextBlock Text="切换状态与下拉独立" />
+                    </Flyout>
+                </ToggleSplitButton.Flyout>
+            </ToggleSplitButton>
+        </WrapPanel>
+        <TextBlock Name="ThemeCommandStatus" Text="{Binding Status}" Foreground="{DynamicResource One.Muted}" />
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="16" RowSpacing="12">
+            <TextBox Name="ThemeFilledInput" Classes="filled" Text="{Binding Text, Mode=TwoWay}"
+                     PlaceholderText="填充输入 · 点击检查焦点" />
+            <ComboBox Name="ThemeFilledCombo" Grid.Column="1" Classes="filled" ItemsSource="{Binding Items}"
+                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" HorizontalAlignment="Stretch" />
+            <TextBox Name="ThemeErrorInput" Grid.Row="1" Classes="filled error" Text="校验错误仍清晰" />
+            <NumericUpDown Name="ThemeFilledNumber" Grid.Column="1" Grid.Row="1" Classes="filled"
+                           Value="{Binding Number, Mode=TwoWay}" />
+            <AutoCompleteBox Name="ThemeFilledAutoComplete" Grid.Row="2" Grid.ColumnSpan="2" Classes="filled"
+                             ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" />
+        </Grid>
+        <WrapPanel>
+            <one:Tag Name="ThemeInformationTag" Content="信息" Status="Information" Margin="0,0,8,0" />
+            <one:Tag Content="成功" Status="Success" Margin="0,0,8,0" />
+            <one:Tag Content="警告" Status="Warning" Variant="Outline" Margin="0,0,8,0" />
+            <one:Tag Content="错误" Status="Error" Variant="Solid" />
+        </WrapPanel>
+        <StackPanel Spacing="10">
+            <TextBlock Text="进度与状态" FontWeight="SemiBold" />
+            <ProgressBar Name="ThemeGradientProgress" Classes="gradient" Value="68" />
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12">
+                <ProgressBar Classes="success" Value="100" /><ProgressBar Grid.Column="1" Classes="info" Value="70" />
+                <ProgressBar Grid.Column="2" Classes="warning" Value="48" />
+                <ProgressBar Grid.Column="3" Classes="danger" Value="24" />
+            </Grid>
+        </StackPanel>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+            <one:InfoCard Name="ThemeGlowCard" Classes="glow" Header="柔光标题" Content="背景渐变只用于标题，正文保持纯色。"
+                          Footer="正文与页脚仅有细微色差" />
+            <one:InfoCard Name="ThemeFlatCard" Grid.Column="1" Classes="flat" Header="嵌入式卡片"
+                          Content="去除外边框与分割线，适合组合布局。" Footer="背景仍可由属性覆盖" />
+        </Grid>
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+            <DataGrid Name="ThemeGrid" Classes="borderless" Height="220" ItemsSource="{Binding Rows}"
+                      AutoGenerateColumns="False" MaxColumnWidth="240" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:DataType="local:ControlVariantsRow" Header="控件" Binding="{Binding Name}" />
+                    <DataGridTextColumn x:DataType="local:ControlVariantsRow" Header="类别" Binding="{Binding Category}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <one:LineChart Name="ThemeChart" Grid.Column="1" Height="220" Title="六个独立系列色"
+                           SeriesSource="{Binding Series}" />
+        </Grid>
+        <TextBlock Text="嵌入列表 · 原生虚拟化" FontWeight="SemiBold" />
+        <ListBox Name="ThemeList" Classes="cards" Height="110" ItemsSource="{Binding Items}"
+                 SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="12">
+            <TextBox Name="UnderlinedText" Classes="underlined" Text="{Binding Text, Mode=TwoWay}" />
+            <ComboBox Name="UnderlinedCombo" Grid.Column="1" Classes="underlined" ItemsSource="{Binding Items}"
+                      SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+            <NumericUpDown Name="UnderlinedNumber" Grid.Row="1" Classes="underlined"
+                           Value="{Binding Number, Mode=TwoWay}" />
+            <AutoCompleteBox Name="UnderlinedAutoComplete" Grid.Row="1" Grid.Column="1" Classes="underlined"
+                             ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" />
+        </Grid>
+        <WrapPanel>
+            <DatePicker Name="FilledDate" Classes="filled" SelectedDate="{Binding Date, Mode=TwoWay}" Margin="0,0,12,8" />
+            <TimePicker Name="FilledTime" Classes="filled" SelectedTime="{Binding Time, Mode=TwoWay}" Margin="0,0,12,8" />
+            <CalendarDatePicker Name="FilledCalendar" Classes="filled"
+                                SelectedDate="{Binding CalendarDate, Mode=TwoWay}" Width="250" />
+        </WrapPanel>
+        <one:InfoCard Name="OutlinedCard" Classes="outlined" Header="描边信息卡片" Content="共享语义色、内容槽与分割线" />
+        <TabControl Name="PillsTabs" Classes="pills" ItemsSource="{Binding Items}"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Height="150">
+            <TabControl.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{Binding}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{Binding}" Margin="16" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
     </StackPanel>
-    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-      <one:InfoCard Name="ThemeGlowCard" Classes="glow" Header="柔光标题" Content="背景渐变只用于标题，正文保持纯色。" Footer="正文与页脚仅有细微色差" />
-      <one:InfoCard Name="ThemeFlatCard" Grid.Column="1" Classes="flat" Header="嵌入式卡片" Content="去除外边框与分割线，适合组合布局。" Footer="背景仍可由属性覆盖" />
-    </Grid>
-    <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-      <DataGrid Name="ThemeGrid" Classes="borderless" Height="220" ItemsSource="{Binding Rows}" AutoGenerateColumns="False" MaxColumnWidth="240" IsReadOnly="True">
-        <DataGrid.Columns><DataGridTextColumn x:DataType="local:ControlVariantsRow" Header="控件" Binding="{Binding Name}" /><DataGridTextColumn x:DataType="local:ControlVariantsRow" Header="类别" Binding="{Binding Category}" /></DataGrid.Columns>
-      </DataGrid>
-      <one:LineChart Name="ThemeChart" Grid.Column="1" Height="220" Title="六个独立系列色" SeriesSource="{Binding Series}" />
-    </Grid>
-    <TextBlock Text="嵌入列表 · 原生虚拟化" FontWeight="SemiBold" />
-    <ListBox Name="ThemeList" Classes="cards" Height="110" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
-  <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="12">
-<TextBox Name="UnderlinedText" Classes="underlined" Text="{Binding Text, Mode=TwoWay}" />
-<ComboBox Name="UnderlinedCombo" Grid.Column="1" Classes="underlined" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
-<NumericUpDown Name="UnderlinedNumber" Grid.Row="1" Classes="underlined" Value="{Binding Number, Mode=TwoWay}" />
-<AutoCompleteBox Name="UnderlinedAutoComplete" Grid.Row="1" Grid.Column="1" Classes="underlined" ItemsSource="{Binding Items}" Text="{Binding Text, Mode=TwoWay}" />
-</Grid>
-<WrapPanel><DatePicker Name="FilledDate" Classes="filled" SelectedDate="{Binding Date, Mode=TwoWay}" Margin="0,0,12,8" /><TimePicker Name="FilledTime" Classes="filled" SelectedTime="{Binding Time, Mode=TwoWay}" Margin="0,0,12,8" /><CalendarDatePicker Name="FilledCalendar" Classes="filled" SelectedDate="{Binding CalendarDate, Mode=TwoWay}" Width="250" /></WrapPanel>
-<one:InfoCard Name="OutlinedCard" Classes="outlined" Header="描边信息卡片" Content="共享语义色、内容槽与分割线" />
-<TabControl Name="PillsTabs" Classes="pills" ItemsSource="{Binding Items}" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" Height="150">
-<TabControl.ItemTemplate><DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" /></DataTemplate></TabControl.ItemTemplate>
-<TabControl.ContentTemplate><DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" Margin="16" /></DataTemplate></TabControl.ContentTemplate>
-</TabControl>
-</StackPanel>
 </UserControl>

@@ -17,7 +17,7 @@ public sealed class LoginDemoViewModel : ReactiveObject
         _completeLogin = completeLogin;
         _showError = showError;
         var canExecute = Changed.Where(change => change.PropertyName == nameof(CanEdit))
-            .Select(_ => CanEdit).StartWith(new[] { CanEdit }).DistinctUntilChanged();
+            .Select(_ => CanEdit).StartWith(CanEdit).DistinctUntilChanged();
         LoginCommand = ReactiveCommand.CreateFromTask<object?>(_ => LoginAsync(), canExecute);
         CancelCommand = ReactiveCommand.Create<object?>(_ => cancel());
     }

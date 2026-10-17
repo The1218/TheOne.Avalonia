@@ -4,5 +4,9 @@ namespace TheOne.Avalonia.Controls;
 public sealed class PieChart : RadialChartBase
 {
     public override ChartKind Kind => ChartKind.Pie;
-    private protected override ChartBase CreateExportSnapshot() => new PieChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new PieChart();
+    }
 }

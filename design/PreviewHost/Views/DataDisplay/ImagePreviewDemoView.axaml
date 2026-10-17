@@ -1,30 +1,33 @@
 <UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
-             x:Class="TheOne.DesignPreview.ImagePreviewDemoView" x:DataType="local:ImagePreviewDemoViewModel" x:CompileBindings="True">
-  <StackPanel Spacing="16">
-    <TextBlock Text="ImagePreview · 图片预览" FontSize="22" FontWeight="SemiBold" />
-    <TextBlock Text="网络地址、Bitmap 和本地路径共用预览界面。滚轮缩放、拖动平移、双击切换适应窗口与 1:1；多图支持左右键。"
-               TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-      <TextBox Name="NetworkAddress" Text="{Binding NetworkAddress}" PlaceholderText="输入 HTTP(S) 图片地址" />
-      <Button Grid.Column="1" Content="预览网络图片" Click="OnNetwork" />
-    </Grid>
-    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-      <TextBox Name="LocalPath" Text="{Binding LocalPath}" PlaceholderText="输入本地图片路径，或选择文件" />
-      <Button Grid.Column="1" Content="选择文件" Click="OnPickFile" />
-      <Button Grid.Column="2" Content="预览本地图片" Click="OnLocal" />
-    </Grid>
-    <WrapPanel>
-      <Button Content="使用 Bitmap 示例" Click="OnBitmap" Margin="0,0,8,8" />
-      <Button Content="将当前来源加入多图" Click="OnAddCurrent" Margin="0,0,8,8" />
-    </WrapPanel>
-    <TextBlock Text="{Binding SourceDescription}" Foreground="{DynamicResource One.Muted}" />
-    <TextBlock Text="单张预览" FontSize="16" FontWeight="SemiBold" />
-    <one:ImagePreview Name="SingleImagePreview" Source="{Binding SingleSource}" Height="440" />
-    <Grid ColumnDefinitions="*,Auto">
-      <TextBlock Text="多张预览 · 默认第二张为透明 Bitmap，可加入网络和本地来源" VerticalAlignment="Center" TextWrapping="Wrap" />
-      <NumericUpDown Grid.Column="1" Name="ImageIndex" Value="{Binding SelectedIndex}" Minimum="0" Maximum="999" Width="100" ToolTip.Tip="SelectedIndex（从 0 开始）" />
-    </Grid>
-    <one:ImagePreview Name="MultipleImagePreview" ItemsSource="{Binding Images}" SelectedIndex="{Binding SelectedIndex}" Height="440" />
-  </StackPanel>
+             x:Class="TheOne.DesignPreview.ImagePreviewDemoView" x:DataType="local:ImagePreviewDemoViewModel"
+             x:CompileBindings="True">
+    <StackPanel Spacing="16">
+        <TextBlock Text="ImagePreview · 图片预览" FontSize="22" FontWeight="SemiBold" />
+        <TextBlock Text="网络地址、Bitmap 和本地路径共用预览界面。滚轮缩放、拖动平移、双击切换适应窗口与 1:1；多图支持左右键。"
+                   TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+            <TextBox Name="NetworkAddress" Text="{Binding NetworkAddress}" PlaceholderText="输入 HTTP(S) 图片地址" />
+            <Button Grid.Column="1" Content="预览网络图片" Click="OnNetwork" />
+        </Grid>
+        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+            <TextBox Name="LocalPath" Text="{Binding LocalPath}" PlaceholderText="输入本地图片路径，或选择文件" />
+            <Button Grid.Column="1" Content="选择文件" Click="OnPickFile" />
+            <Button Grid.Column="2" Content="预览本地图片" Click="OnLocal" />
+        </Grid>
+        <WrapPanel>
+            <Button Content="使用 Bitmap 示例" Click="OnBitmap" Margin="0,0,8,8" />
+            <Button Content="将当前来源加入多图" Click="OnAddCurrent" Margin="0,0,8,8" />
+        </WrapPanel>
+        <TextBlock Text="{Binding SourceDescription}" Foreground="{DynamicResource One.Muted}" />
+        <TextBlock Text="单张预览" FontSize="16" FontWeight="SemiBold" />
+        <one:ImagePreview Name="SingleImagePreview" Source="{Binding SingleSource}" Height="440" />
+        <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="多张预览 · 默认第二张为透明 Bitmap，可加入网络和本地来源" VerticalAlignment="Center" TextWrapping="Wrap" />
+            <NumericUpDown Grid.Column="1" Name="ImageIndex" Value="{Binding SelectedIndex}" Minimum="0" Maximum="999"
+                           Width="100" ToolTip.Tip="SelectedIndex（从 0 开始）" />
+        </Grid>
+        <one:ImagePreview Name="MultipleImagePreview" ItemsSource="{Binding Images}"
+                          SelectedIndex="{Binding SelectedIndex}" Height="440" />
+    </StackPanel>
 </UserControl>

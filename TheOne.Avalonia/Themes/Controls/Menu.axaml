@@ -12,8 +12,11 @@
     <ControlTheme TargetType="MenuItem" x:Key="One.TopLevelMenuItem">
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
-                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuItem" />
-                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuItem" />
+                <markup:CompiledBindingExtension DataType="MenuItem" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension
+                    DataType="MenuItem"
+                    Path="ItemCount"
+                    RelativeSource="{RelativeSource Self}" />
             </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />
@@ -105,8 +108,11 @@
     <ControlTheme TargetType="Menu" x:Key="{x:Type Menu}">
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Horizontal}">
-                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="Menu" />
-                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="Menu" />
+                <markup:CompiledBindingExtension DataType="Menu" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension
+                    DataType="Menu"
+                    Path="ItemCount"
+                    RelativeSource="{RelativeSource Self}" />
             </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="Transparent" />

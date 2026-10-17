@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class AutoCompleteBoxPageViewModel : BasicControlViewModel { }
+
+public sealed class AutoCompleteBoxPageViewModel : BasicControlViewModel
+{
+}

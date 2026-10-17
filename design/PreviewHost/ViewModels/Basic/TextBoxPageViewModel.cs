@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class TextBoxPageViewModel : BasicControlViewModel { }
+
+public sealed class TextBoxPageViewModel : BasicControlViewModel
+{
+}

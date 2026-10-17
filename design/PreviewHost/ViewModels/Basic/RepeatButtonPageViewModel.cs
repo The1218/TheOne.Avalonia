@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class RepeatButtonPageViewModel : BasicControlViewModel { }
+
+public sealed class RepeatButtonPageViewModel : BasicControlViewModel
+{
+}

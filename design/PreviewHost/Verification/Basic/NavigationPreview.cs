@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Input;
@@ -30,7 +29,8 @@ internal static class NavigationPreview
         Check(!root.IsExpanded, "Left arrow collapses tree");
         PressKey(window, Key.Right, PhysicalKey.ArrowRight);
         PressKey(window, Key.Down, PhysicalKey.ArrowDown);
-        Check(ReferenceEquals(model.SelectedTreeNode, model.TreeRoots[0].Children[0]), "Arrow navigation updates tree selection");
+        Check(ReferenceEquals(model.SelectedTreeNode, model.TreeRoots[0].Children[0]),
+            "Arrow navigation updates tree selection");
         var selected = Item(tree, model.SelectedTreeNode!);
         var selectedBorder = LayoutRoot(selected);
         Check(ColorOf(selectedBorder.Background) == Color.Parse("#C1DCDC"), "Tree selection uses TheOne highlight");
@@ -56,7 +56,8 @@ internal static class NavigationPreview
         PressKey(TopLevel.GetTopLevel(newItem)!, Key.Down, PhysicalKey.ArrowDown);
         Check(((MenuItem)file.Items[1]!).IsSelected, "Down arrow navigates menu items");
         PressKey(TopLevel.GetTopLevel(newItem)!, Key.Enter, PhysicalKey.Enter);
-        Check(model.Status.Contains("已保存第") && !file.IsSubMenuOpen, "Enter executes the focused menu command and closes popup");
+        Check(model.Status.Contains("已保存第") && !file.IsSubMenuOpen,
+            "Enter executes the focused menu command and closes popup");
         menu.Open();
         file.IsSubMenuOpen = true;
         ControlPreview.Flush();
@@ -85,11 +86,13 @@ internal static class NavigationPreview
         ControlPreview.Flush();
         RightClick(window, LayoutRoot(target));
         var treeContext = gallery.FindControl<ContextMenu>("TreeContextMenu")!;
-        Check(treeContext.IsOpen && ReferenceEquals(model.SelectedTreeNode, targetNode), "Tree right-click selects the target node before opening context menu");
+        Check(treeContext.IsOpen && ReferenceEquals(model.SelectedTreeNode, targetNode),
+            "Tree right-click selects the target node before opening context menu");
         var oldName = targetNode.Name;
         ClickItem(gallery.FindControl<MenuItem>("TreeRenameItem")!);
         ControlPreview.Flush();
-        Check(targetNode.Name != oldName && model.Status.Contains(targetNode.Name), "Tree context command renames only the selected demo node");
+        Check(targetNode.Name != oldName && model.Status.Contains(targetNode.Name),
+            "Tree context command renames only the selected demo node");
         Check(!treeContext.IsOpen, "Tree context menu closes after command");
 
         var contextTarget = gallery.FindControl<Border>("ContextTarget")!;
@@ -113,7 +116,8 @@ internal static class NavigationPreview
         var disabled = gallery.FindControl<MenuItem>("ContextDisabledItem")!;
         var before = model.Status;
         MouseClick(TopLevel.GetTopLevel(disabled)!, disabled);
-        Check(model.Status == before && !disabled.IsEffectivelyEnabled, "Disabled context item does not execute via mouse");
+        Check(model.Status == before && !disabled.IsEffectivelyEnabled,
+            "Disabled context item does not execute via mouse");
         context.Close();
 
         menu.Open();
@@ -129,6 +133,7 @@ internal static class NavigationPreview
             Check(ColorOf(selectedBorder.Background) == Color.Parse(theme == 2 ? "#284343" : "#C1DCDC"),
                 "Existing tree row follows theme switch");
         }
+
         menu.Close();
 
         context.Open(contextTarget);
@@ -140,6 +145,7 @@ internal static class NavigationPreview
             Check(ColorOf(context.Background) == Color.Parse(theme == 2 ? "#0F0F0F" : "#FFFFFF"),
                 "Open ContextMenu follows live theme switch");
         }
+
         var first = gallery.FindControl<MenuItem>("ContextInspectItem")!;
         first.Focus(NavigationMethod.Tab);
         PressKey(TopLevel.GetTopLevel(first)!, Key.Escape, PhysicalKey.Escape);
@@ -166,7 +172,8 @@ internal static class NavigationPreview
         menu.Open();
         file.IsSubMenuOpen = true;
         ControlPreview.Flush();
-        Save(file.GetVisualDescendants().OfType<Popup>().Single().Child!, Path.Combine(output, $"menu-popup-{(dark ? "dark" : "light")}.png"));
+        Save(file.GetVisualDescendants().OfType<Popup>().Single().Child!,
+            Path.Combine(output, $"menu-popup-{(dark ? "dark" : "light")}.png"));
         menu.Close();
         var context = gallery.FindControl<ContextMenu>("ContextSample")!;
         context.Open(gallery.FindControl<Border>("ContextTarget")!);
@@ -177,40 +184,64 @@ internal static class NavigationPreview
 
     private static void Save(Control control, string path)
     {
-        using var bitmap = new RenderTargetBitmap(new PixelSize((int)Math.Ceiling(control.Bounds.Width), (int)Math.Ceiling(control.Bounds.Height)), new Vector(96, 96));
+        using var bitmap =
+            new RenderTargetBitmap(
+                new PixelSize((int)Math.Ceiling(control.Bounds.Width), (int)Math.Ceiling(control.Bounds.Height)),
+                new Vector(96, 96));
         bitmap.Render(control);
         bitmap.Save(path, PngBitmapEncoderOptions.Default);
         Console.WriteLine($"Rendered {path}");
     }
 
-    private static Border LayoutRoot(TreeViewItem item) => item.GetVisualDescendants().OfType<Border>()
-        .Single(control => control.Name == "PART_LayoutRoot" && ReferenceEquals(control.TemplatedParent, item));
-    private static TreeViewItem Item(TreeView tree, PreviewTreeNode node) =>
-        tree.GetVisualDescendants().OfType<TreeViewItem>().Single(item => ReferenceEquals(item.DataContext, node));
-    private static Color? ColorOf(IBrush? brush) => (brush as ISolidColorBrush)?.Color;
+    private static Border LayoutRoot(TreeViewItem item)
+    {
+        return item.GetVisualDescendants().OfType<Border>()
+            .Single(control => control.Name == "PART_LayoutRoot" && ReferenceEquals(control.TemplatedParent, item));
+    }
+
+    private static TreeViewItem Item(TreeView tree, PreviewTreeNode node)
+    {
+        return tree.GetVisualDescendants().OfType<TreeViewItem>()
+            .Single(item => ReferenceEquals(item.DataContext, node));
+    }
+
+    private static Color? ColorOf(IBrush? brush)
+    {
+        return (brush as ISolidColorBrush)?.Color;
+    }
+
     private static void PressKey(TopLevel topLevel, Key key, PhysicalKey physical)
     {
         topLevel.KeyPress(key, RawInputModifiers.None, physical, null);
         topLevel.KeyRelease(key, RawInputModifiers.None, physical, null);
         ControlPreview.Flush();
     }
+
     private static void RightClick(TopLevel topLevel, Control control)
     {
-        var point = control.TranslatePoint(new Point(Math.Min(50, control.Bounds.Width / 2), control.Bounds.Height / 2), topLevel)!.Value;
+        var point = control.TranslatePoint(new Point(Math.Min(50, control.Bounds.Width / 2), control.Bounds.Height / 2),
+            topLevel)!.Value;
         topLevel.MouseMove(point);
         topLevel.MouseDown(point, MouseButton.Right);
         topLevel.MouseUp(point, MouseButton.Right);
         ControlPreview.Flush();
     }
-    private static void ClickItem(MenuItem item) => MouseClick(TopLevel.GetTopLevel(item)!, item);
+
+    private static void ClickItem(MenuItem item)
+    {
+        MouseClick(TopLevel.GetTopLevel(item)!, item);
+    }
+
     private static void MouseClick(TopLevel topLevel, Control control)
     {
-        var point = control.TranslatePoint(new Point(control.Bounds.Width / 2, control.Bounds.Height / 2), topLevel)!.Value;
+        var point = control.TranslatePoint(new Point(control.Bounds.Width / 2, control.Bounds.Height / 2), topLevel)!
+            .Value;
         topLevel.MouseMove(point);
         topLevel.MouseDown(point, MouseButton.Left);
         topLevel.MouseUp(point, MouseButton.Left);
         ControlPreview.Flush();
     }
+
     private static void Check(bool condition, string message)
     {
         if (!condition) throw new InvalidOperationException($"Failed: {message}");

@@ -1,8 +1,9 @@
 using System.Globalization;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Templates;
-using global::Avalonia.Data.Converters;
-using global::Avalonia.Layout;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Templates;
+using Avalonia.Data.Converters;
+using Avalonia.Layout;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -19,13 +20,16 @@ internal static class MenuItemsPanels
 
     private sealed class Selector(Orientation orientation) : IMultiValueConverter
     {
-        private readonly ITemplate<Panel> _complete = new FuncTemplate<Panel>(() => new StackPanel { Orientation = orientation });
-        private readonly ITemplate<Panel> _virtualized = new FuncTemplate<Panel>(() => new VirtualizingItemsPanel { Orientation = orientation });
+        private readonly ITemplate<Panel> _complete =
+            new FuncTemplate<Panel>(() => new StackPanel { Orientation = orientation });
+
+        private readonly ITemplate<Panel> _virtualized =
+            new FuncTemplate<Panel>(() => new VirtualizingItemsPanel { Orientation = orientation });
 
         public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
         {
             if (values.Count != 2 || values[0] is not ItemsControl owner || values[1] is not int count)
-                return global::Avalonia.AvaloniaProperty.UnsetValue;
+                return AvaloniaProperty.UnsetValue;
             if (count > FullMeasureLimit) return _virtualized;
             // ItemCount changes before the old panel receives the collection Reset.
             // Release its containers while its owner is still available: native

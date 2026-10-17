@@ -1,8 +1,8 @@
 using System.Globalization;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Data.Converters;
-using global::Avalonia.Layout;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Data.Converters;
+using Avalonia.Layout;
 
 namespace TheOne.Avalonia.Converters;
 
@@ -12,6 +12,8 @@ public sealed class DataGridContentAlignmentConverter : IMultiValueConverter
     public object Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
         if (values.Count < 2 || values[1] is not HorizontalAlignment alignment) return AvaloniaProperty.UnsetValue;
-        return values[0] is TextBlock && alignment == HorizontalAlignment.Center ? HorizontalAlignment.Stretch : alignment;
+        return values[0] is TextBlock && alignment == HorizontalAlignment.Center
+            ? HorizontalAlignment.Stretch
+            : alignment;
     }
 }

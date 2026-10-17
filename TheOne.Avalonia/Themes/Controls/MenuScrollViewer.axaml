@@ -1,8 +1,9 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
+<ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
     xmlns:converters="using:Avalonia.Controls.Converters"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
@@ -13,25 +14,25 @@
             <ControlTemplate>
                 <DockPanel>
                     <RepeatButton
+                        Background="Transparent"
+                        BorderThickness="0"
                         Classes="one-scroll-button"
+                        Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}"
+                        DockPanel.Dock="Top"
                         Height="16"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
                         MinHeight="0"
                         MinWidth="0"
                         Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}"
-                        DockPanel.Dock="Top"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalAlignment="Stretch"
-                        RenderTransform="{x:Null}">
+                        RenderTransform="{x:Null}"
+                        VerticalAlignment="Stretch">
                         <RepeatButton.IsVisible>
                             <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="0">
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height" />
                             </MultiBinding>
                         </RepeatButton.IsVisible>
                         <Viewbox Height="{DynamicResource ScrollBarButtonArrowIconFontSize}" Width="{DynamicResource ScrollBarButtonArrowIconFontSize}">
@@ -45,25 +46,25 @@
                         </Viewbox>
                     </RepeatButton>
                     <RepeatButton
+                        Background="Transparent"
+                        BorderThickness="0"
                         Classes="one-scroll-button"
+                        Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
+                        DockPanel.Dock="Bottom"
                         Height="16"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
                         MinHeight="0"
                         MinWidth="0"
                         Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
-                        DockPanel.Dock="Bottom"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalAlignment="Stretch"
-                        RenderTransform="{x:Null}">
+                        RenderTransform="{x:Null}"
+                        VerticalAlignment="Stretch">
                         <RepeatButton.IsVisible>
                             <MultiBinding Converter="{x:Static converters:MenuScrollingVisibilityConverter.Instance}" ConverterParameter="100">
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height"  />
-                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height"  />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).VerticalScrollBarVisibility" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Offset.Y" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Extent.Height" />
+                                <markup:CompiledBindingExtension Path="$self.((ScrollViewer)TemplatedParent).Viewport.Height" />
                             </MultiBinding>
                         </RepeatButton.IsVisible>
                         <Viewbox Height="{DynamicResource ScrollBarButtonArrowIconFontSize}" Width="{DynamicResource ScrollBarButtonArrowIconFontSize}">

@@ -121,8 +121,10 @@
                 TitleSource="{CompiledBinding Name,
                                               DataType={x:Type local:RelationUnit}}" />
         </ScrollViewer>
-        <TextBlock Text="{Binding SelectedNode.Title, TargetNullValue=点击节点选择}" Foreground="{DynamicResource One.Accent}" />
-        <TextBlock Text="{Binding SelectedUnit.Name, TargetNullValue=点击自定义模型节点选择}" Foreground="{DynamicResource One.Accent}" />
+        <TextBlock Text="{Binding SelectedNode.Title, TargetNullValue=点击节点选择}"
+                   Foreground="{DynamicResource One.Accent}" />
+        <TextBlock Text="{Binding SelectedUnit.Name, TargetNullValue=点击自定义模型节点选择}"
+                   Foreground="{DynamicResource One.Accent}" />
         <TextBlock
             FontSize="18"
             FontWeight="SemiBold"

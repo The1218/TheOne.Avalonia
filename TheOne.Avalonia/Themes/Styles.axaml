@@ -2,7 +2,6 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:n="using:Avalonia.Controls.Notifications"
     xmlns:one="using:TheOne.Avalonia.Controls"
-    xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Styles.Resources>
         <Template x:Key="One.FocusAdorner">
@@ -102,40 +101,64 @@
         <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
     </Style>
-    <Style Selector=":is(Button).success:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
-    <Style Selector=":is(Button).success:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" /></Style>
+    <Style Selector=":is(Button).success:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    </Style>
+    <Style Selector=":is(Button).success:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+    </Style>
     <Style Selector=":is(Button).success:disabled /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
     </Style>
     <Style Selector=":is(Button).warning /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" />
     </Style>
-    <Style Selector=":is(Button).warning:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
-    <Style Selector=":is(Button).warning:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" /></Style>
+    <Style Selector=":is(Button).warning:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    </Style>
+    <Style Selector=":is(Button).warning:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+    </Style>
     <Style Selector=":is(Button).warning:disabled /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
     </Style>
     <Style Selector=":is(Button).info /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.Info}" />
     </Style>
-    <Style Selector=":is(Button).info:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
-    <Style Selector=":is(Button).info:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" /></Style>
+    <Style Selector=":is(Button).info:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    </Style>
+    <Style Selector=":is(Button).info:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+    </Style>
     <Style Selector=":is(Button).info:disabled /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
     </Style>
     <Style Selector=":is(Button).outline /template/ ContentPresenter#PART_ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
         <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
     </Style>
-    <Style Selector=":is(Button).outline:pointerover /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
-    <Style Selector=":is(Button).outline:pressed /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" /></Style>
+    <Style Selector=":is(Button).outline:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+    </Style>
+    <Style Selector=":is(Button).outline:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource One.NeutralPressed}" />
+    </Style>
     <Style Selector=":is(Button).outline:disabled /template/ ContentPresenter#PART_ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+        <Setter Property="Background" Value="{DynamicResource One.DisabledSurface}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
     </Style>
     <StyleInclude Source="avares://TheOne.Avalonia/Themes/Variants.axaml" />
     <Style Selector=":is(Button).primary:disabled /template/ ContentPresenter#PART_ContentPresenter, :is(Button).accent:disabled /template/ ContentPresenter#PART_ContentPresenter">

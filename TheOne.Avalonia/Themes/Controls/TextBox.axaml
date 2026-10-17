@@ -1,7 +1,8 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
+<ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Thickness x:Key="One.TextBoxTopHeaderMargin">0,0,0,4</Thickness>
@@ -147,11 +148,9 @@
                                 <ContentPresenter
                                     Content="{TemplateBinding InnerLeftContent}"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="1"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                                 <DockPanel
                                     Grid.Column="1"
-                                    Grid.ColumnSpan="1"
                                     Margin="{TemplateBinding Padding}"
                                     x:Name="PART_InnerDockPanel">
                                     <TextBlock
@@ -180,14 +179,8 @@
                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                                 <TextBlock.IsVisible>
                                                     <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                                        <markup:CompiledBindingExtension
-                                                            Converter="{x:Static StringConverters.IsNullOrEmpty}"
-                                                            
-                                                            Path="#PART_TextPresenter.PreeditText" />
-                                                        <markup:CompiledBindingExtension
-                                                            Converter="{x:Static StringConverters.IsNullOrEmpty}"
-                                                            Path="$self.((TextBox)TemplatedParent).Text"
-                                                             />
+                                                        <markup:CompiledBindingExtension Converter="{x:Static StringConverters.IsNullOrEmpty}" Path="#PART_TextPresenter.PreeditText" />
+                                                        <markup:CompiledBindingExtension Converter="{x:Static StringConverters.IsNullOrEmpty}" Path="$self.((TextBox)TemplatedParent).Text" />
                                                     </MultiBinding>
                                                 </TextBlock.IsVisible>
                                             </TextBlock>
@@ -222,7 +215,6 @@
                                 <ContentPresenter
                                     Content="{TemplateBinding InnerRightContent}"
                                     Grid.Column="2"
-                                    Grid.ColumnSpan="1"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Border>
@@ -237,7 +229,7 @@
             </ControlTemplate>
         </Setter>
 
-        <!-- Multiline editors keep the native top-to-bottom text flow. -->
+        <!--  Multiline editors keep the native top-to-bottom text flow.  -->
         <Style Selector="^[AcceptsReturn=True]">
             <Setter Property="VerticalContentAlignment" Value="Top" />
         </Style>

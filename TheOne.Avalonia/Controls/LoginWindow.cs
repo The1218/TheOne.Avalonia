@@ -1,30 +1,28 @@
 using System.Runtime.ExceptionServices;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.ApplicationLifetimes;
-using global::Avalonia.Controls.Notifications;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Input;
-using global::Avalonia.Threading;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Notifications;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
+using Avalonia.Threading;
 
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>A themed native Window whose caller-owned content performs authentication.</summary>
 public class LoginWindow : Window
 {
-    public static readonly DirectProperty<LoginWindow, bool> IsDialogOpenProperty = AvaloniaProperty.RegisterDirect<LoginWindow, bool>(nameof(IsDialogOpen), window => window.IsDialogOpen);
-    private bool _isDialogOpen;
-    private Panel? _dialogLayer, _dialogShield;
-    private WindowNotificationManager? _notifications, _toasts;
-    internal DialogCoordinator Dialogs { get; }
-    public bool IsDialogOpen => _isDialogOpen;
+    public static readonly DirectProperty<LoginWindow, bool> IsDialogOpenProperty =
+        AvaloniaProperty.RegisterDirect<LoginWindow, bool>(nameof(IsDialogOpen), window => window.IsDialogOpen);
+
     private bool _completing, _handlingClosing, _completed;
-    private Func<OneWindow>? _mainWindowFactory;
     private IClassicDesktopStyleApplicationLifetime? _desktop;
+    private Panel? _dialogLayer, _dialogShield;
+    private bool _isDialogOpen;
+    private Func<OneWindow>? _mainWindowFactory;
+    private WindowNotificationManager? _notifications, _toasts;
     private OneWindow? _pendingMainWindow;
     private ExceptionDispatchInfo? _transitionError;
-
-    protected override Type StyleKeyOverride => typeof(LoginWindow);
 
     public LoginWindow()
     {
@@ -32,6 +30,11 @@ public class LoginWindow : Window
         Opened += (_, _) => OneWindowRegistry.Activate(this);
         Activated += (_, _) => OneWindowRegistry.Activate(this);
     }
+
+    internal DialogCoordinator Dialogs { get; }
+    public bool IsDialogOpen => _isDialogOpen;
+
+    protected override Type StyleKeyOverride => typeof(LoginWindow);
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs args)
     {
@@ -47,40 +50,60 @@ public class LoginWindow : Window
 
     private void OverlayReleased(object? sender, PointerReleasedEventArgs args)
     {
-        if (ReferenceEquals(args.Source, _dialogShield) && args.InitialPressMouseButton == MouseButton.Left) Dialogs.OverlayClicked();
+        if (ReferenceEquals(args.Source, _dialogShield) && args.InitialPressMouseButton == MouseButton.Left)
+            Dialogs.OverlayClicked();
     }
 
     internal WindowNotificationManager MessageHost(bool toast)
     {
         ApplyTemplate();
-        var host = (toast ? _toasts : _notifications) ?? throw new InvalidOperationException("LoginWindow template must contain PART_Notifications and PART_Toasts.");
-        host.ApplyTemplate(); return host;
+        var host = (toast ? _toasts : _notifications) ??
+                   throw new InvalidOperationException(
+                       "LoginWindow template must contain PART_Notifications and PART_Toasts.");
+        host.ApplyTemplate();
+        return host;
     }
 
     private Panel DialogLayer()
     {
-        ApplyTemplate(); return _dialogLayer ?? throw new InvalidOperationException("LoginWindow template must contain PART_DialogLayer.");
+        ApplyTemplate();
+        return _dialogLayer ??
+               throw new InvalidOperationException("LoginWindow template must contain PART_DialogLayer.");
     }
 
     private void SetDialogOpen(bool value)
     {
-        SetAndRaise(IsDialogOpenProperty, ref _isDialogOpen, value); PseudoClasses.Set(":dialog-open", value);
+        SetAndRaise(IsDialogOpenProperty, ref _isDialogOpen, value);
+        PseudoClasses.Set(":dialog-open", value);
     }
 
     /// <summary>Shows an error toast in this login window on the UI thread.</summary>
     public void ShowErrorToast(string message, TimeSpan? expiration = null)
-        => OneToast.Show(message, NotificationType.Error, expiration, this);
+    {
+        OneToast.Show(message, NotificationType.Error, expiration, this);
+    }
 
     /// <summary>Shows an error notification in this login window on the UI thread.</summary>
     public void ShowErrorNotification(string message, string title = "登录失败", TimeSpan? expiration = null)
-        => OneNotification.Show(title, message, NotificationType.Error, expiration, this);
+    {
+        OneNotification.Show(title, message, NotificationType.Error, expiration, this);
+    }
 
     /// <summary>Shows an error dialog in this login window; dispatches to the UI thread.</summary>
-    public Task<OneDialogResult> ShowErrorDialog(string message, string title = "登录失败", CancellationToken cancellationToken = default)
-        => OneDialog.ShowAsync(title, message, OneDialogButtons.Ok, this, cancellationToken);
+    public Task<OneDialogResult> ShowErrorDialog(string message, string title = "登录失败",
+        CancellationToken cancellationToken = default)
+    {
+        return OneDialog.ShowAsync(title, message, OneDialogButtons.Ok, this, cancellationToken);
+    }
 
-    /// <summary>Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes login.</summary>
-    /// <remarks>A Closing veto leaves the supplied window unopened. An accepted replacement that fails to open is disposed. Call on the UI thread.</remarks>
+    /// <summary>
+    ///     Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes
+    ///     login.
+    /// </summary>
+    /// <remarks>
+    ///     A Closing veto leaves the supplied window unopened. An accepted replacement that fails to open is disposed.
+    ///     Call on the UI thread.
+    /// </remarks>
     public bool CompleteLogin(OneWindow mainWindow)
     {
         ArgumentNullException.ThrowIfNull(mainWindow);
@@ -89,18 +112,20 @@ public class LoginWindow : Window
 
     /// <summary>Dispatches the handoff of the supplied OneWindow to the UI thread. Construct the window on the UI thread.</summary>
     public async Task<bool> CompleteLoginAsync(OneWindow mainWindow)
-        => await Dispatcher.UIThread.InvokeAsync(() => CompleteLogin(mainWindow));
+    {
+        return await Dispatcher.UIThread.InvokeAsync(() => CompleteLogin(mainWindow));
+    }
 
     /// <summary>
-    /// After successful authentication, replaces this desktop MainWindow with a fresh OneWindow.
-    /// Returns false if Closing cancels the transition or a completion is already in progress.
-    /// Repeated calls after success return true without invoking the factory again.
+    ///     After successful authentication, replaces this desktop MainWindow with a fresh OneWindow.
+    ///     Returns false if Closing cancels the transition or a completion is already in progress.
+    ///     Repeated calls after success return true without invoking the factory again.
     /// </summary>
     /// <remarks>
-    /// Call on the UI thread. This window must be the visible, unowned desktop MainWindow.
-    /// The factory runs only after Closing accepts the close and transfers ownership of a new,
-    /// unopened window to this operation. An aborted replacement is disposed. Authentication,
-    /// dependency injection and application/Generic Host lifetime remain the caller's responsibility.
+    ///     Call on the UI thread. This window must be the visible, unowned desktop MainWindow.
+    ///     The factory runs only after Closing accepts the close and transfers ownership of a new,
+    ///     unopened window to this operation. An aborted replacement is disposed. Authentication,
+    ///     dependency injection and application/Generic Host lifetime remain the caller's responsibility.
     /// </remarks>
     public bool CompleteLogin(Func<OneWindow> mainWindowFactory)
     {
@@ -109,9 +134,12 @@ public class LoginWindow : Window
         if (_completed) return true;
         if (_completing) return false;
         if (PlatformImpl is null || !IsVisible || Owner is not null)
-            throw new InvalidOperationException("LoginWindow must be open, visible and have no owner before completing login.");
-        if (global::Avalonia.Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || desktop.MainWindow != this)
-            throw new InvalidOperationException("Set the desktop application's MainWindow to this LoginWindow before completing login.");
+            throw new InvalidOperationException(
+                "LoginWindow must be open, visible and have no owner before completing login.");
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow != this)
+            throw new InvalidOperationException(
+                "Set the desktop application's MainWindow to this LoginWindow before completing login.");
 
         var shutdownMode = desktop.ShutdownMode;
         var toastOwner = OneToast.Owner;
@@ -153,12 +181,15 @@ public class LoginWindow : Window
                         foreach (var child in children.Reverse()) child.PlatformImpl?.Dispose();
                         replacement.PlatformImpl?.Dispose();
                     }
+
                     OneToast.Owner = toastOwner;
                     OneNotification.Owner = notificationOwner;
                     OneDialog.Owner = dialogOwner;
                 }
                 else if (_pendingMainWindow is { IsVisible: true, PlatformImpl: not null } main)
+                {
                     OneWindowRegistry.SetOwners(main);
+                }
             }
             finally
             {
@@ -170,8 +201,9 @@ public class LoginWindow : Window
                 desktop.ShutdownMode = shutdownMode;
                 // A Closed subscriber can also close the new main window while automatic
                 // shutdown is suspended. Restoring ShutdownMode does not re-evaluate it.
-                if (_completed && (shutdownMode == ShutdownMode.OnLastWindowClose && desktop.Windows.Count == 0
-                    || shutdownMode == ShutdownMode.OnMainWindowClose && desktop.MainWindow is { PlatformImpl: null }))
+                if (_completed && ((shutdownMode == ShutdownMode.OnLastWindowClose && desktop.Windows.Count == 0)
+                                   || (shutdownMode == ShutdownMode.OnMainWindowClose && desktop.MainWindow is
+                                       { PlatformImpl: null })))
                     desktop.TryShutdown();
             }
         }
@@ -180,13 +212,16 @@ public class LoginWindow : Window
     private static bool IsOwnedBy(Window window, Window owner)
     {
         for (var parent = window.Owner; parent is not null; parent = parent.Owner)
-            if (parent == owner) return true;
+            if (parent == owner)
+                return true;
         return false;
     }
 
     /// <summary>Dispatches completion, including window construction, to the UI thread.</summary>
     public async Task<bool> CompleteLoginAsync(Func<OneWindow> mainWindowFactory)
-        => await Dispatcher.UIThread.InvokeAsync(() => CompleteLogin(mainWindowFactory));
+    {
+        return await Dispatcher.UIThread.InvokeAsync(() => CompleteLogin(mainWindowFactory));
+    }
 
     protected override void OnClosed(EventArgs args)
     {
@@ -197,6 +232,7 @@ public class LoginWindow : Window
             base.OnClosed(args);
             return;
         }
+
         try
         {
             base.OnClosed(args);
@@ -216,6 +252,7 @@ public class LoginWindow : Window
             base.OnClosing(args);
             return;
         }
+
         if (_handlingClosing)
         {
             args.Cancel = true;
@@ -228,9 +265,12 @@ public class LoginWindow : Window
             base.OnClosing(args);
             if (args.Cancel) return;
             var mainWindow = _mainWindowFactory!()
-                ?? throw new InvalidOperationException("The main window factory must return a new OneWindow.");
-            if (mainWindow.PlatformImpl is null || mainWindow.IsVisible || mainWindow.Owner is not null || _desktop!.Windows.Contains(mainWindow))
-                throw new InvalidOperationException("The main window factory must return a new, unopened OneWindow with no owner.");
+                             ?? throw new InvalidOperationException(
+                                 "The main window factory must return a new OneWindow.");
+            if (mainWindow.PlatformImpl is null || mainWindow.IsVisible || mainWindow.Owner is not null ||
+                _desktop!.Windows.Contains(mainWindow))
+                throw new InvalidOperationException(
+                    "The main window factory must return a new, unopened OneWindow with no owner.");
             _pendingMainWindow = mainWindow;
             if (_desktop!.MainWindow != this || PlatformImpl is null || !IsVisible)
                 throw new InvalidOperationException("The login application's MainWindow changed during completion.");
@@ -238,8 +278,10 @@ public class LoginWindow : Window
             _desktop.MainWindow = mainWindow;
             OneWindowRegistry.SetOwners(mainWindow);
             mainWindow.Show();
-            if (mainWindow.PlatformImpl is null || !mainWindow.IsVisible || mainWindow.Owner is not null || _desktop.MainWindow != mainWindow)
-                throw new InvalidOperationException("The replacement OneWindow must remain open as the desktop MainWindow.");
+            if (mainWindow.PlatformImpl is null || !mainWindow.IsVisible || mainWindow.Owner is not null ||
+                _desktop.MainWindow != mainWindow)
+                throw new InvalidOperationException(
+                    "The replacement OneWindow must remain open as the desktop MainWindow.");
             OneWindowRegistry.SetOwners(mainWindow);
         }
         catch (Exception error)

@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="../PackageVersions.props" />
+    <Import Project="../PackageVersions.props"/>
 
     <PropertyGroup>
         <Version>$(TheOnePackageVersion)</Version>
@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Refines bilingual control/API/model documentation and per-control previews with practical examples. Fixes MultiSelectBox popup scrolling, tab header end-drop behavior, virtualized item reinsertion and Reset/Replace/ItemsSource lifetimes. Corrects native menu first-open sizing and compact scroll buttons; short menus fully measure while large menus retain virtualization. Requires .NET 10 and Avalonia 12.1.4; upgrade TheOne.Avalonia.DataGrid to the same preview version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Adds NavPage navigation with retained card tabs, optional right header and compiled model bindings. Adds tab icons, pinned pages and close menus; pinned pages cannot move or close. Animates NavMenu expansion. Separates MultiSelectBox search from source/subscription rebuilds and adds WorkflowEditor graph indexes, viewport caches and safe offscreen view recycling. Contains popup wheel, touch and inertia input without scrolling outer pages. Requires .NET 10 and Avalonia 12.1.4; upgrade TheOne.Avalonia.DataGrid to the same preview version.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -21,17 +21,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../vendor/Avalonia.Controls.DataGrid/Avalonia.Controls.DataGrid.csproj" />
-        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Skia" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
+        <ProjectReference Include="../vendor/Avalonia.Controls.DataGrid/Avalonia.Controls.DataGrid.csproj"/>
+        <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Skia" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="" />
-        <None Include="../LICENSE" Pack="true" PackagePath="" />
-        <None Update="PACKAGE.md" Pack="true" PackagePath="README.md" />
+        <None Include="../THIRD-PARTY-NOTICES.md" Pack="true" PackagePath=""/>
+        <None Include="../LICENSE" Pack="true" PackagePath=""/>
+        <None Update="PACKAGE.md" Pack="true" PackagePath="README.md"/>
     </ItemGroup>
 
 </Project>

@@ -333,12 +333,15 @@
                         <DatePicker
                             AutomationProperties.Name="日期"
                             HorizontalAlignment="Stretch"
-                            Name="DateSample" SelectedDate="2026-10-13" />
+                            Name="DateSample"
+                            SelectedDate="2026-10-13" />
                         <TimePicker
                             AutomationProperties.Name="时间"
                             ClockIdentifier="24HourClock"
                             HorizontalAlignment="Stretch"
-                            Name="TimeSample" SelectedTime="14:35:20" UseSeconds="True" />
+                            Name="TimeSample"
+                            SelectedTime="14:35:20"
+                            UseSeconds="True" />
 
                     </StackPanel>
                 </Border>
@@ -782,12 +785,25 @@
                             HorizontalAlignment="Stretch"
                             Name="LargeDate"
                             PlaceholderText="大尺寸日期" />
-                        <CalendarDatePicker Name="DateTimeSample" HorizontalAlignment="Stretch"
-                            one:CalendarOptions.DisplayStyle="DateTime" one:CalendarOptions.Format="yyyy/MM/dd HH:mm"
-                            SelectedDate="2026-10-12T16:30:00" PlaceholderText="年 / 月 / 日 时:分" />
+                        <CalendarDatePicker
+                            HorizontalAlignment="Stretch"
+                            Name="DateTimeSample"
+                            PlaceholderText="年 / 月 / 日 时:分"
+                            SelectedDate="2026-10-12T16:30:00"
+                            one:CalendarOptions.DisplayStyle="DateTime"
+                            one:CalendarOptions.Format="yyyy/MM/dd HH:mm" />
                         <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                            <CalendarDatePicker Name="MonthSample" one:CalendarOptions.DisplayStyle="Month" SelectedDate="2026-10-12" HorizontalAlignment="Stretch" />
-                            <CalendarDatePicker Grid.Column="1" Name="YearSample" one:CalendarOptions.DisplayStyle="Year" SelectedDate="2026-10-12" HorizontalAlignment="Stretch" />
+                            <CalendarDatePicker
+                                HorizontalAlignment="Stretch"
+                                Name="MonthSample"
+                                SelectedDate="2026-10-12"
+                                one:CalendarOptions.DisplayStyle="Month" />
+                            <CalendarDatePicker
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Name="YearSample"
+                                SelectedDate="2026-10-12"
+                                one:CalendarOptions.DisplayStyle="Year" />
                         </Grid>
                         <TextBlock Classes="helper" Text="点击年月标题切换月份 / 年份；滚轮翻页，箭头翻页，Esc 撤销本次选择。" />
                     </StackPanel>
@@ -856,45 +872,169 @@
                         <TextBlock Classes="helper" Text="也可点击节点箭头或使用左右方向键；支持父子节点同时展开与收起。" />
                     </StackPanel>
                 </Border>
-                <Border Classes="sample-card" Margin="0,0,12,12" Name="VirtualListsCard" IsVisible="False" Tag="9|大数据虚拟化 ListBox TreeView ItemsControl">
+                <Border
+                    Classes="sample-card"
+                    IsVisible="False"
+                    Margin="0,0,12,12"
+                    Name="VirtualListsCard"
+                    Tag="9|大数据虚拟化 ListBox TreeView ItemsControl">
                     <StackPanel Spacing="12">
                         <TextBlock FontWeight="SemiBold" Text="17  一万条数据 / 容器回收" />
-                        <TextBlock Classes="helper" Text="列表和树使用有界视口。滚动、Home / End 或跳转后观察实际创建的容器数量。" TextWrapping="Wrap" />
-                        <ListBox Name="HugeList" Height="200" />
-                        <Border Name="HugeTreeHost" Height="220" />
-                        <Button Classes="ghost" Name="HugeJump" Content="跳到列表末尾与第 9001 个子节点" Click="OnHugeJump" />
-                        <TextBlock Name="VirtualCounts" Classes="helper" TextWrapping="Wrap" />
+                        <TextBlock
+                            Classes="helper"
+                            Text="列表和树使用有界视口。滚动、Home / End 或跳转后观察实际创建的容器数量。"
+                            TextWrapping="Wrap" />
+                        <ListBox Height="200" Name="HugeList" />
+                        <Border Height="220" Name="HugeTreeHost" />
+                        <Button
+                            Classes="ghost"
+                            Click="OnHugeJump"
+                            Content="跳到列表末尾与第 9001 个子节点"
+                            Name="HugeJump" />
+                        <TextBlock
+                            Classes="helper"
+                            Name="VirtualCounts"
+                            TextWrapping="Wrap" />
                     </StackPanel>
                 </Border>
-                <Border Classes="sample-card" Margin="0,0,12,12" Name="VirtualPopupsCard" IsVisible="False" Tag="9|大数据虚拟化 ComboBox AutoCompleteBox TabControl Menu ContextMenu">
+                <Border
+                    Classes="sample-card"
+                    IsVisible="False"
+                    Margin="0,0,12,12"
+                    Name="VirtualPopupsCard"
+                    Tag="9|大数据虚拟化 ComboBox AutoCompleteBox TabControl Menu ContextMenu">
                     <StackPanel Spacing="12">
                         <TextBlock FontWeight="SemiBold" Text="18  一万项标签与弹层" />
-                        <TextBlock Classes="helper" Text="打开下拉框、输入“数据”查看建议，或右键菜单。标题栏支持滚轮横向滚动。" TextWrapping="Wrap" />
-                        <ComboBox Name="HugeCombo" MaxDropDownHeight="260" HorizontalAlignment="Stretch" />
-                        <AutoCompleteBox Name="HugeAuto" MinimumPrefixLength="1" MaxDropDownHeight="260" PlaceholderText="输入数据" />
-                        <Button Name="HugeMenuTarget" Content="右键：一万项菜单" HorizontalAlignment="Stretch" />
-                        <TabControl Name="HugeTabs" Classes="card" Height="180" />
-                        <Button Classes="ghost" Name="HugeTabJump" Content="选中第 9001 个标签" Click="OnHugeTabJump" />
+                        <TextBlock
+                            Classes="helper"
+                            Text="打开下拉框、输入“数据”查看建议，或右键菜单。标题栏支持滚轮横向滚动。"
+                            TextWrapping="Wrap" />
+                        <ComboBox
+                            HorizontalAlignment="Stretch"
+                            MaxDropDownHeight="260"
+                            Name="HugeCombo" />
+                        <AutoCompleteBox
+                            MaxDropDownHeight="260"
+                            MinimumPrefixLength="1"
+                            Name="HugeAuto"
+                            PlaceholderText="输入数据" />
+                        <Button
+                            Content="右键：一万项菜单"
+                            HorizontalAlignment="Stretch"
+                            Name="HugeMenuTarget" />
+                        <TabControl
+                            Classes="card"
+                            Height="180"
+                            Name="HugeTabs" />
+                        <Button
+                            Classes="ghost"
+                            Click="OnHugeTabJump"
+                            Content="选中第 9001 个标签"
+                            Name="HugeTabJump" />
                     </StackPanel>
                 </Border>
             </local:CatalogPanel>
-            <Border Name="DataGridCard" Classes="sample-card" IsVisible="False" Height="660" Margin="0,0,12,12" Tag="10|数据表格 DataGrid 一万条数据 虚拟化">
-            </Border>
-            <Border Name="LayoutControlsCard" Classes="sample-card" IsVisible="False" MinHeight="820" Margin="0,0,12,12" Tag="11|侧栏与分隔 SplitView GridSplitter 布局 虚拟化" />
-            <Border Name="SplitButtonsCard" Classes="sample-card" IsVisible="False" MinHeight="800" Margin="0,0,12,12" Tag="12|分裂按钮 SplitButton ToggleSplitButton 主操作 下拉 菜单 虚拟化" />
-            <Border Name="TextControlsCard" Classes="sample-card" IsVisible="False" MinHeight="880" Margin="0,0,12,12" Tag="13|标签与可选文本 Label SelectableTextBlock 选择 复制 富文本" />
-            <Border Name="FlyoutCard" Classes="sample-card" IsVisible="False" MinHeight="820" Margin="0,0,12,12" Tag="14|内容弹层 FlyoutPresenter Flyout 定位 关闭 虚拟化" />
-            <Border Name="SelectionControlsCard" Classes="sample-card" IsVisible="False" Margin="0,0,12,12" Tag="15|选择控件对比 CheckBox RadioButton ToggleSwitch 三档尺寸 明暗主题 悬停 按下 禁用" />
-            <Border Name="ButtonControlsCard" Classes="sample-card" IsVisible="False" Margin="0,0,12,12" Tag="16|按钮控件对比 Button ToggleButton RepeatButton 三档尺寸 明暗主题 悬停 按下 禁用 选中 重复 长按" />
-            <Border Name="TabStripCard" Classes="sample-card" Tag="17|独立标签导航 TabStrip TabStripItem 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="CarouselCard" Classes="sample-card" Tag="18|内容轮播 Carousel 千条数据 虚拟化 滑动" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="RefreshCard" Classes="sample-card" Tag="19|下拉刷新 RefreshContainer RefreshVisualizer 千条数据 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="ContentTransitionCard" Classes="sample-card" Tag="20|内容切换 TransitioningContentControl 动画 Motion 草稿 千条记录 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="NotificationCardPreview" Classes="sample-card" Tag="21|通知 NotificationCard WindowNotificationManager 提示 成功 警告 错误 自动关闭 手动关闭 Motion" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="OneWindowCard" Classes="sample-card" Tag="22|窗口 OneWindow ThemeButton 标题栏 LeftContent RightContent 通知 Toast Dialog 静态 API" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="ChartCard" Classes="sample-card" Tag="23|图表 Chart Line Area Bar HorizontalBar Scatter Pie Doughnut Gauge StackedBar StackedHorizontalBar StackedArea PercentStackedBar PercentStackedHorizontalBar PercentStackedArea 折线 面积 柱状 条形 散点 饼图 环形 仪表 堆叠 百分比 双轴 副轴 采样 十万 缩放 平移 数据 可视化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="InfoCardPreviewHost" Classes="sample-card" Tag="24|信息卡片 InfoCard Header HeaderIcon HeaderActions Content Footer 图标 操作 页脚 分割线 模板 表单 千条列表 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
-            <Border Name="NavMenuPreviewHost" Classes="sample-card" Tag="25|导航菜单 NavMenu IconTemplate ContentTemplate ChildrenBinding 多级 分区 千条数据 虚拟化" IsVisible="False" IsEnabled="{Binding DemoEnabled}" />
+            <Border
+                Classes="sample-card"
+                Height="660"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                Name="DataGridCard"
+                Tag="10|数据表格 DataGrid 一万条数据 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                MinHeight="820"
+                Name="LayoutControlsCard"
+                Tag="11|侧栏与分隔 SplitView GridSplitter 布局 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                MinHeight="800"
+                Name="SplitButtonsCard"
+                Tag="12|分裂按钮 SplitButton ToggleSplitButton 主操作 下拉 菜单 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                MinHeight="880"
+                Name="TextControlsCard"
+                Tag="13|标签与可选文本 Label SelectableTextBlock 选择 复制 富文本" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                MinHeight="820"
+                Name="FlyoutCard"
+                Tag="14|内容弹层 FlyoutPresenter Flyout 定位 关闭 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                Name="SelectionControlsCard"
+                Tag="15|选择控件对比 CheckBox RadioButton ToggleSwitch 三档尺寸 明暗主题 悬停 按下 禁用" />
+            <Border
+                Classes="sample-card"
+                IsVisible="False"
+                Margin="0,0,12,12"
+                Name="ButtonControlsCard"
+                Tag="16|按钮控件对比 Button ToggleButton RepeatButton 三档尺寸 明暗主题 悬停 按下 禁用 选中 重复 长按" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="TabStripCard"
+                Tag="17|独立标签导航 TabStrip TabStripItem 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="CarouselCard"
+                Tag="18|内容轮播 Carousel 千条数据 虚拟化 滑动" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="RefreshCard"
+                Tag="19|下拉刷新 RefreshContainer RefreshVisualizer 千条数据 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="ContentTransitionCard"
+                Tag="20|内容切换 TransitioningContentControl 动画 Motion 草稿 千条记录 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="NotificationCardPreview"
+                Tag="21|通知 NotificationCard WindowNotificationManager 提示 成功 警告 错误 自动关闭 手动关闭 Motion" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="OneWindowCard"
+                Tag="22|窗口 OneWindow ThemeButton 标题栏 LeftContent RightContent 通知 Toast Dialog 静态 API" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="ChartCard"
+                Tag="23|图表 Chart Line Area Bar HorizontalBar Scatter Pie Doughnut Gauge StackedBar StackedHorizontalBar StackedArea PercentStackedBar PercentStackedHorizontalBar PercentStackedArea 折线 面积 柱状 条形 散点 饼图 环形 仪表 堆叠 百分比 双轴 副轴 采样 十万 缩放 平移 数据 可视化" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="InfoCardPreviewHost"
+                Tag="24|信息卡片 InfoCard Header HeaderIcon HeaderActions Content Footer 图标 操作 页脚 分割线 模板 表单 千条列表 虚拟化" />
+            <Border
+                Classes="sample-card"
+                IsEnabled="{Binding DemoEnabled}"
+                IsVisible="False"
+                Name="NavMenuPreviewHost"
+                Tag="25|导航菜单 NavMenu IconTemplate ContentTemplate ChildrenBinding 多级 分区 千条数据 虚拟化" />
             <TextBlock
                 Classes="helper"
                 IsVisible="False"

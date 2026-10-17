@@ -1,5 +1,9 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ControlTheme TargetType="TabStripItem" x:Key="{x:Type TabStripItem}">
         <Setter Property="Background" Value="Transparent" />
@@ -22,30 +26,39 @@
                     Name="PART_LayoutRoot">
                     <Panel>
                         <Grid ColumnDefinitions="*,Auto">
-                        <ContentPresenter
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Foreground="{TemplateBinding Foreground}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Name="PART_ContentPresenter"
-                            Padding="{TemplateBinding Padding}"
-                            RecognizesAccessKey="True"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        <Button
-                            Name="PART_CloseButton"
-                            Grid.Column="1"
-                            Classes="one-close"
-                            Theme="{StaticResource One.CardTabHeaderButton}"
-                            Command="{x:Static one:TabFeatures.CloseTabCommand}"
-                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                            Focusable="False"
-                            Width="24" Height="24" MinWidth="0" MinHeight="0"
-                            Margin="0,0,6,0" Padding="5"
-                            AutomationProperties.Name="关闭标签页"
-                            ToolTip.Tip="关闭标签页（Ctrl / ⌘ + W）">
-                            <Button.IsVisible><TemplateBinding Property="one:TabFeatures.ShowCloseButton" /></Button.IsVisible>
-                            <PathIcon Data="M 1,0 L 6,5 L 11,0 L 12,1 L 7,6 L 12,11 L 11,12 L 6,7 L 1,12 L 0,11 L 5,6 L 0,1 Z" Width="12" Height="12" />
-                        </Button>
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Foreground="{TemplateBinding Foreground}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Name="PART_ContentPresenter"
+                                Padding="{TemplateBinding Padding}"
+                                RecognizesAccessKey="True"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <Button
+                                AutomationProperties.Name="关闭标签页"
+                                Classes="one-close"
+                                Command="{x:Static one:TabFeatures.CloseTabCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                Focusable="False"
+                                Grid.Column="1"
+                                Height="24"
+                                Margin="0,0,6,0"
+                                MinHeight="0"
+                                MinWidth="0"
+                                Name="PART_CloseButton"
+                                Padding="5"
+                                Theme="{StaticResource One.CardTabHeaderButton}"
+                                ToolTip.Tip="关闭标签页（Ctrl / ⌘ + W）"
+                                Width="24">
+                                <Button.IsVisible>
+                                    <TemplateBinding Property="one:TabFeatures.ShowCloseButton" />
+                                </Button.IsVisible>
+                                <PathIcon
+                                    Data="M 1,0 L 6,5 L 11,0 L 12,1 L 7,6 L 12,11 L 11,12 L 6,7 L 1,12 L 0,11 L 5,6 L 0,1 Z"
+                                    Height="12"
+                                    Width="12" />
+                            </Button>
                         </Grid>
                         <Border
                             Background="{DynamicResource One.Accent}"

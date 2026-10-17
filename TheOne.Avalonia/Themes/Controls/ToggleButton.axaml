@@ -21,22 +21,30 @@
 
         <Setter Property="Template">
             <ControlTemplate>
-              <Grid>
-                <ContentPresenter
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Content="{TemplateBinding Content}"
-                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                    CornerRadius="{TemplateBinding CornerRadius}"
-                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                    Padding="{TemplateBinding Padding}"
-                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                    x:Name="PART_ContentPresenter" />
-                <Border x:Name="PART_IndeterminateIndicator" Width="12" Height="3" CornerRadius="1.5"
-                        Background="{Binding #PART_ContentPresenter.Foreground}" IsVisible="False" IsHitTestVisible="False"
-                        HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,3" />
-              </Grid>
+                <Grid>
+                    <ContentPresenter
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Padding="{TemplateBinding Padding}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        x:Name="PART_ContentPresenter" />
+                    <Border
+                        Background="{Binding #PART_ContentPresenter.Foreground}"
+                        CornerRadius="1.5"
+                        Height="3"
+                        HorizontalAlignment="Center"
+                        IsHitTestVisible="False"
+                        IsVisible="False"
+                        Margin="0,0,0,3"
+                        VerticalAlignment="Bottom"
+                        Width="12"
+                        x:Name="PART_IndeterminateIndicator" />
+                </Grid>
             </ControlTemplate>
         </Setter>
 

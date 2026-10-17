@@ -1,81 +1,191 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <DataTemplate x:Key="One.FlowNode.DefaultContentTemplate" x:DataType="one:FlowNodeContent">
-    <StackPanel Spacing="6" Classes.vertical="{Binding $parent[one:FlowNode].IsVertical}">
-      <StackPanel.Styles>
-        <Style Selector="TextBlock"><Setter Property="TextWrapping" Value="Wrap" /><Setter Property="TextAlignment" Value="Center" /></Style>
-        <Style Selector="StackPanel.vertical TextBlock"><Setter Property="TextAlignment" Value="Left" /></Style>
-        <Style Selector="TextBlock.flow-state"><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /></Style>
-        <Style Selector="TextBlock.flow-state.completed"><Setter Property="Foreground" Value="{DynamicResource One.Success}" /></Style>
-        <Style Selector="TextBlock.flow-state.current"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /></Style>
-        <Style Selector="one|FlowNodeHeaderPanel.flow-header"><Setter Property="IsVisible" Value="False" /></Style>
-        <Style Selector="StackPanel.vertical > one|FlowNodeHeaderPanel.flow-header"><Setter Property="IsVisible" Value="True" /></Style>
-        <Style Selector="StackPanel.vertical > StackPanel.flow-title, StackPanel.vertical > TextBlock.flow-state"><Setter Property="IsVisible" Value="False" /></Style>
-      </StackPanel.Styles>
-      <one:FlowNodeHeaderPanel Classes="flow-header">
-        <TextBlock Text="{Binding Title}" IsVisible="{Binding HasTitle}" FontWeight="SemiBold" Margin="0,0,12,0" />
-        <TextBlock Classes="flow-state" Text="{Binding $parent[one:FlowNode].EffectiveStateText}"
-                   Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}" Classes.current="{Binding $parent[one:FlowNode].IsInProgress}" />
-      </one:FlowNodeHeaderPanel>
-      <StackPanel Classes="flow-title"><TextBlock Text="{Binding Title}" IsVisible="{Binding HasTitle}" FontWeight="SemiBold" /></StackPanel>
-      <TextBlock Text="{Binding Time}" IsVisible="{Binding HasTime}" Foreground="{DynamicResource One.Muted}" />
-      <TextBlock Classes="flow-state" Text="{Binding $parent[one:FlowNode].EffectiveStateText}"
-                 Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}" Classes.current="{Binding $parent[one:FlowNode].IsInProgress}" />
-      <TextBlock Text="{Binding Text}" IsVisible="{Binding HasText}" Foreground="{DynamicResource One.Muted}" />
-    </StackPanel>
-  </DataTemplate>
-  <ControlTheme x:Key="{x:Type one:FlowNode}" TargetType="one:FlowNode">
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="FontSize" Value="14" />
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Top" />
-    <Setter Property="DefaultContentTemplate" Value="{StaticResource One.FlowNode.DefaultContentTemplate}" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <one:FlowNodePanel ContentSpacing="{TemplateBinding ContentSpacing}">
-          <Grid Name="PART_Indicator" Width="{TemplateBinding IndicatorSize}" Height="{TemplateBinding IndicatorSize}" IsHitTestVisible="False">
-            <Border Name="PART_Ring" CornerRadius="100" BorderThickness="2" BorderBrush="{DynamicResource One.Muted}" />
-            <Path Name="PART_Check" Data="M 7,15 L 12,20 L 23,9" Stroke="{DynamicResource One.OnAccent}" StrokeThickness="2.5" Stretch="Uniform" Width="16" Height="13" IsVisible="False" />
-            <Ellipse Name="PART_Dot" Width="14" Height="14" Fill="{DynamicResource One.Accent}" IsVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" />
-          </Grid>
-          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding EffectiveContentTemplate}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Padding="{TemplateBinding Padding}" />
-        </one:FlowNodePanel>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^:completed /template/ Border#PART_Ring"><Setter Property="Background" Value="{DynamicResource One.Success}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Success}" /></Style>
-    <Style Selector="^:completed /template/ Path#PART_Check"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:in-progress /template/ Border#PART_Ring"><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
-    <Style Selector="^:in-progress /template/ Ellipse#PART_Dot"><Setter Property="IsVisible" Value="True" /></Style>
-    <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.55" /></Style>
-    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="IndicatorSize" Value="24" /><Setter Property="ContentSpacing" Value="10" /></Style>
-    <Style Selector="^.one-normal"><Setter Property="FontSize" Value="14" /><Setter Property="IndicatorSize" Value="30" /><Setter Property="ContentSpacing" Value="12" /></Style>
-    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="IndicatorSize" Value="36" /><Setter Property="ContentSpacing" Value="16" /></Style>
-  </ControlTheme>
-  <ControlTheme x:Key="{x:Type one:FlowStep}" TargetType="one:FlowStep">
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="ItemsPanel">
-      <ItemsPanelTemplate>
-        <one:FlowStepPanel ViewportWidth="{Binding $parent[ScrollViewer].Viewport.Width}" />
-      </ItemsPanelTemplate>
-    </Setter>
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Padding="{TemplateBinding Padding}">
-        <ScrollViewer Name="PART_ScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-          <Panel>
-            <one:FlowStepConnectors Name="PART_Connectors" ConnectorBrush="{DynamicResource One.Line}" CompletedConnectorBrush="{DynamicResource One.Success}" IsHitTestVisible="False" />
-            <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
-          </Panel>
-        </ScrollViewer>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^[Orientation=Vertical] /template/ ScrollViewer#PART_ScrollViewer"><Setter Property="HorizontalScrollBarVisibility" Value="Disabled" /><Setter Property="VerticalScrollBarVisibility" Value="Auto" /></Style>
-    <Style Selector="^.one-small"><Setter Property="NodeSpacing" Value="20" /><Setter Property="MinNodeWidth" Value="150" /></Style>
-    <Style Selector="^.one-normal"><Setter Property="NodeSpacing" Value="24" /><Setter Property="MinNodeWidth" Value="180" /></Style>
-    <Style Selector="^.one-large"><Setter Property="NodeSpacing" Value="32" /><Setter Property="MinNodeWidth" Value="210" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:DataType="one:FlowNodeContent" x:Key="One.FlowNode.DefaultContentTemplate">
+        <StackPanel Classes.vertical="{Binding $parent[one:FlowNode].IsVertical}" Spacing="6">
+            <StackPanel.Styles>
+                <Style Selector="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                    <Setter Property="TextAlignment" Value="Center" />
+                </Style>
+                <Style Selector="StackPanel.vertical TextBlock">
+                    <Setter Property="TextAlignment" Value="Left" />
+                </Style>
+                <Style Selector="TextBlock.flow-state">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+                </Style>
+                <Style Selector="TextBlock.flow-state.completed">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+                </Style>
+                <Style Selector="TextBlock.flow-state.current">
+                    <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+                </Style>
+                <Style Selector="one|FlowNodeHeaderPanel.flow-header">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+                <Style Selector="StackPanel.vertical &gt; one|FlowNodeHeaderPanel.flow-header">
+                    <Setter Property="IsVisible" Value="True" />
+                </Style>
+                <Style Selector="StackPanel.vertical &gt; StackPanel.flow-title, StackPanel.vertical &gt; TextBlock.flow-state">
+                    <Setter Property="IsVisible" Value="False" />
+                </Style>
+            </StackPanel.Styles>
+            <one:FlowNodeHeaderPanel Classes="flow-header">
+                <TextBlock
+                    FontWeight="SemiBold"
+                    IsVisible="{Binding HasTitle}"
+                    Margin="0,0,12,0"
+                    Text="{Binding Title}" />
+                <TextBlock
+                    Classes="flow-state"
+                    Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}"
+                    Classes.current="{Binding $parent[one:FlowNode].IsInProgress}"
+                    Text="{Binding $parent[one:FlowNode].EffectiveStateText}" />
+            </one:FlowNodeHeaderPanel>
+            <StackPanel Classes="flow-title">
+                <TextBlock
+                    FontWeight="SemiBold"
+                    IsVisible="{Binding HasTitle}"
+                    Text="{Binding Title}" />
+            </StackPanel>
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                IsVisible="{Binding HasTime}"
+                Text="{Binding Time}" />
+            <TextBlock
+                Classes="flow-state"
+                Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}"
+                Classes.current="{Binding $parent[one:FlowNode].IsInProgress}"
+                Text="{Binding $parent[one:FlowNode].EffectiveStateText}" />
+            <TextBlock
+                Foreground="{DynamicResource One.Muted}"
+                IsVisible="{Binding HasText}"
+                Text="{Binding Text}" />
+        </StackPanel>
+    </DataTemplate>
+    <ControlTheme TargetType="one:FlowNode" x:Key="{x:Type one:FlowNode}">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="DefaultContentTemplate" Value="{StaticResource One.FlowNode.DefaultContentTemplate}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <one:FlowNodePanel ContentSpacing="{TemplateBinding ContentSpacing}">
+                    <Grid
+                        Height="{TemplateBinding IndicatorSize}"
+                        IsHitTestVisible="False"
+                        Name="PART_Indicator"
+                        Width="{TemplateBinding IndicatorSize}">
+                        <Border
+                            BorderBrush="{DynamicResource One.Muted}"
+                            BorderThickness="2"
+                            CornerRadius="100"
+                            Name="PART_Ring" />
+                        <Path
+                            Data="M 7,15 L 12,20 L 23,9"
+                            Height="13"
+                            IsVisible="False"
+                            Name="PART_Check"
+                            Stretch="Uniform"
+                            Stroke="{DynamicResource One.OnAccent}"
+                            StrokeThickness="2.5"
+                            Width="16" />
+                        <Ellipse
+                            Fill="{DynamicResource One.Accent}"
+                            Height="14"
+                            HorizontalAlignment="Center"
+                            IsVisible="False"
+                            Name="PART_Dot"
+                            VerticalAlignment="Center"
+                            Width="14" />
+                    </Grid>
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding EffectiveContentTemplate}"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Name="PART_ContentPresenter"
+                        Padding="{TemplateBinding Padding}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </one:FlowNodePanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:completed /template/ Border#PART_Ring">
+            <Setter Property="Background" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:completed /template/ Path#PART_Check">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:in-progress /template/ Border#PART_Ring">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:in-progress /template/ Ellipse#PART_Dot">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:disabled">
+            <Setter Property="Opacity" Value="0.55" />
+        </Style>
+        <Style Selector="^.one-small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="IndicatorSize" Value="24" />
+            <Setter Property="ContentSpacing" Value="10" />
+        </Style>
+        <Style Selector="^.one-normal">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="IndicatorSize" Value="30" />
+            <Setter Property="ContentSpacing" Value="12" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="IndicatorSize" Value="36" />
+            <Setter Property="ContentSpacing" Value="16" />
+        </Style>
+    </ControlTheme>
+    <ControlTheme TargetType="one:FlowStep" x:Key="{x:Type one:FlowStep}">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <one:FlowStepPanel ViewportWidth="{Binding $parent[ScrollViewer].Viewport.Width}" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Padding="{TemplateBinding Padding}">
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Auto"
+                        Name="PART_ScrollViewer"
+                        VerticalScrollBarVisibility="Disabled">
+                        <Panel>
+                            <one:FlowStepConnectors
+                                CompletedConnectorBrush="{DynamicResource One.Success}"
+                                ConnectorBrush="{DynamicResource One.Line}"
+                                IsHitTestVisible="False"
+                                Name="PART_Connectors" />
+                            <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" Name="PART_ItemsPresenter" />
+                        </Panel>
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[Orientation=Vertical] /template/ ScrollViewer#PART_ScrollViewer">
+            <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        </Style>
+        <Style Selector="^.one-small">
+            <Setter Property="NodeSpacing" Value="20" />
+            <Setter Property="MinNodeWidth" Value="150" />
+        </Style>
+        <Style Selector="^.one-normal">
+            <Setter Property="NodeSpacing" Value="24" />
+            <Setter Property="MinNodeWidth" Value="180" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="NodeSpacing" Value="32" />
+            <Setter Property="MinNodeWidth" Value="210" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -6,5 +6,9 @@ public sealed class StackedAreaChart : CartesianChartBase
     public override ChartKind Kind => ChartKind.StackedArea;
     private protected override bool IsAreaCartesian => true;
     private protected override bool IsStackedCartesian => true;
-    private protected override ChartBase CreateExportSnapshot() => new StackedAreaChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new StackedAreaChart();
+    }
 }

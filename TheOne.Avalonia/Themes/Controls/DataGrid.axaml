@@ -86,8 +86,8 @@
                             Foreground="{TemplateBinding Foreground}"
                             Grid.Column="0"
                             HorizontalAlignment="Stretch"
-                            Padding="{TemplateBinding Padding}"
                             Name="PART_ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
                             VerticalAlignment="Stretch"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
                             <ContentPresenter.HorizontalContentAlignment>
@@ -156,8 +156,14 @@
                             Margin="{TemplateBinding Padding}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             x:Name="PART_ContentPresenter" />
-                        <one:DataGridSortButton Grid.Column="1" Margin="2,0" Name="PART_SortButton" />
-                        <one:DataGridFilterButton Grid.Column="2" Margin="2,0,5,0" Name="PART_FilterButton" />
+                        <one:DataGridSortButton
+                            Grid.Column="1"
+                            Margin="2,0"
+                            Name="PART_SortButton" />
+                        <one:DataGridFilterButton
+                            Grid.Column="2"
+                            Margin="2,0,5,0"
+                            Name="PART_FilterButton" />
                         <Rectangle
                             Fill="{TemplateBinding SeparatorBrush}"
                             Grid.Column="3"
@@ -522,7 +528,10 @@
         <Setter Property="FocusAdorner" Value="{x:Null}" />
         <Setter Property="DropLocationIndicatorTemplate">
             <Template>
-                <one:DataGridDropIndicator Foreground="{DynamicResource One.Accent}" Width="4" ZIndex="101" />
+                <one:DataGridDropIndicator
+                    Foreground="{DynamicResource One.Accent}"
+                    Width="4"
+                    ZIndex="101" />
             </Template>
         </Setter>
         <Setter Property="Template">
@@ -591,8 +600,11 @@
                                     Name="PART_HorizontalScrollbar"
                                     Orientation="Horizontal" />
                             </Grid>
-                            <one:DataGridSummaryPresenter Name="PART_SummaryPresenter"
-                                Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" />
+                            <one:DataGridSummaryPresenter
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Grid.Row="3"
+                                Name="PART_SummaryPresenter" />
                             <Border
                                 Background="{DynamicResource One.DisabledSurface}"
                                 CornerRadius="{TemplateBinding CornerRadius}"

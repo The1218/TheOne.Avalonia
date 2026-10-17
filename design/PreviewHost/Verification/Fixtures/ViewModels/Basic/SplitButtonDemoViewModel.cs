@@ -1,18 +1,19 @@
 using System.Windows.Input;
-using ReactiveUI.Primitives;
 using ReactiveUI;
+using ReactiveUI.Primitives;
 
 namespace TheOne.DesignPreview;
 
 public sealed class SplitButtonDemoViewModel : ReactiveObject
 {
+    private readonly Lazy<IReadOnlyList<SplitTemplateOption>> _templates;
     private string _format = "PDF", _frequency = "每天";
     private string _selectedTemplate = "模板 00001";
-    private readonly Lazy<IReadOnlyList<SplitTemplateOption>> _templates;
+
     public SplitButtonDemoViewModel()
     {
-        var canExecute = this.Changed.Where(change => change.PropertyName == nameof(AllowCommand))
-            .Select(_ => AllowCommand).StartWith(new[] { AllowCommand }).DistinctUntilChanged();
+        var canExecute = Changed.Where(change => change.PropertyName == nameof(AllowCommand))
+            .Select(_ => AllowCommand).StartWith(AllowCommand).DistinctUntilChanged();
         MainActionCommand = ReactiveCommand.Create<object?>(Invoke, canExecute);
         ChooseFormatCommand = ReactiveCommand.Create<object?>(parameter =>
         {
@@ -45,7 +46,9 @@ public sealed class SplitButtonDemoViewModel : ReactiveObject
             this.RaisePropertyChanged(nameof(FrequencyLabel));
             this.RaisePropertyChanged(nameof(Counts));
         });
-        _templates = new(() => Enumerable.Range(1, 10000).Select(i => new SplitTemplateOption($"模板 {i:00000}", TemplateCommand)).ToArray());
+        _templates = new Lazy<IReadOnlyList<SplitTemplateOption>>(() =>
+            Enumerable.Range(1, 10000).Select(i => new SplitTemplateOption($"模板 {i:00000}", TemplateCommand))
+                .ToArray());
     }
 
     public ICommand MainActionCommand { get; }
@@ -58,11 +61,30 @@ public sealed class SplitButtonDemoViewModel : ReactiveObject
     public string ExportLabel => $"导出 · {_format}";
     public string FrequencyLabel => $"发布频率：{_frequency}";
     public string Counts => $"主操作 {MainCount} 次 · 菜单选择 {ChoiceCount} 次 · 自动发布 {(AutoPublish ? "开启" : "关闭")}";
-    public int MainCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
-    public int ChoiceCount { get; private set => this.RaiseAndSetIfChanged(ref field, value); }
-    public bool IsEnabled { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
 
-    public bool AllowCommand { get; set => this.RaiseAndSetIfChanged(ref field, value); } = true;
+    public int MainCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public int ChoiceCount
+    {
+        get;
+        private set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
+    public bool IsEnabled
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
+
+    public bool AllowCommand
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = true;
 
     public bool AutoPublish
     {
@@ -76,8 +98,17 @@ public sealed class SplitButtonDemoViewModel : ReactiveObject
         }
     }
 
-    public string Status { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "准备就绪 · 主操作与更多选择分别响应";
-    public string MenuMetrics { get; set => this.RaiseAndSetIfChanged(ref field, value); } = "打开模板菜单可查看实际容器数量";
+    public string Status
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "准备就绪 · 主操作与更多选择分别响应";
+
+    public string MenuMetrics
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    } = "打开模板菜单可查看实际容器数量";
 
     private void Choose(string value)
     {
@@ -93,8 +124,8 @@ public sealed class SplitButtonDemoViewModel : ReactiveObject
         {
             "导出" => $"已导出 {_format} 报表",
             "使用模板" => $"已使用：{_selectedTemplate}",
-            _ => $"主操作：{parameter}"};
+            _ => $"主操作：{parameter}"
+        };
         this.RaisePropertyChanged(nameof(Counts));
     }
-
 }

@@ -1,56 +1,139 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.SelectionControlsDemoView" x:DataType="local:SelectionControlsDemoView">
-  <UserControl.Styles>
-    <Style Selector="TextBlock.matrix-text"><Setter Property="Foreground" Value="{DynamicResource One.Text}" /></Style>
-    <Style Selector="TextBlock.note"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
-    <Style Selector="Border.demo-region"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="20" /></Style>
-    <Style Selector="Border.theme-region"><Setter Property="Background" Value="{DynamicResource One.Surface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Line}" /><Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="12" /><Setter Property="Padding" Value="16" /></Style>
-    <Style Selector="Border.size-region"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="12" /></Style>
-  </UserControl.Styles>
-  <StackPanel Spacing="20">
-    <StackPanel Spacing="6">
-      <TextBlock Text="24  选择控件对比 / CheckBox · RadioButton · ToggleSwitch" FontWeight="SemiBold" TextWrapping="Wrap" />
-      <TextBlock Classes="note" Text="整行背景透明 · 统一尺寸与间距 · 明暗主题并排 · 标记、轨道与滑块承担状态反馈" />
-    </StackPanel>
-    <Border Classes="demo-region">
-      <StackPanel Spacing="12">
-        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
-          <TextBlock Text="实时交互 / 跟随顶部主题与尺寸" FontWeight="SemiBold" VerticalAlignment="Center" TextWrapping="Wrap" />
-          <Button Name="ResetSelectionDemo" Grid.Column="1" Content="重置" Classes="ghost" Click="OnReset" />
-        </Grid>
-        <CheckBox Name="SelectionInteractionEnabled" Content="启用以下控件" IsChecked="True" IsCheckedChanged="OnEnabledChanged" />
-        <WrapPanel Name="LiveSelectionControls">
-          <StackPanel Spacing="8" Margin="0,0,24,8">
-            <TextBlock Classes="note" Text="CheckBox / 支持部分选择" />
-            <CheckBox Name="LiveCheck" Content="自动保存" IsChecked="True" IsThreeState="True" IsCheckedChanged="OnSelectionChanged" />
-          </StackPanel>
-          <StackPanel Spacing="8" Margin="0,0,24,8">
-            <TextBlock Classes="note" Text="RadioButton / 同组互斥" />
-            <StackPanel Orientation="Horizontal" Spacing="12">
-              <RadioButton Name="LiveRadioFirst" Content="标准" IsChecked="True" IsCheckedChanged="OnSelectionChanged" />
-              <RadioButton Name="LiveRadioSecond" Content="紧凑" IsCheckedChanged="OnSelectionChanged" />
+<UserControl
+    x:Class="TheOne.DesignPreview.SelectionControlsDemoView"
+    x:DataType="local:SelectionControlsDemoView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.matrix-text">
+            <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        </Style>
+        <Style Selector="TextBlock.note">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="Border.demo-region">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+        <Style Selector="Border.theme-region">
+            <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="16" />
+        </Style>
+        <Style Selector="Border.size-region">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="20">
+        <StackPanel Spacing="6">
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="24  选择控件对比 / CheckBox · RadioButton · ToggleSwitch"
+                TextWrapping="Wrap" />
+            <TextBlock Classes="note" Text="整行背景透明 · 统一尺寸与间距 · 明暗主题并排 · 标记、轨道与滑块承担状态反馈" />
+        </StackPanel>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        Text="实时交互 / 跟随顶部主题与尺寸"
+                        TextWrapping="Wrap"
+                        VerticalAlignment="Center" />
+                    <Button
+                        Classes="ghost"
+                        Click="OnReset"
+                        Content="重置"
+                        Grid.Column="1"
+                        Name="ResetSelectionDemo" />
+                </Grid>
+                <CheckBox
+                    Content="启用以下控件"
+                    IsChecked="True"
+                    IsCheckedChanged="OnEnabledChanged"
+                    Name="SelectionInteractionEnabled" />
+                <WrapPanel Name="LiveSelectionControls">
+                    <StackPanel Margin="0,0,24,8" Spacing="8">
+                        <TextBlock Classes="note" Text="CheckBox / 支持部分选择" />
+                        <CheckBox
+                            Content="自动保存"
+                            IsChecked="True"
+                            IsCheckedChanged="OnSelectionChanged"
+                            IsThreeState="True"
+                            Name="LiveCheck" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,24,8" Spacing="8">
+                        <TextBlock Classes="note" Text="RadioButton / 同组互斥" />
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                            <RadioButton
+                                Content="标准"
+                                IsChecked="True"
+                                IsCheckedChanged="OnSelectionChanged"
+                                Name="LiveRadioFirst" />
+                            <RadioButton
+                                Content="紧凑"
+                                IsCheckedChanged="OnSelectionChanged"
+                                Name="LiveRadioSecond" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,8" Spacing="8">
+                        <TextBlock Classes="note" Text="ToggleSwitch / 点击与拖动" />
+                        <ToggleSwitch
+                            IsChecked="True"
+                            IsCheckedChanged="OnSelectionChanged"
+                            Name="LiveSwitch"
+                            OffContent="通知关闭"
+                            OnContent="通知开启" />
+                    </StackPanel>
+                </WrapPanel>
+                <TextBlock
+                    Name="SelectionStatus"
+                    Text="准备就绪"
+                    TextWrapping="Wrap" />
+                <TextBlock Classes="note" Text="可点击或按 Space 切换；RadioButton 保持互斥。禁用只影响实时控件，固定状态矩阵始终可对比。" />
             </StackPanel>
-          </StackPanel>
-          <StackPanel Spacing="8" Margin="0,0,0,8">
-            <TextBlock Classes="note" Text="ToggleSwitch / 点击与拖动" />
-            <ToggleSwitch Name="LiveSwitch" OnContent="通知开启" OffContent="通知关闭" IsChecked="True" IsCheckedChanged="OnSelectionChanged" />
-          </StackPanel>
-        </WrapPanel>
-        <TextBlock Name="SelectionStatus" Text="准备就绪" TextWrapping="Wrap" />
-        <TextBlock Classes="note" Text="可点击或按 Space 切换；RadioButton 保持互斥。禁用只影响实时控件，固定状态矩阵始终可对比。" />
-      </StackPanel>
-    </Border>
-    <StackPanel Spacing="6">
-      <TextBlock Text="固定状态矩阵 / 明暗 × 三档尺寸" FontWeight="SemiBold" />
-      <TextBlock Classes="note" Text="每列使用同一套官方控件主题。下方为固定状态样例，不响应点击；悬停和按下外观可同时查看。CheckBox 额外展示部分选择。" />
+        </Border>
+        <StackPanel Spacing="6">
+            <TextBlock FontWeight="SemiBold" Text="固定状态矩阵 / 明暗 × 三档尺寸" />
+            <TextBlock Classes="note" Text="每列使用同一套官方控件主题。下方为固定状态样例，不响应点击；悬停和按下外观可同时查看。CheckBox 额外展示部分选择。" />
+        </StackPanel>
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="16"
+            Name="ThemeColumns"
+            RowDefinitions="Auto,Auto"
+            RowSpacing="16"
+            SizeChanged="OnMatrixSizeChanged">
+            <ThemeVariantScope Name="LightMatrixScope" RequestedThemeVariant="Light">
+                <Border Classes="theme-region">
+                    <StackPanel Name="LightMatrix" Spacing="16">
+                        <TextBlock
+                            Classes="matrix-text"
+                            FontWeight="SemiBold"
+                            Text="LIGHT / 浅色" />
+                    </StackPanel>
+                </Border>
+            </ThemeVariantScope>
+            <ThemeVariantScope
+                Grid.Column="1"
+                Name="DarkMatrixScope"
+                RequestedThemeVariant="Dark">
+                <Border Classes="theme-region">
+                    <StackPanel Name="DarkMatrix" Spacing="16">
+                        <TextBlock
+                            Classes="matrix-text"
+                            FontWeight="SemiBold"
+                            Text="DARK / 深色" />
+                    </StackPanel>
+                </Border>
+            </ThemeVariantScope>
+        </Grid>
     </StackPanel>
-    <Grid Name="ThemeColumns" ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="16" SizeChanged="OnMatrixSizeChanged">
-      <ThemeVariantScope Name="LightMatrixScope" RequestedThemeVariant="Light">
-        <Border Classes="theme-region"><StackPanel Name="LightMatrix" Spacing="16"><TextBlock Classes="matrix-text" Text="LIGHT / 浅色" FontWeight="SemiBold" /></StackPanel></Border>
-      </ThemeVariantScope>
-      <ThemeVariantScope Name="DarkMatrixScope" Grid.Column="1" RequestedThemeVariant="Dark">
-        <Border Classes="theme-region"><StackPanel Name="DarkMatrix" Spacing="16"><TextBlock Classes="matrix-text" Text="DARK / 深色" FontWeight="SemiBold" /></StackPanel></Border>
-      </ThemeVariantScope>
-    </Grid>
-  </StackPanel>
 </UserControl>

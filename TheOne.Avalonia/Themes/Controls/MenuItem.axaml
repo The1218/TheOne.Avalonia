@@ -2,9 +2,9 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:conv="using:Avalonia.Controls.Converters"
     xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
-    xmlns:conv="using:Avalonia.Controls.Converters"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
@@ -17,8 +17,11 @@
     <ControlTheme TargetType="MenuItem" x:Key="{x:Type MenuItem}">
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
-                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuItem" />
-                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuItem" />
+                <markup:CompiledBindingExtension DataType="MenuItem" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension
+                    DataType="MenuItem"
+                    Path="ItemCount"
+                    RelativeSource="{RelativeSource Self}" />
             </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />

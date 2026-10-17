@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class TreeViewPageViewModel : BasicControlViewModel { }
+
+public sealed class TreeViewPageViewModel : BasicControlViewModel
+{
+}

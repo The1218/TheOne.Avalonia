@@ -1,8 +1,11 @@
-using global::Avalonia.Controls;
+using Avalonia.Controls;
 
 namespace TheOne.Avalonia.Controls;
 
 internal partial class OneMessageBoxView : UserControl
 {
-    public OneMessageBoxView() => InitializeComponent();
+    public OneMessageBoxView()
+    {
+        InitializeComponent();
+    }
 }

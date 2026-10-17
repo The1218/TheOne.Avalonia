@@ -37,42 +37,62 @@ internal static class TextAlignmentPreview
                 new RadioButton { Content = "单选 Radio", Width = 240 },
                 new ToggleSwitch { OnContent = "启用 On", IsChecked = true, Width = 240 },
                 new SplitButton { Content = "拆分按钮 Split", Width = 200 },
-                new ToggleSplitButton { Content = "拆分切换 Toggle", Width = 200 },
+                new ToggleSplitButton { Content = "拆分切换 Toggle", Width = 200 }
             };
             var multiline = new TextBox { Text = "第一行\n第二行", AcceptsReturn = true, Height = 90, Width = 240 };
-            var aligned = new TextBox { Text = "自定义顶对齐", VerticalContentAlignment = VerticalAlignment.Top, Height = 60, Width = 240 };
-            var alignedButton = new Button { Content = "自定义左上对齐", HorizontalContentAlignment = HorizontalAlignment.Left,
-                VerticalContentAlignment = VerticalAlignment.Top, Height = 60, Width = 240 };
+            var aligned = new TextBox
+                { Text = "自定义顶对齐", VerticalContentAlignment = VerticalAlignment.Top, Height = 60, Width = 240 };
+            var alignedButton = new Button
+            {
+                Content = "自定义左上对齐", HorizontalContentAlignment = HorizontalAlignment.Left,
+                VerticalContentAlignment = VerticalAlignment.Top, Height = 60, Width = 240
+            };
             var panel = new StackPanel { Spacing = 8 };
             foreach (var sample in samples) panel.Children.Add(sample);
-            panel.Children.Add(multiline); panel.Children.Add(aligned); panel.Children.Add(alignedButton);
+            panel.Children.Add(multiline);
+            panel.Children.Add(aligned);
+            panel.Children.Add(alignedButton);
             var window = new Window { Width = 400, Height = 1400, RequestedThemeVariant = theme, Content = panel };
-            ControlSizing.SetSize(window, size); Motion.SetEnabled(window, false);
-            window.Show(); ControlPreview.Flush();
+            ControlSizing.SetSize(window, size);
+            Motion.SetEnabled(window, false);
+            window.Show();
+            ControlPreview.Flush();
             foreach (var sample in samples)
             {
-                var label = $"TextAlignment/{theme.Key}/{size}/{sample.GetType().Name}/{Array.IndexOf(samples, sample)}";
+                var label =
+                    $"TextAlignment/{theme.Key}/{size}/{sample.GetType().Name}/{Array.IndexOf(samples, sample)}";
                 var presenter = sample.GetVisualDescendants().OfType<TextPresenter>().FirstOrDefault();
-                var text = sample.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(block => block.IsEffectivelyVisible && !string.IsNullOrEmpty(block.Text));
-                var visual = (Control?)presenter ?? text ?? throw new InvalidOperationException($"{label}: missing native text visual");
+                var text = sample.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault(block =>
+                    block.IsEffectivelyVisible && !string.IsNullOrEmpty(block.Text));
+                var visual = (Control?)presenter ??
+                             text ?? throw new InvalidOperationException($"{label}: missing native text visual");
                 var height = presenter?.TextLayout.Height ?? text!.TextLayout.Height;
-                if (sample is TextBox { Text: null or "" }) { visual = text!; height = text!.TextLayout.Height; }
+                if (sample is TextBox { Text: null or "" })
+                {
+                    visual = text!;
+                    height = text!.TextLayout.Height;
+                }
+
                 var origin = visual.TranslatePoint(default, sample)!.Value;
                 var centre = origin.Y + height / 2;
                 check(Math.Abs(centre - sample.Bounds.Height / 2) <= 1,
                     $"{label}: actual text is vertically centered (text={centre:0.##}, control={sample.Bounds.Height / 2:0.##})");
                 check(origin.Y >= 0 && origin.Y + height <= sample.Bounds.Height + 1,
                     $"{label}: text is fully visible within its control");
-                if (sample.StyleKey == typeof(Button) || sample.StyleKey == typeof(ToggleButton) || sample.StyleKey == typeof(RepeatButton))
+                if (sample.StyleKey == typeof(Button) || sample.StyleKey == typeof(ToggleButton) ||
+                    sample.StyleKey == typeof(RepeatButton))
                 {
                     var width = text!.TextLayout.WidthIncludingTrailingWhitespace;
                     check(Math.Abs(origin.X + width / 2 - sample.Bounds.Width / 2) <= 1,
                         $"{label}: button text is horizontally centered");
                 }
             }
+
             var multilineText = multiline.GetVisualDescendants().OfType<TextPresenter>().Single();
             var topText = aligned.GetVisualDescendants().OfType<TextPresenter>().Single();
-            check(multilineText.TextLayout.TextLines.Count == 2 && multilineText.TranslatePoint(default, multiline)!.Value.Y < 15,
+            check(
+                multilineText.TextLayout.TextLines.Count == 2 &&
+                multilineText.TranslatePoint(default, multiline)!.Value.Y < 15,
                 $"TextAlignment/{theme.Key}/{size}: multiline input starts at the top and keeps both lines");
             check(topText.TranslatePoint(default, aligned)!.Value.Y < 15,
                 $"TextAlignment/{theme.Key}/{size}: explicit consumer top alignment remains effective");
@@ -81,14 +101,23 @@ internal static class TextAlignmentPreview
             check(buttonOrigin.X < 20 && buttonOrigin.Y < 15,
                 $"TextAlignment/{theme.Key}/{size}: explicit consumer left/top button alignment remains effective");
             var editor = (TextBox)samples[4];
-            editor.Focus(); editor.SelectAll(); window.KeyTextInput("编辑内容 Text"); ControlPreview.Flush();
+            editor.Focus();
+            editor.SelectAll();
+            window.KeyTextInput("编辑内容 Text");
+            ControlPreview.Flush();
             var editorText = editor.GetVisualDescendants().OfType<TextPresenter>().Single();
-            check(editor.Text == "编辑内容 Text" && Math.Abs(editorText.TranslatePoint(default, editor)!.Value.Y + editorText.TextLayout.Height / 2 - editor.Bounds.Height / 2) <= 1,
+            check(
+                editor.Text == "编辑内容 Text" && Math.Abs(editorText.TranslatePoint(default, editor)!.Value.Y +
+                    editorText.TextLayout.Height / 2 - editor.Bounds.Height / 2) <= 1,
                 $"TextAlignment/{theme.Key}/{size}: native keyboard editing and caret scrolling retain centered text");
-            ControlSizing.SetSize(window, size == ControlSize.Small ? ControlSize.Large : ControlSize.Small); ControlPreview.Flush();
-            check(Math.Abs(editorText.TranslatePoint(default, editor)!.Value.Y + editorText.TextLayout.Height / 2 - editor.Bounds.Height / 2) <= 1,
+            ControlSizing.SetSize(window, size == ControlSize.Small ? ControlSize.Large : ControlSize.Small);
+            ControlPreview.Flush();
+            check(
+                Math.Abs(editorText.TranslatePoint(default, editor)!.Value.Y + editorText.TextLayout.Height / 2 -
+                         editor.Bounds.Height / 2) <= 1,
                 $"TextAlignment/{theme.Key}/{size}: live inherited density changes retain centered text");
-            window.Close(); ControlPreview.Flush();
+            window.Close();
+            ControlPreview.Flush();
         }
     }
 }

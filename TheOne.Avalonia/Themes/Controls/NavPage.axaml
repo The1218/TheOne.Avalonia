@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" xmlns:conv="using:Avalonia.Data.Converters" x:CompileBindings="True">
+    <ControlTheme x:Key="{x:Type one:NavPage}" TargetType="one:NavPage" x:DataType="one:NavPage">
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="TransitionDuration" Value="{DynamicResource One.Motion.Expand}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid ColumnDefinitions="Auto,*" Background="{TemplateBinding Background}">
+                    <Border Width="{Binding #PART_Menu.Width}" ClipToBounds="True">
+                        <Grid RowDefinitions="Auto,*,Auto">
+                            <Grid MinHeight="64">
+                                <Grid Name="PART_DefaultHeader" ColumnDefinitions="Auto,*" Margin="8">
+                                    <Button Name="PART_Toggle" Classes="ghost" Width="44" Height="44" Padding="8"
+                                            AutomationProperties.Name="展开或收起导航栏">
+                                        <ContentControl Name="PART_HeaderIcon" Content="{TemplateBinding HeaderIcon}" />
+                                    </Button>
+                                    <TextBlock Name="PART_HeaderTitle" Grid.Column="1" Text="{TemplateBinding HeaderTitle}"
+                                               FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10,0,8,0" />
+                                </Grid>
+                                <ContentPresenter Name="PART_Header" />
+                            </Grid>
+                            <one:NavMenu Name="PART_Menu" Grid.Row="1"
+                                         ExpandedWidth="{TemplateBinding ExpandedWidth}"
+                                         CollapsedWidth="{TemplateBinding CollapsedWidth}"
+                                         IsCollapsed="{TemplateBinding IsCollapsed, Mode=TwoWay}"
+                                         TransitionDuration="{TemplateBinding TransitionDuration}" />
+                            <ContentPresenter Name="PART_Footer" Grid.Row="2" />
+                        </Grid>
+                    </Border>
+                    <Border Width="1" HorizontalAlignment="Right" Background="{DynamicResource One.Line}" IsHitTestVisible="False" />
+                    <Grid Grid.Column="1" RowDefinitions="Auto,*">
+                        <ContentPresenter Name="PART_RightHeader"
+                                          Content="{TemplateBinding RightHeader}"
+                                          ContentTemplate="{TemplateBinding RightHeaderTemplate}"
+                                          IsVisible="{TemplateBinding RightHeader, Converter={x:Static conv:ObjectConverters.IsNotNull}}" />
+                        <Grid Name="PART_RightBody" Grid.Row="1">
+                            <TabControl Name="PART_Tabs" Classes="card" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:collapsed /template/ TextBlock#PART_HeaderTitle">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:custom-header /template/ Grid#PART_DefaultHeader">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

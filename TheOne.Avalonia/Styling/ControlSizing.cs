@@ -1,15 +1,20 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
+using Avalonia;
+using Avalonia.Controls;
 
 namespace TheOne.Avalonia.Styling;
 
-public enum ControlSize { Small, Normal, Large }
+public enum ControlSize
+{
+    Small,
+    Normal,
+    Large
+}
 
 /// <summary>Inheritable density: set on an individual control or on a whole form.</summary>
 public sealed class ControlSizing : AvaloniaObject
 {
     public static readonly AttachedProperty<ControlSize> SizeProperty =
-        AvaloniaProperty.RegisterAttached<ControlSizing, Control, ControlSize>("Size", ControlSize.Normal, inherits: true);
+        AvaloniaProperty.RegisterAttached<ControlSizing, Control, ControlSize>("Size", ControlSize.Normal, true);
 
     static ControlSizing()
     {
@@ -21,8 +26,15 @@ public sealed class ControlSizing : AvaloniaObject
         Control.LoadedEvent.AddClassHandler<FlyoutPresenter>((control, _) => Apply(control));
     }
 
-    public static ControlSize GetSize(Control control) => control.GetValue(SizeProperty);
-    public static void SetSize(Control control, ControlSize value) => control.SetValue(SizeProperty, value);
+    public static ControlSize GetSize(Control control)
+    {
+        return control.GetValue(SizeProperty);
+    }
+
+    public static void SetSize(Control control, ControlSize value)
+    {
+        control.SetValue(SizeProperty, value);
+    }
 
     private static void Apply(Control control)
     {

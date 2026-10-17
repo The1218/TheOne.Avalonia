@@ -4,12 +4,13 @@ using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;
 using Avalonia.Headless;
 using Avalonia.Input;
+using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
-using Avalonia.Styling;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
-using Avalonia.Interactivity;
+using TheOne.Avalonia.Controls;
+using TheOne.Avalonia.Styling;
 
 namespace TheOne.DesignPreview;
 
@@ -17,10 +18,18 @@ internal static class ControlPreview
 {
     public static void Render(string outputDirectory, string[] controls)
     {
-        if (controls.Length == 1 && controls[0] == "--all") { RenderAll(outputDirectory); return; }
-        if (controls.Length == 0) throw new ArgumentException("Specify control names (for example DatePicker TimePicker) or explicitly use --all.");
+        if (controls.Length == 1 && controls[0] == "--all")
+        {
+            RenderAll(outputDirectory);
+            return;
+        }
+
+        if (controls.Length == 0)
+            throw new ArgumentException(
+                "Specify control names (for example DatePicker TimePicker) or explicitly use --all.");
         TargetedControlPreview.Render(Path.GetFullPath(outputDirectory), controls);
     }
+
     private static void RenderAll(string outputDirectory)
     {
         var output = Path.GetFullPath(outputDirectory);
@@ -57,34 +66,71 @@ internal static class ControlPreview
             {
                 NavigationPreview.Render(window, window.FindControl<LegacyControlGallery>("Gallery")!, output, dark);
                 EnhancementsPreview.Render(window, window.FindControl<LegacyControlGallery>("Gallery")!, output, dark);
-                InteractionRepairsPreview.Render(window, window.FindControl<LegacyControlGallery>("Gallery")!, output, dark);
-                window.NavigateToCategory(10); Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"datagrid-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(11); Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"layout-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(12); Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"splitbuttons-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(13); window.Height = 1240; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"text-controls-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(14); window.Height = 1120; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"flyout-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(15); window.Height = 1400; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"selection-comparison-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(16); window.Height = 1320; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"button-comparison-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(17); window.Height = 1060; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"tabstrip-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(18); window.Height = 1140; Flush();
-                EnhancementsPreview.Save(window, Path.Combine(output, $"carousel-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(19); window.Height = 1160; Flush();
+                InteractionRepairsPreview.Render(window, window.FindControl<LegacyControlGallery>("Gallery")!, output,
+                    dark);
+                window.NavigateToCategory(10);
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"datagrid-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(11);
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"layout-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(12);
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"splitbuttons-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(13);
+                window.Height = 1240;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"text-controls-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(14);
+                window.Height = 1120;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"flyout-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(15);
+                window.Height = 1400;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"selection-comparison-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(16);
+                window.Height = 1320;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"button-comparison-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(17);
+                window.Height = 1060;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"tabstrip-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(18);
+                window.Height = 1140;
+                Flush();
+                EnhancementsPreview.Save(window,
+                    Path.Combine(output, $"carousel-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(19);
+                window.Height = 1160;
+                Flush();
                 RefreshPreview.Save(window, Path.Combine(output, $"refresh-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(20); window.Height = 1120; Flush();
-                RefreshPreview.Save(window, Path.Combine(output, $"content-transition-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(21); window.Height = 1280; Flush();
-                RefreshPreview.Save(window, Path.Combine(output, $"notification-catalogue-{(dark ? "dark" : "light")}.png"));
-                window.NavigateToCategory(22); window.Height = 1100; Flush();
-                RefreshPreview.Save(window, Path.Combine(output, $"onewindow-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(20);
+                window.Height = 1120;
+                Flush();
+                RefreshPreview.Save(window,
+                    Path.Combine(output, $"content-transition-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(21);
+                window.Height = 1280;
+                Flush();
+                RefreshPreview.Save(window,
+                    Path.Combine(output, $"notification-catalogue-{(dark ? "dark" : "light")}.png"));
+                window.NavigateToCategory(22);
+                window.Height = 1100;
+                Flush();
+                RefreshPreview.Save(window,
+                    Path.Combine(output, $"onewindow-catalogue-{(dark ? "dark" : "light")}.png"));
             }
+
             window.Close();
         }
     }
@@ -136,7 +182,8 @@ internal static class ControlPreview
         var presenter = save.GetVisualDescendants().OfType<ContentPresenter>()
             .Single(control => control.Name == "PART_ContentPresenter");
 
-        Check(BrushColor(presenter.Background) == Color.Parse("#006061"), "Primary button uses OneTheme, not fallback Fluent");
+        Check(BrushColor(presenter.Background) == Color.Parse("#006061"),
+            "Primary button uses OneTheme, not fallback Fluent");
         window.MouseMove(point);
         Flush();
         Check(BrushColor(presenter.Background) == Color.Parse("#006A6B"), "Pointer hover state");
@@ -153,9 +200,11 @@ internal static class ControlPreview
         email.SelectAll();
         window.KeyTextInput("invalid-email");
         Flush();
-        Check(window.Model.Email == "invalid-email" && window.Model.HasErrors, "Text input updates compiled binding and validation");
+        Check(window.Model.Email == "invalid-email" && window.Model.HasErrors,
+            "Text input updates compiled binding and validation");
         Check(DataValidationErrors.GetHasErrors(email), "Validation reaches the real TextBox error state");
-        var border = email.GetVisualDescendants().OfType<Border>().Single(control => control.Name == "PART_BorderElement");
+        var border = email.GetVisualDescendants().OfType<Border>()
+            .Single(control => control.Name == "PART_BorderElement");
         Check(BrushColor(border.BorderBrush) == Color.Parse("#99000D"), "Error border uses semantic danger colour");
         window.Model.Email = "hello@theone.dev";
         Flush();
@@ -163,13 +212,16 @@ internal static class ControlPreview
 
         var check = gallery.FindControl<CheckBox>("CheckSample")!;
         var checkFrame = check.GetVisualDescendants().OfType<Border>().Single(part => part.Name == "PART_Border");
-        var mixed = gallery.GetVisualDescendants().OfType<CheckBox>().Single(item => item.IsThreeState && item.IsChecked is null);
+        var mixed = gallery.GetVisualDescendants().OfType<CheckBox>()
+            .Single(item => item.IsThreeState && item.IsChecked is null);
         var mixedFrame = mixed.GetVisualDescendants().OfType<Border>().Single(part => part.Name == "PART_Border");
         Check(BrushColor(checkFrame.Background)?.A == 0 && BrushColor(mixedFrame.Background)?.A == 0,
             "Checked and mixed CheckBox labels have no selection background");
         InteractionRepairsPreview.Hover(window, check);
-        Check(BrushColor(checkFrame.Background)?.A == 0, "Checked CheckBox hover retains a transparent label background");
-        window.MouseMove(new Point(1, 1)); Flush();
+        Check(BrushColor(checkFrame.Background)?.A == 0,
+            "Checked CheckBox hover retains a transparent label background");
+        window.MouseMove(new Point(1, 1));
+        Flush();
         check.Focus(NavigationMethod.Tab);
         window.KeyPress(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null);
         window.KeyRelease(Key.Space, RawInputModifiers.None, PhysicalKey.Space, null);
@@ -198,18 +250,19 @@ internal static class ControlPreview
         Check(picker.SelectedIndex == 2, "ComboBox selection works");
 
         foreach (var control in new Control[]
-        {
-            gallery.FindControl<DatePicker>("DateSample")!,
-            gallery.FindControl<TimePicker>("TimeSample")!,
-            gallery.FindControl<CalendarDatePicker>("CalendarSample")!
-        })
+                 {
+                     gallery.FindControl<DatePicker>("DateSample")!,
+                     gallery.FindControl<TimePicker>("TimeSample")!,
+                     gallery.FindControl<CalendarDatePicker>("CalendarSample")!
+                 })
         {
             var button = control.GetVisualDescendants().OfType<Button>()
                 .Single(candidate => candidate.Name is "PART_FlyoutButton" or "PART_Button");
             var popup = control.GetVisualDescendants().OfType<Popup>().Single();
             button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             Flush();
-            Check(popup.IsOpen && popup.Child!.Bounds.Height > 0, $"{control.GetType().Name} popup and presenter render");
+            Check(popup.IsOpen && popup.Child!.Bounds.Height > 0,
+                $"{control.GetType().Name} popup and presenter render");
             popup.IsOpen = false;
             Flush();
         }
@@ -220,7 +273,8 @@ internal static class ControlPreview
             Flush();
             Check(BrushColor(presenter.Background) == Color.Parse(theme == 2 ? "#63D9DE" : "#006061"),
                 "Existing template updates on live theme switch");
-            Check(BrushColor(mixedFrame.Background)?.A == 0, "Mixed CheckBox label stays transparent on a live theme switch");
+            Check(BrushColor(mixedFrame.Background)?.A == 0,
+                "Mixed CheckBox label stays transparent on a live theme switch");
         }
 
         window.Model.DemoEnabled = false;
@@ -231,12 +285,16 @@ internal static class ControlPreview
 
         gallery.Search("TextBox");
         Flush();
-        Check(gallery.FindControl<Border>("InputsCard")!.IsVisible && !gallery.FindControl<Border>("ActionsCard")!.IsVisible,
+        Check(
+            gallery.FindControl<Border>("InputsCard")!.IsVisible &&
+            !gallery.FindControl<Border>("ActionsCard")!.IsVisible,
             "Preview search filters the catalogue");
         gallery.Search("");
         gallery.SelectCategory(5);
         Flush();
-        Check(gallery.FindControl<Border>("DatesCard")!.IsVisible && !gallery.FindControl<Border>("InputsCard")!.IsVisible,
+        Check(
+            gallery.FindControl<Border>("DatesCard")!.IsVisible &&
+            !gallery.FindControl<Border>("InputsCard")!.IsVisible,
             "Preview navigation filters by category");
         gallery.SelectCategory(0);
 
@@ -249,27 +307,43 @@ internal static class ControlPreview
         Flush();
         Check(scroll.Offset.Y > 0, "Rewritten ScrollViewer retains scrolling");
 
-        var navigation = window.FindControl<TheOne.Avalonia.Controls.NavMenu>("Navigation")!;
-        Check(window.Model.NavigationRoots.Count(root => root.IsGroup) == 6 && navigation.ItemsPanelRoot is VirtualizingStackPanel,
+        var navigation = window.FindControl<NavMenu>("Navigation")!;
+        Check(
+            window.Model.NavigationRoots.Count(root => root.IsGroup) == 6 &&
+            navigation.ItemsPanelRoot is VirtualizingStackPanel,
             "NavMenu/shell: six sections use bounded virtualized sidebar");
-        window.NavigateToCategory(25); Flush();
-        Check(window.Model.SelectedNavigation?.Category == 25 && gallery.FindControl<Border>("NavMenuPreviewHost") is { IsVisible: true, Child: NavMenuDemoView },
+        window.NavigateToCategory(25);
+        Flush();
+        Check(
+            window.Model.SelectedNavigation?.Category == 25 && gallery.FindControl<Border>("NavMenuPreviewHost") is
+                { IsVisible: true, Child: NavMenuDemoView },
             "NavMenu/shell: grouped navigation loads interactive NavMenu preview");
-        window.NavigateToCategory(23); Flush();
+        window.NavigateToCategory(23);
+        Flush();
         Check(window.Model.SelectedNavigation?.Category == 23 && gallery.FindControl<Border>("ChartCard")!.IsVisible,
             "NavMenu/shell: grouped chart page retains its stable category");
-        window.Model.NavigationCollapsed = true; Flush();
-        Check(navigation.IsCollapsed && window.FindControl<Grid>("Shell")!.ColumnDefinitions[0].Width.Value == navigation.CollapsedWidth + 16,
+        window.Model.NavigationCollapsed = true;
+        Flush();
+        Check(
+            navigation.IsCollapsed && window.FindControl<Grid>("Shell")!.ColumnDefinitions[0].Width.Value ==
+            navigation.CollapsedWidth + 16,
             "NavMenu/shell: main sidebar compact toggle uses current density rail width");
-        window.NavigateToCategory(25); Flush();
+        window.NavigateToCategory(25);
+        Flush();
         Check(window.Model.SelectedNavigation?.Category == 25 && navigation.IsSubmenuOpen,
             "NavMenu/shell: compact grouped navigation selects popup page through compiled binding");
-        window.Model.NavigationCollapsed = false; Flush();
+        window.Model.NavigationCollapsed = false;
+        Flush();
         Check(!navigation.IsSubmenuOpen && window.FindControl<Grid>("Shell")!.ColumnDefinitions[0].Width.Value == 256,
             "NavMenu/shell: expanding main sidebar closes popup and restores layout");
-        window.NavigateToCategory(0); Flush(); gallery.Search("NavMenu"); Flush();
-        Check(gallery.FindControl<Border>("NavMenuPreviewHost")!.IsVisible, "NavMenu/shell: global search discovers navigation preview");
-        gallery.Search(""); Flush();
+        window.NavigateToCategory(0);
+        Flush();
+        gallery.Search("NavMenu");
+        Flush();
+        Check(gallery.FindControl<Border>("NavMenuPreviewHost")!.IsVisible,
+            "NavMenu/shell: global search discovers navigation preview");
+        gallery.Search("");
+        Flush();
         NavigationPreview.Verify(window, gallery);
         EnhancementsPreview.Verify(window, gallery);
         VirtualizationPreview.VerifyGallery(window, gallery);
@@ -289,8 +363,9 @@ internal static class ControlPreview
 
     private static LegacyPreviewWindow Open(int width, int height)
     {
-        var window = new LegacyPreviewWindow { Width = width, Height = height, WindowDecorations = WindowDecorations.None };
-        TheOne.Avalonia.Styling.Motion.SetEnabled(window, false);
+        var window = new LegacyPreviewWindow
+            { Width = width, Height = height, WindowDecorations = WindowDecorations.None };
+        Motion.SetEnabled(window, false);
         window.Show();
         Flush();
         window.FindControl<LegacyControlGallery>("Gallery")!.ResetScroll();
@@ -298,13 +373,18 @@ internal static class ControlPreview
         return window;
     }
 
-    private static Color? BrushColor(IBrush? brush) => (brush as ISolidColorBrush)?.Color;
+    private static Color? BrushColor(IBrush? brush)
+    {
+        return (brush as ISolidColorBrush)?.Color;
+    }
+
     internal static void Flush()
     {
         Dispatcher.UIThread.RunJobs();
         AvaloniaHeadlessPlatform.ForceRenderTimerTick();
         Dispatcher.UIThread.RunJobs();
     }
+
     private static void Check(bool condition, string message)
     {
         if (!condition) throw new InvalidOperationException($"Failed: {message}");

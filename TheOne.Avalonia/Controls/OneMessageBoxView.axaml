@@ -1,42 +1,98 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:one="using:TheOne.Avalonia.Controls"
-             x:Class="TheOne.Avalonia.Controls.OneMessageBoxView"
-             x:ClassModifier="internal"
-             x:DataType="one:MessageBoxContext"
-             x:CompileBindings="True"
-             MaxWidth="392" HorizontalAlignment="Stretch">
-  <UserControl.Styles>
-    <Style Selector="Border.message-symbol"><Setter Property="Background" Value="{DynamicResource One.AccentSoft}" /><Setter Property="Width" Value="40" /><Setter Property="Height" Value="40" /></Style>
-    <Style Selector="Border.message-symbol.danger"><Setter Property="Background" Value="{DynamicResource One.DangerSoft}" /></Style>
-    <Style Selector="TextBlock.message-symbol"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /></Style>
-    <Style Selector="TextBlock.message-symbol.danger"><Setter Property="Foreground" Value="{DynamicResource One.Danger}" /></Style>
-    <Style Selector="TextBlock.message-title"><Setter Property="FontSize" Value="18" /></Style>
-    <Style Selector="TextBlock.message-title.one-small"><Setter Property="FontSize" Value="16" /></Style>
-    <Style Selector="TextBlock.message-title.one-normal"><Setter Property="FontSize" Value="18" /></Style>
-    <Style Selector="TextBlock.message-title.one-large"><Setter Property="FontSize" Value="20" /></Style>
-    <Style Selector="Border.message-symbol.one-small"><Setter Property="Width" Value="32" /><Setter Property="Height" Value="32" /></Style>
-    <Style Selector="Border.message-symbol.one-large"><Setter Property="Width" Value="44" /><Setter Property="Height" Value="44" /></Style>
-  </UserControl.Styles>
-  <Grid RowDefinitions="Auto,Auto" RowSpacing="24">
-    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
-      <Border Classes="message-symbol" Classes.danger="{Binding IsDangerous}"
-              CornerRadius="20" VerticalAlignment="Top">
-        <TextBlock Classes="message-symbol" Classes.danger="{Binding IsDangerous}" Text="{Binding Symbol}"
-                   FontSize="24" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   AutomationProperties.AccessibilityView="Raw" />
-      </Border>
-      <StackPanel Grid.Column="1" Spacing="8">
-        <TextBlock Name="MessageBoxTitle" Classes="message-title" Text="{Binding Title}"
-                   FontWeight="SemiBold" TextWrapping="Wrap" Foreground="{DynamicResource One.Text}" />
-        <TextBlock Name="MessageBoxMessage" Text="{Binding Message}" TextWrapping="Wrap"
-                   Foreground="{DynamicResource One.Muted}" />
-      </StackPanel>
+<UserControl
+    HorizontalAlignment="Stretch"
+    MaxWidth="392"
+    x:Class="TheOne.Avalonia.Controls.OneMessageBoxView"
+    x:ClassModifier="internal"
+    x:CompileBindings="True"
+    x:DataType="one:MessageBoxContext"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="Border.message-symbol">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+        </Style>
+        <Style Selector="Border.message-symbol.danger">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+        </Style>
+        <Style Selector="TextBlock.message-symbol">
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="TextBlock.message-symbol.danger">
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="TextBlock.message-title">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style Selector="TextBlock.message-title.one-small">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+        <Style Selector="TextBlock.message-title.one-normal">
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+        <Style Selector="TextBlock.message-title.one-large">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
+        <Style Selector="Border.message-symbol.one-small">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+        </Style>
+        <Style Selector="Border.message-symbol.one-large">
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="44" />
+        </Style>
+    </UserControl.Styles>
+    <Grid RowDefinitions="Auto,Auto" RowSpacing="24">
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14">
+            <Border
+                Classes="message-symbol"
+                Classes.danger="{Binding IsDangerous}"
+                CornerRadius="20"
+                VerticalAlignment="Top">
+                <TextBlock
+                    AutomationProperties.AccessibilityView="Raw"
+                    Classes="message-symbol"
+                    Classes.danger="{Binding IsDangerous}"
+                    FontSize="24"
+                    FontWeight="SemiBold"
+                    HorizontalAlignment="Center"
+                    Text="{Binding Symbol}"
+                    VerticalAlignment="Center" />
+            </Border>
+            <StackPanel Grid.Column="1" Spacing="8">
+                <TextBlock
+                    Classes="message-title"
+                    FontWeight="SemiBold"
+                    Foreground="{DynamicResource One.Text}"
+                    Name="MessageBoxTitle"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Foreground="{DynamicResource One.Muted}"
+                    Name="MessageBoxMessage"
+                    Text="{Binding Message}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal"
+            Spacing="8">
+            <Button
+                Command="{Binding CancelCommand}"
+                Content="{Binding CancelText}"
+                MinWidth="76"
+                Name="MessageBoxCancel" />
+            <Button
+                Classes="primary"
+                Classes.danger="{Binding IsDangerous}"
+                Command="{Binding ConfirmCommand}"
+                Content="{Binding ConfirmText}"
+                MinWidth="76"
+                Name="MessageBoxConfirm" />
+        </StackPanel>
     </Grid>
-    <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-      <Button Name="MessageBoxCancel" Content="{Binding CancelText}" Command="{Binding CancelCommand}" MinWidth="76" />
-      <Button Name="MessageBoxConfirm" Content="{Binding ConfirmText}" Command="{Binding ConfirmCommand}" MinWidth="76"
-              Classes="primary" Classes.danger="{Binding IsDangerous}" />
-    </StackPanel>
-  </Grid>
 </UserControl>

@@ -1,9 +1,8 @@
 using System.Collections.Specialized;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.LogicalTree;
-using global::Avalonia.VisualTree;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.LogicalTree;
+using Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -11,8 +10,8 @@ namespace TheOne.Avalonia.Controls;
 // may be cached only while they remain in Items; retired controls must lose both parents.
 internal sealed class OwnItemContainers(VirtualizingPanel panel, Action<Control> remove)
 {
-    private ItemsControl? _owner;
     private HashSet<Control>? _owned;
+    private ItemsControl? _owner;
     public bool NeedsSelectionSync { get; private set; }
 
     public void SetOwner(ItemsControl? owner)
@@ -31,7 +30,10 @@ internal sealed class OwnItemContainers(VirtualizingPanel panel, Action<Control>
             ReferenceEquals(_owner.Items[args.Index], args.Container)) Remember(args.Container);
     }
 
-    public void Remember(Control control) => (_owned ??= new(ReferenceEqualityComparer.Instance)).Add(control);
+    public void Remember(Control control)
+    {
+        (_owned ??= new HashSet<Control>(ReferenceEqualityComparer.Instance)).Add(control);
+    }
 
     public void Restored(Control control)
     {
@@ -64,14 +66,18 @@ internal sealed class OwnItemContainers(VirtualizingPanel panel, Action<Control>
         {
             HashSet<Control>? current = null;
             foreach (var item in items)
-                if (item is Control control) (current ??= new(ReferenceEqualityComparer.Instance)).Add(control);
+                if (item is Control control)
+                    (current ??= new HashSet<Control>(ReferenceEqualityComparer.Instance)).Add(control);
             foreach (var control in _owned.ToArray())
-                if (current?.Contains(control) != true) Retire(control);
+                if (current?.Contains(control) != true)
+                    Retire(control);
         }
-        else if (args.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace && args.OldItems is { } oldItems)
+        else if (args.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace &&
+                 args.OldItems is { } oldItems)
         {
             foreach (var item in oldItems)
-                if (item is Control control && args.NewItems?.Cast<object?>().Any(next => ReferenceEquals(next, control)) != true)
+                if (item is Control control &&
+                    args.NewItems?.Cast<object?>().Any(next => ReferenceEquals(next, control)) != true)
                     Retire(control);
         }
     }
@@ -81,11 +87,15 @@ internal sealed class OwnItemContainers(VirtualizingPanel panel, Action<Control>
         if (_owned?.Remove(control) != true) return;
         if (control is TreeViewItem node && FindTree() is { } tree)
             RemoveRetiredSelection(tree, node);
-        if (ReferenceEquals(control.GetVisualParent(), panel) || ReferenceEquals(control.Parent, _owner)) remove(control);
+        if (ReferenceEquals(control.GetVisualParent(), panel) || ReferenceEquals(control.Parent, _owner))
+            remove(control);
     }
 
-    private TreeView? FindTree() => _owner as TreeView ?? _owner?.GetVisualAncestors().OfType<TreeView>().FirstOrDefault()
-        ?? _owner?.GetLogicalAncestors().OfType<TreeView>().FirstOrDefault();
+    private TreeView? FindTree()
+    {
+        return _owner as TreeView ?? _owner?.GetVisualAncestors().OfType<TreeView>().FirstOrDefault()
+            ?? _owner?.GetLogicalAncestors().OfType<TreeView>().FirstOrDefault();
+    }
 
     private static void RemoveRetiredSelection(TreeView tree, TreeViewItem node)
     {

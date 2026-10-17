@@ -1,10 +1,17 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" xmlns:vm="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.MultiSelectBoxDemoView" x:DataType="vm:MultiSelectBoxDemoViewModel" x:CompileBindings="True">
-  <StackPanel Spacing="16" MaxWidth="700" HorizontalAlignment="Stretch">
-    <TextBlock Text="MultiSelectBox 多选框" FontSize="24" FontWeight="SemiBold" TextWrapping="Wrap" />
-    <TextBlock Text="搜索一万个模型项；选择跨搜索保留，列表按视口回收。已选禁用项保留且不可移除，清空只移除可编辑项。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-    <one:MultiSelectBox Name="MultiSelectSample" ItemsSource="{Binding Choices}" SelectedItems="{Binding Selected, Mode=TwoWay}" ItemAdapter="{Binding Adapter}" PlaceholderText="选择适用选项" AutomationProperties.Name="适用选项" />
-    <TextBlock Text="{Binding #MultiSelectSample.SelectedCount, StringFormat='已选 {0} 项'}" />
-    <TextBlock Text="Enter / Space 展开；方向键移动，Enter / Space 切换；Esc 关闭；结果中 Ctrl / ⌘ + A 只选当前筛选结果。" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-    <Button Name="AfterMultiSelect" Content="下一个操作" HorizontalAlignment="Left" />
-  </StackPanel>
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:vm="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.MultiSelectBoxDemoView" x:DataType="vm:MultiSelectBoxDemoViewModel"
+             x:CompileBindings="True">
+    <StackPanel Spacing="16" MaxWidth="700" HorizontalAlignment="Stretch">
+        <TextBlock Text="MultiSelectBox 多选框" FontSize="24" FontWeight="SemiBold" TextWrapping="Wrap" />
+        <TextBlock Text="搜索一万个模型项；选择跨搜索保留，列表按视口回收。已选禁用项保留且不可移除，清空只移除可编辑项。" TextWrapping="Wrap"
+                   Foreground="{DynamicResource One.Muted}" />
+        <one:MultiSelectBox Name="MultiSelectSample" ItemsSource="{Binding Choices}"
+                            SelectedItems="{Binding Selected, Mode=TwoWay}" ItemAdapter="{Binding Adapter}"
+                            PlaceholderText="选择适用选项" AutomationProperties.Name="适用选项" />
+        <TextBlock Text="{Binding #MultiSelectSample.SelectedCount, StringFormat='已选 {0} 项'}" />
+        <TextBlock Text="Enter / Space 展开；方向键移动，Enter / Space 切换；Esc 关闭；结果中 Ctrl / ⌘ + A 只选当前筛选结果。" TextWrapping="Wrap"
+                   Foreground="{DynamicResource One.Muted}" />
+        <Button Name="AfterMultiSelect" Content="下一个操作" HorizontalAlignment="Left" />
+    </StackPanel>
 </UserControl>

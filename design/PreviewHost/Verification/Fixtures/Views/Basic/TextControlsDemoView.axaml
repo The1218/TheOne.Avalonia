@@ -1,69 +1,190 @@
-<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:TheOne.DesignPreview" x:Class="TheOne.DesignPreview.TextControlsDemoView" x:DataType="local:TextControlsDemoView">
-  <UserControl.Styles>
-    <Style Selector="TextBlock.note"><Setter Property="FontSize" Value="12" /><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /><Setter Property="TextWrapping" Value="Wrap" /></Style>
-    <Style Selector="Border.demo-region"><Setter Property="Background" Value="{DynamicResource One.Subtle}" /><Setter Property="CornerRadius" Value="8" /><Setter Property="Padding" Value="20" /></Style>
-  </UserControl.Styles>
-  <StackPanel Spacing="18">
-    <StackPanel Spacing="6">
-      <TextBlock Text="22  标签与可选文本 / Label · SelectableTextBlock" FontWeight="SemiBold" TextWrapping="Wrap" />
-      <TextBlock Classes="note" Text="标签关联输入与访问键 · 拖动选择、双击选词与三击全选 · 系统复制快捷键与右键菜单" />
-    </StackPanel>
-    <WrapPanel>
-      <CheckBox Name="TextDemoEnabled" Content="启用交互" IsChecked="True" Margin="0,0,16,8" />
-      <Button Name="ResetTextDemo" Content="重置" Classes="ghost" Click="OnReset" />
-    </WrapPanel>
-    <Border Classes="demo-region">
-      <StackPanel Spacing="12">
-        <TextBlock Text="Label / 关联与访问键" FontWeight="SemiBold" />
-        <Grid ColumnDefinitions="128,*" RowDefinitions="Auto,Auto" RowSpacing="10">
-          <Label Name="NameLabel" Content="_Name / 名称" Target="{Binding #NameInput}" IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}" />
-          <TextBox Name="NameInput" Grid.Column="1" Text="TheOne workspace" IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}" GotFocus="OnTargetFocused" AutomationProperties.Name="工作区名称" />
-          <Label Name="RoleLabel" Grid.Row="1" Content="_Role / 角色" Classes="muted" Target="{Binding #RoleInput}" IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}" />
-          <ComboBox Name="RoleInput" Grid.Row="1" Grid.Column="1" SelectedIndex="0" HorizontalAlignment="Stretch" IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}" GotFocus="OnTargetFocused" AutomationProperties.Name="工作区角色">
-            <ComboBoxItem Content="编辑者" /><ComboBoxItem Content="阅读者" /><ComboBoxItem Content="管理员" />
-          </ComboBox>
-        </Grid>
+<UserControl
+    x:Class="TheOne.DesignPreview.TextControlsDemoView"
+    x:DataType="local:TextControlsDemoView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:local="using:TheOne.DesignPreview"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.note">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+        <Style Selector="Border.demo-region">
+            <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+    </UserControl.Styles>
+    <StackPanel Spacing="18">
+        <StackPanel Spacing="6">
+            <TextBlock
+                FontWeight="SemiBold"
+                Text="22  标签与可选文本 / Label · SelectableTextBlock"
+                TextWrapping="Wrap" />
+            <TextBlock Classes="note" Text="标签关联输入与访问键 · 拖动选择、双击选词与三击全选 · 系统复制快捷键与右键菜单" />
+        </StackPanel>
         <WrapPanel>
-          <Label Content="强调标签" Classes="accent" Margin="0,0,24,0" />
-          <Label Content="禁用标签" IsEnabled="False" />
+            <CheckBox
+                Content="启用交互"
+                IsChecked="True"
+                Margin="0,0,16,8"
+                Name="TextDemoEnabled" />
+            <Button
+                Classes="ghost"
+                Click="OnReset"
+                Content="重置"
+                Name="ResetTextDemo" />
         </WrapPanel>
-        <TextBlock Classes="note" Text="点击标签，或按 Alt + N / Alt + R 聚焦关联输入。标签不进入 Tab 序列，内容默认垂直居中。" />
-      </StackPanel>
-    </Border>
-    <Border Classes="demo-region">
-      <StackPanel Spacing="12">
-        <Grid ColumnDefinitions="*,Auto">
-          <TextBlock Text="SelectableTextBlock / 原生选择与复制" FontWeight="SemiBold" TextWrapping="Wrap" />
-          <CheckBox Name="WrapText" Grid.Column="1" Content="自动换行" IsChecked="True" />
-        </Grid>
-        <WrapPanel>
-          <Button Name="SelectTextAll" Content="全选" Classes="ghost" Focusable="False" KeyboardNavigation.IsTabStop="False" Click="OnSelectAll" Margin="0,0,8,0" />
-          <Button Name="CopyText" Content="复制选区" Classes="ghost" Focusable="False" KeyboardNavigation.IsTabStop="False" Click="OnCopy" IsEnabled="{Binding CanCopy, ElementName=SelectionSample}" Margin="0,0,8,0" />
-          <Button Name="ClearTextSelection" Content="清除选区" Classes="ghost" Focusable="False" KeyboardNavigation.IsTabStop="False" Click="OnClear" />
-        </WrapPanel>
-        <SelectableTextBlock Name="SelectionSample" Text="{Binding SampleText}" IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}" AutomationProperties.Name="可选择的示例段落" />
-        <Border Background="{DynamicResource One.Surface}" CornerRadius="6" Padding="12,10">
-          <StackPanel Spacing="5"><TextBlock Name="SelectionMetrics" Classes="note" /><TextBlock Name="SelectionValue" TextWrapping="Wrap" TextTrimming="CharacterEllipsis" MaxLines="2" /></StackPanel>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="Label / 关联与访问键" />
+                <Grid
+                    ColumnDefinitions="128,*"
+                    RowDefinitions="Auto,Auto"
+                    RowSpacing="10">
+                    <Label
+                        Content="_Name / 名称"
+                        IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}"
+                        Name="NameLabel"
+                        Target="{Binding #NameInput}" />
+                    <TextBox
+                        AutomationProperties.Name="工作区名称"
+                        GotFocus="OnTargetFocused"
+                        Grid.Column="1"
+                        IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}"
+                        Name="NameInput"
+                        Text="TheOne workspace" />
+                    <Label
+                        Classes="muted"
+                        Content="_Role / 角色"
+                        Grid.Row="1"
+                        IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}"
+                        Name="RoleLabel"
+                        Target="{Binding #RoleInput}" />
+                    <ComboBox
+                        AutomationProperties.Name="工作区角色"
+                        GotFocus="OnTargetFocused"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}"
+                        Name="RoleInput"
+                        SelectedIndex="0">
+                        <ComboBoxItem Content="编辑者" />
+                        <ComboBoxItem Content="阅读者" />
+                        <ComboBoxItem Content="管理员" />
+                    </ComboBox>
+                </Grid>
+                <WrapPanel>
+                    <Label
+                        Classes="accent"
+                        Content="强调标签"
+                        Margin="0,0,24,0" />
+                    <Label Content="禁用标签" IsEnabled="False" />
+                </WrapPanel>
+                <TextBlock Classes="note" Text="点击标签，或按 Alt + N / Alt + R 聚焦关联输入。标签不进入 Tab 序列，内容默认垂直居中。" />
+            </StackPanel>
         </Border>
-        <TextBlock Classes="note" Text="全选与复制按钮保持文本焦点。Tab 或点击其它输入会按原生行为清除选区；右键菜单保留当前选区。" />
-      </StackPanel>
-    </Border>
-    <Border Classes="demo-region">
-      <StackPanel Spacing="12">
-        <TextBlock Text="独立三档尺寸与富文本" FontWeight="SemiBold" />
-        <WrapPanel>
-          <StackPanel Width="184" Margin="0,0,12,10"><Label Content="小尺寸" Classes="small muted" /><SelectableTextBlock Text="Small · 可选文本" Classes="small" /></StackPanel>
-          <StackPanel Width="184" Margin="0,0,12,10"><Label Content="正常尺寸" Classes="normal muted" /><SelectableTextBlock Text="Normal · 可选文本" Classes="normal" /></StackPanel>
-          <StackPanel Width="184" Margin="0,0,12,10"><Label Content="大尺寸" Classes="large muted" /><SelectableTextBlock Text="Large · 可选文本" Classes="large" /></StackPanel>
-        </WrapPanel>
-        <SelectableTextBlock Name="RichSample" AutomationProperties.Name="富文本选择示例">
-          <Run Text="保留格式：" /><Run Text="Bold " FontWeight="Bold" FontSize="20" /><Run Text="Italic " FontStyle="Italic" /><Run Text="强调文字" Foreground="{DynamicResource One.Accent}" TextDecorations="Underline" />
-          <LineBreak /><Run Text="选择文本时仍保留 Run 的字号、字重、颜色和换行。" />
-        </SelectableTextBlock>
-        <SelectableTextBlock Name="DisabledText" Text="禁用文本 · 无法选择与复制" IsEnabled="False" />
-      </StackPanel>
-    </Border>
-    <TextBlock Name="TextStatus" Text="准备就绪 · 点击标签或拖动文本开始验证" Foreground="{DynamicResource One.Accent}" TextWrapping="Wrap" />
-  </StackPanel>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        Text="SelectableTextBlock / 原生选择与复制"
+                        TextWrapping="Wrap" />
+                    <CheckBox
+                        Content="自动换行"
+                        Grid.Column="1"
+                        IsChecked="True"
+                        Name="WrapText" />
+                </Grid>
+                <WrapPanel>
+                    <Button
+                        Classes="ghost"
+                        Click="OnSelectAll"
+                        Content="全选"
+                        Focusable="False"
+                        KeyboardNavigation.IsTabStop="False"
+                        Margin="0,0,8,0"
+                        Name="SelectTextAll" />
+                    <Button
+                        Classes="ghost"
+                        Click="OnCopy"
+                        Content="复制选区"
+                        Focusable="False"
+                        IsEnabled="{Binding CanCopy, ElementName=SelectionSample}"
+                        KeyboardNavigation.IsTabStop="False"
+                        Margin="0,0,8,0"
+                        Name="CopyText" />
+                    <Button
+                        Classes="ghost"
+                        Click="OnClear"
+                        Content="清除选区"
+                        Focusable="False"
+                        KeyboardNavigation.IsTabStop="False"
+                        Name="ClearTextSelection" />
+                </WrapPanel>
+                <SelectableTextBlock
+                    AutomationProperties.Name="可选择的示例段落"
+                    IsEnabled="{Binding IsChecked, ElementName=TextDemoEnabled}"
+                    Name="SelectionSample"
+                    Text="{Binding SampleText}" />
+                <Border
+                    Background="{DynamicResource One.Surface}"
+                    CornerRadius="6"
+                    Padding="12,10">
+                    <StackPanel Spacing="5">
+                        <TextBlock Classes="note" Name="SelectionMetrics" />
+                        <TextBlock
+                            MaxLines="2"
+                            Name="SelectionValue"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+                <TextBlock Classes="note" Text="全选与复制按钮保持文本焦点。Tab 或点击其它输入会按原生行为清除选区；右键菜单保留当前选区。" />
+            </StackPanel>
+        </Border>
+        <Border Classes="demo-region">
+            <StackPanel Spacing="12">
+                <TextBlock FontWeight="SemiBold" Text="独立三档尺寸与富文本" />
+                <WrapPanel>
+                    <StackPanel Margin="0,0,12,10" Width="184">
+                        <Label Classes="small muted" Content="小尺寸" />
+                        <SelectableTextBlock Classes="small" Text="Small · 可选文本" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,10" Width="184">
+                        <Label Classes="normal muted" Content="正常尺寸" />
+                        <SelectableTextBlock Classes="normal" Text="Normal · 可选文本" />
+                    </StackPanel>
+                    <StackPanel Margin="0,0,12,10" Width="184">
+                        <Label Classes="large muted" Content="大尺寸" />
+                        <SelectableTextBlock Classes="large" Text="Large · 可选文本" />
+                    </StackPanel>
+                </WrapPanel>
+                <SelectableTextBlock AutomationProperties.Name="富文本选择示例" Name="RichSample">
+                    <Run Text="保留格式：" /><Run
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Bold " />
+                    <Run FontStyle="Italic" Text="Italic " />
+                    <Run
+                        Foreground="{DynamicResource One.Accent}"
+                        Text="强调文字"
+                        TextDecorations="Underline" />
+                    <LineBreak /><Run Text="选择文本时仍保留 Run 的字号、字重、颜色和换行。" />
+                </SelectableTextBlock>
+                <SelectableTextBlock
+                    IsEnabled="False"
+                    Name="DisabledText"
+                    Text="禁用文本 · 无法选择与复制" />
+            </StackPanel>
+        </Border>
+        <TextBlock
+            Foreground="{DynamicResource One.Accent}"
+            Name="TextStatus"
+            Text="准备就绪 · 点击标签或拖动文本开始验证"
+            TextWrapping="Wrap" />
+    </StackPanel>
 </UserControl>

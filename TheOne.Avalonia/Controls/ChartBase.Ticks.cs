@@ -11,7 +11,8 @@ public abstract partial class ChartBase
         var raw = span / divisions;
         var magnitude = Math.Pow(10, Math.Floor(Math.Log10(raw)));
         var normalized = raw / magnitude;
-        var step = (normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 2.5 ? 2.5 : normalized <= 5 ? 5 : 10) * magnitude;
+        var step = (normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 2.5 ? 2.5 : normalized <= 5 ? 5 : 10) *
+                   magnitude;
         if (double.IsFinite(step) && step > 0)
         {
             var first = Math.Ceiling(range.Minimum / step);
@@ -24,9 +25,11 @@ public abstract partial class ChartBase
                     if (double.IsFinite(value) && value >= range.Minimum && value <= range.Maximum)
                         yield return (value == 0 ? 0 : value, step);
                 }
+
                 yield break;
             }
         }
+
         // Overflow/subnormal and very narrow high-magnitude ranges retain safe interpolation.
         var previous = double.NaN;
         for (var index = 0; index <= divisions; index++)

@@ -11,8 +11,11 @@
     <ControlTheme TargetType="MenuFlyoutPresenter" x:Key="{x:Type MenuFlyoutPresenter}">
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
-                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
-                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+                <markup:CompiledBindingExtension DataType="MenuFlyoutPresenter" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension
+                    DataType="MenuFlyoutPresenter"
+                    Path="ItemCount"
+                    RelativeSource="{RelativeSource Self}" />
             </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
@@ -56,8 +59,11 @@
         <Setter Property="MinWidth" Value="{DynamicResource HorizontalMenuFlyoutThemeMinWidth}" />
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Horizontal}">
-                <markup:CompiledBindingExtension RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
-                <markup:CompiledBindingExtension Path="ItemCount" RelativeSource="{RelativeSource Self}" DataType="MenuFlyoutPresenter" />
+                <markup:CompiledBindingExtension DataType="MenuFlyoutPresenter" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension
+                    DataType="MenuFlyoutPresenter"
+                    Path="ItemCount"
+                    RelativeSource="{RelativeSource Self}" />
             </MultiBinding>
         </Setter>
     </ControlTheme>

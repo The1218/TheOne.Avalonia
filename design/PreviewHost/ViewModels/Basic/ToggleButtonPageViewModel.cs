@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ToggleButtonPageViewModel : BasicControlViewModel { }
+
+public sealed class ToggleButtonPageViewModel : BasicControlViewModel
+{
+}

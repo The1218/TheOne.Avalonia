@@ -34,6 +34,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [Carousel and refresh](collection-content.md) | Carousel, RefreshContainer, RefreshVisualizer |
 | [Content transitions and notifications](content-feedback.md) | TransitioningContentControl, NotificationCard |
 | [NavMenu](nav-menu.md) | Navigation, collapsing, cascading menus, search, and motion; follow the feature-specific links |
+| [NavPage](nav-page.md) | Integrated navigation and card tabs, default home, model mappings, retained views and pinning |
 | [LoginWindow](login-window.md) | Login handoff and shutdown lifecycle |
 | [Window owners and message services](window-owners.md) | Native ownership, routing, threading, Toast / Notification, Dialog queues and cancellation, login handoff |
 | [Theme implementation](../../theme/en/README.md) | Resources, templates, animation, verification scope, implementation constraints |

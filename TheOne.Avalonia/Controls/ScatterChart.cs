@@ -5,5 +5,9 @@ public sealed class ScatterChart : CartesianChartBase
 {
     public override ChartKind Kind => ChartKind.Scatter;
     private protected override bool IsScatterCartesian => true;
-    private protected override ChartBase CreateExportSnapshot() => new ScatterChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new ScatterChart();
+    }
 }

@@ -118,3 +118,12 @@ A native virtualized navigation tree with separately templated icons and labels.
 - [`TheOne.Avalonia.Controls.NavMenuFilterBox`](TheOne.Avalonia.Controls.NavMenuFilterBox.md)
 - [`TheOne.Avalonia.Controls.NavMenuFilterResult`](TheOne.Avalonia.Controls.NavMenuFilterResult.md)
 - [`TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs`](TheOne.Avalonia.Controls.NavMenuItemInvokedEventArgs.md)
+
+## 新增导航契约
+
+[用法与示例](../../controls/zh-cn/nav-menu.md)
+
+| Name | Type | Default / binding |
+| --- | --- | --- |
+| [DisplayWidth](../../../TheOne.Avalonia/Controls/NavMenu.Motion.cs#L31) | `double` | `computed / state`; OneWay |
+| [ExpandedWidth](../../../TheOne.Avalonia/Controls/NavMenu.Motion.cs#L17) | `double` | `280`; OneWay |

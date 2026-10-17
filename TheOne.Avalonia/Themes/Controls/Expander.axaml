@@ -1,7 +1,8 @@
 <!--  Adapted from Avalonia 12.1.4 (MIT). See THIRD-PARTY-NOTICES.md.  -->
-<ResourceDictionary xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
+<ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
@@ -213,8 +214,8 @@
                             x:Name="ExpanderHeader">
                             <ToggleButton.MinHeight>
                                 <MultiBinding Converter="{StaticResource One.ExpanderHeaderHeightConverter}">
-                                    <markup:CompiledBindingExtension Path="$self.((Expander)TemplatedParent).MinHeight"  />
-                                    <markup:CompiledBindingExtension Path="$self.((Expander)TemplatedParent).BorderThickness"  />
+                                    <markup:CompiledBindingExtension Path="$self.((Expander)TemplatedParent).MinHeight" />
+                                    <markup:CompiledBindingExtension Path="$self.((Expander)TemplatedParent).BorderThickness" />
                                 </MultiBinding>
                             </ToggleButton.MinHeight>
                         </ToggleButton>

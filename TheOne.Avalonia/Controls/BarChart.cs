@@ -5,5 +5,9 @@ public sealed class BarChart : CartesianChartBase
 {
     public override ChartKind Kind => ChartKind.Bar;
     private protected override bool IsCategoricalCartesian => true;
-    private protected override ChartBase CreateExportSnapshot() => new BarChart();
+
+    private protected override ChartBase CreateExportSnapshot()
+    {
+        return new BarChart();
+    }
 }

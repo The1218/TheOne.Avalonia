@@ -7,7 +7,7 @@
 
     <Thickness x:Key="One.TabControlTopPlacementItemMargin">0 0 0 2</Thickness>
 
-    <ControlTemplate x:Key="One.CardTabControlTemplate" TargetType="TabControl">
+    <ControlTemplate TargetType="TabControl" x:Key="One.CardTabControlTemplate">
         <Border Background="{DynamicResource One.CardTabStrip}" CornerRadius="{TemplateBinding CornerRadius}">
             <DockPanel>
                 <Border
@@ -102,6 +102,8 @@
     </ControlTemplate>
 
     <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}">
+        <Setter Property="one:TabFeatures.ShowItemIcon" Value="True" />
+        <Setter Property="one:TabFeatures.EnableContextMenu" Value="True" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
                 <one:VirtualizingItemsPanel Orientation="Horizontal" />
@@ -163,8 +165,10 @@
         <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
             <Setter Property="Margin" Value="{DynamicResource One.TabControlTopPlacementItemMargin}" />
         </Style>
-        <!-- Keep card appearance inside the native theme. A class-level Theme setter
-             is removed on logical detach and can orphan the native presenter cache. -->
+        <!--
+            Keep card appearance inside the native theme. A class-level Theme setter
+            is removed on logical detach and can orphan the native presenter cache.
+        -->
         <Style Selector="^.card">
             <Setter Property="BorderBrush" Value="{DynamicResource One.CardTabBorder}" />
             <Setter Property="BorderThickness" Value="1" />

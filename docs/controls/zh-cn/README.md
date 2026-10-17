@@ -34,6 +34,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [轮播与刷新](collection-content.md) | Carousel、RefreshContainer、RefreshVisualizer |
 | [内容过渡与通知](content-feedback.md) | TransitioningContentControl、NotificationCard |
 | [NavMenu](nav-menu.md) | 导航、折叠、级联、搜索与动效，按功能继续查阅 |
+| [NavPage](nav-page.md) | 导航与 Card 页签集成、默认首页、模型映射、保留视图与固定关闭 |
 | [LoginWindow](login-window.md) | 登录交接与退出生命周期 |
 | [窗口 owner 与消息服务](window-owners.md) | 原生归属、默认路由、线程、Toast／Notification、Dialog 队列与取消、登录交接 |
 | [主题实现说明](../../theme/zh-cn/README.md) | 资源、模板、动画、验证范围与实现约束 |

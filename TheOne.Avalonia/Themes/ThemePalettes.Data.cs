@@ -1,10 +1,12 @@
 // Semantic color values mapped from Eremex/controlthemes, commit 5f6cb3ad8b904cead6bd432f62596648cc9a1039.
 // Nova is already the default palette. Templates and control behavior remain TheOne implementations.
+
 namespace TheOne.Avalonia.Themes;
 
 internal static partial class ThemePalettes
 {
-    private static readonly string[] Names = [
+    private static readonly string[] Names =
+    [
         "Canvas", "Surface", "Subtle", "Text", "Muted", "Line",
         "InputLine", "Accent", "AccentHover", "AccentPressed", "AccentSoft", "OnAccent",
         "Success", "Info", "Warning", "Danger", "DangerHover", "DangerPressed",
@@ -12,8 +14,9 @@ internal static partial class ThemePalettes
         "NeutralHover", "NeutralPressed", "SurfaceHover", "SurfacePressed", "AccentSoftHover", "AccentSoftPressed",
         "RowSelected", "RowSelectedHover", "RowSelectedPressed", "TextSelection", "OutlineMedium", "OutlineStrong",
         "DisabledSelection", "DisabledIcon", "IconOnAccent", "PrimaryDisabled", "SuccessFill", "InfoFill",
-        "WarningFill", "DangerFill", "Chart.Background", "Chart.Text", "Chart.Grid", "Placeholder",
+        "WarningFill", "DangerFill", "Chart.Background", "Chart.Text", "Chart.Grid", "Placeholder"
     ];
+
     private static readonly IReadOnlyDictionary<ThemeColor, (string Light, string Dark)> Values =
         new Dictionary<ThemeColor, (string, string)>
         {
@@ -43,6 +46,6 @@ internal static partial class ThemePalettes
                 "#10100E #10100E #2B2A26 #F3F3F1 #CFCEC9 #44413C #44413C #F4C13E #EFB92E #EBAE14 #473F24 #1B1A18 #15D515 #8AB8FF #FEA462 #FFBEAD #FFB3A3 #FFA894 #777369 #23221F #2B2A26 #4C4A43 #44413C #C19A0B #44413C #4C4A43 #23221F #2B2A26 #52492E #5C5338 #2F2913 #383219 #413A1F #614700 #4C4A43 #59564F #3E3C37 #69665D #10100E #1B1A18 #006100 #006157 #844101 #982B1B #000000 #DBE6E6 #707575 #BAB7B1"),
             [ThemeColor.VegaDeep] = (
                 "#FFFFFF #FFFFFF #F3EEE2 #262112 #4C4A42 #D7D5D1 #D7D5D1 #705100 #7A5C00 #856400 #EBD6A3 #F8F8F7 #007A00 #2860C3 #A04D03 #941A00 #A81D00 #BD1D00 #B1AEA5 #F6F3E9 #F3EEE2 #D0CEC8 #DED7C4 #A37E00 #DED7C4 #D5CEB8 #F6F3E9 #F3EEE2 #E3CE9C #DBC795 #FEEDC3 #F8E6B5 #F1DDAC #F9CB4E #D0CEC8 #C8C7C0 #E5DFCD #B8B6AD #FFFFFF #F9F7F0 #67E067 #61DBCF #FFB980 #FFB3A8 #FFFFFF #385252 #CADADA #6A675C",
-                "#120F07 #120F07 #302918 #F6F3E9 #D0CEC8 #414039 #414039 #F4C13E #EFB92E #EBAE14 #4E3C09 #1B1A18 #15D515 #8AB8FF #FEA462 #FFBEAD #FFB3A3 #FFA894 #757266 #262112 #302918 #4C4A42 #473F2A #C19A0B #473F2A #544B36 #262112 #302918 #594712 #61511A #332700 #403003 #473806 #614700 #4C4A42 #57554C #413A25 #6A675C #120F07 #1D190C #006100 #006157 #844101 #982B1B #000000 #DBE6E6 #707575 #B8B6AD"),
+                "#120F07 #120F07 #302918 #F6F3E9 #D0CEC8 #414039 #414039 #F4C13E #EFB92E #EBAE14 #4E3C09 #1B1A18 #15D515 #8AB8FF #FEA462 #FFBEAD #FFB3A3 #FFA894 #757266 #262112 #302918 #4C4A42 #473F2A #C19A0B #473F2A #544B36 #262112 #302918 #594712 #61511A #332700 #403003 #473806 #614700 #4C4A42 #57554C #413A25 #6A675C #120F07 #1D190C #006100 #006157 #844101 #982B1B #000000 #DBE6E6 #707575 #B8B6AD")
         };
 }

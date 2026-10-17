@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class GridSplitterPageViewModel : BasicControlViewModel { }
+
+public sealed class GridSplitterPageViewModel : BasicControlViewModel
+{
+}

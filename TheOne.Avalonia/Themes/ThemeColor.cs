@@ -12,5 +12,5 @@ public enum ThemeColor
     Terra = 6,
     TerraDeep = 7,
     Vega = 8,
-    VegaDeep = 9,
+    VegaDeep = 9
 }

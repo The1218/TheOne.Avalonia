@@ -1,51 +1,94 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="One.Gantt.Row" TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-    <Setter Property="Margin" Value="0" />
-    <Setter Property="Padding" Value="0" /><Setter Property="CornerRadius" Value="0" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-  </ControlTheme>
-  <ControlTheme x:Key="{x:Type one:GanttChart}" TargetType="one:GanttChart">
-    <Setter Property="Background" Value="{DynamicResource One.Gantt.Background}" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Gantt.Text}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
-    <Setter Property="BorderThickness" Value="1" /><Setter Property="CornerRadius" Value="6" />
-    <Setter Property="GridBrush" Value="{DynamicResource One.Gantt.Grid}" />
-    <Setter Property="HeaderBrush" Value="{DynamicResource One.Gantt.Header}" />
-    <Setter Property="WeekendBrush" Value="{DynamicResource One.Gantt.Weekend}" />
-    <Setter Property="TaskBrush" Value="{DynamicResource One.Gantt.Task}" />
-    <Setter Property="ProgressBrush" Value="{DynamicResource One.Gantt.Progress}" />
-    <Setter Property="SelectionBrush" Value="{DynamicResource One.Gantt.Selection}" />
-    <Setter Property="MutedBrush" Value="{DynamicResource One.Gantt.Muted}" />
-    <Setter Property="OnTaskBrush" Value="{DynamicResource One.Gantt.OnTask}" />
-    <Setter Property="FontSize" Value="14" /><Setter Property="RowHeight" Value="44" />
-    <Setter Property="HeaderHeight" Value="72" /><Setter Property="TaskListWidth" Value="420" />
-    <Setter Property="MinHeight" Value="160" /><Setter Property="Focusable" Value="False" />
-    <Setter Property="Template">
-      <ControlTemplate>
-        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True">
-          <Grid RowDefinitions="Auto,*,Auto">
-            <one:GanttHeaderPresenter Name="PART_Header" Height="{TemplateBinding HeaderHeight}" />
-            <ListBox Name="PART_Rows" Grid.Row="1" Padding="0" BorderThickness="0" CornerRadius="0"
-                     Background="Transparent" SelectionMode="Single" ItemContainerTheme="{StaticResource One.Gantt.Row}"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     ScrollViewer.AllowAutoHide="False">
-              <ListBox.Styles>
-                <Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large">
-                  <Setter Property="Padding" Value="0" /><Setter Property="MinHeight" Value="0" />
-                </Style>
-              </ListBox.Styles>
-            </ListBox>
-            <TextBlock Name="PART_Empty" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Foreground="{TemplateBinding MutedBrush}" TextWrapping="Wrap" Margin="16" IsHitTestVisible="False" />
-            <ScrollBar Name="PART_HorizontalScrollBar" Grid.Row="2" Orientation="Horizontal" MinHeight="14" />
-          </Grid>
-        </Border>
-      </ControlTemplate>
-    </Setter>
-    <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="RowHeight" Value="36" /><Setter Property="HeaderHeight" Value="64" /></Style>
-    <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="RowHeight" Value="52" /><Setter Property="HeaderHeight" Value="80" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type ListBoxItem}}"
+        TargetType="ListBoxItem"
+        x:Key="One.Gantt.Row">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </ControlTheme>
+    <ControlTheme TargetType="one:GanttChart" x:Key="{x:Type one:GanttChart}">
+        <Setter Property="Background" Value="{DynamicResource One.Gantt.Background}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Gantt.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="GridBrush" Value="{DynamicResource One.Gantt.Grid}" />
+        <Setter Property="HeaderBrush" Value="{DynamicResource One.Gantt.Header}" />
+        <Setter Property="WeekendBrush" Value="{DynamicResource One.Gantt.Weekend}" />
+        <Setter Property="TaskBrush" Value="{DynamicResource One.Gantt.Task}" />
+        <Setter Property="ProgressBrush" Value="{DynamicResource One.Gantt.Progress}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource One.Gantt.Selection}" />
+        <Setter Property="MutedBrush" Value="{DynamicResource One.Gantt.Muted}" />
+        <Setter Property="OnTaskBrush" Value="{DynamicResource One.Gantt.OnTask}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="RowHeight" Value="44" />
+        <Setter Property="HeaderHeight" Value="72" />
+        <Setter Property="TaskListWidth" Value="420" />
+        <Setter Property="MinHeight" Value="160" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    ClipToBounds="True"
+                    CornerRadius="{TemplateBinding CornerRadius}">
+                    <Grid RowDefinitions="Auto,*,Auto">
+                        <one:GanttHeaderPresenter Height="{TemplateBinding HeaderHeight}" Name="PART_Header" />
+                        <ListBox
+                            Background="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="0"
+                            Grid.Row="1"
+                            ItemContainerTheme="{StaticResource One.Gantt.Row}"
+                            Name="PART_Rows"
+                            Padding="0"
+                            ScrollViewer.AllowAutoHide="False"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            SelectionMode="Single">
+                            <ListBox.Styles>
+                                <Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large">
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="MinHeight" Value="0" />
+                                </Style>
+                            </ListBox.Styles>
+                        </ListBox>
+                        <TextBlock
+                            Foreground="{TemplateBinding MutedBrush}"
+                            Grid.Row="1"
+                            HorizontalAlignment="Center"
+                            IsHitTestVisible="False"
+                            Margin="16"
+                            Name="PART_Empty"
+                            TextWrapping="Wrap"
+                            VerticalAlignment="Center" />
+                        <ScrollBar
+                            Grid.Row="2"
+                            MinHeight="14"
+                            Name="PART_HorizontalScrollBar"
+                            Orientation="Horizontal" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^.one-small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="RowHeight" Value="36" />
+            <Setter Property="HeaderHeight" Value="64" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="RowHeight" Value="52" />
+            <Setter Property="HeaderHeight" Value="80" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

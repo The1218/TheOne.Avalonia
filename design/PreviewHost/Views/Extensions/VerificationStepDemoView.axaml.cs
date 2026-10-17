@@ -30,5 +30,4 @@ public partial class VerificationStepDemoView : UserControl
     {
         Model.Status = await Sample.GoToAsync(Model.Steps.Count - 1) ? "已进入末步。" : "不能跳过未验证步骤，请先完成当前步骤。";
     }
-
 }

@@ -1,42 +1,110 @@
-<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
-  <ControlTheme x:Key="{x:Type one:FormItem}" TargetType="one:FormItem">
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="Template"><ControlTemplate>
-      <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="{TemplateBinding LabelDock}" Width="{TemplateBinding EffectiveLabelWidth}" IsVisible="{TemplateBinding HasLabel}" Margin="0,0,8,6">
-          <Grid ColumnDefinitions="Auto,*">
-            <TextBlock Text="*" Foreground="{DynamicResource One.Danger}" IsVisible="{TemplateBinding IsRequired}" Margin="0,0,4,0" VerticalAlignment="Center" AutomationProperties.AccessibilityView="Raw" />
-            <Label Name="PART_Label" Grid.Column="1" Content="{TemplateBinding Label}" Padding="0" VerticalContentAlignment="Center">
-              <Label.ContentTemplate><DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" TextWrapping="Wrap" /></DataTemplate></Label.ContentTemplate>
-            </Label>
-          </Grid>
-        </StackPanel>
-        <StackPanel Spacing="4">
-          <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
-          <TextBlock Name="PART_HelpText" Text="{TemplateBinding HelpText}" IsVisible="{TemplateBinding HasHelpText}" Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
-          <ItemsControl Name="PART_FieldErrors" ItemsSource="{TemplateBinding Errors}" IsVisible="{TemplateBinding HasErrors}" Foreground="{DynamicResource One.Danger}" AutomationProperties.LiveSetting="Polite">
-            <ItemsControl.ItemTemplate><DataTemplate x:DataType="one:StepValidationError"><TextBlock Text="{Binding Message}" TextWrapping="Wrap" /></DataTemplate></ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </StackPanel>
-      </DockPanel>
-    </ControlTemplate></Setter>
-  </ControlTheme>
-  <ControlTheme x:Key="{x:Type one:Form}" TargetType="one:Form">
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Stretch" />
-    <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
-    <Setter Property="Template"><ControlTemplate>
-      <Grid RowDefinitions="Auto,*">
-        <Border Name="PART_ErrorSummary" Background="{DynamicResource One.DangerSoft}" CornerRadius="6" Padding="10" Margin="0,0,0,12" IsVisible="{TemplateBinding HasUnmappedErrors}">
-          <ItemsControl ItemsSource="{TemplateBinding UnmappedErrors}" Foreground="{DynamicResource One.Danger}" AutomationProperties.LiveSetting="Polite">
-            <ItemsControl.ItemTemplate><DataTemplate x:DataType="one:StepValidationError"><TextBlock Text="{Binding Message}" TextWrapping="Wrap" /></DataTemplate></ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </Border>
-        <ContentPresenter Name="PART_ContentPresenter" Grid.Row="1" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-      </Grid>
-    </ControlTemplate></Setter>
-    <Style Selector="^[ShowErrorSummary=False] /template/ Border#PART_ErrorSummary"><Setter Property="IsVisible" Value="False" /></Style>
-    <Style Selector="^:busy /template/ ContentPresenter#PART_ContentPresenter"><Setter Property="IsEnabled" Value="False" /></Style>
-  </ControlTheme>
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ControlTheme TargetType="one:FormItem" x:Key="{x:Type one:FormItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DockPanel LastChildFill="True">
+                    <StackPanel
+                        DockPanel.Dock="{TemplateBinding LabelDock}"
+                        IsVisible="{TemplateBinding HasLabel}"
+                        Margin="0,0,8,6"
+                        Width="{TemplateBinding EffectiveLabelWidth}">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <TextBlock
+                                AutomationProperties.AccessibilityView="Raw"
+                                Foreground="{DynamicResource One.Danger}"
+                                IsVisible="{TemplateBinding IsRequired}"
+                                Margin="0,0,4,0"
+                                Text="*"
+                                VerticalAlignment="Center" />
+                            <Label
+                                Content="{TemplateBinding Label}"
+                                Grid.Column="1"
+                                Name="PART_Label"
+                                Padding="0"
+                                VerticalContentAlignment="Center">
+                                <Label.ContentTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </Label.ContentTemplate>
+                            </Label>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Spacing="4">
+                        <ContentPresenter
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Name="PART_ContentPresenter" />
+                        <TextBlock
+                            Foreground="{DynamicResource One.Muted}"
+                            IsVisible="{TemplateBinding HasHelpText}"
+                            Name="PART_HelpText"
+                            Text="{TemplateBinding HelpText}"
+                            TextWrapping="Wrap" />
+                        <ItemsControl
+                            AutomationProperties.LiveSetting="Polite"
+                            Foreground="{DynamicResource One.Danger}"
+                            IsVisible="{TemplateBinding HasErrors}"
+                            ItemsSource="{TemplateBinding Errors}"
+                            Name="PART_FieldErrors">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="one:StepValidationError">
+                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </DockPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+    <ControlTheme TargetType="one:Form" x:Key="{x:Type one:Form}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid RowDefinitions="Auto,*">
+                    <Border
+                        Background="{DynamicResource One.DangerSoft}"
+                        CornerRadius="6"
+                        IsVisible="{TemplateBinding HasUnmappedErrors}"
+                        Margin="0,0,0,12"
+                        Name="PART_ErrorSummary"
+                        Padding="10">
+                        <ItemsControl
+                            AutomationProperties.LiveSetting="Polite"
+                            Foreground="{DynamicResource One.Danger}"
+                            ItemsSource="{TemplateBinding UnmappedErrors}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="one:StepValidationError">
+                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Border>
+                    <ContentPresenter
+                        Content="{TemplateBinding Content}"
+                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                        Grid.Row="1"
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Name="PART_ContentPresenter"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^[ShowErrorSummary=False] /template/ Border#PART_ErrorSummary">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:busy /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="IsEnabled" Value="False" />
+        </Style>
+    </ControlTheme>
 </ResourceDictionary>

@@ -22,25 +22,33 @@ public abstract class DialogContext : INotifyPropertyChanged
         if (!Enum.IsDefined(result)) throw new ArgumentOutOfRangeException(nameof(result));
         CloseRequested?.Invoke(this, new DialogCloseRequestedEventArgs(result));
     }
+
     protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); return true;
+        field = value;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        return true;
     }
+
     internal void Attach(object session, EventHandler<DialogCloseRequestedEventArgs> handler)
     {
         lock (_gate)
         {
-            if (_session is not null) throw new InvalidOperationException("A DialogContext cannot be used by simultaneous dialog requests.");
-            _session = session; CloseRequested += handler;
+            if (_session is not null)
+                throw new InvalidOperationException("A DialogContext cannot be used by simultaneous dialog requests.");
+            _session = session;
+            CloseRequested += handler;
         }
     }
+
     internal void Detach(object session, EventHandler<DialogCloseRequestedEventArgs> handler)
     {
         lock (_gate)
         {
             if (_session != session) return;
-            CloseRequested -= handler; _session = null;
+            CloseRequested -= handler;
+            _session = null;
         }
     }
 }

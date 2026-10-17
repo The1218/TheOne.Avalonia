@@ -1,7 +1,7 @@
 using System.Collections.Specialized;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.VisualTree;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -11,7 +11,10 @@ internal sealed class VirtualizingCarouselItemsPanel : VirtualizingCarouselPanel
 {
     private readonly OwnItemContainers _ownItems;
 
-    public VirtualizingCarouselItemsPanel() => _ownItems = new OwnItemContainers(this, RemoveInternalChild);
+    public VirtualizingCarouselItemsPanel()
+    {
+        _ownItems = new OwnItemContainers(this, RemoveInternalChild);
+    }
 
     protected override Type StyleKeyOverride => typeof(VirtualizingCarouselPanel);
 
@@ -37,9 +40,11 @@ internal sealed class VirtualizingCarouselItemsPanel : VirtualizingCarouselPanel
             var index = IndexFromContainer(container);
             if (index < 0 || index >= Items.Count || !ReferenceEquals(Items[index], container)) continue;
             _ownItems.Remember(container);
-            if (container.GetVisualParent() is null && !Children.Contains(container) && detached?.Contains(container) != true)
+            if (container.GetVisualParent() is null && !Children.Contains(container) &&
+                detached?.Contains(container) != true)
                 (detached ??= []).Add(container);
         }
+
         if (detached is not null)
         {
             foreach (var container in detached)
@@ -47,10 +52,13 @@ internal sealed class VirtualizingCarouselItemsPanel : VirtualizingCarouselPanel
                 AddInternalChild(container);
                 _ownItems.Restored(container);
             }
+
             // Reattachment restores inherited resources and can change desired size.
             result = base.MeasureOverride(availableSize);
         }
-        if (_ownItems.NeedsSelectionSync && GetRealizedContainers() is { } current) _ownItems.SynchronizeSelection(current);
+
+        if (_ownItems.NeedsSelectionSync && GetRealizedContainers() is { } current)
+            _ownItems.SynchronizeSelection(current);
         return result;
     }
 }

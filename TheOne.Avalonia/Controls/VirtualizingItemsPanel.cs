@@ -1,7 +1,7 @@
 using System.Collections.Specialized;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.VisualTree;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.VisualTree;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -12,19 +12,10 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
     private readonly OwnItemContainers _own;
     private RecycleTree? _recycleTree;
 
-    private sealed class RecycleTree : TreeView
+    public VirtualizingItemsPanel()
     {
-        public RecycleTree() => DataContext = null;
-        protected override Type StyleKeyOverride => typeof(Control);
-
-        public void ResetOwner(TreeViewItem node)
-        {
-            try { LogicalChildren.Add(node); }
-            finally { LogicalChildren.Remove(node); }
-        }
+        _own = new OwnItemContainers(this, RemoveInternalChild);
     }
-
-    public VirtualizingItemsPanel() => _own = new(this, RemoveInternalChild);
 
     protected override Type StyleKeyOverride => typeof(VirtualizingStackPanel);
 
@@ -42,6 +33,7 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
             oldValue.ContainerIndexChanged -= TreeContainerIndexChanged;
             oldValue.PreparingContainer -= TreeContainerPreparing;
         }
+
         base.OnItemsControlChanged(oldValue);
         _own.SetOwner(ItemsControl);
         if (ItemsControl is TreeView or TreeViewItem)
@@ -78,8 +70,14 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
         // This temporary logical owner has no visual children or platform window.
         var recycleTree = _recycleTree ??= new RecycleTree();
         LogicalChildren.Add(recycleTree);
-        try { recycleTree.ResetOwner(node); }
-        finally { LogicalChildren.Remove(recycleTree); }
+        try
+        {
+            recycleTree.ResetOwner(node);
+        }
+        finally
+        {
+            LogicalChildren.Remove(recycleTree);
+        }
     }
 
     protected override void OnItemsChanged(IReadOnlyList<object?> items, NotifyCollectionChangedEventArgs args)
@@ -95,11 +93,12 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
         // native panel measures it and raises BringIntoView through the visual tree.
         if (IsEffectivelyVisible && this.IsAttachedToVisualTree() && index >= 0 && index < Items.Count &&
             Items[index] is Control item && item.GetVisualParent() is null && !Children.Contains(item) &&
-            ReferenceEquals(base.ContainerFromIndex(index), item))
+            ReferenceEquals(ContainerFromIndex(index), item))
         {
             AddInternalChild(item);
             Restored(item, index);
         }
+
         return base.ScrollIntoView(index);
     }
 
@@ -112,9 +111,11 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
         {
             if (container.GetVisualParent() is not null) continue;
             var index = IndexFromContainer(container);
-            if (index < 0 || index >= Items.Count || !ReferenceEquals(Items[index], container) || Children.Contains(container)) continue;
+            if (index < 0 || index >= Items.Count || !ReferenceEquals(Items[index], container) ||
+                Children.Contains(container)) continue;
             (detached ??= []).Add(container);
         }
+
         if (detached is not null)
         {
             foreach (var container in detached)
@@ -122,10 +123,34 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
                 AddInternalChild(container);
                 Restored(container, IndexFromContainer(container));
             }
+
             // Reattachment restores inherited resources and may invalidate measurement.
             result = base.MeasureOverride(availableSize);
         }
+
         if (_own.NeedsSelectionSync && GetRealizedContainers() is { } current) _own.SynchronizeSelection(current);
         return result;
+    }
+
+    private sealed class RecycleTree : TreeView
+    {
+        public RecycleTree()
+        {
+            DataContext = null;
+        }
+
+        protected override Type StyleKeyOverride => typeof(Control);
+
+        public void ResetOwner(TreeViewItem node)
+        {
+            try
+            {
+                LogicalChildren.Add(node);
+            }
+            finally
+            {
+                LogicalChildren.Remove(node);
+            }
+        }
     }
 }

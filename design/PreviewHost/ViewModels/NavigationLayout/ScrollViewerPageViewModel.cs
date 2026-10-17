@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class ScrollViewerPageViewModel : BasicControlViewModel { }
+
+public sealed class ScrollViewerPageViewModel : BasicControlViewModel
+{
+}

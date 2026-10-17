@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class CalendarDatePickerPageViewModel : BasicControlViewModel { }
+
+public sealed class CalendarDatePickerPageViewModel : BasicControlViewModel
+{
+}

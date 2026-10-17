@@ -35,7 +35,8 @@ internal static class PreviewPrinting
     {
         var dialog = new PrintPreviewWindow(document, service, new PrintSettings
         {
-            Paper = document.Paper, Margins = PrintMargins.Zero, Copies = options?.Copies ?? 1, PrinterId = options?.PrinterName
+            Paper = document.Paper, Margins = PrintMargins.Zero, Copies = options?.Copies ?? 1,
+            PrinterId = options?.PrinterName
         }) { RequestedThemeVariant = viewer.ActualThemeVariant };
         // Keep this package's Fluent base and print resources local to its dialog.
         dialog.Styles.Add(new PrintingToolsTheme());

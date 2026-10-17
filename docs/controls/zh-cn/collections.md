@@ -81,6 +81,29 @@ if (container is not null)
 
 ## TabControl 与 Card 标签页
 
+新增页签图标与右键菜单。`TabFeatures.ShowItemIcon`（TabControl，默认 True）统一控制图标；`TabFeatures.Icon`（TabItem）为图标数据，默认支持 Geometry／文本，可用 `IconTemplate` 自定义。`TabFeatures.IsPinned=True` 固定到左侧，固定页不能关闭；`IsClosable=False` 只禁止关闭，不等于固定。
+
+```xml
+<TabControl Classes="card" one:TabFeatures.CanClose="True"
+            one:TabFeatures.CanReorder="True" one:TabFeatures.ShowItemIcon="True">
+  <TabItem Header="首页" one:TabFeatures.Icon="{StaticResource HomeGeometry}"
+           one:TabFeatures.IsPinned="True"><TextBlock Text="首页" /></TabItem>
+  <TabItem Header="编辑"><TextBox Text="草稿" /></TabItem>
+</TabControl>
+```
+
+右键菜单含关闭当前页、固定到左侧／取消固定、关闭所有页；关闭所有页跳过固定、不可关闭和取消关闭的项。自定义 ContextMenu 不会被覆盖。固定页显示固钉，禁止拖动、排序快捷键和 Move 移动；普通页的拖动预览及放置位置不能越过固定区。ShowItemIcon 只控制内容图标，不隐藏固钉。按钮、快捷键和 API 均检查相同关闭规则。绑定集合的固定状态按模型实例保留，容器回收不串用。
+
+页签采用紧凑留白，内容图标统一缩放到 14 DIP，固钉 12 DIP，关闭图标 10 DIP；关闭按钮仍保留 24 DIP 点击区域。三档尺寸继续沿用通用尺寸规范。
+
+OneTheme 默认开启菜单；设置 `one:TabFeatures.EnableContextMenu="False"` 可关闭内置菜单，自定义 ContextMenu 仍由使用者管理。
+
+```csharp
+TabFeatures.Pin(tabItem);        // 固定并移到左侧，保持选择
+TabFeatures.Pin(tabItem, false); // 取消固定
+int closed = TabFeatures.CloseAll(tabs); // 逐项遵循取消事件及 CloseCommand
+```
+
 ```xml
 <TabControl Classes="card" Height="320"
             ItemsSource="{Binding Documents}"
@@ -119,7 +142,7 @@ Card 支持关闭与重排。标题仅有背景色，正文保留边框；溢出
 | --- | --- |
 | `TabFeatures.CanClose` | 允许关闭；可显式设为 False |
 | `TabFeatures.CanReorder` | 允许当前 TabControl 内拖动与键盘排序 |
-| `TabFeatures.IsClosable` | 设置在单个 TabItem 上，False 可固定标签 |
+| `TabFeatures.IsClosable` | 设置在单个 TabItem 上，False 禁止关闭，排序仍允许 |
 | `TabFeatures.CloseCommand` | 宿主关闭命令，参数为数据项；指定后由命令负责更新集合 |
 | `TabFeatures.TabClosingEvent` | 关闭前的可取消事件，参数含 Item 与 Cancel |
 | `TabFeatures.Close(tabItem)` | 尝试关闭容器对应的数据项 |
@@ -239,7 +262,7 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 | [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `false` | 允许当前 TabControl 内拖动与键盘排序 |
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | 可写; OneWay; 附加属性 | `null` | 宿主关闭命令，参数为数据项；指定后由命令负责更新集合 |
 | [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L35) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `new CloseTab()` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | 可写; OneWay; 附加属性 | `true` | 设置在单个 TabItem 上，False 可固定标签 |
+| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | 可写; OneWay; 附加属性 | `true` | 设置在单个 TabItem 上，False 禁止关闭，排序仍允许 |
 | [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
 
 ### Virtualization

@@ -2,10 +2,13 @@
 
 namespace Avalonia.Controls.Utils;
 
-internal sealed class AnonymousObserver<T>(Action<T> onNext, Action<Exception>? onError, Action? onCompleted) : IObserver<T>
+internal sealed class AnonymousObserver<T>(Action<T> onNext, Action<Exception>? onError, Action? onCompleted)
+    : IObserver<T>
 {
     public void OnNext(T value)
-        => onNext.Invoke(value);
+    {
+        onNext.Invoke(value);
+    }
 
     public void OnError(Exception error)
     {
@@ -16,5 +19,7 @@ internal sealed class AnonymousObserver<T>(Action<T> onNext, Action<Exception>? 
     }
 
     public void OnCompleted()
-        => onCompleted?.Invoke();
+    {
+        onCompleted?.Invoke();
+    }
 }

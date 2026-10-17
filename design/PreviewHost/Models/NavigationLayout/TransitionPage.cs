@@ -1,11 +1,3 @@
-using Avalonia;
-using Avalonia.Animation;
-using Avalonia.Animation.Easings;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Threading;
-using Avalonia.VisualTree;
-using TheOne.Avalonia.Styling;
 using ReactiveUI;
 
 namespace TheOne.DesignPreview;
@@ -16,6 +8,7 @@ public abstract class TransitionPage(string title) : ReactiveObject
 }
 
 public sealed class TransitionOverview() : TransitionPage("工作区概览");
+
 public sealed class TransitionForm() : TransitionPage("编辑草稿")
 {
     public string Draft
@@ -26,9 +19,11 @@ public sealed class TransitionForm() : TransitionPage("编辑草稿")
 }
 
 public sealed record TransitionRecord(int Number, string Title);
+
 public sealed class TransitionRecords() : TransitionPage("更新记录")
 {
-    public IReadOnlyList<TransitionRecord> Rows { get; } = Enumerable.Range(1, 1000).Select(number => new TransitionRecord(number, $"工作区更新 {number:0000}")).ToArray();
+    public IReadOnlyList<TransitionRecord> Rows { get; } = Enumerable.Range(1, 1000)
+        .Select(number => new TransitionRecord(number, $"工作区更新 {number:0000}")).ToArray();
 
     public TransitionRecord? SelectedRow
     {

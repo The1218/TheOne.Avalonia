@@ -10,9 +10,7 @@ internal sealed class CompositeDisposable(IDisposable[] disposables) : IDisposab
     public void Dispose()
     {
         if (Interlocked.Exchange(ref _disposables, null) is { } disposables)
-        {
             foreach (var disposable in disposables)
                 disposable.Dispose();
-        }
     }
 }

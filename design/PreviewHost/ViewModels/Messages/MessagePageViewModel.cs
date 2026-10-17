@@ -13,7 +13,7 @@ public sealed class MessagePageViewModel : ReactiveObject
         ToastCommand = ReactiveCommand.Create<object?>(_ =>
         {
             ConfigurationRequested?.Invoke(this, EventArgs.Empty);
-            OneToast.Show(CreateNotification(includeTitle: false));
+            OneToast.Show(CreateNotification(false));
             Status = $"已显示 {Type} Toast";
         });
         NotificationCommand = ReactiveCommand.Create<object?>(_ =>

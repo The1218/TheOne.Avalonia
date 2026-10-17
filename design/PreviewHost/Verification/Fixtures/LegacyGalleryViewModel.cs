@@ -9,6 +9,9 @@ namespace TheOne.DesignPreview;
 public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInfo
 {
     private int _saveCount;
+
+    private int _tabCount;
+
     public LegacyGalleryViewModel()
     {
         SaveCommand = ReactiveCommand.Create<object?>(_ => Status = $"已保存第 {++_saveCount} 次 · {Email}");
@@ -32,7 +35,8 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
         ExpandTreeCommand = ReactiveCommand.Create<object?>(_ => SetTreeExpansion(true));
         CollapseTreeCommand = ReactiveCommand.Create<object?>(_ => SetTreeExpansion(false));
         SelectedTreeNode = TreeRoots[0].Children[0].Children[0];
-        AddTabCommand = ReactiveCommand.Create<object?>(_ => DemoTabs.Add(new DemoTab($"新标签 {++_tabCount}", "标签页来自 ObservableCollection，排序和关闭会同步修改集合。")));
+        AddTabCommand = ReactiveCommand.Create<object?>(_ =>
+            DemoTabs.Add(new DemoTab($"新标签 {++_tabCount}", "标签页来自 ObservableCollection，排序和关闭会同步修改集合。")));
         ResetTabsCommand = ReactiveCommand.Create<object?>(_ => ResetTabs());
         ReferenceTabsCommand = ReactiveCommand.Create<object?>(_ => LoadReferenceTabs());
         ResetTabs();
@@ -73,14 +77,7 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
     } = "hello@theone.dev";
 
     public string EmailError => Email.Contains('@') && Email.Contains('.') ? "" : "请输入有效的电子邮箱地址";
-    public bool HasErrors => EmailError.Length > 0;
 
-    public IEnumerable GetErrors(string? propertyName) => (propertyName is null or nameof(Email)) && HasErrors ? new[]
-    {
-        EmailError
-    }
-
-    : Array.Empty<string>();
     public double Progress
     {
         get;
@@ -105,43 +102,10 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = "准备就绪 · 点击、输入或使用 Tab 检查控件";
 
-    private int _tabCount;
     public ObservableCollection<DemoTab> DemoTabs { get; } = [];
     public ICommand AddTabCommand { get; }
     public ICommand ResetTabsCommand { get; }
     public ICommand ReferenceTabsCommand { get; }
-
-    private void LoadReferenceTabs()
-    {
-        DemoTabs.Clear();
-        foreach (var title in new[]
-        {
-            "Kestrel Sport Sedan",
-            "Meridian GT",
-            "Longhaul Estate",
-            "Trailcut 200",
-            "Velocia Coupe",
-            "Regent Executive",
-            "Nimbus Crossover",
-            "Foreman Crew Cab",
-            "Dune Runner",
-            "Cityhop Compact",
-            "Auralis Grand Tourer",
-            "Trailhead Wagon"
-        }
-
-        )
-            DemoTabs.Add(new DemoTab(title, $"{title}：选中标题与内容面板连续连接。使用右侧箭头或滚轮查看溢出标签；支持拖动排序与关闭。"));
-    }
-
-    private void ResetTabs()
-    {
-        DemoTabs.Clear();
-        DemoTabs.Add(new DemoTab("欢迎", "固定标签：可排序，不能关闭。", false));
-        DemoTabs.Add(new DemoTab("主题", "浅色与深色共享语义色，选中卡片与内容面板使用同一个表面。"));
-        DemoTabs.Add(new DemoTab("交互", "拖动标题调整顺序；点击 × 关闭；Ctrl / ⌘ + W 关闭选中项。"));
-        _tabCount = 0;
-    }
 
     public string[] Suggestions { get; } = ["Avalonia", "TheOne", "TheOne", "Skia", "Windows", "macOS", "Linux"];
     public ICommand SaveCommand { get; }
@@ -152,7 +116,16 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
     public ICommand RenameNodeCommand { get; }
     public ICommand ExpandTreeCommand { get; }
     public ICommand CollapseTreeCommand { get; }
-    public PreviewTreeNode[] TreeRoots { get; } = [new("TheOne.Avalonia", "控件库项目", true, new("Themes", "浅色、深色和控件模板", true, new("Colors.axaml", "语义颜色与画刷"), new("TreeViewItem.axaml", "树节点模板"), new("MenuItem.axaml", "菜单项目模板")), new("Controls", "基础控件", true, new("Button", "按钮与命令"), new("TreeView", "树形数据与选择")), new("只读节点", "禁用状态示例", false)), new("PreviewHost", "可操作的预览应用", true, new PreviewTreeNode("ControlGallery.axaml", "控件目录"))];
+
+    public PreviewTreeNode[] TreeRoots { get; } =
+    [
+        new("TheOne.Avalonia", "控件库项目", true,
+            new PreviewTreeNode("Themes", "浅色、深色和控件模板", true, new PreviewTreeNode("Colors.axaml", "语义颜色与画刷"),
+                new PreviewTreeNode("TreeViewItem.axaml", "树节点模板"), new PreviewTreeNode("MenuItem.axaml", "菜单项目模板")),
+            new PreviewTreeNode("Controls", "基础控件", true, new PreviewTreeNode("Button", "按钮与命令"),
+                new PreviewTreeNode("TreeView", "树形数据与选择")), new PreviewTreeNode("只读节点", "禁用状态示例", false)),
+        new("PreviewHost", "可操作的预览应用", true, new PreviewTreeNode("ControlGallery.axaml", "控件目录"))
+    ];
 
     public PreviewTreeNode? SelectedTreeNode
     {
@@ -176,6 +149,51 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = true;
 
+    public bool HasErrors => EmailError.Length > 0;
+
+    public IEnumerable GetErrors(string? propertyName)
+    {
+        return propertyName is null or nameof(Email) && HasErrors
+            ? new[]
+            {
+                EmailError
+            }
+            : Array.Empty<string>();
+    }
+
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+    private void LoadReferenceTabs()
+    {
+        DemoTabs.Clear();
+        foreach (var title in new[]
+                 {
+                     "Kestrel Sport Sedan",
+                     "Meridian GT",
+                     "Longhaul Estate",
+                     "Trailcut 200",
+                     "Velocia Coupe",
+                     "Regent Executive",
+                     "Nimbus Crossover",
+                     "Foreman Crew Cab",
+                     "Dune Runner",
+                     "Cityhop Compact",
+                     "Auralis Grand Tourer",
+                     "Trailhead Wagon"
+                 }
+                )
+            DemoTabs.Add(new DemoTab(title, $"{title}：选中标题与内容面板连续连接。使用右侧箭头或滚轮查看溢出标签；支持拖动排序与关闭。"));
+    }
+
+    private void ResetTabs()
+    {
+        DemoTabs.Clear();
+        DemoTabs.Add(new DemoTab("欢迎", "固定标签：可排序，不能关闭。", false));
+        DemoTabs.Add(new DemoTab("主题", "浅色与深色共享语义色，选中卡片与内容面板使用同一个表面。"));
+        DemoTabs.Add(new DemoTab("交互", "拖动标题调整顺序；点击 × 关闭；Ctrl / ⌘ + W 关闭选中项。"));
+        _tabCount = 0;
+    }
+
     private void SetTreeExpansion(bool expanded)
     {
         void Visit(PreviewTreeNode node)
@@ -189,8 +207,6 @@ public sealed class LegacyGalleryViewModel : ReactiveObject, INotifyDataErrorInf
             Visit(root);
         Status = expanded ? "已展开所有演示节点" : "已折叠所有演示节点";
     }
-
-    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 }
 
 public sealed record DemoTab(string Title, string Description, bool CanClose = true);

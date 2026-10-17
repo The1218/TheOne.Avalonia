@@ -3,36 +3,48 @@
              xmlns:local="using:TheOne.DesignPreview"
              x:Class="TheOne.DesignPreview.MessageBoxDemoView"
              x:DataType="local:MessageBoxDemoViewModel">
-  <StackPanel MaxWidth="760" Spacing="20" HorizontalAlignment="Stretch">
-    <StackPanel Spacing="8">
-      <TextBlock Text="MessageBox · 简单确认" FontSize="22" FontWeight="SemiBold" />
-      <TextBlock Text="用于提交、离开或删除前的一次确认。沿用窗口内的对话框、主题、尺寸与焦点管理。"
-                 Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+    <StackPanel MaxWidth="760" Spacing="20" HorizontalAlignment="Stretch">
+        <StackPanel Spacing="8">
+            <TextBlock Text="MessageBox · 简单确认" FontSize="22" FontWeight="SemiBold" />
+            <TextBlock Text="用于提交、离开或删除前的一次确认。沿用窗口内的对话框、主题、尺寸与焦点管理。"
+                       Foreground="{DynamicResource One.Muted}" TextWrapping="Wrap" />
+        </StackPanel>
+        <Border Padding="20" CornerRadius="8" Background="{DynamicResource One.Surface}"
+                BorderBrush="{DynamicResource One.Line}" BorderThickness="1">
+            <StackPanel Spacing="16">
+                <StackPanel Spacing="6">
+                    <TextBlock Text="标题" /><TextBox Name="MessageBoxTitleInput" Text="{Binding Title, Mode=TwoWay}" />
+                </StackPanel>
+                <StackPanel Spacing="6">
+                    <TextBlock Text="说明" />
+                    <TextBox Text="{Binding Message, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap"
+                             MinHeight="76" />
+                </StackPanel>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                    <StackPanel Spacing="6">
+                        <TextBlock Text="确认文案" /><TextBox Text="{Binding ConfirmText, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Spacing="6">
+                        <TextBlock Text="取消文案" /><TextBox Text="{Binding CancelText, Mode=TwoWay}" />
+                    </StackPanel>
+                </Grid>
+                <CheckBox Content="危险操作（强调不可恢复的结果）" IsChecked="{Binding IsDangerous, Mode=TwoWay}" />
+                <WrapPanel>
+                    <Button Name="OpenMessageBox" Classes="primary" Content="打开确认框" Command="{Binding ConfirmCommand}"
+                            Margin="0,0,10,8" />
+                    <Button Content="删除确认示例" Command="{Binding DeleteCommand}" Margin="0,0,0,8" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+        <Border Padding="16" CornerRadius="8" Background="{DynamicResource One.Subtle}"
+                BorderBrush="{DynamicResource One.Line}" BorderThickness="1">
+            <StackPanel Spacing="8">
+                <TextBlock Name="MessageBoxResult" Text="{Binding Status}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                <TextBlock Text="取消按钮和 Escape 均返回 false。初始焦点在取消，Tab 可切换到确认，Enter 执行当前按钮。"
+                           TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+                <TextBlock Text="由 ViewModel 命令 await OneMessageBox.ConfirmAsync(...)，在返回 true 后执行实际业务操作。"
+                           TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+            </StackPanel>
+        </Border>
     </StackPanel>
-    <Border Padding="20" CornerRadius="8" Background="{DynamicResource One.Surface}"
-            BorderBrush="{DynamicResource One.Line}" BorderThickness="1">
-      <StackPanel Spacing="16">
-        <StackPanel Spacing="6"><TextBlock Text="标题" /><TextBox Name="MessageBoxTitleInput" Text="{Binding Title, Mode=TwoWay}" /></StackPanel>
-        <StackPanel Spacing="6"><TextBlock Text="说明" /><TextBox Text="{Binding Message, Mode=TwoWay}" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="76" /></StackPanel>
-        <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-          <StackPanel Spacing="6"><TextBlock Text="确认文案" /><TextBox Text="{Binding ConfirmText, Mode=TwoWay}" /></StackPanel>
-          <StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="取消文案" /><TextBox Text="{Binding CancelText, Mode=TwoWay}" /></StackPanel>
-        </Grid>
-        <CheckBox Content="危险操作（强调不可恢复的结果）" IsChecked="{Binding IsDangerous, Mode=TwoWay}" />
-        <WrapPanel>
-          <Button Name="OpenMessageBox" Classes="primary" Content="打开确认框" Command="{Binding ConfirmCommand}" Margin="0,0,10,8" />
-          <Button Content="删除确认示例" Command="{Binding DeleteCommand}" Margin="0,0,0,8" />
-        </WrapPanel>
-      </StackPanel>
-    </Border>
-    <Border Padding="16" CornerRadius="8" Background="{DynamicResource One.Subtle}" BorderBrush="{DynamicResource One.Line}" BorderThickness="1">
-      <StackPanel Spacing="8">
-        <TextBlock Name="MessageBoxResult" Text="{Binding Status}" FontWeight="SemiBold" TextWrapping="Wrap" />
-        <TextBlock Text="取消按钮和 Escape 均返回 false。初始焦点在取消，Tab 可切换到确认，Enter 执行当前按钮。"
-                   TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-        <TextBlock Text="由 ViewModel 命令 await OneMessageBox.ConfirmAsync(...)，在返回 true 后执行实际业务操作。"
-                   TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
-      </StackPanel>
-    </Border>
-  </StackPanel>
 </UserControl>

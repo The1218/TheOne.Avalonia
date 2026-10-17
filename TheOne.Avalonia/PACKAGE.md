@@ -3,10 +3,11 @@
 TheOne themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows
 and DataGrid entity filters, left/right frozen columns and numeric summaries.
 
-Preview.4 refines bilingual control/API/model documentation and individual preview pages with practical code examples.
-It fixes MultiSelectBox popup scrolling, tab end-drop behavior, virtualized item reinsertion and collection/source changes,
-plus native menu first-open sizing and scroll-button layout. Short menus measure their complete content; large menus
-retain virtualization. Form/FormItem, enum-based theme switching, gradients and window-owner guidance remain available.
+Preview.5 adds NavPage with a collapsible navigation sidebar, retained card tabs, optional right header and compiled
+model bindings. Tabs support icons, pinned pages and close menus. MultiSelectBox searches cached entries without
+rebuilding source subscriptions; WorkflowEditor adds graph indexes, viewport caches and safe offscreen view recycling.
+Popup boundaries contain wheel, touch and inertia input while preserving native internal scrolling. Bilingual guides
+and individual previews document the added properties, business APIs, models and lifecycle rules.
 
 ```xml
 <Application.Styles>

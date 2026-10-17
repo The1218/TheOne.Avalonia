@@ -81,6 +81,29 @@ The path addresses root 0's 9,001st child. Only path-required containers are cre
 
 ## TabControl and Card tabs
 
+Tab icons and context menus are available. `TabFeatures.ShowItemIcon` on TabControl (default True) toggles icons. `TabFeatures.Icon` on TabItem accepts Geometry / text by default; IconTemplate customizes rendering. `TabFeatures.IsPinned=True` pins left and prevents closing. IsClosable=False only prevents closing.
+
+```xml
+<TabControl Classes="card" one:TabFeatures.CanClose="True"
+            one:TabFeatures.CanReorder="True" one:TabFeatures.ShowItemIcon="True">
+  <TabItem Header="Home" one:TabFeatures.Icon="{StaticResource HomeGeometry}"
+           one:TabFeatures.IsPinned="True"><TextBlock Text="Home" /></TabItem>
+  <TabItem Header="Editor"><TextBox Text="Draft" /></TabItem>
+</TabControl>
+```
+
+Menus offer close current, pin left / unpin and close all. Close all skips pinned, nonclosable and canceled items. Consumer ContextMenus are preserved. Pinned headers display a pushpin and cannot be dragged or reordered by keyboard or Move. Ordinary drag previews and drop positions cannot cross the pinned region. ShowItemIcon only controls the item icon, not the pushpin. Buttons, shortcuts and APIs share close rules. Bound item pin state follows model identity rather than recycled containers.
+
+Compact tab padding accompanies a 14 DIP item icon, 12 DIP pushpin and 10 DIP close glyph. The close button retains its 24 DIP hit target. The three density levels still follow shared sizing.
+
+OneTheme enables menus by default. Set `one:TabFeatures.EnableContextMenu="False"` to disable built-in menus; consumer ContextMenus remain consumer-owned.
+
+```csharp
+TabFeatures.Pin(tabItem);        // pin left while preserving selection
+TabFeatures.Pin(tabItem, false); // unpin
+int closed = TabFeatures.CloseAll(tabs); // honor cancellation and CloseCommand
+```
+
 ```xml
 <TabControl Classes="card" Height="320"
             ItemsSource="{Binding Documents}"
@@ -119,7 +142,7 @@ Displacement / placement uses `One.Motion.Fast` (120 ms) and CubicEaseOut. `Moti
 | --- | --- |
 | `TabFeatures.CanClose` | Enables closing; explicit False supported |
 | `TabFeatures.CanReorder` | Enables pointer / keyboard ordering within a TabControl |
-| `TabFeatures.IsClosable` | Per-TabItem closing; False pins the tab |
+| `TabFeatures.IsClosable` | Per-TabItem closing; False prevents closing but still allows reordering |
 | `TabFeatures.CloseCommand` | Host command receives the data item and updates the collection when provided |
 | `TabFeatures.TabClosingEvent` | Cancellable pre-close event with Item / Cancel |
 | `TabFeatures.Close(tabItem)` | Attempts to close the container's data item |
@@ -239,7 +262,7 @@ This section lists project-added control-specific properties, public Classes usa
 | [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L22) | `bool` | writable; OneWay; attached | `false` | Enables pointer / keyboard ordering within a TabControl |
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | writable; OneWay; attached | `null` | Host command receives the data item and updates the collection when provided |
 | [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L35) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `new CloseTab()` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | writable; OneWay; attached | `true` | Per-TabItem closing; False pins the tab |
+| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | writable; OneWay; attached | `true` | Per-TabItem closing; False prevents closing but still allows reordering |
 | [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | writable; OneWay; attached | `false` | Shows the close button; the host and associated commands retain control over closing. |
 
 ### Virtualization

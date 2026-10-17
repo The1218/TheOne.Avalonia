@@ -26,8 +26,9 @@
                     FontSize="12"
                     Foreground="{DynamicResource One.Muted}"
                     HorizontalAlignment="Center"
-                    x:DataType="x:Object" Text="{Binding}"
-                    VerticalAlignment="Center" />
+                    Text="{Binding}"
+                    VerticalAlignment="Center"
+                    x:DataType="x:Object" />
             </Template>
         </Setter>
         <Setter Property="Template">

@@ -1,0 +1,17 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.NavPageBindingFixture" x:DataType="local:NavPageBindingModel">
+    <one:NavPage x:Name="NavigationShell" ItemsSource="{Binding Routes}" HeaderTitle="Compiled navigation"
+                 RightHeader="{Binding Toolbar}"
+                 TitleBinding="{CompiledBinding Name, DataType=local:NavPageRoute}"
+                 IconBinding="{CompiledBinding Glyph, DataType=local:NavPageRoute}"
+                 ChildrenBinding="{CompiledBinding Nodes, DataType=local:NavPageRoute}"
+                 ViewModelBinding="{CompiledBinding Screen, DataType=local:NavPageRoute}">
+        <one:NavPage.PageTemplate>
+            <DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" Margin="16" /></DataTemplate>
+        </one:NavPage.PageTemplate>
+        <one:NavPage.RightHeaderTemplate>
+            <DataTemplate x:DataType="x:String"><TextBlock Text="{Binding}" Margin="12" /></DataTemplate>
+        </one:NavPage.RightHeaderTemplate>
+    </one:NavPage>
+</UserControl>

@@ -1,8 +1,8 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Input;
-using global::Avalonia.Threading;
 using System.Runtime.CompilerServices;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Threading;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -10,9 +10,11 @@ namespace TheOne.Avalonia.Controls;
 public sealed class RefreshOptions : AvaloniaObject
 {
     public static readonly AttachedProperty<double> IndicatorSizeProperty =
-        AvaloniaProperty.RegisterAttached<RefreshOptions, Control, double>("IndicatorSize", 22, inherits: true);
+        AvaloniaProperty.RegisterAttached<RefreshOptions, Control, double>("IndicatorSize", 22, true);
+
     public static readonly AttachedProperty<bool> UseThemeVisualizerSizingProperty =
         AvaloniaProperty.RegisterAttached<RefreshOptions, RefreshContainer, bool>("UseThemeVisualizerSizing");
+
     private static readonly ConditionalWeakTable<RefreshContainer, State> States = new();
 
     static RefreshOptions()
@@ -20,17 +22,34 @@ public sealed class RefreshOptions : AvaloniaObject
         UseThemeVisualizerSizingProperty.Changed.AddClassHandler<RefreshContainer>((container, change) =>
             States.GetValue(container, control => new State(control)).SetEnabled(change.GetNewValue<bool>()));
     }
-    public static double GetIndicatorSize(Control control) => control.GetValue(IndicatorSizeProperty);
-    public static void SetIndicatorSize(Control control, double value) => control.SetValue(IndicatorSizeProperty, value);
-    public static bool GetUseThemeVisualizerSizing(RefreshContainer container) => container.GetValue(UseThemeVisualizerSizingProperty);
-    public static void SetUseThemeVisualizerSizing(RefreshContainer container, bool value) => container.SetValue(UseThemeVisualizerSizingProperty, value);
+
+    public static double GetIndicatorSize(Control control)
+    {
+        return control.GetValue(IndicatorSizeProperty);
+    }
+
+    public static void SetIndicatorSize(Control control, double value)
+    {
+        control.SetValue(IndicatorSizeProperty, value);
+    }
+
+    public static bool GetUseThemeVisualizerSizing(RefreshContainer container)
+    {
+        return container.GetValue(UseThemeVisualizerSizingProperty);
+    }
+
+    public static void SetUseThemeVisualizerSizing(RefreshContainer container, bool value)
+    {
+        container.SetValue(UseThemeVisualizerSizingProperty, value);
+    }
 
     private sealed class State(RefreshContainer container)
     {
-        private RefreshVisualizer? _managed;
         private bool _awaitingDefault;
         private bool _enabled;
+        private RefreshVisualizer? _managed;
         private bool _queued;
+
         public void SetEnabled(bool enabled)
         {
             if (_enabled == enabled) return;
@@ -40,6 +59,7 @@ public sealed class RefreshOptions : AvaloniaObject
             _awaitingDefault = container.Visualizer is null;
             container.PropertyChanged += Changed;
         }
+
         private void Changed(object? sender, AvaloniaPropertyChangedEventArgs args)
         {
             if (args.Property == RefreshContainer.VisualizerProperty)
@@ -54,10 +74,15 @@ public sealed class RefreshOptions : AvaloniaObject
                     _managed = null;
                     _awaitingDefault = container.Visualizer is null;
                 }
+
                 Queue();
             }
-            else if (args.Property == RefreshContainer.PullDirectionProperty) Queue();
+            else if (args.Property == RefreshContainer.PullDirectionProperty)
+            {
+                Queue();
+            }
         }
+
         private void Queue()
         {
             if (_queued) return;
@@ -73,8 +98,10 @@ public sealed class RefreshOptions : AvaloniaObject
                 _managed.Classes.Set("one-refresh-right", container.PullDirection == PullDirection.RightToLeft);
                 // The native container assigns a local 100 px size to its own visualizer.
                 // Release those defaults so density styles can apply; preserve custom sizes.
-                if (_managed.IsSet(Control.HeightProperty) && (_managed.Height == 100 || double.IsNaN(_managed.Height))) _managed.ClearValue(Control.HeightProperty);
-                if (_managed.IsSet(Control.WidthProperty) && (_managed.Width == 100 || double.IsNaN(_managed.Width))) _managed.ClearValue(Control.WidthProperty);
+                if (_managed.IsSet(Control.HeightProperty) && (_managed.Height == 100 || double.IsNaN(_managed.Height)))
+                    _managed.ClearValue(Control.HeightProperty);
+                if (_managed.IsSet(Control.WidthProperty) && (_managed.Width == 100 || double.IsNaN(_managed.Width)))
+                    _managed.ClearValue(Control.WidthProperty);
             }, DispatcherPriority.Loaded);
         }
     }

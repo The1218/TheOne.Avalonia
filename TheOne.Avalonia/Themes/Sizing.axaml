@@ -4,30 +4,135 @@
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style Selector="one|OneWindow.one-small"><Setter Property="TitleBarHeight" Value="42" /><Setter Property="FontSize" Value="12" /></Style>
-    <Style Selector="one|OneWindow.one-normal"><Setter Property="TitleBarHeight" Value="48" /><Setter Property="FontSize" Value="14" /></Style>
-    <Style Selector="one|OneWindow.one-large"><Setter Property="TitleBarHeight" Value="56" /><Setter Property="FontSize" Value="16" /></Style>
-    <Style Selector="one|LoginWindow.one-small"><Setter Property="FontSize" Value="12" /></Style>
-    <Style Selector="one|LoginWindow.one-normal"><Setter Property="FontSize" Value="14" /></Style>
-    <Style Selector="one|LoginWindow.one-large"><Setter Property="FontSize" Value="16" /></Style>
-    <Style Selector="one|ThemeButton.one-small"><Setter Property="Width" Value="30" /><Setter Property="Height" Value="30" /></Style>
-    <Style Selector="one|ThemeButton.one-normal"><Setter Property="Width" Value="36" /><Setter Property="Height" Value="36" /></Style>
-    <Style Selector="one|ThemeButton.one-large"><Setter Property="Width" Value="44" /><Setter Property="Height" Value="44" /></Style>
-    <Style Selector="one|NavMenu.one-small"><Setter Property="CollapsedWidth" Value="44" /><Setter Property="SubmenuWidth" Value="240" /><Setter Property="SubmenuMaxHeight" Value="240" /><Setter Property="FontSize" Value="12" /><Setter Property="IconSize" Value="16" /><Setter Property="IconSpacing" Value="8" /><Setter Property="ItemHeight" Value="30" /><Setter Property="Indent" Value="12" /></Style>
-    <Style Selector="one|NavMenu.one-normal"><Setter Property="CollapsedWidth" Value="52" /><Setter Property="SubmenuWidth" Value="280" /><Setter Property="SubmenuMaxHeight" Value="320" /><Setter Property="FontSize" Value="14" /><Setter Property="IconSize" Value="18" /><Setter Property="IconSpacing" Value="10" /><Setter Property="ItemHeight" Value="36" /><Setter Property="Indent" Value="16" /></Style>
-    <Style Selector="one|NavMenu.one-large"><Setter Property="CollapsedWidth" Value="60" /><Setter Property="SubmenuWidth" Value="320" /><Setter Property="SubmenuMaxHeight" Value="400" /><Setter Property="FontSize" Value="16" /><Setter Property="IconSize" Value="20" /><Setter Property="IconSpacing" Value="12" /><Setter Property="ItemHeight" Value="44" /><Setter Property="Indent" Value="20" /></Style>
-    <Style Selector="one|Avatar.one-small"><Setter Property="Width" Value="32" /><Setter Property="Height" Value="32" /><Setter Property="FontSize" Value="12" /></Style>
-    <Style Selector="one|Avatar.one-normal"><Setter Property="Width" Value="40" /><Setter Property="Height" Value="40" /><Setter Property="FontSize" Value="14" /></Style>
-    <Style Selector="one|Avatar.one-large"><Setter Property="Width" Value="56" /><Setter Property="Height" Value="56" /><Setter Property="FontSize" Value="18" /></Style>
-    <Style Selector="one|InfoCard.one-small"><Setter Property="Padding" Value="16" /><Setter Property="FontSize" Value="12" /><Setter Property="HeaderFontSize" Value="14" /><Setter Property="HeaderSpacing" Value="8" /><Setter Property="HeaderIconSize" Value="16" /><Setter Property="HeaderContentSpacing" Value="8" /><Setter Property="FooterSpacing" Value="8" /></Style>
-    <Style Selector="one|ImagePreview.one-small"><Setter Property="ChromeHeight" Value="36" /><Setter Property="FontSize" Value="12" /></Style>
-    <Style Selector="one|ImagePreview.one-normal"><Setter Property="ChromeHeight" Value="44" /><Setter Property="FontSize" Value="14" /></Style>
-    <Style Selector="one|ImagePreview.one-large"><Setter Property="ChromeHeight" Value="52" /><Setter Property="FontSize" Value="16" /></Style>
-    <Style Selector="one|InfoCard.one-normal"><Setter Property="Padding" Value="20" /><Setter Property="FontSize" Value="14" /><Setter Property="HeaderFontSize" Value="16" /><Setter Property="HeaderSpacing" Value="12" /><Setter Property="HeaderIconSize" Value="18" /><Setter Property="HeaderContentSpacing" Value="10" /><Setter Property="FooterSpacing" Value="12" /></Style>
-    <Style Selector="one|InfoCard.one-large"><Setter Property="Padding" Value="24" /><Setter Property="FontSize" Value="16" /><Setter Property="HeaderFontSize" Value="18" /><Setter Property="HeaderSpacing" Value="16" /><Setter Property="HeaderIconSize" Value="20" /><Setter Property="HeaderContentSpacing" Value="12" /><Setter Property="FooterSpacing" Value="16" /></Style>
-    <Style Selector="one|OneDialogPresenter.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="16" /></Style>
-    <Style Selector="one|OneDialogPresenter.one-normal"><Setter Property="FontSize" Value="14" /><Setter Property="Padding" Value="24" /></Style>
-    <Style Selector="one|OneDialogPresenter.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="32" /></Style>
+    <Style Selector="one|OneWindow.one-small">
+        <Setter Property="TitleBarHeight" Value="42" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="one|OneWindow.one-normal">
+        <Setter Property="TitleBarHeight" Value="48" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="one|OneWindow.one-large">
+        <Setter Property="TitleBarHeight" Value="56" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="one|LoginWindow.one-small">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="one|LoginWindow.one-normal">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="one|LoginWindow.one-large">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="one|ThemeButton.one-small">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+    </Style>
+    <Style Selector="one|ThemeButton.one-normal">
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+    </Style>
+    <Style Selector="one|ThemeButton.one-large">
+        <Setter Property="Width" Value="44" />
+        <Setter Property="Height" Value="44" />
+    </Style>
+    <Style Selector="one|NavMenu.one-small">
+        <Setter Property="CollapsedWidth" Value="44" />
+        <Setter Property="SubmenuWidth" Value="240" />
+        <Setter Property="SubmenuMaxHeight" Value="240" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="IconSize" Value="16" />
+        <Setter Property="IconSpacing" Value="8" />
+        <Setter Property="ItemHeight" Value="30" />
+        <Setter Property="Indent" Value="12" />
+    </Style>
+    <Style Selector="one|NavMenu.one-normal">
+        <Setter Property="CollapsedWidth" Value="52" />
+        <Setter Property="SubmenuWidth" Value="280" />
+        <Setter Property="SubmenuMaxHeight" Value="320" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="IconSize" Value="18" />
+        <Setter Property="IconSpacing" Value="10" />
+        <Setter Property="ItemHeight" Value="36" />
+        <Setter Property="Indent" Value="16" />
+    </Style>
+    <Style Selector="one|NavMenu.one-large">
+        <Setter Property="CollapsedWidth" Value="60" />
+        <Setter Property="SubmenuWidth" Value="320" />
+        <Setter Property="SubmenuMaxHeight" Value="400" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="IconSize" Value="20" />
+        <Setter Property="IconSpacing" Value="12" />
+        <Setter Property="ItemHeight" Value="44" />
+        <Setter Property="Indent" Value="20" />
+    </Style>
+    <Style Selector="one|Avatar.one-small">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="one|Avatar.one-normal">
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="one|Avatar.one-large">
+        <Setter Property="Width" Value="56" />
+        <Setter Property="Height" Value="56" />
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+    <Style Selector="one|InfoCard.one-small">
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="HeaderFontSize" Value="14" />
+        <Setter Property="HeaderSpacing" Value="8" />
+        <Setter Property="HeaderIconSize" Value="16" />
+        <Setter Property="HeaderContentSpacing" Value="8" />
+        <Setter Property="FooterSpacing" Value="8" />
+    </Style>
+    <Style Selector="one|ImagePreview.one-small">
+        <Setter Property="ChromeHeight" Value="36" />
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+    <Style Selector="one|ImagePreview.one-normal">
+        <Setter Property="ChromeHeight" Value="44" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="one|ImagePreview.one-large">
+        <Setter Property="ChromeHeight" Value="52" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style Selector="one|InfoCard.one-normal">
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HeaderFontSize" Value="16" />
+        <Setter Property="HeaderSpacing" Value="12" />
+        <Setter Property="HeaderIconSize" Value="18" />
+        <Setter Property="HeaderContentSpacing" Value="10" />
+        <Setter Property="FooterSpacing" Value="12" />
+    </Style>
+    <Style Selector="one|InfoCard.one-large">
+        <Setter Property="Padding" Value="24" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeaderFontSize" Value="18" />
+        <Setter Property="HeaderSpacing" Value="16" />
+        <Setter Property="HeaderIconSize" Value="20" />
+        <Setter Property="HeaderContentSpacing" Value="12" />
+        <Setter Property="FooterSpacing" Value="16" />
+    </Style>
+    <Style Selector="one|OneDialogPresenter.one-small">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+    <Style Selector="one|OneDialogPresenter.one-normal">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="24" />
+    </Style>
+    <Style Selector="one|OneDialogPresenter.one-large">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="32" />
+    </Style>
     <Style Selector=":is(Control).small">
         <Setter Property="styling:ControlSizing.Size" Value="Small" />
     </Style>
@@ -48,7 +153,7 @@
         <Setter Property="Padding" Value="0,4,10,4" />
     </Style>
     <Style Selector="TabItem.one-small">
-        <Setter Property="Padding" Value="10,2,6,2" />
+        <Setter Property="Padding" Value="8,2,4,2" />
     </Style>
     <Style Selector="TreeViewItem.one-small /template/ ToggleButton#PART_ExpandCollapseChevron">
         <Setter Property="Width" Value="30" />
@@ -99,7 +204,7 @@
         <Setter Property="Padding" Value="0,4,10,4" />
     </Style>
     <Style Selector="TabItem.one-normal">
-        <Setter Property="Padding" Value="14,4,6,4" />
+        <Setter Property="Padding" Value="10,3,4,3" />
     </Style>
     <Style Selector="TreeViewItem.one-normal /template/ ToggleButton#PART_ExpandCollapseChevron">
         <Setter Property="Width" Value="36" />
@@ -150,7 +255,7 @@
         <Setter Property="Padding" Value="0,4,14,4" />
     </Style>
     <Style Selector="TabItem.one-large">
-        <Setter Property="Padding" Value="14,4,6,4" />
+        <Setter Property="Padding" Value="12,3,4,3" />
     </Style>
     <Style Selector="TreeViewItem.one-large /template/ ToggleButton#PART_ExpandCollapseChevron">
         <Setter Property="Width" Value="44" />
@@ -636,24 +741,36 @@
         <Setter Property="FontSize" Value="16" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-small">
-        <Setter Property="Width" Value="NaN" /><Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Small.Width}" />
-        <Setter Property="FontSize" Value="12" /><Setter Property="Padding" Value="12,8" /><Setter Property="MinHeight" Value="40" />
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Small.Width}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="MinHeight" Value="40" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-normal">
-        <Setter Property="Width" Value="NaN" /><Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Width}" />
-        <Setter Property="FontSize" Value="14" /><Setter Property="Padding" Value="16,10" /><Setter Property="MinHeight" Value="48" />
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Width}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="16,10" />
+        <Setter Property="MinHeight" Value="48" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-large">
-        <Setter Property="Width" Value="NaN" /><Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Large.Width}" />
-        <Setter Property="FontSize" Value="16" /><Setter Property="Padding" Value="20,12" /><Setter Property="MinHeight" Value="56" />
+        <Setter Property="Width" Value="NaN" />
+        <Setter Property="MaxWidth" Value="{DynamicResource One.Notification.Large.Width}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Padding" Value="20,12" />
+        <Setter Property="MinHeight" Value="56" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-small /template/ PathIcon#PART_StatusIcon">
-        <Setter Property="Width" Value="16" /><Setter Property="Height" Value="16" />
+        <Setter Property="Width" Value="16" />
+        <Setter Property="Height" Value="16" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-normal /template/ PathIcon#PART_StatusIcon">
-        <Setter Property="Width" Value="18" /><Setter Property="Height" Value="18" />
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="18" />
     </Style>
     <Style Selector="n|NotificationCard.one-toast.one-large /template/ PathIcon#PART_StatusIcon">
-        <Setter Property="Width" Value="20" /><Setter Property="Height" Value="20" />
+        <Setter Property="Width" Value="20" />
+        <Setter Property="Height" Value="20" />
     </Style>
 </Styles>

@@ -1,2 +1,5 @@
 namespace TheOne.DesignPreview;
-public sealed class NumericUpDownPageViewModel : BasicControlViewModel { }
+
+public sealed class NumericUpDownPageViewModel : BasicControlViewModel
+{
+}

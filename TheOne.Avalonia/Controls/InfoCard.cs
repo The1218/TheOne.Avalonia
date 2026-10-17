@@ -1,11 +1,11 @@
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Controls.Metadata;
-using global::Avalonia.Controls.Presenters;
-using global::Avalonia.Controls.Templates;
-using global::Avalonia.LogicalTree;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
+using Avalonia.Controls.Presenters;
+using Avalonia.Controls.Primitives;
+using Avalonia.Controls.Templates;
+using Avalonia.LogicalTree;
+using Avalonia.Media;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -17,25 +17,65 @@ namespace TheOne.Avalonia.Controls;
 public class InfoCard : HeaderedContentControl
 {
     public static readonly StyledProperty<BoxShadows> BoxShadowProperty = Border.BoxShadowProperty.AddOwner<InfoCard>();
-    public static readonly StyledProperty<object?> HeaderIconProperty = AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderIcon));
-    public static readonly StyledProperty<IDataTemplate?> HeaderIconTemplateProperty = AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(HeaderIconTemplate));
-    public static readonly StyledProperty<object?> HeaderActionsProperty = AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderActions));
-    public static readonly StyledProperty<IDataTemplate?> HeaderActionsTemplateProperty = AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(HeaderActionsTemplate));
-    public static readonly StyledProperty<object?> FooterProperty = AvaloniaProperty.Register<InfoCard, object?>(nameof(Footer));
-    public static readonly StyledProperty<IDataTemplate?> FooterTemplateProperty = AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(FooterTemplate));
-    public static readonly StyledProperty<IBrush?> HeaderBackgroundProperty = AvaloniaProperty.Register<InfoCard, IBrush?>(nameof(HeaderBackground));
-    public static readonly StyledProperty<IBrush?> FooterBackgroundProperty = AvaloniaProperty.Register<InfoCard, IBrush?>(nameof(FooterBackground));
-    public static readonly DirectProperty<InfoCard, Thickness> HeaderPaddingProperty = AvaloniaProperty.RegisterDirect<InfoCard, Thickness>(nameof(HeaderPadding), card => card.HeaderPadding);
-    public static readonly DirectProperty<InfoCard, Thickness> FooterPaddingProperty = AvaloniaProperty.RegisterDirect<InfoCard, Thickness>(nameof(FooterPadding), card => card.FooterPadding);
-    public static readonly StyledProperty<double> HeaderSpacingProperty = AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderSpacing), 12, validate: value => double.IsFinite(value) && value >= 0);
-    public static readonly StyledProperty<double> HeaderFontSizeProperty = AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderFontSize), 16, validate: value => double.IsFinite(value) && value > 0);
-    public static readonly StyledProperty<double> HeaderIconSizeProperty = AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderIconSize), 18, validate: value => double.IsFinite(value) && value > 0);
-    public static readonly StyledProperty<double> HeaderContentSpacingProperty = AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderContentSpacing), 10, validate: value => double.IsFinite(value) && value >= 0);
-    public static readonly StyledProperty<bool> ShowHeaderSeparatorProperty = AvaloniaProperty.Register<InfoCard, bool>(nameof(ShowHeaderSeparator), true);
-    public static readonly StyledProperty<bool> ShowFooterSeparatorProperty = AvaloniaProperty.Register<InfoCard, bool>(nameof(ShowFooterSeparator), true);
-    public static readonly StyledProperty<double> FooterSpacingProperty = AvaloniaProperty.Register<InfoCard, double>(nameof(FooterSpacing), 12, validate: value => double.IsFinite(value) && value >= 0);
-    private Thickness _headerPadding;
+
+    public static readonly StyledProperty<object?> HeaderIconProperty =
+        AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderIcon));
+
+    public static readonly StyledProperty<IDataTemplate?> HeaderIconTemplateProperty =
+        AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(HeaderIconTemplate));
+
+    public static readonly StyledProperty<object?> HeaderActionsProperty =
+        AvaloniaProperty.Register<InfoCard, object?>(nameof(HeaderActions));
+
+    public static readonly StyledProperty<IDataTemplate?> HeaderActionsTemplateProperty =
+        AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(HeaderActionsTemplate));
+
+    public static readonly StyledProperty<object?> FooterProperty =
+        AvaloniaProperty.Register<InfoCard, object?>(nameof(Footer));
+
+    public static readonly StyledProperty<IDataTemplate?> FooterTemplateProperty =
+        AvaloniaProperty.Register<InfoCard, IDataTemplate?>(nameof(FooterTemplate));
+
+    public static readonly StyledProperty<IBrush?> HeaderBackgroundProperty =
+        AvaloniaProperty.Register<InfoCard, IBrush?>(nameof(HeaderBackground));
+
+    public static readonly StyledProperty<IBrush?> FooterBackgroundProperty =
+        AvaloniaProperty.Register<InfoCard, IBrush?>(nameof(FooterBackground));
+
+    public static readonly DirectProperty<InfoCard, Thickness> HeaderPaddingProperty =
+        AvaloniaProperty.RegisterDirect<InfoCard, Thickness>(nameof(HeaderPadding), card => card.HeaderPadding);
+
+    public static readonly DirectProperty<InfoCard, Thickness> FooterPaddingProperty =
+        AvaloniaProperty.RegisterDirect<InfoCard, Thickness>(nameof(FooterPadding), card => card.FooterPadding);
+
+    public static readonly StyledProperty<double> HeaderSpacingProperty =
+        AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderSpacing), 12,
+            validate: value => double.IsFinite(value) && value >= 0);
+
+    public static readonly StyledProperty<double> HeaderFontSizeProperty =
+        AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderFontSize), 16,
+            validate: value => double.IsFinite(value) && value > 0);
+
+    public static readonly StyledProperty<double> HeaderIconSizeProperty =
+        AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderIconSize), 18,
+            validate: value => double.IsFinite(value) && value > 0);
+
+    public static readonly StyledProperty<double> HeaderContentSpacingProperty =
+        AvaloniaProperty.Register<InfoCard, double>(nameof(HeaderContentSpacing), 10,
+            validate: value => double.IsFinite(value) && value >= 0);
+
+    public static readonly StyledProperty<bool> ShowHeaderSeparatorProperty =
+        AvaloniaProperty.Register<InfoCard, bool>(nameof(ShowHeaderSeparator), true);
+
+    public static readonly StyledProperty<bool> ShowFooterSeparatorProperty =
+        AvaloniaProperty.Register<InfoCard, bool>(nameof(ShowFooterSeparator), true);
+
+    public static readonly StyledProperty<double> FooterSpacingProperty =
+        AvaloniaProperty.Register<InfoCard, double>(nameof(FooterSpacing), 12,
+            validate: value => double.IsFinite(value) && value >= 0);
+
     private Thickness _footerPadding;
+    private Thickness _headerPadding;
 
     static InfoCard()
     {
@@ -44,38 +84,125 @@ public class InfoCard : HeaderedContentControl
         FooterProperty.Changed.AddClassHandler<InfoCard>((card, change) => card.SlotChanged(change));
     }
 
-    public InfoCard() => UpdateState();
+    public InfoCard()
+    {
+        UpdateState();
+    }
 
     /// <summary>Outer shadow, supplied by the shadow and hove theme classes.</summary>
-    public BoxShadows BoxShadow { get => GetValue(BoxShadowProperty); set => SetValue(BoxShadowProperty, value); }
+    public BoxShadows BoxShadow
+    {
+        get => GetValue(BoxShadowProperty);
+        set => SetValue(BoxShadowProperty, value);
+    }
 
-    public object? HeaderIcon { get => GetValue(HeaderIconProperty); set => SetValue(HeaderIconProperty, value); }
-    public IDataTemplate? HeaderIconTemplate { get => GetValue(HeaderIconTemplateProperty); set => SetValue(HeaderIconTemplateProperty, value); }
-    public object? HeaderActions { get => GetValue(HeaderActionsProperty); set => SetValue(HeaderActionsProperty, value); }
-    public IDataTemplate? HeaderActionsTemplate { get => GetValue(HeaderActionsTemplateProperty); set => SetValue(HeaderActionsTemplateProperty, value); }
-    public object? Footer { get => GetValue(FooterProperty); set => SetValue(FooterProperty, value); }
-    public IDataTemplate? FooterTemplate { get => GetValue(FooterTemplateProperty); set => SetValue(FooterTemplateProperty, value); }
+    public object? HeaderIcon
+    {
+        get => GetValue(HeaderIconProperty);
+        set => SetValue(HeaderIconProperty, value);
+    }
+
+    public IDataTemplate? HeaderIconTemplate
+    {
+        get => GetValue(HeaderIconTemplateProperty);
+        set => SetValue(HeaderIconTemplateProperty, value);
+    }
+
+    public object? HeaderActions
+    {
+        get => GetValue(HeaderActionsProperty);
+        set => SetValue(HeaderActionsProperty, value);
+    }
+
+    public IDataTemplate? HeaderActionsTemplate
+    {
+        get => GetValue(HeaderActionsTemplateProperty);
+        set => SetValue(HeaderActionsTemplateProperty, value);
+    }
+
+    public object? Footer
+    {
+        get => GetValue(FooterProperty);
+        set => SetValue(FooterProperty, value);
+    }
+
+    public IDataTemplate? FooterTemplate
+    {
+        get => GetValue(FooterTemplateProperty);
+        set => SetValue(FooterTemplateProperty, value);
+    }
+
     /// <summary>Background of the full-width header region.</summary>
-    public IBrush? HeaderBackground { get => GetValue(HeaderBackgroundProperty); set => SetValue(HeaderBackgroundProperty, value); }
+    public IBrush? HeaderBackground
+    {
+        get => GetValue(HeaderBackgroundProperty);
+        set => SetValue(HeaderBackgroundProperty, value);
+    }
+
     /// <summary>Background of the full-width footer region; Background controls the body.</summary>
-    public IBrush? FooterBackground { get => GetValue(FooterBackgroundProperty); set => SetValue(FooterBackgroundProperty, value); }
+    public IBrush? FooterBackground
+    {
+        get => GetValue(FooterBackgroundProperty);
+        set => SetValue(FooterBackgroundProperty, value);
+    }
+
     /// <summary>Computed header insets: horizontal Padding and vertical HeaderSpacing.</summary>
     public Thickness HeaderPadding => _headerPadding;
+
     /// <summary>Computed footer insets: horizontal Padding and vertical FooterSpacing.</summary>
     public Thickness FooterPadding => _footerPadding;
-    public double HeaderSpacing { get => GetValue(HeaderSpacingProperty); set => SetValue(HeaderSpacingProperty, value); }
-    public double HeaderFontSize { get => GetValue(HeaderFontSizeProperty); set => SetValue(HeaderFontSizeProperty, value); }
-    public double HeaderIconSize { get => GetValue(HeaderIconSizeProperty); set => SetValue(HeaderIconSizeProperty, value); }
-    public double HeaderContentSpacing { get => GetValue(HeaderContentSpacingProperty); set => SetValue(HeaderContentSpacingProperty, value); }
+
+    public double HeaderSpacing
+    {
+        get => GetValue(HeaderSpacingProperty);
+        set => SetValue(HeaderSpacingProperty, value);
+    }
+
+    public double HeaderFontSize
+    {
+        get => GetValue(HeaderFontSizeProperty);
+        set => SetValue(HeaderFontSizeProperty, value);
+    }
+
+    public double HeaderIconSize
+    {
+        get => GetValue(HeaderIconSizeProperty);
+        set => SetValue(HeaderIconSizeProperty, value);
+    }
+
+    public double HeaderContentSpacing
+    {
+        get => GetValue(HeaderContentSpacingProperty);
+        set => SetValue(HeaderContentSpacingProperty, value);
+    }
+
     /// <summary>Shows an edge-to-edge divider between the header and body.</summary>
-    public bool ShowHeaderSeparator { get => GetValue(ShowHeaderSeparatorProperty); set => SetValue(ShowHeaderSeparatorProperty, value); }
+    public bool ShowHeaderSeparator
+    {
+        get => GetValue(ShowHeaderSeparatorProperty);
+        set => SetValue(ShowHeaderSeparatorProperty, value);
+    }
+
     /// <summary>Shows a divider before an existing footer when another region precedes it.</summary>
-    public bool ShowFooterSeparator { get => GetValue(ShowFooterSeparatorProperty); set => SetValue(ShowFooterSeparatorProperty, value); }
-    public double FooterSpacing { get => GetValue(FooterSpacingProperty); set => SetValue(FooterSpacingProperty, value); }
+    public bool ShowFooterSeparator
+    {
+        get => GetValue(ShowFooterSeparatorProperty);
+        set => SetValue(ShowFooterSeparatorProperty, value);
+    }
+
+    public double FooterSpacing
+    {
+        get => GetValue(FooterSpacingProperty);
+        set => SetValue(FooterSpacingProperty, value);
+    }
+
     protected override Type StyleKeyOverride => typeof(InfoCard);
 
-    protected override bool RegisterContentPresenter(ContentPresenter presenter) =>
-        base.RegisterContentPresenter(presenter) || presenter.Name is "PART_HeaderIconPresenter" or "PART_HeaderActionsPresenter" or "PART_FooterPresenter";
+    protected override bool RegisterContentPresenter(ContentPresenter presenter)
+    {
+        return base.RegisterContentPresenter(presenter) || presenter.Name is "PART_HeaderIconPresenter"
+            or "PART_HeaderActionsPresenter" or "PART_FooterPresenter";
+    }
 
     private void SlotChanged(AvaloniaPropertyChangedEventArgs change)
     {
@@ -93,16 +220,17 @@ public class InfoCard : HeaderedContentControl
             change.Property == HeaderActionsProperty || change.Property == HeaderActionsTemplateProperty ||
             change.Property == FooterProperty || change.Property == FooterTemplateProperty ||
             change.Property == ContentProperty || change.Property == ContentTemplateProperty ||
-            change.Property == PaddingProperty || change.Property == HeaderSpacingProperty || change.Property == FooterSpacingProperty)
-        {
+            change.Property == PaddingProperty || change.Property == HeaderSpacingProperty ||
+            change.Property == FooterSpacingProperty)
             UpdateState();
-        }
     }
 
     private void UpdateState()
     {
-        SetAndRaise(HeaderPaddingProperty, ref _headerPadding, new Thickness(Padding.Left, HeaderSpacing, Padding.Right, HeaderSpacing));
-        SetAndRaise(FooterPaddingProperty, ref _footerPadding, new Thickness(Padding.Left, FooterSpacing, Padding.Right, FooterSpacing));
+        SetAndRaise(HeaderPaddingProperty, ref _headerPadding,
+            new Thickness(Padding.Left, HeaderSpacing, Padding.Right, HeaderSpacing));
+        SetAndRaise(FooterPaddingProperty, ref _footerPadding,
+            new Thickness(Padding.Left, FooterSpacing, Padding.Right, FooterSpacing));
         var title = HasContent(Header, HeaderTemplate);
         var icon = HasContent(HeaderIcon, HeaderIconTemplate);
         var actions = HasContent(HeaderActions, HeaderActionsTemplate);
@@ -114,6 +242,9 @@ public class InfoCard : HeaderedContentControl
         PseudoClasses.Set(":has-footer", HasContent(Footer, FooterTemplate));
     }
 
-    private static bool HasContent(object? content, IDataTemplate? template) =>
-        template is not null || (content is not null && (content is not string text || !string.IsNullOrWhiteSpace(text)));
+    private static bool HasContent(object? content, IDataTemplate? template)
+    {
+        return template is not null ||
+               (content is not null && (content is not string text || !string.IsNullOrWhiteSpace(text)));
+    }
 }
