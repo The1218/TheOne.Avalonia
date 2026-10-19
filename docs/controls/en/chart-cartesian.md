@@ -1,16 +1,20 @@
 # Cartesian charts and sampling
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/chart-cartesian.md) · **English**
 
 See [charts](charts.md) for models and setup.
+
+ScatterChart keeps individual ellipses, original source ordering, alpha overlap, outlines and original-point hit/selection rules. Built-in solid fills/outlines use cached marker snapshots and a batched drawing command; gradient, visual, tile and other custom brushes retain the native ellipse path. This does not reduce the sampled point set or change the soft budget. See [Scatter rendering tail latency](chart-rendering.md#scatter-rendering-tail) for measurements and tradeoffs. Scatter points remain visible when `ShowMarkers=False`, as before.
+
+Selecting an omitted Scatter original uses an immutable one-point splice over the base sample, preserving source-order drawing without copying its coordinate array. Axis/data-label text layouts and stable pens/operations are also reused. Events and sampling diagnostics remain synchronous. See [selection p99](chart-rendering.md#scatter-selection-p99) for the measured boundary, cache lifecycle and remaining raster work.
 
 ## X-axis labels and narrow viewports
 
 Line, column, and other Cartesian charts use actual text widths to determine label counts rather than skipping short labels because of a fixed 36 px minimum slot. The Small 240 px month example shows all six labels. Spacing is checked in screen order, including decreasing X data. Genuine crowding reduces labels while retaining all points, coordinates, and tooltip information.
 
 Labels align within the available text area and clip against the whole axis-label region, removing the fixed 80 px window that truncated long text. Bottom space accounts for actual text height separately from legends. If one label exceeds the entire chart width, provide a shorter name or wider viewport.
-
-`--verify-chart-axis-labels [输出目录]` compares pixels with independently drawn unclipped text. It covers line / columns, themes, sizes, six month names, long Chinese labels, decreasing X, and legend visibility. The optional argument is an output directory. See [preview entry points](../../../design/PreviewHost/Program.cs) for managed / native calls.
 
 ## Smooth curves
 
@@ -96,6 +100,8 @@ viewModel.Revenue[1].ItemsSource = new[]
 
 The budget is a **soft target per series**, allocated by segment length. Boundaries, gaps, sign changes, and selected original points need additional retention; fragmented or unsampleable segments can exceed it. It is neither a shared all-series limit nor a strict vertex cap. Zoom prepares geometry for the current view; `SamplingMode=None` disables sampling.
 
+Mapping-stable Y updates maintain only affected buckets' top/baseline extrema through an index tree; equal extrema retain the earliest source offset. Offscreen originals outside the cached interval do not rebuild the base sample. Gap/sign/X/range changes rebuild the affected frame as before. Selection still pins an omitted original outside the soft budget. See [incremental sampling and measurements](chart-rendering.md#incremental-sampling-buckets) for costs and verification.
+
 Read-only `RenderedPointCount` totals prepared numeric-curve sample points and visible column / bar marks across series; pie, doughnut, and gauge report 0. It is not original data count, Control count, or low-level draw-command count. `SamplingActive` indicates whether prepared output actually reduces points. Both update after layout / geometry preparation. Notifications during drawing coalesce and defer to the next UI dispatch to prevent listeners / bindings from mutating charts while rendering; preparation outside rendering through geometry APIs updates synchronously.
 
 Drawing geometry and the original-point spatial hit index are cached and reused by pointer queries. Data, axes, viewport, layout, or sampling changes rebuild them. `GetDataPointPosition`, hit testing, selection, and tooltips retain original series / point indices; visible original points excluded from sampled geometry can still be located and selected. Hit testing scans spatial buckets near the pointer; highly dense or overlapping data can increase candidate scans, so fixed query time is not guaranteed.
@@ -106,6 +112,8 @@ RevenueChart.SelectedIndex = 99_999; // 数据源须包含该项；选择仍指�
 ```
 
 Sampling does not preserve every point's visual detail. Disable it or zoom for point-by-point inspection. The preview includes 100,000 points and actual draw counts; performance depends on target hardware and data shape.
+
+Cached base samples let an omitted selected original enter its segment without rebuilding the full frame. Switching or clearing selection removes the previous extra point; original model indices and soft-budget rules remain unchanged. Single-point Y updates reuse ranges/stacks and patch geometry when mapping and topology stay stable. See [cache rules and measurements](chart-rendering.md#cartesian-range-stack-and-drawing-caches) for fallbacks, memory costs and the scoped verification entry.
 
 ## Tick and label precision
 

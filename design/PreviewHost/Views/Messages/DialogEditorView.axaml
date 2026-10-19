@@ -10,19 +10,19 @@
         <TextBox
             Name="WorkspaceName"
             PlaceholderText="输入名称"
-            Text="{Binding Name, Mode=TwoWay}" />
+            Text="{CompiledBinding Name, Mode=TwoWay}" />
         <TextBlock Text="保存和取消由内部 ViewModel 发出关闭事件，父页面 await 获取结果。" TextWrapping="Wrap" />
         <StackPanel
             HorizontalAlignment="Right"
             Orientation="Horizontal"
             Spacing="8">
             <Button
-                Command="{Binding CancelCommand}"
+                Command="{CompiledBinding CancelCommand}"
                 Content="取消"
                 Name="EditorCancel" />
             <Button
                 Classes="primary"
-                Command="{Binding SaveCommand}"
+                Command="{CompiledBinding SaveCommand}"
                 Content="保存"
                 Name="EditorSave" />
         </StackPanel>

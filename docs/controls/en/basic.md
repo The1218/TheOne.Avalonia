@@ -1,5 +1,7 @@
 # Buttons, inputs, selection, and feedback
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/basic.md) · **English**
 
 [Back to control documentation](README.md). The business ViewModel supplies the bound properties and commands below; declare `x:DataType` on the root view.
@@ -34,7 +36,6 @@ All three buttons center their content horizontally and vertically by default an
 With `ToggleButton.IsThreeState="True"`, click or Space cycles false → true → null → false. The null state uses the Primary surface and a separate short dash at the bottom. soft, gradient, primary, outline, ghost, and other appearances keep that mark. It follows actual text color and remains distinguishable in gradients and disabled states, so partial selection is not conveyed by background color alone.
 
 ## TextBox
-
 
 ```xml
 <TextBox Classes="clearButton" PlaceholderText="邮箱"
@@ -80,8 +81,6 @@ Dropdowns and suggestions use the theme's virtualized templates. Supply model co
 
 ## NumericUpDown and ButtonSpinner
 
-NumericUpDown's default and `filled` styles use a single outer border with neutral spinner separators; focus/error colors stay on the outer border. The `underlined` variant draws only its baseline and leaves the spinner buttons borderless. Both left/right spinner placement and hidden spinner buttons retain native input behavior. `--verify-numericupdown [output]` in PreviewHost verifies only this control's styles, pixels, and input across themes, sizes, and wide/narrow viewports.
-
 ```xml
 <NumericUpDown Minimum="0" Maximum="100" Increment="1"
                FormatString="0" Value="{Binding Quantity, Mode=TwoWay}" />
@@ -94,8 +93,6 @@ NumericUpDown's default and `filled` styles use a single outer border with neutr
   <TextBlock Text="自定义数值" />
 </ButtonSpinner>
 ```
-
-`OnSpin` is the view's event handler, accepting `SpinEventArgs` and updating state according to `SpinDirection`. Runnable input examples are in [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml).
 
 ## Slider, ProgressBar, ToolTip
 

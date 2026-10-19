@@ -1,5 +1,7 @@
 # OneWindow, LoginWindow, and window services
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/windows.md) · **English**
 
 OneWindow inherits native Window and is available after OneTheme loads. It keeps Content / ContentTemplate, ownership, Closing, state, and platform lifecycle. Title bars, messages, and dialogs live in templates without wrapping and reassigning business Content.
@@ -93,8 +95,6 @@ ShowContentAsync supports models and explicit contentTemplate. Control content m
 
 Closing cleans active / queued requests to avoid hanging awaits; cancelled closure retains hosts. Custom OneWindow / LoginWindow templates must keep PART_VisualLayerManager, PART_ContentPresenter, PART_Notifications, PART_Toasts, PART_DialogShield, PART_DialogLayer, and relevant title-bar PART_*. Missing message parts cause API errors.
 
-PreviewHost has separate Toast, Dialog, Notification pages with type, body, size, and motion settings. Toast omits title settings; Notification and Dialog retain them. Notification / Toast configure position, limits, duration, auto / manual dismissal, and callbacks. Dialog tests titles, close buttons, action combinations, overlays, Escape, and ViewModel results. OneWindow, LoginWindow, and NotificationCard no longer have catalog display pages; controls and lower-level checks remain. ThemeButton is shown with Button. Independent binding / native examples: [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs).
-
 ## Generic ViewModel dialogs
 
 ```csharp
@@ -132,8 +132,6 @@ public sealed class EditorViewModel : DialogContext
 RequestClose raises CloseRequested; the coordinator closes only requests associated with that ViewModel and resolves the parent's awaited OneDialogResult. It supports background triggering and queued ViewModels can end before their View is created, without affecting active dialogs. Close buttons / optional overlay clicks return Closed; Escape returns Cancel; cancellation cancels Tasks; host closure returns Closed.
 
 Completion, cancellation, and host closure detach events, allowing sequential ViewModel reuse. A DialogContext cannot serve concurrent requests across windows, avoiding one close event ending multiple dialogs; concurrent use returns a faulted Task. A thousand queued generic requests create only the active View, retaining request data for the rest. PreviewHost's Messages and dialogs → Dialog form changes title / close / overlay / Escape settings and verifies results through compiled save / cancel commands.
-
-NativeAotSmoke provides the Toast-only `--verify-toast` check for both themes, three densities, four states, multiline alignment in narrow windows, callbacks and expiration. Omit `--require-aot` for managed execution. Publish and execute a native artifact with `--require-aot` only for affected AOT/binding/metadata changes. Build only the required consumer project with task-specific output directories; see [integration and validation](../../integration/en/README.md#6-implementation-and-acceptance). PreviewHost's `--verify-buttons-messages` covers buttons and messages together rather than Toast alone.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

@@ -13,42 +13,42 @@
             Foreground="{DynamicResource One.Muted}"
             Text="默认 / 主要 / 禁用 · 主按钮与下拉菜单分别交互"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <SplitButton
-                    Command="{Binding InvokeCommand}"
+                    Command="{CompiledBinding InvokeCommand}"
                     Content="默认操作"
                     Margin="0,0,12,12"
                     Name="ControlSample">
                     <SplitButton.Flyout>
                         <MenuFlyout>
-                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
-                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="发布工作区" />
                         </MenuFlyout>
                     </SplitButton.Flyout>
                 </SplitButton>
                 <SplitButton
                     Classes="primary"
-                    Command="{Binding InvokeCommand}"
+                    Command="{CompiledBinding InvokeCommand}"
                     Content="主要操作"
                     Margin="0,0,12,12">
                     <SplitButton.Flyout>
                         <MenuFlyout>
-                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
-                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="发布工作区" />
                         </MenuFlyout>
                     </SplitButton.Flyout>
                 </SplitButton>
                 <SplitButton
-                    Command="{Binding InvokeCommand}"
+                    Command="{CompiledBinding InvokeCommand}"
                     Content="禁用操作"
                     IsEnabled="False"
                     Margin="0,0,12,12">
                     <SplitButton.Flyout>
                         <MenuFlyout>
-                            <MenuItem Command="{Binding InvokeCommand}" Header="保存草稿" />
-                            <MenuItem Command="{Binding InvokeCommand}" Header="发布工作区" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="保存草稿" />
+                            <MenuItem Command="{CompiledBinding InvokeCommand}" Header="发布工作区" />
                         </MenuFlyout>
                     </SplitButton.Flyout>
                 </SplitButton>

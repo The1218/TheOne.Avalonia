@@ -1,5 +1,7 @@
 # Loading states and LoadingContainer
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/loading.md) · **English**
 
 Ordinary Button keeps its native type and uses the `ButtonLoading.IsLoading` attached property; IconButton exposes `IsLoading` directly. While loading, both show an indicator and block native input, Command, Click, and Flyout activation. Ordinary Button preserves its IsEnabled value / binding, including TwoWay. Native command executability temporarily gates input; the original command and disabled behavior return after loading. Command uses its native OneWay default binding. The gate does not wrap or proxy business commands. Direct ICommand execution is outside control input; business commands should still manage their own concurrency.
@@ -26,8 +28,6 @@ LoadingContainer inherits ContentControl and supports Content / ContentTemplate,
 `LoadingIcon` accepts Geometry, PathIcon / another Control, or data rendered by `LoadingIconTemplate`. The default Geometry template uses PathIcon; consumers can supply a Material icon template with x:DataType. When LoadingIcon and LoadingIconTemplate are both null, the built-in rotating indicator returns. Custom icons do not rotate automatically, but their templates can add motion. `LoadingIconSize` follows the three densities by default. Empty or whitespace `LoadingText` hides text and spacing. Control instances cannot share visual parents; use Geometry or templates for shared icons.
 
 `ControlSizing.Size` supports Small / Normal / Large. Button indicator sizes are 14 / 16 / 20 px; container indicators are 22 / 28 / 34 px. One.* semantic colors follow Light / Dark themes. `Motion.Enabled=False` stops rotation but retains the static icon and text; setting it to true during loading resumes rotation. Hiding or unloading cancels animation. LoadingIndicator can also be used independently: IsActive controls operation and Foreground controls color.
-
-PreviewHost's Button and IconButton pages demonstrate loading and motion; LoadingContainer has a separate extension page. See [PreviewHost](../../../design/PreviewHost/Program.cs) for verification and targeted rendering entry points, and [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs) for native consumption.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

@@ -1,5 +1,7 @@
 # ColorPicker / ColorView 颜色选择器
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 [English](../en/color-picker.md) · [控件目录](README.md)
 
 `OneTheme` 自动加载官方 `Avalonia.Controls.ColorPicker` **12.1.4** 及其 Fluent
@@ -34,11 +36,6 @@ RGB / HSV、Hex 和数值编辑仍使用官方控件实例、命名部件与双�
 `ControlSizing.Size` 的 Small / Normal / Large 提供 30 / 36 / 44 px
 下拉入口与文本输入高度。内嵌面板可适配 280–340 px 的宽度；禁用状态保留原生行为并显示主题反馈。
 色谱支持 Tab 聚焦和官方方向键调色。
-
-PreviewHost 导航包含 **ColorPicker**；`--colorpicker` 可直接打开桌面演示，
-`--verify-colorpicker [output]` 只测试 ColorPicker / ColorView 的布局、主题、绑定、
-指针、键盘和实际像素结果。
-`--verify-colorpicker-model-spacing [output]` 仅验证模型按钮间距、文字容纳、原生指针／键盘切换及间隙像素，覆盖明暗主题和三档尺寸。
 
 控件逻辑及基础模板由官方包提供：
 [Avalonia ColorPicker 文档](https://docs.avaloniaui.net/controls/input/selectors/colorpicker)。

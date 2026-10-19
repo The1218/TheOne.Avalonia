@@ -1,4 +1,3 @@
-using System.Collections.Specialized;
 using System.Globalization;
 using Avalonia;
 using Avalonia.Automation;
@@ -116,7 +115,6 @@ public abstract partial class ChartBase : Control
         AvaloniaProperty.RegisterDirect<ChartBase, ChartSelection?>(nameof(Selection), chart => chart.Selection);
 
     private readonly Dictionary<(int Series, int Index), Point> _positions = [];
-    private readonly List<Action> _unsubscribe = [];
     private bool _geometryDirty = true;
     private Size _geometrySize;
     private long _geometryVersion;
@@ -382,6 +380,11 @@ public abstract partial class ChartBase : Control
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        if (IsScatterCartesian)
+        {
+            ClearScatterMarkerBrushes();
+            ClearScatterTextFrames();
+        }
         _animateDataPending = false;
         FinishDataAnimation();
         CancelPan();
@@ -403,6 +406,11 @@ public abstract partial class ChartBase : Control
         }
         else if (change.Property == SeriesSourceProperty)
         {
+        }
+        else if (change.Property == SelectedIndexProperty || change.Property == SelectedSeriesIndexProperty)
+        {
+            _animateDataPending = false;
+            FinishDataAnimation();
         }
         else if (AffectsChartGeometry(change.Property))
         {
@@ -455,79 +463,8 @@ public abstract partial class ChartBase : Control
     /// <summary>Refresh a plain IList after modifying its contents. Use observable collections for automatic updates.</summary>
     public void RefreshData()
     {
-        CancelPan();
-        CancelLegendPress();
-        ClearPointerHover();
-        MarkDataUpdate();
-        Unsubscribe();
-        if (_observing && !IsGauge)
-        {
-            var collections = new HashSet<object>(ReferenceEqualityComparer.Instance);
-            if (SeriesSource is { } source && collections.Add(source)) ObserveCollection(source);
-            var observed = new HashSet<AvaloniaObject>();
-            if (SeriesSource is { } series)
-                foreach (var item in series)
-                {
-                    if (observed.Add(item)) ObserveObject(item);
-                    if (item.ItemsSource is { } collection && collections.Add(collection))
-                        ObserveCollection(collection);
-                    if (item.ItemsSource is { } points)
-                        foreach (var point in points)
-                            if (observed.Add(point))
-                                ObserveObject(point);
-                }
-        }
-
-        _hover = null;
-        ToolTip.SetTip(this, null);
-        UpdateSelection();
-        InvalidateVisual();
-    }
-
-    private void ObserveCollection(object? source)
-    {
-        if (source is not INotifyCollectionChanged observable) return;
-        NotifyCollectionChangedEventHandler handler = (_, _) => RefreshData();
-        observable.CollectionChanged += handler;
-        _unsubscribe.Add(() => observable.CollectionChanged -= handler);
-    }
-
-    private void ObserveObject(AvaloniaObject source)
-    {
-        EventHandler<AvaloniaPropertyChangedEventArgs> handler = (_, args) =>
-        {
-            if (args.Property == ChartSeries.ItemsSourceProperty)
-            {
-                RefreshData();
-            }
-            else
-            {
-                if (args.Property == ChartPoint.XProperty || args.Property == ChartPoint.YProperty ||
-                    args.Property == ChartSeries.IsVisibleProperty)
-                {
-                    MarkDataUpdate();
-                }
-                else
-                {
-                    _animateDataPending = false;
-                    FinishDataAnimation();
-                    MarkGeometryDirty();
-                }
-
-                CancelLegendPress();
-                ClearPointerHover();
-                UpdateSelection();
-                InvalidateVisual();
-            }
-        };
-        source.PropertyChanged += handler;
-        _unsubscribe.Add(() => source.PropertyChanged -= handler);
-    }
-
-    private void Unsubscribe()
-    {
-        foreach (var action in _unsubscribe) action();
-        _unsubscribe.Clear();
+        ReconcileSubscriptions();
+        DataChanged();
     }
 
     private bool IsValid(ChartPoint point)
@@ -563,6 +500,7 @@ public abstract partial class ChartBase : Control
         AutomationProperties.SetItemStatus(this, next is null ? "" : Describe(next));
         if (changed)
         {
+            PreserveSelectedSample(next);
             if (next is not null && _observing && !_suppressSelectionReveal)
                 BringDataPointIntoView(next.SeriesIndex, next.PointIndex);
             SelectionChanged?.Invoke(this, new ChartSelectionChangedEventArgs(next));
@@ -695,7 +633,6 @@ public abstract partial class ChartBase : Control
             _bars.Clear();
             _normalizedPositions.Clear();
             _cartesianPlot = default;
-            _samplingReduced = false;
             BuildLegendLayout();
             if (plot.Width >= 24 && plot.Height >= 24)
             {
@@ -753,7 +690,6 @@ public abstract partial class ChartBase : Control
                property == YMaximumProperty ||
                property == MinimumProperty || property == MaximumProperty || property == ValueProperty ||
                property == ValueFormatProperty || property == UnitProperty ||
-               property == SelectedSeriesIndexProperty || property == SelectedIndexProperty ||
                property == BackgroundProperty || property == ForegroundProperty ||
                property == GridBrushProperty || property == MutedBrushProperty || property == AccentBrushProperty ||
                property == SecondaryBrushProperty ||
@@ -815,8 +751,11 @@ public abstract partial class ChartBase : Control
         if (ShowLegend && !IsGauge) DrawLegend(context);
         if (!IsGaugeValueAnimating && !_isExportSnapshot) DrawPointerOverlay(context);
         if (IsFocused && !_isExportSnapshot)
-            context.DrawRectangle(null, new Pen(AccentBrush, SelectionThickness), new Rect(Bounds.Size).Deflate(1), 6,
-                6);
+        {
+            var pen = IsScatterCartesian && _cartesianFrame is { } frame
+                ? ScatterFramePen(frame, 3, AccentBrush, SelectionThickness) : new Pen(AccentBrush, SelectionThickness);
+            context.DrawRectangle(null, pen, new Rect(Bounds.Size).Deflate(1), 6, 6);
+        }
     }
 
     protected override void OnPointerMoved(PointerEventArgs e)

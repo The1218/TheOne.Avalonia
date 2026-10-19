@@ -1,5 +1,7 @@
 # InfoCard
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/info-card.md) · **English**
 
 `InfoCard` inherits native `HeaderedContentControl` for headings / content, adding header icons, header actions, and a footer. With `OneTheme`, it uses TheOne surfaces, thin borders, radii, light / dark themes, and sizes. Existing regions remain displayed; buttons, inputs, and lists within them retain native interactions.
@@ -159,17 +161,7 @@ Set finite `Height` / `MaxHeight` and use a `*` row in body `Grid` to give lists
 
 PreviewHost exposes independent header / icon / actions / footer / separator switches, native inputs / buttons, typed compiled templates for every slot, and a fixed-height thousand-member list with last-item navigation. Height / MaxHeight checks cover recycling and footer visibility. Header / footer actions update state; disabling affects all regions. Only this control's images are rendered:
 
-See [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
-
 Capture rendered hover and shadow pixels with the existing suite:
-
-```bash
-dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-infocard .preview/infocard-effects/managed
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/infocard-effects/native
-.preview/infocard-effects/native/NativeAotSmoke --require-aot --verify-infocard .preview/infocard-effects/native-pixels
-```
-
-Build the native executable through the existing NativeAotSmoke consumer, using macOS xcrun clang and SDK. The suite covers light/dark, three densities, pointer entry/exit, combined classes, disabling, local overrides and actual shadow pixels.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

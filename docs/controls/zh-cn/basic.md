@@ -1,5 +1,7 @@
 # 按钮、输入、选择与反馈
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/basic.md)
 
 [返回控件文档](README.md)。以下绑定属性与命令由业务 ViewModel 提供，根视图需声明 `x:DataType`。
@@ -34,7 +36,6 @@ RepeatButton 长按重复触发；`segment` 只提供分段外观。互斥选择
 设置 `ToggleButton.IsThreeState="True"` 后，点击或 Space 按 false → true → null → false 循环。空值态使用 Primary 表面，并在按钮底部显示独立短横线；soft、gradient、primary、outline、ghost 等外观均保留该标记。标记跟随实际文字色，渐变和禁用状态仍保持可辨识。部分选中无需只靠背景色辨认。
 
 ## TextBox
-
 
 ```xml
 <TextBox Classes="clearButton" PlaceholderText="邮箱"
@@ -80,8 +81,6 @@ CheckBox 默认不绘制文字行背景，勾选框自身保留填色与状态�
 
 ## NumericUpDown 与 ButtonSpinner
 
-NumericUpDown 的默认及 `filled` 样式使用单层外边框，步进按钮分隔线保持中性色，焦点／错误色仅作用于外边框。`underlined` 变体仅绘制底线，步进按钮不绘制边框。左右按钮位置和隐藏按钮均保留原生输入行为。PreviewHost 的 `--verify-numericupdown [output]` 专项仅验证此控件在明暗主题、三档尺寸和宽窄视口下的样式、实际像素及输入。
-
 ```xml
 <NumericUpDown Minimum="0" Maximum="100" Increment="1"
                FormatString="0" Value="{Binding Quantity, Mode=TwoWay}" />
@@ -94,8 +93,6 @@ NumericUpDown 的默认及 `filled` 样式使用单层外边框，步进按钮�
   <TextBlock Text="自定义数值" />
 </ButtonSpinner>
 ```
-
-`OnSpin` 是视图中的事件处理方法，接收 `SpinEventArgs` 并按 `SpinDirection` 更新状态。可运行的输入示例见 [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml)。
 
 ## Slider、ProgressBar、ToolTip
 

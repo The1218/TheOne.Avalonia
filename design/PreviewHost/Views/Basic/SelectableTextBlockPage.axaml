@@ -13,11 +13,11 @@
             Foreground="{DynamicResource One.Muted}"
             Text="正文 / 强调 / 多行 / 辅助信息 · 保留文字选择与复制"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <SelectableTextBlock
                 Name="ControlSample"
-                Text="{Binding Text, Mode=TwoWay}"
+                Text="{CompiledBinding Text, Mode=TwoWay}"
                 TextWrapping="Wrap" />
             <SelectableTextBlock
                 FontSize="20"

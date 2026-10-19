@@ -112,22 +112,22 @@
                                     Name="PART_Popup"
                                     PlacementTarget="{TemplateBinding}">
                                     <Calendar
-                                        DisplayDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DisplayDate, Mode=TwoWay}"
+                                        DisplayDate="{TemplateBinding DisplayDate, Mode=TwoWay}"
                                         DisplayDateEnd="{TemplateBinding DisplayDateEnd}"
                                         DisplayDateStart="{TemplateBinding DisplayDateStart}"
                                         FirstDayOfWeek="{TemplateBinding FirstDayOfWeek}"
                                         IsTodayHighlighted="{TemplateBinding IsTodayHighlighted}"
                                         Name="PART_Calendar"
-                                        SelectedDate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedDate, Mode=TwoWay}"
+                                        SelectedDate="{TemplateBinding SelectedDate, Mode=TwoWay}"
                                         one:CalendarOptions.DisplayStyle="{TemplateBinding one:CalendarOptions.DisplayStyle}"
-                                        one:CalendarOptions.Time="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(one:CalendarOptions.Time), Mode=TwoWay}" />
+                                        one:CalendarOptions.Time="{TemplateBinding one:CalendarOptions.Time, Mode=TwoWay}" />
                                 </Popup>
                             </Grid>
                         </Border>
                         <Border
-                            BorderBrush="{Binding #Background.BorderBrush}"
-                            BorderThickness="{Binding #Background.BorderThickness}"
-                            CornerRadius="{Binding #Background.CornerRadius}"
+                            BorderBrush="{CompiledBinding #Background.BorderBrush}"
+                            BorderThickness="{CompiledBinding #Background.BorderThickness}"
+                            CornerRadius="{CompiledBinding #Background.CornerRadius}"
                             IsHitTestVisible="False"
                             Name="InputOutline" />
                     </Panel>

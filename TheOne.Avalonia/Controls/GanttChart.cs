@@ -93,7 +93,8 @@ public partial class GanttChart : TemplatedControl
         AvaloniaProperty.RegisterDirect<GanttChart, GanttSelection?>(nameof(Selection), c => c.Selection);
 
     private readonly Dictionary<string, Row> _entries = new(StringComparer.Ordinal);
-    private readonly HashSet<GanttTask> _observed = [];
+    private readonly HashSet<GanttTask> _observed = new(ReferenceEqualityComparer.Instance);
+    private readonly Dictionary<GanttTask, Row> _taskRows = new(ReferenceEqualityComparer.Instance);
 
     private readonly ObservableCollection<Row> _rows = [];
     private bool _active, _pending, _selecting;
@@ -293,6 +294,7 @@ public partial class GanttChart : TemplatedControl
     {
         _active = false;
         StopObserving();
+        _dirtyTasks.Clear();
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -311,36 +313,52 @@ public partial class GanttChart : TemplatedControl
 
     private void OnTaskChanged(object? sender, PropertyChangedEventArgs e)
     {
-        RequestRefresh();
+        if (!_active || sender is not GanttTask task || !_observed.Contains(task)) return;
+        var change = e.PropertyName switch
+        {
+            nameof(GanttTask.Title) or nameof(GanttTask.Owner) => TaskChange.Presentation,
+            nameof(GanttTask.Start) or nameof(GanttTask.EndExclusive) or nameof(GanttTask.Progress) or
+                nameof(GanttTask.IsMilestone) => TaskChange.Values,
+            nameof(GanttTask.IsExpanded) => TaskChange.Expansion,
+            _ => TaskChange.Structure
+        };
+        if (change == TaskChange.Structure || ValidationError is not null)
+            RequestRefresh();
+        else
+        {
+            _dirtyTasks[task] = _dirtyTasks.GetValueOrDefault(task) | change;
+            QueueUpdates();
+        }
     }
 
     private void RequestRefresh()
+    {
+        _structureDirty = true;
+        QueueUpdates();
+    }
+
+    private void QueueUpdates()
     {
         if (!_active || _pending) return;
         _pending = true;
         Dispatcher.UIThread.Post(() =>
         {
             _pending = false;
-            if (_active) RefreshData();
+            if (_active) ApplyPendingUpdates();
         });
     }
 
     /// <summary>Refresh a non-notifying source. Call on the UI thread.</summary>
     public void RefreshData()
     {
+        _structureDirty = false;
+        _dirtyTasks.Clear();
         var restoreFocus = _list?.IsKeyboardFocusWithin == true;
-        StopObserving();
         _entries.Clear();
+        _taskRows.Clear();
         string? error = null;
         var source = ItemsSource?.ToArray() ?? [];
-        if (_active)
-        {
-            _collection = ItemsSource as INotifyCollectionChanged;
-            if (_collection is not null) _collection.CollectionChanged += OnCollection;
-            foreach (var task in source)
-                if (task is not null && _observed.Add(task))
-                    task.PropertyChanged += OnTaskChanged;
-        }
+        ObserveSource(source);
 
         foreach (var task in source)
             if (task is null || string.IsNullOrWhiteSpace(task.Id) || !_entries.TryAdd(task.Id, new Row(task)))
@@ -348,6 +366,9 @@ public partial class GanttChart : TemplatedControl
                 error = "Task IDs must be non-empty and unique.";
                 break;
             }
+
+        if (error is null)
+            foreach (var row in _entries.Values) _taskRows.Add(row.Task, row);
 
         var roots = new List<Row>();
         if (error is null)
@@ -385,36 +406,8 @@ public partial class GanttChart : TemplatedControl
             for (var i = ordered.Count - 1; i >= 0; i--)
             {
                 var row = ordered[i];
-                var task = row.Task;
-                if (row.Children.Count > 0)
-                {
-                    if (task.IsMilestone)
-                    {
-                        error = "A milestone cannot have children.";
-                        break;
-                    }
-
-                    row.Start = row.Children.Min(c => c.Start);
-                    row.End = row.Children.Max(c => c.End);
-                    row.Weight = row.Children.Sum(c => c.Weight);
-                    row.Progress = row.Weight > 0 ? row.Children.Sum(c => c.Progress * c.Weight) / row.Weight : 0;
-                }
-                else
-                {
-                    if (!double.IsFinite(task.Progress) || task.Progress < 0 || task.Progress > 1 ||
-                        (!task.IsMilestone && task.EndExclusive <= task.Start))
-                    {
-                        error = "Leaf tasks need Progress in [0, 1] and EndExclusive after Start.";
-                        break;
-                    }
-
-                    row.Start = task.Start;
-                    row.End = task.IsMilestone
-                        ? task.Start < DateOnly.MaxValue ? task.Start.AddDays(1) : task.Start
-                        : task.EndExclusive;
-                    row.Progress = task.Progress;
-                    row.Weight = task.IsMilestone ? 0 : row.End.DayNumber - row.Start.DayNumber;
-                }
+                error = CalculateValues(row);
+                if (error is not null) break;
             }
 
         _selecting = true;
@@ -436,12 +429,13 @@ public partial class GanttChart : TemplatedControl
             else
             {
                 _entries.Clear();
+                _taskRows.Clear();
             }
 
             SetAndRaise(ValidationErrorProperty, ref _validationError, error);
             SetAndRaise(VisibleTaskCountProperty, ref _visibleTaskCount, _rows.Count);
-            var selected = _entries.Values.FirstOrDefault(r => ReferenceEquals(r.Task, SelectedTask));
-            while (selected is not null && !_rows.Contains(selected)) selected = selected.Parent;
+            var selected = SelectedRow();
+            while (selected is not null && !IsRowVisible(selected)) selected = selected.Parent;
             SetCurrentValue(SelectedTaskProperty, selected?.Task);
         }
         finally
@@ -463,6 +457,8 @@ public partial class GanttChart : TemplatedControl
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == SelectionProperty || change.Property == ValidationErrorProperty ||
+            change.Property == VisibleTaskCountProperty) return;
         if (change.Property == ItemsSourceProperty) RequestRefresh();
         if (change.Property == SelectedTaskProperty)
         {
@@ -520,7 +516,8 @@ public partial class GanttChart : TemplatedControl
         _selecting = true;
         try
         {
-            _list.SelectedItem = _rows.FirstOrDefault(r => ReferenceEquals(r.Task, SelectedTask));
+            var selected = SelectedRow();
+            _list.SelectedItem = selected is not null && IsRowVisible(selected) ? selected : null;
         }
         finally
         {
@@ -530,7 +527,7 @@ public partial class GanttChart : TemplatedControl
 
     private void UpdateSelectionInfo()
     {
-        var row = _entries.Values.FirstOrDefault(r => ReferenceEquals(r.Task, SelectedTask));
+        var row = SelectedRow();
         var selection = row is null
             ? null
             : new GanttSelection(row.Task, row.Start, row.End, row.Progress, row.Children.Count > 0);
@@ -674,9 +671,10 @@ public partial class GanttChart : TemplatedControl
 
     internal sealed class Row(GanttTask task)
     {
-        public int Depth, Index;
+        public int Depth, Index = -1;
+        public bool Expanded = task.IsExpanded;
         public Row? Parent;
-        public double Progress, Weight;
+        public double Progress, Weight, CompletedWeight;
         public DateOnly Start, End;
         public GanttTask Task { get; } = task;
         public List<Row> Children { get; } = [];

@@ -1,5 +1,7 @@
 # NavMenu sidebar and cascading popups
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/nav-menu-popups.md) · **English**
 
 See [NavMenu](nav-menu.md) for basic setup.
@@ -56,10 +58,6 @@ Invoking the deepest leaf sends ItemInvoked / ItemInvokedCommand to the root exa
 
 Pointer verification:
 
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
-
-`--verify-navmenu`, `--verify-controls`, and NativeAOT consumption also include hover and cascade scenarios: three sizes × light / dark, cross-level movement, cancelled delayed closure, rapid switching, keyboard return, thousand-item distant selection, recycling, and timer cleanup on unload.
-
 ## Window edges and narrow windows
 
 Popups prefer the previous level's opening direction. When space is insufficient, they flip if the other side will not cover visible ancestors. Root-adjacent popups also narrow to available space. Size and position stay within the client area and recalculate on resizing.
@@ -67,8 +65,6 @@ Popups prefer the previous level's opening direction. When space is insufficient
 When levels cannot fit side by side, navigation shows one level at a time: the parent is temporarily hidden and hit testing disabled, and the child shows a back button. Returning restores parent selection and scrolling. A pointer resting on the newly exposed old branch does not reopen it until it leaves and re-enters. Left / Esc also returns level by level. Widening the window restores cascades.
 
 Read-only Avalonia properties IsCompactSubmenu and SubmenuOpensLeft expose layout state. Pointer movement considers the visible popup chain and preserves close buffering through layout changes, preventing accidental closure after flipping or resizing. Each level retains a bounded viewport and recycling.
-
-PreviewHost → Extensions → NavMenu provides window-width, right-edge placement, and edge-preview controls with 1,000 items per level. `--verify-navmenu-edge` covers all sizes, light / dark themes, both edges, widths 260 / 420 / 900, live width / height changes, back navigation, and distant selection. Full NavMenu verification includes these checks.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

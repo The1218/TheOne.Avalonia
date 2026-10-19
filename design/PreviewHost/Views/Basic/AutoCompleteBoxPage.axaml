@@ -13,19 +13,19 @@
             Foreground="{DynamicResource One.Muted}"
             Text="可编辑建议 / 占位提示 / 禁用 · 1,000 项建议"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <AutoCompleteBox
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     MaxDropDownHeight="260"
                     Name="ControlSample"
-                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                    Text="{Binding Text, Mode=TwoWay}"
+                    SelectedItem="{CompiledBinding SelectedItem, Mode=TwoWay}"
+                    Text="{CompiledBinding Text, Mode=TwoWay}"
                     Width="260" />
                 <AutoCompleteBox
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     MaxDropDownHeight="260"
                     PlaceholderText="输入工作区名称"
@@ -38,25 +38,25 @@
             </WrapPanel>
         </StackPanel>
         <Button
-            Command="{Binding LastCommand}"
+            Command="{CompiledBinding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <WrapPanel>
                 <AutoCompleteBox
                     Classes="filled"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     MaxDropDownHeight="260"
-                    Text="{Binding Text, Mode=TwoWay}"
+                    Text="{CompiledBinding Text, Mode=TwoWay}"
                     Width="260" />
                 <AutoCompleteBox
                     Classes="underlined"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     MaxDropDownHeight="260"
-                    Text="{Binding Text, Mode=TwoWay}"
+                    Text="{CompiledBinding Text, Mode=TwoWay}"
                     Width="260" />
             </WrapPanel>
         </StackPanel>

@@ -151,7 +151,7 @@
                             <SelectableTextBlock
                                 FontFamily="Menlo, Consolas, monospace"
                                 FontSize="12"
-                                Text="&lt;StackPanel styling:ControlSizing.Size=&quot;{Binding ControlSize}&quot; /&gt;"
+                                Text="&lt;StackPanel styling:ControlSizing.Size=&quot;{CompiledBinding ControlSize}&quot; /&gt;"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </one:DescriptionItem>
@@ -161,7 +161,7 @@
                             <SelectableTextBlock
                                 FontFamily="Menlo, Consolas, monospace"
                                 FontSize="12"
-                                Text="&lt;StackPanel styling:Motion.Enabled=&quot;{Binding EnableMotion}&quot; /&gt;"
+                                Text="&lt;StackPanel styling:Motion.Enabled=&quot;{CompiledBinding EnableMotion}&quot; /&gt;"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </one:DescriptionItem>
@@ -291,7 +291,7 @@
                     Foreground="{DynamicResource One.Muted}"
                     Text="默认 Nova，可选择 10 套配色。顶部配色选择器切换颜色资源，太阳 / 月亮按钮只切换 Light / Dark；尺寸和业务数据保持独立。"
                     TextWrapping="Wrap" />
-                <local:PreviewCodeBlock CodeType="CSharp" Text="OneTheme.SetColor(ThemeColor.Atlas);&#10;// 启动时先读取应用保存的 ThemeColor，再创建主窗口。&#10;OneTheme.SetColor(settings.ColorTheme);&#10;// 在窗口中使用编译绑定：&#10;// &lt;one:ThemeColorPicker SelectThemeColor=&quot;{Binding ColorTheme}&quot; /&gt;&#10;// ColorTheme 为 ThemeColor；默认双向绑定。由应用负责保存配置。" />
+                <local:PreviewCodeBlock CodeType="CSharp" Text="OneTheme.SetColor(ThemeColor.Atlas);&#10;// 启动时先读取应用保存的 ThemeColor，再创建主窗口。&#10;OneTheme.SetColor(settings.ColorTheme);&#10;// 在窗口中使用编译绑定：&#10;// &lt;one:ThemeColorPicker SelectThemeColor=&quot;{CompiledBinding ColorTheme}&quot; /&gt;&#10;// ColorTheme 为 ThemeColor；默认双向绑定。由应用负责保存配置。" />
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
                     Text="动态资源随配色更新：One.Surface、One.Text、One.Accent 等。渐变提供 Subtle（柔和）和 Vivid（明显）两类，每类包含 Brand、Cool、Natural、Warm。以下色块可随顶部选择实时变化。"
@@ -334,7 +334,7 @@
                 <local:PreviewCodeBlock CodeType="CSharp" Text="if (await login.CompleteLoginAsync(new MainWindow()))&#10;    await OneToast.ShowAsync(&quot;欢迎回来&quot;);" />
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
-                    Text="文档：docs/controls/zh-cn/windows.md · login-window.md&#10;登录演示：dotnet run --project design/PreviewHost -- --login"
+                    Text="文档：docs/controls/zh-cn/windows.md · login-window.md&#10;登录演示：从左侧菜单打开 LoginWindow 页面"
                     TextWrapping="Wrap" />
             </StackPanel>
         </Border>

@@ -38,7 +38,7 @@
                         <ComboBox
                             HorizontalAlignment="Stretch"
                             Name="PlacementPicker"
-                            SelectedIndex="{Binding Placement, Mode=TwoWay}"
+                            SelectedIndex="{CompiledBinding Placement, Mode=TwoWay}"
                             SelectionChanged="OnOptionsChanged">
                             <ComboBoxItem Content="下方 Bottom" />
                             <ComboBoxItem Content="右侧 Right" />
@@ -54,7 +54,7 @@
                         <ComboBox
                             HorizontalAlignment="Stretch"
                             Name="FlyoutSizePicker"
-                            SelectedIndex="{Binding Size, Mode=TwoWay}"
+                            SelectedIndex="{CompiledBinding Size, Mode=TwoWay}"
                             SelectionChanged="OnOptionsChanged">
                             <ComboBoxItem Content="继承全局" />
                             <ComboBoxItem Content="small" />
@@ -70,7 +70,7 @@
                         <ComboBox
                             HorizontalAlignment="Stretch"
                             Name="ShowModePicker"
-                            SelectedIndex="{Binding ShowMode, Mode=TwoWay}"
+                            SelectedIndex="{CompiledBinding ShowMode, Mode=TwoWay}"
                             SelectionChanged="OnOptionsChanged">
                             <ComboBoxItem Content="Standard / 聚焦内容" />
                             <ComboBoxItem Content="Transient / 保留焦点" />
@@ -79,7 +79,7 @@
                 </WrapPanel>
                 <CheckBox
                     Content="阻止外部关闭（仍可应用或取消）"
-                    IsChecked="{Binding PreventDismiss, Mode=TwoWay}"
+                    IsChecked="{CompiledBinding PreventDismiss, Mode=TwoWay}"
                     Name="PreventDismiss" />
                 <WrapPanel>
                     <Button
@@ -90,7 +90,7 @@
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel
-                                    DataContext="{Binding #FlyoutRoot.Model}"
+                                    DataContext="{CompiledBinding #FlyoutRoot.Model}"
                                     Spacing="12"
                                     Width="300"
                                     x:DataType="local:FlyoutDemoViewModel">
@@ -103,10 +103,10 @@
                                         AutomationProperties.Name="工作区名称"
                                         Name="WorkspaceName"
                                         PlaceholderText="工作区名称"
-                                        Text="{Binding Name, Mode=TwoWay}" />
+                                        Text="{CompiledBinding Name, Mode=TwoWay}" />
                                     <CheckBox
                                         Content="通知工作区成员"
-                                        IsChecked="{Binding Notify, Mode=TwoWay}"
+                                        IsChecked="{CompiledBinding Notify, Mode=TwoWay}"
                                         Name="NotifyMembers" />
                                     <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
                                         <Button
@@ -133,12 +133,12 @@
                 </WrapPanel>
                 <TextBlock
                     Name="FlyoutStatus"
-                    Text="{Binding Status}"
+                    Text="{CompiledBinding Status}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Classes="note"
                     Name="FlyoutMetrics"
-                    Text="{Binding Metrics}" />
+                    Text="{CompiledBinding Metrics}" />
             </StackPanel>
         </Border>
         <Border Classes="demo-region">
@@ -152,7 +152,7 @@
                     <Button.Flyout>
                         <Flyout>
                             <StackPanel
-                                DataContext="{Binding #FlyoutRoot.Model}"
+                                DataContext="{CompiledBinding #FlyoutRoot.Model}"
                                 Spacing="10"
                                 Width="300"
                                 x:DataType="local:FlyoutDemoViewModel">
@@ -160,14 +160,14 @@
                                 <ListBox
                                     AutomationProperties.Name="一万条成员列表"
                                     Height="248"
-                                    ItemsSource="{Binding Rows}"
+                                    ItemsSource="{CompiledBinding Rows}"
                                     Name="MemberList"
-                                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                    SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                                     SelectionChanged="OnMemberChanged" />
                                 <TextBlock
                                     Foreground="{DynamicResource One.Muted}"
                                     Name="ListMetrics"
-                                    Text="{Binding ListMetrics}"
+                                    Text="{CompiledBinding ListMetrics}"
                                     TextWrapping="Wrap" />
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                                     <Button
@@ -187,7 +187,7 @@
                 </Button>
                 <TextBlock
                     Name="MemberStatus"
-                    Text="{Binding MemberStatus}"
+                    Text="{CompiledBinding MemberStatus}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </Border>

@@ -59,8 +59,15 @@ public partial class ChartBase
         snapshot.Measure(logical);
         snapshot.Arrange(new Rect(logical));
         using var bitmap = new RenderTargetBitmap(pixels, new Vector(dpi, dpi));
-        bitmap.Render(snapshot);
-        bitmap.Save(stream, PngBitmapEncoderOptions.Default);
+        try
+        {
+            bitmap.Render(snapshot);
+            bitmap.Save(stream, PngBitmapEncoderOptions.Default);
+        }
+        finally
+        {
+            if (snapshot.IsScatterCartesian) snapshot.ClearScatterTextFrames();
+        }
     }
 
     private protected virtual void CopyExportProperties(ChartBase snapshot)

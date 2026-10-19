@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 namespace TheOne.Avalonia.Workflow;
 
 /// <summary>Undo-aware presentation for the default inspector; usable in custom templates.</summary>
-public sealed class WorkflowNodeEditor : WorkflowObservable
+public sealed class WorkflowNodeEditor : WorkflowObservable, IDisposable
 {
     public WorkflowNodeEditor(WorkflowDocument document, WorkflowNode node)
     {
@@ -41,6 +41,7 @@ public sealed class WorkflowNodeEditor : WorkflowObservable
     {
         if (!Fields.Select(f => f.Property).SequenceEqual(Node.Properties))
         {
+            foreach (var field in Fields) field.Dispose();
             Fields.Clear();
             foreach (var property in Node.Properties) Fields.Add(new WorkflowPropertyEditor(Document, Node, property));
         }
@@ -49,10 +50,12 @@ public sealed class WorkflowNodeEditor : WorkflowObservable
         Notify(nameof(Title));
         Notify(nameof(Description));
     }
+
+    public void Dispose() { foreach (var field in Fields) field.Dispose(); }
 }
 
 /// <summary>A literal/reference editor backed by the same document undo history.</summary>
-public sealed class WorkflowPropertyEditor : WorkflowObservable
+public sealed partial class WorkflowPropertyEditor : WorkflowObservable, IDisposable
 {
     private readonly WorkflowDocument _document;
     private readonly WorkflowNode _node;
@@ -78,7 +81,7 @@ public sealed class WorkflowPropertyEditor : WorkflowObservable
         }
     }
 
-    public bool IsLiteral => Property.Reference == null;
+    public bool IsLiteral => !IsMultiSelect && Property.Reference == null;
     public ObservableCollection<WorkflowReferenceOption> Options { get; } = [];
 
     public WorkflowReferenceOption? SelectedOption
@@ -94,6 +97,8 @@ public sealed class WorkflowPropertyEditor : WorkflowObservable
 
     public void Refresh()
     {
+        RefreshChoiceSelection();
+        if (IsMultiSelect) return;
         var options = _document.GetReferenceOptions(_node, Property)
             .Prepend(new WorkflowReferenceOption("固定值", new WorkflowDataReference("", ""))).ToList();
         if (Property.Reference is { } reference && options.All(o => o.Reference != reference))

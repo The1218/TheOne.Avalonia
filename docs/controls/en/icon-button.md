@@ -1,5 +1,7 @@
 # Icon buttons and action hierarchy
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/icon-button.md) · **English**
 
 IconButton inherits Avalonia Button and keeps Command, CommandParameter, Click, keyboard input, focus, Flyout, and disabled behavior. Load OneTheme to use it. Icon is a separate property; Content remains text / content, and IconTemplate renders data icons. IconPlacement supports Left (default), Right, Top, and Bottom. Icons and text stay centered, with no empty gap when either is missing. IsLoading replaces the icon with a loading indicator and blocks repeated actions; see [loading controls](loading.md). Override IconSize and IconSpacing through styles or bindings. Default icons are 13 / 15 / 19 px for small / normal / large. A null Icon reserves no space; empty Content produces a square icon button. Icon-only buttons need AutomationProperties.Name and Tooltip.
@@ -28,8 +30,6 @@ The consuming application can reference [Material.Icons.Avalonia](https://www.nu
 ```
 
 Native Button and IconButton share primary/accent, soft, gradient, outline, ghost, link, success, info, warning, and danger styles. The default style suits secondary actions; primary advances the main workflow, ghost is lightweight, outline emphasizes a boundary, and success/info/warning/danger indicate completion, information, risk, and destructive actions. Hover, pressed, focus, and disabled states keep native behavior and TheOne semantic colors. Prefer one primary action per group and explicit action labels.
-
-Declare the view's x:DataType for compiled bindings and the icon data type on data IconTemplate instances. Implementation uses StyledProperty, TemplateBinding, and compiled templates without reflection-based icon creation. See [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs) for independent compiled-binding and native consumption examples.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

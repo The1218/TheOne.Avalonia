@@ -1,5 +1,7 @@
 # DataGrid binding, sorting, and cell density
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/datagrid-binding.md) · **English**
 
 DataGridColumnHeader, DataGridRowHeader, and DataGridRowGroupHeader are native header / grouping template structures, already themed by OneTheme. Prefer public extension points such as HeaderTemplate. Complete replacement templates must preserve PART_*, column identity, and native layout contracts; do not create these containers separately.
@@ -35,8 +37,6 @@ The DataGrid preview ViewModel and GridRecord inherit ReactiveObject directly an
 
 Centered text uses the full content width, avoiding clipping to stale measurements after sorting / recycling while retaining other controls' alignment. Small cells reserve full height for fixed 20 px checkmarks. Button / ToggleButton / RepeatButton use cell-density padding and minimum heights. Auto row height follows content without shrinking fonts or forced truncation. Consumers must adjust explicitly undersized RowHeight.
 
-PreviewHost's DataGrid page has a separate collection-operation area and real thousand-item recycling checks. Use --verify-datagrid-binding and the DataGridBinding render target. No comparison page was added.
-
 [Filtering, frozen columns, and summaries](datagrid-extensions.md).
 
 ## NativeAOT
@@ -70,7 +70,7 @@ Set `SortMemberPath` explicitly for path sorting and a finite `MaxColumnWidth` b
 </DataGrid>
 ```
 
-This library replaces the official DataGrid package while preserving native assembly identity, types, and presenters. Do not also reference official `Avalonia.Controls.DataGrid`. Sources and licenses: [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md). Independent compiled-binding / native consumption: [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs). Package-only consumption: [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs).
+This library replaces the official DataGrid package while preserving native assembly identity, types, and presenters. Do not also reference official `Avalonia.Controls.DataGrid`. Sources and licenses: [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md).
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

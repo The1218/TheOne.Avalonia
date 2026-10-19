@@ -13,12 +13,12 @@
             Foreground="{DynamicResource One.Muted}"
             Text="未选中 / 选中 / 不确定 / 禁用"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <CheckBox
                     Content="点击选择"
-                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    IsChecked="{CompiledBinding Checked, Mode=TwoWay}"
                     Margin="0,0,12,12"
                     Name="ControlSample" />
                 <CheckBox

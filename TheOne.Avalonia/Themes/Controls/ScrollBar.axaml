@@ -7,68 +7,68 @@
     <MenuFlyout x:Key="One.VerticalScrollBarContextFlyout">
         <MenuItem
             AutomationProperties.AutomationId="ScrollHere"
-            Command="{Binding $parent[ScrollBar].ScrollHere}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollHere}"
             Header="{DynamicResource StringScrollBarScrollHere}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="Top"
-            Command="{Binding $parent[ScrollBar].ScrollToHome}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollToHome}"
             Header="{DynamicResource StringScrollBarTop}" />
         <MenuItem
             AutomationProperties.AutomationId="Bottom"
-            Command="{Binding $parent[ScrollBar].ScrollToEnd}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollToEnd}"
             Header="{DynamicResource StringScrollBarBottom}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="PageUp"
-            Command="{Binding $parent[ScrollBar].PageUp}"
+            Command="{CompiledBinding $parent[ScrollBar].PageUp}"
             Header="{DynamicResource StringScrollBarPageUp}" />
         <MenuItem
             AutomationProperties.AutomationId="PageDown"
-            Command="{Binding $parent[ScrollBar].PageDown}"
+            Command="{CompiledBinding $parent[ScrollBar].PageDown}"
             Header="{DynamicResource StringScrollBarPageDown}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="ScrollUp"
-            Command="{Binding $parent[ScrollBar].LineUp}"
+            Command="{CompiledBinding $parent[ScrollBar].LineUp}"
             Header="{DynamicResource StringScrollBarScrollUp}" />
         <MenuItem
             AutomationProperties.AutomationId="ScrollDown"
-            Command="{Binding $parent[ScrollBar].LineDown}"
+            Command="{CompiledBinding $parent[ScrollBar].LineDown}"
             Header="{DynamicResource StringScrollBarScrollDown}" />
     </MenuFlyout>
 
     <MenuFlyout x:Key="One.HorizontalScrollBarContextFlyout">
         <MenuItem
             AutomationProperties.AutomationId="ScrollHere"
-            Command="{Binding $parent[ScrollBar].ScrollHere}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollHere}"
             Header="{DynamicResource StringScrollBarScrollHere}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="LeftEdge"
-            Command="{Binding $parent[ScrollBar].ScrollToHome}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollToHome}"
             Header="{DynamicResource StringScrollBarLeftEdge}" />
         <MenuItem
             AutomationProperties.AutomationId="RightEdge"
-            Command="{Binding $parent[ScrollBar].ScrollToEnd}"
+            Command="{CompiledBinding $parent[ScrollBar].ScrollToEnd}"
             Header="{DynamicResource StringScrollBarRightEdge}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="PageLeft"
-            Command="{Binding $parent[ScrollBar].PageLeft}"
+            Command="{CompiledBinding $parent[ScrollBar].PageLeft}"
             Header="{DynamicResource StringScrollBarPageLeft}" />
         <MenuItem
             AutomationProperties.AutomationId="PageRight"
-            Command="{Binding $parent[ScrollBar].PageRight}"
+            Command="{CompiledBinding $parent[ScrollBar].PageRight}"
             Header="{DynamicResource StringScrollBarPageRight}" />
         <Separator />
         <MenuItem
             AutomationProperties.AutomationId="ScrollLeft"
-            Command="{Binding $parent[ScrollBar].LineLeft}"
+            Command="{CompiledBinding $parent[ScrollBar].LineLeft}"
             Header="{DynamicResource StringScrollBarScrollLeft}" />
         <MenuItem
             AutomationProperties.AutomationId="ScrollRight"
-            Command="{Binding $parent[ScrollBar].LineRight}"
+            Command="{CompiledBinding $parent[ScrollBar].LineRight}"
             Header="{DynamicResource StringScrollBarScrollRight}" />
     </MenuFlyout>
 

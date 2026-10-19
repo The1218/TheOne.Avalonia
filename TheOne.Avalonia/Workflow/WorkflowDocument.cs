@@ -244,6 +244,26 @@ public sealed partial class WorkflowDocument : WorkflowObservable
         });
     }
 
+    /// <summary>One undoable multi-selection edit, preserving stable keys and their order.</summary>
+    public void SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)
+    {
+        ArgumentNullException.ThrowIfNull(property);
+        ArgumentNullException.ThrowIfNull(keys);
+        var next = keys.ToArray();
+        if (next.Any(string.IsNullOrWhiteSpace)) throw new ArgumentException("Selection keys cannot be empty.", nameof(keys));
+        next = next.Distinct(StringComparer.Ordinal).ToArray();
+        var old = property.SelectedKeys.ToArray();
+        var reference = property.Reference;
+        if (old.SequenceEqual(next) && reference is null) return;
+        Edit("修改多选字段", () => Apply(next, null), () => Apply(old, reference));
+        void Apply(string[] values, WorkflowDataReference? valueReference)
+        {
+            property.SelectedKeys.Clear();
+            foreach (var key in values) property.SelectedKeys.Add(key);
+            property.Reference = valueReference;
+        }
+    }
+
     public string? CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort,
         bool allowCycles = false)
     {
@@ -327,7 +347,12 @@ public sealed partial class WorkflowDocument : WorkflowObservable
                     if (!GetReferenceOptions(n, p).Any(o => o.Reference == r))
                         issues.Add(new WorkflowValidationIssue($"{p.Title}：引用不存在、类型不兼容或不在上游", n.Id));
                 }
-                else if (p.IsRequired && string.IsNullOrWhiteSpace(p.Value))
+                else if (p.Kind == WorkflowValueKind.MultiSelect && (p.SelectedKeys.Any(string.IsNullOrWhiteSpace) ||
+                             p.SelectedKeys.Distinct(StringComparer.Ordinal).Count() != p.SelectedKeys.Count))
+                {
+                    issues.Add(new WorkflowValidationIssue($"{p.Title}：选项 Key 为空或重复", n.Id));
+                }
+                else if (p.IsRequired && (p.Kind == WorkflowValueKind.MultiSelect ? p.SelectedKeys.Count == 0 : string.IsNullOrWhiteSpace(p.Value)))
                 {
                     issues.Add(new WorkflowValidationIssue($"{p.Title}：必填", n.Id));
                 }

@@ -13,14 +13,14 @@
             Foreground="{DynamicResource One.Muted}"
             Text="普通 / 占位提示 / 密码 / 只读 / 多行输入"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <TextBox
                 HorizontalAlignment="Stretch"
                 MaxWidth="420"
                 Name="ControlSample"
                 PlaceholderText="普通输入"
-                Text="{Binding Text, Mode=TwoWay}" />
+                Text="{CompiledBinding Text, Mode=TwoWay}" />
             <TextBox
                 HorizontalAlignment="Stretch"
                 MaxWidth="420"
@@ -44,17 +44,17 @@
                 TextWrapping="Wrap" />
         </StackPanel>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <TextBox
                 Classes="filled"
                 MaxWidth="420"
                 Name="FilledInputSample"
-                Text="{Binding Text, Mode=TwoWay}" />
+                Text="{CompiledBinding Text, Mode=TwoWay}" />
             <TextBox
                 Classes="underlined"
                 MaxWidth="420"
                 Name="UnderlinedInputSample"
-                Text="{Binding Text, Mode=TwoWay}" />
+                Text="{CompiledBinding Text, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </local:BasicControlPage>

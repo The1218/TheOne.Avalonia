@@ -22,10 +22,10 @@
                 Text="步骤条对齐"
                 VerticalAlignment="Center" />
             <ComboBox
-                ItemsSource="{Binding HeaderAlignments}"
+                ItemsSource="{CompiledBinding HeaderAlignments}"
                 Margin="0,0,12,8"
                 MinWidth="120"
-                SelectedItem="{Binding HeaderAlignment, Mode=TwoWay}" />
+                SelectedItem="{CompiledBinding HeaderAlignment, Mode=TwoWay}" />
             <Button
                 Click="ResetClicked"
                 Content="重置三步表单"
@@ -40,14 +40,14 @@
                 Margin="0,0,8,8" />
         </WrapPanel>
         <one:VerificationStep
-            CompletedCommand="{Binding CompletedCommand}"
-            HeaderHorizontalAlignment="{Binding HeaderAlignment}"
+            CompletedCommand="{CompiledBinding CompletedCommand}"
+            HeaderHorizontalAlignment="{CompiledBinding HeaderAlignment}"
             Height="590"
-            ItemsSource="{Binding Steps}"
+            ItemsSource="{CompiledBinding Steps}"
             Name="StepSample" />
         <TextBlock
             Name="StepStatus"
-            Text="{Binding Status}"
+            Text="{CompiledBinding Status}"
             TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

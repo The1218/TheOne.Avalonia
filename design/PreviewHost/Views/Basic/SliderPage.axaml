@@ -13,20 +13,20 @@
             Foreground="{DynamicResource One.Muted}"
             Text="连续值 / 刻度吸附 / 禁用"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <Slider
                 MaxWidth="420"
                 Maximum="100"
                 Minimum="0"
                 Name="ControlSample"
-                Value="{Binding Value, Mode=TwoWay}" />
+                Value="{CompiledBinding Value, Mode=TwoWay}" />
             <Slider
                 IsSnapToTickEnabled="True"
                 MaxWidth="420"
                 TickFrequency="20"
                 TickPlacement="BottomRight"
-                Value="{Binding Value, Mode=TwoWay}" />
+                Value="{CompiledBinding Value, Mode=TwoWay}" />
             <Slider
                 IsEnabled="False"
                 MaxWidth="420"

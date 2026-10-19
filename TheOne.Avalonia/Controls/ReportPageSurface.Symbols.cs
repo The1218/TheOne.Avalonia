@@ -6,6 +6,16 @@ namespace TheOne.Avalonia.Controls;
 
 internal sealed partial class ReportPageSurface
 {
+    private void DrawQRCode(DrawingContext context, ReportElement element, QRCodeSymbol? symbol, Rect area, IBrush brush)
+    {
+        if (symbol is null)
+        {
+            if (!_preview) Text(context, "二维码待验证 / 绑定数据", area.Deflate(2), Brushes.DarkRed, 10);
+            return;
+        }
+        QRCodeDrawing.Draw(context, symbol, area, element.QRCodeQuietZone, brush, Brushes.White);
+    }
+
     private void DrawCheckBox(DrawingContext context, ReportElement element, string value, Rect area, IBrush brush)
     {
         var size = Math.Max(1, Math.Min(Math.Min(area.Height - 4, area.Width - 4), Math.Max(14, element.FontSize)));

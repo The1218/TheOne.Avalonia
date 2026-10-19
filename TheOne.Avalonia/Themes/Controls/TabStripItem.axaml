@@ -39,7 +39,7 @@
                                 AutomationProperties.Name="关闭标签页"
                                 Classes="one-close"
                                 Command="{x:Static one:TabFeatures.CloseTabCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                CommandParameter="{TemplateBinding}"
                                 Focusable="False"
                                 Grid.Column="1"
                                 Height="24"

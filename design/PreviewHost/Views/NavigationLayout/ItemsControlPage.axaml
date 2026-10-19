@@ -13,8 +13,8 @@
             Foreground="{DynamicResource One.Muted}"
             Text="文字行 / 卡片内容模板 · 1,000 项数据，按视口回收"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <StackPanel
                     Margin="0,0,16,16"
@@ -22,10 +22,10 @@
                     Width="340">
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="文字行" />
                     <ScrollViewer Height="240">
-                        <ItemsControl ItemsSource="{Binding Items}" Name="ControlSample">
+                        <ItemsControl ItemsSource="{CompiledBinding Items}" Name="ControlSample">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
-                                    <TextBlock Margin="12,8" Text="{Binding}" />
+                                    <TextBlock Margin="12,8" Text="{CompiledBinding}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -37,7 +37,7 @@
                     Width="340">
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="卡片行" />
                     <ScrollViewer Height="240">
-                        <ItemsControl ItemsSource="{Binding Items}" Name="DetailedSample">
+                        <ItemsControl ItemsSource="{CompiledBinding Items}" Name="DetailedSample">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <Border
@@ -46,7 +46,7 @@
                                         Margin="4"
                                         Padding="12">
                                         <StackPanel Spacing="4">
-                                            <TextBlock FontWeight="SemiBold" Text="{Binding}" />
+                                            <TextBlock FontWeight="SemiBold" Text="{CompiledBinding}" />
                                             <TextBlock
                                                 FontSize="12"
                                                 Foreground="{DynamicResource One.Muted}"
@@ -61,7 +61,7 @@
             </WrapPanel>
         </StackPanel>
         <Button
-            Command="{Binding LastCommand}"
+            Command="{CompiledBinding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
     </StackPanel>

@@ -1,5 +1,7 @@
 # Pagination
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/pagination.md) · **English**
 
 `Pagination` uses native Button, ComboBox and TextBox controls for navigation. With `OneTheme`, it supports Standard / Compact, Light / Dark and Small / Normal / Large. It manages page numbers and ranges, but does not fetch or filter business data. Request data through two-way bindings, PageChanged or PageChangedCommand.
@@ -70,14 +72,6 @@ The theme reuses One.Surface, One.Text, One.Muted, One.Line, One.Accent, One.OnA
 ## Examples and verification
 
 PreviewHost's “扩展控件 → Pagination” page demonstrates shared Standard / Compact bindings, first / last pages, empty results and disabled controls. Actions restore and reduce the record count.
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/pagination/artifacts
-dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-pagination .preview/pagination/render
-dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --render-controls .preview/pagination/render Pagination
-```
-
-Checks use actual pointer / keyboard input and Skia pixels for themes, sizes, wide / narrow layout, bounds, jumping, atomic notifications, focus, template reapplication, compiled bindings and Int64 extremes. NativeAotSmoke supports --verify-pagination --require-aot; publish and execute a real native binary.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

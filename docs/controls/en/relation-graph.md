@@ -1,5 +1,7 @@
 # RelationGraph
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/relation-graph.md) · **English**
 
 `RelationGraph` displays a tree with one root. `Orientation="Horizontal"` expands left to right; `Vertical` expands top to bottom. Node interiors always keep the icon on the left and title/content on the right. Load `OneTheme` first.
@@ -20,7 +22,7 @@ root.Children!.Add(new RelationGraphNode
 ```xml
 <ScrollViewer Height="540" HorizontalScrollBarVisibility="Auto"
               VerticalScrollBarVisibility="Auto">
-  <one:RelationGraph RootNode="{Binding Root}" Orientation="Horizontal" />
+  <one:RelationGraph RootNode="{CompiledBinding Root}" Orientation="Horizontal" />
 </ScrollViewer>
 ```
 
@@ -35,14 +37,35 @@ Models need not inherit the default type or copy their tree. `ChildrenSource` st
 For an `OrganizationUnit` with `Branches`, `Symbol`, `Name`, and `Description`, and a view model exposing `OrganizationUnit Root`:
 
 ```xml
-<one:RelationGraph RootNode="{Binding Root}" Orientation="Vertical"
-    ChildrenSource="{CompiledBinding Branches, DataType={x:Type vm:OrganizationUnit}}"
-    IconSource="{CompiledBinding Symbol, DataType={x:Type vm:OrganizationUnit}}"
-    TitleSource="{CompiledBinding Name, DataType={x:Type vm:OrganizationUnit}}"
-    ContentSource="{CompiledBinding Description, DataType={x:Type vm:OrganizationUnit}}" />
+<!-- The root view declares x:Name="View" and a typed, notifying ViewModel property. -->
+<one:RelationGraph x:DataType="vm:OrganizationUnit"
+    RootNode="{CompiledBinding #View.ViewModel.Root}"
+    SelectItem="{CompiledBinding #View.ViewModel.SelectedNode}"
+    Orientation="Vertical"
+    ChildrenSource="{CompiledBinding Branches}"
+    IconSource="{CompiledBinding Symbol}"
+    TitleSource="{CompiledBinding Name}"
+    ContentSource="{CompiledBinding Description}" />
 ```
 
-Declare the **node type** explicitly on these bindings; it differs from the view model type on the view root. Default models require no Source properties. Custom models require `ChildrenSource`, which must resolve to an `IEnumerable` or null (strings are invalid). Omitted display Source properties for custom models produce null regions.
+Declare the **node type** once on RelationGraph. Its four captured paths then resolve directly, without a per-binding `DataType` or cast. Keep the page view-model `x:DataType` on the root view. These declarations do not change the runtime DataContext. Bind the root and selection through the named view's typed `ViewModel` property so IDEs do not infer a cross-scope DataContext as object or CompiledBinding. Do not replace the application DataContext merely to clear diagnostics.
+
+The view's `ViewModel` property must follow DataContext changes and notify bindings, rather than always returning the initially created model. For example, in the view code:
+
+```csharp
+public static readonly DirectProperty<OrganizationView, OrganizationViewModel?> ViewModelProperty =
+    AvaloniaProperty.RegisterDirect<OrganizationView, OrganizationViewModel?>(
+        nameof(ViewModel), view => view.ViewModel);
+private OrganizationViewModel? _viewModel;
+public OrganizationViewModel? ViewModel => _viewModel;
+
+private void UpdateViewModel() => SetAndRaise(ViewModelProperty, ref _viewModel,
+    DataContext as OrganizationViewModel);
+// In the constructor, call UpdateViewModel() before loading XAML, then subscribe:
+// DataContextChanged += (_, _) => UpdateViewModel();
+```
+
+See [RelationGraphDemoView](../../../design/PreviewHost/Views/DataDisplay/RelationGraphDemoView.axaml) and its [code](../../../design/PreviewHost/Views/DataDisplay/RelationGraphDemoView.axaml.cs) for a complete example. Default models require no Source properties. Custom models require `ChildrenSource`, which must resolve to an `IEnumerable` or null (strings are invalid). Omitted display Source properties for custom models produce null regions.
 
 Changing properties must notify through `INotifyPropertyChanged`, and changing collections through `INotifyCollectionChanged`, such as `ObservableCollection<T>`. Property replacement and collection changes update automatically. Call `RefreshData()` after in-place mutations of an ordinary `List<T>`. Make data changes on the UI thread. Detachment removes observers; reattachment reads the latest data.
 
@@ -63,7 +86,7 @@ Strings wrap; content may grow a node beyond `NodeMinHeight`. `Icon` can be a na
 ```xml
 <one:RelationGraph.IconTemplate>
   <DataTemplate x:DataType="media:Geometry">
-    <PathIcon Data="{Binding}" />
+    <PathIcon Data="{CompiledBinding}" />
   </DataTemplate>
 </one:RelationGraph.IconTemplate>
 ```
@@ -75,8 +98,8 @@ Declare `xmlns:media="using:Avalonia.Media"` on the view. Templates receive the 
 SelectItem holds the selected **node model object**, defaults to null and defaults to TwoWay binding. Clicking a valid node selects it. A focused node supports Enter / Space; Avalonia still manages Tab navigation. Clicking a native button or input inside a node also selects the node while preserving that control's command and focus.
 
 ```xml
-<one:RelationGraph RootNode="{Binding Root}"
-                   SelectItem="{Binding SelectedNode, Mode=TwoWay}" />
+<one:RelationGraph RootNode="{CompiledBinding Root}"
+                   SelectItem="{CompiledBinding SelectedNode, Mode=TwoWay}" />
 ```
 
 SelectedNode should have the node model type, such as RelationGraphNode? or a custom OrganizationUnit?. Custom models still require ChildrenSource and the other compiled bindings. Selection matches objects by reference in the current tree; do not pass a newly constructed equal-looking object or a Presenter. Selection may initialize before RootNode and is validated after the first layout. Removing the selected node, clearing the root or invalidating the tree clears SelectItem and writes null back through the binding. Assigning an object outside a valid tree also clears selection. Assign null to clear it explicitly.
@@ -107,20 +130,7 @@ The graph measures its entire natural extent. Wrap it in a native `ScrollViewer`
 
 PreviewHost's “数据展示 → RelationGraph” page provides direction, width/spacing, root null regions, collection mutation, custom model bindings, and all eight slot combinations.
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/relation-graph/artifacts --disable-build-servers -m:1
-dotnet .preview/relation-graph/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-relation-graph .preview/relation-graph/managed
-```
-
 Checks cover light/dark themes, three densities, both orientations, actual connector pixels, narrow scrolling, wrapping, null slots, collection/property replacement, invalid-tree recovery, renewed observers, native interactions, and compiled XAML bindings. The independent NativeAOT consumer runs the same checks:
-
-```sh
-# macOS: native checks only for affected AOT/binding/metadata changes.
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/relation-graph/native-artifacts -o .preview/relation-graph/native
-.preview/relation-graph/native/NativeAotSmoke --require-aot --verify-relation-graph .preview/relation-graph/native-pixels
-```
-
-Selection checks cover light/dark, three densities, both directions, rendered selection pixels, pointer/keyboard selection, embedded button commands and focus, removal/invalid-tree cleanup, and two-way compiled bindings for default/custom models. The native consumer runs the same --verify-relation-graph suite.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

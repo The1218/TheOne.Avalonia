@@ -15,8 +15,8 @@
             </Border>
         </Grid>
         <WrapPanel>
-            <TextBox Width="220" PlaceholderText="搜索任务…" Text="{Binding SearchText, Mode=TwoWay}" Margin="0,0,12,8" />
-            <ComboBox Width="145" ItemsSource="{Binding Owners}" SelectedItem="{Binding SelectedOwner, Mode=TwoWay}"
+            <TextBox Width="220" PlaceholderText="搜索任务…" Text="{CompiledBinding SearchText, Mode=TwoWay}" Margin="0,0,12,8" />
+            <ComboBox Width="145" ItemsSource="{CompiledBinding Owners}" SelectedItem="{CompiledBinding SelectedOwner, Mode=TwoWay}"
                       Margin="0,0,12,8" />
             <Button Content="今天" Click="TodayClick" Margin="0,0,8,8" />
             <Button Content="适应项目" Click="FitClick" Margin="0,0,12,8" />
@@ -26,15 +26,15 @@
             <Button Content="−" Click="ZoomOutClick" Margin="0,0,4,8" />
             <Button Content="＋" Click="ZoomInClick" Margin="0,0,8,8" />
         </WrapPanel>
-        <one:GanttChart Name="Schedule" ItemsSource="{Binding Items}"
-                        SelectedTask="{Binding SelectedTask, Mode=TwoWay}"
-                        ViewStart="{Binding ViewStart, Mode=TwoWay}" ViewEnd="{Binding ViewEnd, Mode=TwoWay}"
-                        Today="{Binding Today}"
-                        DayWidth="{Binding DayWidth, Mode=TwoWay}" TaskHeader="任务名称" OwnerHeader="负责人"
+        <one:GanttChart Name="Schedule" ItemsSource="{CompiledBinding Items}"
+                        SelectedTask="{CompiledBinding SelectedTask, Mode=TwoWay}"
+                        ViewStart="{CompiledBinding ViewStart, Mode=TwoWay}" ViewEnd="{CompiledBinding ViewEnd, Mode=TwoWay}"
+                        Today="{CompiledBinding Today}"
+                        DayWidth="{CompiledBinding DayWidth, Mode=TwoWay}" TaskHeader="任务名称" OwnerHeader="负责人"
                         ProgressHeader="进度" EmptyText="没有匹配的任务" />
         <WrapPanel>
             <TextBlock Text="● 已完成   ◐ 进行中   ○ 未开始   ◆ 里程碑" Foreground="{DynamicResource One.Muted}" Margin="0,0,20,8" />
-            <TextBlock Text="{Binding #Schedule.VisibleTaskCount, StringFormat='可见任务：{0}'}"
+            <TextBlock Text="{CompiledBinding #Schedule.VisibleTaskCount, StringFormat='可见任务：{0}'}"
                        Foreground="{DynamicResource One.Muted}" Margin="0,0,20,8" />
             <TextBlock Text="滚轮滚动 · Shift + 滚轮横移 · Ctrl / ⌘ + 滚轮缩放" Foreground="{DynamicResource One.Muted}"
                        TextWrapping="Wrap" />
@@ -43,35 +43,35 @@
             <WrapPanel>
                 <StackPanel Width="200" Spacing="6" Margin="0,0,16,8">
                     <TextBlock Text="当前任务" Foreground="{DynamicResource One.Muted}" />
-                    <TextBlock Text="{Binding SelectedTask.Title, TargetNullValue='请选择任务'}" FontWeight="SemiBold" />
+                    <TextBlock Text="{CompiledBinding SelectedTask.Title, TargetNullValue='请选择任务'}" FontWeight="SemiBold" />
                 </StackPanel>
                 <StackPanel Width="100" Spacing="6" Margin="0,0,16,8">
                     <TextBlock Text="负责人" Foreground="{DynamicResource One.Muted}" />
-                    <TextBlock Text="{Binding SelectedTask.Owner, TargetNullValue='—'}" />
+                    <TextBlock Text="{CompiledBinding SelectedTask.Owner, TargetNullValue='—'}" />
                 </StackPanel>
                 <StackPanel Width="120" Spacing="6" Margin="0,0,16,8">
                     <TextBlock Text="开始" Foreground="{DynamicResource One.Muted}" />
                     <TextBlock
-                        Text="{Binding #Schedule.Selection.Start, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" />
+                        Text="{CompiledBinding #Schedule.Selection.Start, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" />
                 </StackPanel>
                 <StackPanel Width="120" Spacing="6" Margin="0,0,16,8">
                     <TextBlock Text="结束" Foreground="{DynamicResource One.Muted}" />
                     <TextBlock
-                        Text="{Binding #Schedule.Selection.DisplayEnd, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" />
+                        Text="{CompiledBinding #Schedule.Selection.DisplayEnd, StringFormat='{}{0:yyyy/MM/dd}', TargetNullValue='—'}" />
                 </StackPanel>
                 <StackPanel Width="80" Spacing="6" Margin="0,0,16,8">
                     <TextBlock Text="进度" Foreground="{DynamicResource One.Muted}" />
                     <TextBlock
-                        Text="{Binding #Schedule.Selection.Progress, StringFormat='{}{0:P0}', TargetNullValue='—'}" />
+                        Text="{CompiledBinding #Schedule.Selection.Progress, StringFormat='{}{0:P0}', TargetNullValue='—'}" />
                 </StackPanel>
-                <TextBlock Text="{Binding #Schedule.ValidationError}" Foreground="{DynamicResource One.Danger}"
+                <TextBlock Text="{CompiledBinding #Schedule.ValidationError}" Foreground="{DynamicResource One.Danger}"
                            TextWrapping="Wrap" />
             </WrapPanel>
         </Border>
         <WrapPanel>
             <Button Content="全部展开" Click="ExpandClick" Margin="0,0,8,8" />
             <Button Content="全部折叠" Click="CollapseClick" Margin="0,0,12,8" />
-            <CheckBox Content="1,500 条任务 · 虚拟滚动" IsChecked="{Binding LargeData, Mode=TwoWay}" Margin="0,0,12,8" />
+            <CheckBox Content="1,500 条任务 · 虚拟滚动" IsChecked="{CompiledBinding LargeData, Mode=TwoWay}" Margin="0,0,12,8" />
             <Button Content="定位最后任务" Click="LastClick" Margin="0,0,8,8" />
         </WrapPanel>
     </StackPanel>

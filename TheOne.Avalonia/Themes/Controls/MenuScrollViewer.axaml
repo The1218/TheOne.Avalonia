@@ -17,8 +17,9 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Classes="one-scroll-button"
-                        Command="{Binding LineUp, RelativeSource={RelativeSource TemplatedParent}}"
+                        Command="{CompiledBinding #OneScrollUpButton.((ScrollViewer)TemplatedParent).LineUp}"
                         DockPanel.Dock="Top"
+                        Name="OneScrollUpButton"
                         Height="16"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
@@ -49,8 +50,9 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Classes="one-scroll-button"
-                        Command="{Binding LineDown, RelativeSource={RelativeSource TemplatedParent}}"
+                        Command="{CompiledBinding #OneScrollDownButton.((ScrollViewer)TemplatedParent).LineDown}"
                         DockPanel.Dock="Bottom"
+                        Name="OneScrollDownButton"
                         Height="16"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
@@ -79,7 +81,7 @@
                     </RepeatButton>
                     <ScrollContentPresenter Name="PART_ContentPresenter">
                         <ScrollContentPresenter.GestureRecognizers>
-                            <ScrollGestureRecognizer CanHorizontallyScroll="{Binding CanHorizontallyScroll, ElementName=PART_ContentPresenter}" CanVerticallyScroll="{Binding CanVerticallyScroll, ElementName=PART_ContentPresenter}" />
+                            <ScrollGestureRecognizer CanHorizontallyScroll="{CompiledBinding CanHorizontallyScroll, ElementName=PART_ContentPresenter}" CanVerticallyScroll="{CompiledBinding CanVerticallyScroll, ElementName=PART_ContentPresenter}" />
                         </ScrollContentPresenter.GestureRecognizers>
                     </ScrollContentPresenter>
                 </DockPanel>

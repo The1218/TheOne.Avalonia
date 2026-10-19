@@ -6,10 +6,10 @@
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Spacing="12">
-        <one:Tag Content="{Binding Type}" Status="{Binding MessageStatus}" />
+        <one:Tag Content="{CompiledBinding Type}" Status="{CompiledBinding MessageStatus}" />
         <TextBlock
             MaxWidth="520"
-            Text="{Binding Message}"
+            Text="{CompiledBinding Message}"
             TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

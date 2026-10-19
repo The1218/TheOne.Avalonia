@@ -30,7 +30,7 @@
                                 VerticalContentAlignment="Center">
                                 <Label.ContentTemplate>
                                     <DataTemplate x:DataType="x:String">
-                                        <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                                        <TextBlock Text="{CompiledBinding}" TextWrapping="Wrap" />
                                     </DataTemplate>
                                 </Label.ContentTemplate>
                             </Label>
@@ -56,7 +56,7 @@
                             Name="PART_FieldErrors">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="one:StepValidationError">
-                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{CompiledBinding Message}" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -85,7 +85,7 @@
                             ItemsSource="{TemplateBinding UnmappedErrors}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="one:StepValidationError">
-                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{CompiledBinding Message}" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>

@@ -19,26 +19,26 @@
         <WrapPanel>
             <TextBox
                 Margin="0,0,8,8"
-                Text="{Binding Text, Mode=TwoWay}"
+                Text="{CompiledBinding Text, Mode=TwoWay}"
                 Width="180" />
             <ComboBox
-                ItemsSource="{Binding Statuses}"
+                ItemsSource="{CompiledBinding Statuses}"
                 Margin="0,0,8,8"
-                SelectedItem="{Binding Status, Mode=TwoWay}"
+                SelectedItem="{CompiledBinding Status, Mode=TwoWay}"
                 Width="150" />
             <ComboBox
-                ItemsSource="{Binding Variants}"
+                ItemsSource="{CompiledBinding Variants}"
                 Margin="0,0,8,8"
-                SelectedItem="{Binding Variant, Mode=TwoWay}"
+                SelectedItem="{CompiledBinding Variant, Mode=TwoWay}"
                 Width="130" />
-            <CheckBox Content="启用" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+            <CheckBox Content="启用" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
         </WrapPanel>
         <one:Tag
-            Content="{Binding Text}"
-            IsEnabled="{Binding Enabled}"
+            Content="{CompiledBinding Text}"
+            IsEnabled="{CompiledBinding Enabled}"
             Name="TagSample"
-            Status="{Binding Status}"
-            Variant="{Binding Variant}">
+            Status="{CompiledBinding Status}"
+            Variant="{CompiledBinding Variant}">
             <one:Tag.Icon>
                 <PathIcon
                     Data="M1,7 L3,5 L5,8 L11,1 L13,3 L5,12 Z"

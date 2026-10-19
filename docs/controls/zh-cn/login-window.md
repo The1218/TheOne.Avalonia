@@ -1,5 +1,7 @@
 # LoginWindow 与主窗体交接
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/login-window.md)
 
 主题与公共窗口服务见[窗口文档](windows.md)。
@@ -60,12 +62,6 @@ OneDialogResult result = await login.ShowErrorDialog("请检查账号和密码",
 ShowErrorToast / ShowErrorNotification 使用 NotificationType.Error，在 UI 线程调用，可传 expiration（TimeSpan.Zero 表示保留）；ShowErrorDialog 返回可等待的 Ok / Closed 结果，并支持 CancellationToken。登录窗口关闭时，当前及排队中的对话框以 Closed 完成，不迁移到主窗体；交接后的新请求使用 OneWindow 的宿主。业务 Content、DataContext、ContentTemplate 与宿主实例也不复制到主窗体。
 
 LoginWindow 不管理依赖注入容器或 .NET Generic Host。Generic Host 及应用共享服务应与应用生命周期关联，在桌面 lifetime 的 Exit / Shutdown 路径停止、释放；不要把 Host.StopAsync / Dispose 注册到登录窗口 Closed。登录验证的局部取消与清理仍由登录表单负责。
-
-运行 `dotnet run --project design/PreviewHost -- --login` 可验证完整启动和交接流程：示例表单使用编译绑定，账号和密码非空即通过本地演示校验，空输入显示错误 Toast，提供三个错误提示按钮；关闭时取消等待并清空密码。它不连接认证服务。主窗体目录不再提供 OneWindow / LoginWindow 展示页；完整登录流程使用该独立启动入口。
-
-定向交互验证使用 `--verify-loginwindow`；`--verify-login-lifetime <ShutdownMode>` 在真实桌面主循环中验证退出策略，`--verify-login-lifetime-close <ShutdownMode>` 验证登录 Closed 回调立即关闭新主窗体。两个入口分别传入 OnMainWindowClose、OnLastWindowClose、OnExplicitShutdown，并在独立进程中运行。截图只导出当前控件：`--render-controls .preview/loginwindow LoginWindow`。
-
-实机检查窗口创建次数可运行 `dotnet run --project design/PreviewHost -- --login --trace-login`。可选日志以 `LOGIN_TRACE` 开头，记录校验忙碌状态、完成请求、主窗体工厂调用次数、窗口打开／关闭及应用退出时的窗口数量，不记录账号或密码。校验延迟与退出策略保持演示原有设置。
 
 生命周期实现依据 [Avalonia 桌面生命周期](https://docs.avaloniaui.net/docs/fundamentals/application-lifetimes) 与 [12.1.4 Window 源码](https://github.com/AvaloniaUI/Avalonia/blob/12.1.4/src/Avalonia.Controls/Window.cs)。
 

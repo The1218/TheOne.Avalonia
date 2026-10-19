@@ -1,5 +1,7 @@
 # ThemeColorPicker 与明暗切换
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/theme-color-picker.md)
 
 配色与明暗模式是两个独立设置：`OneTheme.ColorTheme` 选择 `One.*` 颜色资源，`RequestedThemeVariant` 选择 Light / Dark。`ThemeColorPicker` 是原生 ComboBox 的专用派生控件，`ThemeButton` 是带内置图标的 ToggleButton。
@@ -98,20 +100,7 @@ ThemeButton 现在继承 ToggleButton，不显示文本，只显示一个内置�
 
 PreviewHost 启动默认打开独立一级菜单 Home；顶部 ThemeColorPicker 选择配色，标题栏 ThemeButton 仅切换明暗。Home 代码片段使用 NuGet 包 `TheOne.Avalonia.CodeEditor` 的只读高亮、换行和复制功能。每页底部可展开源码区，切换对应 AXAML、C# 及相关 VM 文件；源码嵌入应用，无需本机仓库路径。源码面板按需加载并使用有界视口。
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/theme-code/artifacts
-# 使用以上产物中的 PreviewHost.dll 分别执行：
-dotnet <PreviewHost.dll> --verify-theme-colors .preview/theme-code/palettes
-dotnet <PreviewHost.dll> --verify-preview-code .preview/theme-code/code
-dotnet <PreviewHost.dll> --verify-home .preview/theme-code/home
-# 本次枚举 API、编译绑定及切换性能专项：
-dotnet <PreviewHost.dll> --verify-theme-api
-dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized.json
-```
-
 专项范围为配色选择器、ThemeButton、代码面板及 Home 导航，检查原生键鼠、资源实时更新、明暗／尺寸／窄视口与实际绘制。不会触发其他控件的全量回归。
-
-原生消费可在既有 NativeAotSmoke 项目设置 `ThemeOnlyPreview=true`、`PublishAot=true`、`PublishTrimmed=true`，发布后传入 `--require-aot`，只执行枚举选择器及编译绑定专项，不执行其他控件回归。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

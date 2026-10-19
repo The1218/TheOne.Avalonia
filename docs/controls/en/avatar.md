@@ -1,5 +1,7 @@
 # Avatar
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/avatar.md) · **English**
 
 `Avatar` displays a local or remote image, with up to two Unicode text elements or a person icon as fallback. Load `OneTheme` before use. It is a display control; wrap it in a native `Button` when a profile action is needed.
@@ -28,8 +30,6 @@ Inherited Small / Normal / Large densities use 32 / 40 / 56 px square bounds and
 Image loading starts on visual attachment. Replacing Source or detaching cancels pending work. Late responses never replace a newer image. Owned bitmaps are disposed on replacement or detach; supplied `IImage` objects remain owned by the caller. Reattachment loads the current source again. Files and network responses are decoded off the UI thread. Remote loading has a 30-second total timeout and 16 MiB response limit. There is no persistent image cache, authentication UI, SVG decoder, or animated-image playback. Relative files resolve from the process working directory. HTTPS uses normal platform certificate validation.
 
 Fallback remains visible during loading and on HTTP, file, or decode errors. Pseudoclasses: `:loading`, `:error`, `:has-image`, `:has-text`. The default template preserves `PART_Surface`, `PART_Fallback`, `PART_Icon`, `PART_Text`, and `PART_Image`. Set `AutomationProperties.Name` to describe the person; the automation peer otherwise uses Text, then “Avatar”.
-
-Preview: Extensions / Avatar. Run `dotnet run --project design/PreviewHost -- --verify-avatar .preview/avatar` for file/HTTP loading, cancellation, caller ownership, density, Unicode fallback and actual clipping-pixel checks, plus Light / Dark gallery exports and a narrow viewport. The native consumer accepts `--require-aot --verify-avatar .preview/avatar-native`. Network checks use a deterministic loopback HTTP server, without third-party image hosting.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

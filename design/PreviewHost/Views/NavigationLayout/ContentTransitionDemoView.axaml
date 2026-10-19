@@ -23,7 +23,7 @@
                 <TextBlock
                     Classes="page-title"
                     Name="TransitionPageTitle"
-                    Text="{Binding Title}" />
+                    Text="{CompiledBinding Title}" />
                 <TextBlock Text="让当前任务保持清晰。浏览概览、编辑草稿，或查看更新记录。" TextWrapping="Wrap" />
                 <Border
                     Background="{DynamicResource One.AccentSoft}"
@@ -35,8 +35,8 @@
                     </StackPanel>
                 </Border>
                 <Button
-                    Command="{Binding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
-                    CommandParameter="{Binding}"
+                    Command="{CompiledBinding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
+                    CommandParameter="{CompiledBinding}"
                     Content="查看工作区"
                     HorizontalAlignment="Left"
                     Name="OverviewAction" />
@@ -48,17 +48,17 @@
                 <TextBlock
                     Classes="page-title"
                     Name="TransitionPageTitle"
-                    Text="{Binding Title}" />
+                    Text="{CompiledBinding Title}" />
                 <TextBlock Text="切换页面后再回来，已输入的草稿仍然保留。" TextWrapping="Wrap" />
-                <Label Content="草稿内容" Target="{Binding #TransitionDraft}" />
+                <Label Content="草稿内容" Target="{CompiledBinding #TransitionDraft}" />
                 <TextBox
                     Name="TransitionDraft"
                     PlaceholderText="记录下一步要做的事"
-                    Text="{Binding Draft, Mode=TwoWay}" />
+                    Text="{CompiledBinding Draft, Mode=TwoWay}" />
                 <Button
                     Classes="primary"
-                    Command="{Binding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
-                    CommandParameter="{Binding}"
+                    Command="{CompiledBinding $parent[local:ContentTransitionDemoView].Model.PageActionCommand}"
+                    CommandParameter="{CompiledBinding}"
                     Content="保存草稿"
                     HorizontalAlignment="Left"
                     Name="SaveTransitionDraft" />
@@ -71,7 +71,7 @@
                     <TextBlock
                         Classes="page-title"
                         Name="TransitionPageTitle"
-                        Text="{Binding Title}" />
+                        Text="{CompiledBinding Title}" />
                 </StackPanel>
                 <TextBlock
                     Grid.Row="1"
@@ -81,9 +81,9 @@
                     AutomationProperties.Name="千条更新记录"
                     Grid.Row="2"
                     Height="240"
-                    ItemsSource="{Binding Rows}"
+                    ItemsSource="{CompiledBinding Rows}"
                     Name="TransitionRecordsList"
-                    SelectedItem="{Binding SelectedRow, Mode=TwoWay}">
+                    SelectedItem="{CompiledBinding SelectedRow, Mode=TwoWay}">
                     <ListBox.Styles>
                         <Style Selector="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -92,10 +92,10 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="local:TransitionRecord">
                             <Grid ColumnDefinitions="52,*" ColumnSpacing="12">
-                                <TextBlock Foreground="{DynamicResource One.Muted}" Text="{Binding Number, StringFormat='{}{0:0000}'}" />
+                                <TextBlock Foreground="{DynamicResource One.Muted}" Text="{CompiledBinding Number, StringFormat='{}{0:0000}'}" />
                                 <TextBlock
                                     Grid.Column="1"
-                                    Text="{Binding Title}"
+                                    Text="{CompiledBinding Title}"
                                     TextTrimming="CharacterEllipsis" />
                             </Grid>
                         </DataTemplate>
@@ -117,7 +117,7 @@
                 AutomationProperties.Name="内容过渡方式"
                 Margin="0,0,16,8"
                 Name="ContentTransitionPicker"
-                SelectedIndex="{Binding TransitionIndex, Mode=TwoWay}"
+                SelectedIndex="{CompiledBinding TransitionIndex, Mode=TwoWay}"
                 Width="160">
                 <ComboBoxItem Content="淡入淡出" />
                 <ComboBoxItem Content="水平滑动" />
@@ -126,73 +126,73 @@
             </ComboBox>
             <CheckBox
                 Content="内容动效"
-                IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ContentMotionEnabled" />
             <CheckBox
                 Content="反向过渡"
-                IsChecked="{Binding Reverse, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Reverse, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ReverseContentTransition" />
             <CheckBox
                 Content="启用内容区域"
-                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="EnableContentRegion" />
         </WrapPanel>
         <Grid ColumnDefinitions="Auto,*,Auto">
             <Button
-                Command="{Binding PreviousCommand}"
+                Command="{CompiledBinding PreviousCommand}"
                 Content="上一页"
-                IsEnabled="{Binding Enabled}"
+                IsEnabled="{CompiledBinding Enabled}"
                 Name="PreviousContentPage" />
             <TextBlock
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 Name="ContentPagePosition"
-                Text="{Binding Position}"
+                Text="{CompiledBinding Position}"
                 VerticalAlignment="Center" />
             <Button
-                Command="{Binding NextCommand}"
+                Command="{CompiledBinding NextCommand}"
                 Content="下一页"
                 Grid.Column="2"
-                IsEnabled="{Binding Enabled}"
+                IsEnabled="{CompiledBinding Enabled}"
                 Name="NextContentPage" />
         </Grid>
         <TransitioningContentControl
             AutomationProperties.Name="工作区内容切换区域"
-            Content="{Binding Content, Mode=TwoWay}"
+            Content="{CompiledBinding Content, Mode=TwoWay}"
             Height="400"
-            IsEnabled="{Binding Enabled}"
-            IsTransitionReversed="{Binding Reverse}"
+            IsEnabled="{CompiledBinding Enabled}"
+            IsTransitionReversed="{CompiledBinding Reverse}"
             Name="ContentTransitionSample"
-            PageTransition="{Binding Transition}"
+            PageTransition="{CompiledBinding Transition}"
             TransitionCompleted="OnTransitionCompleted" />
         <WrapPanel>
             <Button
-                Command="{Binding RapidCommand}"
+                Command="{CompiledBinding RapidCommand}"
                 Content="快速往返"
-                IsEnabled="{Binding Enabled}"
+                IsEnabled="{CompiledBinding Enabled}"
                 Margin="0,0,8,8"
                 Name="RapidContentSwitch" />
             <Button
-                Command="{Binding ClearCommand}"
+                Command="{CompiledBinding ClearCommand}"
                 Content="清空内容"
                 Margin="0,0,8,8"
                 Name="ClearTransitionContent" />
             <Button
-                Command="{Binding RestoreCommand}"
+                Command="{CompiledBinding RestoreCommand}"
                 Content="恢复当前页"
                 Margin="0,0,8,8"
                 Name="RestoreTransitionContent" />
             <Button
-                Command="{Binding LastRecordCommand}"
+                Command="{CompiledBinding LastRecordCommand}"
                 Content="第 1,000 条记录"
-                IsEnabled="{Binding Enabled}"
+                IsEnabled="{CompiledBinding Enabled}"
                 Margin="0,0,8,8"
                 Name="LastTransitionRecord" />
             <Button
-                Command="{Binding ResetCommand}"
+                Command="{CompiledBinding ResetCommand}"
                 Content="重置"
                 Margin="0,0,8,8"
                 Name="ResetContentTransition" />
@@ -200,7 +200,7 @@
         <TextBlock
             Classes="helper"
             Name="ContentTransitionMetrics"
-            Text="{Binding Metrics}" />
+            Text="{CompiledBinding Metrics}" />
         <Border
             Background="{DynamicResource One.Subtle}"
             CornerRadius="8"
@@ -208,7 +208,7 @@
             <StackPanel Spacing="6">
                 <TextBlock
                     Name="ContentTransitionStatus"
-                    Text="{Binding Status}"
+                    Text="{CompiledBinding Status}"
                     TextWrapping="Wrap" />
                 <TextBlock Classes="helper" Text="切换动画约 200 ms。快速往返可验证最后一次选择；关闭动效保留内容和输入，重新开启后的下一次切换恢复动画。重置恢复全局动效设置。" />
             </StackPanel>

@@ -4,6 +4,8 @@
 
 数据模型与接入见[图表入口](charts.md)。
 
+Scatter 选择保持同步事件与原始模型身份，复用基础样本、Pen 和已排版文字；实测行为与边界见[选择 p99 与分配复用](chart-rendering.md#scatter-selection-p99)。
+
 ## 显示与选择
 
 | 属性 | 默认值 / 用途 |
@@ -47,6 +49,8 @@ var selection = position is { } point ? RevenueChart.HitTestDataPoint(point) : n
 ```
 
 索引对应原始列表顺序。删除／重排后会重新解析索引，不承诺按对象身份保留原来的选择。系列隐藏、无效索引、无效数据、两类堆叠面积的同轴 X 不匹配或仪表模式下 `Selection` 为 `null`。`SelectionChanged` 表示选择对象变化；已选中 `ChartPoint` 的属性更新通过数据点自身的属性通知反映。
+
+Replace、Reset 和数据源替换后，`Selection` 会同步解析为当前模型；索引失效时，`Selection` 变为 `null`，绑定的索引值保留。选择强调通常复用几何缓存，抽样、视口显露和动画的处理边界见[数据更新与性能](chart-rendering.md#数据更新与性能边界)。
 
 ## 十字准线与多系列提示
 

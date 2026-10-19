@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Adds NavPage navigation with retained card tabs, optional right header and compiled model bindings. Adds tab icons, pinned pages and close menus; pinned pages cannot move or close. Animates NavMenu expansion. Separates MultiSelectBox search from source/subscription rebuilds and adds WorkflowEditor graph indexes, viewport caches and safe offscreen view recycling. Contains popup wheel, touch and inertia input without scrolling outer pages. Requires .NET 10 and Avalonia 12.1.4; upgrade TheOne.Avalonia.DataGrid to the same preview version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Adds QRCode and report QR elements with stable field binding and vector PDF output. Hardens report data-source steps, table-column editing and transactional PDF saves. Adds bound multi-select workflow identities, consistent property templates, compact node items and resizable side panels. Optimizes Gantt single-task updates and chart subscriptions, sampling and drawing caches; remaining ScatterChart raster p99 limits are documented. Uses explicit compiled bindings and removes historical preview test startup branches. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.6. NuGet upload is manual.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -26,6 +26,7 @@
         <PackageReference Include="Avalonia.Skia" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)"/>
         <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Net.Codecrete.QrCodeGenerator" Version="3.2.1"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -22,42 +22,42 @@
                 <TextBlock Text="显示位置" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Positions}"
-                    SelectedItem="{Binding Position, Mode=TwoWay}" />
+                    ItemsSource="{CompiledBinding Positions}"
+                    SelectedItem="{CompiledBinding Position, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="6">
                 <TextBlock Text="停留秒数" />
                 <NumericUpDown
                     Increment="0.5"
-                    IsEnabled="{Binding AutoClose}"
+                    IsEnabled="{CompiledBinding AutoClose}"
                     Maximum="120"
                     Minimum="0.1"
-                    Value="{Binding Seconds, Mode=TwoWay}" />
+                    Value="{CompiledBinding Seconds, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="2" Spacing="6">
                 <TextBlock Text="同时显示上限" />
                 <NumericUpDown
                     Maximum="10"
                     Minimum="1"
-                    Value="{Binding Maximum, Mode=TwoWay}" />
+                    Value="{CompiledBinding Maximum, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-        <CheckBox Content="自动关闭" IsChecked="{Binding AutoClose, Mode=TwoWay}" />
+        <CheckBox Content="自动关闭" IsChecked="{CompiledBinding AutoClose, Mode=TwoWay}" />
         <WrapPanel>
             <Button
                 Classes="primary"
-                Command="{Binding NotificationCommand}"
+                Command="{CompiledBinding NotificationCommand}"
                 Content="发送通知"
                 Margin="0,0,12,0"
                 Name="ShowMessage" />
             <Button
                 Classes="ghost"
-                Command="{Binding CloseNotificationCommand}"
+                Command="{CompiledBinding CloseNotificationCommand}"
                 Content="关闭全部" />
         </WrapPanel>
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="{Binding Status}"
+            Text="{CompiledBinding Status}"
             TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

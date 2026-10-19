@@ -6,10 +6,10 @@
 
     <MenuFlyout Placement="Bottom" x:Key="One.SelectableTextBlock.ContextFlyout">
         <MenuItem
-            Command="{Binding $parent[SelectableTextBlock].Copy}"
+            Command="{CompiledBinding $parent[SelectableTextBlock].Copy}"
             Header="{DynamicResource StringTextFlyoutCopyText}"
             InputGesture="{x:Static TextBox.CopyGesture}"
-            IsEnabled="{Binding $parent[SelectableTextBlock].CanCopy}" />
+            IsEnabled="{CompiledBinding $parent[SelectableTextBlock].CanCopy}" />
     </MenuFlyout>
     <ControlTheme TargetType="SelectableTextBlock" x:Key="{x:Type SelectableTextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />

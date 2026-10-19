@@ -1,5 +1,7 @@
 # Default colors and control appearances
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/theme-colors.md) · **English**
 
 This page describes the default palette. See [ThemeColorPicker / ThemeButton](theme-color-picker.md) for nine additional palettes, the palette dropdown, and independent Light / Dark switching.
@@ -115,9 +117,7 @@ Choose one primary appearance class per control; avoid mutually exclusive combin
 
 Default chart brushes map to `One.Chart.Series1..6`, cycling after six. For many categories, combine colors with legends, marks, and line styles rather than relying on color alone. `ChartSeries.Brush` wins; `FifthBrush` / `SixthBrush` can be overridden and exported like the original four.
 
-Appearances are shown on their existing control pages, with no separate theme-preview page. Checks / targeted rendering: [preview entry points](../../../design/PreviewHost/Program.cs). Contrast results: [contrast-report.json](../contrast-report.json).
-
-`underlined` input focus uses a 2 px bottom line; validation still uses Danger and disabled baselines retain InputLine. Editable ComboBox uses one outer baseline, with no separate editor outline; its focus and validation overlays share the baseline color. NumericUpDown spin buttons stay borderless in this variant. PreviewHost's `--verify-underlined-inputs [output]` checks TextBox, editable/noneditable ComboBox, and AutoCompleteBox independently of other controls. Selected `pills` headers use Accent / OnAccent. `cards` only changes ListBox native container spacing, radii, and borders, retaining VirtualizingStackPanel. `outlined` cards keep content slots, separators, and subtle footer color differences.
+Appearances are shown on their existing control pages, with no separate theme-preview page. Contrast results: [contrast-report.json](../contrast-report.json).
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

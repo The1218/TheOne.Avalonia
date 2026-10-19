@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Media.TextFormatting;
 
 namespace TheOne.Avalonia.Controls;
 
@@ -11,7 +12,7 @@ public partial class ChartBase
     private readonly Dictionary<(int Series, int Index), Rect> _bars = [];
     private readonly Dictionary<(int Series, int Index), Point> _normalizedPositions = [];
     private readonly Dictionary<(int X, int Y), List<(int Series, int Index)>> _numericHitBuckets = [];
-    private readonly Dictionary<(int Series, int Index), double> _percentages = [];
+    private Dictionary<(int Series, int Index), double> _percentages = [];
     private CartesianFrame? _cartesianFrame;
     private Rect _cartesianPlot;
 
@@ -25,25 +26,33 @@ public partial class ChartBase
         }
 
         if (_cartesianFrame is not { } frame) return;
+        if (IsScatterCartesian) _scatterUsedMarkerBrushes?.Clear();
         foreach (var line in frame.Lines)
         {
             if (line.Kind == 0 && !ShowGrid) continue;
-            context.DrawLine(new Pen(line.Kind == 2 ? MutedBrush : GridBrush ?? MutedBrush), line.Start, line.End);
+            var brush = line.Kind == 2 ? MutedBrush : GridBrush ?? MutedBrush;
+            var pen = IsScatterCartesian ? ScatterFramePen(frame, line.Kind == 2 ? 1 : 0, brush, 1) : new Pen(brush);
+            context.DrawLine(pen, line.Start, line.End);
         }
 
         foreach (var label in frame.Labels)
             if (label.Clip is { } rect)
             {
                 using var clip = context.PushClip(rect);
-                context.DrawText(Text(label.Value, label.Title ? Foreground : MutedBrush), label.Position);
+                DrawCartesianText(context, frame, label.Value, label.Title ? Foreground : MutedBrush, label.Position);
             }
             else
             {
-                context.DrawText(Text(label.Value, label.Title ? Foreground : MutedBrush), label.Position);
+                DrawCartesianText(context, frame, label.Value, label.Title ? Foreground : MutedBrush, label.Position);
             }
 
         using var plotClip = context.PushClip(CartesianDataClip);
         DrawAnimatedCartesianData(context, frame);
+        if (IsScatterCartesian)
+        {
+            TrimScatterMarkerBrushes();
+            TrimScatterTextFrames();
+        }
     }
 
     private void DrawCartesianData(DrawingContext context, CartesianFrame frame)
@@ -54,7 +63,7 @@ public partial class ChartBase
             var radius = frame.Stacked || bar.Zero ? 0 : Math.Min(3, Math.Min(bar.Bounds.Width, bar.Bounds.Height) / 4);
             context.DrawRectangle(brush, null, bar.Bounds, radius, radius);
             if (!ShowDataLabels || bar.Label is null || bar.Zero) continue;
-            var text = Text(bar.Label, Background);
+            var text = CartesianText(frame, bar.Label, Background);
             if (text.Width + 8 <= bar.Bounds.Width && text.Height + 4 <= bar.Bounds.Height)
                 context.DrawText(text,
                     new Point(bar.Bounds.Center.X - text.Width / 2, bar.Bounds.Center.Y - text.Height / 2));
@@ -62,16 +71,18 @@ public partial class ChartBase
 
         foreach (var series in frame.Series)
         {
+            if (IsScatterCartesian && TryDrawScatterMarkers(context, series)) continue;
             var brush = series.Brush;
             var pen = new Pen(brush, StrokeThickness);
             foreach (var segment in series.Segments)
             {
                 using (context.PushClip(_cartesianPlot))
                 {
-                    if (series.Area) DrawAreaBand(context, segment.Points, brush, pen, segment.Smooth);
-                    else if (DrawsLineCartesian) DrawLineSegment(context, segment.Points, pen, segment.Smooth);
+                    if (series.Area) DrawAreaBand(context, segment, brush, pen);
+                    else if (DrawsLineCartesian) DrawLineSegment(context, segment, pen);
                 }
 
+                if (!IsScatterCartesian && !ShowMarkers) continue;
                 foreach (var point in segment.Points)
                 {
                     if (!_cartesianPlot.Contains(point.Position)) continue;
@@ -82,14 +93,14 @@ public partial class ChartBase
             }
         }
 
-        foreach (var label in frame.DataLabels) context.DrawText(Text(label.Value, label.Brush), label.Bounds.TopLeft);
+        foreach (var label in frame.DataLabels) DrawCartesianText(context, frame, label.Value, label.Brush, label.Bounds.TopLeft);
     }
 
     private protected void BuildCartesianFrame(Rect bounds)
     {
+        _cartesianFullBuilds++;
         _bars.Clear();
         _normalizedPositions.Clear();
-        _percentages.Clear();
         _numericHitBuckets.Clear();
         _barCategories.Clear();
         ResetSharedIndex();
@@ -101,66 +112,21 @@ public partial class ChartBase
             return;
         }
 
-        var visible = Enumerable.Range(0, source.Count)
-            .Where(i => source[i].IsVisible && source[i].ItemsSource is { Count: > 0 }).ToArray();
+        var data = _cartesianData ??= new CartesianDataCache(this, source);
+        _percentages = data.Percentages;
+        var visible = data.Visible;
         if (visible.Length == 0)
         {
             SetSamplingDiagnostics(0, false);
             return;
         }
-
         var categorical = IsCategoricalCartesian;
         var horizontal = IsHorizontalCartesian;
         var stacked = IsStackedCartesian;
         var area = IsAreaCartesian;
-        var count = visible.Max(i => source[i].ItemsSource!.Count);
-        var stacks = stacked ? BuildStacks(visible, count) : null;
-        var xMin = double.PositiveInfinity;
-        var xMax = double.NegativeInfinity;
-        var minima = new[] { double.PositiveInfinity, double.PositiveInfinity };
-        var maxima = new[] { double.NegativeInfinity, double.NegativeInfinity };
-        foreach (var s in visible)
-        {
-            var axis = (int)source[s].YAxis;
-            var points = source[s].ItemsSource!;
-            for (var i = 0; i < points.Count; i++)
-            {
-                var point = points[i];
-                if (!IsValid(point) || (stacked && !stacks!.ContainsKey((s, i)))) continue;
-                xMin = Math.Min(xMin, point.X);
-                xMax = Math.Max(xMax, point.X);
-                var valueTop = stacked ? stacks![(s, i)].Top : point.Y;
-                minima[axis] = Math.Min(minima[axis], valueTop);
-                maxima[axis] = Math.Max(maxima[axis], valueTop);
-            }
-        }
-
-        var ranges = new AxisRange[2];
-        var validAxes = new bool[2];
-        for (var axis = 0; axis < 2; axis++)
-        {
-            if (!double.IsFinite(minima[axis])) continue;
-            if (IsPercentCartesian)
-            {
-                ranges[axis] = new AxisRange(minima[axis] < 0 ? -1 : 0, maxima[axis] > 0 || minima[axis] >= 0 ? 1 : 0);
-            }
-            else
-            {
-                if (categorical || area)
-                {
-                    minima[axis] = Math.Min(minima[axis], 0);
-                    maxima[axis] = Math.Max(maxima[axis], 0);
-                }
-
-                ranges[axis] = ExpandRange(minima[axis], maxima[axis]);
-                var minimum = axis == 0 ? YMinimum : SecondaryYMinimum;
-                var maximum = axis == 0 ? YMaximum : SecondaryYMaximum;
-                if (!double.IsNaN(minimum)) ranges[axis] = ranges[axis] with { Minimum = minimum };
-                if (!double.IsNaN(maximum)) ranges[axis] = ranges[axis] with { Maximum = maximum };
-            }
-
-            validAxes[axis] = ranges[axis].Maximum > ranges[axis].Minimum;
-        }
+        var count = data.Count;
+        var stacks = data.Stacks;
+        var (ranges, validAxes) = ResolveCartesianRanges(data.Extents);
 
         if (!validAxes.Any(valid => valid))
         {
@@ -168,7 +134,7 @@ public partial class ChartBase
             return;
         }
 
-        var xRange = ExpandRange(xMin, xMax);
+        var xRange = ExpandRange(data.Extents.XMin, data.Extents.XMax);
         var viewport = GetCartesianViewport();
         var secondaryShown = validAxes[1] && ShowSecondaryAxis;
         // Margins use full extents and remain stable while the viewport changes.
@@ -191,7 +157,8 @@ public partial class ChartBase
             return;
         }
 
-        var frame = _cartesianFrame = new CartesianFrame(viewport, count, categorical, horizontal, stacked);
+        var frame = _cartesianFrame = new CartesianFrame(viewport, count, categorical, horizontal, stacked)
+            { XRange = xRange, Ranges = ranges, ValidAxes = validAxes };
         frame.Identity = 14695981039346656037UL;
         foreach (var s in visible)
         {
@@ -202,9 +169,6 @@ public partial class ChartBase
 
         PrepareCartesianAxes(frame, bounds, xRange, ranges, validAxes, secondaryShown, visible[0]);
         var axisSlots = Enumerable.Range(0, 2).Where(axis => validAxes[axis]).ToArray();
-        var rendered = 0;
-        var originalNumeric = 0;
-        var sampledNumeric = 0;
         for (var slot = 0; slot < visible.Length; slot++)
         {
             var s = visible[slot];
@@ -224,10 +188,7 @@ public partial class ChartBase
             void FinishSegment()
             {
                 if (segment.Count == 0) return;
-                originalNumeric += segment.Count;
-                var sampled = SampleSeriesPoints(s, segment, plot);
-                sampledNumeric += sampled.Count;
-                rendered += sampled.Count;
+                var sampled = SampleSeriesPoints(s, segment, plot, out var sampleIndex);
                 if (sampled.Count > 0)
                 {
                     var ascending = true;
@@ -238,9 +199,12 @@ public partial class ChartBase
                         descending &= points[segment[n].Index].X < points[segment[n - 1].Index].X;
                     }
 
-                    seriesFrame.Segments.Add(new CartesianSegment(sampled, ascending || descending));
+                    var prepared = new CartesianSegment(sampled, ascending || descending)
+                        { Originals = segment, BasePoints = sampled, SampleIndex = sampleIndex };
+                    SelectSegmentSample(prepared, s, SelectedSeriesIndex, SelectedIndex, IsScatterCartesian);
+                    seriesFrame.Segments.Add(prepared);
                     if (ShowDataLabels)
-                        foreach (var p in sampled)
+                        foreach (var p in prepared.Points)
                             if (p.Index % labelStep == 0)
                                 seriesFrame.Labels[p.Index] = CartesianDataLabel(s, p.Index);
                 }
@@ -295,9 +259,9 @@ public partial class ChartBase
                             : bar;
                     if (!_barCategories.TryGetValue(i, out var categoryBars)) _barCategories[i] = categoryBars = [];
                     categoryBars.Add((s, i));
+                    frame.BarSlots[(s, i)] = frame.Bars.Count;
                     frame.Bars.Add(new CartesianBar(s, i, bar, zero,
                         ShowDataLabels && i % labelStep == 0 ? CartesianDataLabel(s, i) : null, SeriesBrush(s)));
-                    rendered++;
                 }
                 else
                 {
@@ -323,92 +287,47 @@ public partial class ChartBase
 
         FinishSharedIndex();
         PrepareCartesianDataLabels(frame);
-        SetSamplingDiagnostics(rendered, sampledNumeric < originalNumeric);
+        PublishFrameSampling(frame);
     }
 
-    private Dictionary<(int Series, int Index), StackValue> BuildStacks(int[] visible, int count)
+    private void PublishFrameSampling(CartesianFrame frame)
     {
-        var result = new Dictionary<(int Series, int Index), StackValue>();
-        var positive = new[] { new double[count], new double[count] };
-        var negative = new[] { new double[count], new double[count] };
-        var canonical = new[]
-            { Enumerable.Repeat(double.NaN, count).ToArray(), Enumerable.Repeat(double.NaN, count).ToArray() };
-        if (IsStackedAreaCartesian)
-            foreach (var s in visible)
-            {
-                var axis = (int)SeriesSource![s].YAxis;
-                var points = SeriesSource[s].ItemsSource!;
-                for (var i = 0; i < points.Count; i++)
-                    if (double.IsNaN(canonical[axis][i]) && double.IsFinite(points[i].X))
-                        canonical[axis][i] = points[i].X;
-            }
-
-        bool Valid(int s, int i, ChartPoint point)
+        var rendered = frame.Bars.Count;
+        var originals = rendered;
+        foreach (var series in frame.Series)
+        foreach (var segment in series.Segments)
         {
-            return IsValid(point) && (!IsStackedAreaCartesian || point.X == canonical[(int)SeriesSource![s].YAxis][i]);
+            rendered += segment.Points.Count;
+            originals += segment.Originals?.Count ?? segment.Points.Count;
         }
+        SetSamplingDiagnostics(rendered, rendered < originals);
+    }
 
-        var positiveMax = new[] { new double[count], new double[count] };
-        var negativeMax = new[] { new double[count], new double[count] };
-        var positiveTotal = new[] { new double[count], new double[count] };
-        var negativeTotal = new[] { new double[count], new double[count] };
-        if (IsPercentCartesian)
+    private void RefreshCartesianLabels(CartesianFrame frame)
+    {
+        foreach (var series in frame.Series)
         {
-            // Maximum-first sums normalize several MaxValue contributions without overflow.
-            foreach (var s in visible)
-            {
-                var axis = (int)SeriesSource![s].YAxis;
-                var points = SeriesSource[s].ItemsSource!;
-                for (var i = 0; i < points.Count; i++)
-                    if (Valid(s, i, points[i]))
-                    {
-                        var maxima = points[i].Y >= 0 ? positiveMax : negativeMax;
-                        maxima[axis][i] = Math.Max(maxima[axis][i], Math.Abs(points[i].Y));
-                    }
-            }
-
-            foreach (var s in visible)
-            {
-                var axis = (int)SeriesSource![s].YAxis;
-                var points = SeriesSource[s].ItemsSource!;
-                for (var i = 0; i < points.Count; i++)
-                    if (Valid(s, i, points[i]) && points[i].Y != 0)
-                    {
-                        var maxima = points[i].Y > 0 ? positiveMax : negativeMax;
-                        var totals = points[i].Y > 0 ? positiveTotal : negativeTotal;
-                        totals[axis][i] += Math.Abs(points[i].Y) / maxima[axis][i];
-                    }
-            }
+            series.Labels.Clear();
+            if (!ShowDataLabels) continue;
+            foreach (var segment in series.Segments)
+            foreach (var point in segment.Points)
+                if (point.Index % series.LabelStep == 0)
+                    series.Labels[point.Index] = CartesianDataLabel(series.Series, point.Index);
         }
+        frame.DataLabels.Clear();
+        frame.DataLabelBounds.Clear();
+        PrepareCartesianDataLabels(frame);
+    }
 
-        foreach (var s in visible)
-        {
-            var axis = (int)SeriesSource![s].YAxis;
-            var points = SeriesSource[s].ItemsSource!;
-            for (var i = 0; i < points.Count; i++)
-            {
-                var point = points[i];
-                if (!Valid(s, i, point)) continue;
-                var value = point.Y;
-                if (IsPercentCartesian)
-                {
-                    var maxima = value >= 0 ? positiveMax : negativeMax;
-                    var totals = value >= 0 ? positiveTotal : negativeTotal;
-                    value = value == 0 ? 0 : Math.CopySign(Math.Abs(value) / maxima[axis][i] / totals[axis][i], value);
-                    _percentages[(s, i)] = value;
-                }
-
-                var basis = value >= 0 ? positive[axis][i] : negative[axis][i];
-                var sum = basis + value;
-                if (IsPercentCartesian) sum = Math.Clamp(sum, -1, 1);
-                else if (!double.IsFinite(sum)) sum = value >= 0 ? double.MaxValue : -double.MaxValue;
-                result[(s, i)] = new StackValue(basis, sum);
-                if (value >= 0) positive[axis][i] = sum;
-                else negative[axis][i] = sum;
-            }
-        }
-
-        return result;
+    private FormattedText CartesianText(CartesianFrame frame, string value, IBrush? brush)
+    {
+        var key = (value, brush);
+        if (frame.Texts.TryGetValue(key, out var text)) return text;
+        // Bound user-provided strings retained by a long-lived incremental frame.
+        if (frame.Texts.Count >= 512) frame.Texts.Clear();
+        text = Text(value, brush);
+        frame.Texts.Add(key, text);
+        return text;
     }
 
     private bool HasCanonicalStackX(int seriesIndex, int pointIndex)
@@ -496,41 +415,49 @@ public partial class ChartBase
         return plot.Top + ViewRatio(normalized, viewport.Top, viewport.Height) * plot.Height;
     }
 
-    private void DrawLineSegment(DrawingContext context, IReadOnlyList<ChartRenderPoint> points, Pen pen, bool smooth)
+    private void DrawLineSegment(DrawingContext context, CartesianSegment segment, Pen pen)
     {
+        var points = segment.Points;
         if (points.Count < 2) return;
-        var geometry = new StreamGeometry();
-        using (var path = geometry.Open())
+        if (segment.LineGeometry is null)
         {
-            path.BeginFigure(points[0].Position, false);
-            AppendCurve(path, points, smooth);
-            path.EndFigure(false);
+            var geometry = new StreamGeometry();
+            using (var path = geometry.Open())
+            {
+                path.BeginFigure(points[0].Position, false);
+                AppendCurve(path, points, segment.Smooth);
+                path.EndFigure(false);
+            }
+            segment.LineGeometry = geometry;
         }
-
-        context.DrawGeometry(null, pen, geometry);
+        context.DrawGeometry(null, pen, segment.LineGeometry);
     }
 
-    private void DrawAreaBand(DrawingContext context, IReadOnlyList<ChartRenderPoint> points, IBrush brush, Pen pen,
-        bool smooth)
+    private void DrawAreaBand(DrawingContext context, CartesianSegment segment, IBrush brush, Pen pen)
     {
+        var points = segment.Points;
         if (points.Count < 2) return;
-        var fill = new StreamGeometry();
-        using (var path = fill.Open())
+        if (segment.FillGeometry is null)
         {
-            path.BeginFigure(points[0].Baseline);
-            path.LineTo(points[0].Position);
-            AppendCurve(path, points, smooth);
-            path.LineTo(points[^1].Baseline);
-            AppendCurve(path, points, smooth, true, true);
-            path.EndFigure(true);
+            var fill = new StreamGeometry();
+            using (var path = fill.Open())
+            {
+                path.BeginFigure(points[0].Baseline);
+                path.LineTo(points[0].Position);
+                AppendCurve(path, points, segment.Smooth);
+                path.LineTo(points[^1].Baseline);
+                AppendCurve(path, points, segment.Smooth, true, true);
+                path.EndFigure(true);
+            }
+            segment.FillGeometry = fill;
         }
 
         using (context.PushOpacity(IsStackedAreaCartesian ? 0.28 : 0.16))
         {
-            context.DrawGeometry(brush, null, fill);
+            context.DrawGeometry(brush, null, segment.FillGeometry);
         }
 
-        DrawLineSegment(context, points, pen, smooth);
+        DrawLineSegment(context, segment, pen);
     }
 
     private void PrepareCartesianAxes(CartesianFrame frame, Rect bounds, AxisRange xRange, AxisRange[] ranges,
@@ -769,7 +696,18 @@ public partial class ChartBase
 
     private readonly record struct CartesianLine(Point Start, Point End, int Kind);
 
-    private sealed record CartesianSegment(IReadOnlyList<ChartRenderPoint> Points, bool Smooth);
+    private sealed class CartesianSegment(IReadOnlyList<ChartRenderPoint> points, bool smooth)
+    {
+        public IReadOnlyList<ChartRenderPoint> Points { get; set; } = points;
+        public bool Smooth { get; } = smooth;
+        public List<ChartRenderPoint>? Originals { get; init; }
+        public IReadOnlyList<ChartRenderPoint>? BasePoints { get; set; }
+        public SegmentSampleIndex? SampleIndex { get; init; }
+        public ScatterMarkerSnapshot? ScatterMarkers { get; set; }
+        public ScatterMarkerOperation? ScatterOperation { get; set; }
+        public StreamGeometry? LineGeometry { get; set; }
+        public StreamGeometry? FillGeometry { get; set; }
+    }
 
     private sealed record CartesianSeriesFrame(
         int Series,
@@ -778,7 +716,10 @@ public partial class ChartBase
         int LabelStep,
         IBrush Brush,
         Dictionary<int, string> Labels,
-        List<CartesianSegment> Segments);
+        List<CartesianSegment> Segments)
+    {
+        public ScatterMarkerPaint? ScatterPaint { get; set; }
+    }
 
     private sealed class CartesianFrame(Rect viewport, int count, bool categorical, bool horizontal, bool stacked)
     {
@@ -788,11 +729,18 @@ public partial class ChartBase
         public bool Horizontal { get; } = horizontal;
         public bool Stacked { get; } = stacked;
         public ulong Identity { get; set; }
+        public AxisRange XRange { get; init; }
+        public AxisRange[] Ranges { get; init; } = [];
+        public bool[] ValidAxes { get; init; } = [];
+        public Dictionary<(int Series, int Index), int> BarSlots { get; } = [];
         public List<CartesianBar> Bars { get; } = [];
         public List<CartesianSeriesFrame> Series { get; } = [];
         public List<CartesianLabel> Labels { get; } = [];
         public List<CartesianLine> Lines { get; } = [];
         public List<PreparedDataLabel> DataLabels { get; } = [];
         public Dictionary<(int Series, int Index), Rect> DataLabelBounds { get; } = [];
+        public Dictionary<(string, IBrush?), FormattedText> Texts { get; } = [];
+        public Pen?[]? ScatterPens { get; set; }
+        public Dictionary<(string, IBrush?), TextLayout>? ScatterTexts { get; set; }
     }
 }

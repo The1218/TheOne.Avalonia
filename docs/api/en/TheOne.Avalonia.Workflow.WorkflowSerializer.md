@@ -17,7 +17,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static string WorkflowSerializer.Save(WorkflowDocument document)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L9) | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
-| [`static WorkflowDocument WorkflowSerializer.Load(string json)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L23) | Loads a typed business document from JSON under its version/field/structure validation contract. |
+| [`static WorkflowDocument WorkflowSerializer.Load(string json)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L30) | Loads a typed business document from JSON under its version/field/structure validation contract. |
 
 ## Related APIs and built-in models
 

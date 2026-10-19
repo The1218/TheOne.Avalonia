@@ -64,7 +64,7 @@
                                 Content="{TemplateBinding Content}"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 Focusable="False"
-                                FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize}"
+                                FontSize="{CompiledBinding #PART_PrimaryButton.((SplitButton)TemplatedParent).FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
                                 Foreground="{TemplateBinding Foreground}"
                                 HorizontalAlignment="Stretch"
@@ -73,7 +73,7 @@
                                 MinHeight="0"
                                 MinWidth="0"
                                 Name="PART_PrimaryButton"
-                                Padding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding}"
+                                Padding="{CompiledBinding #PART_PrimaryButton.((SplitButton)TemplatedParent).Padding}"
                                 Theme="{StaticResource One.SplitButton.Part}"
                                 VerticalAlignment="Stretch"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />

@@ -1,5 +1,7 @@
 # ThemeColorPicker and Light / Dark switching
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/theme-color-picker.md) · **English**
 
 Palette and mode are independent settings: `OneTheme.ColorTheme` selects `One.*` color resources; `RequestedThemeVariant` selects Light / Dark. `ThemeColorPicker` specializes native ComboBox, while `ThemeButton` is a ToggleButton with built-in icons.
@@ -97,20 +99,7 @@ Changing the base class from Button to ToggleButton is an inheritance change. St
 
 PreviewHost opens the standalone top-level Home item by default. The top ThemeColorPicker selects resources; the title-bar ThemeButton switches Light / Dark only. Home snippets use the `TheOne.Avalonia.CodeEditor` NuGet package for read-only highlighting, wrapping, and copying. Expand each page's source panel to switch between its AXAML, C#, and related VM files. Sources are embedded, requiring no local repository path; the panel loads on demand in a bounded viewport.
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/theme-code/artifacts
-# Run each command against PreviewHost.dll from those artifacts:
-dotnet <PreviewHost.dll> --verify-theme-colors .preview/theme-code/palettes
-dotnet <PreviewHost.dll> --verify-preview-code .preview/theme-code/code
-dotnet <PreviewHost.dll> --verify-home .preview/theme-code/home
-# Focused enum API, compiled-binding, and switching-performance checks:
-dotnet <PreviewHost.dll> --verify-theme-api
-dotnet <PreviewHost.dll> --verify-theme-performance .preview/theme-api/optimized.json
-```
-
 These scoped checks cover the palette selector, ThemeButton, code panel, and Home navigation, including native input, live resources, Light / Dark, densities, narrow viewports, and actual rendering. They do not run other controls' full regression suites.
-
-For native consumption, publish the existing NativeAotSmoke project with `ThemeOnlyPreview=true`, `PublishAot=true`, and `PublishTrimmed=true`, then run with `--require-aot`. This executes only enum selector and compiled-binding checks.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

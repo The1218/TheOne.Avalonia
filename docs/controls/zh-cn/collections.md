@@ -1,5 +1,7 @@
 # 列表、树、标签与表格
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/collections.md)
 
 [返回控件文档](README.md)。视图绑定需有对应的 ViewModel 和 `x:DataType`；扩展使用 `xmlns:one="using:TheOne.Avalonia.Controls"`。
@@ -162,8 +164,6 @@ DocumentsTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
 
 `HasUnsavedChanges` 为业务模型属性。需要异步确认时先取消当前关闭，再由宿主确认并更新集合。默认关闭 / 排序要求可修改的 IList；只读或定长集合不能默认删除或排序，可由 CloseCommand 更新来源。
 
-快捷键：Ctrl / macOS ⌘ + W 关闭当前项，Ctrl / ⌘ + Shift + ← / → 排序，Esc 取消拖动。关闭后选择相邻项；排序保留选中模型。Card 颜色可覆盖 One.CardTabStrip、One.CardTabBorder、One.CardTabHover。完整演示见 [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml) 与 [CardTabPreview.cs](../../../design/PreviewHost/Verification/Basic/CardTabPreview.cs)。
-
 ## DataGrid
 
 类库引用基于 `Avalonia.Controls.DataGrid` 12.1.2 的原生布局源码扩展，应用加载 OneTheme 即可使用。核心 Avalonia 保持 12.1.4。
@@ -198,8 +198,7 @@ DataGrid 保留官方 DataGridRowsPresenter / DataGridCellsPresenter、冻结列
 
 ## 大数据验证
 
-PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节点、建议列表、标签和右键菜单，并显示实际容器数量。按[预览专项入口](../../../design/PreviewHost/Program.cs)选择覆盖远距离操作、回收、导航和选择的检查；DataGrid 有独立专项。维护集合模板时，应同时观察实际容器数量和远处项操作，不能仅检查 ItemsPanel 的类型。
-
+PreviewHost 的“大数据虚拟化”页展示万项列表、树根与子节点、建议列表、标签和右键菜单，并显示实际容器数量。 维护集合模板时，应同时观察实际容器数量和远处项操作，不能仅检查 ItemsPanel 的类型。
 
 ## TabStrip 独立标签导航
 
@@ -240,8 +239,7 @@ if (SectionTabs.ContainerFromIndex(SectionTabs.SelectedIndex) is TabStripItem it
 
 PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器计数、目标定位、末项和启用切换。
 
-
-轮播与刷新见[Carousel／Refresh](collection-content.md)。验证范围与命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+轮播与刷新见[Carousel／Refresh](collection-content.md)。
 
 ## 外观类
 

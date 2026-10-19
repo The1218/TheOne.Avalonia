@@ -1,5 +1,7 @@
 # 文本展示与字段标签
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/text-display.md)
 
 TextBlock 用于普通只读文字；SelectableTextBlock 用于需要选择和复制的只读内容；Label 用于关联输入控件的字段标题。三者加载 OneTheme 后使用统一文字色、字体和继承的尺寸。
@@ -20,8 +22,6 @@ TextBlock 和 SelectableTextBlock 支持 Text、Inlines、TextWrapping、TextTri
 SelectableTextBlock 保留原生 SelectionStart / SelectionEnd、SelectedText、鼠标选择及平台复制快捷键。文本变化后选择范围由原生控件校正；需要编辑时使用 TextBox。SelectionBrush 映射 One.TextSelection；SelectionForegroundBrush 默认为空，保留各 Inline 的文字格式，也可局部覆盖。明暗切换保留选择范围。
 
 small / normal / large 正文字号为 12 / 14 / 16 px，Label 与输入行共享最小高度。显式 FontSize、LineHeight 等局部值优先。不要为只读段落固定单行 Height，以免换行或字体缩放被裁切。
-
-预览位于文本／数据展示组合页；`--verify-text-alignment` 验证字段关联、实际选择、范围校正和主题／尺寸切换。复制访问系统剪贴板的行为仍需在目标桌面宿主验证。输入控件见[基础控件](basic.md)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

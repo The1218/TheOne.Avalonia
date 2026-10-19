@@ -11,6 +11,64 @@ public enum ChartSamplingMode
 
 public partial class ChartBase
 {
+    private void PreserveSelectedSample(ChartSelection? selection)
+    {
+        if (_geometryDirty || _cartesianFrame is not { Categorical: false } frame) return;
+        var changed = false;
+        foreach (var series in frame.Series)
+        foreach (var segment in series.Segments)
+            changed |= SelectSegmentSample(segment, series.Series, selection?.SeriesIndex ?? -1, selection?.PointIndex ?? -1, IsScatterCartesian);
+        if (!changed) return;
+        RefreshCartesianLabels(frame);
+        PublishFrameSampling(frame);
+        InvalidateVisual();
+    }
+
+    private static bool SelectSegmentSample(CartesianSegment segment, int series, int selectedSeries, int selectedIndex, bool scatter = false)
+    {
+        if (segment.Originals is not { } originals || segment.BasePoints is not { } baseline ||
+            ReferenceEquals(originals, baseline)) return false;
+        IReadOnlyList<ChartRenderPoint> next = baseline;
+        if (series == selectedSeries && FindPoint(originals, selectedIndex) is var original && original >= 0 &&
+            FindPoint(baseline, selectedIndex) < 0)
+        {
+            // The base sample is selection-independent. Keep exactly one extra original.
+            if (scatter)
+            {
+                next = segment.Points is ScatterSelectedSample current && ReferenceEquals(current.Baseline, baseline) &&
+                       current.Selected == originals[original]
+                    ? current : new ScatterSelectedSample(baseline, originals[original]);
+            }
+            else
+            {
+                var insertion = 0;
+                while (insertion < baseline.Count && baseline[insertion].Index < selectedIndex) insertion++;
+                var points = new ChartRenderPoint[baseline.Count + 1];
+                for (var i = 0; i < insertion; i++) points[i] = baseline[i];
+                points[insertion] = originals[original];
+                for (var i = insertion; i < baseline.Count; i++) points[i + 1] = baseline[i];
+                next = points;
+            }
+        }
+        if (ReferenceEquals(segment.Points, next)) return false;
+        segment.Points = next;
+        segment.LineGeometry = null;
+        segment.FillGeometry = null;
+        return true;
+    }
+
+    private static int FindPoint(IReadOnlyList<ChartRenderPoint> points, int index)
+    {
+        var low = 0; var high = points.Count;
+        while (low < high)
+        {
+            var middle = low + (high - low) / 2;
+            if (points[middle].Index < index) low = middle + 1;
+            else high = middle;
+        }
+        return low < points.Count && points[low].Index == index ? low : -1;
+    }
+
     public static readonly StyledProperty<ChartSamplingMode> SamplingModeProperty =
         AvaloniaProperty.Register<ChartBase, ChartSamplingMode>(nameof(SamplingMode), ChartSamplingMode.MinMax,
             validate: value => value is ChartSamplingMode.None or ChartSamplingMode.MinMax);
@@ -31,7 +89,7 @@ public partial class ChartBase
     private (int Count, bool Active) _pendingSamplingDiagnostics;
     private int _renderedPointCount;
     private bool _samplingActive;
-    private bool _samplingReduced;
+    private long _samplingRevision;
 
     public ChartSamplingMode SamplingMode
     {
@@ -57,14 +115,15 @@ public partial class ChartBase
 
     private void SetSamplingDiagnostics(int count, bool active)
     {
+        _samplingRevision++;
         if (_isExportSnapshot)
         {
             _renderedPointCount = count;
-            _samplingActive = active || _samplingReduced;
+            _samplingActive = active;
             return;
         }
 
-        _pendingSamplingDiagnostics = (count, active || _samplingReduced);
+        _pendingSamplingDiagnostics = (count, active);
         // A binding listener may update the chart; Avalonia forbids that inside a render pass.
         if (_rendering)
         {
@@ -88,17 +147,23 @@ public partial class ChartBase
     {
         var pending = _pendingSamplingDiagnostics;
         var version = _geometryVersion;
+        var revision = _samplingRevision;
         SetAndRaise(RenderedPointCountProperty, ref _renderedPointCount, pending.Count);
-        if (version == _geometryVersion) SetAndRaise(SamplingActiveProperty, ref _samplingActive, pending.Active);
+        if (version == _geometryVersion && revision == _samplingRevision)
+            SetAndRaise(SamplingActiveProperty, ref _samplingActive, pending.Active);
     }
 
+    private long _samplingScanPoints;
+
     private IReadOnlyList<ChartRenderPoint> SampleSeriesPoints(int seriesIndex, IReadOnlyList<ChartRenderPoint> points,
-        Rect plot)
+        Rect plot, out SegmentSampleIndex? sampleIndex)
     {
+        sampleIndex = SegmentSampleIndex.PassThrough;
         var total = SeriesSource![seriesIndex].ItemsSource!.Count;
         if (SamplingMode == ChartSamplingMode.None || total < SamplingThreshold || points.Count < 3) return points;
         var ascending = true;
         var descending = true;
+        _samplingScanPoints += points.Count - 1;
         for (var index = 1; index < points.Count; index++)
         {
             ascending &= points[index].Position.X >= points[index - 1].Position.X;
@@ -115,9 +180,12 @@ public partial class ChartBase
         var proportionalBudget = Math.Max(8, (int)Math.Ceiling(SamplingPointBudget * (double)points.Count / total));
         var bucketCount = Math.Max(1, Math.Min((int)Math.Ceiling(plot.Width), proportionalBudget / 6));
         var buckets = new Dictionary<int, SampleBucket>();
+        var finite = true;
+        _samplingScanPoints += last - first + 1;
         for (var index = first; index <= last; index++)
         {
             var point = points[index];
+            finite &= double.IsFinite(point.Position.Y) && double.IsFinite(point.Baseline.Y);
             var bucketIndex =
                 Math.Clamp((int)Math.Floor((point.Position.X - plot.Left) / Math.Max(1, plot.Width) * bucketCount), 0,
                     bucketCount - 1);
@@ -126,19 +194,11 @@ public partial class ChartBase
             else bucket.Add(index, point);
         }
 
+        // Keep the full preparation linear as an independent reference for incremental queries.
+        sampleIndex = finite ? new SegmentSampleIndex(points, first, last, buckets.Values.ToArray()) : null;
         var retained = new SortedSet<int> { first, last };
         foreach (var bucket in buckets.Values) bucket.Retain(retained);
-        if (SelectedSeriesIndex == seriesIndex && SelectedIndex >= points[first].Index &&
-            SelectedIndex <= points[last].Index)
-            for (var index = first; index <= last; index++)
-                if (points[index].Index == SelectedIndex)
-                {
-                    retained.Add(index);
-                    break;
-                }
-
         if (retained.Count >= points.Count) return points;
-        _samplingReduced = true;
         return retained.Select(index => points[index]).ToArray();
     }
 
@@ -158,6 +218,15 @@ public partial class ChartBase
 
     private sealed class SampleBucket
     {
+        public int First => _first;
+        public int Last => _last;
+
+        public void Refresh(SampleExtrema extrema)
+        {
+            _topMin = extrema.TopMin; _topMax = extrema.TopMax;
+            _baseMin = extrema.BaseMin; _baseMax = extrema.BaseMax;
+        }
+
         private readonly int _first;
         private int _last, _topMin, _topMax, _baseMin, _baseMax;
         private double _topMinimum, _topMaximum, _baseMinimum, _baseMaximum;

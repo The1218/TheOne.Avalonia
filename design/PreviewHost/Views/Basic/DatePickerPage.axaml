@@ -13,29 +13,29 @@
             Foreground="{DynamicResource One.Muted}"
             Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <DatePicker
                     Margin="0,0,12,12"
                     Name="ControlSample"
-                    SelectedDate="{Binding Date, Mode=TwoWay}" />
+                    SelectedDate="{CompiledBinding Date, Mode=TwoWay}" />
                 <DatePicker
                     DayVisible="False"
                     Margin="0,0,12,12"
-                    SelectedDate="{Binding Date, Mode=TwoWay}" />
+                    SelectedDate="{CompiledBinding Date, Mode=TwoWay}" />
                 <DatePicker
                     IsEnabled="False"
                     Margin="0,0,12,12"
-                    SelectedDate="{Binding Date}" />
+                    SelectedDate="{CompiledBinding Date}" />
             </WrapPanel>
         </StackPanel>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <DatePicker
                 Classes="filled"
                 Name="FilledDateSample"
-                SelectedDate="{Binding Date, Mode=TwoWay}" />
+                SelectedDate="{CompiledBinding Date, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </local:BasicControlPage>

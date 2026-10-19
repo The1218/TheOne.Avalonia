@@ -13,15 +13,15 @@
             Foreground="{DynamicResource One.Muted}"
             Text="确定进度 / 完成 / 不确定进度 · 拖动滑块调整"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <ProgressBar
                 Height="10"
                 MaxWidth="420"
                 Maximum="100"
                 Minimum="0"
                 Name="ControlSample"
-                Value="{Binding Value, Mode=TwoWay}" />
+                Value="{CompiledBinding Value, Mode=TwoWay}" />
             <ProgressBar
                 Height="16"
                 MaxWidth="420"
@@ -30,14 +30,14 @@
                 Height="10"
                 IsIndeterminate="True"
                 MaxWidth="420" />
-            <Slider MaxWidth="420" Value="{Binding Value, Mode=TwoWay}" />
+            <Slider MaxWidth="420" Value="{CompiledBinding Value, Mode=TwoWay}" />
         </StackPanel>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <ProgressBar
                 Classes="gradient"
                 MaxWidth="420"
-                Value="{Binding Value}" />
+                Value="{CompiledBinding Value}" />
             <ProgressBar
                 Classes="success"
                 MaxWidth="420"

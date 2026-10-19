@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
@@ -42,11 +41,6 @@ public partial class WorkflowEditorDemoView : UserControl
         this.FindControl<WorkflowEditor>("Editor")?.FitToView();
         this.FindControl<WorkflowEditor>("DefaultEditor")?.FitToView();
         this.FindControl<WorkflowEditor>("AssociationEditor")?.FitToView();
-    }
-
-    private void ApplyNodeTitle(object? sender, FocusChangedEventArgs e)
-    {
-        Model.ApplyTitleCommand.Execute(null);
     }
 
     private void CopyNode(object? sender, RoutedEventArgs e)

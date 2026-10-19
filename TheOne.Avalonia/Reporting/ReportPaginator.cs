@@ -1,5 +1,7 @@
 using System.Globalization;
+using Avalonia;
 using Avalonia.Media;
+using TheOne.Avalonia.Controls;
 
 namespace TheOne.Avalonia.Reporting;
 
@@ -22,7 +24,10 @@ public sealed record ReportLayoutElement(
     bool Bold,
     string Foreground,
     string Fill,
-    bool ShowBorder);
+    bool ShowBorder)
+{
+    internal QRCodeSymbol? QRCode { get; init; }
+}
 
 public sealed record ReportPage(int Number, IReadOnlyList<ReportLayoutRow> Rows, bool ShowSummary);
 
@@ -53,6 +58,12 @@ public sealed record ReportLayout(
 /// <summary>Single table pagination: repeated title/header, atomic wrapped rows, last-page totals and page numbers.</summary>
 public static class ReportPaginator
 {
+    internal static void RequireQRCodes(ReportLayout layout)
+    {
+        var missing = layout.Elements.FirstOrDefault(element => element.Kind == ReportElementKind.QRCode && element.QRCode is null);
+        if (missing is not null) throw new ArgumentException($"二维码“{missing.Name}”没有可用字段数据，请先连接非空数据源。");
+    }
+
     public const double DipsPerMillimetre = 96d / 25.4;
     internal static readonly CultureInfo Culture = CultureInfo.GetCultureInfo("zh-CN");
 
@@ -157,10 +168,26 @@ public static class ReportPaginator
                     throw new ArgumentException($"条码“{element.Name}”高度不足，请增大高度或隐藏文字。");
             }
 
+            QRCodeSymbol? qrCode = null;
+            if (element.Kind == ReportElementKind.QRCode)
+            {
+                QRCodeDrawing.ValidateQuietZone(element.QRCodeQuietZone);
+                if (!Enum.IsDefined(element.QRCodeErrorCorrection)) throw new ArgumentException("二维码纠错等级无效。");
+                // A field placeholder is never a payload. Encode only actual static or resolved values.
+                if (element.FieldKey.Length == 0 || source is not null &&
+                    (source.RowCount > 0 || ReportJsonData.IsRootField(element.FieldKey)))
+                {
+                    qrCode = QRCodeDrawing.Encode(text, element.QRCodeErrorCorrection);
+                    if (!QRCodeDrawing.Fits(qrCode, new Size(element.Width * DipsPerMillimetre,
+                            element.Height * DipsPerMillimetre), element.QRCodeQuietZone))
+                        throw new ArgumentException($"二维码“{element.Name}”尺寸不足，每个模块至少需要 1 DIP（含静区）。");
+                }
+            }
+
             return new ReportLayoutElement(element.Name, element.Kind, element.X * DipsPerMillimetre,
                 element.Y * DipsPerMillimetre,
                 element.Width * DipsPerMillimetre, element.Height * DipsPerMillimetre, text, element.FontSize,
-                element.Bold, element.Foreground, element.Fill, element.ShowBorder);
+                element.Bold, element.Foreground, element.Fill, element.ShowBorder) { QRCode = qrCode };
         }).ToArray());
         if (width - margin * 2 < 80 || height - margin * 2 < 240) throw new ArgumentException("纸张可用区域过小，请调整纸张或边距。");
         if (document.Columns.Count == 0)

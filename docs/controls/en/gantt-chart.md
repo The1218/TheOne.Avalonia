@@ -1,5 +1,7 @@
 # GanttChart
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 **English** · [简体中文](../zh-cn/gantt-chart.md)
 
 `GanttChart` displays read-only all-day schedules. A native ListBox provides selection, keyboard navigation and row virtualization. Each visible row draws both task information and its timeline, so vertical scrolling cannot separate them. The horizontal ScrollBar moves only the timeline; the header stays fixed.
@@ -30,6 +32,39 @@ public ObservableCollection<GanttTask> Tasks { get; } =
             Start = new(2026, 10, 23), IsMilestone = true }
 ];
 ```
+
+## Incremental task updates
+
+Public properties and APIs are unchanged; no new method calls are needed:
+
+```csharp
+task.Title = "Interaction design complete";
+task.Owner = "Zhou";
+task.Progress = .8;
+task.EndExclusive = new DateOnly(2026, 10, 20);
+// Notifications in one UI turn are coalesced; row/container identity, focus and scroll position remain.
+```
+
+- `Title` / `Owner` refresh only the task's realized row, tooltip and automation name. They do not enumerate the source or rebuild the task tree or subscriptions.
+- `Progress` / `Start` / `EndExclusive` / `IsMilestone` update cached leaf values and affected ancestors' dates and duration-weighted progress. Ordinary progress updates follow the parent chain. When an existing date extremum moves inward, the corresponding parent's direct children are checked again, rather than scanning the whole tree. Summary model dates and progress remain ignored.
+- `IsExpanded` inserts or removes the affected descendants in the visible-row projection, retaining other row identities and subscriptions. A hidden selected descendant moves to its closest visible ancestor. Renumbering costs grow with the following visible rows.
+- Collection changes, `Id` / `ParentId`, empty or unknown property notifications, and explicit `RefreshData()` still validate and rebuild the complete task tree. Subscriptions are reconciled only for actual source/model membership changes; unchanged models are not resubscribed.
+- Invalid data still hides the complete chart; notifying corrections recover through full validation. Detaching releases subscriptions, and replacing the source supersedes pending old-task edits. Unnotified changes to plain collections still require `RefreshData()`.
+
+The incremental path adds a task-reference index and completed-duration caches, both proportional to task count. This optimizes updates after loading, not initial load or structural rebuilds. Notifications must still be raised on the UI thread.
+
+### Performance record and reproduction
+
+Current-source measurement on 2026-10-18: macOS 27.0.1 ARM64, .NET 10.0.0, Release, Skia Headless, fixed 1100 × 520 viewport, motion disabled, eight warm-up updates and 32 measured updates per scenario. Baseline control source: `e083204`. This table uses 10,000 tasks in groups of 100. Timings cover the UI-thread update, dispatcher processing and layout, not GPU/display latency. Allocation additionally includes the subsequent headless frame processing, on the current thread only.
+
+| Edit | Median before → after | P95 before → after | Median allocation per update before → after |
+| --- | --- | --- | --- |
+| Title | 7.593 → 0.383 ms | 13.413 → 0.443 ms | 6,431,560 → 54,704 B |
+| Owner | 6.374 → 0.422 ms | 12.683 → 0.917 ms | 6,467,632 → 58,296 B |
+| Progress | 6.426 → 0.741 ms | 14.763 → 1.319 ms | 6,406,280 → 118,248 B |
+| Date | 6.077 → 0.710 ms | 12.914 → 1.317 ms | 6,404,752 → 118,648 B |
+
+Wide trees and 1,000-task sources are also measured. Across all 16 scenarios, each 32-update baseline run enumerates/resubscribes the source and resets rows 32 times; all corresponding counters are zero after optimization and the selected row retains its identity. The date scenario alternates outward and inward boundaries, including sibling rechecks. Those rechecks can still grow with the parent's direct-child count in wide trees. Tests do not impose hardware-dependent timing pass thresholds.
 
 ## Data contract
 
@@ -70,14 +105,6 @@ The template retains PART_Header (GanttHeaderPresenter), PART_Rows (ListBox), PA
 ## Verification
 
 PreviewHost's Data display / GanttChart page includes the design sample, filtering, zoom, expand / collapse all, 1,500 tasks and last-row reveal.
-
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/gantt/artifacts
-dotnet .preview/gantt/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-gantt .preview/gantt/managed
-# macOS: native checks only for affected AOT/binding/metadata changes.
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/gantt/native-artifacts -o .preview/gantt/native
-.preview/gantt/native/NativeAotSmoke --require-aot --verify-gantt .preview/gantt/native-pixels
-```
 
 The suite covers light / dark, three densities, narrow windows, rendered task and today-line pixels, hierarchy and selection, read-only dragging, validation, reattachment, compiled bindings and distant virtualization. Run the native executable for NativeAOT validation; a managed run does not substitute for it.
 

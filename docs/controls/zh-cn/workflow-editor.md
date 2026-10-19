@@ -1,5 +1,7 @@
 # WorkflowEditor 流程编辑器
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 [English](../en/workflow-editor.md) · [目录](README.md)
 
 `WorkflowEditor` 绑定 `WorkflowDocument`，编辑节点、命名端口、连线与业务字段引用。控件内置默认模板，宿主提供节点工厂、业务数据、持久化和执行逻辑，并可按需替换模板；控件不内置审批引擎、HTTP 或脚本执行。
@@ -15,7 +17,8 @@
 | WorkflowNode | 稳定 Id / TypeId、标题、说明、逻辑坐标、Width / Shape、注释标记、Ports、Properties、State 和展示 Content |
 | WorkflowPort | 节点内稳定 ID、方向、DataType、最大连接数；非正数表示不限 |
 | WorkflowConnection | 稳定连线 ID、来源节点/端口 ID、目标节点/端口 ID、标签 |
-| WorkflowProperty | Key、标题、DataType、Text/Number/Boolean、必填标记、字符串固定值或 Reference |
+| WorkflowProperty | Key、标题、DataType、Text/Number/Boolean/MultiSelect、必填标记、固定值／Reference 或 SelectedKeys |
+| WorkflowChoiceAdapter / WorkflowChoice | 编译期 Key／文本 getter，以及运行时选项展示模型 |
 | WorkflowDataReference | NodeId + OutputPortId + FieldPath，不依赖显示名称 |
 | WorkflowOutputField | 宿主声明的输出字段路径、名称及类型 |
 
@@ -25,10 +28,10 @@ Number / Boolean 固定值以字符串保存，按不变区域性数值和布尔
 
 ```xml
 <Grid>
-<one:WorkflowEditor Document="{Binding Document, Mode=TwoWay}"
-                    NodeDefinitions="{Binding NodeDefinitions}"
-                    SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
-                    SaveCommand="{Binding SaveCommand}" />
+<one:WorkflowEditor Document="{CompiledBinding Document, Mode=TwoWay}"
+                    NodeDefinitions="{CompiledBinding NodeDefinitions}"
+                    SelectedNode="{CompiledBinding SelectedNode, Mode=TwoWay}"
+                    SaveCommand="{CompiledBinding SaveCommand}" />
 </Grid>
 ```
 
@@ -52,6 +55,48 @@ document.TryConnect(source.Id, "out", target.Id, "in", out var error);
 
 NodeDefinitions 由宿主注册；工厂返回独立新节点、唯一 ID 和匹配 TypeId。节点库支持搜索、按 Category 分组、点击添加及拖入画布，也可调用 AddNode(definition, position)。NodeDefinitionTemplate 接收定义，使用者可提供带图标的库条目。示例将图中的审批流程及图标作为消费端数据提供。
 
+## 审批人绑定与多选字段
+
+审批人及其他身份列表使用 `WorkflowValueKind.MultiSelect`。将宿主数据绑定到 `WorkflowEditor.ChoiceItemsSource`，通过 `ChoiceItemAdapter` 的编译 getter 指定每项 Key 和显示文本的来源属性，不反射字符串成员路径。显示名称可以重复，Key 必须非空且在数据源中唯一。建议使用 `user:42`、`role:finance` 等稳定 Key 区分人员和角色，后续执行端按 Key 查询真实身份。选项及已选标签内置默认人员图标，无须提供图标属性。
+
+```csharp
+public sealed record ApprovalTarget(string Key, string DisplayName);
+// 放在具备属性通知的 ViewModel 中；可整体替换，ObservableCollection 也支持增删。
+private IEnumerable<ApprovalTarget> _approverItems = new ObservableCollection<ApprovalTarget>
+{
+    new("user:42", "张敏"), new("role:finance", "财务审批组")
+};
+public IEnumerable<ApprovalTarget> ApproverItems
+{
+    get => _approverItems;
+    set => Set(ref _approverItems, value); // ViewModel 继承 WorkflowObservable，或使用自己的通知基类
+}
+public WorkflowChoiceAdapter ApproverAdapter { get; } =
+    WorkflowChoiceAdapter.Create<ApprovalTarget>(item => item.Key, item => item.DisplayName);
+
+var field = new WorkflowProperty
+{
+    Key = "approvers", Title = "审批人", DataType = "principal",
+    Kind = WorkflowValueKind.MultiSelect, IsRequired = true
+};
+approvalNode.Properties.Add(field);
+document.SetSelectedKeys(field, ["user:42", "role:finance"]); // 一次可撤销编辑
+```
+
+```xml
+<one:WorkflowEditor Document="{CompiledBinding Document, Mode=TwoWay}"
+    ChoiceItemsSource="{CompiledBinding ApproverItems, Mode=TwoWay}"
+    ChoiceItemAdapter="{CompiledBinding ApproverAdapter}" />
+```
+
+默认属性栏在“数据”页显示多选框。界面选择写回 `WorkflowProperty.SelectedKeys`，宿主修改该可观察集合也会同步界面。需要保留撤销记录时，使用 `document.SetSelectedKeys(field, keys)`；直接修改集合沿用已有的“外部直接修改模型会重置历史”规则。候选项增删、整体替换及可通知模型的名称变更只更新展示，不修改流程或清空历史；整体替换数据源时需通知源属性。选中 Key 存在各节点自己的属性中，切换节点不会共用一份审批人选择。
+
+自定义属性模板可复用 `WorkflowPropertyEditor`：调用 `ConfigureChoices(source, adapter)`，将 `MultiSelectBox` 绑定到 `Choices` 和 `SelectedChoices`（`Mode=TwoWay`）。`SelectedChoices` 内是含 `Key`、`Text`、`IsAvailable` 的 `WorkflowChoice` 模型。独立创建的字段编辑器不用后应释放；WorkflowEditor 会释放自己持有的编辑器。演示页审批人栏使用此方式，复用内置文本适配器和默认人员模板。
+
+PreviewHost 的基础审批人栏、规则页业务字段和关联示例均复用同一字段编辑器行为：多选字段隐藏固定值／引用输入，显示 `ChoiceError` 与缺失 Key 提示，每个多选框显式设置 `MaxVisibleTags="1"`，折叠标签不影响实际选择。自定义模板独立于默认模板，修改一处实例的控件属性不会自动应用到其他实例。只读时禁用字段写入，保留属性页签和滚动浏览；节点名称直接双向绑定 `SelectedNodeEditor.Title`，即时写入文档并随撤销／重做刷新，不另存失焦提交草稿。字段集合替换及切换节点时释放旧编辑器，按当前属性重新绑定。审批方式、超时范围和单位等为演示业务配置，仍由宿主管理。
+
+数据源过滤、移除或替换后找不到的已选 Key 不会静默删除，仍保留并显示为待解析项，可移除；对应项重新出现时恢复名称。候选 Key 为空或重复时显示 `ChoiceError`，不猜测身份；必填多选为空时校验失败。搜索保留未显示的选择，只读模式阻止界面编辑。JSON 以显式 `selectedKeys` 字符串数组保存；加载、撤销／重做、复制／粘贴保留准确 Key，不保存显示文本、数据源对象或委托。执行端自行按 Key 查询人员／角色，控件不执行审批规则。旧 Text/Number/Boolean 枚举值保持不变，旧版库不能读取新增的 `MultiSelect = 3`。演示会将旧单值 `roleId` 迁移成单项选择；其他业务数据迁移由宿主明确处理。
+
 ## 业务数据关联
 
 连线只表达图关系，不会自动传递全部数据。GetReferenceOptions(node, property) 按上游可达关系与字段 DataType 筛选声明输出，字段 any 接受所有类型。宿主根据引用三元组查输出表或调用显式编译 getter；FieldPath 不作为反射路径或表达式执行。
@@ -69,6 +114,8 @@ NodeDefinitions 由宿主注册；工厂返回独立新节点、唯一 ID 和匹
 - ContentTemplate 接收节点 Content，可使用任意具体业务类型和编译绑定。Content 不序列化，加载后由宿主按 TypeId 重建。
 - PropertyTemplate 接收选中节点。默认使用内置 TabStrip 展示基础、数据和端口页，支持编辑名称、说明、固定值与上游引用，修改参与文档撤销历史，并遵循 IsReadOnly。SelectedNodeEditor 暴露 WorkflowNodeEditor / WorkflowPropertyEditor，方便自定义模板复用编辑逻辑。业务专用表单可替换此模板，也可隐藏面板后在外部绑定 SelectedNode。模板自行提供滚动容器，默认删除按钮固定在滚动区域外。
 - SelectedConnection 提供选中边，宿主可在外部编辑 Label 或业务条件；默认面板显示节点属性。
+
+节点库和属性栏与画布之间各有原生 `GridSplitter`，可用鼠标拖动，分隔条获取焦点后也可用左右方向键调整。左右初始宽度分别为 195、296 DIP，最大宽度为 420、560 DIP；正常宽度下最小值为 140、280 DIP，空间允许时画布保留至少 160 DIP。窄窗口下边栏按比例收缩，窗口恢复后还原用户偏好宽度。折叠时同时释放边栏与分隔条空间，重新展开保留本控件实例的调整值；宽度不写入工作流 JSON。只读模式允许调整布局，不修改文档修订号、选择或属性编辑器。节点库按钮采用更紧凑的留白，演示图标为 18 DIP、图标底板为 24 DIP。完整替换控件模板时，若要保留此行为，应保留 `PART_PanelGrid` 的“左栏、分隔条、画布、分隔条、右栏”五列结构及两个原生分隔条；自定义节点和属性内容模板不需要更改。
 
 节点与连线选择互斥，外部设置 `SelectedNode` / `SelectedConnection` 时同样生效。选中连线会清空所有选中节点及节点属性面板；选中节点会清除连线选择。不属于当前文档的模型统一归为空，即使其 ID 与文档中的模型相同也不会串用选择状态。
 
@@ -117,13 +164,6 @@ schema version=1，使用源生成 System.Text.Json 元数据。保存节点、�
 
 PreviewHost：**扩展控件 → WorkflowEditor**。主界面还原设计图的七节点审批流程、备注、图标、端口及状态；属性页签使用内置 `TabStrip`。节点库、工具栏、属性面板及示例操作区默认使用 Small 尺寸（正文与输入文字 12），画布保留宿主尺寸和节点比例。下方折叠区演示默认与自定义模板、强类型 Content、配置面板、引用选择/解析、只读、可编辑 JSON 及原生文件保存/打开。独立数据关联示例展示提交申请 → 审批 → 通知的收件人引用。
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/workflow-editor/artifacts
-dotnet .preview/workflow-editor/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-workflow .preview/workflow-editor/render
-```
-
-NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模板、真实键鼠、明暗、三档尺寸和折叠面板后的窄视口。文件选择器需桌面实跑，headless 覆盖共享 JSON 路径。
-
 连线采用直接绘制圆角正交线与拓扑分层排列，支持离屏裁剪和安全节点视图回收，不提供完整障碍避让或折点编辑。业务规则执行与输出求值由宿主负责。
 
 <!-- generated-contracts:start -->
@@ -143,50 +183,52 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`AddNodeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L95) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`AlignCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L104) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`AllowCycles`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L88) | `bool` | 可写; OneWay | `false` | 允许连接形成环；关闭时由编辑器连接校验阻止环路，运行器仍需处理业务循环语义。 |
-| [`ArrangeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L103) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`ConnectionValidator`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L109) | `System.Func<TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, string?>?` | 可写; CLR / n/a | `null` | Host can reject business-specific connections in addition to structural checks. |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L69) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`DeleteCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L98) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`Document`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L64) | `TheOne.Avalonia.Workflow.WorkflowDocument?` | 可写; TwoWay | `null` | 当前业务文档模型；替换时重接订阅、选择和历史的具体行为见编辑器文档。 |
-| [`FitCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L99) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`FitPadding`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L92) | `Avalonia.Thickness` | 可写; OneWay | `new Thickness(32)` | 缩放适配内容时保留的 DIP 留白。 校验：`p => new[] { p.Left, p.Top, p.Right, p.Bottom }.All(x => double.IsFinite(x) && x >= 0)` |
-| [`GraphSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L83) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HeaderTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L73) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | Header content receives this editor. The default exposes document title, validation and SaveCommand. |
-| [`IsPanMode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L78) | `bool` | 可写; OneWay | `false` | 将指针拖动用于平移画布；选择和编辑手势按流程编辑器规则处理。 |
-| [`IsReadOnly`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L85) | `bool` | 可写; OneWay | `false` | 是否阻止编辑；展示、选择与导航是否仍可用由各控件的只读契约决定。 |
-| [`LibraryGroups`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L81) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowNodeGroup>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`LocateIssueCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L107) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`NodeDefinitionTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L71) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`NodeDefinitions`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L65) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Workflow.WorkflowNodeDefinition>?` | 可写; OneWay | `null` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
-| [`NodeTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L68) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`Pan`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L91) | `Avalonia.Vector` | 可写; TwoWay | `new Vector(24, 24)` | 画布平移向量；只改变视口，不改写节点模型坐标。 校验：`x => double.IsFinite(x.X) && double.IsFinite(x.Y)` |
-| [`PropertyTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L70) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`RedoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L97) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`SaveCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L75) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | Host-owned persistence command. The default save button passes Document as its parameter. |
-| [`SearchText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L77) | `string` | 可写; OneWay | `""` | 当前搜索文本；搜索与选中状态独立，不用查询字符串充当模型主键。 |
-| [`SelectedConnection`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L67) | `TheOne.Avalonia.Workflow.WorkflowConnection?` | 可写; TwoWay | `null` | 当前选中的连线模型；与节点选择的互斥规则见编辑器文档。 |
-| [`SelectedNode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L66) | `TheOne.Avalonia.Workflow.WorkflowNode?` | 可写; TwoWay | `null` | 当前选中的节点模型；空值清除节点选择。 |
-| [`SelectedNodeEditor`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L76) | `TheOne.Avalonia.Workflow.WorkflowNodeEditor?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`SelectedNodes`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L63) | `System.Collections.ObjectModel.ReadOnlyObservableCollection<TheOne.Avalonia.Workflow.WorkflowNode>` | 只读; CLR / n/a | `accessor-defined / state` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
-| [`ShowNodeLibrary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L86) | `bool` | 可写; OneWay | `true` | 显示可添加节点的定义库面板。 |
-| [`ShowProperties`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L87) | `bool` | 可写; OneWay | `true` | 显示所选对象的属性编辑面板。 |
-| [`ShowRuntimePreview`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L79) | `bool` | 可写; OneWay | `false` | 显示运行时预览面板；实际业务执行由宿主运行器负责。 |
-| [`ShowValidation`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L80) | `bool` | 可写; OneWay | `false` | 显示文档校验结果面板；关闭面板不等于绕过校验。 |
-| [`SnapToGrid`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L89) | `bool` | 可写; OneWay | `true` | 节点移动时吸附到网格；不修改已有节点，直到进行相应编辑。 |
-| [`Status`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L93) | `string` | 只读; OneWay | `computed / state` | 节点业务状态枚举；样式由状态派生，不把样式类作为状态存储。 |
-| [`ToggleLibraryCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L105) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`TogglePropertiesCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L106) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`UndoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L96) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`ValidateCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L102) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`ValidationIssues`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L82) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowValidationIssue>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`ValidationSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L84) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`Zoom`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L90) | `double` | 可写; TwoWay | `1` | 视图缩放倍率，1 表示 100%；只缩放视图，不修改报表毫米尺寸或流程坐标。 校验：`x => double.IsFinite(x) && x >= .25 && x <= 2` |
-| [`ZoomInCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L100) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`ZoomOutCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L101) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`ZoomText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L94) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`AddNodeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L344) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`AlignCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L353) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`AllowCycles`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L312) | `bool` | 可写; OneWay | `false` | 允许连接形成环；关闭时由编辑器连接校验阻止环路，运行器仍需处理业务循环语义。 |
+| [`ArrangeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L352) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`ChoiceItemAdapter`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L39) | `TheOne.Avalonia.Workflow.WorkflowChoiceAdapter?` | 可写; OneWay | `null` | 使用 WorkflowChoiceAdapter.Create<T> 指定候选项 Key 和显示文字的编译委托；不使用反射属性路径。未设置时数据项必须为 WorkflowChoice。 |
+| [`ChoiceItemsSource`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L33) | `System.Collections.IEnumerable?` | 可写; OneWay | `null` | 多选字段的默认候选数据源，支持双向绑定和集合通知；使用 ChoiceItemAdapter 提供稳定 Key 与显示文字，审批人或角色数据由宿主加载。 |
+| [`ConnectionValidator`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L359) | `System.Func<TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, string?>?` | 可写; CLR / n/a | `null` | Host can reject business-specific connections in addition to structural checks. |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L231) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`DeleteCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L347) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`Document`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L201) | `TheOne.Avalonia.Workflow.WorkflowDocument?` | 可写; TwoWay | `null` | 当前业务文档模型；替换时重接订阅、选择和历史的具体行为见编辑器文档。 |
+| [`FitCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L348) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`FitPadding`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L336) | `Avalonia.Thickness` | 可写; OneWay | `new Thickness(32)` | 缩放适配内容时保留的 DIP 留白。 校验：`p => new[] { p.Left, p.Top, p.Right, p.Bottom }.All(x => double.IsFinite(x) && x >= 0)` |
+| [`GraphSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L291) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HeaderTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L250) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | Header content receives this editor. The default exposes document title, validation and SaveCommand. |
+| [`IsPanMode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L271) | `bool` | 可写; OneWay | `false` | 将指针拖动用于平移画布；选择和编辑手势按流程编辑器规则处理。 |
+| [`IsReadOnly`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L294) | `bool` | 可写; OneWay | `false` | 是否阻止编辑；展示、选择与导航是否仍可用由各控件的只读契约决定。 |
+| [`LibraryGroups`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L289) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowNodeGroup>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`LocateIssueCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L356) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`NodeDefinitionTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L243) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`NodeDefinitions`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L207) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Workflow.WorkflowNodeDefinition>?` | 可写; OneWay | `null` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
+| [`NodeTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L225) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`Pan`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L330) | `Avalonia.Vector` | 可写; TwoWay | `new Vector(24, 24)` | 画布平移向量；只改变视口，不改写节点模型坐标。 校验：`x => double.IsFinite(x.X) && double.IsFinite(x.Y)` |
+| [`PropertyTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L237) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`RedoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L346) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`SaveCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L257) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | Host-owned persistence command. The default save button passes Document as its parameter. |
+| [`SearchText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L265) | `string` | 可写; OneWay | `""` | 当前搜索文本；搜索与选中状态独立，不用查询字符串充当模型主键。 |
+| [`SelectedConnection`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L219) | `TheOne.Avalonia.Workflow.WorkflowConnection?` | 可写; TwoWay | `null` | 当前选中的连线模型；与节点选择的互斥规则见编辑器文档。 |
+| [`SelectedNode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L213) | `TheOne.Avalonia.Workflow.WorkflowNode?` | 可写; TwoWay | `null` | 当前选中的节点模型；空值清除节点选择。 |
+| [`SelectedNodeEditor`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L263) | `TheOne.Avalonia.Workflow.WorkflowNodeEditor?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`SelectedNodes`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L199) | `System.Collections.ObjectModel.ReadOnlyObservableCollection<TheOne.Avalonia.Workflow.WorkflowNode>` | 只读; CLR / n/a | `accessor-defined / state` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
+| [`ShowNodeLibrary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L300) | `bool` | 可写; OneWay | `true` | 显示可添加节点的定义库面板。 |
+| [`ShowProperties`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L306) | `bool` | 可写; OneWay | `true` | 显示所选对象的属性编辑面板。 |
+| [`ShowRuntimePreview`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L277) | `bool` | 可写; OneWay | `false` | 显示运行时预览面板；实际业务执行由宿主运行器负责。 |
+| [`ShowValidation`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L283) | `bool` | 可写; OneWay | `false` | 显示文档校验结果面板；关闭面板不等于绕过校验。 |
+| [`SnapToGrid`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L318) | `bool` | 可写; OneWay | `true` | 节点移动时吸附到网格；不修改已有节点，直到进行相应编辑。 |
+| [`Status`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L342) | `string` | 只读; OneWay | `computed / state` | 节点业务状态枚举；样式由状态派生，不把样式类作为状态存储。 |
+| [`ToggleLibraryCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L354) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`TogglePropertiesCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L355) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`UndoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L345) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`ValidateCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L351) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`ValidationIssues`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L290) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowValidationIssue>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ValidationSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L292) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Zoom`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L324) | `double` | 可写; TwoWay | `1` | 视图缩放倍率，1 表示 100%；只缩放视图，不修改报表毫米尺寸或流程坐标。 校验：`x => double.IsFinite(x) && x >= .25 && x <= 2` |
+| [`ZoomInCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L349) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`ZoomOutCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L350) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`ZoomText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L343) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### WorkflowMiniMap
 
@@ -194,7 +236,7 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Editor`](../../../TheOne.Avalonia/Controls/WorkflowMiniMap.cs#L13) | `TheOne.Avalonia.Controls.WorkflowEditor?` | 可写; OneWay | `null` | 缩略图关联的 WorkflowEditor；用于共享文档和视口，不创建独立工作流状态。 |
+| [`Editor`](../../../TheOne.Avalonia/Controls/WorkflowMiniMap.cs#L24) | `TheOne.Avalonia.Controls.WorkflowEditor?` | 可写; OneWay | `null` | 缩略图关联的 WorkflowEditor；用于共享文档和视口，不创建独立工作流状态。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
@@ -219,6 +261,8 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 | [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.ArrangeNodes()` | 自动整理节点布局，通过文档编辑历史记录坐标变更。 |
 | [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.CopySelection()` | 复制当前选择为编辑器支持的片段，保持序列化边界。 |
 | [`WorkflowEditor`](../../api/zh-cn/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.PasteSelection()` | 粘贴已复制片段，创建独立标识并记录可撤销编辑。 |
+| [`WorkflowChoiceAdapter`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowChoiceAdapter.md) | `abstract string WorkflowChoiceAdapter.GetKey(object item)` |  |
+| [`WorkflowChoiceAdapter`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowChoiceAdapter.md) | `abstract string WorkflowChoiceAdapter.GetText(object item)` | 使用已配置的类型化适配器读取原始模型显示／搜索文本。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Edit(string title, Action redo, Action undo)` | Apply a host edit to the same history as graph edits. Actions must be deterministic and not throw. |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Undo()` | 撤销最近一次可撤销的文档编辑。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Redo()` | 重做最近撤销的文档编辑。 |
@@ -227,6 +271,7 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Remove(IEnumerable<WorkflowNode> nodes, WorkflowConnection? connection = null)` | 删除指定工作流对象及关联关系，通过文档编辑历史执行。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.MoveNodes(IEnumerable<(WorkflowNode Node, double X, double Y)> positions)` | 批量更新节点坐标并记录一次可撤销移动。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)` | 通过文档修改流程属性的固定值／引用，以保持撤销与通知。 |
+| [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)` | One undoable multi-selection edit, preserving stable keys and their order. |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)` | 校验候选端口连接，返回失败原因而不创建连线。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)` | 校验并尝试创建连接；返回是否成功及相关结果。 |
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.IsReachable(string from, string to)` | 判断流程图中目标节点是否可从起点到达，用于连线与循环判断。 |
@@ -234,6 +279,7 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 | [`WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)` | 校验工作流结构、端口与属性引用，返回可定位的问题集合。 |
 | [`WorkflowNodeEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | `void WorkflowNodeEditor.Refresh()` | Refresh after document edits, including undo and upstream metadata changes. |
 | [`WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.Refresh()` | 从底层模型与文档重新同步属性检查器，包含撤销后及上游变化。 |
+| [`WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.ConfigureChoices(IEnumerable? source, WorkflowChoiceAdapter? adapter)` | Configure host records with typed key/text projections. Collection and label notifications are observed. |
 | [`WorkflowSerializer`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static string WorkflowSerializer.Save(WorkflowDocument document)` | 将业务文档保存为可移植 JSON；不包含运行期凭据、视觉对象或非持久化状态。 |
 | [`WorkflowSerializer`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static WorkflowDocument WorkflowSerializer.Load(string json)` | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
 
@@ -251,6 +297,7 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 
 | 模型 | 属性／枚举值 |
 | --- | ---: |
+| [`TheOne.Avalonia.Workflow.WorkflowChoice`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowChoice.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowConnection.md) | 6 |
 | [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowDocument.md) | 6 |
@@ -263,11 +310,11 @@ NativeAotSmoke 支持 --verify-workflow。专项验证契约、JSON、编译模�
 | [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPort.md) | 6 |
 | [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | 2 |
-| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 8 |
-| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 7 |
+| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 9 |
+| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 13 |
 | [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | 2 |
 | [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | 3 |
-| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/zh-cn/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 4 |
 
 [完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
 <!-- generated-contracts:end -->

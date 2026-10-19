@@ -1,5 +1,7 @@
 # Form 与 FormItem
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 `Form` 为普通编辑页提供统一校验与提交入口，复用 `VerificationStep` 的 `IStepValidator`、`StepValidation.For<T>`、`StepValidationError` 和 `StepCompareAttribute`。`FormItem` 为调用方的原生输入提供标签、必填标记、帮助文本与字段错误。加载 `OneTheme` 后即可使用，无需额外包或主题。
 
 ## 编译绑定与接入
@@ -101,15 +103,6 @@ private async void SaveClicked(object? sender, RoutedEventArgs args)
 ## 预览与专项
 
 PreviewHost：**扩展控件 → Form**。
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/form/artifacts
-dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-form .preview/form/screenshots
-```
-
-专项仅验证 Form / FormItem：编译绑定、属性与转换错误、标签关联、真实按键／指针、取消与过期结果、命令可用性、嵌套归属、模板替换、重新挂载，以及明暗 × 三档尺寸 × 宽窄视口绘制和像素。共享字段改动另跑 `--verify-verification-step`，不跑 Tag 或全库回归。
-
-`design/PreviewHost/Consumers/NativeAotSmoke` 复用同一专项。绑定／元数据变化时发布并执行原生程序的 `--require-aot --verify-form`。托管专项与跨 RID 构建不代表目标平台原生运行或读屏器实测通过。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

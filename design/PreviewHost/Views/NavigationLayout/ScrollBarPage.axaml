@@ -13,14 +13,14 @@
             Foreground="{DynamicResource One.Muted}"
             Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <ScrollBar
                 HorizontalAlignment="Left"
                 Maximum="100"
                 Name="ControlSample"
                 Orientation="Horizontal"
-                Value="{Binding Value, Mode=TwoWay}"
+                Value="{CompiledBinding Value, Mode=TwoWay}"
                 ViewportSize="20"
                 Width="360" />
         </StackPanel>

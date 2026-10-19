@@ -17,11 +17,18 @@ public sealed record ReportApiRequest(
     ReportApiParameterMode ParameterMode = ReportApiParameterMode.Json)
 {
     public ReportApiAuthentication? Authentication { get; init; }
+    public string SourceName { get; init; } = "接口数据";
+    /// <summary>JSON Pointers visible in the designer; null retains all available items.</summary>
+    public string[]? SelectedDataPointers { get; init; }
 
     internal static ReportApiRequest FromDocument(ReportDocument document)
     {
         return new ReportApiRequest(document.DataSourceUrl, document.DataSourceMethod, document.DataSourceParameters,
-            document.DataSourceParameterMode) { Authentication = document.DataSourceAuthentication };
+            document.DataSourceParameterMode)
+        {
+            Authentication = document.DataSourceAuthentication, SourceName = document.DataSourceName,
+            SelectedDataPointers = document.SelectedDataPointers
+        };
     }
 
     internal HttpRequestMessage CreateMessage()

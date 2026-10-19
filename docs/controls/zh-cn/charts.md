@@ -1,5 +1,7 @@
 # Chart 图表
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/charts.md)
 
 图表由 14 个独立绘制控件组成，位于 `TheOne.Avalonia.Controls`；每个控件有自己的具体类型、主题和视觉状态。加载 `OneTheme` 后即可使用，并共享 `ChartSeries` / `ChartPoint` 数据模型；无需额外图表包。图形、刻度、图例与数据标签直接绘制，不为每个数据点创建 Control 或容器。
@@ -135,9 +137,8 @@ public sealed class ChartViewModel : INotifyPropertyChanged
 | 平滑、堆叠、百分比、双轴、采样 | [坐标图与采样](chart-cartesian.md) |
 | 饼图、环形图、仪表指针／刻度 | [径向图](chart-radial.md) |
 | 标签、选择、十字准线、联动提示、图例、缩放／平移 | [交互](chart-interaction.md) |
-| 更新动画、PNG 导出、更新规则、主题与尺寸 | [渲染](chart-rendering.md) |
-
-专项为 `--verify-charts`，截图使用具体类型或场景名；命令统一见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+| 更新动画、PNG 导出、范围／堆积／绘制缓存、抽样桶增量维护、Scatter 尾延迟／选择 p99、性能记录、主题与尺寸 | [渲染](chart-rendering.md) |
+| Scatter 选择分配、经身份核验的 p99 数据及剩余光栅尾延迟 | [Scatter 选择性能](chart-rendering.md#scatter-selection-p99) |
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

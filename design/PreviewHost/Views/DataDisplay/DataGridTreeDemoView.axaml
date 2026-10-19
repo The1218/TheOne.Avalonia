@@ -1,0 +1,24 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
+             x:Class="TheOne.DesignPreview.DataGridTreeDemoView" x:DataType="local:DataGridTreeDemoViewModel">
+    <Grid RowDefinitions="Auto,Auto,*" RowSpacing="12">
+        <TextBlock Text="树表格 · 表头排序／筛选，F2 编辑，Esc 取消" TextWrapping="Wrap" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="8">
+            <ComboBox Width="150" ItemsSource="{CompiledBinding SummaryScopes}"
+                      SelectedItem="{CompiledBinding SummaryScope, Mode=TwoWay}" />
+            <CheckBox Content="仅叶节点" IsChecked="{CompiledBinding SummaryLeavesOnly, Mode=TwoWay}" />
+        </StackPanel>
+        <DataGrid Grid.Row="2" Name="TreeGrid" ItemsSource="{CompiledBinding View}" AutoGenerateColumns="False"
+                  MaxColumnWidth="360" FrozenColumnCount="1" SelectionMode="Single"
+                  one:DataGridTreeFeatures.IsEnabled="True" one:DataGridFeatures.ShowColumnFilters="True"
+                  one:DataGridFeatures.ShowSummaryRow="True" one:DataGridFeatures.SummaryScope="{CompiledBinding SummaryScope}"
+                  one:DataGridFeatures.SummaryLeavesOnly="{CompiledBinding SummaryLeavesOnly}">
+            <DataGrid.Columns>
+                <one:DataGridTreeTextColumn Header="名称" Width="300" Binding="{CompiledBinding Name, Mode=TwoWay}" />
+                <DataGridTextColumn Header="数量" Width="100" Binding="{CompiledBinding Quantity, Mode=TwoWay}"
+                                    one:DataGridColumnOptions.SummaryEnabled="True"
+                                    one:DataGridColumnOptions.SummaryFormat="N0" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

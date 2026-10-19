@@ -33,7 +33,7 @@
                         IsVisible="{TemplateBinding one:CalendarOptions.ShowTime}"
                         Margin="9,0,9,9"
                         Name="PART_TimeEditor"
-                        SelectedTime="{Binding $parent[Calendar].(one:CalendarOptions.Time), Mode=TwoWay}" />
+                        SelectedTime="{CompiledBinding $parent[Calendar].(one:CalendarOptions.Time), Mode=TwoWay}" />
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"

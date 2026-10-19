@@ -5,11 +5,13 @@
 `ReportPreview` is a standalone read-only viewer for JSON returned by `ReportDocument.Save()`. It parses the definition, fetches optional API data/network images, paginates and displays the report. It includes page navigation, zoom, reload, PDF export and printing, without a designer instance. Load `OneTheme` and initialize Avalonia for measurement/rendering.
 
 ```xml
-<one:ReportPreview DocumentJson="{Binding ReportJson}"
-                   DataSource="{Binding SourceOverride}" />
+<one:ReportPreview DocumentJson="{CompiledBinding ReportJson}"
+                   DataSource="{CompiledBinding SourceOverride}" />
 ```
 
 Declare the correct `x:DataType`; `one` is `using:TheOne.Avalonia.Controls`.
+
+Templates may include [QRCode elements](report-design.md#qr-code-components). The viewer uses the same UTF-8 encoding, correction level, quiet zone and vector geometry as ReportDesign/PDF. Static `Text` is supported; bound `FieldKey` uses the first source record or a registered root JSON value. Missing/empty payloads, unresolved bound data, capacity overflow and insufficient size fail loading rather than displaying a stale or placeholder code. PreviewHost's sales sample includes both static and bound header codes.
 
 ## Loading definitions and data
 
@@ -76,15 +78,15 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L29) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L21) | `TheOne.Avalonia.Reporting.ReportDataSource?` | writable; OneWay | `null` | Explicit data source supplied by the host according to the model contract; templates do not replace data adaptation. |
-| [`Document`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L22) | `TheOne.Avalonia.Reporting.ReportDocument?` | read-only; OneWay | `computed / state` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
-| [`DocumentJson`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L20) | `string?` | writable; OneWay | `null` | Report document JSON; loading failures/replacement/data refresh follow the report loading contract. |
-| [`Error`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L23) | `string?` | read-only; OneWay | `computed / state` | Structured/text failure information; inspect it together with the success flag. |
-| [`HttpClient`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L26) | `System.Net.Http.HttpClient?` | writable; CLR / n/a | `null` | Optional consumer-owned client for authenticated API and image requests. Not serialized. |
-| [`Layout`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L24) | `TheOne.Avalonia.Reporting.ReportLayout?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`PrintHandler`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L28) | `System.Func<string, TheOne.Avalonia.Reporting.ReportPrintOptions?, System.Threading.CancellationToken, System.Threading.Tasks.Task<TheOne.Avalonia.Reporting.ReportPrintResult>>?` | writable; CLR / n/a | `null` | Optional host printer. The PDF exists until the returned task completes; KeepDocument controls its subsequent lifetime. |
-| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L30) | `double` | writable; CLR / n/a | `.75` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. |
+| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L126) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L107) | `TheOne.Avalonia.Reporting.ReportDataSource?` | writable; OneWay | `null` | Explicit data source supplied by the host according to the model contract; templates do not replace data adaptation. |
+| [`Document`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L113) | `TheOne.Avalonia.Reporting.ReportDocument?` | read-only; OneWay | `computed / state` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
+| [`DocumentJson`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L101) | `string?` | writable; OneWay | `null` | Report document JSON; loading failures/replacement/data refresh follow the report loading contract. |
+| [`Error`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L114) | `string?` | read-only; OneWay | `computed / state` | Structured/text failure information; inspect it together with the success flag. |
+| [`HttpClient`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L118) | `System.Net.Http.HttpClient?` | writable; CLR / n/a | `null` | Optional consumer-owned client for authenticated API and image requests. Not serialized. |
+| [`Layout`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L115) | `TheOne.Avalonia.Reporting.ReportLayout?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`PrintHandler`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L124) | `System.Func<string, TheOne.Avalonia.Reporting.ReportPrintOptions?, System.Threading.CancellationToken, System.Threading.Tasks.Task<TheOne.Avalonia.Reporting.ReportPrintResult>>?` | writable; CLR / n/a | `null` | Optional host printer. The PDF exists until the returned task completes; KeepDocument controls its subsequent lifetime. |
+| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L128) | `double` | writable; CLR / n/a | `.75` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
@@ -114,7 +116,7 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer)` | Creates a report source from a JSON record-array path and explicit field configuration. |
 | [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer, IEnumerable<string>? rootFieldKeys)` | Creates a report source from a JSON record-array path and explicit field configuration. |
 | [`ReportPaginator`](../../api/en/TheOne.Avalonia.Reporting.ReportPaginator.md) | `static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)` | Validates the document and computes immutable paginated layout shared by preview/printing. |
-| [`ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Exports a paginated report PDF asynchronously with caller-supplied destination/cancellation/file lifetime. |
+| [`ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Stages a complete PDF; concurrent jobs require separate destination streams. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Fetches one bounded JSON response using the same request path as the independent preview. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Loads records asynchronously from report API configuration without persisting fetched rows in the template. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Resolves report images asynchronously with batch-owned caching/failure state. |
@@ -135,17 +137,18 @@ Subscribe when needed and detach when the host is disposed. These are event entr
 
 | Model | Properties/enum values |
 | --- | ---: |
+| [`TheOne.Avalonia.Controls.QRCodeErrorCorrection`](../../api/en/TheOne.Avalonia.Controls.QRCodeErrorCorrection.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportApiAuthentication`](../../api/en/TheOne.Avalonia.Reporting.ReportApiAuthentication.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportApiParameterMode`](../../api/en/TheOne.Avalonia.Reporting.ReportApiParameterMode.md) | 2 |
-| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 5 |
+| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportColumn.md) | 12 |
 | [`TheOne.Avalonia.Reporting.ReportCondition`](../../api/en/TheOne.Avalonia.Reporting.ReportCondition.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | 9 |
+| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | 10 |
 | [`TheOne.Avalonia.Reporting.ReportDataNodeKind`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNodeKind.md) | 3 |
 | [`TheOne.Avalonia.Reporting.ReportDataSource`](../../api/en/TheOne.Avalonia.Reporting.ReportDataSource.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | 29 |
-| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | 25 |
-| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | 8 |
+| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | 31 |
+| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | 27 |
+| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | 9 |
 | [`TheOne.Avalonia.Reporting.ReportField<T>`](../../api/en/TheOne.Avalonia.Reporting.ReportField_T_.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportFieldInfo`](../../api/en/TheOne.Avalonia.Reporting.ReportFieldInfo.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportImageFit`](../../api/en/TheOne.Avalonia.Reporting.ReportImageFit.md) | 3 |

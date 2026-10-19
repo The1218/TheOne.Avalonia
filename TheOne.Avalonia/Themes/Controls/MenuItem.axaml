@@ -17,11 +17,10 @@
     <ControlTheme TargetType="MenuItem" x:Key="{x:Type MenuItem}">
         <Setter Property="ItemsPanel">
             <MultiBinding Converter="{x:Static one:MenuItemsPanels.Vertical}">
-                <markup:CompiledBindingExtension DataType="MenuItem" RelativeSource="{RelativeSource Self}" />
+                <markup:CompiledBindingExtension DataType="MenuItem" Path="$self" />
                 <markup:CompiledBindingExtension
                     DataType="MenuItem"
-                    Path="ItemCount"
-                    RelativeSource="{RelativeSource Self}" />
+                    Path="$self.ItemCount" />
             </MultiBinding>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource One.Transparent}" />
@@ -201,7 +200,7 @@
                 <Template>
                     <Path
                         Data="{StaticResource CheckMarkPathData}"
-                        Fill="{Binding $parent[MenuItem].Foreground}"
+                        Fill="{CompiledBinding $parent[MenuItem].Foreground}"
                         Width="16" />
                 </Template>
             </Setter>
@@ -211,7 +210,7 @@
             <Setter Property="Content">
                 <Template>
                     <Ellipse
-                        Fill="{Binding $parent[MenuItem].Foreground}"
+                        Fill="{CompiledBinding $parent[MenuItem].Foreground}"
                         Height="8"
                         Margin="4"
                         Width="8" />

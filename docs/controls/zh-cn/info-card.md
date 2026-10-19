@@ -1,5 +1,7 @@
 # InfoCard 信息卡片
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/info-card.md)
 
 `InfoCard` 继承官方 `HeaderedContentControl`，用于展示标题与内容，并提供标题图标、标题操作区、页脚区域。加载 `OneTheme` 后自动使用 TheOne 表面、细边框和圆角，并继承明暗主题及三种尺寸。卡片固定展示存在的区域；放入其中的按钮、输入框和列表保留原生交互。
@@ -159,17 +161,7 @@ InfoCard 不替换内容的布局，也不额外包裹无限高度的滚动容�
 
 PreviewHost 的 InfoCard 预览包含标题、图标、操作区、页脚及两处分割线的独立开关，原生输入与按钮，明确类型的标题、正文、图标、操作区和页脚编译绑定模板，以及固定高度的 1,000 条成员列表和末尾跳转。固定高度与 MaxHeight 专项检查千条列表回收和页脚可见性。标题操作和页脚按钮可更新状态，禁用卡片会同时禁用各区域的交互。仅导出当前控件的测试图：
 
-执行命令与测试范围见[预览专项入口](../../../design/PreviewHost/Program.cs)。
-
 专项可保存悬浮和阴影的实际像素截图：
-
-```bash
-dotnet design/PreviewHost/bin/Debug/net10.0/PreviewHost.dll --verify-infocard .preview/infocard-effects/managed
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 -o .preview/infocard-effects/native
-.preview/infocard-effects/native/NativeAotSmoke --require-aot --verify-infocard .preview/infocard-effects/native-pixels
-```
-
-原生产物按现有 NativeAotSmoke 消费端编译，使用 macOS xcrun 的 clang 与 SDK。专项涵盖明暗主题、三档尺寸、鼠标进出、组合类、禁用、本地值覆盖和阴影实际像素。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

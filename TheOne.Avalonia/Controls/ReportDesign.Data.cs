@@ -14,18 +14,21 @@ public partial class ReportDesign
     private string? _treeJson;
     private string? _treeSearch;
     private ReportDataSource? _treeSource;
+    private ReportApiRequest? _treeRequest;
 
     private void RefreshDataTree()
     {
         var rootsChanged = false;
-        if (!ReferenceEquals(_treeJson, _apiJson) || (_apiJson is null && !ReferenceEquals(_treeSource, DataSource)))
+        if (!ReferenceEquals(_treeJson, _apiJson) || !ReferenceEquals(_treeRequest, _apiRequest) ||
+            (_apiJson is null && !ReferenceEquals(_treeSource, DataSource)))
         {
             rootsChanged = true;
             _treeJson = _apiJson;
             _treeSource = DataSource;
+            _treeRequest = _apiRequest;
             if (_apiJson is not null)
             {
-                _dataRoots = ReportJsonData.CreateTree(_apiJson);
+                _dataRoots = ReportDataCatalog.Tree(_apiJson, _apiRequest);
             }
             else if (DataSource is { } source)
             {
@@ -58,7 +61,7 @@ public partial class ReportDesign
             return children.Length == 0
                 ? null
                 : new ReportDataNode(node.Name, node.Pointer, node.Kind, node.Preview, children, node.FieldKey,
-                    node.IsJson, true);
+                    node.IsJson, true, node.TypeLabel);
         }
 
         var filtered = _dataRoots.Select(Filter).OfType<ReportDataNode>().ToArray();
@@ -93,7 +96,10 @@ public partial class ReportDesign
     private ReportDocument CaptureHistorySource(ReportDocument snapshot)
     {
         if (!_historySources.TryGetValue(snapshot, out _))
-            _historySources.Add(snapshot, new SourceSnapshot(DataSource));
+        {
+            _historySources.Add(snapshot, CaptureSource());
+            RememberHistorySelection(snapshot);
+        }
         return snapshot;
     }
 
@@ -101,7 +107,7 @@ public partial class ReportDesign
     {
         if (_lastSnapshot is not { } snapshot) return;
         _historySources.Remove(snapshot);
-        _historySources.Add(snapshot, new SourceSnapshot(DataSource));
+        _historySources.Add(snapshot, CaptureSource());
     }
 
     private void RememberApiSource()
@@ -111,7 +117,18 @@ public partial class ReportDesign
 
     private void RestoreApiDataSource(ReportDocument snapshot)
     {
-        if (_historySources.TryGetValue(snapshot, out var saved)) SetCurrentValue(DataSourceProperty, saved.Source);
+        if (_historySources.TryGetValue(snapshot, out var saved))
+        {
+            SetCurrentValue(DataSourceProperty, saved.Source);
+            _apiRequest = saved.Request;
+            _apiJson = saved.Json;
+            State.ApiUrl = saved.Request?.Url ?? snapshot.DataSourceUrl;
+        }
+        if (_apiRequest is not null && _apiRequest.Url == snapshot.DataSourceUrl)
+        {
+            _apiRequest = ReportApiRequest.FromDocument(snapshot);
+        }
+        RefreshDataTree();
         UpdateHistorySource();
     }
 
@@ -238,7 +255,8 @@ public partial class ReportDesign
             else
             {
                 element.FieldKey = node.FieldKey;
-                if (element.Kind != ReportElementKind.CheckBox) element.Text = text;
+                // QR payloads resolve through FieldKey; keep the user's editable static fallback intact.
+                if (element.Kind is not (ReportElementKind.CheckBox or ReportElementKind.QRCode)) element.Text = text;
                 if (element.Kind == ReportElementKind.Image) element.ImageUrl = text;
             }
 
@@ -254,5 +272,9 @@ public partial class ReportDesign
         if (element.Kind == ReportElementKind.Image) await RefreshRemoteImagesAsync();
     }
 
-    private sealed record SourceSnapshot(ReportDataSource? Source);
+    private SourceSnapshot CaptureSource() => new(DataSource,
+        _apiRequest is { } request ? request with { SelectedDataPointers = request.SelectedDataPointers?.ToArray() } : null,
+        _apiJson);
+
+    private sealed record SourceSnapshot(ReportDataSource? Source, ReportApiRequest? Request, string? Json);
 }

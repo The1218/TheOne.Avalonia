@@ -1,5 +1,5 @@
 <UserControl
-    styling:Motion.Enabled="{Binding MotionEnabled}"
+    styling:Motion.Enabled="{CompiledBinding MotionEnabled}"
     x:Class="TheOne.DesignPreview.LoadingContainerPage"
     x:DataType="local:LoadingContainerPageViewModel"
     xmlns="https://github.com/avaloniaui"
@@ -11,7 +11,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.DataTemplates>
         <DataTemplate DataType="{x:Type kinds:MaterialIconKind}" x:DataType="kinds:MaterialIconKind">
-            <material:MaterialIcon Kind="{Binding}" />
+            <material:MaterialIcon Kind="{CompiledBinding}" />
         </DataTemplate>
     </UserControl.DataTemplates>
     <StackPanel MaxWidth="760" Spacing="18">
@@ -23,11 +23,11 @@
         <StackPanel Orientation="Horizontal" Spacing="16">
             <CheckBox
                 Content="手动加载"
-                IsChecked="{Binding IsLoading, Mode=TwoWay}"
+                IsChecked="{CompiledBinding IsLoading, Mode=TwoWay}"
                 Name="LoadingToggle" />
             <CheckBox
                 Content="启用动效"
-                IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}"
                 Name="MotionToggle" />
         </StackPanel>
         <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
@@ -37,38 +37,38 @@
                 Maximum="1"
                 Minimum="0"
                 Name="OverlayOpacitySlider"
-                Value="{Binding OverlayOpacity, Mode=TwoWay}" />
+                Value="{CompiledBinding OverlayOpacity, Mode=TwoWay}" />
             <TextBlock
                 Grid.Column="2"
-                Text="{Binding OverlayOpacity, StringFormat={}{0:P0}}"
+                Text="{CompiledBinding OverlayOpacity, StringFormat={}{0:P0}}"
                 VerticalAlignment="Center" />
         </Grid>
         <StackPanel Orientation="Horizontal" Spacing="16">
-            <CheckBox Content="自定义图标" IsChecked="{Binding UseCustomIcon, Mode=TwoWay}" />
+            <CheckBox Content="自定义图标" IsChecked="{CompiledBinding UseCustomIcon, Mode=TwoWay}" />
             <CheckBox
                 Content="Material 图标"
-                IsChecked="{Binding UseMaterialIcon, Mode=TwoWay}"
-                IsEnabled="{Binding UseCustomIcon}" />
+                IsChecked="{CompiledBinding UseMaterialIcon, Mode=TwoWay}"
+                IsEnabled="{CompiledBinding UseCustomIcon}" />
         </StackPanel>
-        <TextBox PlaceholderText="加载提示文字" Text="{Binding LoadingText, Mode=TwoWay}" />
+        <TextBox PlaceholderText="加载提示文字" Text="{CompiledBinding LoadingText, Mode=TwoWay}" />
         <Button
             Classes="primary"
-            Command="{Binding LoadCommand}"
+            Command="{CompiledBinding LoadCommand}"
             Content="模拟三秒加载"
             Name="LoadAction"
-            one:ButtonLoading.IsLoading="{Binding IsLoading}" />
+            one:ButtonLoading.IsLoading="{CompiledBinding IsLoading}" />
         <one:LoadingContainer
             Height="240"
-            IsLoading="{Binding IsLoading}"
-            LoadingIcon="{Binding LoadingIcon}"
-            LoadingText="{Binding LoadingText}"
+            IsLoading="{CompiledBinding IsLoading}"
+            LoadingIcon="{CompiledBinding LoadingIcon}"
+            LoadingText="{CompiledBinding LoadingText}"
             Name="LoadingSample"
-            OverlayOpacity="{Binding OverlayOpacity}">
+            OverlayOpacity="{CompiledBinding OverlayOpacity}">
             <one:InfoCard Footer="加载完成后可继续编辑，输入内容保留。" Header="工作区设置">
                 <StackPanel Spacing="12">
-                    <TextBox Name="ContentInput" Text="{Binding Text, Mode=TwoWay}" />
+                    <TextBox Name="ContentInput" Text="{CompiledBinding Text, Mode=TwoWay}" />
                     <Button
-                        Command="{Binding InvokeCommand}"
+                        Command="{CompiledBinding InvokeCommand}"
                         Content="内容区操作"
                         Name="ContentAction" />
                 </StackPanel>

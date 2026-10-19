@@ -1,5 +1,7 @@
 # 加载状态与 LoadingContainer
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/loading.md)
 
 普通 Button 保留官方类型，使用 `ButtonLoading.IsLoading` 附加属性；IconButton 直接提供 `IsLoading`。两者加载期间显示指示图标并禁用原生输入、Command、Click 与 Flyout 触发。普通 Button 的 IsEnabled 值／绑定保持不变（包括 TwoWay），内部利用原生命令可执行状态临时阻止输入，加载结束后恢复原命令，并继续遵守原来的禁用状态。Command 按原生默认 OneWay 绑定；执行门禁不包装或代理业务命令。调用方直接执行 ICommand 不属于控件输入，业务命令仍应管理自己的并发。
@@ -26,8 +28,6 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 `LoadingIcon` 可以传 Geometry、PathIcon／其他 Control，或由 `LoadingIconTemplate` 渲染的数据。默认 Geometry 模板使用 PathIcon；消费项目可提供带 x:DataType 的 Material 图标模板。LoadingIcon 和 LoadingIconTemplate 都为空时恢复内置旋转指示器；自定义图标不自动旋转，其模板可自行提供动效。`LoadingIconSize` 控制图标大小，默认跟随三档密度。`LoadingText` 为空／空白时隐藏文字和间隔。控件实例不能共享视觉父级，共用图标请使用 Geometry 或模板。
 
 `ControlSizing.Size` 支持 Small／Normal／Large，按钮指示图标为 14／16／20px，容器为 22／28／34px。使用 One.* 语义色，跟随 Light／Dark。`Motion.Enabled=False` 停止旋转、保留静态图标和文字；在加载中重新设置 true 恢复旋转，隐藏／卸载时取消动画。LoadingIndicator 也可独立使用，IsActive 控制运行状态，Foreground 控制颜色。
-
-PreviewHost 的 Button、IconButton 页面提供加载与动效交互，LoadingContainer 有独立扩展控件页。验证与定向截图入口见 [PreviewHost](../../../design/PreviewHost/Program.cs)，原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

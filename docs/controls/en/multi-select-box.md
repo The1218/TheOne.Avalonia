@@ -1,5 +1,7 @@
 # MultiSelectBox
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 The popup owns a bounded viewport: overflow displays a native vertical scrollbar, while a short list correctly has none. Wheel input, fractional vertical/horizontal/diagonal touchpad deltas, and gesture inertia/end phases stay inside the popup over results, search, empty results and scroll boundaries. Native internal scrolling remains available. Closing restores ordinary page scrolling while tails originating in the old popup remain isolated.
 
 `MultiSelectBox` combines local search, selected-item tags, clearing, and a native virtualized results list. Selection contains model objects and survives filtering, including queries that hide every selected item. Load `OneTheme` to use it.
@@ -88,14 +90,7 @@ The bounded native `ListBox` and `VirtualizingStackPanel` create UI only for vis
 
 PreviewHost: **Extensions → MultiSelectBox**, with ten thousand models, preselected disabled values, and compiled bindings.
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/multiselect/artifacts
-dotnet .preview/multiselect/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-multiselect .preview/multiselect/screenshots
-```
-
 The check runs only MultiSelectBox: real key/pointer input, search, locked tags, clearing, collection replacement, readonly/disabled state, template and attachment lifetime, empty results, distant recycling of ten thousand options, bounded tags for bulk selection, and layout/pixels across light/dark × three densities × wide/narrow viewports.
-
-`NativeAotSmoke` reuses the same check. Publish and execute the native program with `--require-aot --verify-multiselect` to verify getters, compiled templates, and bindings. Managed checks or cross-RID builds do not establish native execution on other platforms.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

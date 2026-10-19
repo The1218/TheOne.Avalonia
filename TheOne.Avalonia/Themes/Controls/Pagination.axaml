@@ -42,19 +42,19 @@
                         <StackPanel.Styles>
                             <Style Selector="Button.pagination-navigation">
                                 <Setter Property="Padding" Value="8,0" />
-                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                                <Setter Property="MinHeight" Value="{CompiledBinding $parent[one:Pagination].ItemHeight}" />
                             </Style>
                             <Style Selector="Button.pagination-action">
                                 <Setter Property="Padding" Value="12,0" />
-                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                                <Setter Property="MinHeight" Value="{CompiledBinding $parent[one:Pagination].ItemHeight}" />
                             </Style>
                             <Style Selector="ComboBox.pagination-size">
                                 <Setter Property="Padding" Value="10,0,6,0" />
-                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                                <Setter Property="MinHeight" Value="{CompiledBinding $parent[one:Pagination].ItemHeight}" />
                             </Style>
                             <Style Selector="TextBox.pagination-input">
                                 <Setter Property="Padding" Value="8,0" />
-                                <Setter Property="MinHeight" Value="{Binding $parent[one:Pagination].ItemHeight}" />
+                                <Setter Property="MinHeight" Value="{CompiledBinding $parent[one:Pagination].ItemHeight}" />
                             </Style>
                         </StackPanel.Styles>
                         <one:PaginationPanel IsCompact="{TemplateBinding IsCompact}" Name="PART_Layout">
@@ -77,14 +77,14 @@
                                     Grid.Column="1"
                                     IsVisible="{TemplateBinding ShowPageSizeSelector}"
                                     ItemsSource="{TemplateBinding PageSizes}"
-                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                     MinWidth="112"
                                     Name="PART_PageSizes"
                                     Padding="10,0,6,0"
                                     VerticalAlignment="Center">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="one:PaginationPageSize">
-                                            <TextBlock Text="{Binding Text}" />
+                                            <TextBlock Text="{CompiledBinding Text}" />
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
@@ -97,7 +97,7 @@
                                     AutomationProperties.Name="{TemplateBinding PreviousText}"
                                     Classes="pagination-navigation"
                                     IsEnabled="{TemplateBinding CanGoPrevious}"
-                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                     MinWidth="{TemplateBinding ItemHeight}"
                                     Name="PART_PreviousButton"
                                     Padding="8,0"
@@ -131,17 +131,17 @@
                                         <DataTemplate x:DataType="one:PaginationPageItem">
                                             <Grid>
                                                 <Button
-                                                    AutomationProperties.Name="{Binding AccessibleName}"
-                                                    Classes.primary="{Binding IsCurrent}"
-                                                    Content="{Binding Text}"
-                                                    IsVisible="{Binding IsPage}"
-                                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
-                                                    MinWidth="{Binding $parent[one:Pagination].ItemHeight}"
+                                                    AutomationProperties.Name="{CompiledBinding AccessibleName}"
+                                                    Classes.primary="{CompiledBinding IsCurrent}"
+                                                    Content="{CompiledBinding Text}"
+                                                    IsVisible="{CompiledBinding IsPage}"
+                                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
+                                                    MinWidth="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                                     Padding="6,0"
                                                     Theme="{StaticResource One.PaginationButton}" />
                                                 <TextBlock
                                                     IsHitTestVisible="False"
-                                                    IsVisible="{Binding IsEllipsis}"
+                                                    IsVisible="{CompiledBinding IsEllipsis}"
                                                     Margin="6,0"
                                                     Text="…"
                                                     VerticalAlignment="Center" />
@@ -162,7 +162,7 @@
                                     Classes="pagination-navigation"
                                     Grid.Column="2"
                                     IsEnabled="{TemplateBinding CanGoNext}"
-                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                     MinWidth="{TemplateBinding ItemHeight}"
                                     Name="PART_NextButton"
                                     Padding="8,0"
@@ -193,7 +193,7 @@
                                     Background="{DynamicResource One.Surface}"
                                     BorderBrush="{DynamicResource One.Line}"
                                     Classes="pagination-input"
-                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                     Name="PART_JumpInput"
                                     Padding="8,0"
                                     TextAlignment="Center"
@@ -202,7 +202,7 @@
                                 <Button
                                     Classes="pagination-action"
                                     Content="{TemplateBinding JumpText}"
-                                    MinHeight="{Binding $parent[one:Pagination].ItemHeight}"
+                                    MinHeight="{CompiledBinding $parent[one:Pagination].ItemHeight}"
                                     Name="PART_JumpButton"
                                     Padding="12,0"
                                     Theme="{StaticResource One.PaginationButton}" />

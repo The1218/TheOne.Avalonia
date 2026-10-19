@@ -13,29 +13,29 @@
             Foreground="{DynamicResource One.Muted}"
             Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <CalendarDatePicker
                     Margin="0,0,12,12"
                     Name="ControlSample"
-                    SelectedDate="{Binding CalendarDate, Mode=TwoWay}" />
+                    SelectedDate="{CompiledBinding CalendarDate, Mode=TwoWay}" />
                 <CalendarDatePicker
                     Margin="0,0,12,12"
                     PlaceholderText="选择日期"
-                    SelectedDate="{Binding CalendarDate, Mode=TwoWay}" />
+                    SelectedDate="{CompiledBinding CalendarDate, Mode=TwoWay}" />
                 <CalendarDatePicker
                     IsEnabled="False"
                     Margin="0,0,12,12"
-                    SelectedDate="{Binding CalendarDate}" />
+                    SelectedDate="{CompiledBinding CalendarDate}" />
             </WrapPanel>
         </StackPanel>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <CalendarDatePicker
                 Classes="filled"
                 Name="FilledCalendarSample"
-                SelectedDate="{Binding CalendarDate, Mode=TwoWay}"
+                SelectedDate="{CompiledBinding CalendarDate, Mode=TwoWay}"
                 Width="300" />
         </StackPanel>
     </StackPanel>

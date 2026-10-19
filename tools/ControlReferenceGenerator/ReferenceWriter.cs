@@ -39,7 +39,7 @@ internal static class ReferenceWriter
         ["info-card"] = ["InfoCard"], ["gantt-chart"] = ["GanttChart", "GanttHeaderPresenter"],
         ["relation-graph"] = ["RelationGraph", "RelationGraphNode", "RelationGraphNodePresenter"],
         ["workflow-editor"] = ["WorkflowEditor", "WorkflowCanvas", "WorkflowMiniMap"],
-        ["report-design"] = ["ReportDesign"], ["report-preview"] = ["ReportPreview"],
+        ["report-design"] = ["ReportDesign"], ["report-preview"] = ["ReportPreview"], ["qr-code"] = ["QRCode"],
         ["datagrid-binding"] = ["DataGrid", "DataGridAot", "DataGridColumnOptions", "DataGridSortButton", "DataGridValueAccessor", "DataGridRowMetadata", "DataGridCollectionView", "DataGridColumn"],
         ["datagrid-extensions"] = ["DataGrid", "DataGridFeatures", "DataGridColumnOptions", "DataGridFilterButton", "DataGridSortButton", "DataGridSummaryPresenter", "DataGridColumn", "DataGridCollectionView"],
         ["datagrid-tree"] = ["DataGrid", "DataGridTreeFeatures", "DataGridFeatures", "DataGridColumnOptions", "DataGridTreeCollectionView", "IDataGridTreeCollectionView", "IDataGridTreeQueryView", "DataGridTreeNodeState", "DataGridTreeChangingEventArgs"],

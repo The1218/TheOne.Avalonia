@@ -44,11 +44,11 @@
                                 <StackPanel Spacing="12">
                                     <one:LoadingIndicator
                                         Foreground="{DynamicResource One.Accent}"
-                                        Height="{Binding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}"
+                                        Height="{CompiledBinding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}"
                                         IsActive="{TemplateBinding ShowDefaultLoadingIndicator}"
                                         IsVisible="{TemplateBinding ShowDefaultLoadingIndicator}"
                                         Name="PART_LoadingIndicator"
-                                        Width="{Binding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}" />
+                                        Width="{CompiledBinding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}" />
                                     <ContentPresenter
                                         Content="{TemplateBinding LoadingIcon}"
                                         ContentTemplate="{TemplateBinding LoadingIconTemplate}"
@@ -62,7 +62,7 @@
                                         <ContentPresenter.DataTemplates>
                                             <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
                                                 <PathIcon
-                                                    Data="{Binding}"
+                                                    Data="{CompiledBinding}"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch" />
                                             </DataTemplate>

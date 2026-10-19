@@ -1,5 +1,5 @@
 <local:BasicControlPage
-    styling:Motion.Enabled="{Binding MotionEnabled}"
+    styling:Motion.Enabled="{CompiledBinding MotionEnabled}"
     x:Class="TheOne.DesignPreview.IconButtonPage"
     x:DataType="local:IconButtonPageViewModel"
     xmlns="https://github.com/avaloniaui"
@@ -14,27 +14,27 @@
         <WrapPanel>
             <one:IconButton
                 Classes="primary"
-                Command="{Binding InvokeCommand}"
+                Command="{CompiledBinding InvokeCommand}"
                 Content="新建项目"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 Margin="0,0,12,8"
                 Name="GeometryIcon" />
             <one:IconButton
-                Command="{Binding InvokeCommand}"
+                Command="{CompiledBinding InvokeCommand}"
                 Content="工作区"
-                Icon="{Binding MaterialIcon}"
+                Icon="{CompiledBinding MaterialIcon}"
                 Margin="0,0,12,8"
                 Name="MaterialIcon">
                 <one:IconButton.IconTemplate>
                     <DataTemplate x:DataType="kinds:MaterialIconKind">
-                        <material:MaterialIcon Kind="{Binding}" />
+                        <material:MaterialIcon Kind="{CompiledBinding}" />
                     </DataTemplate>
                 </one:IconButton.IconTemplate>
             </one:IconButton>
             <one:IconButton
                 AutomationProperties.Name="收藏"
                 Classes="ghost"
-                Command="{Binding InvokeCommand}"
+                Command="{CompiledBinding InvokeCommand}"
                 Margin="0,0,12,8"
                 Name="PathIconControl"
                 ToolTip.Tip="收藏">
@@ -44,46 +44,46 @@
             </one:IconButton>
             <one:IconButton
                 Content="禁用图标操作"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 IsEnabled="False"
                 Margin="0,0,12,8" />
         </WrapPanel>
         <TextBlock FontWeight="SemiBold" Text="加载状态 · 运行三秒，可在过程中关闭／开启动效" />
         <StackPanel Orientation="Horizontal" Spacing="16">
-            <CheckBox Content="手动加载" IsChecked="{Binding IsLoading, Mode=TwoWay}" />
-            <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+            <CheckBox Content="手动加载" IsChecked="{CompiledBinding IsLoading, Mode=TwoWay}" />
+            <CheckBox Content="启用动效" IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}" />
         </StackPanel>
         <WrapPanel>
             <one:IconButton
-                Command="{Binding LoadCommand}"
+                Command="{CompiledBinding LoadCommand}"
                 Content="左侧"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 IconPlacement="Left"
-                IsLoading="{Binding IsLoading}"
+                IsLoading="{CompiledBinding IsLoading}"
                 Margin="0,0,16,8"
                 Name="PlacementLeft" />
             <one:IconButton
-                Command="{Binding LoadCommand}"
+                Command="{CompiledBinding LoadCommand}"
                 Content="右侧"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 IconPlacement="Right"
-                IsLoading="{Binding IsLoading}"
+                IsLoading="{CompiledBinding IsLoading}"
                 Margin="0,0,16,8"
                 Name="PlacementRight" />
             <one:IconButton
-                Command="{Binding LoadCommand}"
+                Command="{CompiledBinding LoadCommand}"
                 Content="上方"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 IconPlacement="Top"
-                IsLoading="{Binding IsLoading}"
+                IsLoading="{CompiledBinding IsLoading}"
                 Margin="0,0,16,8"
                 Name="PlacementTop" />
             <one:IconButton
-                Command="{Binding LoadCommand}"
+                Command="{CompiledBinding LoadCommand}"
                 Content="下方"
-                Icon="{Binding Icon}"
+                Icon="{CompiledBinding Icon}"
                 IconPlacement="Bottom"
-                IsLoading="{Binding IsLoading}"
+                IsLoading="{CompiledBinding IsLoading}"
                 Margin="0,0,16,8"
                 Name="PlacementBottom" />
         </WrapPanel>

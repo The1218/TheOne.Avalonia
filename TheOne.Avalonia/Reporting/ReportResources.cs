@@ -77,6 +77,20 @@ public static class ReportResources
         }
 
         cancellationToken.ThrowIfCancellationRequested();
+        return await FetchJsonWithHeaderAsync(request, header, client, cancellationToken);
+    }
+
+    // The wizard has already called the login endpoint and validated the selected token.
+    // Reuse it for this request only; normal template loads still authenticate afresh.
+    internal static async Task<string> FetchJsonWithHeaderAsync(ReportApiRequest request, string? header,
+        HttpClient client, CancellationToken cancellationToken)
+    {
+        using var validation = request.CreateMessage();
+        if (request.Authentication is { } authentication)
+        {
+            if (string.IsNullOrWhiteSpace(header)) throw new ArgumentException("请先获取并验证权限。");
+            authentication.ValidateHeader(header);
+        }
         var bytes = await DownloadBase64Async(request, 4 * 1024 * 1024, client, cancellationToken, header);
         var json = Encoding.UTF8.GetString(Convert.FromBase64String(bytes));
         using var parsed = JsonDocument.Parse(json);

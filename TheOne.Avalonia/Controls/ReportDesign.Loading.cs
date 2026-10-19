@@ -39,6 +39,7 @@ public partial class ReportDesign
         if (clearApiSource) SetCurrentValue(DataSourceProperty, null);
         _treeJson = null;
         _treeSource = null;
+        _treeRequest = null;
         _treeSearch = null;
         _dataRoots = [];
         State.DataNodes.Clear();

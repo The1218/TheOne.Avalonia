@@ -1,5 +1,7 @@
 # Theme colors and implementation
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/README.md) · **English**
 
 OneTheme is the library's default theme. It uses shared `One.*` resources and includes DataGrid. [Setup](../../../README.en.md#quick-start) · [Colors and variants](theme-colors.md) · [Control APIs](../../controls/en/README.md).
@@ -29,12 +31,6 @@ The base templates adapt Avalonia **12.1.4** Fluent sources; the Calendar family
 ## Style APIs
 
 See [item surface spacing](item-spacing.md) for the shared spacing rules, audited control families, and independent verification commands.
-
-TreeViewItem applies `Margin="4,2"` to the header surface (`PART_LayoutRoot`): 4px on either side and 4px between visible rows. Child presenters keep the native level indentation; margins do not accumulate with tree depth. `--verify-treeview-spacing [output]` checks header spacing, selected pixels, three-level indentation, pointer selection, chevron collapse, and keyboard expansion across themes, sizes, and wide/narrow viewports.
-
-TextBox, AutoCompleteBox, NumericUpDown, ComboBox, CalendarDatePicker, DatePicker, TimePicker, and MultiSelectBox use a visible 1px `One.InputLine` resting border. Focus and error states keep their semantic colors. Embedded editors retain a single outer border. ListBoxItem and ComboBoxItem both use `Margin="4,2"`: 4px on either side and 4px between adjacent item surfaces, without replacing native containers or virtualization. Override an item's Margin locally when a denser layout is required. `--verify-combobox-spacing [output]` checks only ComboBox popup spacing, pixels, and native selection across themes, sizes, and wide/narrow viewports. `--verify-listbox-spacing [output]` checks ListBox spacing, selected pixels, native multiple selection, and recycling with default and custom content.
-
-Run `--verify-input-appearance [output]` in PreviewHost for input border pixels, list/dropdown spacing, and native input across light/dark, three sizes, two backgrounds, and wide/narrow viewports. `--verify-datagrid-filter-entries` checks only filter button visibility and runtime changes.
 
 | Control | Classes / properties | Purpose |
 | --- | --- | --- |
@@ -91,9 +87,13 @@ Classes="small|normal|large" or ControlSizing.Size inherits to descendants and c
 
 Motion.Enabled can be set on a container and inherited. Disabling it or using zero duration immediately completes the current state; re-enabling it does not replay an already expanded state. Brush transitions default to 120 ms, expansion to 200 ms, and collapse to 140 ms. Override One.Motion.Fast / One.Motion.Expand as needed. System reduced-motion preferences are not read automatically.
 
-Templates use TemplateBinding / compiled bindings; MultiBinding children explicitly use CompiledBindingExtension. Keep compiled bindings enabled for older examples too. Preserve native PART_*, input presenters, Popup, validation, Track, Spinner, gestures, and keyboard behavior. Template upgrades must compare changes to upstream parts and bindings. See [third-party notices](../../../THIRD-PARTY-NOTICES.md) for sources and licenses.
+Keep TemplateBinding for template properties, use explicit CompiledBinding for ordinary paths, and explicit CompiledBindingExtension for MultiBinding children. Keep compiled bindings enabled for older examples too. Declare each view's and data template's own x:DataType, so node-model paths do not accidentally use the page view-model scope; per-binding DataType declarations and manual casts are unnecessary. Declare named template parts with x:Name for IDE name-scope resolution. Preserve native PART_*, input presenters, Popup, validation, Track, Spinner, gestures, and keyboard behavior. Template upgrades must compare changes to upstream parts and bindings. See [third-party notices](../../../THIRD-PARTY-NOTICES.md) for sources and licenses.
 
-Collections keep bounded viewports, on-demand templates, and dedicated panels. Recycling checks are exposed by [PreviewHost](../../../design/PreviewHost/Program.cs). Set a finite DataGrid MaxColumnWidth before creating columns; see the [DataGrid documentation](../../controls/en/datagrid-binding.md#nativeaot) for AOT requirements.
+Controls that capture node bindings may declare a separate node-model `x:DataType` on the control while the page keeps its view-model type. This does not change the runtime DataContext. Reach page data across scopes through a typed property on the named view, preserving notifications when DataContext changes. See the [RelationGraph example](../../controls/en/relation-graph.md#custom-models-and-childrensource).
+
+Use `TemplateBinding` for host properties and retain explicit `Mode=TwoWay` when changes must flow back. CLR commands, formatting and nested properties use typed compiled paths, such as `{CompiledBinding #PART_Popup.((ComboBox)TemplatedParent).Bounds.Width}`. In MultiBinding, `Path="$self"` refers to the target control and `Path="$self.ItemCount"` observes its item count. These bindings do not depend on the application DataContext or reflection. Popup content retains its original template host rather than looking up a parent across the popup boundary. Follow the [Avalonia template binding guidance](https://docs.avaloniaui.net/docs/custom-controls/templated-controls) for custom templates; application views still need an accurate `x:DataType` and compiled bindings enabled.
+
+Collections keep bounded viewports, on-demand templates, and dedicated panels. Set a finite DataGrid MaxColumnWidth before creating columns; see the [DataGrid documentation](../../controls/en/datagrid-binding.md#nativeaot) for AOT requirements.
 
 ## Related control documentation
 

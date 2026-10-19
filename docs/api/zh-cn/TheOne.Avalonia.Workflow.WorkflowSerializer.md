@@ -17,7 +17,7 @@ Versioned, source-generated JSON. Templates, Content, delegates and history are 
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static string WorkflowSerializer.Save(WorkflowDocument document)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L9) | 将业务文档保存为可移植 JSON；不包含运行期凭据、视觉对象或非持久化状态。 |
-| [`static WorkflowDocument WorkflowSerializer.Load(string json)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L23) | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
+| [`static WorkflowDocument WorkflowSerializer.Load(string json)`](../../../TheOne.Avalonia/Workflow/WorkflowSerializer.cs#L30) | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
 
 ## 相关 API 与内置模型
 

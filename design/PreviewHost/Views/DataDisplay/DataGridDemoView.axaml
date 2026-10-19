@@ -27,7 +27,7 @@
                 <TextBlock
                     FontSize="12"
                     Foreground="{DynamicResource One.Accent}"
-                    Text="{Binding CountLabel}" />
+                    Text="{CompiledBinding CountLabel}" />
             </Border>
         </Grid>
 
@@ -36,19 +36,19 @@
                 Margin="0,0,8,8"
                 Name="GridFilter"
                 PlaceholderText="搜索设备、仓库或编号"
-                Text="{Binding FilterText}"
+                Text="{CompiledBinding FilterText}"
                 Width="210" />
             <Button
-                Command="{Binding FilterCommand}"
+                Command="{CompiledBinding FilterCommand}"
                 Content="筛选"
-                IsEnabled="{Binding View.CanFilter}"
+                IsEnabled="{CompiledBinding View.CanFilter}"
                 Margin="0,0,8,8"
                 Name="GridApplyFilter" />
             <Button
                 Classes="ghost"
-                Command="{Binding ResetCommand}"
+                Command="{CompiledBinding ResetCommand}"
                 Content="重置"
-                IsEnabled="{Binding View.CanFilter}"
+                IsEnabled="{CompiledBinding View.CanFilter}"
                 Margin="0,0,16,8" />
             <Button
                 Classes="ghost"
@@ -58,19 +58,19 @@
                 Name="GridClearColumnFilters" />
             <Button
                 Classes="ghost"
-                Command="{Binding FirstCommand}"
+                Command="{CompiledBinding FirstCommand}"
                 Content="首行"
                 Margin="0,0,8,8"
                 Name="GridFirst" />
             <Button
                 Classes="ghost"
-                Command="{Binding MiddleCommand}"
+                Command="{CompiledBinding MiddleCommand}"
                 Content="中间"
                 Margin="0,0,8,8"
                 Name="GridMiddle" />
             <Button
                 Classes="ghost"
-                Command="{Binding LastCommand}"
+                Command="{CompiledBinding LastCommand}"
                 Content="末行"
                 Margin="0,0,16,8"
                 Name="GridLast" />
@@ -85,20 +85,20 @@
                     Maximum="3"
                     Minimum="0"
                     Name="GridFrozenRightCount"
-                    Value="{Binding FrozenRightCount, Mode=TwoWay}"
+                    Value="{CompiledBinding FrozenRightCount, Mode=TwoWay}"
                     Width="130" />
             </StackPanel>
             <CheckBox
                 Content="显示统计"
-                IsChecked="{Binding ShowSummary, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowSummary, Mode=TwoWay}"
                 Margin="0,0,12,8" />
             <CheckBox
                 Content="只读"
-                IsChecked="{Binding IsReadOnly}"
+                IsChecked="{CompiledBinding IsReadOnly}"
                 Margin="0,0,12,8" />
             <CheckBox
                 Content="启用"
-                IsChecked="{Binding IsInteractive}"
+                IsChecked="{CompiledBinding IsInteractive}"
                 Margin="0,0,0,8" />
         </WrapPanel>
         <DataGrid
@@ -108,38 +108,38 @@
             CanUserSortColumns="True"
             FrozenColumnCount="1"
             Grid.Row="2"
-            IsEnabled="{Binding IsInteractive}"
-            IsReadOnly="{Binding IsReadOnly}"
-            ItemsSource="{Binding View}"
+            IsEnabled="{CompiledBinding IsInteractive}"
+            IsReadOnly="{CompiledBinding IsReadOnly}"
+            ItemsSource="{CompiledBinding View}"
             MaxColumnWidth="320"
             MaxHeight="520"
             MinHeight="300"
             Name="InventoryGrid"
-            SelectedItem="{Binding Selected, Mode=TwoWay}"
-            one:DataGridFeatures.FrozenRightColumnCount="{Binding FrozenRightCount}"
+            SelectedItem="{CompiledBinding Selected, Mode=TwoWay}"
+            one:DataGridFeatures.FrozenRightColumnCount="{CompiledBinding FrozenRightCount}"
             one:DataGridFeatures.ShowColumnFilters="True"
-            one:DataGridFeatures.ShowSummaryRow="{Binding ShowSummary}">
+            one:DataGridFeatures.ShowSummaryRow="{CompiledBinding ShowSummary}">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Binding="{Binding Id}"
+                    Binding="{CompiledBinding Id}"
                     Header="编号"
                     IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding Name, Mode=TwoWay}" Header="设备名称" />
-                <DataGridTextColumn Binding="{Binding Warehouse, Mode=TwoWay}" Header="仓库" />
+                <DataGridTextColumn Binding="{CompiledBinding Name, Mode=TwoWay}" Header="设备名称" />
+                <DataGridTextColumn Binding="{CompiledBinding Warehouse, Mode=TwoWay}" Header="仓库" />
                 <DataGridTextColumn
-                    Binding="{Binding Quantity, Mode=TwoWay}"
+                    Binding="{CompiledBinding Quantity, Mode=TwoWay}"
                     Header="数量"
                     one:DataGridColumnOptions.SummaryEnabled="True"
                     one:DataGridColumnOptions.SummaryFormat="N0"
                     one:DataGridColumnOptions.SummaryKind="Sum" />
                 <DataGridTextColumn
-                    Binding="{Binding Price, Mode=TwoWay, StringFormat='{}{0:N2}'}"
+                    Binding="{CompiledBinding Price, Mode=TwoWay, StringFormat='{}{0:N2}'}"
                     Header="单价 / 元"
                     one:DataGridColumnOptions.SummaryEnabled="True"
                     one:DataGridColumnOptions.SummaryFormat="0.00"
                     one:DataGridColumnOptions.SummaryKind="Average" />
-                <DataGridCheckBoxColumn Binding="{Binding Enabled, Mode=TwoWay}" Header="启用" />
-                <DataGridTextColumn Binding="{Binding Notes, Mode=TwoWay}" Header="备注" />
+                <DataGridCheckBoxColumn Binding="{CompiledBinding Enabled, Mode=TwoWay}" Header="启用" />
+                <DataGridTextColumn Binding="{CompiledBinding Notes, Mode=TwoWay}" Header="备注" />
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="3" Spacing="5">
@@ -147,12 +147,12 @@
                 FontSize="12"
                 Foreground="{DynamicResource One.Accent}"
                 Name="GridMetrics"
-                Text="{Binding Metrics}"
+                Text="{CompiledBinding Metrics}"
                 TextWrapping="Wrap" />
             <TextBlock
                 FontSize="12"
                 Foreground="{DynamicResource One.Muted}"
-                Text="{Binding SelectedLabel}"
+                Text="{CompiledBinding SelectedLabel}"
                 TextWrapping="Wrap" />
             <TextBlock
                 FontSize="12"

@@ -1,5 +1,7 @@
 # DataGrid tree view prototype
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 **English** · [简体中文](../zh-cn/datagrid-tree.md)
 
 Stage-two prototype: sibling sorting, ancestor-preserving filtering and tree-aware summaries reuse native DataGrid editing, selection and recycling. These APIs are provisional.
@@ -72,21 +74,9 @@ Text editing retains the native TextBox as the binding target; row cancellation 
 
 Start PreviewHost normally and open **数据展示 → DataGridTree**, or search for `DataGridTree`. The page reuses the tree grid verification fixture and preserves expansion and selection when switching pages.
 
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/datagrid-tree-stage2/artifacts
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-datagrid-tree-query .preview/datagrid-tree-stage2/frames
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-datagrid-tree
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --datagrid-tree
-```
-
 The query suite covers stable sibling sorting, deferred multi-sort, nested notifications, failure rollback, actual headers/filter popups, all summary scopes, leaves, native editing during active queries and expansion automation. Stage-one tree checks stay separate. Rendering covers both themes, three sizes and wide/narrow viewports. Run only DataGrid entry points affected by the change.
 
-```bash
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/datagrid-tree-stage2/aot-artifacts -o .preview/datagrid-tree-stage2/native
-.preview/datagrid-tree-stage2/native/NativeAotSmoke --verify-datagrid-tree-query --require-aot
-```
-
-This is the native consumer entry point for the current macOS host; it does not establish Windows/Linux runtime coverage. Existing ordinary-grid regression entry points remain in [Program.cs](../../../design/PreviewHost/Program.cs).
+Historical macOS native-consumer results do not establish Windows/Linux runtime coverage; validate the consuming application on its target platform.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

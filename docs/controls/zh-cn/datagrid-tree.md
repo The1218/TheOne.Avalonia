@@ -1,5 +1,7 @@
 # DataGrid 树视图原型
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/datagrid-tree.md)
 
 第二阶段原型：在原生 DataGrid 的编辑、选择与行回收上，增加同级排序、保留祖先路径的筛选和树感知统计。API 尚处于原型阶段。
@@ -72,21 +74,9 @@ var tree = new DataGridTreeCollectionView<Node>(roots, node => node.Children);
 
 正常启动 PreviewHost 后，在 **数据展示 → DataGridTree** 打开树表格，也可以搜索 `DataGridTree`。页面复用树表格专项示例，切换页面后保留展开和选择状态。
 
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/datagrid-tree-stage2/artifacts
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-datagrid-tree-query .preview/datagrid-tree-stage2/frames
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-datagrid-tree
-dotnet .preview/datagrid-tree-stage2/artifacts/bin/PreviewHost/debug/PreviewHost.dll --datagrid-tree
-```
-
 查询专项覆盖同级稳定排序、多列延迟提交、嵌套通知、失败回滚、真实表头／筛选弹层、三种统计范围、叶节点、活动查询中的原生编辑和自动化展开。第一阶段树专项保持独立。绘制覆盖明暗主题、三档尺寸、宽窄视口。只运行受本次改动影响的 DataGrid 入口。
 
-```bash
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/datagrid-tree-stage2/aot-artifacts -o .preview/datagrid-tree-stage2/native
-.preview/datagrid-tree-stage2/native/NativeAotSmoke --verify-datagrid-tree-query --require-aot
-```
-
-这是当前 macOS 宿主的原生消费入口，不能据此宣称 Windows／Linux 实跑通过。现有普通表格回归入口仍见 [Program.cs](../../../design/PreviewHost/Program.cs)。
+历史 macOS 原生消费验证不能作为 Windows／Linux 实跑通过的依据；请在目标应用与目标平台验证。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

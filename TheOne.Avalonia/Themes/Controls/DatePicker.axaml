@@ -151,7 +151,7 @@
     <ControlTheme TargetType="DatePickerPresenter" x:Key="{x:Type DatePickerPresenter}">
         <Setter Property="Width" Value="296" />
         <Setter Property="MinWidth" Value="296" />
-        <Setter Property="MaxHeight" Value="{Binding $self.(one:PickerSizing.PopupHeight)}" />
+        <Setter Property="MaxHeight" Value="{CompiledBinding $self.(one:PickerSizing.PopupHeight)}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
@@ -185,11 +185,11 @@
                                     <ScrollViewer
                                         Grid.Row="1"
                                         HorizontalScrollBarVisibility="Disabled"
-                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        MaxHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
                                         VerticalAlignment="Center"
                                         VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
-                                            ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
+                                            ItemHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_MonthSelector"
                                             PanelType="Month"
                                             ShouldLoop="True" />
@@ -207,11 +207,11 @@
                                     <ScrollViewer
                                         Grid.Row="1"
                                         HorizontalScrollBarVisibility="Disabled"
-                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        MaxHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
                                         VerticalAlignment="Center"
                                         VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
-                                            ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
+                                            ItemHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_DaySelector"
                                             PanelType="Day"
                                             ShouldLoop="True" />
@@ -229,11 +229,11 @@
                                     <ScrollViewer
                                         Grid.Row="1"
                                         HorizontalScrollBarVisibility="Disabled"
-                                        MaxHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
+                                        MaxHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ViewportHeight)}"
                                         VerticalAlignment="Center"
                                         VerticalScrollBarVisibility="Hidden">
                                         <DateTimePickerPanel
-                                            ItemHeight="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
+                                            ItemHeight="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                             Name="PART_YearSelector"
                                             PanelType="Year"
                                             ShouldLoop="False" />
@@ -252,7 +252,7 @@
                                     CornerRadius="4"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="5"
-                                    Height="{Binding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
+                                    Height="{CompiledBinding $parent[PickerPresenterBase].(one:PickerSizing.ItemHeight)}"
                                     IsHitTestVisible="False"
                                     Name="HighlightRect"
                                     VerticalAlignment="Center"
@@ -306,9 +306,9 @@
                         </Grid>
                     </Border>
                     <Border
-                        BorderBrush="{Binding #Background.BorderBrush}"
-                        BorderThickness="{Binding #Background.BorderThickness}"
-                        CornerRadius="{Binding #Background.CornerRadius}"
+                        BorderBrush="{CompiledBinding #Background.BorderBrush}"
+                        BorderThickness="{CompiledBinding #Background.BorderThickness}"
+                        CornerRadius="{CompiledBinding #Background.CornerRadius}"
                         IsHitTestVisible="False"
                         Name="InputOutline" />
                 </Panel>

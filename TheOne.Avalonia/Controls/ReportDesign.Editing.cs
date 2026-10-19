@@ -100,18 +100,19 @@ public partial class ReportDesign
         {
             ReportElementKind.Table => "表格", ReportElementKind.Line => "线条", ReportElementKind.Rectangle => "矩形",
             ReportElementKind.PageNumber => "页码", ReportElementKind.Image => "图片",
-            ReportElementKind.CheckBox => "复选框", ReportElementKind.Barcode => "条码", _ => "文本"
+            ReportElementKind.CheckBox => "复选框", ReportElementKind.Barcode => "条码",
+            ReportElementKind.QRCode => "二维码", _ => "文本"
         };
         var width = kind == ReportElementKind.Table
             ?
             Document!.PageWidthMm - Document.LeftMargin - Document.RightMargin
             : kind == ReportElementKind.Line
                 ? 80
-                : 60;
+                : kind == ReportElementKind.QRCode ? 32 : 60;
         var height = kind == ReportElementKind.Table ? 24 :
             kind == ReportElementKind.Line ? 2 :
             kind == ReportElementKind.Image ? 40 :
-            kind == ReportElementKind.Barcode ? 22 : 12;
+            kind == ReportElementKind.Barcode ? 22 : kind == ReportElementKind.QRCode ? 32 : 12;
         var element = new ReportElement
         {
             Name = title + (Document!.Elements.Count + 1), Kind = kind,
@@ -119,6 +120,7 @@ public partial class ReportDesign
             Y = Math.Clamp(y, 0, Math.Max(0, Document.PageHeightMm - height)), Width = width, Height = height,
             Text = kind == ReportElementKind.Text ? "请输入文本" :
                 kind == ReportElementKind.Barcode ? "12345678" :
+                kind == ReportElementKind.QRCode ? "https://example.com" :
                 kind == ReportElementKind.CheckBox ? "复选框" : "",
             FontSize = 16, Foreground = kind == ReportElementKind.Table ? "#FFFFFF" : "#212222",
             Fill = kind == ReportElementKind.Table ? "#006061" : "Transparent",
@@ -284,9 +286,14 @@ public partial class ReportDesign
     private void ImportApiResponse(ReportApiRequest request, string json)
     {
         var bodies = ReportJsonData.FindBodies(json);
+        var catalog = ReportDataCatalog.Tree(json, request);
         State.ApiUrl = request.Url;
         _apiRequest = request;
         _apiJson = json;
+        _treeJson = json;
+        _treeRequest = request;
+        _treeSearch = null;
+        _dataRoots = catalog;
         _fetchUpdating = true;
         try
         {
@@ -301,6 +308,7 @@ public partial class ReportDesign
         }
 
         RefreshDataTree();
+        State.HasApiError = false;
         State.ApiStatus = "已添加数据源；拖入单值填充，拖入集合配置表格。";
     }
 
@@ -312,6 +320,8 @@ public partial class ReportDesign
         document.DataSourceParameters = request.Parameters;
         document.DataSourceParameterMode = request.ParameterMode;
         document.DataSourceAuthentication = request.Authentication;
+        document.DataSourceName = request.SourceName;
+        document.SelectedDataPointers = request.SelectedDataPointers?.ToArray();
     }
 
     private void SelectApiBody()
@@ -349,6 +359,44 @@ public partial class ReportDesign
             ++_fetchGeneration;
             State.IsFetching = false;
             ImportApiResponse(fetched.Request, fetched.Json);
+            if (document is not null)
+            {
+                var previousBatch = _batch;
+                _batch = true;
+                try { ApplyApiRequest(document); }
+                finally { _batch = previousBatch; }
+                DefinitionChanged(this, new PropertyChangedEventArgs(nameof(Document)));
+            }
+        }
+    }
+
+    private async void OnRefreshDataSource(object? sender, RoutedEventArgs e)
+    {
+        if (State.IsFetching || !State.HasApiSource) return;
+        var definition = Document;
+        var source = DataSource;
+        var bodyPointer = definition?.DataBodyPointer;
+        var request = _apiRequest ?? (Document is { } document ? ReportApiRequest.FromDocument(document) : new ReportApiRequest(State.ApiUrl));
+        var generation = _fetchGeneration + 1;
+        await FetchApiDataAsync(request);
+        // FetchApiDataAsync imports a catalog. Refresh must also replace the bound row snapshot,
+        // but may not reclaim a source or definition that the consumer replaced while awaiting HTTP.
+        if (generation != _fetchGeneration || State.HasApiError || _apiJson is null || definition is null ||
+            !ReferenceEquals(Document, definition) || !ReferenceEquals(DataSource, source) ||
+            definition.DataSourceUrl.Length == 0 || bodyPointer != definition.DataBodyPointer) return;
+        var currentRequest = ReportApiRequest.FromDocument(definition);
+        // Selection arrays affect catalog visibility, not the HTTP request or record values.
+        if ((request with { SelectedDataPointers = null }) != (currentRequest with { SelectedDataPointers = null })) return;
+        try
+        {
+            var refreshed = ReportJsonData.CreateSource(_apiJson, definition.DataBodyPointer, RootBindingKeys());
+            SetCurrentValue(DataSourceProperty, refreshed);
+            State.ApiStatus = $"数据源已刷新；{refreshed.RowCount} 条记录。";
+        }
+        catch (ArgumentException exception)
+        {
+            State.ApiStatus = "刷新数据源失败：" + exception.Message;
+            State.HasApiError = true;
         }
     }
 

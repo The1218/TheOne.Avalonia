@@ -1,5 +1,7 @@
 # 主题配色维护
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/README.md)
 
 OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid。[加载](../../../README.zh-cn.md#快速开始) · [配色与变体](theme-colors.md) · [控件 API](../../controls/zh-cn/README.md)。
@@ -29,12 +31,6 @@ OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid�
 ## 样式接口
 
 统一间距规范、控件检查范围和独立验证入口见[项表面间距](item-spacing.md)。
-
-TreeViewItem 在节点标题表面（`PART_LayoutRoot`）使用 `Margin="4,2"`：左右各留 4px，可见行之间保留 4px 空隙。子项 Presenter 保留原生层级缩进，边距不随树深度累加。`--verify-treeview-spacing [output]` 检查标题间距、选中像素、三级缩进、指针选择、展开按钮折叠与键盘展开，覆盖明暗主题、三档尺寸和宽窄视口。
-
-TextBox、AutoCompleteBox、NumericUpDown、ComboBox、CalendarDatePicker、DatePicker、TimePicker 和 MultiSelectBox 的常态边框统一使用可见的 1px `One.InputLine`；焦点和错误状态保留各自语义色，嵌入式编辑器保留单层外边框。ListBoxItem 和 ComboBoxItem 均使用 `Margin="4,2"`：左右各留 4px，相邻项表面之间保留 4px 空隙，继续使用原生容器和虚拟化。需要紧凑排列时，可在项上局部覆盖 Margin。`--verify-combobox-spacing [output]` 专项只检查 ComboBox 的边距、实际像素与原生选择，覆盖明暗主题、三档尺寸和宽窄视口。`--verify-listbox-spacing [output]` 检查默认及自定义内容的 ListBox 边距、选中像素、原生多选与容器回收。
-
-PreviewHost 的 `--verify-input-appearance [output]` 专项覆盖明暗主题、三档尺寸、两种背景和宽窄视口下的输入边框像素、列表／下拉项间距及原生输入。`--verify-datagrid-filter-entries` 只检查筛选按钮显隐和运行时配置变更。
 
 | 控件 | Classes / 属性 | 用途 |
 | --- | --- | --- |
@@ -91,9 +87,13 @@ Classes="small|normal|large" 或 ControlSizing.Size 向后代继承，单控件�
 
 Motion.Enabled 可在容器设置并继承；关闭或零时长立即完成当前状态，重新启用不重播已展开内容。画刷默认 120 ms，展开 200 ms，收起 140 ms；可覆盖 One.Motion.Fast／One.Motion.Expand。当前不自动读取系统减少动画偏好。
 
-模板使用 TemplateBinding／编译绑定，MultiBinding 子项显式 CompiledBindingExtension；不能以关闭编译绑定兼容旧示例。保留官方 PART_*、输入 Presenter、Popup、验证、Track、Spinner、手势及键盘行为。模板升级需比较官方部件与绑定变化。来源与许可见 [第三方声明](../../../THIRD-PARTY-NOTICES.md)。
+模板属性保留 TemplateBinding，普通路径统一显式 CompiledBinding，MultiBinding 子项显式 CompiledBindingExtension；不能以关闭编译绑定兼容旧示例。视图、数据模板分别声明自身的 x:DataType，避免将节点模型路径误放在页面 ViewModel 作用域；不需要为每个绑定重复声明 DataType 或手写类型转换。使用 x:Name 声明模板命名部件，便于 IDE 识别命名作用域。保留官方 PART_*、输入 Presenter、Popup、验证、Track、Spinner、手势及键盘行为。模板升级需比较官方部件与绑定变化。来源与许可见 [第三方声明](../../../THIRD-PARTY-NOTICES.md)。
 
-集合保留有界视口、按需模板和专用面板；回收检查入口见 [PreviewHost](../../../design/PreviewHost/Program.cs)。DataGrid 有限 MaxColumnWidth 在创建列前配置，AOT 要求见 [DataGrid 控件文档](../../controls/zh-cn/datagrid-binding.md#nativeaot)。
+对于捕获节点绑定的控件，可在控件上单独声明节点模型的 `x:DataType`，页面仍保留 ViewModel 类型；这不会改变运行时 DataContext。跨作用域访问页面数据时使用命名视图上的强类型属性，并保留 DataContext 替换通知，见 [RelationGraph 示例](../../controls/zh-cn/relation-graph.md#自定义模型与-childrensource)。
+
+模板中的宿主属性使用 `TemplateBinding`，需要回写时显式保留 `Mode=TwoWay`；CLR 命令、格式化与嵌套属性使用明确类型的编译路径，例如 `{CompiledBinding #PART_Popup.((ComboBox)TemplatedParent).Bounds.Width}`。MultiBinding 中绑定目标控件本身使用 `Path="$self"`，监听目标属性使用 `Path="$self.ItemCount"`。这些写法不依赖业务 DataContext，也不需要反射绑定。弹层内仍引用原模板宿主，不改成可能越过弹层边界的父级查找。自定义模板可按 [Avalonia 模板绑定说明](https://docs.avaloniaui.net/docs/custom-controls/templated-controls)编写；业务页面继续声明准确的 `x:DataType` 并保持编译绑定开启。
+
+DataGrid 有限 MaxColumnWidth 在创建列前配置，AOT 要求见 [DataGrid 控件文档](../../controls/zh-cn/datagrid-binding.md#nativeaot)。
 
 ## 对应控件文档
 

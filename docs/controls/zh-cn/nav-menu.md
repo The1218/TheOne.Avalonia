@@ -1,5 +1,7 @@
 # NavMenu 多级导航
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/nav-menu.md)
 
 `NavMenu` 继承官方 `TreeView`，使用 `NavMenuItem` 容器和 TheOne 主题。支持多级菜单、独立图标与文字模板、页面选择、分组标题、原生键盘导航，以及所有层级的虚拟化和容器回收。加载 `OneTheme` 后自动支持 Light / Dark 和三种尺寸。
@@ -67,11 +69,7 @@ bool selected = menu.SelectPath(0, 0, 999);
 
 大根集合和每一级子菜单使用原生 `VirtualizingStackPanel`，保留 `PART_*`、焦点、选择和展开逻辑。指定 `ChildrenBinding` 且根节点不超过 32 个时，根层改用 `StackPanel` 保留分组容器，避免快速反向滚动时整组回收、重挂载和高度估算跳变；子级仍虚拟化，并缓存前后各一个视口。根集合增删跨过此阈值时自动切换，显式设置的 `ItemsPanel` 优先。
 
-需要有限高度或位于 `Grid` 的有界 `*` 行中；不要将无限增长的导航放进无高度限制的 `StackPanel` 或外层无限 ScrollViewer。虚拟化减少 UI 容器，不等于业务数据分页。`--verify-navmenu-fling` 专项使用 PreviewHost 实际侧栏，覆盖滚到底部后快速反向滚回顶部、分组边界高度稳定、窄侧栏和大分支虚拟化。
-
 PreviewHost 主侧栏已采用 NavMenu，分为基础控件、数据展示、导航与布局、图表控件、扩展控件、交互验证六区。扩展控件中的“导航菜单 NavMenu”演示每级 1,000 条、共 5,000 个模型，可跳到末尾根节点、二级及三级页面，实时查看实际容器数量。
-
-执行命令与测试范围见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
 专项覆盖明暗主题和三种尺寸、实际容器数量、远距离选择与键盘导航、回收后的展开状态、编译模板更新、动态子项、禁用状态、分组不导航、自定义模板操作、实时尺寸及主题切换。独立原生消费项目复用同一编译 XAML 和交互验证，不使用反射绑定、动态 XAML 或整程序集保留。
 
@@ -80,8 +78,6 @@ PreviewHost 主侧栏已采用 NavMenu，分为基础控件、数据展示、导
 - [侧栏折叠、悬停级联与边缘适配](nav-menu-popups.md)。
 - [多级搜索、高亮、键盘与顶部自动完成](nav-menu-search.md)。
 - [展开与收起动效](nav-menu-motion.md)。
-
-验证入口及原生专项选择见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

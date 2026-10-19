@@ -2,9 +2,6 @@
     <Folder Name="/design/">
         <Project Path="design/PreviewHost/PreviewHost.csproj"/>
     </Folder>
-    <Folder Name="/design/consumers/">
-        <Project Path="design/PreviewHost/Consumers/NativeAotSmoke/NativeAotSmoke.csproj"/>
-    </Folder>
     <Folder Name="/vendor/">
         <Project Path="vendor/Avalonia.Controls.DataGrid/Avalonia.Controls.DataGrid.csproj"/>
     </Folder>

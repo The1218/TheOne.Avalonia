@@ -13,46 +13,46 @@
             Foreground="{DynamicResource One.Muted}"
             Text="已选值 / 占位提示 / 禁用 · 1,000 项按需生成"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <ComboBox
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     Name="ControlSample"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                     Width="260" />
                 <ComboBox
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     PlaceholderText="请选择工作区"
                     Width="260" />
                 <ComboBox
                     IsEnabled="False"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
                     SelectedIndex="1"
                     Width="260" />
             </WrapPanel>
         </StackPanel>
         <Button
-            Command="{Binding LastCommand}"
+            Command="{CompiledBinding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <WrapPanel>
                 <ComboBox
                     Classes="filled"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                     Width="260" />
                 <ComboBox
                     Classes="underlined"
-                    ItemsSource="{Binding Items}"
+                    ItemsSource="{CompiledBinding Items}"
                     Margin="0,0,12,12"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                     Width="260" />
             </WrapPanel>
         </StackPanel>

@@ -19,9 +19,9 @@
             <Template>
                 <PathIcon
                     Data="M 18 2 L 18 5.4 A 9 9 0 1 0 21 12 L 19 12 A 7 7 0 1 1 16.2 6.6 L 13 6.6 L 13 8.6 L 20 8.6 L 20 2 Z"
-                    Height="{Binding $self.(one:RefreshOptions.IndicatorSize)}"
+                    Height="{CompiledBinding $self.(one:RefreshOptions.IndicatorSize)}"
                     Name="PART_Icon"
-                    Width="{Binding $self.(one:RefreshOptions.IndicatorSize)}"
+                    Width="{CompiledBinding $self.(one:RefreshOptions.IndicatorSize)}"
                     x:DataType="PathIcon" />
             </Template>
         </Setter>

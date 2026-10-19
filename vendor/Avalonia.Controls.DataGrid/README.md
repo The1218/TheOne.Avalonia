@@ -31,6 +31,7 @@ NuGet 包版本与主库共用根目录 [PackageVersions.props](../../PackageVer
   递归提交；真实移出表格继续提交。树专项包含普通表格多单元格撤销回归。
 - DataGridRow.cs：数据视图重置时避免选择状态的重复回写，保留槽位断言。
 - 单元格／表头 AutomationPeer：被完全裁剪的元素不作为屏内元素报告。
+- Themes/Fluent.xaml、Themes/Simple.xaml：普通绑定统一显式 CompiledBinding，保留 TemplateBinding；滚动条自动隐藏属性通过带 DataGrid 类型的 `#PART_VerticalScrollbar.((DataGrid)TemplatedParent)` / `#PART_HorizontalScrollbar.((DataGrid)TemplatedParent)` 编译路径读取，保持模板宿主、附加属性与后续更新语义。普通绑定语法替换前后，使用同一依赖解析路径反编译生成模板，代码一致。
 
 右侧冻结为零时保留上游布局路径。升级时先比较上游变更，再运行 DataGrid 相关专项与实际
 NativeAOT，不能只更换版本号。当前实现、窄窗口规则和配置示例见 [使用文档](../../docs/controls/zh-cn/datagrid-extensions.md)。

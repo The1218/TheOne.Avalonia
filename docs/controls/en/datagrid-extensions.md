@@ -1,9 +1,10 @@
 # DataGrid filtering, frozen columns, and summaries
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/datagrid-extensions.md) · **English**
 
 Native DataGrid, column types, virtualized presenters, and keyboard behavior are retained, with automatic entity-property filters, native right frozen columns, and numeric summaries.
-
 
 See [DataGrid binding and sorting](datagrid-binding.md) for type inference, generic collection views, header sort buttons, and cell sizing.
 
@@ -68,10 +69,7 @@ DataGridFeatures.ShowColumnFilters defaults to false. DataGridColumnOptions conf
 | `FilterCondition` | DataGridFilterCondition? / null | Applied immutable condition; TwoWay supported; null means none; popup drafts are separate |
 | `FilterError` | string? / null | Read-only phase-2 query property describing condition / field errors; read with GetFilterError |
 
-
 Automatic identification applies to compiled property chains targeting the current entity. Template columns with multiple fields do not infer identity; override ValueAccessor or disable FilterEnabled. Supported numeric types are byte / sbyte / short / ushort / int / uint / long / ulong / float / double / decimal and Nullable. Parsing uses the raw type and CurrentCulture. Exact comparison adds no floating tolerance; null / NaN / Infinity do not match valid conditions.
-
-Use `--verify-datagrid-filters` and render target DataGridFilters; see [preview entry points](../../../design/PreviewHost/Program.cs). Native layout package consumption is demonstrated by [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs).
 
 ## Native right frozen columns
 
@@ -91,15 +89,9 @@ Pointer reordering stays within a frozen region; center columns cannot drag into
 
 This requires native layout extensions. The library references the [12.1.2 source project](../../../vendor/Avalonia.Controls.DataGrid/README.md), preserving native assembly identity, types, presenters, and PART_* while replacing official DataGrid NuGet. Consumers must not add the official package too; upgrades must maintain this local patch. Core Avalonia remains 12.1.4.
 
-PreviewHost's DataGrid page changes right frozen count, default 0. `--verify-datagrid-right` checks right freezing, existing filters, and native left-only behavior; DataGridRightFrozen is the render target. See [preview entry points](../../../design/PreviewHost/Program.cs) for commands and platform context.
-
 ### Column drag feedback
 
-Dragging preserves native drop targets and frozen-region limits. The source header fades; an independent card represents the drag without duplicate action buttons, and insertion hints ease briefly. The drag keeps the initial grab position. Esc, release outside header vertical bounds, or unloading cancels and clears capture. `Motion.Enabled=False` or zero `One.Motion.Fast` disables insertion animation. See [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs).
-
 ## Numeric summaries
-
-
 
 ```xml
 <DataGrid ItemsSource="{CompiledBinding Records}" AutoGenerateColumns="False"
@@ -133,8 +125,6 @@ Dragging preserves native drop targets and frozen-region limits. The source head
 All 11 basic numeric types and Nullable are supported. null, NaN, and Infinity are excluded from every aggregate; Count includes only valid values. Integer / decimal sums and averages accumulate in decimal; floating values use double. Min / Max retain original types; Count returns long. Overflow, failed reads, nonnumeric configuration, and format errors are reported through result Error and display ! instead of silently showing infinity or wrong numbers.
 
 `DataGridFeatures.GetSummaryResult(grid, column)` returns Value, ValidCount, and Error. SummaryUpdatedEvent publishes coalesced updates. Filtering, editing, unrealized-row PropertyChanged, collection changes / replacement, and nested-object updates recalculate results. Hidden columns stop calculation / listening and recalculate when restored. Summaries do not participate in selection, editing, sorting, or ItemsSource. Widths, reordering, scrolling, and frozen regions share native layout descriptions, retaining narrow-window clipping rules.
-
-Only locally loaded models are summarized, not unloaded server data. Fully custom DataGrid templates must embed DataGridSummaryPresenter; OneTheme already includes it. PreviewHost toggles summaries. `--verify-datagrid-summary` checks aggregates, automatic filters, frozen regions, and native behavior; render targets are DataGridSummary / DataGridFilters. See [preview entry points](../../../design/PreviewHost/Program.cs).
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

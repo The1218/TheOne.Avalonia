@@ -17,21 +17,21 @@
             <StackPanel Spacing="16">
                 <TextBlock Text="此表单由应用定义，LoginWindow 只负责窗口与主窗体交接。" Foreground="{DynamicResource One.Muted}"
                            TextWrapping="Wrap" />
-                <StackPanel Spacing="6" IsEnabled="{Binding CanEdit}">
-                    <Label Content="账号 (_A)" Target="{Binding #LoginAccount}" />
-                    <TextBox Name="LoginAccount" Text="{Binding Account, Mode=TwoWay}" PlaceholderText="输入演示账号"
+                <StackPanel Spacing="6" IsEnabled="{CompiledBinding CanEdit}">
+                    <Label Content="账号 (_A)" Target="{CompiledBinding #LoginAccount}" />
+                    <TextBox Name="LoginAccount" Text="{CompiledBinding Account, Mode=TwoWay}" PlaceholderText="输入演示账号"
                              AutomationProperties.Name="登录账号" />
-                    <Label Content="密码 (_P)" Target="{Binding #LoginPassword}" />
-                    <TextBox Name="LoginPassword" Text="{Binding Password, Mode=TwoWay}" PasswordChar="●"
+                    <Label Content="密码 (_P)" Target="{CompiledBinding #LoginPassword}" />
+                    <TextBox Name="LoginPassword" Text="{CompiledBinding Password, Mode=TwoWay}" PasswordChar="●"
                              PlaceholderText="输入演示密码" AutomationProperties.Name="登录密码" />
                 </StackPanel>
-                <TextBlock Name="LoginStatus" Text="{Binding Status}" TextWrapping="Wrap" MinHeight="40"
+                <TextBlock Name="LoginStatus" Text="{CompiledBinding Status}" TextWrapping="Wrap" MinHeight="40"
                            AutomationProperties.Name="登录状态" />
-                <ProgressBar IsIndeterminate="True" IsVisible="{Binding IsBusy}" Height="4" />
+                <ProgressBar IsIndeterminate="True" IsVisible="{CompiledBinding IsBusy}" Height="4" />
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                    <Button Name="LoginSubmit" Classes="primary" Content="登录" Command="{Binding LoginCommand}"
+                    <Button Name="LoginSubmit" Classes="primary" Content="登录" Command="{CompiledBinding LoginCommand}"
                             HorizontalAlignment="Stretch" IsDefault="True" />
-                    <Button Name="LoginCancel" Grid.Column="1" Content="取消" Command="{Binding CancelCommand}"
+                    <Button Name="LoginCancel" Grid.Column="1" Content="取消" Command="{CompiledBinding CancelCommand}"
                             IsCancel="True" />
                 </Grid>
                 <Border Background="{DynamicResource One.Subtle}" CornerRadius="8" Padding="12">

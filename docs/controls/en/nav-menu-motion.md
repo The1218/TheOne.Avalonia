@@ -1,5 +1,7 @@
 # NavMenu motion
 
+Historical command-line checks have been removed. Start PreviewHost normally and open the corresponding control page from its menu.
+
 [简体中文](../zh-cn/nav-menu-motion.md) · **English**
 
 See [NavMenu](nav-menu.md) for basic setup.
@@ -18,8 +20,6 @@ Sidebar width transitions between ExpandedWidth (default 280) and CollapsedWidth
 ```
 
 PreviewHost's dedicated NavMenu page provides actions to expand / collapse a thousand children, expand / collapse three levels, and rapidly reverse the sidebar. The top motion switch tests disabling motion midway. Verification uses real Dispatcher frames and Skia advancement, covering Light / Dark × three sizes, actual thousand-item recycling, intermediate frames, reversal, full extent restoration, focus / selection, and unload cleanup:
-
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
 
 Targeted rendering includes intermediate collapse, expansion, and sidebar frames, plus built-in search suggestions and the collapsed search icon / popup. The current NavMenu set contains 66 images and does not render unrelated controls.
 

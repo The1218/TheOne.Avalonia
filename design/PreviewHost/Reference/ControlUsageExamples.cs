@@ -5,6 +5,21 @@ internal static class ControlUsageExamples
 {
     internal static string Property(TypeContract owner, PropertyContract property)
     {
+        if (owner.Name == "WorkflowEditor" && property.Name == "ChoiceItemsSource")
+            return "<one:WorkflowEditor ChoiceItemsSource=\"{CompiledBinding ApproverItems, Mode=TwoWay}\" ChoiceItemAdapter=\"{CompiledBinding ApproverAdapter}\" />";
+        if (owner.Name == "WorkflowEditor" && property.Name == "ChoiceItemAdapter")
+            return "// ApprovalTarget 是消费端模型；getter 在编译期校验。\nvar adapter = WorkflowChoiceAdapter.Create<ApprovalTarget>(item => item.Key, item => item.DisplayName);\neditor.ChoiceItemAdapter = adapter;";
+        if (owner.Name == "QRCode")
+            return property.Name switch
+            {
+                "Text" => "<one:QRCode Text=\"{CompiledBinding QrText}\" Width=\"192\" Height=\"192\" />",
+                "ErrorCorrection" => "<one:QRCode Text=\"https://example.com\" ErrorCorrection=\"High\" />",
+                "QuietZone" => "<one:QRCode Text=\"https://example.com\" QuietZone=\"6\" />",
+                "ValidationError" => "// 只读状态，可在视图中绑定显示。\nvar error = qrCode.ValidationError;",
+                "Foreground" => "<one:QRCode Text=\"https://example.com\" Foreground=\"Black\" />",
+                "Background" => "<one:QRCode Text=\"https://example.com\" Background=\"White\" />",
+                _ => ""
+            };
         var variable = property.Static ? owner.Name : Variable(owner.Name);
         if (!property.Writable)
         {
@@ -92,6 +107,8 @@ internal static class ControlUsageExamples
             "WorkflowDocument.MoveNodes" => "document.MoveNodes(new[] { (Node: node, X: 160d, Y: 120d) });",
             "WorkflowDocument.SetProperty" =>
                 "// property 是当前节点的 WorkflowProperty。\ndocument.SetProperty(property, \"approved\", reference: null);",
+            "WorkflowDocument.SetSelectedKeys" =>
+                "// property.Kind 为 WorkflowValueKind.MultiSelect；按稳定 Key 保存，一次编辑可撤销。\ndocument.SetSelectedKeys(property, [\"user:42\", \"role:finance\"]);",
             "WorkflowDocument.Edit" =>
                 "double oldX = node.X;\ndocument.Edit(\"移动节点\", () => node.X = 200, () => node.X = oldX);",
             "WorkflowDocument.CheckConnection" =>

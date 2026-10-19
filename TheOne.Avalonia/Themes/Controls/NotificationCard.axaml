@@ -66,14 +66,14 @@
                                                     <StackPanel Spacing="4">
                                                         <TextBlock
                                                             FontWeight="SemiBold"
-                                                            IsVisible="{Binding Title, Converter={x:Static converters:StringConverters.IsNotNullOrEmpty}}"
+                                                            IsVisible="{CompiledBinding Title, Converter={x:Static converters:StringConverters.IsNotNullOrEmpty}}"
                                                             Name="PART_NotificationTitle"
-                                                            Text="{Binding Title}"
+                                                            Text="{CompiledBinding Title}"
                                                             TextWrapping="Wrap" />
                                                         <TextBlock
                                                             MaxHeight="80"
                                                             Name="PART_NotificationMessage"
-                                                            Text="{Binding Message}"
+                                                            Text="{CompiledBinding Message}"
                                                             TextTrimming="CharacterEllipsis"
                                                             TextWrapping="Wrap" />
                                                     </StackPanel>
@@ -208,7 +208,7 @@
                                                 <DataTemplate DataType="{x:Type n:INotification}" x:DataType="n:INotification">
                                                     <TextBlock
                                                         Name="PART_NotificationMessage"
-                                                        Text="{Binding Message}"
+                                                        Text="{CompiledBinding Message}"
                                                         TextWrapping="Wrap"
                                                         VerticalAlignment="Center" />
                                                 </DataTemplate>

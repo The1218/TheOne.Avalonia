@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using TheOne.Avalonia.Controls;
 
 namespace TheOne.Avalonia.Reporting;
 
@@ -30,7 +31,8 @@ public enum ReportElementKind
     PageNumber,
     Image,
     CheckBox,
-    Barcode
+    Barcode,
+    QRCode
 }
 
 public enum ReportTextAlignment
@@ -120,6 +122,18 @@ public sealed class ReportElement : ReportObservable
         get;
         set => Set(ref field, value);
     } = true;
+
+    public QRCodeErrorCorrection QRCodeErrorCorrection
+    {
+        get;
+        set => Set(ref field, value);
+    } = QRCodeErrorCorrection.Medium;
+
+    public int QRCodeQuietZone
+    {
+        get;
+        set => Set(ref field, value);
+    } = 4;
 
     public double FontSize
     {
@@ -322,6 +336,19 @@ public sealed class ReportDocument : ReportObservable
     }
 
     public ReportApiAuthentication? DataSourceAuthentication
+    {
+        get;
+        set => Set(ref field, value);
+    }
+
+    public string DataSourceName
+    {
+        get;
+        set => Set(ref field, value);
+    } = "接口数据";
+
+    /// <summary>Designer item selection, independent of the data used by existing report bindings.</summary>
+    public string[]? SelectedDataPointers
     {
         get;
         set => Set(ref field, value);

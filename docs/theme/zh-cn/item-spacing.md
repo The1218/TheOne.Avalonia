@@ -1,5 +1,7 @@
 # 项表面间距
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/item-spacing.md)
 
 列表和导航中的可选择项表面与外框至少相隔 4px，相邻表面间隔 4px；弹层原有的更大留白继续保留。横向排列时，每项左右各 2px 形成 4px 项间距，由父容器补齐边缘留白。嵌套结构在可见标题表面设置间距，避免整个分支的边距随深度累加。
@@ -25,13 +27,6 @@
 - 通用 ItemsControl 的内容由调用方定义，没有默认选中表面，不在模板中强加项边距。WorkflowEditor 使用共享 TabStrip 主题，节点库已有显式间隔。
 
 PreviewHost 提供独立入口，只运行受影响控件族：
-
-```text
---verify-menu-item-spacing [output]
---verify-tab-item-spacing [output]
---verify-tabstrip-item-spacing [output]
---verify-gantt [output]
-```
 
 覆盖明暗主题、Small / Normal / Large、宽窄视口、实际表面与间距像素、禁用项以及原生按键／指针交互。菜单专项包含 ContextMenu、纵向／横向浮层和嵌套子菜单；TabControl 覆盖四种位置，TabStrip 覆盖两种面板方向。
 

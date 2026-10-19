@@ -4,6 +4,25 @@ namespace TheOne.Documentation;
 internal static class PropertyHelp
 {
     private static readonly Dictionary<string, (string Zh, string En)> Entries = Parse("""
+    ReportDocument.DataSourceName|设计器左侧数据目录的来源名称，默认“接口数据”；随报表模板保存，不改变接口地址或字段键。|Source label in the designer's data catalog, default “接口数据”; saved with the template without changing the API URL or field keys.
+    ReportApiRequest.SourceName|请求成功后用于数据目录分组的来源名称；默认“接口数据”，不作为身份标识或请求 URL。|Catalog group label after a successful request, default “接口数据”; not an identity key or request URL.
+    ReportDataNode.IconKind|只读图标名称：集合为 Table、对象为 Folder、单值为 Text；由节点 Kind 计算，不参与字段绑定。|Read-only icon name derived from Kind: Table for collections, Folder for objects and Text for scalar values; independent of field binding.
+    WorkflowEditor.ChoiceItemsSource|多选字段的默认候选数据源，支持双向绑定和集合通知；使用 ChoiceItemAdapter 提供稳定 Key 与显示文字，审批人或角色数据由宿主加载。|Default choice catalog for multi-select fields; supports two-way binding and collection notifications. ChoiceItemAdapter supplies stable keys and labels; the host loads people or roles.
+    WorkflowEditor.ChoiceItemAdapter|使用 WorkflowChoiceAdapter.Create<T> 指定候选项 Key 和显示文字的编译委托；不使用反射属性路径。未设置时数据项必须为 WorkflowChoice。|Typed key and label projections from WorkflowChoiceAdapter.Create<T>, without reflection member paths. When omitted, records must be WorkflowChoice instances.
+    WorkflowProperty.SelectedKeys|多选字段保存的稳定 Key 集合，序列化为 JSON 数组；选项对象与显示文字不保存。直接修改用于模型绑定；用户编辑通过 WorkflowDocument.SetSelectedKeys 记录撤销。|Stable selected keys serialized as a JSON array; records and labels are not persisted. Direct changes support model binding; use WorkflowDocument.SetSelectedKeys for undoable user edits.
+    WorkflowPropertyEditor.Choices|当前字段的候选投影，按 Key 保持标识；仅显示用，持久状态为 Property.SelectedKeys。|Current choice projections identified by key, for display only; Property.SelectedKeys owns persisted selection.
+    WorkflowPropertyEditor.SelectedChoices|绑定 MultiSelectBox.SelectedItems 的双向选择集合；添加和移除会更新 SelectedKeys，并通过文档记录撤销。|Two-way collection for MultiSelectBox.SelectedItems; additions and removals update SelectedKeys through the document undo history.
+    WorkflowPropertyEditor.ChoiceError|候选数据 Key 为空、重复或类型不兼容时的错误文字；不会清除已保存的选择。|Error text for empty or duplicate catalog keys or incompatible records; persisted selections are retained.
+    WorkflowPropertyEditor.HasMissingChoices|已保存的 Key 暂时不在候选数据源中时为 true；保留可移除标签，数据恢复后重新关联。|True when persisted keys are temporarily absent from the catalog; removable tags remain and reconnect when records return.
+    WorkflowChoice.IsAvailable|该 Key 当前是否存在于宿主候选数据源；不代表业务审批权限。|Whether this key currently exists in the host catalog; it does not indicate approval authorization.
+    QRCode.Text|二维码内容，原样保留，使用带 ECI 标记的 UTF-8；空值、无效 Unicode 或超出当前等级容量时清除旧图形并设置 ValidationError。|Payload preserved exactly and encoded as UTF-8 with ECI; empty, invalid Unicode or over-capacity input clears the old symbol and sets ValidationError.
+    QRCode.ErrorCorrection|纠错等级 Low、Medium、Quartile、High，默认 Medium；使用指定等级，不自动提升。|Low, Medium, Quartile or High error correction, default Medium; the exact requested level is used without automatic boosting.
+    QRCode.QuietZone|四周静区宽度，单位为模块，范围 4–32，默认 4；非正方形空间中居中绘制正方形二维码。|Quiet border on every side in modules, range 4–32, default 4; non-square bounds center a square symbol.
+    QRCode.ValidationError|只读编码或尺寸错误；有效时为 null。含静区的每个模块至少 1 DIP，非法状态不显示旧二维码。|Read-only encoding or size error, null when valid. Each module including the quiet zone needs at least 1 DIP; invalid states never display a stale symbol.
+    QRCode.Foreground|二维码深色模块画刷，默认固定黑色；自定义时应保持与背景的扫描对比度。|Dark-module brush, fixed black by default; preserve scanning contrast when customizing.
+    QRCode.Background|浅色模块及静区画刷，默认固定白色，不随明暗主题反色。|Light-module and quiet-zone brush, fixed white by default and never inverted by brightness themes.
+    ReportElement.QRCodeErrorCorrection|二维码元素的纠错等级，默认 Medium；随模板、撤销和重做保存。|Error correction for a QR report element, default Medium; retained by templates and undo/redo.
+    ReportElement.QRCodeQuietZone|二维码元素四周的静区模块数，范围 4–32，默认 4；设计、预览和 PDF 共用。|Quiet-zone modules around a QR report element, range 4–32, default 4; shared by design, preview and PDF.
     Description.LabelWidth|标签列的 DIP 宽度；向后代继承，可由 DescriptionItem 单项覆盖，窄布局切换为上下排列。|Label-column width in DIPs, inherited by descendants and overridable per DescriptionItem; narrow layouts place the label above the content.
     Description.StackWidth|切换上下排列的可用宽度阈值，单位 DIP；宽度小于该值时标签在上、内容在下。向后代继承，可由单项覆盖。|Available-width threshold in DIPs for stacked labels and content; below this width the label appears above its content. Inherited by descendants and overridable per item.
     DescriptionItem.LabelWidth|此说明项的标签列 DIP 宽度；默认继承 Description.LabelWidth，局部值仅覆盖本项。|Label-column width in DIPs for this row; inherits Description.LabelWidth by default, while a local value overrides this item only.

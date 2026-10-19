@@ -12,7 +12,7 @@
                     BorderThickness="1" CornerRadius="12" Padding="24">
                 <StackPanel Spacing="20">
                     <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16">
-                        <one:Avatar Name="AvatarSample" Source="{Binding ImageSource}" Width="80" Height="80"
+                        <one:Avatar Name="AvatarSample" Source="{CompiledBinding ImageSource}" Width="80" Height="80"
                                     FontSize="24" Text="林默" AutomationProperties.Name="林默的头像" />
                         <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
                             <TextBlock Text="林默" FontSize="20" FontWeight="SemiBold" />
@@ -35,10 +35,10 @@
             <StackPanel Spacing="12">
                 <TextBlock Text="图片头像" FontSize="16" FontWeight="SemiBold" />
                 <StackPanel Orientation="Horizontal" Spacing="20">
-                    <one:Avatar Source="{Binding ExampleImageSource}" Text="LM" AutomationProperties.Name="圆形图片头像" />
-                    <one:Avatar Source="{Binding ExampleImageSource}" Shape="Rounded" Text="JL"
+                    <one:Avatar Source="{CompiledBinding ExampleImageSource}" Text="LM" AutomationProperties.Name="圆形图片头像" />
+                    <one:Avatar Source="{CompiledBinding ExampleImageSource}" Shape="Rounded" Text="JL"
                                 AutomationProperties.Name="圆角图片头像" />
-                    <one:Avatar Source="{Binding ExampleImageSource}" Shape="Square" Text="AK"
+                    <one:Avatar Source="{CompiledBinding ExampleImageSource}" Shape="Square" Text="AK"
                                 AutomationProperties.Name="方形图片头像" />
                 </StackPanel>
             </StackPanel>

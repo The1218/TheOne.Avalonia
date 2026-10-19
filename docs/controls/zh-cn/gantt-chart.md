@@ -1,5 +1,7 @@
 # GanttChart 甘特图
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 [English](../en/gantt-chart.md) · **简体中文**
 
 `GanttChart` 是全天任务的只读甘特图。任务列表使用原生 ListBox 的选择、键盘导航和行虚拟化；每个可见行同时绘制任务信息与时间条，共用垂直滚动。水平 ScrollBar 只移动时间轴，表头保持固定。
@@ -30,6 +32,39 @@ public ObservableCollection<GanttTask> Tasks { get; } =
             Start = new(2026, 10, 23), IsMilestone = true }
 ];
 ```
+
+## 单任务增量刷新
+
+公共属性与 API 保持不变，不需要调用额外方法：
+
+```csharp
+task.Title = "交互设计完成";
+task.Owner = "周宁";
+task.Progress = .8;
+task.EndExclusive = new DateOnly(2026, 10, 20);
+// 同一轮 UI 通知合并处理；保留行对象、原生容器、焦点与滚动位置。
+```
+
+- `Title`／`Owner` 只刷新该任务的已实现行、ToolTip 和自动化名称，不枚举数据源、不重建任务树或订阅。
+- `Progress`／`Start`／`EndExclusive`／`IsMilestone` 更新叶任务缓存，再按受影响祖先更新日期与日历天数加权进度。普通进度更新沿父链传播；原有最早／最晚日期向内收缩时，重新检查对应父节点的直接子任务，不扫描整棵树。汇总任务自己的日期与进度仍不参与计算。
+- `IsExpanded` 只在可见行集合中插入／移除对应后代，保留其他行的身份及订阅；折叠后选择移到最近的可见祖先。调整行号的成本随后续可见行数量增长。
+- 集合变化、`Id`／`ParentId`、空属性名或未知属性通知，以及显式 `RefreshData()` 仍完整校验并重建任务树。订阅按实际源与模型成员变化增减，不重复订阅未改变的模型。
+- 无效数据仍使整个图表隐藏，修正通知后完整恢复；卸载取消订阅，切换源不会应用旧任务的待处理更新。普通集合的未通知修改仍需 `RefreshData()`。
+
+增量路径增加任务引用索引与加权完成量缓存，均随任务数增长。本次优化针对已加载后的任务更新，不承诺降低首次加载或结构重建成本。所有通知仍须在 UI 线程发出。
+
+### 性能记录与复测
+
+2026-10-18 当前源码专项：macOS 27.0.1 ARM64、.NET 10.0.0、Release、Skia Headless；固定 1100 × 520 视口、关闭动效，每场景预热 8 次、采样 32 次。基线控件源码为 `e083204`。下表是 10,000 任务、每组 100 个子任务的 UI 线程更新／队列处理／布局耗时，不代表 GPU 或屏幕呈现延迟；分配量另包含该次 Headless 帧处理，仅统计当前线程。
+
+| 修改 | 中位耗时：优化前 → 后 | P95：优化前 → 后 | 每次分配中位数：优化前 → 后 |
+| --- | --- | --- | --- |
+| 标题 | 7.593 → 0.383 ms | 13.413 → 0.443 ms | 6,431,560 → 54,704 B |
+| 负责人 | 6.374 → 0.422 ms | 12.683 → 0.917 ms | 6,467,632 → 58,296 B |
+| 进度 | 6.426 → 0.741 ms | 14.763 → 1.319 ms | 6,406,280 → 118,248 B |
+| 日期 | 6.077 → 0.710 ms | 12.914 → 1.317 ms | 6,404,752 → 118,648 B |
+
+另测 1,000／10,000 任务的宽树。全部 16 个场景中，优化前每组 32 次更新均枚举源、重新订阅源并 Reset 行集合 32 次；优化后这些计数均为 0，选中行对象保持不变。日期场景交替扩大／收缩边界，包含直接子任务重查；宽树的此类重查最坏仍随该父节点的子任务数增长。测试不设置依赖机器速度的固定耗时通过门槛。
 
 ## 数据契约
 
@@ -70,14 +105,6 @@ public ObservableCollection<GanttTask> Tasks { get; } =
 ## 验证
 
 PreviewHost 的“数据展示 / GanttChart”页面包含设计稿任务、筛选、缩放、全部展开／折叠，以及 1,500 条任务和末行定位。
-
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/gantt/artifacts
-dotnet .preview/gantt/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-gantt .preview/gantt/managed
-# macOS：仅在涉及 AOT／绑定／元数据时执行原生专项。
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/gantt/native-artifacts -o .preview/gantt/native
-.preview/gantt/native/NativeAotSmoke --require-aot --verify-gantt .preview/gantt/native-pixels
-```
 
 专项检查明暗主题、三档尺寸、窄窗口、实际任务与今天线像素、层级与选择、只读拖动、数据校验、重新挂载、编译绑定和远距离虚拟滚动。NativeAOT 命令必须执行原生产物，不能用托管运行替代。
 

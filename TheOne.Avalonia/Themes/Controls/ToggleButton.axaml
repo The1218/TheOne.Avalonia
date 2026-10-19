@@ -34,7 +34,7 @@
                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         x:Name="PART_ContentPresenter" />
                     <Border
-                        Background="{Binding #PART_ContentPresenter.Foreground}"
+                        Background="{CompiledBinding #PART_ContentPresenter.Foreground}"
                         CornerRadius="1.5"
                         Height="3"
                         HorizontalAlignment="Center"

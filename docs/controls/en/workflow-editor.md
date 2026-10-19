@@ -1,5 +1,7 @@
 # WorkflowEditor
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/workflow-editor.md) · [Index](README.md)
 
 WorkflowEditor edits a bound WorkflowDocument: nodes, named ports, edges and business data references. It includes default templates; the host supplies factories, data, persistence and execution, and can replace individual templates. There is no built-in approval, HTTP or script engine.
@@ -15,7 +17,8 @@ Models live in TheOne.Avalonia.Workflow, independently of visual controls.
 | WorkflowNode | Stable Id / TypeId, title, description, logical coordinates, width / shape, annotation flag, ports, properties, state and presentation Content |
 | WorkflowPort | Node-local ID, direction, DataType, maximum connections; nonpositive means unlimited |
 | WorkflowConnection | Stable edge ID, source/target node and port IDs, label |
-| WorkflowProperty | Key, title, DataType, Text/Number/Boolean kind, required flag, string literal or reference |
+| WorkflowProperty | Key, title, DataType, Text/Number/Boolean/MultiSelect kind, required flag, literal/reference or SelectedKeys |
+| WorkflowChoiceAdapter / WorkflowChoice | Compiled host key/text projections and runtime choice presentation |
 | WorkflowDataReference | NodeId + OutputPortId + FieldPath, independent of display titles |
 | WorkflowOutputField | Host-declared field path, title and data type |
 
@@ -25,10 +28,10 @@ Number/Boolean literals are stored as strings and validated using invariant nume
 
 ```xml
 <Grid>
-<one:WorkflowEditor Document="{Binding Document, Mode=TwoWay}"
-                    NodeDefinitions="{Binding NodeDefinitions}"
-                    SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
-                    SaveCommand="{Binding SaveCommand}" />
+<one:WorkflowEditor Document="{CompiledBinding Document, Mode=TwoWay}"
+                    NodeDefinitions="{CompiledBinding NodeDefinitions}"
+                    SelectedNode="{CompiledBinding SelectedNode, Mode=TwoWay}"
+                    SaveCommand="{CompiledBinding SaveCommand}" />
 </Grid>
 ```
 
@@ -52,6 +55,48 @@ document.TryConnect(source.Id, "out", target.Id, "in", out var error);
 
 The host registers NodeDefinitions. Each factory returns an independent instance with a fresh ID and matching TypeId. Search the category-grouped library, click/drag items, or call AddNode(definition, position). NodeDefinitionTemplate receives a definition for custom library icons and content. The demo supplies the approval types and icons as consumer data.
 
+## Bound approvers and multiple choices
+
+Use `WorkflowValueKind.MultiSelect` for approvers or other identity lists. Bind `WorkflowEditor.ChoiceItemsSource` to host records and supply `ChoiceItemAdapter` with compiled key/text getters. This selects your model's properties without reflection-based member paths. Labels may repeat; keys must be nonempty and unique across the catalog. Prefixing keys such as `user:42` and `role:finance` lets the host distinguish people from roles. Items and selected tags use a built-in person icon; no icon field is required.
+
+```csharp
+public sealed record ApprovalTarget(string Key, string DisplayName);
+// In a notifying ViewModel; the source can be replaced and an ObservableCollection can change in place.
+private IEnumerable<ApprovalTarget> _approverItems = new ObservableCollection<ApprovalTarget>
+{
+    new("user:42", "Alex"), new("role:finance", "Finance reviewers")
+};
+public IEnumerable<ApprovalTarget> ApproverItems
+{
+    get => _approverItems;
+    set => Set(ref _approverItems, value); // Inherit WorkflowObservable or use your own notifying base.
+}
+public WorkflowChoiceAdapter ApproverAdapter { get; } =
+    WorkflowChoiceAdapter.Create<ApprovalTarget>(item => item.Key, item => item.DisplayName);
+
+var field = new WorkflowProperty
+{
+    Key = "approvers", Title = "Approvers", DataType = "principal",
+    Kind = WorkflowValueKind.MultiSelect, IsRequired = true
+};
+approvalNode.Properties.Add(field);
+document.SetSelectedKeys(field, ["user:42", "role:finance"]); // One undoable edit
+```
+
+```xml
+<one:WorkflowEditor Document="{CompiledBinding Document, Mode=TwoWay}"
+    ChoiceItemsSource="{CompiledBinding ApproverItems, Mode=TwoWay}"
+    ChoiceItemAdapter="{CompiledBinding ApproverAdapter}" />
+```
+
+The default inspector shows the multiple-choice picker on its Data tab. UI changes update `WorkflowProperty.SelectedKeys`; host changes to this observable collection update selection. Prefer `document.SetSelectedKeys(field, keys)` for an undoable host edit; direct collection changes follow the existing direct-model-edit history reset contract. Catalog changes, source replacement and notifying label changes update presentation without editing the document or resetting history. Notify the source property when replacing it. `SelectedKeys` belongs to each node property, so selecting another node restores that node's choices instead of sharing one global selection.
+
+Custom property templates can use `WorkflowPropertyEditor`: call `ConfigureChoices(source, adapter)` and bind a `MultiSelectBox` to `Choices` / `SelectedChoices` (`Mode=TwoWay`). `SelectedChoices` contains `WorkflowChoice` models with `Key`, `Text` and `IsAvailable`. Dispose standalone field editors when no longer used; WorkflowEditor disposes its own editors. The preview's approver inspector demonstrates this with the same built-in text adapter and person template.
+
+PreviewHost's basic approver inspector, Rules fields and association example share the same field-editor behavior. Multi-select fields hide literal/reference inputs, display `ChoiceError` and missing-key warnings, and explicitly use `MaxVisibleTags="1"` per picker without changing the actual selection. Custom templates are independent of the default template; a local property value on one instance does not configure others. Readonly mode disables field writes while keeping tabs and scrolling available. Node titles bind directly to `SelectedNodeEditor.Title`, committing immediately and refreshing on undo/redo without a separate blur-commit draft. Replacing property collections or switching nodes disposes old field editors and binds the current properties. Approval modes, timeout limits and units remain host-owned business settings.
+
+Selected keys missing from a filtered/replaced catalog remain saved and visible as unresolved choices; they are removable and resolve again if the catalog returns. Duplicate/empty catalog keys show `ChoiceError` instead of guessing an identity. An empty required multi-selection is invalid. Search does not clear hidden selections; readonly mode blocks UI edits. The JSON property has an explicit `selectedKeys` string array. Save/load, undo/redo and copy/paste retain those exact keys, not display labels, catalog records or delegates. Host execution uses these keys to find the current person/role; the library does not execute approval rules. The old Text/Number/Boolean values and enum numbers remain unchanged; older libraries cannot load the new `MultiSelect = 3` kind. The demo migrates its older single `roleId` literal into a one-key selection; general host migrations remain explicit.
+
 ## Associate business data
 
 Edges represent graph relationships, without automatically transmitting every output. GetReferenceOptions(node, property) filters declared fields by upstream reachability and matching DataType (any accepts all field types). The host resolves the stable triple against output tables or explicit compiled getters. FieldPath is not evaluated as an expression or reflection path.
@@ -69,6 +114,8 @@ The demo's reference-resolution action uses a host dictionary to provide request
 - ContentTemplate receives typed host Content. Declare the concrete x:DataType. Content is not persisted; the host restores it by TypeId after loading.
 - PropertyTemplate receives the selected node. The default uses native TabStrip tabs for basic metadata, data and ports; it edits name, description, literals and upstream references through document undo history, and respects IsReadOnly. SelectedNodeEditor exposes WorkflowNodeEditor and WorkflowPropertyEditor adapters for custom templates. A host can supply specialized business UI or hide the panel and bind SelectedNode externally. Templates own their scroll container; delete stays outside the default scrolling region.
 - SelectedConnection exposes the selected edge for external label or business-condition editing. The default inspector displays nodes.
+
+Native `GridSplitter` controls separate the node library and property inspector from the canvas. Drag with the pointer, or focus a splitter and use the left/right arrow keys. Initial side widths are 195/296 DIP, with maximum widths of 420/560 DIP and normal minimums of 140/280 DIP; the canvas keeps at least 160 DIP when space permits. Narrow windows proportionally reduce the side panels and restore preferred widths when expanded again. Collapsing a panel releases both its width and splitter space; reopening retains the width for this control instance. Widths are not stored in workflow JSON. Readonly mode permits layout resizing without changing document revisions, selection or the property editor. Library items use compact padding, with 18 DIP icons on 24 DIP surfaces in the demo. Full control-template replacements must retain the five `PART_PanelGrid` columns (library, splitter, canvas, splitter, inspector) and both native splitters to keep this behavior; custom node/property content templates need no changes.
 
 Node and connection selection are exclusive, including external `SelectedNode` / `SelectedConnection` assignments. Selecting a connection clears all selected nodes and the node inspector; selecting a node clears the selected connection. Models outside the current document normalize to null, even when they share an ID with a document model.
 
@@ -117,13 +164,6 @@ Unsupported versions or invalid identities/coordinates are rejected. Draft unres
 
 PreviewHost: **Extensions → WorkflowEditor**. The primary view follows the approved seven-node design, with a note, icons, ports and states; inspector tabs use the built-in `TabStrip`. The library, toolbar, inspector and example actions default to Small sizing (body and input font size 12), while canvases retain host density and node proportions. The collapsible consumer section includes default/custom templates, typed Content, configuration, reference selection/resolution, read-only mode, editable JSON and native file save/open. A separate request → approval → notification example demonstrates recipient references.
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/workflow-editor/artifacts
-dotnet .preview/workflow-editor/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-workflow .preview/workflow-editor/render
-```
-
-NativeAotSmoke supports --verify-workflow. Checks cover contracts, JSON, compiled templates, actual pointer/keyboard input, light/dark, three densities and narrow views with panels folded. Native file dialogs require desktop verification; headless checks cover their shared JSON path.
-
 Routing uses directly drawn rounded orthogonal edges and layered arrangement, with offscreen culling and safe node-view recycling. Full obstacle routing and bend editing are not included. The host owns rule execution and output evaluation.
 
 <!-- generated-contracts:start -->
@@ -143,50 +183,52 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`AddNodeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L95) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`AlignCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L104) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`AllowCycles`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L88) | `bool` | writable; OneWay | `false` | Allows cyclic connections; otherwise editor validation rejects cycles. Runners still own business-loop semantics. |
-| [`ArrangeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L103) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`ConnectionValidator`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L109) | `System.Func<TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, string?>?` | writable; CLR / n/a | `null` | Host can reject business-specific connections in addition to structural checks. |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L69) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`DeleteCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L98) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`Document`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L64) | `TheOne.Avalonia.Workflow.WorkflowDocument?` | writable; TwoWay | `null` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
-| [`FitCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L99) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`FitPadding`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L92) | `Avalonia.Thickness` | writable; OneWay | `new Thickness(32)` | DIP padding reserved when fitting content to the viewport. Validation: `p => new[] { p.Left, p.Top, p.Right, p.Bottom }.All(x => double.IsFinite(x) && x >= 0)` |
-| [`GraphSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L83) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`HeaderTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L73) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Header content receives this editor. The default exposes document title, validation and SaveCommand. |
-| [`IsPanMode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L78) | `bool` | writable; OneWay | `false` | Uses pointer dragging to pan the canvas, following workflow selection/edit gesture rules. |
-| [`IsReadOnly`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L85) | `bool` | writable; OneWay | `false` | Whether editing is blocked; the control's read-only contract determines remaining display, selection and navigation behavior. |
-| [`LibraryGroups`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L81) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowNodeGroup>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`LocateIssueCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L107) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`NodeDefinitionTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L71) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`NodeDefinitions`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L65) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Workflow.WorkflowNodeDefinition>?` | writable; OneWay | `null` | Model/result collection; the signature defines element types. Dynamic business data needs notifications; control-owned read-only collections must not be replaced. |
-| [`NodeTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L68) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`Pan`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L91) | `Avalonia.Vector` | writable; TwoWay | `new Vector(24, 24)` | Canvas pan vector, affecting the viewport without rewriting node coordinates. Validation: `x => double.IsFinite(x.X) && double.IsFinite(x.Y)` |
-| [`PropertyTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L70) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`RedoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L97) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`SaveCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L75) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host-owned persistence command. The default save button passes Document as its parameter. |
-| [`SearchText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L77) | `string` | writable; OneWay | `""` | Current search text, independent of selection and model identity. |
-| [`SelectedConnection`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L67) | `TheOne.Avalonia.Workflow.WorkflowConnection?` | writable; TwoWay | `null` | Selected connection model, following the editor's node/connection selection rules. |
-| [`SelectedNode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L66) | `TheOne.Avalonia.Workflow.WorkflowNode?` | writable; TwoWay | `null` | Selected node model; null clears node selection. |
-| [`SelectedNodeEditor`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L76) | `TheOne.Avalonia.Workflow.WorkflowNodeEditor?` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SelectedNodes`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L63) | `System.Collections.ObjectModel.ReadOnlyObservableCollection<TheOne.Avalonia.Workflow.WorkflowNode>` | read-only; CLR / n/a | `accessor-defined / state` | Model/result collection; the signature defines element types. Dynamic business data needs notifications; control-owned read-only collections must not be replaced. |
-| [`ShowNodeLibrary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L86) | `bool` | writable; OneWay | `true` | Shows the library panel of node definitions available to add. |
-| [`ShowProperties`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L87) | `bool` | writable; OneWay | `true` | Shows the selected object's property editor panel. |
-| [`ShowRuntimePreview`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L79) | `bool` | writable; OneWay | `false` | Shows runtime preview; the host runner owns actual business execution. |
-| [`ShowValidation`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L80) | `bool` | writable; OneWay | `false` | Shows document validation results; hiding the panel does not bypass validation. |
-| [`SnapToGrid`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L89) | `bool` | writable; OneWay | `true` | Snaps moved nodes to the grid; existing coordinates remain until edited. |
-| [`Status`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L93) | `string` | read-only; OneWay | `computed / state` | Business node-state enum; styles derive from state rather than storing state in classes. |
-| [`ToggleLibraryCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L105) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`TogglePropertiesCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L106) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`UndoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L96) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`ValidateCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L102) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`ValidationIssues`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L82) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowValidationIssue>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`ValidationSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L84) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Zoom`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L90) | `double` | writable; TwoWay | `1` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. Validation: `x => double.IsFinite(x) && x >= .25 && x <= 2` |
-| [`ZoomInCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L100) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`ZoomOutCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L101) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`ZoomText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L94) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`AddNodeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L344) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`AlignCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L353) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`AllowCycles`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L312) | `bool` | writable; OneWay | `false` | Allows cyclic connections; otherwise editor validation rejects cycles. Runners still own business-loop semantics. |
+| [`ArrangeCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L352) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`ChoiceItemAdapter`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L39) | `TheOne.Avalonia.Workflow.WorkflowChoiceAdapter?` | writable; OneWay | `null` | Typed key and label projections from WorkflowChoiceAdapter.Create<T>, without reflection member paths. When omitted, records must be WorkflowChoice instances. |
+| [`ChoiceItemsSource`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L33) | `System.Collections.IEnumerable?` | writable; OneWay | `null` | Default choice catalog for multi-select fields; supports two-way binding and collection notifications. ChoiceItemAdapter supplies stable keys and labels; the host loads people or roles. |
+| [`ConnectionValidator`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L359) | `System.Func<TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, TheOne.Avalonia.Workflow.WorkflowNode, TheOne.Avalonia.Workflow.WorkflowPort, string?>?` | writable; CLR / n/a | `null` | Host can reject business-specific connections in addition to structural checks. |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L231) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`DeleteCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L347) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`Document`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L201) | `TheOne.Avalonia.Workflow.WorkflowDocument?` | writable; TwoWay | `null` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
+| [`FitCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L348) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`FitPadding`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L336) | `Avalonia.Thickness` | writable; OneWay | `new Thickness(32)` | DIP padding reserved when fitting content to the viewport. Validation: `p => new[] { p.Left, p.Top, p.Right, p.Bottom }.All(x => double.IsFinite(x) && x >= 0)` |
+| [`GraphSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L291) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HeaderTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L250) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Header content receives this editor. The default exposes document title, validation and SaveCommand. |
+| [`IsPanMode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L271) | `bool` | writable; OneWay | `false` | Uses pointer dragging to pan the canvas, following workflow selection/edit gesture rules. |
+| [`IsReadOnly`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L294) | `bool` | writable; OneWay | `false` | Whether editing is blocked; the control's read-only contract determines remaining display, selection and navigation behavior. |
+| [`LibraryGroups`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L289) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowNodeGroup>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`LocateIssueCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L356) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`NodeDefinitionTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L243) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`NodeDefinitions`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L207) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Workflow.WorkflowNodeDefinition>?` | writable; OneWay | `null` | Model/result collection; the signature defines element types. Dynamic business data needs notifications; control-owned read-only collections must not be replaced. |
+| [`NodeTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L225) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`Pan`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L330) | `Avalonia.Vector` | writable; TwoWay | `new Vector(24, 24)` | Canvas pan vector, affecting the viewport without rewriting node coordinates. Validation: `x => double.IsFinite(x.X) && double.IsFinite(x.Y)` |
+| [`PropertyTemplate`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L237) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`RedoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L346) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`SaveCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L257) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host-owned persistence command. The default save button passes Document as its parameter. |
+| [`SearchText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L265) | `string` | writable; OneWay | `""` | Current search text, independent of selection and model identity. |
+| [`SelectedConnection`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L219) | `TheOne.Avalonia.Workflow.WorkflowConnection?` | writable; TwoWay | `null` | Selected connection model, following the editor's node/connection selection rules. |
+| [`SelectedNode`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L213) | `TheOne.Avalonia.Workflow.WorkflowNode?` | writable; TwoWay | `null` | Selected node model; null clears node selection. |
+| [`SelectedNodeEditor`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L263) | `TheOne.Avalonia.Workflow.WorkflowNodeEditor?` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SelectedNodes`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L199) | `System.Collections.ObjectModel.ReadOnlyObservableCollection<TheOne.Avalonia.Workflow.WorkflowNode>` | read-only; CLR / n/a | `accessor-defined / state` | Model/result collection; the signature defines element types. Dynamic business data needs notifications; control-owned read-only collections must not be replaced. |
+| [`ShowNodeLibrary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L300) | `bool` | writable; OneWay | `true` | Shows the library panel of node definitions available to add. |
+| [`ShowProperties`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L306) | `bool` | writable; OneWay | `true` | Shows the selected object's property editor panel. |
+| [`ShowRuntimePreview`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L277) | `bool` | writable; OneWay | `false` | Shows runtime preview; the host runner owns actual business execution. |
+| [`ShowValidation`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L283) | `bool` | writable; OneWay | `false` | Shows document validation results; hiding the panel does not bypass validation. |
+| [`SnapToGrid`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L318) | `bool` | writable; OneWay | `true` | Snaps moved nodes to the grid; existing coordinates remain until edited. |
+| [`Status`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L342) | `string` | read-only; OneWay | `computed / state` | Business node-state enum; styles derive from state rather than storing state in classes. |
+| [`ToggleLibraryCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L354) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`TogglePropertiesCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L355) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`UndoCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L345) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`ValidateCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L351) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`ValidationIssues`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L290) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Workflow.WorkflowValidationIssue>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ValidationSummary`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L292) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Zoom`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L324) | `double` | writable; TwoWay | `1` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. Validation: `x => double.IsFinite(x) && x >= .25 && x <= 2` |
+| [`ZoomInCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L349) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`ZoomOutCommand`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L350) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`ZoomText`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L343) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### WorkflowMiniMap
 
@@ -194,7 +236,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Editor`](../../../TheOne.Avalonia/Controls/WorkflowMiniMap.cs#L13) | `TheOne.Avalonia.Controls.WorkflowEditor?` | writable; OneWay | `null` | WorkflowEditor associated with the minimap, sharing document/viewport rather than creating independent workflow state. |
+| [`Editor`](../../../TheOne.Avalonia/Controls/WorkflowMiniMap.cs#L24) | `TheOne.Avalonia.Controls.WorkflowEditor?` | writable; OneWay | `null` | WorkflowEditor associated with the minimap, sharing document/viewport rather than creating independent workflow state. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
@@ -218,6 +260,8 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.ArrangeNodes()` | Arranges node layout while recording coordinate changes in document history. |
 | [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.CopySelection()` | Copies the selection into a supported editor fragment under serialization boundaries. |
 | [`WorkflowEditor`](../../api/en/TheOne.Avalonia.Controls.WorkflowEditor.md) | `void WorkflowEditor.PasteSelection()` | Pastes a copied fragment with independent identities and undoable edits. |
+| [`WorkflowChoiceAdapter`](../../api/en/TheOne.Avalonia.Workflow.WorkflowChoiceAdapter.md) | `abstract string WorkflowChoiceAdapter.GetKey(object item)` |  |
+| [`WorkflowChoiceAdapter`](../../api/en/TheOne.Avalonia.Workflow.WorkflowChoiceAdapter.md) | `abstract string WorkflowChoiceAdapter.GetText(object item)` | Reads original-model display/search text through the configured typed adapter. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Edit(string title, Action redo, Action undo)` | Apply a host edit to the same history as graph edits. Actions must be deterministic and not throw. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Undo()` | Undoes the most recent undoable document edit. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Redo()` | Redoes the most recently undone document edit. |
@@ -226,6 +270,7 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.Remove(IEnumerable<WorkflowNode> nodes, WorkflowConnection? connection = null)` | Removes a workflow object/associated relationships through document history. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.MoveNodes(IEnumerable<(WorkflowNode Node, double X, double Y)> positions)` | Updates node coordinates in a batch recorded as an undoable move. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)` | Edits workflow literal/reference properties through the document to preserve undo/notifications. |
+| [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `void WorkflowDocument.SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)` | One undoable multi-selection edit, preserving stable keys and their order. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)` | Validates a candidate port connection and reports failures without creating it. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)` | Validates and attempts a connection, returning success and associated results. |
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `bool WorkflowDocument.IsReachable(string from, string to)` | Checks graph reachability for connection/cycle decisions. |
@@ -233,6 +278,7 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | [`WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | `IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)` | Validates workflow structure, ports and references, returning locatable issues. |
 | [`WorkflowNodeEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowNodeEditor.md) | `void WorkflowNodeEditor.Refresh()` | Refresh after document edits, including undo and upstream metadata changes. |
 | [`WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.Refresh()` | Resynchronizes the inspector from its model/document, including undo and upstream changes. |
+| [`WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | `void WorkflowPropertyEditor.ConfigureChoices(IEnumerable? source, WorkflowChoiceAdapter? adapter)` | Configure host records with typed key/text projections. Collection and label notifications are observed. |
 | [`WorkflowSerializer`](../../api/en/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static string WorkflowSerializer.Save(WorkflowDocument document)` | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
 | [`WorkflowSerializer`](../../api/en/TheOne.Avalonia.Workflow.WorkflowSerializer.md) | `static WorkflowDocument WorkflowSerializer.Load(string json)` | Loads a typed business document from JSON under its version/field/structure validation contract. |
 
@@ -250,6 +296,7 @@ Subscribe when needed and detach when the host is disposed. These are event entr
 
 | Model | Properties/enum values |
 | --- | ---: |
+| [`TheOne.Avalonia.Workflow.WorkflowChoice`](../../api/en/TheOne.Avalonia.Workflow.WorkflowChoice.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowConnection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowConnection.md) | 6 |
 | [`TheOne.Avalonia.Workflow.WorkflowDataReference`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDataReference.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowDocument`](../../api/en/TheOne.Avalonia.Workflow.WorkflowDocument.md) | 6 |
@@ -262,11 +309,11 @@ Subscribe when needed and detach when the host is disposed. These are event entr
 | [`TheOne.Avalonia.Workflow.WorkflowOutputField`](../../api/en/TheOne.Avalonia.Workflow.WorkflowOutputField.md) | 3 |
 | [`TheOne.Avalonia.Workflow.WorkflowPort`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPort.md) | 6 |
 | [`TheOne.Avalonia.Workflow.WorkflowPortDirection`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPortDirection.md) | 2 |
-| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/en/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 8 |
-| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 7 |
+| [`TheOne.Avalonia.Workflow.WorkflowProperty`](../../api/en/TheOne.Avalonia.Workflow.WorkflowProperty.md) | 9 |
+| [`TheOne.Avalonia.Workflow.WorkflowPropertyEditor`](../../api/en/TheOne.Avalonia.Workflow.WorkflowPropertyEditor.md) | 13 |
 | [`TheOne.Avalonia.Workflow.WorkflowReferenceOption`](../../api/en/TheOne.Avalonia.Workflow.WorkflowReferenceOption.md) | 2 |
 | [`TheOne.Avalonia.Workflow.WorkflowValidationIssue`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValidationIssue.md) | 3 |
-| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 3 |
+| [`TheOne.Avalonia.Workflow.WorkflowValueKind`](../../api/en/TheOne.Avalonia.Workflow.WorkflowValueKind.md) | 4 |
 
 [Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)
 <!-- generated-contracts:end -->

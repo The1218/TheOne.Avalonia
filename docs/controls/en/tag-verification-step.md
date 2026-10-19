@@ -1,5 +1,7 @@
 # Tag and VerificationStep
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/tag-verification-step.md) · **English**
 
 [Back to controls](README.md). Load OneTheme and use `xmlns:one="using:TheOne.Avalonia.Controls"`.
@@ -151,9 +153,7 @@ The built-in form supports native `Tab` / `Shift+Tab` traversal between inputs, 
 
 VerificationStep defaults to maximum height 720; built-in forms max at width 640 within finite content height. Headers and forms share horizontal centers. Set `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"` for equal width. Preview switches among four alignments. Custom long forms can use ScrollViewer; collections keep their own bounded viewports. Field errors max at height 96 and top step errors at 120.
 
-Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_NextButton, PART_ValidationErrors, with PART_FormFields for built-in forms. Extensions / Step / VerificationStep demonstrates auto forms, attribute validation, completion commands, reset, and thousand-step recycling. Commands: [preview entry points](../../../design/PreviewHost/Program.cs).
-
-Run `dotnet run --project design/PreviewHost -- --verify-verification-step` for VerificationStep-only checks (including real Tab / Shift+Tab input), or use `--render-controls .preview/verification-step VerificationStep` to render this control. The published NativeAotSmoke consumer runs the same checks with `--require-aot --verify-verification-step`.
+Templates preserve PART_Steps, PART_ContentPresenter, PART_PreviousButton, PART_NextButton, PART_ValidationErrors, with PART_FormFields for built-in forms. Extensions / Step / VerificationStep demonstrates auto forms, attribute validation, completion commands, reset, and thousand-step recycling.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

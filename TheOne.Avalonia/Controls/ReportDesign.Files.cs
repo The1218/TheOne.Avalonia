@@ -34,6 +34,9 @@ public partial class ReportDesign
     private static readonly FilePickerFileType TemplateFile = new("ReportDesign 模板")
         { Patterns = ["*.reportdesign.json", "*.json"] };
 
+    // Only paths created by this process are retried; never sweep other files in the save folder.
+    private static readonly HashSet<string> PendingPdfTemporaryFiles = new();
+
     public int ConditionIndex
     {
         get => (int)(SelectedColumn?.Condition ?? ReportCondition.GreaterThan);
@@ -181,6 +184,8 @@ public partial class ReportDesign
     }
 
     /// <summary>Exports every preview page as a vector PDF. Must be called on the UI thread.</summary>
+    /// <remarks>Uses a staged commit; cancellation is honored before writing the destination.
+    /// Concurrent jobs need separate streams. To overwrite existing data safely, supply a readable, seekable stream.</remarks>
     public Task ExportPdfAsync(Stream destination, CancellationToken cancellationToken = default)
     {
         return ReportPdfExporter.ExportAsync(Document ?? throw new InvalidOperationException("没有可导出的报表。"), DataSource,
@@ -298,18 +303,30 @@ public partial class ReportDesign
             var file = await storage.SaveFilePickerAsync(new FilePickerSaveOptions
             {
                 Title = "导出 PDF", SuggestedFileName = SafeFileName() + ".pdf", DefaultExtension = "pdf",
-                FileTypeChoices = [new FilePickerFileType("PDF 文档") { Patterns = ["*.pdf"] }]
+                FileTypeChoices = [new FilePickerFileType("PDF 文档") { Patterns = ["*.pdf"] }],
+                ShowOverwritePrompt = true
             });
-            if (file is null) return;
+            if (file is null)
+            {
+                State.Status = "已取消 PDF 保存。";
+                return;
+            }
             using (file)
             {
-                await using var stream = await file.OpenWriteAsync();
-                if (stream.CanSeek) stream.SetLength(0);
-                buffer.Position = 0;
-                await buffer.CopyToAsync(stream);
+                if (file.TryGetLocalPath() is { } path)
+                    await SaveLocalPdfAsync(path, buffer);
+                else
+                {
+                    await using var stream = await file.OpenWriteAsync();
+                    await ReportPdfExporter.WriteStagedAsync(buffer, stream);
+                }
             }
 
             State.Status = $"已导出 {Layout?.Pages.Count ?? 1} 页 PDF";
+        }
+        catch (OperationCanceledException)
+        {
+            State.Status = "已取消 PDF 保存。";
         }
         catch (Exception exception)
         {
@@ -318,6 +335,66 @@ public partial class ReportDesign
         finally
         {
             State.IsExporting = false;
+        }
+    }
+
+    private static async Task SaveLocalPdfAsync(string path, MemoryStream buffer,
+        CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        path = Path.GetFullPath(path);
+        var directory = Path.GetDirectoryName(path)!;
+        var comparison = OperatingSystem.IsWindows() ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+        foreach (var pending in PendingPdfTemporaryFiles.Where(p => string.Equals(Path.GetDirectoryName(p), directory, comparison)).ToArray())
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            File.Delete(pending);
+            PendingPdfTemporaryFiles.Remove(pending);
+        }
+        // Keep the existing PDF until the complete replacement is ready on the same volume.
+        var temporary = Path.Combine(directory, "." + Path.GetFileName(path) + "." + Guid.NewGuid().ToString("N") + ".tmp");
+        var temporaryCreated = false;
+        Exception? saveError = null;
+        try
+        {
+            await using (var stream = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write, FileShare.None,
+                             81920, FileOptions.Asynchronous))
+            {
+                temporaryCreated = true;
+                buffer.Position = 0;
+                await buffer.CopyToAsync(stream, cancellationToken);
+                await stream.FlushAsync(cancellationToken);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            // Opening without truncation checks write permission and cooperative sharing locks.
+            // Delete sharing permits our own replacement while retaining the target handle.
+            FileStream? target;
+            try { target = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.Delete); }
+            catch (FileNotFoundException) { target = null; }
+            using (target)
+            {
+                if (target is not null && !OperatingSystem.IsWindows())
+                    File.SetUnixFileMode(temporary, File.GetUnixFileMode(path));
+                cancellationToken.ThrowIfCancellationRequested();
+                File.Move(temporary, path, true);
+                temporaryCreated = false;
+            }
+        }
+        catch (Exception exception)
+        {
+            saveError = exception;
+            throw;
+        }
+        finally
+        {
+            if (temporaryCreated)
+                try { File.Delete(temporary); }
+                catch (Exception cleanupError) when (cleanupError is IOException or UnauthorizedAccessException)
+                {
+                    PendingPdfTemporaryFiles.Add(temporary);
+                    throw new AggregateException("PDF 保存失败且临时文件未能清理；恢复权限或解除占用后重试将再次清理：" + temporary,
+                        saveError ?? cleanupError, cleanupError);
+                }
         }
     }
 

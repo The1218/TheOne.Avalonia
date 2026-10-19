@@ -1,5 +1,7 @@
 # Chart updates, export, and sizing
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/chart-rendering.md) · **English**
 
 See [charts](charts.md) for models and setup.
@@ -45,7 +47,9 @@ Use Avalonia `StorageProvider.SaveFilePickerAsync` and pass the stream from `ISt
 
 ## Data updates and performance
 
-`ChartPoint` and `ChartSeries` inherit `AvaloniaObject`; property changes refresh mounted charts. `ObservableCollection<T>` for `SeriesSource` or series `ItemsSource` also refreshes on addition, removal, replacement, and reordering. Replacing `SeriesSource` / `ItemsSource` subscribes to new data. Detaching releases subscriptions; reattaching reads current data.
+`ChartPoint` and `ChartSeries` inherit `AvaloniaObject`; property changes refresh mounted charts. Observable `SeriesSource` and series `ItemsSource` collections update subscriptions by membership: Add / Remove / Replace touch changed references only; Move keeps subscriptions intact. Reset reconciles the notifying collection, retaining unchanged model subscriptions. Replacing a series `ItemsSource` inspects only that series's new source. Replacing `SeriesSource` or explicitly refreshing reconciles current series and point lists, preserving shared references. Detaching releases subscriptions; reattaching reads current data.
+
+The same series, point, or point collection may appear more than once. Each distinct model is observed once per chart, and each point collection has one collection handler; subscriptions remain active until the last owner is removed. Removed sources and models no longer trigger updates. Subscription ownership uses reference identity; selection continues to use source indices.
 
 Create / modify chart models and collections and call `RefreshData()` on the UI thread. After fetching data in the background, dispatch updates back to it:
 
@@ -59,9 +63,198 @@ await Dispatcher.UIThread.InvokeAsync(() =>
 });
 ```
 
-`List<ChartPoint>` can also supply data; call `RevenueChart.RefreshData()` after list-content changes. Point property notifications remain automatic. For batches, replace `ItemsSource` once or mutate a plain list and refresh once to avoid repeated subscription rebuilding for individual notifications.
+`List<ChartPoint>` can also supply data; call `RevenueChart.RefreshData()` after list-content changes. Point property notifications remain automatic. For batches, replace `ItemsSource` once or mutate a plain list and refresh once to reduce notifications and invalidations. Cartesian charts cache data extents and per-index stacks independently of drawing frames; coordinate changes update affected columns, while structural/source changes rebuild membership. A selection that reveals an offscreen point can still prepare geometry synchronously.
+
+Selection repaints emphasis using prepared positions, bars, and sectors. In sampled Cartesian charts, cached originals and a selection-independent base sample let a previously omitted original enter only its affected segment; axes, ranges, stacks and hit indices remain. Switching or clearing selection removes the old extra sample, so retained points do not accumulate. Labels are prepared again for the resulting visible sample. Revealing an offscreen original may change the viewport and rebuild transformed geometry. Selection ends an in-progress data animation before presenting the selected target data.
 
 Charts have no per-point UI containers, so collection recycling panels do not apply. Preparation, original-point lookup indices, and model memory still grow with data. Sampling reduces drawn vertices but does not replace paging or remote virtualization. Bound data volume and chart dimensions in business code.
+
+### First-stage subscription measurements (2026-10-18)
+
+Historical first-stage results, before the range/stack/drawing caches described below. Scope: the 13 series charts; Gauge has no series subscriptions. Public properties and business APIs are unchanged. The baseline uses the chart implementation at `e083204` with the same measurement harness. macOS 27.0.1 / ARM64, .NET 10.0.0, Release, Skia headless, 900 × 420, three series of 1,000 or 10,000 points each; animations, markers and legends disabled. Ordinary scenarios disable sampling; sampled scenarios use MinMax, threshold 100 and budget 128. Each scenario warms up 8 operations and measures 32. The table fixes `DOTNET_TieredCompilation=0` for both processes; this is a measurement setting, not a recommended application setting.
+
+Each cell is **before → after**. Notification time is synchronous mutation / selection time. Settled time includes that notification, dispatcher, layout and the headless render tick; it is not GPU or screen presentation latency. Allocations are median current-UI-thread bytes during the synchronous operation. Add/remove scenarios perform two notifications per operation; the extra series contains 8 points. Selection uses visible points and the default viewport.
+
+| Points per series | Scenario | Notification median ms | Settled median ms | Notification allocation B |
+| ---: | --- | ---: | ---: | ---: |
+| 1,000 | `point-add-remove` | 0.3640 → 0.0118 | 4.257 → 5.487 | 1,320,616 → 1,312 |
+| 1,000 | `point-replace` | 0.2399 → 0.0159 | 4.408 → 6.008 | 660,512 → 1,048 |
+| 1,000 | `point-move` | 0.2133 → 0.0098 | 4.031 → 5.949 | 660,488 → 600 |
+| 1,000 | `series-add-remove` | 0.3532 → 0.0212 | 3.977 → 5.995 | 1,322,168 → 3,880 |
+| 1,000 | `select-line` | 1.5376 → 0.0117 | 3.253 → 2.784 | 1,331,304 → 936 |
+| 1,000 | `select-bar` | 1.4792 → 0.0239 | 4.868 → 6.562 | 1,577,112 → 936 |
+| 1,000 | `select-sampled-endpoints` | 1.6316 → 0.0121 | 2.734 → 1.992 | 1,367,536 → 968 |
+| 1,000 | `select-sampled-interior` | 1.5876 → 2.8806 | 2.675 → 5.094 | 1,367,632 → 1,367,664 |
+| 10,000 | `point-add-remove` | 10.5573 → 0.0257 | 35.440 → 36.817 | 12,884,568 → 1,312 |
+| 10,000 | `point-replace` | 2.7012 → 0.0212 | 29.985 → 30.110 | 6,442,488 → 1,048 |
+| 10,000 | `point-move` | 2.9542 → 0.0192 | 31.798 → 29.950 | 6,442,464 → 600 |
+| 10,000 | `series-add-remove` | 12.2339 → 0.0299 | 37.938 → 31.290 | 12,886,120 → 3,880 |
+| 10,000 | `select-line` | 8.7050 → 0.0252 | 24.042 → 19.489 | 6,813,888 → 936 |
+| 10,000 | `select-bar` | 12.6793 → 0.0328 | 60.736 → 42.757 | 6,821,840 → 936 |
+| 10,000 | `select-sampled-endpoints` | 12.1532 → 0.0090 | 17.767 → 4.450 | 6,947,976 → 968 |
+| 10,000 | `select-sampled-interior` | 11.0652 → 11.6682 | 16.240 → 16.860 | 6,948,064 → 6,948,096 |
+
+For 32 point-Replace / Move operations, enumeration of the existing source collections drops from 128 to 0 and their collection-handler additions/removals from 128/128 to 0/0. The same zero-churn result holds for existing collections in Add / Remove and series Add / Remove scenarios; initializing the new series source is intentionally excluded from those counters. Ordinary Line / Bar selection and retained sampled-endpoint selection reduce geometry invalidations and Cartesian-frame replacements from 32 to 0. Newly omitted sampled selections still produce 32 rebuilds.
+
+This first stage improved notification work and allocations, without consistently reducing complete rendering. Two default-tiered-JIT runs also varied: 10,000-point-per-series Bar selection settled medians were 31.91–36.98 ms before and 25.73–42.10 ms after; omitted-sample selection at 1,000 points per series was 2.89–3.23 ms before and 5.24–5.27 ms after. These historical results motivated the next cache stage; they do not establish a frame-rate improvement for those first-stage paths.
+
+The measurement entry records medians, p95, allocations, source enumerations, collection-handler changes, geometry invalidations and frame replacements. Before / after JSON, default-JIT repeat runs, logs and a comparison table are retained under `.preview/chart-refresh/`; this authored table is the repository record. Measurements are local headless observations, not Windows/Linux runs, NativeAOT results, or production latency guarantees.
+
+### Cartesian range, stack and drawing caches
+
+This stage affects the 11 Cartesian chart types: Line, Area, Scatter, Bar, HorizontalBar, the three Stacked variants and the three PercentStacked variants. It does not change Pie, Doughnut or Gauge rendering, properties, classes or business APIs.
+
+- A range tree holds X and per-axis Y extents by original source index. A coordinate update recomputes only the affected columns and their aggregate ancestors. Stack/percentage calculations remain independent per axis and sign, preserving canonical-X gaps, zero values and overflow handling. Shared/duplicate points update each affected column once. Moving an extremum inward is handled by the aggregate tree without scanning all other columns.
+- If a Y change preserves validity, segment topology, axis mapping and visible bar slots, it patches original positions, hit buckets/bars, and affected paths in the existing frame. Only marks on the affected stack axis need geometry changes. Numeric sampled segments use the incremental bucket index described below, without rescanning the original segment.
+- Selecting an omitted original uses binary lookup in cached originals and insertion into the base sample, rather than resampling all original points. Only the previously/newly affected segment paths and sampled labels change. Clearing selection restores the base sample. Pointer/keyboard selection, original identity and viewport reveal retain their existing behavior.
+- Line and area `StreamGeometry` objects are reused until their segment changes. Cartesian text drawing has a bounded 512-entry per-frame cache. Style, viewport, layout and font changes create fresh geometry; text/brushes continue to follow the theme. No per-point controls or screen-bitmap cache are introduced.
+
+Fallbacks are deliberate: X changes, gaps becoming valid/invalid, stacked-area sign transitions, zero/nonzero bar transitions, changed axis ranges and newly appearing/disappearing clipped bars rebuild the drawing frame. The range/stack cache still updates only the affected columns. Collection Add / Remove / Move / Replace / Reset, source replacement, explicit `RefreshData()`, visibility/axis membership changes rebuild data membership. Detaching releases the model/range cache. Existing bounded data animations retain full animation-frame preparation when motion is enabled and the current frame has at most 6,000 marks; large exact frames that already suppress animation can take the patch path.
+
+Caches retain model membership, range aggregates and original coordinates, increasing retained O(data volume) memory and initial preparation work. This is CPU/memory reuse, not data virtualization. Sampling and `ShowMarkers="False"` reduce drawing work, but rasterizing a long path or painting many bars still has a cost. Theme/font/layout changes intentionally invalidate drawing caches, without discarding unchanged data aggregates. Local/full-preparation pixel comparisons also cover a 260 × 240 narrow viewport across both themes and all three sizes.
+
+```csharp
+// Use the existing observable models on the UI thread; no new API is needed.
+series.ItemsSource![index].Y = nextValue;
+chart.SelectedIndex = originalIndex; // An omitted sample reuses the prepared frame.
+// Call RefreshData() only after silently changing plain-list contents.
+```
+
+### Second-stage geometry-cache measurements (2026-10-18)
+
+The baseline is the previous incremental-subscription implementation at the start of this stage, frozen in `before-artifacts`; it is not the earlier `e083204` implementation. Both runs use macOS 27.0.1 ARM64, .NET 10.0.0, Release, Skia headless, `DOTNET_TieredCompilation=0`, 900 × 420, three series and identical sine-wave data. Animations, markers and legends are disabled. Except `select-omitted` (MinMax, threshold 100, budget 128), scenarios disable sampling. Each warms up 16 operations and measures 32; median and nearest-rank p95 are recorded. Ordinary Y changes alternate 21/22 inside existing extents; `line-extremum` alternates 50/60 to change the automatic range, and `line-x` changes an interior X. `select-paint` switches existing endpoints without resampling.
+
+Each value is **before → after**. Synchronous time includes the setter/notification and any synchronous selection work; settled time additionally includes dispatcher/layout/headless rendering. Settled allocation is current-UI-thread bytes across that whole interval. These figures exclude GPU/display presentation. Frame replacements count whole-frame object changes across 32 operations, not native raster draw calls.
+
+| Points per series | Scenario | Sync median ms | Settled median ms | Settled p95 ms | Settled allocation B | Frame replacements |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: |
+| 1,000 | `line-y` | 0.0056 → 0.0031 | 3.7089 → 1.3365 | 7.7179 → 1.6640 | 1,417,888 → 77,488 | 32 → 0 |
+| 1,000 | `line-x` | 0.0026 → 0.0038 | 3.6178 → 3.3457 | 6.9697 → 7.2635 | 1,358,896 → 1,418,904 | 32 → 32 |
+| 1,000 | `line-extremum` | 0.0028 → 0.0074 | 3.4599 → 3.2195 | 7.9621 → 6.8861 | 1,452,976 → 1,455,592 | 32 → 32 |
+| 1,000 | `area-y` | 0.0028 → 0.0048 | 4.0124 → 1.6716 | 7.1083 → 2.2310 | 1,319,872 → 78,256 | 32 → 0 |
+| 1,000 | `bar-y` | 0.0025 → 0.0058 | 5.2390 → 3.4257 | 6.7759 → 3.8791 | 1,703,552 → 90,992 | 32 → 0 |
+| 1,000 | `stacked-bar-y` | 0.0025 → 0.0051 | 3.9355 → 1.4012 | 7.4242 → 1.8276 | 2,094,176 → 97,632 | 32 → 0 |
+| 1,000 | `stacked-area-y` | 0.0023 → 0.0048 | 4.3504 → 2.0432 | 6.4923 → 4.4865 | 1,863,008 → 88,088 | 32 → 0 |
+| 1,000 | `percent-bar-y` | 0.0035 → 0.0033 | 4.2589 → 1.4847 | 7.8183 → 1.8405 | 2,070,536 → 101,008 | 32 → 0 |
+| 1,000 | `percent-area-y` | 0.0019 → 0.0036 | 3.6225 → 0.8801 | 7.5747 → 1.1873 | 1,847,512 → 91,512 | 32 → 0 |
+| 1,000 | `select-omitted` | 1.7453 → 0.0030 | 2.9552 → 1.0034 | 6.4562 → 1.2988 | 1,463,832 → 80,064 | 32 → 0 |
+| 1,000 | `select-paint` | 0.0028 → 0.0026 | 1.6558 → 1.3064 | 2.1664 → 1.5165 | 96,960 → 77,040 | 0 → 0 |
+| 10,000 | `line-y` | 0.0075 → 0.0052 | 23.4702 → 11.9880 | 26.8788 → 12.4250 | 6,972,216 → 58,288 | 32 → 0 |
+| 10,000 | `line-x` | 0.0060 → 0.0094 | 22.7644 → 20.0450 | 27.0378 → 22.4590 | 6,925,272 → 6,905,864 | 32 → 32 |
+| 10,000 | `line-extremum` | 0.0060 → 0.0087 | 19.4625 → 16.8521 | 23.9716 → 19.6971 | 6,893,480 → 6,835,360 | 32 → 32 |
+| 10,000 | `area-y` | 0.0101 → 0.0055 | 27.5882 → 13.8933 | 29.9900 → 14.2987 | 6,872,384 → 59,056 | 32 → 0 |
+| 10,000 | `bar-y` | 0.0121 → 0.0057 | 43.6016 → 27.2284 | 52.2981 → 28.0128 | 7,057,032 → 220,456 | 32 → 0 |
+| 10,000 | `stacked-bar-y` | 0.0118 → 0.0050 | 26.4908 → 9.0752 | 34.0675 → 9.8523 | 10,536,488 → 229,688 | 32 → 0 |
+| 10,000 | `stacked-area-y` | 0.0079 → 0.0130 | 32.9540 → 15.4129 | 37.1892 → 15.8615 | 10,373,240 → 68,992 | 32 → 0 |
+| 10,000 | `percent-bar-y` | 0.0070 → 0.0052 | 27.5493 → 9.5905 | 34.6526 → 10.4497 | 10,547,024 → 233,064 | 32 → 0 |
+| 10,000 | `percent-area-y` | 0.0077 → 0.0050 | 25.1682 → 4.4891 | 30.7451 → 4.6916 | 10,282,248 → 72,192 | 32 → 0 |
+| 10,000 | `select-omitted` | 9.4645 → 0.0033 | 13.4702 → 3.0072 | 20.5185 → 3.1740 | 6,981,264 → 61,920 | 32 → 0 |
+| 10,000 | `select-paint` | 0.0083 → 0.0046 | 15.2876 → 11.3818 | 15.7846 → 11.7171 | 71,480 → 57,864 | 0 → 0 |
+
+Interior Y updates and omitted-point selections eliminate all 32 whole-frame replacements in these immediate-rendering scenarios. At 10,000 points per series, Line Y updates reduce settled time from 23.470 to 11.988 ms and allocations from 6,972,216 to 58,288 B; StackedBar Y updates go from 26.491 to 9.075 ms. Omitted-point selection goes from 13.470 to 3.007 ms and from 6,981,264 to 61,920 B. X and automatic-extremum updates still replace 32 frames; they reuse data aggregates without promising constant-time remapping. Bar/path rasterization remains visible in settled time. This local run is not an FPS guarantee or Windows/Linux/GPU/NativeAOT result.
+
+JSON, before/after binaries, logs and a full comparison (including synchronous allocation and p95) remain under `.preview/chart-geometry/`. The table above is the durable repository record. The separate first-stage table is retained for historical comparison; its omitted-selection rebuild behavior has been superseded by this stage.
+
+<a id="incremental-sampling-buckets"></a>
+### Incremental sampling buckets
+
+This stage affects **LineChart, AreaChart, ScatterChart, StackedAreaChart and PercentStackedAreaChart** only. Public properties, classes and APIs are unchanged.
+
+- Full preparation still uses the linear MinMax sampler. It additionally caches the monotonic-X visible interval (including its neighboring points), source-ordered bucket boundaries, and a tree of top/baseline extrema offsets. A mapping-stable Y update repairs only changed leaf paths and queries affected buckets. Shared models repair all changed leaves before any bucket query; all unchanged bucket representatives are reused.
+- Bucket first/last points and both top/baseline minima/maxima remain retained. Equal extrema keep the earliest original source offset, including descending/equal X. Selection is applied after the base sample and may add one original point. Clearing selection restores that base sample. Gap/sign boundaries and the per-series, proportional **soft** budget are unchanged; heavily fragmented data can exceed it.
+- Originals outside the cached interval reuse the base sample. Sampling disabled, below-threshold, short and nonmonotonic segments reuse exact originals without repeating the eligibility scan on each Y change. An initially unreduced sample still maintains its index, so later extrema changes can reduce it correctly. Nonfinite mapped coordinates retain the linear fallback.
+- With V cached originals, B occupied buckets, k changed offsets and q affected buckets, sampling maintenance costs O(k log V + q log V + B log B), rather than scanning the entire segment. The final sample merge and affected path drawing still cost work proportional to retained samples. Stack changes can affect multiple series. These bounds describe sampling maintenance, not the entire frame or GPU latency.
+- Initial preparation adds O(V) tree work/memory. Each tree stores four 32-bit source offsets per node; its array uses `32 × nextPowerOfTwo(V)` bytes (about 4 MiB for 100,000 visible originals in one segment), plus bucket/object overhead and existing original-coordinate caches. Unsampled segments have no tree. X/topology/range, viewport/layout and sampling-configuration changes prepare a new index; collection/source replacement and detach follow the existing cache lifecycle. No persistent bitmap or per-point control is added.
+
+### Third-stage incremental-bucket measurements (2026-10-18)
+
+The Release build and all **3,212** scoped checks passed on the host. No unrelated chart/control regression suite or native AOT publish was run for this private-cache change.
+
+The baseline is the preceding range/stack/drawing-cache implementation, frozen in `.preview/chart-sampling/before-artifacts`. Both runs use macOS 27.0.1 ARM64, .NET 10.0.0, Release, Skia headless, `DOTNET_TieredCompilation=0`, 900 × 420, three series with 10,000/100,000 points each, and identical sine-wave data. MinMax threshold is 100 and per-series budget 128; animations, markers and legends are disabled. Y bounds are fixed at 0–150; interior Y alternates 21/22. `offscreen-y` uses LineChart and edits original index 10 after 8× zoom. Each case warms up 16 operations and measures 32. Initial index construction precedes warmup and is excluded from single-point update timing.
+
+Each cell is **before → after**. Sync is property notification time. Settled time includes dispatcher/layout/headless drawing; allocation is current-UI-thread bytes over that interval. p95 uses nearest rank. The last column counts full-sampling loop iterations per operation (X-order checking and visible-bucket scanning), not indexed-query reads. Neither implementation replaces the whole frame in any of these 12 cases.
+
+| Points per series | Scenario | Sync median ms | Sync p95 ms | Settled median ms | Settled p95 ms | Settled allocation B | Full-scan iterations/op |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10,000 | `line-y` | 0.1687 → 0.0090 | 0.2113 → 0.0202 | 1.1218 → 0.9095 | 1.9954 → 1.5663 | 72,048 → 80,968 | 19,999 → 0 |
+| 10,000 | `area-y` | 0.1644 → 0.0136 | 0.1784 → 0.0505 | 1.3065 → 1.2529 | 1.7880 → 1.8137 | 72,824 → 69,360 | 19,999 → 0 |
+| 10,000 | `scatter-y` | 0.1580 → 0.0130 | 0.2007 → 0.0462 | 1.7535 → 1.7287 | 4.8027 → 4.3322 | 464,416 → 460,952 | 19,999 → 0 |
+| 10,000 | `stacked-area-y` | 0.4743 → 0.0270 | 0.5143 → 0.0808 | 2.6304 → 2.3020 | 3.1013 → 2.6702 | 97,704 → 87,232 | 59,997 → 0 |
+| 10,000 | `percent-area-y` | 0.4605 → 0.0144 | 0.4998 → 0.0528 | 0.9243 → 0.4941 | 1.3244 → 0.7506 | 94,584 → 97,872 | 59,997 → 0 |
+| 10,000 | `offscreen-y` | 0.0697 → 0.0022 | 0.0826 → 0.0094 | 0.4120 → 0.3362 | 0.5005 → 0.4303 | 62,152 → 53,880 | 11,252 → 0 |
+| 100,000 | `line-y` | 1.4753 → 0.0084 | 1.5100 → 0.0196 | 2.3470 → 0.8684 | 2.5056 → 0.9485 | 71,040 → 67,576 | 199,999 → 0 |
+| 100,000 | `area-y` | 1.4826 → 0.0083 | 1.5325 → 0.0194 | 2.6150 → 1.1129 | 2.7682 → 1.3202 | 71,816 → 68,352 | 199,999 → 0 |
+| 100,000 | `scatter-y` | 1.4755 → 0.0184 | 1.5067 → 0.0620 | 3.0988 → 1.8026 | 3.4598 → 4.0338 | 462,520 → 459,056 | 199,999 → 0 |
+| 100,000 | `stacked-area-y` | 4.4181 → 0.0296 | 4.5017 → 0.0924 | 6.5371 → 2.2821 | 6.7417 → 2.6422 | 96,696 → 86,224 | 599,997 → 0 |
+| 100,000 | `percent-area-y` | 4.4163 → 0.0142 | 4.5329 → 0.0396 | 4.9335 → 0.4670 | 5.1659 → 0.7693 | 105,656 → 95,184 | 599,997 → 0 |
+| 100,000 | `offscreen-y` | 0.6460 → 0.0031 | 0.7860 → 0.0382 | 1.0432 → 0.3682 | 1.4949 → 0.6863 | 64,784 → 54,176 | 112,502 → 0 |
+
+<a id="scatter-rendering-tail"></a>
+### Scatter rendering tail latency
+
+Only **ScatterChart** changes in this stage; public properties, classes and APIs are unchanged. Sampling, extrema/ties/gaps, the per-series soft budget, original-point hit testing, selected-point retention and selection reveal use the existing data paths. `ShowMarkers=False` still does not hide scatter points.
+
+The previous 32-sample p95 observation alone does not establish a stable regression. This stage freezes the current library and records three rounds of 256 operations per scenario. At budget 2000, the baseline prepares 3,990 points across three series, records separate ellipses and creates a new mutable Pen for every visible point. The baseline median of round p95 values is 0.2109 ms for the update notification, 104.4647 ms for dispatcher/layout (which includes drawing-command recording), and 18.6441 ms for the render tick. All 39 samples in the slowest 5% of the combined baseline have an observed GC. These measurements support command/allocation pressure as a major source of tails; they do not attribute every delayed frame exclusively to GC.
+
+- Built-in solid fills and null/solid outlines use one custom drawing operation per nonempty segment, sharing an immutable outline and cached coordinates. The compositor reads only immutable coordinates/brushes; it never reads a live data-model list. Mapping-stable selection now reuses the base coordinates and inserts the selected marker by source order; see the selection p99 section below.
+- Rendering still issues separate ellipses in the original series/point order. It does not merge paths, quantize coordinates or combine transparent overlaps. Existing outer clipping, opacity/disabled states, radius/stroke settings and PNG export remain intact.
+- Mutable built-in solid brushes are observed once per distinct brush. Color/opacity edits invalidate drawing; obsolete subscriptions are removed after the drawing pass, including when animations finish, and detach releases all subscriptions. Gradient, visual, tile and other custom brushes retain the original native ellipse path and its resource behavior.
+- This reduces command recording and per-marker managed allocation, rather than eliminating raster work. The current base coordinate/index arrays add approximately 20 bytes per retained-sample capacity slot, plus small segment/operation overhead (the first batch implementation used coordinates only, at 16 bytes). With sampling disabled, that capacity may be the full original segment. Original indices, spatial hit buckets and sampling trees are unchanged. Large visible point sets still incur one ellipse fill/stroke per point; no bitmap cache or per-point controls are introduced.
+
+#### Scatter measurements (2026-10-18)
+
+Baseline: the current workspace library frozen before this change, with the preceding incremental-sampling optimization already present. Both versions use the same workload: macOS 27.0.1 ARM64, .NET 10.0.0, Release, Skia headless, `DOTNET_TieredCompilation=0`, 900 × 420 and three identical sine-wave series. Animations, legends and optional marker decoration are disabled; ScatterChart itself still draws the scatter points. MinMax threshold is 100, budget is 128 or 2000, and Y bounds are fixed at 0–150. `y` alternates the middle original's Y between 21/22; selection cases alternate omitted indices 50,013/50,017 or existing sample endpoints 0/99,999.
+
+Each case has three rounds, each with 32 warmups followed by 256 samples; forced GC occurs before timing each round. Construction, warmup, JSON logging and PNG capture are excluded. Below, median/p95/p99 and allocation median use the pooled 768 samples per case, with nearest-rank quantiles. GC columns total observed collections across those samples for generations 0/1/2; counts overlap between generations. Every pair retains identical prepared point counts, zero full-sampling scans and zero whole-frame replacements.
+
+Each cell is **before → after**; time is milliseconds, allocation is current-UI-thread bytes. Settled time includes the update, dispatcher/layout, drawing-command recording and headless render tick. It does not measure GPU/display latency or guarantee frame rate on another host.
+
+| Scenario | Prepared points | Settled median ms | Settled p95 ms | Settled p99 ms | UI allocation median B | GC0/1/2 |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `10k-y-128` | 252 | 1.6340 → 1.4590 | 4.1231 → 2.3327 | 5.5977 → 6.9196 | 460,912 → 66,568 | 62/40/20 → 23/22/18 |
+| `100k-y-128` | 252 | 1.6133 → 1.3719 | 2.4394 → 1.6246 | 5.3314 → 4.5009 | 459,016 → 73,664 | 45/45/3 → 9/9/3 |
+| `100k-y-2000` | 3,990 | 24.4545 → 17.0141 | 104.2413 → 17.7369 | 189.1705 → 18.5633 | 6,157,152 → 182,360 | 592/260/103 → 24/15/9 |
+| `100k-select-omitted` | 253 | 1.5998 → 1.3731 | 2.4083 → 1.5557 | 4.3437 → 4.4983 | 457,112 → 70,336 | 45/21/3 → 9/6/3 |
+| `100k-select-existing` | 252 | 1.5800 → 1.3619 | 2.4603 → 1.4900 | 4.2790 → 4.4625 | 452,304 → 65,448 | 42/18/3 → 6/3/3 |
+
+For `100k-y-128`, per-round p95 ranges fall from 2.4165–2.6290 to 1.6031–1.6448 ms. At budget 2000, they fall from 104.2413–105.2264 to 17.6292–17.8710 ms. The median of round p95 dispatcher/layout times falls from 104.4647 to 0.1480 ms, while render-tick p95 remains 17.2819 ms. This separates the removed recording/allocation bottleneck from the remaining per-point raster work. Not every statistic improves: 10k Y and 100k selection p99 values remain noisy or increase, as shown above; this change does not promise uniformly lower extremes.
+
+<a id="scatter-selection-p99"></a>
+### Scatter selection p99 and allocation reuse
+
+This follow-up changes **ScatterChart only**, without new public properties, classes or APIs. Its baseline is the preceding batched-ellipse implementation, not the earlier per-point Pen implementation. The drawing counters show three series batches for each settled selection in both versions, including the slow frames; an eight-change burst also settles in three batches. Reassigning the same selected index has zero recording/raster batches and zero measured allocation. No duplicate full drawing pass was found to remove.
+
+The remaining avoidable work was preparation: copying the selected sample and coordinates, recreating stable pens/paint operations, and repeatedly formatting axis text. The sampled allocation profile showed glyph arrays, shaped runs and text lines. Avalonia's [FormattedText.Draw](https://github.com/AvaloniaUI/Avalonia/blob/12.1.4/src/Avalonia.Base/Media/FormattedText.cs) enumerates formatted lines when drawn; caching the FormattedText instance alone does not retain those lines. The fix uses [TextLayout](https://github.com/AvaloniaUI/Avalonia/blob/12.1.4/src/Avalonia.Base/Media/TextFormatting/TextLayout.cs) for retained axis/data-label lines, while keeping existing FormattedText metrics for layout decisions. The profiler is separate from timed measurements; allocation-tick estimates are sampling evidence, not exact per-type byte accounting.
+
+- An omitted selected point is an immutable one-point splice over the base sample. Count and source-index order remain identical, including synchronous sampling diagnostics and selection events. The renderer retains base positions plus source indices and inserts the selected marker at its original drawing position. It copies no base coordinate array when selection alone changes. Clearing selection restores the same base sample; gaps, equal extrema, soft-budget overflow and original hit buckets are unchanged.
+- Stable marker paint, drawing operations and the four axes/selected-ring/focus Pen slots are reused. Mutable pen brushes keep their normal native resource behavior. A changed color, opacity, radius, thickness, data source or mapping refreshes the appropriate state. Existing-sample selection can reuse all marker-operation instances; changing a pinned point replaces only its operation. Rasterization still draws all required ellipses in source order, preserving alpha overlap.
+- Axis and data-label TextLayout caches are bounded to 512 entries per frame, with explicit culture, typeface, size and flow direction. Data-label measurements also reuse cached metrics. Layouts are disposed on eviction, when an obsolete frame leaves the active animation, on detach, and in export's finally block. Current/active-animation frames retain their layouts; transient interpolation frames are released after drawing. Title/legend text retains its previous path.
+- Cached marker capacity now uses about 20 bytes per slot (position and source index); extra selection state has constant size rather than a sample-sized copy. Text caches add bounded retained glyph resources and first-use shaping work. A 512-entry bound is not a byte limit for arbitrarily long labels. No bitmap cache, skipped circles or extra per-point controls are introduced.
+
+#### Selection measurement record (2026-10-18)
+
+Both versions use macOS 27.0.1 ARM64, .NET 10.0.0, Release Skia headless, `DOTNET_TieredCompilation=0`, a 900 × 420 view and three series of 100,000 sine-wave points each. MinMax has threshold 100 and budget 128, or 2000 for the named variants; Y is fixed to 0–150, with legend and animation off. Existing-point selection alternates the endpoints; omitted-point selection alternates original indices 50013/50017. A burst changes selection eight times before one flush; no-op repeats index 0. Three rounds each warm up 32 operations and measure 256. The table pools all **768 operations per scenario**, using nearest-rank percentiles, rather than taking a median of round p99 values. GC columns sum collections observed inside timed windows across all three rounds; explicit pre-round collections are outside those windows.
+
+Each cell is **before → after**. The complete cycle includes the synchronous update, dispatcher/layout and render tick. Allocation is the median byte count for the current UI thread over that cycle, excluding other threads and native memory. The point count is retained across all three series and is identical in both versions; a budget is a per-series soft limit, not an exact requested count.
+
+| Scenario | Retained points | Cycle median ms | Cycle p95 ms | Cycle p99 ms | Cycle allocation B | GC 0/1/2 |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `100k-select-omitted` | 253 | 1.3835 → 1.3026 | 1.6037 → 1.4222 | 4.5730 → 1.6409 | 70,360 → 13,144 | 9/9/3 → 3/3/3 |
+| `100k-select-existing` | 252 | 1.4172 → 1.3518 | 1.7393 → 1.6572 | 2.3352 → 2.0820 | 65,472 → 12,960 | 6/3/3 → 3/3/3 |
+| `100k-select-omitted-2000` | 3,991 | 17.0943 → 16.8964 | 17.9505 → 17.7998 | 19.0080 → 19.7188 | 140,400 → 13,408 | 21/15/9 → 9/9/9 |
+| `100k-select-existing-2000` | 3,990 | 17.0967 → 16.9578 | 18.2200 → 17.5817 | 20.3327 → 18.0221 | 65,736 → 13,224 | 12/9/9 → 9/9/9 |
+| `100k-select-noop` | 252 | 0.0000 → 0.0000 | 0.0001 → 0.0001 | 0.0001 → 0.0002 | 0 → 0 | 0/0/0 → 0/0/0 |
+| `100k-select-burst` | 253 | 1.4085 → 1.3114 | 1.7252 → 1.4407 | 5.1392 → 1.7403 | 97,160 → 16,360 | 9/6/3 → 3/3/3 |
+
+Budget-128 omitted selection reduces p99 by 64.1% and median allocation by 81.3%; bursts reduce them by 66.1% and 83.2%. Every scenario has zero full frame replacements and zero sampling scans in both versions. Omitted selection/bursts reduce coordinate snapshot builds from one per operation to zero; settled changes retain exactly three recording and raster batches, while no-op retains zero. These counters establish avoided preparation, without claiming fewer raster passes.
+
+**Budget-2000 omitted selection p99 is still not resolved:** it increases from 19.0080 to 19.7188 ms, despite a 90.5% allocation reduction. After-change per-round p99 values are 17.7902, 17.7183 and 30.0700 ms. The eight slowest operations spend 99.64% of their aggregate cycle in the render-tick stage; the three longest operations have zero collections and zero measured allocation inside the ellipse loop, unchanged three batches, zero snapshot builds and zero frame replacements. The ellipse-loop p99 itself rises from 18.1675 to 19.0575 ms. This places the remaining tail in actual raster work and its scheduling interval; these measurements cannot distinguish native execution from an OS scheduling pause. They do not establish a duplicate-drawing or managed-allocation cause for that tail.
+
+Occasional allocation during rasterization is still observable: in the after budget-2000 omitted case, 9/768 operations report nonzero ellipse-loop allocation (median 0 B, p99 2,024 B, maximum 6,264 B). Across all after scenarios the maximum is 6,896 B. The optimization does not make the entire frame allocation-free. Separate allocation sampling still observes dispatcher/render-context and Skia-related objects; it is not a stack-level attribution of those rare allocations. Do not infer uniformly lower p99, zero GC, or production frame-rate guarantees from this table.
+
+The audited raw data and complete comparison are in `.preview/scatter-selection/audited-before.json`, `audited-after.json` and `comparison.md`. The same physical PreviewHost entry assembly is used in each host. Before/after library SHA-256 prefixes are `A63960DF4F35181C` / `0AE51A90D0C051B4`; JSON records the full hashes, paths and module IDs, and the harness checks that the loaded module matches the file. Intermediate `confirm-*.json` and `final-confirm-*.json` runs used symlinked entry assemblies and could resolve the wrong library: they are retained as invalid evidence and excluded from the table. Earlier direct-host `before.json`/`after.json` runs remain separate observations, not replacements for unfavorable audited samples.
+
+Release builds with zero errors and two existing unrelated nullable warnings. **1,004 ScatterChart-only checks pass**, including 143 exact native-reference PNG comparisons. The native reference was recaptured through a physical host loading the original per-ellipse library (`7441CE01E5708203…`), independently of both measured versions; its full identity is in `capture-audited.log`, and the optimized identity is in `verify-audited.log`. No all-chart/control regression or AOT publish was run. These are current-host headless results; GPU/display latency and other operating systems remain unverified.
 
 ## Theme and three sizes
 
@@ -85,7 +278,7 @@ Override values per chart. `DefaultChartWidth` / `DefaultChartHeight` are prefer
 
 ## Verification scenarios
 
-Every concrete chart type has a same-name render entry; abstract bases do not. Choose affected scenarios through [preview entry points](../../../design/PreviewHost/Program.cs):
+The following table records the former targeted rendering scenarios; these entry points are no longer included.
 
 | Need | Render targets |
 | --- | --- |
@@ -94,7 +287,7 @@ Every concrete chart type has a same-name render entry; abstract bases do not. C
 | Labels / smoothing / animation | LabeledLineChart, SmoothLineChart, AnimatedChart |
 | Hover / gauges | PieHoverChart, DoughnutHoverChart, BarHoverChart, NeedleGaugeChart, PrecisionGaugeChart |
 
-PNG export is verified independently of screenshot commands. Chart models need no additional metadata preservation. SeriesSource, selection, Viewport, and gauge values use compiled bindings. Dynamic switching creates concrete controls without changing read-only Kind. Native example: [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs).
+PNG export is verified independently of screenshot commands. Chart models need no additional metadata preservation. SeriesSource, selection, Viewport, and gauge values use compiled bindings. Dynamic switching creates concrete controls without changing read-only Kind.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

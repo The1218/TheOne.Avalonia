@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ using TheOne.Avalonia.Workflow;
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>Template-based graph editing. Persistence, execution and business validation belong to the host.</summary>
-public class WorkflowEditor : TemplatedControl
+public partial class WorkflowEditor : TemplatedControl
 {
     public static readonly StyledProperty<WorkflowDocument?> DocumentProperty =
         AvaloniaProperty.Register<WorkflowEditor, WorkflowDocument?>(nameof(Document),
@@ -22,6 +23,24 @@ public class WorkflowEditor : TemplatedControl
 
     public static readonly StyledProperty<IEnumerable<WorkflowNodeDefinition>?> NodeDefinitionsProperty =
         AvaloniaProperty.Register<WorkflowEditor, IEnumerable<WorkflowNodeDefinition>?>(nameof(NodeDefinitions));
+
+    public static readonly StyledProperty<IEnumerable?> ChoiceItemsSourceProperty =
+        AvaloniaProperty.Register<WorkflowEditor, IEnumerable?>(nameof(ChoiceItemsSource));
+
+    public static readonly StyledProperty<WorkflowChoiceAdapter?> ChoiceItemAdapterProperty =
+        AvaloniaProperty.Register<WorkflowEditor, WorkflowChoiceAdapter?>(nameof(ChoiceItemAdapter));
+
+    public IEnumerable? ChoiceItemsSource
+    {
+        get => GetValue(ChoiceItemsSourceProperty);
+        set => SetValue(ChoiceItemsSourceProperty, value);
+    }
+
+    public WorkflowChoiceAdapter? ChoiceItemAdapter
+    {
+        get => GetValue(ChoiceItemAdapterProperty);
+        set => SetValue(ChoiceItemAdapterProperty, value);
+    }
 
     public static readonly StyledProperty<WorkflowNode?> SelectedNodeProperty =
         AvaloniaProperty.Register<WorkflowEditor, WorkflowNode?>(nameof(SelectedNode),
@@ -350,6 +369,7 @@ public class WorkflowEditor : TemplatedControl
         base.OnApplyTemplate(e);
         _canvas = e.NameScope.Find<WorkflowCanvas>("PART_Canvas");
         _canvas?.SetOwner(this);
+        AttachPanelLayout(e.NameScope.Find<Grid>("PART_PanelGrid"));
         Observe();
         ObserveDefinitions();
     }
@@ -371,6 +391,8 @@ public class WorkflowEditor : TemplatedControl
         _definitionsObserver = null;
         _canvas?.CancelGesture();
         _paletteDefinition = null;
+        _selectedNodeEditor?.Dispose();
+        SetAndRaise(SelectedNodeEditorProperty, ref _selectedNodeEditor, null);
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -413,10 +435,18 @@ public class WorkflowEditor : TemplatedControl
     private void RefreshNodeEditor()
     {
         if (Document is not { } document || SelectedNode is not { } node)
+        {
+            _selectedNodeEditor?.Dispose();
             SetAndRaise(SelectedNodeEditorProperty, ref _selectedNodeEditor, null);
+        }
         else if (_selectedNodeEditor?.Document != document || _selectedNodeEditor.Node != node)
+        {
+            _selectedNodeEditor?.Dispose();
             SetAndRaise(SelectedNodeEditorProperty, ref _selectedNodeEditor, new WorkflowNodeEditor(document, node));
+        }
         else _selectedNodeEditor.Refresh();
+        if (_selectedNodeEditor is { } editor)
+            foreach (var field in editor.Fields.Where(f => f.IsMultiSelect)) field.ConfigureChoices(ChoiceItemsSource, ChoiceItemAdapter);
     }
 
     private void ObserveDefinitions()
@@ -457,6 +487,8 @@ public class WorkflowEditor : TemplatedControl
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == ChoiceItemsSourceProperty || change.Property == ChoiceItemAdapterProperty) RefreshNodeEditor();
+        if (change.Property == ShowNodeLibraryProperty || change.Property == ShowPropertiesProperty) UpdatePanelLayout();
         if (change.Property == NodeDefinitionsProperty) ObserveDefinitions();
         if (change.Property == SearchTextProperty) FilterLibrary();
         if (change.Property == AllowCyclesProperty) RefreshValidation();
@@ -695,12 +727,16 @@ public class WorkflowEditor : TemplatedControl
         };
         foreach (var p in source.Ports) n.Ports.Add(p);
         foreach (var p in source.Properties)
-            n.Properties.Add(new WorkflowProperty
+        {
+            var property = new WorkflowProperty
             {
                 Key = p.Key, Title = p.Title, Kind = p.Kind, DataType = p.DataType, IsRequired = p.IsRequired,
                 Value = p.Value,
                 Reference = p.Reference is { } r ? r with { NodeId = ids.GetValueOrDefault(r.NodeId, r.NodeId) } : null
-            });
+            };
+            foreach (var key in p.SelectedKeys) property.SelectedKeys.Add(key);
+            n.Properties.Add(property);
+        }
         return n;
     }
 

@@ -85,7 +85,7 @@
                                 x:Name="SliderContainer">
                                 <Grid.Styles>
                                     <Style Selector="TickBar">
-                                        <Setter Property="ReservedSpace" Value="{Binding #PART_Track.Thumb.Bounds}" />
+                                        <Setter Property="ReservedSpace" Value="{CompiledBinding #PART_Track.Thumb.Bounds}" />
                                     </Style>
                                 </Grid.Styles>
                                 <Grid
@@ -184,7 +184,7 @@
                                 x:Name="SliderContainer">
                                 <Grid.Styles>
                                     <Style Selector="TickBar">
-                                        <Setter Property="ReservedSpace" Value="{Binding #PART_Track.Thumb.Bounds}" />
+                                        <Setter Property="ReservedSpace" Value="{CompiledBinding #PART_Track.Thumb.Bounds}" />
                                     </Style>
                                 </Grid.Styles>
                                 <Grid

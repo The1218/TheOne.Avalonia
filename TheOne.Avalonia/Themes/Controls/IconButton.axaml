@@ -18,23 +18,23 @@
                     Name="PART_ContentPresenter"
                     Padding="{TemplateBinding Padding}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
-                    <one:IconButtonPanel IconPlacement="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconPlacement}" Spacing="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSpacing}">
+                    <one:IconButtonPanel IconPlacement="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconPlacement}" Spacing="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSpacing}">
                         <Viewbox
-                            Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
-                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
+                            Height="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
+                            IsVisible="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
                             Name="PART_IconSizer"
                             Stretch="Uniform"
-                            Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}">
+                            Width="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}">
                             <ContentPresenter
-                                Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Icon}"
-                                ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconTemplate}"
-                                IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
+                                Content="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Icon}"
+                                ContentTemplate="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconTemplate}"
+                                IsVisible="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ShowIcon}"
                                 Name="PART_IconPresenter"
                                 VerticalAlignment="Center">
                                 <ContentPresenter.DataTemplates>
                                     <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
                                         <PathIcon
-                                            Data="{Binding}"
+                                            Data="{CompiledBinding}"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch" />
                                     </DataTemplate>
@@ -42,17 +42,17 @@
                             </ContentPresenter>
                         </Viewbox>
                         <ContentPresenter
-                            Content="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Content}"
-                            ContentTemplate="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ContentTemplate}"
-                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasLabel}"
+                            Content="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).Content}"
+                            ContentTemplate="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).ContentTemplate}"
+                            IsVisible="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).HasLabel}"
                             Name="PART_LabelPresenter"
                             RecognizesAccessKey="True"
                             VerticalAlignment="Center" />
                         <one:LoadingIndicator
-                            Height="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
-                            IsVisible="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IsLoading}"
+                            Height="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}"
+                            IsVisible="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IsLoading}"
                             Name="PART_LoadingIndicator"
-                            Width="{Binding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" />
+                            Width="{CompiledBinding #PART_ContentPresenter.((one:IconButton)TemplatedParent).IconSize}" />
                     </one:IconButtonPanel>
                 </ContentPresenter>
             </ControlTemplate>

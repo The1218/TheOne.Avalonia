@@ -5,11 +5,13 @@
 `ReportPreview` 是独立只读控件，接收 `ReportDocument.Save()` 返回的 JSON，自行解析模板、获取可选接口数据／网络图片、分页并展示。内置翻页、缩放、刷新、PDF 导出和打印，不依赖设计器实例。使用前加载 `OneTheme` 并初始化 Avalonia，以测量文字和绘制。
 
 ```xml
-<one:ReportPreview DocumentJson="{Binding ReportJson}"
-                   DataSource="{Binding SourceOverride}" />
+<one:ReportPreview DocumentJson="{CompiledBinding ReportJson}"
+                   DataSource="{CompiledBinding SourceOverride}" />
 ```
 
 视图声明正确的 `x:DataType`；`one` 为 `using:TheOne.Avalonia.Controls`。
+
+模板支持 [QRCode 二维码元素](report-design.md#二维码组件)，与 ReportDesign / PDF 复用相同的 UTF-8 编码、纠错等级、静区和矢量几何。静态内容使用 `Text`，`FieldKey` 则使用数据源第一条记录或已注册的 JSON 根属性。缺失／空内容、绑定数据尚未就绪、容量超限和尺寸不足会导致加载失败，不会显示旧码或把占位文字编码进去。PreviewHost 销售示例页眉同时包含静态和字段二维码。
 
 ## 加载模板与数据
 
@@ -76,15 +78,15 @@ JSON 保存公共接口／图片 URL 和数据体路径，不包含数据记录�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L29) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L21) | `TheOne.Avalonia.Reporting.ReportDataSource?` | 可写; OneWay | `null` | 显式数据来源；由宿主提供符合目标模型契约的数据，不能用显示模板代替数据适配。 |
-| [`Document`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L22) | `TheOne.Avalonia.Reporting.ReportDocument?` | 只读; OneWay | `computed / state` | 当前业务文档模型；替换时重接订阅、选择和历史的具体行为见编辑器文档。 |
-| [`DocumentJson`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L20) | `string?` | 可写; OneWay | `null` | 报表文档 JSON；读取／替换失败和数据刷新行为按报表加载契约处理。 |
-| [`Error`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L23) | `string?` | 只读; OneWay | `computed / state` | 操作失败的结构化／文本信息；与成功标志一起检查，不忽略失败。 |
-| [`HttpClient`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L26) | `System.Net.Http.HttpClient?` | 可写; CLR / n/a | `null` | Optional consumer-owned client for authenticated API and image requests. Not serialized. |
-| [`Layout`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L24) | `TheOne.Avalonia.Reporting.ReportLayout?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`PrintHandler`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L28) | `System.Func<string, TheOne.Avalonia.Reporting.ReportPrintOptions?, System.Threading.CancellationToken, System.Threading.Tasks.Task<TheOne.Avalonia.Reporting.ReportPrintResult>>?` | 可写; CLR / n/a | `null` | Optional host printer. The PDF exists until the returned task completes; KeepDocument controls its subsequent lifetime. |
-| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L30) | `double` | 可写; CLR / n/a | `.75` | 视图缩放倍率，1 表示 100%；只缩放视图，不修改报表毫米尺寸或流程坐标。 |
+| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L126) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L107) | `TheOne.Avalonia.Reporting.ReportDataSource?` | 可写; OneWay | `null` | 显式数据来源；由宿主提供符合目标模型契约的数据，不能用显示模板代替数据适配。 |
+| [`Document`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L113) | `TheOne.Avalonia.Reporting.ReportDocument?` | 只读; OneWay | `computed / state` | 当前业务文档模型；替换时重接订阅、选择和历史的具体行为见编辑器文档。 |
+| [`DocumentJson`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L101) | `string?` | 可写; OneWay | `null` | 报表文档 JSON；读取／替换失败和数据刷新行为按报表加载契约处理。 |
+| [`Error`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L114) | `string?` | 只读; OneWay | `computed / state` | 操作失败的结构化／文本信息；与成功标志一起检查，不忽略失败。 |
+| [`HttpClient`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L118) | `System.Net.Http.HttpClient?` | 可写; CLR / n/a | `null` | Optional consumer-owned client for authenticated API and image requests. Not serialized. |
+| [`Layout`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L115) | `TheOne.Avalonia.Reporting.ReportLayout?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`PrintHandler`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L124) | `System.Func<string, TheOne.Avalonia.Reporting.ReportPrintOptions?, System.Threading.CancellationToken, System.Threading.Tasks.Task<TheOne.Avalonia.Reporting.ReportPrintResult>>?` | 可写; CLR / n/a | `null` | Optional host printer. The PDF exists until the returned task completes; KeepDocument controls its subsequent lifetime. |
+| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportPreview.cs#L128) | `double` | 可写; CLR / n/a | `.75` | 视图缩放倍率，1 表示 100%；只缩放视图，不修改报表毫米尺寸或流程坐标。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
@@ -115,7 +117,7 @@ JSON 保存公共接口／图片 URL 和数据体路径，不包含数据记录�
 | [`ReportJsonData`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer)` | 从 JSON 记录数组路径和显式字段配置创建报表数据源。 |
 | [`ReportJsonData`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer, IEnumerable<string>? rootFieldKeys)` | 从 JSON 记录数组路径和显式字段配置创建报表数据源。 |
 | [`ReportPaginator`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportPaginator.md) | `static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)` | 校验文档并计算不可变分页布局，供设计预览与打印共享。 |
-| [`ReportPdfExporter`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | 异步输出分页报表 PDF；调用方提供目标并遵守取消与文件生命周期。 |
+| [`ReportPdfExporter`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Stages a complete PDF; concurrent jobs require separate destination streams. |
 | [`ReportResources`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Fetches one bounded JSON response using the same request path as the independent preview. |
 | [`ReportResources`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | 按报表 API 配置异步加载记录，不在序列化文档内保存返回记录。 |
 | [`ReportResources`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | 异步解析报表外部图片，按加载批次维护缓存和失败状态。 |
@@ -136,17 +138,18 @@ JSON 保存公共接口／图片 URL 和数据体路径，不包含数据记录�
 
 | 模型 | 属性／枚举值 |
 | --- | ---: |
+| [`TheOne.Avalonia.Controls.QRCodeErrorCorrection`](../../api/zh-cn/TheOne.Avalonia.Controls.QRCodeErrorCorrection.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportApiAuthentication`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportApiAuthentication.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportApiParameterMode`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportApiParameterMode.md) | 2 |
-| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 5 |
+| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportColumn`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportColumn.md) | 12 |
 | [`TheOne.Avalonia.Reporting.ReportCondition`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportCondition.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDataNode.md) | 9 |
+| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDataNode.md) | 10 |
 | [`TheOne.Avalonia.Reporting.ReportDataNodeKind`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDataNodeKind.md) | 3 |
 | [`TheOne.Avalonia.Reporting.ReportDataSource`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDataSource.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDocument.md) | 29 |
-| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportElement.md) | 25 |
-| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportElementKind.md) | 8 |
+| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportDocument.md) | 31 |
+| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportElement.md) | 27 |
+| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportElementKind.md) | 9 |
 | [`TheOne.Avalonia.Reporting.ReportField<T>`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportField_T_.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportFieldInfo`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportFieldInfo.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportImageFit`](../../api/zh-cn/TheOne.Avalonia.Reporting.ReportImageFit.md) | 3 |

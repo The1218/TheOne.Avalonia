@@ -10,7 +10,7 @@
         x:DataType="one:NavMenu"
         x:Key="{x:Type one:NavMenu}">
         <Setter Property="TransitionDuration" Value="{DynamicResource One.Motion.Expand}" />
-        <Setter Property="Width" Value="{Binding $self.DisplayWidth}" />
+        <Setter Property="Width" Value="{CompiledBinding $self.DisplayWidth}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="ItemHeight" Value="36" />
@@ -38,16 +38,16 @@
                                     PlaceholderText="{TemplateBinding FilterPlaceholder}"
                                     Text="{TemplateBinding SearchText,
                                                            Mode=TwoWay}"
-                                    ValueMemberBinding="{Binding Label}"
+                                    ValueMemberBinding="{CompiledBinding Label}"
                                     x:DataType="one:NavMenuFilterResult">
                                     <one:NavMenuFilterBox.ItemTemplate>
                                         <DataTemplate x:DataType="one:NavMenuFilterResult">
                                             <StackPanel Spacing="2">
-                                                <one:NavMenuSearchText SourceText="{Binding Label}" TextTrimming="CharacterEllipsis" />
+                                                <one:NavMenuSearchText SourceText="{CompiledBinding Label}" TextTrimming="CharacterEllipsis" />
                                                 <TextBlock
                                                     FontSize="12"
                                                     Foreground="{DynamicResource One.Muted}"
-                                                    Text="{Binding Path}"
+                                                    Text="{CompiledBinding Path}"
                                                     TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
                                         </DataTemplate>

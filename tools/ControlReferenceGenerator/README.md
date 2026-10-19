@@ -27,6 +27,6 @@ Inherited native properties and APIs are omitted. Global `ControlSizing` and `Mo
 
 Only Button, Input and Select share comparison pages. The original demo is never extracted or reparented. Pages and reference rows grow naturally; canvas editors own a finite viewport and keep reference content reachable in a separate tab. Theme/window/service examples retain their real ownership rules. Template-only classes are maintained automatically. The catalog supplies description content without an executable property editor or runtime accessor generation.
 
-After updating preview behavior, build only PreviewHost with isolated artifacts and run its independent `--verify-control-pages` entry. This checks the new catalog/demos and does not request a full control-library regression. The MultiSelectBox scroll fix has separate coverage in `--verify-multiselect`; the Home-specific partial verification file is not linked into the native package consumer.
+After updating preview behavior, build only PreviewHost with isolated artifacts and inspect the affected control pages. PreviewHost starts the normal demo window and no longer contains command-line verification branches or consumer test projects. Keep any temporary checks under the task-specific `.preview/` directory.
 
 默认值是源码注册、构造参数或模型初值；主题 Setter、构造逻辑和局部值可能覆盖它。`CLR / init-only` 表示仅可在初始化时赋值，`CLR / n/a` 不声明 Avalonia 默认绑定模式。只读状态和访问器定义值不会被错误地当成可写默认配置。公开模板辅助类可供审查，但不意味着应由业务页面独立创建；使用入口以控件指南为准。

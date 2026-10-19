@@ -18,35 +18,35 @@
         <WrapPanel>
             <Button
                 Classes="primary"
-                Command="{Binding AdvanceCommand}"
+                Command="{CompiledBinding AdvanceCommand}"
                 Content="推进流程"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding ResetCommand}"
+                Command="{CompiledBinding ResetCommand}"
                 Content="重置"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding ToggleTextCommand}"
+                Command="{CompiledBinding ToggleTextCommand}"
                 Content="切换长文本"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding AddCommand}"
+                Command="{CompiledBinding AddCommand}"
                 Content="添加节点"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding RemoveCommand}"
+                Command="{CompiledBinding RemoveCommand}"
                 Content="移除末节点"
                 Margin="0,0,8,8" />
         </WrapPanel>
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="{Binding Status}"
+            Text="{CompiledBinding Status}"
             TextWrapping="Wrap" />
         <TextBlock
             FontSize="18"
             FontWeight="SemiBold"
             Text="横向布局" />
-        <one:FlowStep ItemsSource="{Binding Nodes}" Name="HorizontalFlow" />
+        <one:FlowStep ItemsSource="{CompiledBinding Nodes}" Name="HorizontalFlow" />
         <Grid
             ColumnDefinitions="*,*"
             ColumnSpacing="24"
@@ -58,7 +58,7 @@
                     Text="纵向布局 · 默认 ContentTemplate"
                     TextWrapping="Wrap" />
                 <one:FlowStep
-                    ItemsSource="{Binding Nodes}"
+                    ItemsSource="{CompiledBinding Nodes}"
                     Name="VerticalFlow"
                     Orientation="Vertical" />
             </StackPanel>
@@ -76,7 +76,7 @@
                                 Title="提交申请" />
                         </one:FlowNode.Content>
                     </one:FlowNode>
-                    <one:FlowNode Content="{Binding Approval}" Status="InProgress">
+                    <one:FlowNode Content="{CompiledBinding Approval}" Status="InProgress">
                         <one:FlowNode.ContentTemplate>
                             <DataTemplate x:DataType="local:FlowApprovalContent">
                                 <Border
@@ -90,11 +90,11 @@
                                             <TextBlock
                                                 FontWeight="SemiBold"
                                                 Margin="0,0,12,0"
-                                                Text="{Binding Title}"
+                                                Text="{CompiledBinding Title}"
                                                 TextWrapping="Wrap" />
                                             <TextBlock Foreground="{DynamicResource One.Accent}" Text="进行中" />
                                         </one:FlowNodeHeaderPanel>
-                                        <TextBlock Foreground="{DynamicResource One.Muted}" Text="{Binding Time}" />
+                                        <TextBlock Foreground="{DynamicResource One.Muted}" Text="{CompiledBinding Time}" />
                                         <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
                                             <Border
                                                 Background="{DynamicResource One.Surface}"
@@ -109,11 +109,11 @@
                                             </Border>
                                             <TextBlock
                                                 Grid.Column="1"
-                                                Text="{Binding Approver}"
+                                                Text="{CompiledBinding Approver}"
                                                 TextWrapping="Wrap"
                                                 VerticalAlignment="Center" />
                                         </Grid>
-                                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                                        <TextBlock Text="{CompiledBinding Text}" TextWrapping="Wrap" />
                                         <Border
                                             BorderBrush="{DynamicResource One.Line}"
                                             BorderThickness="1"
@@ -131,20 +131,20 @@
                                                 <TextBlock
                                                     Foreground="{DynamicResource One.Muted}"
                                                     Grid.Column="1"
-                                                    Text="{Binding FileName}"
+                                                    Text="{CompiledBinding FileName}"
                                                     TextWrapping="Wrap"
                                                     VerticalAlignment="Center" />
                                             </Grid>
                                         </Border>
                                         <Button
                                             Classes="primary"
-                                            Command="{Binding DetailsCommand}"
+                                            Command="{CompiledBinding DetailsCommand}"
                                             Content="查看详情"
                                             HorizontalAlignment="Left"
                                             Name="DetailsButton" />
                                         <TextBlock
-                                            IsVisible="{Binding HasDetails}"
-                                            Text="{Binding Details}"
+                                            IsVisible="{CompiledBinding HasDetails}"
+                                            Text="{CompiledBinding Details}"
                                             TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Border>
@@ -164,17 +164,17 @@
             Text="共享 ContentTemplate · 所有节点复用一份模板"
             TextWrapping="Wrap" />
         <one:FlowStep
-            ItemsSource="{Binding Nodes}"
+            ItemsSource="{CompiledBinding Nodes}"
             Name="SharedTemplateFlow"
             NodeSpacing="12"
             Orientation="Vertical">
             <one:FlowStep.ContentTemplate>
                 <DataTemplate x:DataType="one:FlowNodeContent">
                     <StackPanel Spacing="4">
-                        <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
+                        <TextBlock FontWeight="SemiBold" Text="{CompiledBinding Title}" />
                         <TextBlock
                             Foreground="{DynamicResource One.Muted}"
-                            Text="{Binding Text}"
+                            Text="{CompiledBinding Text}"
                             TextWrapping="Wrap" />
                     </StackPanel>
                 </DataTemplate>

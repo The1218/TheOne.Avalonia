@@ -13,13 +13,13 @@
             Foreground="{DynamicResource One.Muted}"
             Text="同组互斥选择 / 禁用状态"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <RadioButton
                     Content="本地工作区"
                     GroupName="Workspace"
-                    IsChecked="{Binding Checked, Mode=TwoWay}"
+                    IsChecked="{CompiledBinding Checked, Mode=TwoWay}"
                     Margin="0,0,12,12"
                     Name="ControlSample" />
                 <RadioButton

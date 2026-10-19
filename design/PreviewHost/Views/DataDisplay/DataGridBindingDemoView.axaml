@@ -8,51 +8,51 @@
         <TextBlock FontWeight="SemiBold" Text="集合绑定与单元格操作 / 千条数据" />
         <WrapPanel>
             <Button
-                Command="{Binding UseListCommand}"
+                Command="{CompiledBinding UseListCommand}"
                 Content="List 源"
                 Margin="0,0,8,4"
                 Name="UseList" />
             <Button
-                Command="{Binding UseObservableCommand}"
+                Command="{CompiledBinding UseObservableCommand}"
                 Content="ObservableCollection 源"
                 Margin="0,0,8,4"
                 Name="UseObservable" />
             <Button
-                Command="{Binding AddCommand}"
+                Command="{CompiledBinding AddCommand}"
                 Content="新增一项"
-                IsEnabled="{Binding CanAdd}"
+                IsEnabled="{CompiledBinding CanAdd}"
                 Margin="0,0,0,4"
                 Name="AddRow" />
         </WrapPanel>
         <TextBlock
             FontSize="12"
             Foreground="{DynamicResource One.Muted}"
-            Text="{Binding SourceLabel}"
+            Text="{CompiledBinding SourceLabel}"
             TextWrapping="Wrap" />
         <DataGrid
             AutoGenerateColumns="False"
             Height="240"
-            ItemsSource="{Binding Rows}"
+            ItemsSource="{CompiledBinding Rows}"
             MaxColumnWidth="280"
             Name="CollectionGrid"
-            SelectedItem="{Binding Selected, Mode=TwoWay}">
+            SelectedItem="{CompiledBinding Selected, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Binding="{Binding Id}"
+                    Binding="{CompiledBinding Id}"
                     Header="编号"
                     IsReadOnly="True" />
                 <DataGridTextColumn
-                    Binding="{Binding Name, Mode=TwoWay}"
+                    Binding="{CompiledBinding Name, Mode=TwoWay}"
                     Header="设备"
                     Width="*" />
-                <DataGridCheckBoxColumn Binding="{Binding Enabled, Mode=TwoWay}" Header="启用" />
+                <DataGridCheckBoxColumn Binding="{CompiledBinding Enabled, Mode=TwoWay}" Header="启用" />
 
                 <DataGridTemplateColumn CanUserSort="False" Header="操作">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button
-                                Command="{Binding $parent[local:DataGridBindingDemoView].Model.InspectCommand}"
-                                CommandParameter="{Binding}"
+                                Command="{CompiledBinding $parent[local:DataGridBindingDemoView].Model.InspectCommand}"
+                                CommandParameter="{CompiledBinding}"
                                 Content="查看" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -60,7 +60,7 @@
                 <DataGridTemplateColumn CanUserSort="False" Header="标记">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ToggleButton Content="标记" IsChecked="{Binding Enabled, Mode=TwoWay}" />
+                            <ToggleButton Content="标记" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -69,7 +69,7 @@
         <TextBlock
             FontSize="12"
             Foreground="{DynamicResource One.Accent}"
-            Text="{Binding ActionLabel}" />
+            Text="{CompiledBinding ActionLabel}" />
         <TextBlock
             FontSize="12"
             Foreground="{DynamicResource One.Muted}"

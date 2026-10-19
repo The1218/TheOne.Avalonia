@@ -13,8 +13,8 @@
             Foreground="{DynamicResource One.Muted}"
             Text="简洁节点 / 带说明节点 · 独立模型、双向展开状态与 1,000 项根及子集合"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <StackPanel
                     Margin="0,0,16,16"
@@ -23,17 +23,17 @@
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="简洁树节点" />
                     <TreeView
                         Height="280"
-                        ItemsSource="{Binding TreeRoots}"
+                        ItemsSource="{CompiledBinding TreeRoots}"
                         Name="ControlSample"
-                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        SelectedItem="{CompiledBinding SelectedItem, Mode=TwoWay}">
                         <TreeView.DataTemplates>
-                            <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="local:PreviewTreeNode">
-                                <TextBlock Text="{Binding Name}" />
+                            <TreeDataTemplate ItemsSource="{CompiledBinding Children}" x:DataType="local:PreviewTreeNode">
+                                <TextBlock Text="{CompiledBinding Name}" />
                             </TreeDataTemplate>
                         </TreeView.DataTemplates>
                         <TreeView.Styles>
                             <Style Selector="TreeViewItem" x:DataType="local:PreviewTreeNode">
-                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsExpanded" Value="{CompiledBinding IsExpanded, Mode=TwoWay}" />
                             </Style>
                         </TreeView.Styles>
                     </TreeView>
@@ -45,23 +45,23 @@
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="标题与说明节点" />
                     <TreeView
                         Height="280"
-                        ItemsSource="{Binding TreeRoots}"
+                        ItemsSource="{CompiledBinding TreeRoots}"
                         Name="DetailedSample"
-                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        SelectedItem="{CompiledBinding SelectedItem, Mode=TwoWay}">
                         <TreeView.DataTemplates>
-                            <TreeDataTemplate ItemsSource="{Binding Children}" x:DataType="local:PreviewTreeNode">
+                            <TreeDataTemplate ItemsSource="{CompiledBinding Children}" x:DataType="local:PreviewTreeNode">
                                 <StackPanel Spacing="4">
-                                    <TextBlock FontWeight="SemiBold" Text="{Binding Name}" />
+                                    <TextBlock FontWeight="SemiBold" Text="{CompiledBinding Name}" />
                                     <TextBlock
                                         FontSize="12"
                                         Foreground="{DynamicResource One.Muted}"
-                                        Text="{Binding Description}" />
+                                        Text="{CompiledBinding Description}" />
                                 </StackPanel>
                             </TreeDataTemplate>
                         </TreeView.DataTemplates>
                         <TreeView.Styles>
                             <Style Selector="TreeViewItem" x:DataType="local:PreviewTreeNode">
-                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsExpanded" Value="{CompiledBinding IsExpanded, Mode=TwoWay}" />
                             </Style>
                         </TreeView.Styles>
                     </TreeView>
@@ -69,7 +69,7 @@
             </WrapPanel>
         </StackPanel>
         <Button
-            Command="{Binding LastCommand}"
+            Command="{CompiledBinding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
     </StackPanel>

@@ -136,6 +136,9 @@ public partial class ChartBase
 
     private void UpdatePointerHover(Point point)
     {
+        var previousCrosshair = _crosshairPosition;
+        var previousHover = _hover;
+        var previousVersion = _hoverGeometryVersion;
         if (!IsEffectivelyEnabled || _legendKeyboard || HitLegendTarget(point) is not null)
         {
             ClearPointerHover();
@@ -157,15 +160,28 @@ public partial class ChartBase
         var version = _geometryVersion;
         SetAndRaise(CrosshairPositionProperty, ref _crosshairPosition, ShowCrosshair && inPlot ? point : null);
         if (generation != _interactionGeneration || version != _geometryVersion || _geometryDirty) return;
-        var unchanged = entries.Count == _hoveredPoints.Count && entries.Select((entry, i) =>
-            entry.SeriesIndex == _hoveredPoints[i].SeriesIndex && entry.PointIndex == _hoveredPoints[i].PointIndex &&
-            ReferenceEquals(entry.Point, _hoveredPoints[i].Point)).All(value => value);
+        var unchanged = IsScatterCartesian ? SameScatterHover(entries, _hoveredPoints)
+            : entries.Count == _hoveredPoints.Count && entries.Select((entry, i) =>
+                entry.SeriesIndex == _hoveredPoints[i].SeriesIndex && entry.PointIndex == _hoveredPoints[i].PointIndex &&
+                ReferenceEquals(entry.Point, _hoveredPoints[i].Point)).All(value => value);
         if (!unchanged) SetAndRaise(HoveredPointsProperty, ref _hoveredPoints, entries);
         if (generation != _interactionGeneration || version != _geometryVersion || _geometryDirty) return;
         _hoverGeometryVersion = version;
         _hover = entries.Count == 0 ? null : (entries[0].SeriesIndex, entries[0].PointIndex);
         ToolTip.SetTip(this, entries.Count == 0 ? null : SharedTooltip(entries));
-        InvalidateVisual();
+        // A native pointer re-evaluation need not submit all Scatter markers again when its overlay is unchanged.
+        // The tooltip is still refreshed, including formats/culture or silently edited values.
+        if (!IsScatterCartesian || !unchanged || previousCrosshair != _crosshairPosition || previousHover != _hover ||
+            previousVersion != version) InvalidateVisual();
+    }
+
+    private static bool SameScatterHover(IReadOnlyList<ChartSelection> current, IReadOnlyList<ChartSelection> previous)
+    {
+        if (current.Count != previous.Count) return false;
+        for (var i = 0; i < current.Count; i++)
+            if (current[i].SeriesIndex != previous[i].SeriesIndex || current[i].PointIndex != previous[i].PointIndex ||
+                !ReferenceEquals(current[i].Point, previous[i].Point)) return false;
+        return true;
     }
 
     private string SharedTooltip(IReadOnlyList<ChartSelection> entries)
@@ -187,8 +203,10 @@ public partial class ChartBase
 
     private void ClearPointerHover()
     {
+        var redraw = !IsScatterCartesian || _hover is not null || _crosshairPosition is not null || _hoveredPoints.Count != 0;
         var generation = ++_interactionGeneration;
         _hoverGeometryVersion = -1;
+        if (!redraw && ToolTip.GetTip(this) is null) return;
         if (_rendering)
         {
             _hoverClearGeneration = generation;
@@ -208,7 +226,7 @@ public partial class ChartBase
         if (generation != _interactionGeneration) return;
         if (_hoveredPoints.Count != 0)
             SetAndRaise(HoveredPointsProperty, ref _hoveredPoints, Array.Empty<ChartSelection>());
-        if (generation == _interactionGeneration) InvalidateVisual();
+        if (generation == _interactionGeneration && redraw) InvalidateVisual();
     }
 
     private void DrawPointerOverlay(DrawingContext context)
@@ -254,7 +272,9 @@ public partial class ChartBase
         if (_positions.TryGetValue(key, out var point))
         {
             var radius = MarkerRadius + SelectionThickness;
-            context.DrawEllipse(null, new Pen(Foreground, SelectionThickness), point, radius, radius);
+            var pen = IsScatterCartesian && _cartesianFrame is { } frame
+                ? ScatterFramePen(frame, 2, Foreground, SelectionThickness) : new Pen(Foreground, SelectionThickness);
+            context.DrawEllipse(null, pen, point, radius, radius);
         }
     }
 }

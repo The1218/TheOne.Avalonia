@@ -1,5 +1,7 @@
 # Tag 与 VerificationStep
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/tag-verification-step.md)
 
 [返回控件索引](README.md)。加载 OneTheme 后可用，命名空间为 `xmlns:one="using:TheOne.Avalonia.Controls"`。
@@ -151,9 +153,7 @@ StepCompare 通过具体模型的属性访问器比较最新值。标准 Compare
 
 VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用内容区域的有限高度。步骤条与表单默认共享水平中心；若要二者等宽，可设置 `HeaderHorizontalAlignment="Stretch" HeaderMaxWidth="640"`。预览页可直接切换四种对齐方式。自定义内容的长表单使用 ScrollViewer；集合控件保持自己的有界视口。字段错误列表最大高度 96，顶部整步错误区域最大高度 120。
 
-默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。预览“扩展控件 / Step / VerificationStep”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。验证命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
-
-只验证 VerificationStep 时运行 `dotnet run --project design/PreviewHost -- --verify-verification-step`，包含真实 Tab / Shift+Tab 按键检查；渲染入口使用 `--render-controls .preview/verification-step VerificationStep`。发布后的 NativeAotSmoke 原生消费程序使用 `--require-aot --verify-verification-step` 执行相同验证。
+默认模板保留 PART_Steps、PART_ContentPresenter、PART_PreviousButton、PART_NextButton、PART_ValidationErrors；内置表单使用 PART_FormFields。 预览“扩展控件 / Step / VerificationStep”直接演示自动表单、标准属性校验、完成命令、重置及 1,000 步回收。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

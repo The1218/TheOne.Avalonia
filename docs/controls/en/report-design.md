@@ -1,5 +1,7 @@
 # ReportDesign report designer
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/report-design.md) · [Control documentation](README.md) · [ReportPreview](report-preview.md)
 
 `ReportDesign` is a desktop report designer for free positioning. A data source is optional: design static reports before connecting an API. Load `OneTheme`; editor surfaces use `One.*` resources and the three control densities. Printed paper stays white and keeps its real aspect ratio.
@@ -16,13 +18,59 @@ Declare the view's correct `x:DataType`; `one` is `using:TheOne.Avalonia.Control
 
 The report-name header uses a native `TabStrip`, with the document title, built-in close action, saved state and document actions in the top bar above the formatting toolbar. It retains the native tab item's content layout while removing duplicate border and spacing around the strip. Closing its single document clears `Document` and `DataSource`, disables Save/PDF export and leaves New/Open available to restore a document. The component/data sidebar spans the work area vertically; design/preview tabs sit above the paper area. The compact inspector has Properties and Data tabs, with grouped geometry, content, typography and colors in Properties. Component/data (`SourceTabs`), Properties/Data (`PropertyTabs`) and design/preview (`ViewTabs`) all use the built-in `TabControl` with `Classes="card"`, without custom tab templates, retaining native keyboard behavior. These fixed editor pages explicitly disable `TabFeatures.CanClose` and `TabFeatures.CanReorder`, so they cannot be closed or reordered. The report-name strip uses [TabFeatures closing](collections.md#standalone-tabstrip).
 
-Drag text, a table, an image, a line, a rectangle or a page number onto paper. Palette buttons have a compact 44 px minimum height; the structure tree uses the remaining sidebar space. Drag an element to move it, or its bottom-right handle to resize it. A table also has an outer right-edge handle for its overall width; this changes the table width while keeping column proportions. Internal column boundaries adjust neighboring widths, the header/detail boundary changes header height, and the bottom boundary changes detail template height. Columns store relative `WidthWeight`; `TableHeaderHeightMm` sets header height, subject to text measurement.
+Drag text, a table, an image, a line, a rectangle, a page number, a checkbox, a barcode or a QR code onto paper. The palette uses three columns, 30 DIP minimum button height, 6 × 3 DIP padding, 14 DIP icons and 12 DIP text. This compact tool layout stays consistent across the three editor densities; new entries add natural rows, while the structure tree receives the remaining height. Drag an element to move it, or its bottom-right handle to resize it. A table also has an outer right-edge handle for its overall width; this changes the table width while keeping column proportions. Internal column boundaries adjust neighboring widths, the header/detail boundary changes header height, and the bottom boundary changes detail template height. Columns store relative `WidthWeight`; `TableHeaderHeightMm` sets header height, subject to text measurement.
 
 Geometry uses mm; optional snapping uses 1 mm. Arrow keys move by 1 mm (Shift: 5 mm); Delete removes the selection. Undo/redo records a canvas drag as one edit. The toolbar edits font family, size, bold, italic, underline, alignment and lists. The inspector and border/fill dropdowns use the built-in `ColorPicker`. The font editor and `FontSizeValue` use print points; `ReportElement.FontSize` uses DIPs: `pt = DIP × 0.75`. New elements default to 12 pt (16 DIPs).
 
 The font-family dropdown lists local system fonts through Avalonia's `FontManager`, rather than a fixed preset list. The current document font remains selectable even when it is not installed locally; rendering then follows available font fallback. Saving a font name does not embed that font in the template.
 
 Select an element on paper or in the structure tree; click a table template cell to edit its column. The tree groups title, header, detail, summary and footer elements. Clicking a structure item switches to design mode and scrolls its element, cell or region into view. Selecting a child keeps its parent expanded; element selection updates tree selection without rebuilding the hierarchy. Rebuilds caused by renaming or structural edits preserve existing expansion state. One document currently supports one repeating detail table and multiple other elements.
+
+Right-click a table column in the design page for **Insert column left**, **Insert column right** and **Delete column**. Pointer requests target the hit column rather than a previously selected column; keyboard context requests target the current selection. Inserts create and select a blank column; deletion selects an adjacent column. Each action is one undoable edit, retaining other columns' bindings and formatting. Keep at least one and at most 100 columns; insertion is disabled if any resulting column would be narrower than 32 DIPs. Preview and non-table positions do not offer the column menu. Changing documents or entering preview closes an old menu.
+
+A new column inherits the target column's `WidthWeight`; existing weights remain unchanged on insertion or deletion. Actual width is `table width × column weight / sum of all column weights`, keeping the table's overall width unchanged. Existing columns therefore shrink proportionally on insertion and grow on deletion; their absolute widths are not retained. The inspector's Add Column appends a column, inherits the selected weight and uses the pending field. It enforces the same count and minimum-width limits as the context menu. Delete Column also keeps the last remaining column. Deletion selects the next column, or the preceding column when deleting the last one.
+
+Undo restores the selection before the edit; redo restores the selection after it. Field bindings, static text, formatting, decimal places, sums and conditional styles follow the restored column instead of the changed index. History preserves the `Document` instance but replaces column and element instances; consumers should obtain current instances from `SelectedColumn` / `SelectedElement`. Templates persist order and weights, excluding selection and runtime rows. Reload initializes selection and restores API data or requires the consumer to reassign an explicit `DataSource`. Design, preview and PDF share column order, proportional widths and field resolution.
+
+## QR code components
+
+Drag **QRCode** from the palette, or call `AddElement(ReportElementKind.QRCode, x, y)` with millimetre coordinates. New codes are 32 × 32 mm with a static example URL. The inspector edits `Text`, `QRCodeErrorCorrection` (default `Medium`) and `QRCodeQuietZone` (4–32 modules, default 4). Foreground controls dark modules; the code area stays white, protecting the quiet zone from a page fill. Non-square elements center a square symbol rather than stretching it. Keep dark modules and strong contrast.
+
+```csharp
+var qr = designer.AddElement(ReportElementKind.QRCode, 150, 16);
+qr.Text = "https://example.com/report"; // Static payload, including Unicode
+qr.Width = qr.Height = 32;
+qr.QRCodeErrorCorrection = QRCodeErrorCorrection.High;
+qr.QRCodeQuietZone = 4;
+
+// After assigning a source with a registered OrderNo field:
+designer.SelectedElement = qr;
+designer.BindField("OrderNo"); // Or drop that field onto the QR code
+// qr.FieldKey = "" returns to its static Text.
+```
+
+`FieldKey` takes precedence over `Text` and resolves the source's first record, or an explicitly registered root JSON value. It does not generate one code per detail row. Changing the source or refreshing row values replaces the payload; missing fields, empty resolved values, invalid Unicode, capacity overflow and modules below 1 DIP report validation errors. A bound template can be saved without runtime data; design displays a pending-data placeholder, while preview and PDF require actual nonempty field data. Field placeholders are never encoded as payloads.
+
+Saving and reloading preserves `FieldKey`, static `Text`, correction and quiet zone, but does not serialize runtime rows. Loading clears the previous source; a saved API configuration refetches its data, while a template without an endpoint needs its runtime `DataSource` assigned again. Replacing that source never rewrites the binding or static text. After changing an existing row object's value, call `RefreshReport()` to rebuild the QR payload. Row membership is captured when the source is created; replace `DataSource` after adding, removing or replacing rows. Clear `FieldKey` to return to the preserved static text.
+
+```csharp
+var template = designer.SaveTemplate();
+designer.LoadTemplate(template); // No endpoint: runtime rows must be supplied again
+designer.DataSource = ReportDataSource.Create("Orders", rows,
+    new ReportField<Order>("OrderNo", "Order number", row => row.OrderNo));
+rows[0].OrderNo = "SO-2026-002";
+designer.RefreshReport(); // Re-read current row values on the UI thread
+```
+
+The data sidebar's **Refresh DataSource** action fetches the API and replaces the bound record snapshot using the saved collection pointer and root field keys. It retains QR bindings and static text. A response arriving after the document, request configuration or runtime source was replaced cannot overwrite the replacement. A successful response with an empty or missing QR value clears the old symbol and blocks preview/PDF; a failed HTTP request retains the existing source, displays an error and allows retry.
+
+Multi-page reports repeat each QR element at its defined position. A bound code still uses the first record or its registered root value on every page; it does not follow the first detail row of the current page. Changing pages reuses the current layout and encoded symbols. PDF export includes all pages regardless of the selected preview page and leaves that page selection unchanged. Each export captures the definition, resolved QR payloads and pagination before waiting for network images; editing shared row objects or starting another export during that wait cannot change its QR content. For batch exports, set the source and any static text for each job, then await its export before reusing the destination stream. Separate overlapping jobs need separate streams.
+
+Design, preview and vector PDF share the same UTF-8/ECI encoder, exact correction level, square layout and quiet zone. The immutable layout retains encoded geometry, so selection and drawing do not re-encode it. Template JSON and undo/redo retain the payload, binding, geometry in mm, correction and quiet-zone settings; QR matrices and source rows are not serialized. `QRCode = 8` is appended to `ReportElementKind`, retaining existing enum values; older library versions cannot read templates containing the new kind.
+
+PreviewHost's ReportDesign sales sample displays a static link and a first-order field code side by side in the header. The standalone QRCode page shows property examples in `Description`. See [QRCode](qr-code.md) for payload limits, rendering sizes and scanning considerations.
+
+Binding a QR code through the field picker, `BindField`, a typed field drop or a JSON scalar drop preserves its static `Text`. Switching fields also preserves that fallback. While a field is bound, editing `Text` changes only the fallback; the displayed code continues to use the field. Use **Restore static content** in the QR inspector, or clear `FieldKey`, to encode the latest static text. Undo/redo restores both the binding and fallback, including edits made while bound. Invalid or empty active content clears the previous code and prevents PDF export until corrected; it does not silently fall back to the last valid payload.
 
 ## Page settings and fixed regions
 
@@ -59,7 +107,8 @@ picture.ImageUrl = "https://reports.example.com/logo.png";
 picture.ImageFit = ReportImageFit.Contain;
 var json = designer.Document!.Save();
 await designer.LoadTemplateAsync(json);
-await using var pdf = File.Create("report.pdf");
+await using var pdf = new FileStream("report.pdf", FileMode.OpenOrCreate,
+    FileAccess.ReadWrite, FileShare.None);
 await designer.ExportPdfAsync(pdf); // UI thread; every page
 ```
 
@@ -73,7 +122,15 @@ The Data tab uses the full left sidebar: its response tree fills the height belo
 
 An assigned saved `Document` also loads its optional API data when the designer is attached, unless the application has supplied its own source. Assigning `DataSource` during automatic loading takes precedence and cancels that pending fetch. Closing/replacing the document cancels older requests; late responses cannot replace a newer report. Detaching interrupts an in-flight automatic load and reattachment restarts it; an already loaded source survives cached navigation without another data request. Automatic loading has a 30-second overall limit, keeps runtime data outside template JSON and does not create an undoable definition edit.
 
-Fetch first displays formatted response JSON inside the dialog; only a successful response can be confirmed. Editing request settings invalidates the previous confirmation. Cancel/close preserves the existing source, and confirmation imports the response tree without another HTTP request. Text preview displays at most 200,000 characters; imported data remains complete. The tree shows objects, scalars, collections and actual array indices. Importing keeps bound records unchanged until nodes are dropped to establish bindings.
+The dialog uses `VerificationStep`. Without **Requires authentication**, the two steps are **Data interface → Select data**. Enabling it creates four automatically numbered steps: **Authentication interface → Header and Token → Data interface → Select data**. Next validates and calls the current endpoint as needed; the page's call button can also preview the response first. Editing upstream settings invalidates dependent results. Cancel/close aborts pending requests and preserves the existing source. Confirm imports the validated response without another HTTP request.
+
+Going back and forward without edits reuses the validated response and retains the current selection/search. Editing endpoints, parameters, headers or the token path clears dependent data responses, choices and search. Fresh results default to all available items, without reusing the previous configuration's filter. Saved template choices are restored only on the wizard's initial load of the same configuration. Toggling authentication clears the login response, token candidates/highlight and header preview; enabling it again requires a new login call. Editing a token path synchronizes the candidate highlight, clearing it for an invalid path. Closing also releases the runtime login response.
+
+Leaving a step with a pending request or cancelling validation aborts that operation and immediately restores inputs. Retrying starts a fresh request. Invalidation observes Text synchronously so deferred TextChanged events cannot cancel newer work. Each operation captures its own cancellation source and checks its generation; late responses, including those ignoring cancellation, cannot repopulate old data, tokens or choices, or cancel a newer retry.
+
+The final step names the source and selects **Scalar fields / Datasets**. Each scalar property is one item and each entire array is one item; objects only organize paths. Search preserves hidden selections. A nonempty name and at least one selected item are required. Confirmation saves `ReportDocument.DataSourceName` and `SelectedDataPointers` (JSON Pointers), including undo and template persistence. A null selection in older templates displays all items. The sidebar groups a named source into scalar fields and datasets; expanding a dataset shows its field schema rather than individual records. JSON text preview is limited to 200,000 characters, while the complete response and existing report bindings remain available. Unselected items are hidden from the designer catalog, not removed from the underlying data.
+
+The editor still manages one API source. Confirming another configuration replaces its catalog/settings without clearing existing field bindings. Refresh refetches the current configuration while retaining its name and selection; template reload still fetches the complete response.
 
 Drag a scalar tree node onto text or a particular table cell to fill its current value and retain its binding; dropping onto blank paper creates bound text. A scalar containing an HTTP/HTTPS image URL can be dropped onto an image component to load and bind that image. Objects organize the tree and are not dropped as values.
 
@@ -83,7 +140,7 @@ The chosen endpoint and collection JSON Pointer are saved as `DataSourceUrl` and
 
 Binding also saves `DataSourceMethod`, `DataSourceParameters` and `DataSourceParameterMode` for standalone preview. The GET overload `FetchApiDataAsync(url, cancellationToken)` remains available; use `FetchApiDataAsync(new ReportApiRequest(url, "POST", "{\"page\":1}"), cancellationToken)` for configured requests. `ReportResources.FetchJsonAsync(request, client, cancellationToken)` accepts a consumer-owned `HttpClient`.
 
-The dialog places **Requires authentication** first, the optional login/header section second, and the data interface third. Sections use the dialog background, retaining the native inputs' own fills. Enable authentication to show the login URL, method, JSON/Form parameters, response token field and outgoing header settings. **Get authorization** calls only the login endpoint, independently of the data URL, and shows its response JSON and resolved header value. An incorrect token path preserves the login JSON for inspection. Testing authorization does not enable source confirmation or import data; **Fetch data source** still performs the complete login/data chain.
+The **Authentication interface** step calls only the login endpoint, independently of the data URL and before choosing a token. It supports request methods and JSON/Form parameters. **Header and Token** selects a string/number leaf from the login response, or accepts a manual path, then configures the editable header name and prefix. Invalid paths and empty tokens block progress. Login-response strings and the header preview are masked. The data step reuses this validated login response without logging in again; editing login settings requires returning to the first step. The body scrolls independently of Cancel, Previous and Confirm.
 
 The editable header selector offers Authorization, X-API-Key, X-Auth-Token, Token, Access-Token and Auth-Token, and accepts custom names. It uses native `AutoCompleteBox` with a dropdown button. Token paths accept JSON Pointer (`/data/token`, including `~0`/`~1` escapes) or dotted paths (`data.token`). The value must be a nonempty string or number. Header value is the optional prefix plus that field; `Bearer ` includes a trailing space. Leave the prefix empty for raw tokens.
 
@@ -101,7 +158,17 @@ var request = new ReportApiRequest("https://reports.example.com/rows")
 await designer.FetchApiDataAsync(request);
 ```
 
-Binding a fetched node saves settings in `ReportDocument.DataSourceAuthentication`, including undo/redo; `null` requests data directly. Each authenticated fetch performs login → token extraction → data request. Login failure, invalid tokens and cancellation stop the chain. Only the data request receives the header; shared client defaults and separate image requests are unchanged. The dialog displays the resolved header and JSON before confirmation. Runtime tokens are not serialized; standalone preview logs in afresh. Login and data responses each have the same 4 MiB/20-second limits. The editor supports one token header, without interactive OAuth, token refresh or multiple authentication headers.
+Confirming a source or binding a fetched node saves settings in `ReportDocument.DataSourceAuthentication`, including undo/redo; `null` requests data directly. Public fetch APIs, template reload and standalone preview still perform login → token extraction → data request. Login failure, invalid tokens and cancellation stop the chain. Only the data request receives the header; shared client defaults and separate image requests are unchanged. Runtime tokens are not serialized, and reloading logs in afresh. Login and data responses each have the same 4 MiB/20-second limits. The editor supports one token header, without interactive OAuth, token refresh or multiple authentication headers.
+
+Configured requests can select the same catalog presentation in code:
+
+```csharp
+await designer.FetchApiDataAsync(new ReportApiRequest("https://example.com/report")
+{
+    SourceName = "Sales report",
+    SelectedDataPointers = ["/reportTitle", "/sales"]
+});
+```
 
 ## Checkbox and barcode components
 
@@ -109,9 +176,9 @@ Drag `ReportElementKind.CheckBox` or `Barcode` from the palette. Both share posi
 
 Barcodes use Code 128B: `Text` is a static value or is resolved through `FieldKey`; `BarcodeShowText` controls the readable caption. Values contain 1–128 printable ASCII characters, with checksum, stop and ten-module quiet zones on both sides. Chinese text, GS1/FNC and other symbologies are unsupported. Module width must be at least 0.75 DIP (about 0.20 mm), with invalid sizes reported. Both components use vector drawing in template JSON, standalone preview and PDF. Consumers should verify their printer resolution and scanning devices.
 
-The display tree expands to depth 16, shows at most the first 200 indexed children of each array and uses an approximately 4000-node budget, with truncation hints. These are display limits: collection binding reads all source rows. A source supports at most 4096 distinct row-field keys; exceeding that metadata limit reports an error. Automatic root-field discovery is also bounded, while explicitly saved root bindings are restored as needed.
+The designer catalog supports 16 object levels, 4096 selectable items and 4096 distinct fields per dataset. Exceeding a limit reports an error and preserves the previous source. Dataset schemas union fields across all records and use each field's first actual JSON Pointer; they do not create per-record nodes. Public `ReportJsonData.CreateTree(json)` retains its indexed-tree contract (the first 200 array indices and approximately 4000 display nodes). Collection bindings still read all records and restore explicitly saved root bindings as needed.
 
-The source search box and TreeView use native Small sizing independently of the host density. Nodes show their property name and value/count preview on one line; long content is ellipsized, with name, JSON Pointer and value preview available in the tooltip. This bounded response hierarchy uses native StackPanel items panels and one physical scrolling viewport, avoiding nested virtualizing panels losing expanded content while scrolling. Horizontal overflow is clipped to the sidebar width. Successful import/binding messages are hidden above the tree; failed fetch/binding messages remain visible.
+The source search box and TreeView use native Small sizing independently of the host density. Nodes show an icon, name, type and value or row/field-count summary. Long content is ellipsized, with the name, JSON Pointer and preview in the tooltip. The catalog uses native StackPanel item panels and one physical scrolling viewport, avoiding nested virtualizing panels losing expanded content while scrolling. Horizontal overflow is clipped to the sidebar width. Successful import/binding messages are hidden above the tree; failed fetch/binding messages remain visible.
 
 `FetchApiDataAsync(url, cancellationToken)` populates the tree. Public `ReportDataNode` exposes `Kind` (`Scalar`, `Object`, `Collection`), `Pointer`, `FieldKey`, `Preview`, `Children` and `IsExpanded`; `DropDataNodeAsync(node, x, y)` performs the same drop workflow with coordinates in mm. `ReportJsonData.CreateTree(json)` builds nodes, and `CreateSource(json, bodyPointer, rootFieldKeys: ...)` creates collection data plus explicitly requested root keys:
 
@@ -157,24 +224,23 @@ Getters are registered explicitly, including nested accesses, without property r
 
 Current limits: no multiple detail tables/sources, grouping, crosstabs or subreports. Totals use `ShowSum`, not executable expressions. JSON date strings remain text. Editor labels are Chinese.
 
+### Export cancellation, retries and destination ownership
+
+`ExportPdfAsync(destination, token)` stages the complete PDF before modifying the target. Validation, image loading, rendering or cancellation before commit leaves its existing bytes intact. Cancellation is also honored while backing up a readable target. Once destination commit begins, it finishes without the cancellation token: a cancellation arriving during that write returns success with a complete PDF rather than cancellation with a partial file. Success leaves a seekable stream positioned at the new PDF's end.
+
+For a readable, writable, seekable target, the exporter backs up existing bytes. A write, final truncation or buffered flush failure restores the previous bytes, length and position, then rethrows the write error; failure while backing up leaves the target unchanged. An empty seekable write-only target can be restored to empty. A nonempty seekable write-only target is rejected with `NotSupportedException` before modification because its old bytes cannot be recovered. If restoration also fails, `AggregateException` reports both errors and the destination must be treated as damaged. Backup uses additional memory proportional to existing target content. Nonseekable output remains supported, but an I/O failure cannot undo bytes that destination has already accepted.
+
+Only one export may own a given `Stream` object at a time. A conflicting job fails with `InvalidOperationException` before fetching or writing; ownership is released after success, failure or cancellation so retry can reuse the same stream. Independent jobs may run concurrently with distinct streams and retain their own QR/pagination snapshots. Call on the UI thread, await every task and keep streams open until completion; the exporter does not dispose caller-owned streams. Separate wrappers for one underlying file and writes outside this exporter remain the caller's responsibility.
+
+Use `FileMode.OpenOrCreate` with `FileAccess.ReadWrite` when an API caller must preserve an existing PDF, as above. `File.Create` / `FileMode.Create` truncates the file before export starts, so the exporter cannot recover that earlier content. The designer's built-in save action writes a temporary sibling file and replaces a local target only after the complete PDF has been written and flushed; failure/cancellation removes the temporary file and retains the old PDF. Storage providers without a local path use staged stream writing; a provider that truncates on opening, or does not support rollback, cannot offer the same replacement guarantee. Operating-system crashes and failed recovery writes are outside stream rollback guarantees.
+
+The built-in save picker explicitly requests overwrite confirmation. Cancelling the picker, or a cancelled picker task, reports cancellation and releases the export state without opening or changing a target. Failed saves also release that state, allowing retry after the file is unlocked or permissions are restored. Before replacing an existing local PDF, the designer opens it for read/write without truncation and keeps the handle through replacement, allowing delete sharing for its own rename. Exclusive sharing locks and denied write access therefore fail before replacement. Unix permission bits on an existing PDF are retained. Open files that the OS permits replacing follow native rules: Unix file sharing is advisory, not equivalent to mandatory Windows sharing. See the [.NET Unix file-lock implementation](https://github.com/dotnet/runtime/blob/v10.0.0/src/libraries/System.Private.CoreLib/src/Microsoft/Win32/SafeHandles/SafeFileHandle.Unix.cs#L311).
+
+If folder permissions are revoked after the temporary file is created, deleting it may also be denied. The error then includes both the original save error and cleanup error, with the exact temporary path; the previous PDF remains intact. Retrying a local save in that folder after access is restored first removes temporary files tracked by this process. It does not scan or delete other applications' temporary files. Until access returns, retries create no additional staging files. Tracking is process-local: after restarting, any previously reported inaccessible temporary file must be removed using its reported path. Cleanup cannot be guaranteed while the OS denies deletion.
+
 ## PreviewHost and focused verification
 
 Extensions → ReportDesign opens the sales example; Extensions → ReportPreview opens the standalone viewer with saved JSON and an explicit 96-row source, without external network access. Both fill the host content area. Search by control name; navigating away and back preserves designer state.
-
-```sh
-dotnet run --project design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/reportdesign/artifacts -- --reportdesign
-dotnet run --project design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/reportdesign/artifacts -- --verify-reportdesign .preview/reportdesign/screenshots
-```
-
-Focused report checks cover layout, bindings, pointer editing, response-tree drops and field mapping, JSON roundtrips, images, PDF and themed drawing. NativeAotSmoke `--require-aot --verify-reportdesign` runs the report checks for native consumption. These checks do not establish physical printer output or Windows/Linux runtime behavior.
-
-`--verify-report-authentication` checks login/data ordering, editable headers, failure/cancellation, confirmation, persistence and standalone preview against a loopback API. `--verify-report-lifecycle` checks native plain/card tabs and cached ReportDesign pages in light/dark and all three densities, plus overflow, keyboard and closing in four placements. Both accept an optional screenshot folder. Add `-p:ReportOnlyPreview=true` before `--` to isolate these from unrelated PreviewHost demos. NativeAotSmoke supports the same property/commands with `--require-aot`.
-
-`--verify-report-tree-scroll` isolates the response tree: actual wheel input, stable extents, rendered text at the bottom, returning to the root, collapse/re-expand, filtering, scalar pointer drag and fetch-error recovery. It covers both themes, all host densities and a narrower viewport; the same isolation property and native consumer command apply.
-
-`--verify-report-sidebar` combines the tree scroll checks with structure navigation and repeated Components/Data switching. An optional output folder also captures both sidebar tabs across light/dark and the three host densities.
-
-`--verify-report-reload` checks saved-template reopening, fresh root/table values, request modes and authentication, network-image binding, cancellation, late-response isolation, cached navigation and direct MVVM document assignment. The tree scroll checks also verify expansion, selection, offset and filtered-tree identity across repeated tab changes.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
@@ -187,24 +253,24 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ConditionIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L21) | `int` | writable; OneWay | `computed / state` | Current conditional-format editor option index, synchronized with the selected column. |
-| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L39) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L23) | `TheOne.Avalonia.Reporting.ReportDataSource?` | writable; OneWay | `null` | Explicit data source supplied by the host according to the model contract; templates do not replace data adaptation. |
-| [`Document`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L22) | `TheOne.Avalonia.Reporting.ReportDocument?` | writable; OneWay | `null` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
-| [`FontFamilyName`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L30) | `string` | writable; OneWay | `computed / state` | Report text font-family name; use fonts available on the target platform and check fallback. |
-| [`FontSizeValue`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L25) | `double` | writable; OneWay | `computed / state` | Current font-size editor value, synchronized with the selected report element/document. |
-| [`FormatIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L31) | `int` | writable; OneWay | `computed / state` | Current option index in the report numeric-format editor. |
-| [`ImageFitIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L39) | `int` | writable; OneWay | `computed / state` | Current option index in the report image-fit editor. |
-| [`IsPreview`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L38) | `bool` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Layout`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L36) | `TheOne.Avalonia.Reporting.ReportLayout?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SaveCommand`](../../../TheOne.Avalonia/Controls/ReportDesign.Commands.cs#L26) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Consumer save command. Its parameter is the current ReportDocument; call document.Save() to obtain JSON. |
-| [`SelectedColumn`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L24) | `TheOne.Avalonia.Reporting.ReportColumn?` | writable; TwoWay | `null` | Selected report column model; null means no selection. |
-| [`SelectedElement`](../../../TheOne.Avalonia/Controls/ReportDesign.Editing.cs#L19) | `TheOne.Avalonia.Reporting.ReportElement?` | writable; TwoWay | `null` | Selected report element model; null means no selection. |
-| [`SelectedField`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L26) | `TheOne.Avalonia.Reporting.ReportFieldInfo?` | writable; OneWay | `computed / state` | Selected available report field, used for insertion/binding edits. |
-| [`SourceFields`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L25) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Reporting.ReportFieldInfo>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SumIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L40) | `int` | writable; OneWay | `computed / state` | Current option index in the report summary-operation editor. |
-| [`ValidationError`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L37) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L40) | `double` | writable; CLR / n/a | `accessor-defined / state` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. |
+| [`ConditionIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L40) | `int` | writable; OneWay | `computed / state` | Current conditional-format editor option index, synchronized with the selected column. |
+| [`CurrentPageNumber`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L109) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`DataSource`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L70) | `TheOne.Avalonia.Reporting.ReportDataSource?` | writable; OneWay | `null` | Explicit data source supplied by the host according to the model contract; templates do not replace data adaptation. |
+| [`Document`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L64) | `TheOne.Avalonia.Reporting.ReportDocument?` | writable; OneWay | `null` | Current business document model; editor documentation defines subscription, selection and history behavior on replacement. |
+| [`FontFamilyName`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L60) | `string` | writable; OneWay | `computed / state` | Report text font-family name; use fonts available on the target platform and check fallback. |
+| [`FontSizeValue`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L50) | `double` | writable; OneWay | `computed / state` | Current font-size editor value, synchronized with the selected report element/document. |
+| [`FormatIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L96) | `int` | writable; OneWay | `computed / state` | Current option index in the report numeric-format editor. |
+| [`ImageFitIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L76) | `int` | writable; OneWay | `computed / state` | Current option index in the report image-fit editor. |
+| [`IsPreview`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L108) | `bool` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Layout`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L106) | `TheOne.Avalonia.Reporting.ReportLayout?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SaveCommand`](../../../TheOne.Avalonia/Controls/ReportDesign.Commands.cs#L17) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Consumer save command. Its parameter is the current ReportDocument; call document.Save() to obtain JSON. |
+| [`SelectedColumn`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L76) | `TheOne.Avalonia.Reporting.ReportColumn?` | writable; TwoWay | `null` | Selected report column model; null means no selection. |
+| [`SelectedElement`](../../../TheOne.Avalonia/Controls/ReportDesign.Editing.cs#L30) | `TheOne.Avalonia.Reporting.ReportElement?` | writable; TwoWay | `null` | Selected report element model; null means no selection. |
+| [`SelectedField`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L84) | `TheOne.Avalonia.Reporting.ReportFieldInfo?` | writable; OneWay | `computed / state` | Selected available report field, used for insertion/binding edits. |
+| [`SourceFields`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L82) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Reporting.ReportFieldInfo>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SumIndex`](../../../TheOne.Avalonia/Controls/ReportDesign.Files.cs#L86) | `int` | writable; OneWay | `computed / state` | Current option index in the report summary-operation editor. |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L107) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Zoom`](../../../TheOne.Avalonia/Controls/ReportDesign.axaml.cs#L111) | `double` | writable; CLR / n/a | `accessor-defined / state` | View scale factor, where 1 means 100%; does not modify report millimetres or workflow coordinates. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
@@ -246,7 +312,7 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer)` | Creates a report source from a JSON record-array path and explicit field configuration. |
 | [`ReportJsonData`](../../api/en/TheOne.Avalonia.Reporting.ReportJsonData.md) | `static ReportDataSource ReportJsonData.CreateSource(string json, string bodyPointer, IEnumerable<string>? rootFieldKeys)` | Creates a report source from a JSON record-array path and explicit field configuration. |
 | [`ReportPaginator`](../../api/en/TheOne.Avalonia.Reporting.ReportPaginator.md) | `static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)` | Validates the document and computes immutable paginated layout shared by preview/printing. |
-| [`ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Exports a paginated report PDF asynchronously with caller-supplied destination/cancellation/file lifetime. |
+| [`ReportPdfExporter`](../../api/en/TheOne.Avalonia.Reporting.ReportPdfExporter.md) | `static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Stages a complete PDF; concurrent jobs require separate destination streams. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Fetches one bounded JSON response using the same request path as the independent preview. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Loads records asynchronously from report API configuration without persisting fetched rows in the template. |
 | [`ReportResources`](../../api/en/TheOne.Avalonia.Reporting.ReportResources.md) | `static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))` | Resolves report images asynchronously with batch-owned caching/failure state. |
@@ -267,17 +333,18 @@ Subscribe when needed and detach when the host is disposed. These are event entr
 
 | Model | Properties/enum values |
 | --- | ---: |
+| [`TheOne.Avalonia.Controls.QRCodeErrorCorrection`](../../api/en/TheOne.Avalonia.Controls.QRCodeErrorCorrection.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportApiAuthentication`](../../api/en/TheOne.Avalonia.Reporting.ReportApiAuthentication.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportApiParameterMode`](../../api/en/TheOne.Avalonia.Reporting.ReportApiParameterMode.md) | 2 |
-| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 5 |
+| [`TheOne.Avalonia.Reporting.ReportApiRequest`](../../api/en/TheOne.Avalonia.Reporting.ReportApiRequest.md) | 7 |
 | [`TheOne.Avalonia.Reporting.ReportColumn`](../../api/en/TheOne.Avalonia.Reporting.ReportColumn.md) | 12 |
 | [`TheOne.Avalonia.Reporting.ReportCondition`](../../api/en/TheOne.Avalonia.Reporting.ReportCondition.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | 9 |
+| [`TheOne.Avalonia.Reporting.ReportDataNode`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNode.md) | 10 |
 | [`TheOne.Avalonia.Reporting.ReportDataNodeKind`](../../api/en/TheOne.Avalonia.Reporting.ReportDataNodeKind.md) | 3 |
 | [`TheOne.Avalonia.Reporting.ReportDataSource`](../../api/en/TheOne.Avalonia.Reporting.ReportDataSource.md) | 3 |
-| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | 29 |
-| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | 25 |
-| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | 8 |
+| [`TheOne.Avalonia.Reporting.ReportDocument`](../../api/en/TheOne.Avalonia.Reporting.ReportDocument.md) | 31 |
+| [`TheOne.Avalonia.Reporting.ReportElement`](../../api/en/TheOne.Avalonia.Reporting.ReportElement.md) | 27 |
+| [`TheOne.Avalonia.Reporting.ReportElementKind`](../../api/en/TheOne.Avalonia.Reporting.ReportElementKind.md) | 9 |
 | [`TheOne.Avalonia.Reporting.ReportField<T>`](../../api/en/TheOne.Avalonia.Reporting.ReportField_T_.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportFieldInfo`](../../api/en/TheOne.Avalonia.Reporting.ReportFieldInfo.md) | 4 |
 | [`TheOne.Avalonia.Reporting.ReportImageFit`](../../api/en/TheOne.Avalonia.Reporting.ReportImageFit.md) | 3 |

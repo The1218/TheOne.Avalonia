@@ -136,7 +136,7 @@
                                     IsOpen="{TemplateBinding IsDropDownOpen,
                                                              Mode=TwoWay}"
                                     MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                    MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                    MinWidth="{CompiledBinding #PART_Popup.((ComboBox)TemplatedParent).Bounds.Width}"
                                     Name="PART_Popup"
                                     PlacementTarget="Background"
                                     WindowManagerAddShadowHint="False">
@@ -163,9 +163,9 @@
                             </Grid>
                         </Border>
                         <Border
-                            BorderBrush="{Binding #Background.BorderBrush}"
-                            BorderThickness="{Binding #Background.BorderThickness}"
-                            CornerRadius="{Binding #Background.CornerRadius}"
+                            BorderBrush="{CompiledBinding #Background.BorderBrush}"
+                            BorderThickness="{CompiledBinding #Background.BorderThickness}"
+                            CornerRadius="{CompiledBinding #Background.CornerRadius}"
                             IsHitTestVisible="False"
                             Name="InputOutline" />
                     </Panel>

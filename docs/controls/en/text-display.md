@@ -1,5 +1,7 @@
 # Text display and field labels
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/text-display.md) · **English**
 
 TextBlock displays ordinary read-only text; SelectableTextBlock displays read-only content that users can select and copy; Label associates a field title with an input control. After loading OneTheme, all three use shared text colors, fonts, and inherited sizing.
@@ -20,8 +22,6 @@ TextBlock and SelectableTextBlock support Text, Inlines, TextWrapping, TextTrimm
 SelectableTextBlock keeps native SelectionStart / SelectionEnd, SelectedText, pointer selection, and platform copy shortcuts. The native control adjusts selection ranges when text changes; use TextBox for editing. SelectionBrush maps to One.TextSelection. SelectionForegroundBrush defaults to null, preserving each Inline's formatting, and can be overridden locally. Theme changes preserve selection.
 
 Body font sizes for small / normal / large are 12 / 14 / 16 px. Label shares the minimum height of an input row. Explicit FontSize, LineHeight, and other local values take precedence. Avoid a fixed single-line Height for read-only paragraphs, which can clip wrapping or scaled fonts.
-
-The preview is on the combined text / data-display page. `--verify-text-alignment` checks field association, real selection, range correction, and theme / size changes. Copying through the system clipboard still requires verification on the target desktop host. See [basic controls](basic.md) for input controls.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

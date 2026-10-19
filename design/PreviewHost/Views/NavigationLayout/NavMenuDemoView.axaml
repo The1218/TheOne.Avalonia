@@ -24,71 +24,71 @@
         <WrapPanel>
             <ToggleButton
                 Content="折叠侧栏"
-                IsChecked="{Binding IsCollapsed, Mode=TwoWay}"
+                IsChecked="{CompiledBinding IsCollapsed, Mode=TwoWay}"
                 Margin="0,0,8,8"
                 Name="CompactToggle" />
             <Button
-                Command="{Binding ToggleBranchCommand}"
+                Command="{CompiledBinding ToggleBranchCommand}"
                 Content="展开 / 收起千条子项"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding ToggleNestedBranchCommand}"
+                Command="{CompiledBinding ToggleNestedBranchCommand}"
                 Content="展开 / 收起三级"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding ReverseSidebarCommand}"
+                Command="{CompiledBinding ReverseSidebarCommand}"
                 Content="快速反转侧栏"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding OpenCommand}"
+                Command="{CompiledBinding OpenCommand}"
                 Content="打开产品菜单"
                 Margin="0,0,8,8"
                 Name="OpenSubmenu" />
             <Button
-                Command="{Binding CloseCommand}"
+                Command="{CompiledBinding CloseCommand}"
                 Content="关闭弹层"
                 Margin="0,0,8,8"
                 Name="CloseSubmenu" />
             <Button
-                Command="{Binding JumpRootCommand}"
+                Command="{CompiledBinding JumpRootCommand}"
                 Content="末尾根菜单"
                 Margin="0,0,8,8"
                 Name="JumpRoot" />
             <Button
-                Command="{Binding JumpChildCommand}"
+                Command="{CompiledBinding JumpChildCommand}"
                 Content="末尾二级菜单"
                 Margin="0,0,8,8"
                 Name="JumpChild" />
             <Button
-                Command="{Binding JumpDeepCommand}"
+                Command="{CompiledBinding JumpDeepCommand}"
                 Content="末尾三级菜单"
                 Margin="0,0,8,8"
                 Name="JumpDeep" />
             <ToggleButton
                 Content="悬停打开"
-                IsChecked="{Binding OpenOnHover, Mode=TwoWay}"
+                IsChecked="{CompiledBinding OpenOnHover, Mode=TwoWay}"
                 Margin="0,0,8,8"
                 Name="HoverToggle" />
             <Button
-                Command="{Binding CollapseCommand}"
+                Command="{CompiledBinding CollapseCommand}"
                 Content="收起所有"
                 Margin="0,0,8,8" />
         </WrapPanel>
         <WrapPanel>
             <CheckBox
                 Content="显示内置搜索"
-                IsChecked="{Binding ShowFilter, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowFilter, Mode=TwoWay}"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding SearchDeepCommand}"
+                Command="{CompiledBinding SearchDeepCommand}"
                 Content="搜索三级末项"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding SearchAllChildrenCommand}"
+                Command="{CompiledBinding SearchAllChildrenCommand}"
                 Content="搜索千条子菜单"
                 Margin="0,0,8,8" />
             <Button
-                Command="{Binding ClearSearchCommand}"
+                Command="{CompiledBinding ClearSearchCommand}"
                 Content="清空并恢复状态"
                 Margin="0,0,8,8"
                 Name="ClearMenuSearch" />
@@ -104,14 +104,14 @@
                 Maximum="1400"
                 Minimum="260"
                 Name="EdgeWindowWidth"
-                Value="{Binding EdgeWidth, Mode=TwoWay}"
+                Value="{CompiledBinding EdgeWidth, Mode=TwoWay}"
                 Width="156" />
             <CheckBox
                 Content="靠右放置图标栏"
-                IsChecked="{Binding EdgeRight, Mode=TwoWay}"
+                IsChecked="{CompiledBinding EdgeRight, Mode=TwoWay}"
                 Margin="0,0,16,8" />
             <Button
-                Command="{Binding EdgeCommand}"
+                Command="{CompiledBinding EdgeCommand}"
                 Content="边缘与窄窗口验证"
                 Margin="0,0,8,8" />
         </WrapPanel>
@@ -123,33 +123,33 @@
                 Padding="8">
                 <one:NavMenu
                     ExpandedWidth="300"
-                    ChildrenBinding="{Binding Entries}"
-                    ExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                    ChildrenBinding="{CompiledBinding Entries}"
+                    ExpandedBinding="{CompiledBinding IsExpanded, Mode=TwoWay}"
                     Height="400"
-                    IsCollapsed="{Binding IsCollapsed, Mode=TwoWay}"
-                    IsGroupBinding="{Binding IsGroup}"
-                    IsItemEnabledBinding="{Binding IsEnabled}"
-                    ItemInvokedCommand="{Binding InvokeCommand}"
-                    ItemsSource="{Binding Roots}"
+                    IsCollapsed="{CompiledBinding IsCollapsed, Mode=TwoWay}"
+                    IsGroupBinding="{CompiledBinding IsGroup}"
+                    IsItemEnabledBinding="{CompiledBinding IsEnabled}"
+                    ItemInvokedCommand="{CompiledBinding InvokeCommand}"
+                    ItemsSource="{CompiledBinding Roots}"
                     Name="DemoMenu"
-                    OpenOnHover="{Binding OpenOnHover}"
-                    SearchText="{Binding Search, Mode=TwoWay}"
-                    SearchTextBinding="{Binding Title}"
-                    SelectedItem="{Binding Selected, Mode=TwoWay}"
+                    OpenOnHover="{CompiledBinding OpenOnHover}"
+                    SearchText="{CompiledBinding Search, Mode=TwoWay}"
+                    SearchTextBinding="{CompiledBinding Title}"
+                    SelectedItem="{CompiledBinding Selected, Mode=TwoWay}"
                     SelectionChanged="OnSelected"
-                    ShowFilter="{Binding ShowFilter, Mode=TwoWay}">
+                    ShowFilter="{CompiledBinding ShowFilter, Mode=TwoWay}">
                     <one:NavMenu.IconTemplate>
                         <DataTemplate>
                             <Path
-                                Data="{Binding Icon}"
+                                Data="{CompiledBinding Icon}"
                                 Stretch="Uniform"
-                                Stroke="{Binding $parent[ContentPresenter].Foreground}"
+                                Stroke="{CompiledBinding $parent[ContentPresenter].Foreground}"
                                 StrokeThickness="1.3" />
                         </DataTemplate>
                     </one:NavMenu.IconTemplate>
                     <one:NavMenu.ContentTemplate>
                         <DataTemplate>
-                            <one:NavMenuSearchText SourceText="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                            <one:NavMenuSearchText SourceText="{CompiledBinding Title}" TextTrimming="CharacterEllipsis" />
                         </DataTemplate>
                     </one:NavMenu.ContentTemplate>
                 </one:NavMenu>
@@ -159,13 +159,13 @@
                 <TextBlock
                     FontSize="20"
                     Name="SelectedLabel"
-                    Text="{Binding Selected.Title, TargetNullValue=尚未选择}"
+                    Text="{CompiledBinding Selected.Title, TargetNullValue=尚未选择}"
                     TextWrapping="Wrap" />
-                <TextBlock Text="{Binding InvocationStatus}" TextWrapping="Wrap" />
+                <TextBlock Text="{CompiledBinding InvocationStatus}" TextWrapping="Wrap" />
                 <TextBlock
                     Classes="helper"
                     Name="MenuMetrics"
-                    Text="{Binding Metrics}"
+                    Text="{CompiledBinding Metrics}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Classes="helper"

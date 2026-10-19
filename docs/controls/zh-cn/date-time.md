@@ -1,5 +1,7 @@
 # 日期与时间
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/date-time.md)
 
 CalendarItem、CalendarButton、CalendarDayButton 属于日历模板；DatePickerPresenter、TimePickerPresenter 属于选择器弹层。它们随父控件提供主题，不单独创建。替换模板时保留原生 PART_* 与绑定合约。
@@ -50,8 +52,6 @@ DateTime、Month、Year 默认格式分别为 `yyyy-MM-dd HH:mm`、`yyyy-MM`、`
 
 保留月份翻页、年 / 十年视图、范围与禁选日期、键盘选择。今天用描边标记，选中日期用强调色。需要多日期时使用官方 `SelectionMode` 和 `SelectedDates`；日期网格为固定上限布局。
 
-日期、月份、年份网格在同一档尺寸下预留相同主体高度：Small 258px、Normal 294px、Large 342px。切换视图或直接打开月份／年份选择时，外部高度保持稳定，日期单元格按自然尺寸居中排列。月份／年份按钮按文字自然尺寸及原生最小高度居中，选中背景不再铺满整个网格槽，命中区域、焦点与选择行为仍由原生按钮提供。CalendarDatePicker 弹层共用此布局。自定义日历字体或单元格尺寸时，可覆盖 `One.CalendarBodyHeight.Small`、`.Normal`、`.Large` 资源。PreviewHost 的 `--verify-calendar-layout [output]` 仅验证 Calendar 及其 CalendarDatePicker 弹层调用方。
-
 ## DatePicker 与 TimePicker
 
 ```xml
@@ -60,13 +60,11 @@ DateTime、Month、Year 默认格式分别为 `yyyy-MM-dd HH:mm`、`yyyy-MM`、`
             SelectedTime="{Binding Time, Mode=TwoWay}" />
 ```
 
-DatePicker 的 `SelectedDate` 为 `DateTimeOffset?`，TimePicker 的 `SelectedTime` 为 `TimeSpan?`，与 CalendarDatePicker 的 `DateTime?` 类型不同。保留原生按视口回收的 DateTimePickerPanel，不需要替换内部滚动面板。示例见 [EnhancementsPreview.cs](../../../design/PreviewHost/Verification/Basic/EnhancementsPreview.cs) 和 [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml)。
-
 显示区域的日期、月份、时间和时段文本在 small / normal / large 下均按原生字段水平居中、垂直居中，空值与禁用状态保持同一布局。
 
 条目／选中条高度为 32／40／48 px，弹层字号 12／14／16 px，高度上限 288／340／400 px。确认提交，取消保留原值；箭头支持按住重复。
 
-内部 PickerScroll.Enabled 默认启用：滚轮停止 140 ms 后吸附整数行，手势结束立即对齐，确定／Enter 对齐后提交；非循环列表限制有效范围。选中条内外文字分层裁剪，避免小数滚动时状态文字落在错误背景上；不改变原生选择模型，卸载时停止计时并解除订阅。专项和定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+内部 PickerScroll.Enabled 默认启用：滚轮停止 140 ms 后吸附整数行，手势结束立即对齐，确定／Enter 对齐后提交；非循环列表限制有效范围。 选中条内外文字分层裁剪，避免小数滚动时状态文字落在错误背景上；不改变原生选择模型，卸载时停止计时并解除订阅。
 
 日期／时间弹层会隔离未被内部消费的细粒度横向、纵向和斜向滚动及手势惯性／结束阶段，空白区域或滚动边界不会带动外层容器。内部日期切换、滚轮列滚动、惯性与结束对齐仍由原生控件处理；关闭后来自旧弹层的尾帧不影响外层，新页面滚动正常。
 

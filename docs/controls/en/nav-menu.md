@@ -1,5 +1,7 @@
 # NavMenu multilevel navigation
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/nav-menu.md) · **English**
 
 `NavMenu` inherits native `TreeView`, using `NavMenuItem` containers and TheOne themes. It supports multilevel menus, separate icon and text templates, page selection, group headers, native keyboard navigation, virtualization, and recycling at every level. Loading `OneTheme` enables Light / Dark and all three sizes.
@@ -67,11 +69,7 @@ Normal rows are transparent; hover uses `One.Subtle`, selection uses `One.Accent
 
 Large root collections and every child level use native `VirtualizingStackPanel`, preserving `PART_*`, focus, selection, and expansion. With `ChildrenBinding` and at most 32 roots, the root layer uses `StackPanel` to retain group containers. This prevents entire branches from being recycled, remounted, and re-estimated when rapidly reversing the scroll direction. Children remain virtualized with one cached viewport on each side. Adding or removing roots across this limit switches the default panel automatically; an explicitly assigned `ItemsPanel` takes precedence.
 
-Provide finite height or a bounded `*` row in `Grid`. Avoid unbounded navigation in a height-unconstrained `StackPanel` or outer infinite ScrollViewer. Virtualization reduces UI containers; it is not business-data pagination. The `--verify-navmenu-fling` check uses PreviewHost's actual sidebar to cover bottom-to-top wheel reversal, stable height across group boundaries, narrow sidebars, and large child collections.
-
 PreviewHost's sidebar uses NavMenu with six groups: basic controls, data display, navigation / layout, charts, extensions, and interaction verification. Extensions → NavMenu demonstrates 1,000 items per level and 5,000 models in total, with navigation to the final root, second-level, and third-level pages and live realized-container counts.
-
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
 
 Checks cover light / dark themes and all sizes, realized-container counts, distant selection and keyboard navigation, expansion after recycling, compiled template updates, dynamic children, disabled states, non-navigating groups, custom template interactions, and live theme / size changes. Independent native consumption reuses the same compiled XAML and interactions without reflection bindings, dynamic XAML, or whole-assembly preservation.
 
@@ -80,8 +78,6 @@ Checks cover light / dark themes and all sizes, realized-container counts, dista
 - [Collapsed sidebar, hover cascades, and edge adaptation](nav-menu-popups.md).
 - [Multilevel search, highlighting, keyboard input, and built-in autocomplete](nav-menu-search.md).
 - [Expansion and collapse motion](nav-menu-motion.md).
-
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for verification and native scenarios.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

@@ -232,17 +232,18 @@ public partial class GanttChart
 
     internal sealed class GanttRowPresenter : Control
     {
+        private static readonly StreamGeometry ExpandedIcon = StreamGeometry.Parse("M0,2 L10,2 L5,8 Z");
+        private static readonly StreamGeometry CollapsedIcon = StreamGeometry.Parse("M2,0 L8,5 L2,10 Z");
         private readonly Button? _expand;
         private readonly GanttChart _owner;
         private readonly Row _row;
+        internal Row Data => _row;
 
         public GanttRowPresenter(GanttChart owner, Row row)
         {
             _owner = owner;
             _row = row;
             ClipToBounds = true;
-            ToolTip.SetTip(this,
-                $"{row.Task.Title}\n{row.Start:yyyy/MM/dd} — {(row.Task.IsMilestone ? row.Start : row.End.AddDays(-1)):yyyy/MM/dd}\n{row.Progress:P0}");
             if (row.Children.Count > 0)
             {
                 _expand = new Button
@@ -252,7 +253,7 @@ public partial class GanttChart
                     Background = Brushes.Transparent, Content = new PathIcon
                     {
                         Width = 10, Height = 10, Foreground = owner.Foreground,
-                        Data = StreamGeometry.Parse(row.Task.IsExpanded ? "M0,2 L10,2 L5,8 Z" : "M2,0 L8,5 L2,10 Z")
+                        Data = row.Task.IsExpanded ? ExpandedIcon : CollapsedIcon
                     }
                 };
                 AutomationProperties.SetName(_expand,
@@ -265,14 +266,29 @@ public partial class GanttChart
                 VisualChildren.Add(_expand);
                 LogicalChildren.Add(_expand);
             }
+            RefreshTask();
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
         {
             base.OnAttachedToVisualTree(e);
+            RefreshTask();
+        }
+
+        internal void RefreshTask()
+        {
+            ToolTip.SetTip(this,
+                $"{_row.Task.Title}\n{_row.Start:yyyy/MM/dd} — {(_row.Task.IsMilestone ? _row.Start : _row.End.AddDays(-1)):yyyy/MM/dd}\n{_row.Progress:P0}");
             if (this.FindAncestorOfType<ListBoxItem>() is { } item)
                 AutomationProperties.SetName(item,
                     $"{_row.Task.Title}, {_row.Task.Owner}, {_row.Start:yyyy/MM/dd}, {_row.Progress:P0}");
+            if (_expand is not null)
+            {
+                AutomationProperties.SetName(_expand,
+                    $"{(_row.Task.IsExpanded ? "Collapse" : "Expand")} {_row.Task.Title}");
+                if (_expand.Content is PathIcon icon) icon.Data = _row.Task.IsExpanded ? ExpandedIcon : CollapsedIcon;
+            }
+            InvalidateVisual();
         }
 
         internal void RefreshTheme()

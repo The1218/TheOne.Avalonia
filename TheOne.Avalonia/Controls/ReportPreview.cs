@@ -232,6 +232,7 @@ public sealed class ReportPreview : UserControl
             await ReportResources.LoadImagesAsync(document, HttpClient, token, source);
             token.ThrowIfCancellationRequested();
             var layout = ReportPaginator.Paginate(document, source);
+            ReportPaginator.RequireQRCodes(layout);
             var snapshot = ReportPdfExporter.Snapshot(document);
             token.ThrowIfCancellationRequested();
             if (generation != _generation) return;

@@ -26,7 +26,7 @@
                     FontSize="12"
                     Foreground="{DynamicResource One.Muted}"
                     HorizontalAlignment="Center"
-                    Text="{Binding}"
+                    Text="{CompiledBinding}"
                     VerticalAlignment="Center"
                     x:DataType="x:Object" />
             </Template>

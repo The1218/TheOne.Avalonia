@@ -13,13 +13,13 @@
             Foreground="{DynamicResource One.Muted}"
             Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <Expander
                 Header="工作区详情"
-                IsExpanded="{Binding Expanded, Mode=TwoWay}"
+                IsExpanded="{CompiledBinding Expanded, Mode=TwoWay}"
                 Name="ControlSample">
-                <TextBlock Margin="16" Text="{Binding Text}" />
+                <TextBlock Margin="16" Text="{CompiledBinding Text}" />
             </Expander>
         </StackPanel>
     </StackPanel>

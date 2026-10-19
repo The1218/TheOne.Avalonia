@@ -1,5 +1,7 @@
 # Charts
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/charts.md) · **English**
 
 Fourteen independently drawn controls live in `TheOne.Avalonia.Controls`, each with its own concrete type, theme, and visual state. Load `OneTheme` and use shared `ChartSeries` / `ChartPoint` models without an extra chart package. Shapes, ticks, legends, and labels are drawn directly instead of creating a Control or container per point.
@@ -135,9 +137,8 @@ Cartesian charts ignore nonfinite coordinates; line / area break at `NaN` / `Inf
 | Smoothing, stacking, percentages, dual axes, sampling | [Cartesian charts and sampling](chart-cartesian.md) |
 | Pie, doughnut, gauge needles / ticks | [Radial charts](chart-radial.md) |
 | Labels, selection, crosshairs, shared tooltips, legends, zoom / pan | [Interaction](chart-interaction.md) |
-| Update animation, PNG export, update rules, themes, sizes | [Rendering](chart-rendering.md) |
-
-Use `--verify-charts`; rendering uses concrete type or scenario names. Commands are in the [preview entry points](../../../design/PreviewHost/Program.cs).
+| Update animation, PNG export, range/stack/drawing caches, incremental sampling buckets, Scatter tails/selection p99, measurements, themes, sizes | [Rendering](chart-rendering.md) |
+| Scatter selection allocation, audited p99 data and remaining raster tails | [Scatter selection performance](chart-rendering.md#scatter-selection-p99) |
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

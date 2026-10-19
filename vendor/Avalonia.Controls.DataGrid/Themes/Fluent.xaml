@@ -358,7 +358,7 @@
             </ControlTheme>
 
             <ControlTheme TargetType="DataGridRow" x:Key="{x:Type DataGridRow}">
-                <Setter Property="Background" Value="{Binding $parent[DataGrid].RowBackground}" />
+                <Setter Property="Background" Value="{CompiledBinding $parent[DataGrid].RowBackground}" />
                 <Setter Property="Template">
                     <ControlTemplate>
                         <Border
@@ -506,7 +506,7 @@
                                 <TextBlock
                                     Foreground="{TemplateBinding Foreground}"
                                     Margin="4,0,0,0"
-                                    Text="{Binding Key}" />
+                                    Text="{CompiledBinding Key}" />
                                 <TextBlock
                                     Foreground="{TemplateBinding Foreground}"
                                     IsVisible="{TemplateBinding IsItemCountVisible}"
@@ -612,7 +612,7 @@
                                         <ScrollGestureRecognizer
                                             CanHorizontallyScroll="True"
                                             CanVerticallyScroll="True"
-                                            IsScrollInertiaEnabled="{Binding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_RowsPresenter}" />
+                                            IsScrollInertiaEnabled="{CompiledBinding (ScrollViewer.IsScrollInertiaEnabled), ElementName=PART_RowsPresenter}" />
                                     </DataGridRowsPresenter.GestureRecognizers>
                                 </DataGridRowsPresenter>
                                 <Rectangle
@@ -621,7 +621,7 @@
                                     Grid.Row="2"
                                     Name="PART_BottomRightCorner" />
                                 <ScrollBar
-                                    AllowAutoHide="{Binding Path=(ScrollViewer.AllowAutoHide), RelativeSource={RelativeSource TemplatedParent}}"
+                                    AllowAutoHide="{CompiledBinding #PART_VerticalScrollbar.((DataGrid)TemplatedParent).(ScrollViewer.AllowAutoHide)}"
                                     Grid.Column="2"
                                     Grid.Row="1"
                                     Name="PART_VerticalScrollbar"
@@ -634,7 +634,7 @@
                                     Grid.Row="2">
                                     <Rectangle Name="PART_FrozenColumnScrollBarSpacer" />
                                     <ScrollBar
-                                        AllowAutoHide="{Binding Path=(ScrollViewer.AllowAutoHide), RelativeSource={RelativeSource TemplatedParent}}"
+                                        AllowAutoHide="{CompiledBinding #PART_HorizontalScrollbar.((DataGrid)TemplatedParent).(ScrollViewer.AllowAutoHide)}"
                                         Grid.Column="1"
                                         Height="{DynamicResource ScrollBarSize}"
                                         Name="PART_HorizontalScrollbar"
@@ -649,7 +649,7 @@
                                     Grid.RowSpan="4"
                                     HorizontalAlignment="Stretch"
                                     IsHitTestVisible="False"
-                                    IsVisible="{Binding !$parent[DataGrid].IsEnabled}"
+                                    IsVisible="{CompiledBinding !$parent[DataGrid].IsEnabled}"
                                     VerticalAlignment="Stretch"
                                     x:Name="PART_DisabledVisualElement" />
                             </Grid>

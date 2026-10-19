@@ -6,7 +6,7 @@
 
 WorkflowEditor template part. Graph coordinates are independent of zoom and pan.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L16)
+[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowCanvas.Rendering.cs#L8)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -16,10 +16,10 @@ WorkflowEditor template part. Graph coordinates are independent of zoom and pan.
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Point WorkflowCanvas.ToWorld(Point point)`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L71) | 将画布视口坐标换算为文档世界坐标，计入缩放和平移。 |
-| [`override void WorkflowCanvas.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L133) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
-| [`void WorkflowCanvas.CancelGesture()`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L276) | 取消当前画布手势并清理拖动／连线预览。 |
-| [`WorkflowCanvas.WorkflowCanvas()`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L31) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+| [`Point WorkflowCanvas.ToWorld(Point point)`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L97) | 将画布视口坐标换算为文档世界坐标，计入缩放和平移。 |
+| [`override void WorkflowCanvas.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L214) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
+| [`void WorkflowCanvas.CancelGesture()`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L487) | 取消当前画布手势并清理拖动／连线预览。 |
+| [`WorkflowCanvas.WorkflowCanvas()`](../../../TheOne.Avalonia/Controls/WorkflowCanvas.cs#L32) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 样式与密度
 

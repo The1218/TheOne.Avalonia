@@ -58,7 +58,8 @@ public sealed class WorkflowBusinessSummary : WorkflowObservable
     public bool IsNotNote => !IsNote;
 
     public bool HasWarning =>
-        Node.Properties.Any(p => p.IsRequired && p.Reference == null && string.IsNullOrWhiteSpace(p.Value));
+        Node.Properties.Any(p => p.IsRequired && p.Reference == null &&
+            (p.Kind == WorkflowValueKind.MultiSelect ? p.SelectedKeys.Count == 0 : string.IsNullOrWhiteSpace(p.Value)));
 
     public string Warning => Node.TypeId == "approval" && HasWarning ? "⚠ 缺少审批人" : HasWarning ? "⚠ 缺少配置" : "";
 }
@@ -71,11 +72,17 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
     private readonly bool _designSample;
     private readonly IWorkflowEditorFileService? _files;
     private WorkflowDocument _document = new();
-    private string _json = "", _message = "节点与业务数据均由消费端提供。选择节点编辑字段，选择上游输出建立关联。", _nodeTitle = "";
+    private string _json = "", _message = "节点与业务数据均由消费端提供。选择节点编辑字段，选择上游输出建立关联。";
     private bool _restoringContent;
     private long _savedRevision = -1;
     private WorkflowNode? _selected;
     private bool _showConsumerExamples;
+    private WorkflowPropertyEditor? _approverEditor;
+    private IEnumerable<WorkflowRole> _roles = new ObservableCollection<WorkflowRole>
+    {
+        new("department-manager", "直属主管"), new("finance", "财务负责人"), new("owner", "流程负责人"),
+        new("person:1001", "张敏 · 员工"), new("person:1002", "李明 · 员工")
+    };
 
     public WorkflowEditorDemoViewModel(bool designSample = false, IWorkflowEditorFileService? files = null)
     {
@@ -116,13 +123,6 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         OpenCommand = new WorkflowFileCommand(OpenAsync, ex => Message = "打开失败：" + ex.Message);
         LoadCommand = new DemoCommand(LoadJson);
         ResetCommand = new DemoCommand(Reset);
-        ApplyTitleCommand = new DemoCommand(() =>
-        {
-            if (SelectedNode is not { } n) return;
-            var old = n.Title;
-            var title = NodeTitle;
-            if (old != title) Document.Edit("修改标题", () => n.Title = title, () => n.Title = old);
-        });
         PreviewStateCommand = new DemoCommand(() =>
         {
             for (var i = 0; i < Document.Nodes.Count; i++)
@@ -153,18 +153,18 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
 
     public string SaveStateText => _savedRevision == Document.Revision ? "已保存" : "有未保存更改";
 
-    public WorkflowRole[] Roles { get; } =
-        [new("department-manager", "直属主管"), new("finance", "财务负责人"), new("owner", "流程负责人")];
-
-    public WorkflowRole? SelectedRole
+    public IEnumerable<WorkflowRole> Roles
     {
-        get => Roles.FirstOrDefault(r => r.Id == Value("roleId"));
+        get => _roles;
         set
         {
-            SetField("roleId", value?.Id ?? "");
-            Notify();
+            if (Set(ref _roles, value))
+                foreach (var editor in Fields.Where(f => f.IsMultiSelect)) editor.ConfigureChoices(value, ApproverAdapter);
         }
     }
+
+    public WorkflowChoiceAdapter ApproverAdapter { get; } = WorkflowChoiceAdapter.Create<WorkflowRole>(role => role.Id, role => role.Title);
+    public WorkflowPropertyEditor? ApproverEditor => _approverEditor;
 
     public bool AnyApproval
     {
@@ -254,19 +254,9 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         set
         {
             if (!Set(ref _selected, value)) return;
-            NodeTitle = value?.Title ?? "";
-            Fields.Clear();
-            if (value != null)
-                foreach (var p in value.Properties)
-                    Fields.Add(new WorkflowFieldEditor(Document, value, p));
+            RefreshFields(true);
             NotifyInspector();
         }
-    }
-
-    public string NodeTitle
-    {
-        get => _nodeTitle;
-        set => Set(ref _nodeTitle, value);
     }
 
     public string Json
@@ -281,14 +271,13 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         set => Set(ref _message, value);
     }
 
-    public ObservableCollection<WorkflowFieldEditor> Fields { get; } = [];
+    public ObservableCollection<WorkflowPropertyEditor> Fields { get; } = [];
     public ObservableCollection<WorkflowNodeDefinition> NodeDefinitions { get; }
     public ICommand SaveCommand { get; }
     public ICommand ExportCommand { get; }
     public ICommand OpenCommand { get; }
     public ICommand LoadCommand { get; }
     public ICommand ResetCommand { get; }
-    public ICommand ApplyTitleCommand { get; }
     public ICommand PreviewStateCommand { get; }
     public ICommand ResolveDataCommand { get; }
 
@@ -306,6 +295,25 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         return SelectedNode?.Properties.FirstOrDefault(p => p.Key == key)?.Value ?? "";
     }
 
+    private void RefreshFields(bool rebuild = false)
+    {
+        if (rebuild || !Fields.Select(f => f.Property).SequenceEqual(SelectedNode?.Properties ?? []))
+        {
+            foreach (var field in Fields) field.Dispose();
+            Fields.Clear();
+            if (SelectedNode is { } node)
+                foreach (var property in node.Properties)
+                {
+                    var field = new WorkflowPropertyEditor(Document, node, property);
+                    if (field.IsMultiSelect) field.ConfigureChoices(Roles, ApproverAdapter);
+                    Fields.Add(field);
+                }
+            _approverEditor = Fields.FirstOrDefault(f => f.Property.Key == "roleId");
+            Notify(nameof(ApproverEditor));
+        }
+        foreach (var field in Fields) field.Refresh();
+    }
+
     private void SetField(string key, string value)
     {
         if (SelectedNode?.Properties.FirstOrDefault(p => p.Key == key) is { } p) Document.SetProperty(p, value, null);
@@ -315,7 +323,7 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
     {
         foreach (var key in new[]
                  {
-                     nameof(SelectedRole), nameof(AnyApproval), nameof(AllApproval), nameof(TimeoutHours),
+                     nameof(ApproverEditor), nameof(AnyApproval), nameof(AllApproval), nameof(TimeoutHours),
                      nameof(AllowDelegate), nameof(Description), nameof(IsApproval), nameof(IsOtherNode),
                      nameof(TimeoutUnit), nameof(RejectionMode), nameof(SelectedNodeType), nameof(OutputSummary)
                  }) Notify(key);
@@ -417,8 +425,8 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
             _restoringContent = false;
         }
 
-        foreach (var row in Fields) row.Refresh();
         if (SelectedNode != null && !Document.Nodes.Contains(SelectedNode)) SelectedNode = null;
+        RefreshFields();
         NotifyInspector();
         Notify(nameof(SaveStateText));
     }
@@ -468,7 +476,7 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         supervisor.Description = "由直属主管审批";
         finance.Title = "财务审批";
         finance.Description = "由财务部门审批";
-        finance.Properties.Single(p => p.Key == "roleId").Value = "";
+        finance.Properties.Single(p => p.Key == "roleId").SelectedKeys.Clear();
         foreach (var node in new[] { supervisor, finance })
         {
             var port = node.Ports.Single(p => p.Id == "approved");
@@ -572,8 +580,10 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
         n.Ports.Add(new WorkflowPort("in", "输入", WorkflowPortDirection.Input));
         n.Ports.Add(new WorkflowPort("approved", "通过", WorkflowPortDirection.Output, "flow", 0,
             [new WorkflowOutputField("approved", "审批结果", "boolean")]));
-        n.Properties.Add(new WorkflowProperty
-            { Key = "roleId", Title = "审批角色 ID", IsRequired = true, Value = "department-manager" });
+        var approvers = new WorkflowProperty
+            { Key = "roleId", Title = "审批人", Kind = WorkflowValueKind.MultiSelect, DataType = "principal", IsRequired = true };
+        approvers.SelectedKeys.Add("department-manager");
+        n.Properties.Add(approvers);
         n.Properties.Add(new WorkflowProperty
         {
             Key = "amount", Title = "待审批金额", DataType = "number", Kind = WorkflowValueKind.Number, IsRequired = true,
@@ -623,6 +633,13 @@ public sealed class WorkflowEditorDemoViewModel : WorkflowObservable
 
     private static void RestoreContent(WorkflowNode n)
     {
+        // Migrate the previous single-role sample without changing the generic serializer's contract.
+        if (n.TypeId == "approval" && n.Properties.FirstOrDefault(p => p.Key == "roleId") is { Kind: not WorkflowValueKind.MultiSelect } old)
+        {
+            var field = new WorkflowProperty { Key = old.Key, Title = "审批人", Kind = WorkflowValueKind.MultiSelect, DataType = "principal", IsRequired = old.IsRequired };
+            if (!string.IsNullOrWhiteSpace(old.Value)) field.SelectedKeys.Add(old.Value);
+            n.Properties[n.Properties.IndexOf(old)] = field;
+        }
         n.Content = new WorkflowBusinessSummary(
             n.TypeId switch { "request" => "业务数据源", "approval" => "人工处理", "notification" => "数据引用", _ => "分支规则" },
             "宿主按 TypeId 创建的强类型 Content", n);
@@ -682,60 +699,5 @@ public sealed class WorkflowFileCommand(Func<Task> execute, Action<Exception> fa
             _running = false;
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
-    }
-}
-
-public sealed class WorkflowFieldEditor : WorkflowObservable
-{
-    private readonly WorkflowDocument _document;
-    private readonly WorkflowNode _node;
-
-    public WorkflowFieldEditor(WorkflowDocument document, WorkflowNode node, WorkflowProperty property)
-    {
-        _document = document;
-        _node = node;
-        Property = property;
-        Refresh();
-    }
-
-    public WorkflowProperty Property { get; }
-    public string Title => Property.Title + (Property.IsRequired ? " *" : "");
-    public string TypeHint => Property.Kind + " · " + Property.DataType;
-
-    public string Literal
-    {
-        get => Property.Value;
-        set => _document.SetProperty(Property, value ?? "", Property.Reference);
-    }
-
-    public bool IsLiteral => Property.Reference == null;
-    public ObservableCollection<WorkflowReferenceOption> Options { get; } = [];
-
-    public WorkflowReferenceOption? SelectedOption
-    {
-        get => Options.FirstOrDefault(o => o.Reference == Property.Reference) ?? Options.FirstOrDefault();
-        set
-        {
-            if (value != null)
-                _document.SetProperty(Property, Property.Value,
-                    value.Reference.NodeId.Length == 0 ? null : value.Reference);
-        }
-    }
-
-    public void Refresh()
-    {
-        var options = _document.GetReferenceOptions(_node, Property)
-            .Prepend(new WorkflowReferenceOption("固定值", new WorkflowDataReference("", ""))).ToList();
-        if (Property.Reference is { } r && options.All(o => o.Reference != r))
-            options.Add(new WorkflowReferenceOption("无效引用：" + Property.DisplayValue, r));
-        if (!Options.SequenceEqual(options))
-        {
-            Options.Clear();
-            foreach (var o in options) Options.Add(o);
-        }
-
-        Notify(nameof(Literal));
-        Notify(nameof(SelectedOption));
-        Notify(nameof(IsLiteral));
     }
 }

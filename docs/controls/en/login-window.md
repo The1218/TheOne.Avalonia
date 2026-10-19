@@ -1,5 +1,7 @@
 # LoginWindow and main-window handoff
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/login-window.md) · **English**
 
 See [windows](windows.md) for themes and shared services.
@@ -60,12 +62,6 @@ OneDialogResult result = await login.ShowErrorDialog("请检查账号和密码",
 ShowErrorToast / ShowErrorNotification use NotificationType.Error on the UI thread and accept expiration; TimeSpan.Zero persists. ShowErrorDialog awaits Ok / Closed and supports CancellationToken. Closing login resolves active / queued dialogs as Closed without transferring them to main. New post-handoff requests use OneWindow hosts; Content, DataContext, ContentTemplate, and host instances are not copied.
 
 LoginWindow does not manage dependency injection or .NET Generic Host. Associate shared services / Generic Host with application lifetime and stop / dispose on desktop Exit / Shutdown. Do not attach Host.StopAsync / Dispose to login Closed. Local authentication cancellation / cleanup remains the form's responsibility.
-
-`dotnet run --project design/PreviewHost -- --login` exercises startup / handoff. Compiled example bindings accept any nonempty account / password as local demo validation, show error Toast for empty input, and provide three error helpers. Closing cancels waits and clears passwords. No authentication service is contacted. The main catalog has no OneWindow / LoginWindow pages; this independent entry demonstrates the full flow.
-
-`--verify-loginwindow` checks interactions. `--verify-login-lifetime <ShutdownMode>` checks shutdown in a real desktop loop; `--verify-login-lifetime-close <ShutdownMode>` checks login Closed immediately closing the new main. Each runs independently with OnMainWindowClose, OnLastWindowClose, and OnExplicitShutdown. Targeted render: `--render-controls .preview/loginwindow LoginWindow`.
-
-Use `dotnet run --project design/PreviewHost -- --login --trace-login` to inspect actual window creation. Optional `LOGIN_TRACE` logs busy state, completion requests, factory call counts, open / close events, and exit window counts without accounts / passwords. Validation delay and shutdown policy retain demo settings.
 
 Lifecycle references: [Avalonia desktop lifetimes](https://docs.avaloniaui.net/docs/fundamentals/application-lifetimes) and [12.1.4 Window sources](https://github.com/AvaloniaUI/Avalonia/blob/12.1.4/src/Avalonia.Controls/Window.cs).
 

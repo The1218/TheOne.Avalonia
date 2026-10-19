@@ -9,16 +9,16 @@
     <UserControl.Resources>
         <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardIconTemplate">
             <PathIcon
-                Data="{Binding IconData}"
+                Data="{CompiledBinding IconData}"
                 Foreground="{DynamicResource One.Accent}"
-                Height="{Binding $parent[one:InfoCard].HeaderIconSize}"
+                Height="{CompiledBinding $parent[one:InfoCard].HeaderIconSize}"
                 Name="InfoCardTypedIcon"
-                Width="{Binding $parent[one:InfoCard].HeaderIconSize}" />
+                Width="{CompiledBinding $parent[one:InfoCard].HeaderIconSize}" />
         </DataTemplate>
         <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardActionsTemplate">
             <Button
-                Command="{Binding DetailsCommand}"
-                Content="{Binding DetailsLabel}"
+                Command="{CompiledBinding DetailsCommand}"
+                Content="{CompiledBinding DetailsLabel}"
                 Name="InfoCardTypedHeaderAction" />
         </DataTemplate>
         <DataTemplate x:DataType="local:InfoCardDemoViewModel" x:Key="InfoCardFooterTemplate">
@@ -26,11 +26,11 @@
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
                     Name="InfoCardTypedFooterStatus"
-                    Text="{Binding FooterStatus}"
+                    Text="{CompiledBinding FooterStatus}"
                     TextWrapping="Wrap"
                     VerticalAlignment="Center" />
                 <Button
-                    Command="{Binding SyncCommand}"
+                    Command="{CompiledBinding SyncCommand}"
                     Content="同步"
                     Grid.Column="1"
                     Name="InfoCardFooterAction" />
@@ -53,81 +53,81 @@
             <TextBlock Classes="helper" Text="标题、图标、操作区、正文与页脚自由组合；切换顶部主题和尺寸，查看 TheOne 表面与间距。卡片内的输入、按钮和列表保留各自的原生交互。" />
         </StackPanel>
         <WrapPanel>
-            <CheckBox Content="hove · 鼠标移入效果" IsChecked="{Binding HoverEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
-            <CheckBox Content="shadow · 常驻阴影" IsChecked="{Binding ShadowEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
+            <CheckBox Content="hove · 鼠标移入效果" IsChecked="{CompiledBinding HoverEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
+            <CheckBox Content="shadow · 常驻阴影" IsChecked="{CompiledBinding ShadowEnabled, Mode=TwoWay}" Margin="0,0,16,8" />
             <CheckBox
                 Content="显示标题"
-                IsChecked="{Binding ShowHeader, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowHeader, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowHeader" />
             <CheckBox
                 Content="显示图标"
-                IsChecked="{Binding ShowIcon, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowIcon, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowIcon" />
             <CheckBox
                 Content="显示操作区"
-                IsChecked="{Binding ShowHeaderActions, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowHeaderActions, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowHeaderActions" />
             <CheckBox
                 Content="显示页脚"
-                IsChecked="{Binding ShowFooter, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowFooter, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowFooter" />
             <CheckBox
                 Content="标题分割线"
-                IsChecked="{Binding ShowHeaderSeparator, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowHeaderSeparator, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowHeaderSeparator" />
             <CheckBox
                 Content="页脚分割线"
-                IsChecked="{Binding ShowFooterSeparator, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowFooterSeparator, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardShowFooterSeparator" />
             <CheckBox
                 Content="启用卡片"
-                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="InfoCardEnabled" />
             <Button
-                Command="{Binding UpdateCommand}"
+                Command="{CompiledBinding UpdateCommand}"
                 Content="更新绑定内容"
                 Margin="0,0,8,8"
                 Name="InfoCardUpdate" />
             <Button
-                Command="{Binding ResetCommand}"
+                Command="{CompiledBinding ResetCommand}"
                 Content="重置"
                 Margin="0,0,8,8"
                 Name="InfoCardReset" />
         </WrapPanel>
         <one:InfoCard
-            Classes.hove="{Binding HoverEnabled}" Classes.shadow="{Binding ShadowEnabled}"
-            Content="{Binding Description}"
-            Header="{Binding VisibleTitle}"
-            IsEnabled="{Binding Enabled}"
+            Classes.hove="{CompiledBinding HoverEnabled}" Classes.shadow="{CompiledBinding ShadowEnabled}"
+            Content="{CompiledBinding Description}"
+            Header="{CompiledBinding VisibleTitle}"
+            IsEnabled="{CompiledBinding Enabled}"
             Name="InfoCardSample"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}" />
         <one:InfoCard
-            Content="{Binding Description}"
-            Footer="{Binding VisibleFooter}"
-            FooterTemplate="{Binding ShowFooter, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardFooterTemplate}}"
-            Header="{Binding VisibleTitle}"
-            HeaderActions="{Binding VisibleHeaderActions}"
-            HeaderActionsTemplate="{Binding ShowHeaderActions, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardActionsTemplate}}"
-            HeaderIcon="{Binding VisibleHeaderIcon}"
-            HeaderIconTemplate="{Binding ShowIcon, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardIconTemplate}}"
-            IsEnabled="{Binding Enabled}"
+            Content="{CompiledBinding Description}"
+            Footer="{CompiledBinding VisibleFooter}"
+            FooterTemplate="{CompiledBinding ShowFooter, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardFooterTemplate}}"
+            Header="{CompiledBinding VisibleTitle}"
+            HeaderActions="{CompiledBinding VisibleHeaderActions}"
+            HeaderActionsTemplate="{CompiledBinding ShowHeaderActions, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardActionsTemplate}}"
+            HeaderIcon="{CompiledBinding VisibleHeaderIcon}"
+            HeaderIconTemplate="{CompiledBinding ShowIcon, Converter={x:Static local:InfoCardTemplateVisibilityConverter.Instance}, ConverterParameter={StaticResource InfoCardIconTemplate}}"
+            IsEnabled="{CompiledBinding Enabled}"
             Name="InfoCardSlots"
-            Classes.hove="{Binding HoverEnabled}" Classes.shadow="{Binding ShadowEnabled}"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+            Classes.hove="{CompiledBinding HoverEnabled}" Classes.shadow="{CompiledBinding ShadowEnabled}"
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}" />
         <one:InfoCard
-            IsEnabled="{Binding Enabled}"
+            IsEnabled="{CompiledBinding Enabled}"
             Name="InfoCardForm"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}">
             <one:InfoCard.Header>
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                     <TextBlock
@@ -136,46 +136,46 @@
                         VerticalAlignment="Center" />
                     <Button
                         Classes="primary"
-                        Command="{Binding SaveCommand}"
+                        Command="{CompiledBinding SaveCommand}"
                         Content="保存"
                         Grid.Column="1"
                         Name="InfoCardHeaderAction" />
                 </Grid>
             </one:InfoCard.Header>
             <StackPanel Spacing="12">
-                <Label Content="工作区名称" Target="{Binding #InfoCardName}" />
+                <Label Content="工作区名称" Target="{CompiledBinding #InfoCardName}" />
                 <TextBox
                     AutomationProperties.Name="工作区名称"
                     Name="InfoCardName"
                     PlaceholderText="输入名称"
-                    Text="{Binding WorkspaceName, Mode=TwoWay}" />
+                    Text="{CompiledBinding WorkspaceName, Mode=TwoWay}" />
                 <TextBlock
                     AutomationProperties.LiveSetting="Polite"
                     Name="InfoCardSaveStatus"
-                    Text="{Binding SaveStatus}"
+                    Text="{CompiledBinding SaveStatus}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </one:InfoCard>
         <one:InfoCard
-            Content="{Binding}"
-            Header="{Binding}"
-            IsEnabled="{Binding Enabled}"
+            Content="{CompiledBinding}"
+            Header="{CompiledBinding}"
+            IsEnabled="{CompiledBinding Enabled}"
             Name="InfoCardTemplated"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}">
             <one:InfoCard.HeaderTemplate>
                 <DataTemplate x:DataType="local:InfoCardDemoViewModel">
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                         <TextBlock
                             FontWeight="SemiBold"
                             Name="InfoCardTypedTitle"
-                            Text="{Binding Title}"
+                            Text="{CompiledBinding Title}"
                             TextWrapping="Wrap" />
                         <TextBlock
                             FontSize="12"
                             Foreground="{DynamicResource One.Muted}"
                             Grid.Column="1"
-                            Text="{Binding Revision, StringFormat='{}版本 {0}'}"
+                            Text="{CompiledBinding Revision, StringFormat='{}版本 {0}'}"
                             VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
@@ -185,7 +185,7 @@
                     <StackPanel Spacing="8">
                         <TextBlock
                             Name="InfoCardTypedDescription"
-                            Text="{Binding Description}"
+                            Text="{CompiledBinding Description}"
                             TextWrapping="Wrap" />
                         <TextBlock
                             FontSize="12"
@@ -199,20 +199,20 @@
         <one:InfoCard
             Content="不提供 Header 时，内容从卡片内边距起始处布局，不保留标题间隙。"
             Name="InfoCardHeaderless"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}" />
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}" />
         <one:InfoCard
             Header="成员 · 1,000 条数据"
             Name="InfoCardList"
-            ShowFooterSeparator="{Binding ShowFooterSeparator}"
-            ShowHeaderSeparator="{Binding ShowHeaderSeparator}">
+            ShowFooterSeparator="{CompiledBinding ShowFooterSeparator}"
+            ShowHeaderSeparator="{CompiledBinding ShowHeaderSeparator}">
             <StackPanel Spacing="12">
                 <ListBox
                     AutomationProperties.Name="卡片内的一千条成员列表"
                     Height="180"
-                    ItemsSource="{Binding Members}"
+                    ItemsSource="{CompiledBinding Members}"
                     Name="InfoCardMembers"
-                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                    SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                     SelectionChanged="OnMemberChanged" />
                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
                     <TextBlock
@@ -229,7 +229,7 @@
             </StackPanel>
         </one:InfoCard>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <one:InfoCard
                 Classes="glow"
                 Content="与全库配色同步的渐变标题。"

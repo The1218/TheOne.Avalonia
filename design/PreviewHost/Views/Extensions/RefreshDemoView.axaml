@@ -26,27 +26,27 @@
         <WrapPanel>
             <CheckBox
                 Content="鼠标下拉"
-                IsChecked="{Binding MousePull, Mode=TwoWay}"
+                IsChecked="{CompiledBinding MousePull, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="MousePull" />
             <CheckBox
                 Content="手动完成"
-                IsChecked="{Binding Manual, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Manual, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ManualComplete" />
             <CheckBox
                 Content="下次模拟失败"
-                IsChecked="{Binding Fail, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Fail, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="FailNextRefresh" />
             <CheckBox
                 Content="启用刷新区域"
-                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="EnableRefresh" />
             <CheckBox
                 Content="刷新动效"
-                IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="RefreshMotionEnabled" />
         </WrapPanel>
@@ -61,7 +61,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 Name="RefreshStateLabel"
-                Text="{Binding State}"
+                Text="{CompiledBinding State}"
                 VerticalAlignment="Center" />
             <Button
                 Click="OnCompleteRefresh"
@@ -73,35 +73,35 @@
         <RefreshContainer
             AutomationProperties.Name="千条数据下拉刷新区域"
             Height="400"
-            IsEnabled="{Binding Enabled}"
-            IsMouseEnabled="{Binding MousePull}"
+            IsEnabled="{CompiledBinding Enabled}"
+            IsMouseEnabled="{CompiledBinding MousePull}"
             Name="RefreshSample"
             RefreshRequested="OnRefreshRequested">
             <ListBox
                 AutomationProperties.Name="刷新数据列表"
                 BorderThickness="0"
                 CornerRadius="0"
-                ItemsSource="{Binding Rows}"
+                ItemsSource="{CompiledBinding Rows}"
                 Name="RefreshList"
                 ScrollViewer.IsScrollChainingEnabled="False"
-                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="local:RefreshRow">
                         <Grid ColumnDefinitions="60,*,Auto" ColumnSpacing="12">
                             <TextBlock
                                 Foreground="{DynamicResource One.Muted}"
-                                Text="{Binding Number, StringFormat='{}{0:0000}'}"
+                                Text="{CompiledBinding Number, StringFormat='{}{0:0000}'}"
                                 VerticalAlignment="Center" />
                             <TextBlock
                                 Grid.Column="1"
                                 Name="RefreshRowTitle"
-                                Text="{Binding Title}"
+                                Text="{CompiledBinding Title}"
                                 TextTrimming="CharacterEllipsis"
                                 VerticalAlignment="Center" />
                             <TextBlock
                                 Foreground="{DynamicResource One.Muted}"
                                 Grid.Column="2"
-                                Text="{Binding Revision, StringFormat='第 {0} 次更新'}"
+                                Text="{CompiledBinding Revision, StringFormat='第 {0} 次更新'}"
                                 VerticalAlignment="Center" />
                         </Grid>
                     </DataTemplate>
@@ -128,7 +128,7 @@
         <TextBlock
             Classes="helper"
             Name="RefreshMetrics"
-            Text="{Binding Metrics}" />
+            Text="{CompiledBinding Metrics}" />
         <Border
             Background="{DynamicResource One.Subtle}"
             CornerRadius="8"
@@ -136,7 +136,7 @@
             <StackPanel Spacing="6">
                 <TextBlock
                     Name="RefreshStatus"
-                    Text="{Binding Status}"
+                    Text="{CompiledBinding Status}"
                     TextWrapping="Wrap" />
                 <TextBlock Classes="helper" Text="自动刷新约 1 秒完成。开启手动完成，在刷新中反复切换刷新动效；关闭后保留下拉和状态提示，重新开启恢复旋转。通过全局工具栏切换尺寸、明暗主题和动效；重置恢复全局动效设置。" />
             </StackPanel>

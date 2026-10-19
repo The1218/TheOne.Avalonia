@@ -10,35 +10,35 @@
                 <TextBlock Text="状态 / 类型" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Types}"
+                    ItemsSource="{CompiledBinding Types}"
                     Name="MessageType"
-                    SelectedItem="{Binding Type, Mode=TwoWay}" />
+                    SelectedItem="{CompiledBinding Type, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="6">
                 <TextBlock Text="显示尺寸" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Sizes}"
-                    SelectedItem="{Binding Size, Mode=TwoWay}" />
+                    ItemsSource="{CompiledBinding Sizes}"
+                    SelectedItem="{CompiledBinding Size, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
         <TextBox
             Name="MessageTitle"
             PlaceholderText="标题"
-            Text="{Binding Title, Mode=TwoWay}" />
+            Text="{CompiledBinding Title, Mode=TwoWay}" />
         <TextBox
             AcceptsReturn="True"
             MinHeight="76"
             Name="MessageText"
             PlaceholderText="正文"
-            Text="{Binding Message, Mode=TwoWay}"
+            Text="{CompiledBinding Message, Mode=TwoWay}"
             TextWrapping="Wrap" />
         <WrapPanel>
             <CheckBox
                 Content="显示标题"
-                IsChecked="{Binding ShowTitle, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowTitle, Mode=TwoWay}"
                 Margin="0,0,20,0" />
-            <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+            <CheckBox Content="启用动效" IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}" />
         </WrapPanel>
     </StackPanel>
 </UserControl>

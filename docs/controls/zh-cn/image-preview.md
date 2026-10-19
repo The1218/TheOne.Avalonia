@@ -1,5 +1,7 @@
 # ImagePreview 图片预览
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/image-preview.md)
 
 轻量单图／多图预览器，支持 HTTP(S) 地址、本地路径／file URI 和 Bitmap（也接受 IImage）。使用已加载 OneTheme 的视图，并声明正确的 x:DataType 以启用编译绑定。
@@ -45,14 +47,6 @@ ShowHeader 默认 true；Title 可覆盖路径推导的名称，Bitmap 默认显
 ## 演示与验证
 
 PreviewHost 的“数据展示 → ImagePreview”包含 Bitmap 和透明图片、网络地址输入、本地文件选择、混合来源集合和 SelectedIndex 编译绑定。网络示例需要自行输入地址，不自动请求外部服务。内置山湖示例图由 ImageGen 生成。
-
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/image-preview/artifacts
-dotnet .preview/image-preview/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-image-preview .preview/image-preview/managed
-# macOS：仅在涉及 AOT／绑定／元数据时执行原生专项。
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/image-preview/native-artifacts -o .preview/image-preview/native
-.preview/image-preview/native/NativeAotSmoke --require-aot --verify-image-preview .preview/image-preview/native-pixels
-```
 
 专项使用本地 HTTP 服务验证真实网络加载、失败重试及取消竞争，无外部网络依赖；同时检查本地路径、Bitmap 所有权、集合变化、编译绑定、全屏、明暗三档尺寸、窄视口与实际像素。
 

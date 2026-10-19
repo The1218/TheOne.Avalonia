@@ -4,6 +4,8 @@
 
 See [charts](charts.md) for models and setup.
 
+Scatter selection preserves synchronous events and original model identity while reusing base samples, pens and shaped text. See [selection p99 and allocation reuse](chart-rendering.md#scatter-selection-p99) for the measured behavior and limits.
+
 ## Display and selection
 
 | Property | Default / purpose |
@@ -47,6 +49,8 @@ var selection = position is { } point ? RevenueChart.HitTestDataPoint(point) : n
 ```
 
 Indices follow source order and are resolved again after deletion / reordering; selection is not guaranteed to track object identity. Hidden series, invalid indices / data, same-axis X mismatches in stacked-area variants, and gauges have `Selection` equal to `null`. `SelectionChanged` reports selection-object changes; selected `ChartPoint` property updates notify through the point itself.
+
+Replace, Reset, and source replacement resolve `Selection` synchronously against the current models. If an index becomes invalid, `Selection` becomes `null` while the bound indices remain unchanged. Selection emphasis normally reuses cached geometry; see [data updates and performance](chart-rendering.md#data-updates-and-performance) for sampling, viewport reveal, and animation exceptions.
 
 ## Crosshairs and shared tooltips
 

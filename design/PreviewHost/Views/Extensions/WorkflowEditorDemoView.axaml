@@ -11,56 +11,58 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <UserControl.Resources>
         <DataTemplate x:DataType="w:WorkflowNodeDefinition" x:Key="WorkflowPaletteTemplate">
-            <Grid ColumnDefinitions="34,*">
-                <ContentControl Content="{Binding Content}">
+            <Grid ColumnDefinitions="24,*">
+                <ContentControl Content="{CompiledBinding Content}">
                     <ContentControl.ContentTemplate>
                         <DataTemplate x:DataType="local:WorkflowBusinessSummary">
                             <Border
-                                Background="{Binding IconBackground}"
+                                Background="{CompiledBinding IconBackground}"
                                 CornerRadius="5"
-                                Height="32"
-                                Width="32">
+                                Height="24"
+                                Width="24">
                                 <icons:MaterialIcon
-                                    Foreground="{Binding Accent}"
-                                    Height="25"
-                                    Kind="{Binding Icon}"
-                                    Width="25" />
+                                    Foreground="{CompiledBinding Accent}"
+                                    Height="18"
+                                    Kind="{CompiledBinding Icon}"
+                                    Width="18" />
                             </Border>
                         </DataTemplate>
                     </ContentControl.ContentTemplate>
                 </ContentControl>
                 <StackPanel
                     Grid.Column="1"
-                    Margin="8,0,0,0"
-                    Spacing="2"
+                    Margin="6,0,0,0"
+                    Spacing="1"
                     VerticalAlignment="Center">
                     <TextBlock
                         FontSize="12"
                         FontWeight="SemiBold"
-                        Text="{Binding Title}" />
+                        Text="{CompiledBinding Title}"
+                        TextTrimming="CharacterEllipsis" />
                     <TextBlock
                         FontSize="11"
                         Foreground="{DynamicResource One.Muted}"
-                        Text="{Binding Description}" />
+                        Text="{CompiledBinding Description}"
+                        TextTrimming="CharacterEllipsis" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
         <DataTemplate x:DataType="w:WorkflowNode" x:Key="DesignedNodeTemplate">
-            <ContentControl Content="{Binding Content}">
+            <ContentControl Content="{CompiledBinding Content}">
                 <ContentControl.ContentTemplate>
                     <DataTemplate x:DataType="local:WorkflowBusinessSummary">
                         <Grid>
-                            <StackPanel IsVisible="{Binding IsNotNote}" Spacing="8">
+                            <StackPanel IsVisible="{CompiledBinding IsNotNote}" Spacing="8">
                                 <Grid ColumnDefinitions="32,*">
                                     <Border
-                                        Background="{Binding IconBackground}"
+                                        Background="{CompiledBinding IconBackground}"
                                         CornerRadius="5"
                                         Height="30"
                                         Width="30">
                                         <icons:MaterialIcon
-                                            Foreground="{Binding Accent}"
+                                            Foreground="{CompiledBinding Accent}"
                                             Height="23"
-                                            Kind="{Binding Icon}"
+                                            Kind="{CompiledBinding Icon}"
                                             Width="23" />
                                     </Border>
                                     <StackPanel
@@ -71,52 +73,52 @@
                                         <TextBlock
                                             FontSize="12"
                                             FontWeight="SemiBold"
-                                            Text="{Binding Node.Title}"
+                                            Text="{CompiledBinding Node.Title}"
                                             TextTrimming="CharacterEllipsis" />
                                         <TextBlock
                                             FontSize="10"
                                             Foreground="{DynamicResource One.Muted}"
-                                            Text="{Binding Node.Description}"
+                                            Text="{CompiledBinding Node.Description}"
                                             TextTrimming="CharacterEllipsis" />
                                     </StackPanel>
                                 </Grid>
                                 <Grid ColumnDefinitions="*,Auto">
                                     <StackPanel
-                                        IsVisible="{Binding !HasWarning}"
+                                        IsVisible="{CompiledBinding !HasWarning}"
                                         Orientation="Horizontal"
                                         Spacing="4">
                                         <TextBlock
                                             FontSize="10"
-                                            Foreground="{Binding StateBrush}"
-                                            Text="{Binding StateIcon}" />
+                                            Foreground="{CompiledBinding StateBrush}"
+                                            Text="{CompiledBinding StateIcon}" />
                                         <TextBlock
                                             FontSize="10"
-                                            Foreground="{Binding StateBrush}"
-                                            Text="{Binding Node.StateText}" />
+                                            Foreground="{CompiledBinding StateBrush}"
+                                            Text="{CompiledBinding Node.StateText}" />
                                     </StackPanel>
                                     <TextBlock
                                         FontSize="10"
                                         Foreground="#E04455"
                                         Grid.Column="0"
-                                        IsVisible="{Binding HasWarning}"
-                                        Text="{Binding Warning}" />
+                                        IsVisible="{CompiledBinding HasWarning}"
+                                        Text="{CompiledBinding Warning}" />
                                     <TextBlock
                                         FontSize="10"
-                                        Foreground="{Binding StateBrush}"
+                                        Foreground="{CompiledBinding StateBrush}"
                                         Grid.Column="1"
-                                        IsVisible="{Binding HasWarning}"
-                                        Text="{Binding Node.StateText}" />
+                                        IsVisible="{CompiledBinding HasWarning}"
+                                        Text="{CompiledBinding Node.StateText}" />
                                 </Grid>
                             </StackPanel>
                             <Border
                                 Background="#FFF4C7"
-                                IsVisible="{Binding IsNote}"
+                                IsVisible="{CompiledBinding IsNote}"
                                 MinHeight="74"
                                 Padding="14">
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="#625324"
-                                    Text="{Binding Node.Description}"
+                                    Text="{CompiledBinding Node.Description}"
                                     TextWrapping="Wrap" />
                             </Border>
                         </Grid>
@@ -129,47 +131,63 @@
                 <TextBlock
                     FontSize="11"
                     Foreground="{DynamicResource One.Accent}"
-                    Text="{Binding TypeId}" />
-                <TextBlock FontWeight="SemiBold" Text="{Binding Title}" />
-                <TextBlock FontSize="11" Text="{Binding StateText}" />
+                    Text="{CompiledBinding TypeId}" />
+                <TextBlock FontWeight="SemiBold" Text="{CompiledBinding Title}" />
+                <TextBlock FontSize="11" Text="{CompiledBinding StateText}" />
             </StackPanel>
         </DataTemplate>
         <DataTemplate x:DataType="local:WorkflowEditorDemoViewModel" x:Key="BusinessFields">
-            <ItemsControl ItemsSource="{Binding Fields}">
+            <ItemsControl IsEnabled="{CompiledBinding !$parent[one:WorkflowEditor].IsReadOnly}" ItemsSource="{CompiledBinding Fields}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Spacing="14" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="local:WorkflowFieldEditor">
+                    <DataTemplate x:DataType="w:WorkflowPropertyEditor">
                         <StackPanel Spacing="6">
                             <TextBlock
                                 FontSize="12"
                                 FontWeight="SemiBold"
-                                Text="{Binding Title}" />
+                                Text="{CompiledBinding Title}" />
                             <TextBlock
                                 FontSize="10"
                                 Foreground="{DynamicResource One.Muted}"
-                                Text="{Binding TypeHint}" />
+                                Text="{CompiledBinding TypeHint}" />
                             <ComboBox
                                 HorizontalAlignment="Stretch"
-                                ItemsSource="{Binding Options}"
-                                SelectedItem="{Binding SelectedOption, Mode=TwoWay}">
+                                IsVisible="{CompiledBinding IsSingleValue}"
+                                ItemsSource="{CompiledBinding Options}"
+                                SelectedItem="{CompiledBinding SelectedOption, Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate x:DataType="w:WorkflowReferenceOption">
                                         <TextBlock
                                             FontSize="11"
-                                            Text="{Binding Title}"
+                                            Text="{CompiledBinding Title}"
                                             TextTrimming="CharacterEllipsis" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                             <TextBox
                                 FontSize="12"
-                                IsVisible="{Binding IsLiteral}"
+                                IsVisible="{CompiledBinding IsLiteral}"
                                 PlaceholderText="输入固定值"
-                                Text="{Binding Literal, Mode=TwoWay}" />
+                                Text="{CompiledBinding Literal, Mode=TwoWay}" />
+                            <one:MultiSelectBox
+                                IsVisible="{CompiledBinding IsMultiSelect}"
+                                ItemAdapter="{StaticResource One.Workflow.ChoiceAdapter}"
+                                ItemTemplate="{StaticResource One.Workflow.ChoiceTemplate}"
+                                ItemsSource="{CompiledBinding Choices}"
+                                MaxVisibleTags="1"
+                                Name="BusinessChoices"
+                                SelectedItemTemplate="{StaticResource One.Workflow.ChoiceTemplate}"
+                                SelectedItems="{CompiledBinding SelectedChoices, Mode=TwoWay}" />
+                            <TextBlock Foreground="{DynamicResource One.Danger}" Text="{CompiledBinding ChoiceError}" TextWrapping="Wrap" />
+                            <TextBlock
+                                Foreground="{DynamicResource One.Warning}"
+                                IsVisible="{CompiledBinding HasMissingChoices}"
+                                Text="部分 Key 不在当前数据源中，已保留；可移除或等待数据源恢复。"
+                                TextWrapping="Wrap" />
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -211,18 +229,20 @@
             </Style>
         </Grid.Styles>
         <one:WorkflowEditor
-            Document="{Binding Document, Mode=TwoWay}"
+            ChoiceItemsSource="{CompiledBinding Roles, Mode=TwoWay}"
+            ChoiceItemAdapter="{CompiledBinding ApproverAdapter}"
+            Document="{CompiledBinding Document, Mode=TwoWay}"
             FitPadding="32,92,32,32"
             Name="Editor"
             NodeDefinitionTemplate="{StaticResource WorkflowPaletteTemplate}"
-            NodeDefinitions="{Binding NodeDefinitions}"
+            NodeDefinitions="{CompiledBinding NodeDefinitions}"
             NodeTemplate="{StaticResource DesignedNodeTemplate}"
-            SaveCommand="{Binding SaveCommand}"
-            SelectedNode="{Binding SelectedNode, Mode=TwoWay}"
+            SaveCommand="{CompiledBinding SaveCommand}"
+            SelectedNode="{CompiledBinding SelectedNode, Mode=TwoWay}"
             ShowRuntimePreview="True">
             <one:WorkflowEditor.HeaderTemplate>
                 <DataTemplate x:DataType="one:WorkflowEditor">
-                    <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}">
+                    <ContentControl Content="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model}">
                         <ContentControl.ContentTemplate>
                             <DataTemplate x:DataType="local:WorkflowEditorDemoViewModel">
                                 <Border
@@ -273,7 +293,7 @@
                                             <TextBlock
                                                 FontSize="12"
                                                 FontWeight="SemiBold"
-                                                Text="{Binding Document.Title}" />
+                                                Text="{CompiledBinding Document.Title}" />
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="2"
@@ -291,20 +311,20 @@
                                             <TextBlock
                                                 FontSize="11"
                                                 Foreground="{DynamicResource One.Muted}"
-                                                Text="{Binding SaveStateText}"
+                                                Text="{CompiledBinding SaveStateText}"
                                                 VerticalAlignment="Center" />
                                         </StackPanel>
                                         <StackPanel
                                             Grid.Column="3"
                                             Orientation="Horizontal"
                                             Spacing="8">
-                                            <Button Classes="workflow-header" Command="{Binding $parent[one:WorkflowEditor].ValidateCommand}">
+                                            <Button Classes="workflow-header" Command="{CompiledBinding $parent[one:WorkflowEditor].ValidateCommand}">
                                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                                     <icons:MaterialIcon Kind="FileCheckOutline" Width="15" />
                                                     <TextBlock Text="校验流程" />
                                                 </StackPanel>
                                             </Button>
-                                            <Button Classes="workflow-header" Command="{Binding ExportCommand}">
+                                            <Button Classes="workflow-header" Command="{CompiledBinding ExportCommand}">
                                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                                     <icons:MaterialIcon Kind="TrayArrowDown" Width="15" />
                                                     <TextBlock Text="导出 JSON" />
@@ -312,8 +332,8 @@
                                             </Button>
                                             <Button
                                                 Classes="primary"
-                                                Command="{Binding $parent[one:WorkflowEditor].SaveCommand}"
-                                                CommandParameter="{Binding Document}"
+                                                Command="{CompiledBinding $parent[one:WorkflowEditor].SaveCommand}"
+                                                CommandParameter="{CompiledBinding Document}"
                                                 Content="保存"
                                                 FontSize="12"
                                                 MinHeight="30"
@@ -321,7 +341,7 @@
                                                 Padding="14,4" />
                                             <Button
                                                 Classes="workflow-header"
-                                                Command="{Binding PreviewStateCommand}"
+                                                Command="{CompiledBinding PreviewStateCommand}"
                                                 ToolTip.Tip="宿主提供的运行状态演示">
                                                 <StackPanel Orientation="Horizontal" Spacing="5">
                                                     <icons:MaterialIcon Kind="Play" Width="16" />
@@ -343,7 +363,7 @@
             </one:WorkflowEditor.HeaderTemplate>
             <one:WorkflowEditor.PropertyTemplate>
                 <DataTemplate x:DataType="w:WorkflowNode">
-                    <DockPanel IsEnabled="{Binding !$parent[one:WorkflowEditor].IsReadOnly}">
+                    <DockPanel>
                         <Grid
                             ColumnDefinitions="*,*"
                             DockPanel.Dock="Bottom"
@@ -361,7 +381,7 @@
                             <Button
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Command="{Binding $parent[one:WorkflowEditor].DeleteCommand}"
+                                Command="{CompiledBinding $parent[one:WorkflowEditor].DeleteCommand}"
                                 Content="删除节点"
                                 FontSize="12"
                                 Foreground="#DE4756"
@@ -373,18 +393,18 @@
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                             <StackPanel Spacing="12">
                                 <Grid ColumnDefinitions="36,*">
-                                    <ContentControl Content="{Binding Content}">
+                                    <ContentControl Content="{CompiledBinding Content}">
                                         <ContentControl.ContentTemplate>
                                             <DataTemplate x:DataType="local:WorkflowBusinessSummary">
                                                 <Border
-                                                    Background="{Binding IconBackground}"
+                                                    Background="{CompiledBinding IconBackground}"
                                                     CornerRadius="6"
                                                     Height="36"
                                                     Width="34">
                                                     <icons:MaterialIcon
-                                                        Foreground="{Binding Accent}"
+                                                        Foreground="{CompiledBinding Accent}"
                                                         Height="27"
-                                                        Kind="{Binding Icon}"
+                                                        Kind="{CompiledBinding Icon}"
                                                         Width="27" />
                                                 </Border>
                                             </DataTemplate>
@@ -397,11 +417,11 @@
                                         <TextBlock
                                             FontSize="12"
                                             FontWeight="SemiBold"
-                                            Text="{Binding Title}" />
+                                            Text="{CompiledBinding Title}" />
                                         <TextBlock
                                             FontSize="10"
                                             Foreground="{DynamicResource One.Muted}"
-                                            Text="{Binding Id, StringFormat='ID: {0}'}" />
+                                            Text="{CompiledBinding Id, StringFormat='ID: {0}'}" />
                                     </StackPanel>
                                 </Grid>
                                 <TabStrip Name="InspectorTabs" SelectedIndex="0">
@@ -411,7 +431,8 @@
                                 </TabStrip>
                                 <Panel>
                                     <StackPanel
-                                        IsVisible="{Binding #BasicTab.IsSelected}"
+                                        IsEnabled="{CompiledBinding !$parent[one:WorkflowEditor].IsReadOnly}"
+                                        IsVisible="{CompiledBinding #BasicTab.IsSelected}"
                                         Margin="0,5,0,0"
                                         Name="BasicPanel"
                                         Spacing="8">
@@ -423,11 +444,10 @@
                                             <TextBox
                                                 Grid.Column="1"
                                                 Height="30"
-                                                LostFocus="ApplyNodeTitle"
                                                 MinHeight="0"
                                                 Name="NodeTitleInput"
                                                 Padding="8,4"
-                                                Text="{Binding $parent[local:WorkflowEditorDemoView].Model.NodeTitle, Mode=TwoWay}" />
+                                                Text="{CompiledBinding $parent[one:WorkflowEditor].SelectedNodeEditor.Title, Mode=TwoWay}" />
                                         </Grid>
                                         <Grid ColumnDefinitions="80,*">
                                             <TextBlock
@@ -440,33 +460,36 @@
                                                 IsReadOnly="True"
                                                 MinHeight="0"
                                                 Padding="8,4"
-                                                Text="{Binding $parent[local:WorkflowEditorDemoView].Model.SelectedNodeType}" />
+                                                Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.SelectedNodeType}" />
                                         </Grid>
-                                        <StackPanel IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsApproval}" Spacing="8">
+                                        <StackPanel IsVisible="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.IsApproval}" Spacing="8">
                                             <Grid ColumnDefinitions="80,*">
                                                 <TextBlock
                                                     FontSize="12"
                                                     Text="审批人 *"
                                                     VerticalAlignment="Center" />
-                                                <ComboBox
+                                                <one:MultiSelectBox
+                                                    Name="ApproverSelector"
+                                                    MaxVisibleTags="1"
                                                     Grid.Column="1"
-                                                    Height="30"
                                                     HorizontalAlignment="Stretch"
-                                                    ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.Roles}"
-                                                    MinHeight="0"
-                                                    Padding="6,0"
+                                                    ItemsSource="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.ApproverEditor.Choices}"
+                                                    SelectedItems="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.ApproverEditor.SelectedChoices, Mode=TwoWay}"
+                                                    ItemAdapter="{StaticResource One.Workflow.ChoiceAdapter}"
+                                                    ItemTemplate="{StaticResource One.Workflow.ChoiceTemplate}"
+                                                    SelectedItemTemplate="{StaticResource One.Workflow.ChoiceTemplate}"
                                                     PlaceholderText="请选择审批人"
-                                                    SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.SelectedRole, Mode=TwoWay}">
-                                                    <ComboBox.ItemTemplate>
-                                                        <DataTemplate x:DataType="local:WorkflowRole">
-                                                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                                                <icons:MaterialIcon Kind="AccountCircle" Width="18" />
-                                                                <TextBlock Text="{Binding Title}" />
-                                                            </StackPanel>
-                                                        </DataTemplate>
-                                                    </ComboBox.ItemTemplate>
-                                                </ComboBox>
+                                                    SearchPlaceholderText="搜索人员或角色" />
                                             </Grid>
+                                            <TextBlock
+                                                Foreground="{DynamicResource One.Danger}"
+                                                Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.ApproverEditor.ChoiceError}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock
+                                                Foreground="{DynamicResource One.Warning}"
+                                                IsVisible="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.ApproverEditor.HasMissingChoices}"
+                                                Text="部分 Key 不在当前数据源中，已保留；可移除或等待数据源恢复。"
+                                                TextWrapping="Wrap" />
                                             <Grid ColumnDefinitions="80,*">
                                                 <TextBlock
                                                     FontSize="12"
@@ -477,7 +500,7 @@
                                                         Content="任一人通过"
                                                         FontSize="12"
                                                         GroupName="ApprovalMode"
-                                                        IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AnyApproval, Mode=TwoWay}"
+                                                        IsChecked="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.AnyApproval, Mode=TwoWay}"
                                                         MinHeight="22"
                                                         Padding="0"
                                                         Width="90" />
@@ -485,7 +508,7 @@
                                                         Content="全部通过"
                                                         FontSize="12"
                                                         GroupName="ApprovalMode"
-                                                        IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AllApproval, Mode=TwoWay}"
+                                                        IsChecked="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.AllApproval, Mode=TwoWay}"
                                                         MinHeight="22"
                                                         Padding="0"
                                                         Width="78" />
@@ -506,15 +529,15 @@
                                                     Minimum="1"
                                                     Padding="8,4"
                                                     ShowButtonSpinner="False"
-                                                    Value="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutHours, Mode=TwoWay}" />
+                                                    Value="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.TimeoutHours, Mode=TwoWay}" />
                                                 <ComboBox
                                                     Grid.Column="2"
                                                     Height="30"
                                                     HorizontalAlignment="Stretch"
-                                                    ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnits}"
+                                                    ItemsSource="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnits}"
                                                     MinHeight="0"
                                                     Padding="4,0"
-                                                    SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnit, Mode=TwoWay}" />
+                                                    SelectedItem="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.TimeoutUnit, Mode=TwoWay}" />
                                             </Grid>
                                             <Grid ColumnDefinitions="80,*">
                                                 <TextBlock
@@ -524,7 +547,7 @@
                                                 <ToggleSwitch
                                                     Grid.Column="1"
                                                     Height="24"
-                                                    IsChecked="{Binding $parent[local:WorkflowEditorDemoView].Model.AllowDelegate, Mode=TwoWay}"
+                                                    IsChecked="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.AllowDelegate, Mode=TwoWay}"
                                                     MinHeight="0"
                                                     OffContent=""
                                                     OnContent="" />
@@ -535,14 +558,14 @@
                                                     AcceptsReturn="True"
                                                     Grid.Column="1"
                                                     Height="56"
-                                                    Text="{Binding $parent[local:WorkflowEditorDemoView].Model.Description, Mode=TwoWay}"
+                                                    Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.Description, Mode=TwoWay}"
                                                     TextWrapping="Wrap" />
                                             </Grid>
                                         </StackPanel>
                                         <ContentControl
-                                            Content="{Binding $parent[local:WorkflowEditorDemoView].Model}"
+                                            Content="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model}"
                                             ContentTemplate="{StaticResource BusinessFields}"
-                                            IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsOtherNode}" />
+                                            IsVisible="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.IsOtherNode}" />
                                         <Border
                                             Background="{DynamicResource One.Line}"
                                             Height="1"
@@ -551,7 +574,7 @@
                                             FontSize="12"
                                             FontWeight="SemiBold"
                                             Text="连接端口" />
-                                        <ItemsControl ItemsSource="{Binding Ports}">
+                                        <ItemsControl ItemsSource="{CompiledBinding Ports}">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <StackPanel Spacing="10" />
@@ -560,25 +583,25 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate x:DataType="w:WorkflowPort">
                                                     <Grid ColumnDefinitions="40,*,Auto">
-                                                        <TextBlock FontSize="11" Text="{Binding Title}" />
+                                                        <TextBlock FontSize="11" Text="{CompiledBinding Title}" />
                                                         <Border
                                                             Background="{DynamicResource One.Subtle}"
                                                             CornerRadius="3"
                                                             Grid.Column="1"
                                                             HorizontalAlignment="Left"
                                                             Padding="4,2">
-                                                            <TextBlock FontSize="10" Text="{Binding Id}" />
+                                                            <TextBlock FontSize="10" Text="{CompiledBinding Id}" />
                                                         </Border>
                                                         <TextBlock
                                                             FontSize="10"
                                                             Foreground="{DynamicResource One.Muted}"
                                                             Grid.Column="2"
-                                                            Text="{Binding MaxConnections, StringFormat='最多 {0} 条'}" />
+                                                            Text="{CompiledBinding MaxConnections, StringFormat='最多 {0} 条'}" />
                                                     </Grid>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-                                        <Grid ColumnDefinitions="80,*" IsVisible="{Binding $parent[local:WorkflowEditorDemoView].Model.IsApproval}">
+                                        <Grid ColumnDefinitions="80,*" IsVisible="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.IsApproval}">
                                             <TextBlock
                                                 FontSize="12"
                                                 Text="驳回处理"
@@ -587,10 +610,10 @@
                                                 Grid.Column="1"
                                                 Height="30"
                                                 HorizontalAlignment="Stretch"
-                                                ItemsSource="{Binding $parent[local:WorkflowEditorDemoView].Model.RejectionModes}"
+                                                ItemsSource="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.RejectionModes}"
                                                 MinHeight="0"
                                                 Padding="6,0"
-                                                SelectedItem="{Binding $parent[local:WorkflowEditorDemoView].Model.RejectionMode, Mode=TwoWay}" />
+                                                SelectedItem="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.RejectionMode, Mode=TwoWay}" />
                                         </Grid>
                                         <Border
                                             Background="{DynamicResource One.Subtle}"
@@ -601,13 +624,13 @@
                                                 <TextBlock
                                                     FontFamily="monospace"
                                                     FontSize="10"
-                                                    Text="{Binding $parent[local:WorkflowEditorDemoView].Model.OutputSummary}"
+                                                    Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.OutputSummary}"
                                                     TextWrapping="Wrap" />
                                             </StackPanel>
                                         </Border>
                                     </StackPanel>
                                     <StackPanel
-                                        IsVisible="{Binding #RulesTab.IsSelected}"
+                                        IsVisible="{CompiledBinding #RulesTab.IsSelected}"
                                         Margin="0,12,0,0"
                                         Name="RulesPanel"
                                         Spacing="12">
@@ -615,11 +638,11 @@
                                             FontSize="12"
                                             FontWeight="SemiBold"
                                             Text="业务字段与数据关联" />
-                                        <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].Model}" ContentTemplate="{StaticResource BusinessFields}" />
-                                        <Button Command="{Binding $parent[local:WorkflowEditorDemoView].Model.ResolveDataCommand}" Content="解析数据关联" />
+                                        <ContentControl Content="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model}" ContentTemplate="{StaticResource BusinessFields}" />
+                                        <Button Command="{CompiledBinding $parent[local:WorkflowEditorDemoView].Model.ResolveDataCommand}" Content="解析数据关联" />
                                     </StackPanel>
                                     <StackPanel
-                                        IsVisible="{Binding #AppearanceTab.IsSelected}"
+                                        IsVisible="{CompiledBinding #AppearanceTab.IsSelected}"
                                         Margin="0,12,0,0"
                                         Name="AppearancePanel"
                                         Spacing="12">
@@ -646,7 +669,7 @@
             FontSize="12"
             Grid.Row="1"
             Header="消费端接入示例 · 数据配置、关联及保存加载"
-            IsExpanded="{Binding ShowConsumerExamples, Mode=TwoWay}"
+            IsExpanded="{CompiledBinding ShowConsumerExamples, Mode=TwoWay}"
             MaxHeight="420"
             Name="ConsumerExamples"
             styling:ControlSizing.Size="Small">
@@ -654,79 +677,83 @@
                 <StackPanel Margin="12" Spacing="12">
                     <TextBlock
                         Foreground="{DynamicResource One.Muted}"
-                        Text="{Binding Message}"
+                        Text="{CompiledBinding Message}"
                         TextWrapping="Wrap" />
                     <WrapPanel>
                         <Button
-                            Command="{Binding ResetCommand}"
+                            Command="{CompiledBinding ResetCommand}"
                             Content="恢复设计图示例"
                             Margin="0,0,8,8" />
                         <Button
-                            Command="{Binding ExportCommand}"
+                            Command="{CompiledBinding ExportCommand}"
                             Content="生成 JSON"
                             Margin="0,0,8,8" />
                         <Button
-                            Command="{Binding LoadCommand}"
+                            Command="{CompiledBinding LoadCommand}"
                             Content="从 JSON 加载"
                             Margin="0,0,8,8" />
                         <Button
-                            Command="{Binding OpenCommand}"
+                            Command="{CompiledBinding OpenCommand}"
                             Content="打开文件"
                             Margin="0,0,8,8" />
                         <Button
-                            Command="{Binding ResolveDataCommand}"
+                            Command="{CompiledBinding ResolveDataCommand}"
                             Content="解析数据关联"
                             Margin="0,0,8,8" />
                     </WrapPanel>
                     <WrapPanel>
                         <CheckBox
                             Content="只读"
-                            IsChecked="{Binding #Editor.IsReadOnly, Mode=TwoWay}"
+                            IsChecked="{CompiledBinding #Editor.IsReadOnly, Mode=TwoWay}"
                             Margin="0,0,12,0" />
                         <CheckBox
                             Content="节点库"
-                            IsChecked="{Binding #Editor.ShowNodeLibrary, Mode=TwoWay}"
+                            IsChecked="{CompiledBinding #Editor.ShowNodeLibrary, Mode=TwoWay}"
                             Margin="0,0,12,0" />
-                        <CheckBox Content="属性面板" IsChecked="{Binding #Editor.ShowProperties, Mode=TwoWay}" />
+                        <CheckBox Content="属性面板" IsChecked="{CompiledBinding #Editor.ShowProperties, Mode=TwoWay}" />
                     </WrapPanel>
                     <TextBox
                         AcceptsReturn="True"
                         FontFamily="monospace"
                         Height="220"
                         Name="JsonInput"
-                        Text="{Binding Json, Mode=TwoWay}"
+                        Text="{CompiledBinding Json, Mode=TwoWay}"
                         TextWrapping="NoWrap" />
                     <TextBlock FontWeight="SemiBold" Text="默认模板 · 独立只读视图绑定同一文档" />
                     <one:WorkflowEditor
-                        Document="{Binding Document}"
+                        ChoiceItemsSource="{CompiledBinding Roles}"
+                        ChoiceItemAdapter="{CompiledBinding ApproverAdapter}"
+                        Document="{CompiledBinding Document}"
                         Height="300"
                         IsReadOnly="True"
                         Name="DefaultEditor"
                         ShowNodeLibrary="False"
-                        styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}" />
+                        styling:ControlSizing.Size="{CompiledBinding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}" />
                     <TextBlock FontWeight="SemiBold" Text="数据关联示例 · 宿主提供申请数据、审批配置和通知收件人" />
                     <WrapPanel>
                         <Button
-                            Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ResolveDataCommand}"
+                            Command="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.ResolveDataCommand}"
                             Content="解析上游数据"
                             Margin="0,0,8,0" />
                         <Button
-                            Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.ExportCommand}"
+                            Command="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.ExportCommand}"
                             Content="保存关联 JSON"
                             Margin="0,0,8,0" />
-                        <Button Command="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.LoadCommand}" Content="加载关联 JSON" />
+                        <Button Command="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.LoadCommand}" Content="加载关联 JSON" />
                     </WrapPanel>
                     <TextBlock
                         FontSize="12"
-                        Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Message}"
+                        Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.Message}"
                         TextWrapping="Wrap" />
                     <one:WorkflowEditor
-                        Document="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Document}"
+                        ChoiceItemsSource="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.Roles}"
+                        ChoiceItemAdapter="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.ApproverAdapter}"
+                        Document="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.Document}"
                         Height="340"
                         Name="AssociationEditor"
-                        SelectedNode="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.SelectedNode, Mode=TwoWay}"
+                        SelectedNode="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.SelectedNode, Mode=TwoWay}"
                         ShowNodeLibrary="False"
-                        styling:ControlSizing.Size="{Binding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}">
+                        styling:ControlSizing.Size="{CompiledBinding $parent[local:WorkflowEditorDemoView].(styling:ControlSizing.Size)}">
                         <one:WorkflowEditor.ContentTemplate>
                             <DataTemplate x:DataType="local:WorkflowBusinessSummary">
                                 <Border
@@ -737,10 +764,10 @@
                                         <TextBlock
                                             FontSize="11"
                                             Foreground="{DynamicResource One.Accent}"
-                                            Text="{Binding Caption}" />
+                                            Text="{CompiledBinding Caption}" />
                                         <TextBlock
                                             FontSize="10"
-                                            Text="{Binding Detail}"
+                                            Text="{CompiledBinding Detail}"
                                             TextWrapping="Wrap" />
                                     </StackPanel>
                                 </Border>
@@ -748,7 +775,7 @@
                         </one:WorkflowEditor.ContentTemplate>
                         <one:WorkflowEditor.PropertyTemplate>
                             <DataTemplate x:DataType="w:WorkflowNode">
-                                <ContentControl Content="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel}" ContentTemplate="{StaticResource BusinessFields}" />
+                                <ContentControl Content="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel}" ContentTemplate="{StaticResource BusinessFields}" />
                             </DataTemplate>
                         </one:WorkflowEditor.PropertyTemplate>
                     </one:WorkflowEditor>
@@ -756,7 +783,7 @@
                         AcceptsReturn="True"
                         FontFamily="monospace"
                         Height="160"
-                        Text="{Binding $parent[local:WorkflowEditorDemoView].AssociationModel.Json, Mode=TwoWay}" />
+                        Text="{CompiledBinding $parent[local:WorkflowEditorDemoView].AssociationModel.Json, Mode=TwoWay}" />
                 </StackPanel>
             </ScrollViewer>
         </Expander>

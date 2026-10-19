@@ -1,5 +1,10 @@
 # Avalonia template adaptations
 
+QRCode and ReportDesign QR symbols use Net.Codecrete.QrCodeGenerator 3.2.1 by Manuel Bleichenbacher
+(MIT), https://github.com/manuelbl/QrCodeGenerator. The package supplies managed QR encoding;
+TheOne supplies the shared Avalonia vector drawing and report integration. Its NuGet package includes
+the MIT license declaration; no platform bitmap library is required by this dependency.
+
 ColorPicker, ColorView, ColorSpectrum, ColorSlider and ColorPreviewer use the unmodified official
 Avalonia.Controls.ColorPicker 12.1.4 package and its Fluent color-editing templates (Avalonia MIT license below). TheOne
 provides scoped dropdown-button chrome, compact panel layout, a hue-ordered default palette and density styles without

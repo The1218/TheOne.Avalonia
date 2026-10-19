@@ -4,7 +4,7 @@
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <DataTemplate x:DataType="one:FlowNodeContent" x:Key="One.FlowNode.DefaultContentTemplate">
-        <StackPanel Classes.vertical="{Binding $parent[one:FlowNode].IsVertical}" Spacing="6">
+        <StackPanel Classes.vertical="{CompiledBinding $parent[one:FlowNode].IsVertical}" Spacing="6">
             <StackPanel.Styles>
                 <Style Selector="TextBlock">
                     <Setter Property="TextWrapping" Value="Wrap" />
@@ -35,34 +35,34 @@
             <one:FlowNodeHeaderPanel Classes="flow-header">
                 <TextBlock
                     FontWeight="SemiBold"
-                    IsVisible="{Binding HasTitle}"
+                    IsVisible="{CompiledBinding HasTitle}"
                     Margin="0,0,12,0"
-                    Text="{Binding Title}" />
+                    Text="{CompiledBinding Title}" />
                 <TextBlock
                     Classes="flow-state"
-                    Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}"
-                    Classes.current="{Binding $parent[one:FlowNode].IsInProgress}"
-                    Text="{Binding $parent[one:FlowNode].EffectiveStateText}" />
+                    Classes.completed="{CompiledBinding $parent[one:FlowNode].IsCompleted}"
+                    Classes.current="{CompiledBinding $parent[one:FlowNode].IsInProgress}"
+                    Text="{CompiledBinding $parent[one:FlowNode].EffectiveStateText}" />
             </one:FlowNodeHeaderPanel>
             <StackPanel Classes="flow-title">
                 <TextBlock
                     FontWeight="SemiBold"
-                    IsVisible="{Binding HasTitle}"
-                    Text="{Binding Title}" />
+                    IsVisible="{CompiledBinding HasTitle}"
+                    Text="{CompiledBinding Title}" />
             </StackPanel>
             <TextBlock
                 Foreground="{DynamicResource One.Muted}"
-                IsVisible="{Binding HasTime}"
-                Text="{Binding Time}" />
+                IsVisible="{CompiledBinding HasTime}"
+                Text="{CompiledBinding Time}" />
             <TextBlock
                 Classes="flow-state"
-                Classes.completed="{Binding $parent[one:FlowNode].IsCompleted}"
-                Classes.current="{Binding $parent[one:FlowNode].IsInProgress}"
-                Text="{Binding $parent[one:FlowNode].EffectiveStateText}" />
+                Classes.completed="{CompiledBinding $parent[one:FlowNode].IsCompleted}"
+                Classes.current="{CompiledBinding $parent[one:FlowNode].IsInProgress}"
+                Text="{CompiledBinding $parent[one:FlowNode].EffectiveStateText}" />
             <TextBlock
                 Foreground="{DynamicResource One.Muted}"
-                IsVisible="{Binding HasText}"
-                Text="{Binding Text}" />
+                IsVisible="{CompiledBinding HasText}"
+                Text="{CompiledBinding Text}" />
         </StackPanel>
     </DataTemplate>
     <ControlTheme TargetType="one:FlowNode" x:Key="{x:Type one:FlowNode}">
@@ -149,7 +149,7 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <one:FlowStepPanel ViewportWidth="{Binding $parent[ScrollViewer].Viewport.Width}" />
+                <one:FlowStepPanel ViewportWidth="{CompiledBinding $parent[ScrollViewer].Viewport.Width}" />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Template">

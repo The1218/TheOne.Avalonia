@@ -19,7 +19,7 @@
         <TextBlock
             FontSize="22"
             FontWeight="SemiBold"
-            Text="{Binding Title}" />
+            Text="{CompiledBinding Title}" />
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
             Text="同一图表的多种样式 · 可点击数据和图例 · 使用顶部工具栏切换主题、尺寸和动效"

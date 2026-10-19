@@ -23,7 +23,8 @@ public enum WorkflowValueKind
 {
     Text,
     Number,
-    Boolean
+    Boolean,
+    MultiSelect
 }
 
 public enum WorkflowNodeShape
@@ -71,6 +72,13 @@ public abstract class WorkflowObservable : INotifyPropertyChanged
 /// <summary>A literal or an upstream reference. DataType is a host-defined token, e.g. text, number, email.</summary>
 public sealed class WorkflowProperty : WorkflowObservable
 {
+    public WorkflowProperty()
+    {
+        SelectedKeys.CollectionChanged += (_, _) => { Notify(nameof(SelectedKeys)); Notify(nameof(DisplayValue)); };
+    }
+
+    /// <summary>Stable host identities for MultiSelect fields; display labels and runtime objects are not saved.</summary>
+    public ObservableCollection<string> SelectedKeys { get; } = [];
     private WorkflowDataReference? _reference;
     private string _value = "";
     public string Key { get; init; } = "";
@@ -97,7 +105,8 @@ public sealed class WorkflowProperty : WorkflowObservable
         }
     }
 
-    public string DisplayValue => Reference is { } r ? $"{r.NodeId}.{r.OutputPortId}.{r.FieldPath}" : Value;
+    public string DisplayValue => Reference is { } r ? $"{r.NodeId}.{r.OutputPortId}.{r.FieldPath}" :
+        Kind == WorkflowValueKind.MultiSelect ? string.Join(", ", SelectedKeys) : Value;
 }
 
 public sealed class WorkflowNode : WorkflowObservable

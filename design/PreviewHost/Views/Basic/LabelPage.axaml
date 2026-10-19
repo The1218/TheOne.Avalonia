@@ -13,16 +13,16 @@
             Foreground="{DynamicResource One.Muted}"
             Text="字段标题 / 辅助说明 / 禁用 · 点击字段标题聚焦输入框"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <Label
                 Content="工作区名称"
                 Name="ControlSample"
-                Target="{Binding #LabelInput}" />
+                Target="{CompiledBinding #LabelInput}" />
             <TextBox
                 MaxWidth="420"
                 Name="LabelInput"
-                Text="{Binding Text, Mode=TwoWay}" />
+                Text="{CompiledBinding Text, Mode=TwoWay}" />
             <Label Content="字段说明 · 可使用内容模板" Foreground="{DynamicResource One.Muted}" />
             <Label Content="禁用标签" IsEnabled="False" />
         </StackPanel>

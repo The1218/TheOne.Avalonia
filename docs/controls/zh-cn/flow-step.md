@@ -1,5 +1,7 @@
 # FlowStep 与 FlowNode
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/flow-step.md)
 
 `FlowStep` 是基于原生 `ItemsControl` 的线性流程展示控件，`FlowNode` 是基于原生 `ContentControl` 的节点容器。加载 `OneTheme` 后支持横向／纵向、Light／Dark 和 Small／Normal／Large。状态由业务显式设置，不自动推进或校验表单。
@@ -85,14 +87,6 @@ Orientation 默认 Horizontal，也可在独立 FlowNode 上设置。局部属�
 ## 示例与验证
 
 PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三种状态、单节点模板、共享模板、集合增删、流程推进与长文本切换。
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/flowstep/artifacts
-dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-flow-step .preview/flowstep/render
-dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --render-controls .preview/flowstep/render FlowStep
-```
-
-专项包含明暗主题、三档尺寸、窄视口、实际连接线像素、集合与模型变化、模板优先级和自定义按钮交互。独立 NativeAotSmoke 消费端支持 `--verify-flow-step --require-aot`；原生消费需要真实 PublishAot 发布后执行，不能用托管运行替代。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

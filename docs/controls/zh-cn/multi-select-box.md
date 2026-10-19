@@ -1,5 +1,7 @@
 # MultiSelectBox 多选框
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 弹层使用独立的有限视口：内容超出时显示原生纵向滚动条；短列表没有滚动条是正常行为。鼠标滚轮、触摸板细粒度纵向／横向／斜向增量，以及滚动手势的惯性和结束阶段，在结果列表、搜索框、空结果及列表边界均停留在弹层内，不带动 Home 等外层页面。保留内部原生滚动；关闭后恢复普通页面滚动，旧弹层产生的尾帧仍被隔离。
 
 `MultiSelectBox` 提供本地搜索、多选标签、清空和原生虚拟化结果列表。选择绑定模型对象，搜索只改变结果投影；隐藏的已选项不会因搜索而丢失。加载 `OneTheme` 后即可使用。
@@ -88,14 +90,7 @@ public MultiSelectItemAdapter Adapter { get; } =
 
 PreviewHost：**扩展控件 → MultiSelectBox**，包含一万条模型、预选禁选项及编译绑定。
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/multiselect/artifacts
-dotnet .preview/multiselect/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-multiselect .preview/multiselect/screenshots
-```
-
 专项只覆盖 MultiSelectBox：真实按键与指针、搜索、多选与锁定标签、清空、集合替换、只读／禁用、模板和挂载生命周期、空结果、一万条远距离容器回收、批量已选标签上限，以及明暗 × 三档尺寸 × 宽窄窗口的布局和实际像素。
-
-`NativeAotSmoke` 复用同一专项；发布后执行原生程序的 `--require-aot --verify-multiselect`，验证 getter、编译模板和绑定。托管验证或跨 RID 构建不代表其他平台的原生运行通过。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

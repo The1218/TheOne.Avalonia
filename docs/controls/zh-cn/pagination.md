@@ -1,5 +1,7 @@
 # Pagination 分页控件
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/pagination.md)
 
 `Pagination` 使用原生 Button、ComboBox、TextBox 展示分页导航。加载 `OneTheme` 后支持 Standard／Compact、Light／Dark 和 Small／Normal／Large。控件负责页码与范围，不加载或筛选业务数据；通过双向绑定、PageChanged 事件或 PageChangedCommand 请求数据。
@@ -70,14 +72,6 @@ if (parameter is PaginationPageChangedEventArgs request)
 ## 示例与验证
 
 PreviewHost 的“扩展控件 → Pagination”展示标准／紧凑共享绑定、首页／末页、空数据与整体禁用，并支持恢复和缩减记录数。
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/pagination/artifacts
-dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-pagination .preview/pagination/render
-dotnet .preview/pagination/artifacts/bin/PreviewHost/release/PreviewHost.dll --render-controls .preview/pagination/render Pagination
-```
-
-专项使用真实指针／键盘输入和 Skia 绘制像素，检查明暗主题、三档尺寸、宽窄布局、边界、跳页、原子通知、焦点、模板重新应用、编译绑定和 Int64 极值。独立 NativeAotSmoke 支持 `--verify-pagination --require-aot`，需要发布并执行真正的原生程序。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

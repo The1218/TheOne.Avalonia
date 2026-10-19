@@ -50,6 +50,7 @@ public partial class ReportDesign : UserControl
         InitializeDataTreeState();
         StructureTree.AddHandler(PointerReleasedEvent, OnStructurePointerReleased, RoutingStrategies.Bubble, true);
         InitializeDesigner();
+        PageSurface.ContextRequested += OnTableContextRequested;
         _ready = true;
         State.PropertyChanged += StateChanged;
         PageSurface.ColumnSelected += index =>
@@ -131,6 +132,7 @@ public partial class ReportDesign : UserControl
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        CloseTableContextMenu();
         if (ReferenceEquals(_loadingDataDocument, Document) && State.IsFetching) _pendingDocumentData = true;
         _fetchGeneration++;
         _fetchCancellation?.Cancel();
@@ -151,6 +153,7 @@ public partial class ReportDesign : UserControl
         if (!_ready) return;
         if (change.Property == DocumentProperty)
         {
+            CloseTableContextMenu();
             var clearApiSource = _apiJson is not null && DataSource?.Name == "API";
             Unobserve();
             _historySources.Clear();
@@ -214,6 +217,8 @@ public partial class ReportDesign : UserControl
             }
 
             State.SelectedColumn = SelectedColumn;
+            if (!_batch && _lastSnapshot is { } snapshot && Document?.Columns.Count == snapshot.Columns.Count)
+                RememberHistorySelection(snapshot);
             UpdateInspector();
             Redraw();
         }
@@ -263,8 +268,19 @@ public partial class ReportDesign : UserControl
     private void ColumnsChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         ObserveColumns();
+        if (_batch) return;
         if (SelectedColumn is null || Document?.Columns.Contains(SelectedColumn) != true)
-            SetCurrentValue(SelectedColumnProperty, Document?.Columns.LastOrDefault());
+        {
+            // Do not overwrite the old snapshot's selection while reacting to a collection edit.
+            _batch = true;
+            try
+            {
+                var index = e.OldStartingIndex < 0 ? 0 : e.OldStartingIndex;
+                SetCurrentValue(SelectedColumnProperty, Document?.Columns.ElementAtOrDefault(
+                    Math.Min(index, Document.Columns.Count - 1)));
+            }
+            finally { _batch = false; }
+        }
         DefinitionChanged(sender, new PropertyChangedEventArgs(nameof(ReportDocument.Columns)));
     }
 
@@ -274,6 +290,8 @@ public partial class ReportDesign : UserControl
         State.SaveStatus = "未保存";
         if (!_restoring && _lastSnapshot is not null)
         {
+            if (e.PropertyName is not (nameof(ReportDocument.Columns) or nameof(ReportDocument.Elements)))
+                RememberHistorySelection(_lastSnapshot);
             _undo.Push(CaptureHistorySource(_lastSnapshot));
             _redo.Clear();
         }
@@ -304,7 +322,11 @@ public partial class ReportDesign : UserControl
         if (e.PropertyName == nameof(ReportDesignState.SelectedBody) && !_fetchUpdating) SelectApiBody();
         if (e.PropertyName == nameof(ReportDesignState.Snap)) PageSurface.Snap = State.Snap;
         if (e.PropertyName == nameof(ReportDesignState.Zoom)) Redraw();
-        if (e.PropertyName == nameof(ReportDesignState.IsPreview)) Rebuild();
+        if (e.PropertyName == nameof(ReportDesignState.IsPreview))
+        {
+            CloseTableContextMenu();
+            Rebuild();
+        }
     }
 
     /// <summary>Re-evaluates registered getters and repaginates. Source row membership is a creation-time snapshot.</summary>
@@ -338,7 +360,7 @@ public partial class ReportDesign : UserControl
         if (SelectedElement is { Kind: not ReportElementKind.Table } element)
         {
             if (element.Kind is not (ReportElementKind.Text or ReportElementKind.CheckBox
-                or ReportElementKind.Barcode)) return;
+                or ReportElementKind.Barcode or ReportElementKind.QRCode)) return;
             if (!DataSource.Fields.Any(f => f.Key == fieldKey)) throw new ArgumentException("字段不存在。", nameof(fieldKey));
             element.FieldKey = fieldKey;
             State.PropertyTab = 1;
@@ -380,6 +402,7 @@ public partial class ReportDesign : UserControl
         {
             if (Document is null) throw new ArgumentException("请创建报表。");
             Layout = ReportPaginator.Paginate(Document, DataSource);
+            if (State.IsPreview) ReportPaginator.RequireQRCodes(Layout);
             ValidationError = null;
             State.Status = State.IsPreview
                 ? $"{DataSource?.RowCount ?? 0} 条数据 · {Layout.Pages.Count} 页"
@@ -513,16 +536,21 @@ public partial class ReportDesign : UserControl
 
     private void OnAddColumn(object? sender, RoutedEventArgs e)
     {
-        if (Document is null || IsPreview) return;
+        if (Document is not { } document || IsPreview) return;
+        var weight = SelectedColumn?.WidthWeight ?? 1;
+        if (!CanInsertColumn(document, weight))
+        {
+            State.Status = "无法插入列：最多 100 列，且每列至少保留 32 DIP。请先调整表格或列宽。";
+            return;
+        }
         var field = State.PendingField ?? DataSource?.Fields.FirstOrDefault();
-        var column = new ReportColumn { Header = field?.Label ?? "新列", FieldKey = field?.Key ?? "" };
-        Document.Columns.Add(column);
-        SetCurrentValue(SelectedColumnProperty, column);
+        var column = new ReportColumn { Header = field?.Label ?? "新列", FieldKey = field?.Key ?? "", WidthWeight = weight };
+        ChangeColumns(() => document.Columns.Add(column), column);
     }
 
     private void OnRemoveColumn(object? sender, RoutedEventArgs e)
     {
-        if (!IsPreview && SelectedColumn is { } column) Document?.Columns.Remove(column);
+        if (SelectedColumn is { } column) RemoveColumn(column);
     }
 
     private void OnUndo(object? sender, RoutedEventArgs e)
@@ -538,10 +566,16 @@ public partial class ReportDesign : UserControl
     private void Restore(Stack<ReportDocument> from, Stack<ReportDocument> to)
     {
         if (from.Count == 0 || Document is null) return;
+        CloseTableContextMenu();
         var index = Document.Columns.IndexOf(SelectedColumn!);
         var elementIndex = Document.Elements.IndexOf(SelectedElement!);
         to.Push(CaptureHistorySource(Copy(Document)));
         var restored = from.Pop();
+        if (_historySelections.TryGetValue(restored, out var selection))
+        {
+            index = selection.Column;
+            elementIndex = selection.Element;
+        }
         _restoring = true;
         _batch = true;
         try
@@ -566,13 +600,14 @@ public partial class ReportDesign : UserControl
             Document.DataSourceParameters = restored.DataSourceParameters;
             Document.DataSourceParameterMode = restored.DataSourceParameterMode;
             Document.DataSourceAuthentication = restored.DataSourceAuthentication;
+            Document.DataSourceName = restored.DataSourceName;
+            Document.SelectedDataPointers = restored.SelectedDataPointers?.ToArray();
             Document.FontSize = restored.FontSize;
             Document.MinimumRowHeight = restored.MinimumRowHeight;
             Document.Columns.Clear();
             foreach (var column in restored.Columns) Document.Columns.Add(column);
             Document.Elements.Clear();
             foreach (var element in restored.Elements) Document.Elements.Add(element);
-            _lastSnapshot = Copy(Document);
         }
         finally
         {
@@ -580,9 +615,11 @@ public partial class ReportDesign : UserControl
             _batch = false;
         }
 
-        SetCurrentValue(SelectedElementProperty, Document.Elements.ElementAtOrDefault(Math.Max(0, elementIndex)));
-        SetCurrentValue(SelectedColumnProperty, Document.Columns.ElementAtOrDefault(Math.Max(0, index)));
+        SetCurrentValue(SelectedElementProperty, elementIndex < 0 ? null : Document.Elements.ElementAtOrDefault(elementIndex));
+        SetCurrentValue(SelectedColumnProperty, index < 0 ? null : Document.Columns.ElementAtOrDefault(index));
         RestoreApiDataSource(restored);
+        _lastSnapshot = CaptureHistorySource(Copy(Document));
+        State.SaveStatus = "未保存";
         RefreshStructure();
         Rebuild();
         if (Document.Elements.Any(e =>
@@ -603,7 +640,8 @@ public partial class ReportDesign : UserControl
             DataSourceUrl = source.DataSourceUrl, DataBodyPointer = source.DataBodyPointer,
             DataSourceMethod = source.DataSourceMethod, DataSourceParameters = source.DataSourceParameters,
             DataSourceParameterMode = source.DataSourceParameterMode,
-            DataSourceAuthentication = source.DataSourceAuthentication
+            DataSourceAuthentication = source.DataSourceAuthentication,
+            DataSourceName = source.DataSourceName, SelectedDataPointers = source.SelectedDataPointers?.ToArray()
         };
         foreach (var c in source.Columns)
             copy.Columns.Add(new ReportColumn
@@ -623,7 +661,8 @@ public partial class ReportDesign : UserControl
                 ListStyle = e.ListStyle, ImageData = e.ImageData, ImageName = e.ImageName, ImageFit = e.ImageFit,
                 ImageUrl = e.ImageUrl, ResolvedImageUrl = e.ResolvedImageUrl, ResolvedImageData = e.ResolvedImageData,
                 TableHeaderHeightMm = e.TableHeaderHeightMm,
-                IsChecked = e.IsChecked, BarcodeShowText = e.BarcodeShowText
+                IsChecked = e.IsChecked, BarcodeShowText = e.BarcodeShowText,
+                QRCodeErrorCorrection = e.QRCodeErrorCorrection, QRCodeQuietZone = e.QRCodeQuietZone
             });
         return copy;
     }

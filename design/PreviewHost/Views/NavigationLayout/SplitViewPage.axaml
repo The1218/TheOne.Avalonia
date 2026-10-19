@@ -13,42 +13,42 @@
             Foreground="{DynamicResource One.Muted}"
             Text="独立控件页面 · 双向绑定 · 使用顶部工具栏切换尺寸、主题与动效"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <ToggleButton
                 Content="展开侧栏"
                 HorizontalAlignment="Left"
-                IsChecked="{Binding Expanded, Mode=TwoWay}" />
+                IsChecked="{CompiledBinding Expanded, Mode=TwoWay}" />
             <WrapPanel>
                 <ComboBox
-                    ItemsSource="{Binding Modes}"
+                    ItemsSource="{CompiledBinding Modes}"
                     Margin="0,0,12,8"
-                    SelectedItem="{Binding DisplayMode, Mode=TwoWay}"
+                    SelectedItem="{CompiledBinding DisplayMode, Mode=TwoWay}"
                     Width="180" />
                 <ComboBox
-                    ItemsSource="{Binding Placements}"
+                    ItemsSource="{CompiledBinding Placements}"
                     Margin="0,0,12,8"
-                    SelectedItem="{Binding PanePlacement, Mode=TwoWay}"
+                    SelectedItem="{CompiledBinding PanePlacement, Mode=TwoWay}"
                     Width="140" />
                 <Button
-                    Command="{Binding LastCommand}"
+                    Command="{CompiledBinding LastCommand}"
                     Content="定位第 1000 项"
                     Margin="0,0,0,8" />
             </WrapPanel>
             <SplitView
-                DisplayMode="{Binding DisplayMode}"
+                DisplayMode="{CompiledBinding DisplayMode}"
                 Height="420"
-                IsPaneOpen="{Binding Expanded, Mode=TwoWay}"
+                IsPaneOpen="{CompiledBinding Expanded, Mode=TwoWay}"
                 Name="ControlSample"
-                PanePlacement="{Binding PanePlacement}">
+                PanePlacement="{CompiledBinding PanePlacement}">
                 <SplitView.Pane>
                     <ListBox
                         Background="Transparent"
                         BorderThickness="0"
                         CornerRadius="0"
-                        ItemsSource="{Binding Items}"
+                        ItemsSource="{CompiledBinding Items}"
                         Name="DetailedSample"
-                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                        SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
                                 <StackPanel Orientation="Horizontal" Spacing="10">
@@ -58,14 +58,14 @@
                                         Width="16" />
                                     <TextBlock
                                         IsVisible="{CompiledBinding $parent[SplitView].IsPaneOpen}"
-                                        Text="{Binding}"
+                                        Text="{CompiledBinding}"
                                         VerticalAlignment="Center" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </SplitView.Pane>
-                <TextBlock Margin="24" Text="{Binding Text}" />
+                <TextBlock Margin="24" Text="{CompiledBinding Text}" />
             </SplitView>
         </StackPanel>
     </StackPanel>

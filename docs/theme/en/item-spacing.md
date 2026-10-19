@@ -1,5 +1,7 @@
 # Item surface spacing
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/item-spacing.md) · **English**
 
 Selectable list and navigation surfaces keep at least 4px clear of their enclosing frame and 4px between neighboring surfaces. Existing larger popup padding is retained. Horizontal strips use 2px on either side of each item to create a 4px gap; their parent provides the edge gutter. Apply spacing to the visible header rather than an entire nested branch when margins would accumulate with depth.
@@ -25,13 +27,6 @@ The audit also checked these separate layouts:
 - Generic ItemsControl has caller-owned content and no default selected surface; its template does not add arbitrary item margins. WorkflowEditor uses the shared TabStrip theme and explicit spacing for its node library.
 
 PreviewHost provides independent checks; run only affected families:
-
-```text
---verify-menu-item-spacing [output]
---verify-tab-item-spacing [output]
---verify-tabstrip-item-spacing [output]
---verify-gantt [output]
-```
 
 They cover light/dark, Small/Normal/Large, wide/narrow viewports, actual surface/gap pixels, disabled items, and native key/pointer interaction. Menu checks include ContextMenu, vertical/horizontal flyouts, and nested submenus. TabControl checks all four placements; TabStrip checks both panel orientations.
 

@@ -21,39 +21,39 @@
             <TextBlock Text="确认按钮组合" />
             <ComboBox
                 HorizontalAlignment="Stretch"
-                ItemsSource="{Binding ButtonSets}"
-                SelectedItem="{Binding Buttons, Mode=TwoWay}" />
+                ItemsSource="{CompiledBinding ButtonSets}"
+                SelectedItem="{CompiledBinding Buttons, Mode=TwoWay}" />
         </StackPanel>
         <WrapPanel>
             <CheckBox
                 Content="显示关闭按钮"
-                IsChecked="{Binding ShowClose, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowClose, Mode=TwoWay}"
                 Margin="0,0,20,8" />
             <CheckBox
                 Content="显示确认按钮"
-                IsChecked="{Binding ShowButtons, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowButtons, Mode=TwoWay}"
                 Margin="0,0,20,8" />
             <CheckBox
                 Content="点击蒙层关闭"
-                IsChecked="{Binding OverlayClose, Mode=TwoWay}"
+                IsChecked="{CompiledBinding OverlayClose, Mode=TwoWay}"
                 Margin="0,0,20,8" />
-            <CheckBox Content="Esc 关闭" IsChecked="{Binding EscapeClose, Mode=TwoWay}" />
+            <CheckBox Content="Esc 关闭" IsChecked="{CompiledBinding EscapeClose, Mode=TwoWay}" />
         </WrapPanel>
         <WrapPanel>
             <Button
                 Classes="primary"
-                Command="{Binding DialogCommand}"
+                Command="{CompiledBinding DialogCommand}"
                 Content="显示确认对话框"
                 Margin="0,0,12,0"
                 Name="ShowDialog" />
             <Button
                 Classes="outline"
-                Command="{Binding FormDialogCommand}"
+                Command="{CompiledBinding FormDialogCommand}"
                 Content="打开 VM 表单" />
         </WrapPanel>
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="{Binding Status}"
+            Text="{CompiledBinding Status}"
             TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

@@ -41,7 +41,7 @@
                     <Popup
                         IsLightDismissEnabled="True"
                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                        MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                        MinWidth="{CompiledBinding #PART_Popup.((AutoCompleteBox)TemplatedParent).Bounds.Width}"
                         Name="PART_Popup"
                         PlacementTarget="{TemplateBinding}"
                         WindowManagerAddShadowHint="False">

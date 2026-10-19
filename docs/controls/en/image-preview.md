@@ -1,5 +1,7 @@
 # ImagePreview
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/image-preview.md) · **English**
 
 A lightweight single/multiple image viewer for HTTP(S), local paths / file URIs and Bitmap (also accepts IImage). Load OneTheme and declare the view's correct x:DataType for compiled bindings.
@@ -45,14 +47,6 @@ Template parts: PART_Viewport (ImagePreviewSurface), PART_Previous, PART_Next, P
 ## Preview and verification
 
 PreviewHost's ImagePreview page includes a Bitmap and transparent sample, HTTP(S) input, local file selection, mixed-source collections and compiled SelectedIndex bindings. Enter a network address explicitly; the demo does not contact an external service by default. The bundled alpine lake sample was generated with ImageGen.
-
-```bash
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/image-preview/artifacts
-dotnet .preview/image-preview/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-image-preview .preview/image-preview/managed
-# macOS: native checks only for affected AOT/binding/metadata changes.
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/image-preview/native-artifacts -o .preview/image-preview/native
-.preview/image-preview/native/NativeAotSmoke --require-aot --verify-image-preview .preview/image-preview/native-pixels
-```
 
 The suite uses a local HTTP server to verify real requests, retry and cancellation races without external network dependencies. It also checks local paths, Bitmap ownership, collection changes, compiled bindings, full-screen behavior, both themes, three densities, narrow viewports and rendered pixels.
 

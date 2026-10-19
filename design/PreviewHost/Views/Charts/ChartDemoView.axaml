@@ -14,39 +14,39 @@
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
         <Style Selector=":is(one|ChartBase).demo-chart" x:DataType="local:ChartDemoViewModel">
-            <Setter Property="AnimationDuration" Value="{Binding UpdateAnimationDuration}" />
+            <Setter Property="AnimationDuration" Value="{CompiledBinding UpdateAnimationDuration}" />
             <Setter Property="AutomationProperties.Name" Value="交互图表示例" />
-            <Setter Property="IsAnimationEnabled" Value="{Binding AnimateUpdates}" />
-            <Setter Property="IsEnabled" Value="{Binding Enabled}" />
-            <Setter Property="IsLegendInteractive" Value="{Binding LegendInteractive}" />
-            <Setter Property="IsPanEnabled" Value="{Binding PanEnabled}" />
-            <Setter Property="IsSmooth" Value="{Binding Smooth}" />
-            <Setter Property="IsZoomEnabled" Value="{Binding ZoomEnabled}" />
-            <Setter Property="NavigationAxes" Value="{Binding NavigationAxes}" />
-            <Setter Property="SamplingMode" Value="{Binding SamplingMode}" />
+            <Setter Property="IsAnimationEnabled" Value="{CompiledBinding AnimateUpdates}" />
+            <Setter Property="IsEnabled" Value="{CompiledBinding Enabled}" />
+            <Setter Property="IsLegendInteractive" Value="{CompiledBinding LegendInteractive}" />
+            <Setter Property="IsPanEnabled" Value="{CompiledBinding PanEnabled}" />
+            <Setter Property="IsSmooth" Value="{CompiledBinding Smooth}" />
+            <Setter Property="IsZoomEnabled" Value="{CompiledBinding ZoomEnabled}" />
+            <Setter Property="NavigationAxes" Value="{CompiledBinding NavigationAxes}" />
+            <Setter Property="SamplingMode" Value="{CompiledBinding SamplingMode}" />
             <Setter Property="SamplingPointBudget" Value="2000" />
             <Setter Property="SamplingThreshold" Value="2000" />
-            <Setter Property="SecondaryUnit" Value="{Binding SecondaryUnit}" />
-            <Setter Property="SecondaryYAxisTitle" Value="{Binding SecondaryAxisTitle}" />
-            <Setter Property="SelectedIndex" Value="{Binding SelectedPoint, Mode=TwoWay}" />
-            <Setter Property="SelectedSeriesIndex" Value="{Binding SelectedSeries, Mode=TwoWay}" />
-            <Setter Property="SeriesSource" Value="{Binding Series}" />
-            <Setter Property="ShowCrosshair" Value="{Binding ShowCrosshair}" />
-            <Setter Property="ShowDataLabels" Value="{Binding ShowDataLabels}" />
-            <Setter Property="ShowGrid" Value="{Binding ShowGrid}" />
-            <Setter Property="ShowLegend" Value="{Binding ShowLegend}" />
-            <Setter Property="ShowSecondaryAxis" Value="{Binding ShowSecondaryAxis}" />
-            <Setter Property="Title" Value="{Binding ChartTitle}" />
-            <Setter Property="TooltipMode" Value="{Binding TooltipMode}" />
-            <Setter Property="Unit" Value="{Binding Unit}" />
-            <Setter Property="Viewport" Value="{Binding Viewport, Mode=TwoWay}" />
-            <Setter Property="YAxisTitle" Value="{Binding PrimaryAxisTitle}" />
+            <Setter Property="SecondaryUnit" Value="{CompiledBinding SecondaryUnit}" />
+            <Setter Property="SecondaryYAxisTitle" Value="{CompiledBinding SecondaryAxisTitle}" />
+            <Setter Property="SelectedIndex" Value="{CompiledBinding SelectedPoint, Mode=TwoWay}" />
+            <Setter Property="SelectedSeriesIndex" Value="{CompiledBinding SelectedSeries, Mode=TwoWay}" />
+            <Setter Property="SeriesSource" Value="{CompiledBinding Series}" />
+            <Setter Property="ShowCrosshair" Value="{CompiledBinding ShowCrosshair}" />
+            <Setter Property="ShowDataLabels" Value="{CompiledBinding ShowDataLabels}" />
+            <Setter Property="ShowGrid" Value="{CompiledBinding ShowGrid}" />
+            <Setter Property="ShowLegend" Value="{CompiledBinding ShowLegend}" />
+            <Setter Property="ShowSecondaryAxis" Value="{CompiledBinding ShowSecondaryAxis}" />
+            <Setter Property="Title" Value="{CompiledBinding ChartTitle}" />
+            <Setter Property="TooltipMode" Value="{CompiledBinding TooltipMode}" />
+            <Setter Property="Unit" Value="{CompiledBinding Unit}" />
+            <Setter Property="Viewport" Value="{CompiledBinding Viewport, Mode=TwoWay}" />
+            <Setter Property="YAxisTitle" Value="{CompiledBinding PrimaryAxisTitle}" />
         </Style>
         <Style Selector="one|GaugeChart.demo-chart" x:DataType="local:ChartDemoViewModel">
-            <Setter Property="Value" Value="{Binding GaugeValue, Mode=TwoWay}" />
-            <Setter Property="GaugeStyle" Value="{Binding GaugeStyle}" />
-            <Setter Property="ShowGaugeNeedle" Value="{Binding GaugeNeedle}" />
-            <Setter Property="ShowGaugeTicks" Value="{Binding GaugeTicks}" />
+            <Setter Property="Value" Value="{CompiledBinding GaugeValue, Mode=TwoWay}" />
+            <Setter Property="GaugeStyle" Value="{CompiledBinding GaugeStyle}" />
+            <Setter Property="ShowGaugeNeedle" Value="{CompiledBinding GaugeNeedle}" />
+            <Setter Property="ShowGaugeTicks" Value="{CompiledBinding GaugeTicks}" />
         </Style>
     </UserControl.Styles>
     <StackPanel Spacing="18">
@@ -61,84 +61,84 @@
 
             <CheckBox
                 Content="启用图表"
-                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartEnabled" />
             <CheckBox
                 Content="对比系列"
-                IsChecked="{Binding ShowComparison, Mode=TwoWay}"
-                IsEnabled="{Binding HasComparison}"
-                IsVisible="{Binding IsCartesian}"
+                IsChecked="{CompiledBinding ShowComparison, Mode=TwoWay}"
+                IsEnabled="{CompiledBinding HasComparison}"
+                IsVisible="{CompiledBinding IsCartesian}"
                 Margin="0,0,16,8"
                 Name="ChartComparison" />
             <CheckBox
                 Content="第二系列使用副轴"
-                IsChecked="{Binding UseSecondaryAxis, Mode=TwoWay}"
-                IsVisible="{Binding IsCartesian}"
+                IsChecked="{CompiledBinding UseSecondaryAxis, Mode=TwoWay}"
+                IsVisible="{CompiledBinding IsCartesian}"
                 Margin="0,0,16,8"
                 Name="ChartSecondaryAxis" />
             <CheckBox
                 Content="副轴标签"
-                IsChecked="{Binding ShowSecondaryAxis, Mode=TwoWay}"
-                IsVisible="{Binding IsCartesian}"
+                IsChecked="{CompiledBinding ShowSecondaryAxis, Mode=TwoWay}"
+                IsVisible="{CompiledBinding IsCartesian}"
                 Margin="0,0,16,8"
                 Name="ChartSecondaryLabels" />
             <CheckBox
                 Content="大数据采样"
-                IsChecked="{Binding SamplingEnabled, Mode=TwoWay}"
-                IsVisible="{Binding IsCartesian}"
+                IsChecked="{CompiledBinding SamplingEnabled, Mode=TwoWay}"
+                IsVisible="{CompiledBinding IsCartesian}"
                 Margin="0,0,16,8"
                 Name="ChartSamplingEnabled" />
             <CheckBox
                 Content="图例"
-                IsChecked="{Binding ShowLegend, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowLegend, Mode=TwoWay}"
                 Margin="0,0,16,8" />
             <CheckBox
                 Content="网格"
-                IsChecked="{Binding ShowGrid, Mode=TwoWay}"
-                IsVisible="{Binding IsCartesian}"
+                IsChecked="{CompiledBinding ShowGrid, Mode=TwoWay}"
+                IsVisible="{CompiledBinding IsCartesian}"
                 Margin="0,0,16,8" />
             <CheckBox
                 Content="数据标签"
-                IsChecked="{Binding ShowDataLabels, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowDataLabels, Mode=TwoWay}"
                 Margin="0,0,16,8" />
         </WrapPanel>
-        <WrapPanel IsVisible="{Binding IsCartesian}">
+        <WrapPanel IsVisible="{CompiledBinding IsCartesian}">
             <CheckBox
                 Content="平滑曲线"
-                IsChecked="{Binding Smooth, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Smooth, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartSmooth" />
             <CheckBox
                 Content="十字光标"
-                IsChecked="{Binding ShowCrosshair, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ShowCrosshair, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartCrosshair" />
             <CheckBox
                 Content="共享提示"
-                IsChecked="{Binding SharedTooltip, Mode=TwoWay}"
+                IsChecked="{CompiledBinding SharedTooltip, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartSharedTooltip" />
             <CheckBox
                 Content="图例交互"
-                IsChecked="{Binding LegendInteractive, Mode=TwoWay}"
+                IsChecked="{CompiledBinding LegendInteractive, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartLegendInteractive" />
             <CheckBox
                 Content="滚轮缩放"
-                IsChecked="{Binding ZoomEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding ZoomEnabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartZoomEnabled" />
             <CheckBox
                 Content="拖动平移"
-                IsChecked="{Binding PanEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding PanEnabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartPanEnabled" />
             <ComboBox
                 AutomationProperties.Name="缩放平移方向"
                 Margin="0,0,16,8"
                 Name="ChartAxesPicker"
-                SelectedIndex="{Binding NavigationAxesIndex, Mode=TwoWay}"
+                SelectedIndex="{CompiledBinding NavigationAxesIndex, Mode=TwoWay}"
                 Width="160">
                 <ComboBoxItem Content="锁定视野" />
                 <ComboBoxItem Content="仅横向" />
@@ -174,14 +174,14 @@
         <WrapPanel>
             <CheckBox
                 Content="数据更新动效"
-                IsChecked="{Binding AnimateUpdates, Mode=TwoWay}"
+                IsChecked="{CompiledBinding AnimateUpdates, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartAnimateUpdates" />
             <ComboBox
                 AutomationProperties.Name="数据更新动效时长"
                 Margin="0,0,16,8"
                 Name="ChartAnimationSpeed"
-                SelectedIndex="{Binding AnimationDurationIndex, Mode=TwoWay}"
+                SelectedIndex="{CompiledBinding AnimationDurationIndex, Mode=TwoWay}"
                 Width="150">
                 <ComboBoxItem Content="快速 · 200 ms" />
                 <ComboBoxItem Content="标准 · 500 ms" />
@@ -204,12 +204,12 @@
             BorderThickness="1"
             CornerRadius="10"
             Padding="12">
-            <ContentControl Content="{Binding #ChartDemoRoot.ChartSample}" Name="ChartHost" />
+            <ContentControl Content="{CompiledBinding #ChartDemoRoot.ChartSample}" Name="ChartHost" />
         </Border>
         <Grid
             ColumnDefinitions="Auto,*,Auto"
             ColumnSpacing="16"
-            IsVisible="{Binding IsGauge}">
+            IsVisible="{CompiledBinding IsGauge}">
             <TextBlock Text="完成度" VerticalAlignment="Center" />
             <Slider
                 AutomationProperties.Name="仪表数值"
@@ -217,28 +217,28 @@
                 Maximum="100"
                 Minimum="0"
                 Name="ChartGaugeSlider"
-                Value="{Binding GaugeValue, Mode=TwoWay}" />
+                Value="{CompiledBinding GaugeValue, Mode=TwoWay}" />
             <TextBlock
                 Grid.Column="2"
-                Text="{Binding GaugeValue, StringFormat='{}{0:0}%'}"
+                Text="{CompiledBinding GaugeValue, StringFormat='{}{0:0}%'}"
                 VerticalAlignment="Center" />
         </Grid>
-        <WrapPanel IsVisible="{Binding IsGauge}">
+        <WrapPanel IsVisible="{CompiledBinding IsGauge}">
             <ComboBox
                 AutomationProperties.Name="仪表样式"
-                ItemsSource="{Binding GaugeStyles}"
+                ItemsSource="{CompiledBinding GaugeStyles}"
                 Margin="0,0,16,8"
                 MinWidth="160"
                 Name="ChartGaugeStyle"
-                SelectedItem="{Binding GaugeStyle, Mode=TwoWay}" />
+                SelectedItem="{CompiledBinding GaugeStyle, Mode=TwoWay}" />
             <CheckBox
                 Content="仪表指针"
-                IsChecked="{Binding GaugeNeedle, Mode=TwoWay}"
+                IsChecked="{CompiledBinding GaugeNeedle, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartGaugeNeedle" />
             <CheckBox
                 Content="仪表刻度"
-                IsChecked="{Binding GaugeTicks, Mode=TwoWay}"
+                IsChecked="{CompiledBinding GaugeTicks, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartGaugeTicks" />
         </WrapPanel>
@@ -281,7 +281,7 @@
             <Button
                 Click="OnLastPoint"
                 Content="选择末尾数据"
-                IsEnabled="{Binding IsCartesian}"
+                IsEnabled="{CompiledBinding IsCartesian}"
                 Margin="0,0,8,8"
                 Name="LastChartPoint" />
             <Button
@@ -298,36 +298,36 @@
                 <TextBlock
                     AutomationProperties.LiveSetting="Polite"
                     Name="ChartSelectionLabel"
-                    Text="{Binding SelectedDetail}"
+                    Text="{CompiledBinding SelectedDetail}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Classes="helper"
                     Name="ChartDataStatus"
-                    Text="{Binding Status}" />
+                    Text="{CompiledBinding Status}" />
                 <TextBlock
                     Classes="helper"
                     Name="ChartExportStatus"
-                    Text="{Binding ExportStatus}" />
+                    Text="{CompiledBinding ExportStatus}" />
                 <TextBlock
                     Classes="helper"
-                    IsVisible="{Binding IsCartesian}"
+                    IsVisible="{CompiledBinding IsCartesian}"
                     Name="ChartViewportStatus"
-                    Text="{Binding NavigationStatus}" />
-                <WrapPanel IsVisible="{Binding IsCartesian}">
+                    Text="{CompiledBinding NavigationStatus}" />
+                <WrapPanel IsVisible="{CompiledBinding IsCartesian}">
                     <TextBlock
                         Classes="helper"
                         Margin="0,0,16,0"
                         Name="ChartHoveredCount"
-                        Text="{Binding #ChartDemoRoot.ChartSample.HoveredPoints.Count, StringFormat='当前对齐 {0} 个系列'}" />
+                        Text="{CompiledBinding #ChartDemoRoot.ChartSample.HoveredPoints.Count, StringFormat='当前对齐 {0} 个系列'}" />
                     <TextBlock
                         Classes="helper"
                         Margin="0,0,16,0"
                         Name="ChartRenderedCount"
-                        Text="{Binding #ChartDemoRoot.ChartSample.RenderedPointCount, StringFormat='实际绘制 {0:N0} 个顶点'}" />
+                        Text="{CompiledBinding #ChartDemoRoot.ChartSample.RenderedPointCount, StringFormat='实际绘制 {0:N0} 个顶点'}" />
                     <TextBlock
                         Classes="helper"
                         Name="ChartSamplingState"
-                        Text="{Binding #ChartDemoRoot.ChartSample.SamplingActive, StringFormat='采样生效：{0}'}" />
+                        Text="{CompiledBinding #ChartDemoRoot.ChartSample.SamplingActive, StringFormat='采样生效：{0}'}" />
                 </WrapPanel>
             </StackPanel>
         </Border>

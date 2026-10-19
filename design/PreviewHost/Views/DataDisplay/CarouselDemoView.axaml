@@ -23,29 +23,29 @@
         <WrapPanel>
             <CheckBox
                 Content="允许拖动"
-                IsChecked="{Binding Swipe, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Swipe, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="EnableSwipe" />
             <CheckBox
                 Content="循环切换"
-                IsChecked="{Binding Wrap, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Wrap, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="WrapPages" />
             <CheckBox
                 Content="过渡效果"
-                IsChecked="{Binding Animate, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Animate, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="AnimatePages" />
             <CheckBox
                 Content="启用轮播"
-                IsChecked="{Binding Enabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="EnableCarousel" />
             <ComboBox
                 AutomationProperties.Name="页面显示比例"
                 Margin="0,0,0,8"
                 Name="ViewportPicker"
-                SelectedIndex="{Binding ViewportIndex, Mode=TwoWay}"
+                SelectedIndex="{CompiledBinding ViewportIndex, Mode=TwoWay}"
                 Width="160">
                 <ComboBoxItem Content="完整页面" />
                 <ComboBoxItem Content="显示相邻页面" />
@@ -54,13 +54,13 @@
         <Carousel
             AutomationProperties.Name="一千项内容轮播"
             Height="340"
-            IsEnabled="{Binding Enabled}"
-            IsSwipeEnabled="{Binding Swipe}"
-            ItemsSource="{Binding Slides}"
+            IsEnabled="{CompiledBinding Enabled}"
+            IsSwipeEnabled="{CompiledBinding Swipe}"
+            ItemsSource="{CompiledBinding Slides}"
             Name="CarouselSample"
-            SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-            ViewportFraction="{Binding ViewportFraction}"
-            WrapSelection="{Binding Wrap}">
+            SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
+            ViewportFraction="{CompiledBinding ViewportFraction}"
+            WrapSelection="{CompiledBinding Wrap}">
             <Carousel.ItemTemplate>
                 <DataTemplate x:DataType="local:CarouselSlide">
                     <Border
@@ -91,7 +91,7 @@
                                         FontWeight="SemiBold"
                                         Foreground="{DynamicResource One.Accent}"
                                         HorizontalAlignment="Center"
-                                        Text="{Binding Number, StringFormat='{}{0:0000}'}" />
+                                        Text="{CompiledBinding Number, StringFormat='{}{0:0000}'}" />
                                 </StackPanel>
                             </Border>
                             <StackPanel
@@ -101,20 +101,20 @@
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="{DynamicResource One.Muted}"
-                                    Text="{Binding Category}" />
+                                    Text="{CompiledBinding Category}" />
                                 <TextBlock
                                     FontSize="22"
                                     FontWeight="SemiBold"
                                     Name="SlideTitle"
-                                    Text="{Binding Title}"
+                                    Text="{CompiledBinding Title}"
                                     TextWrapping="Wrap" />
                                 <TextBlock
                                     Name="SlideDescription"
-                                    Text="{Binding Description}"
+                                    Text="{CompiledBinding Description}"
                                     TextWrapping="Wrap" />
                                 <Button
-                                    Command="{Binding $parent[local:CarouselDemoView].Model.SlideActionCommand}"
-                                    CommandParameter="{Binding}"
+                                    Command="{CompiledBinding $parent[local:CarouselDemoView].Model.SlideActionCommand}"
+                                    CommandParameter="{CompiledBinding}"
                                     Content="查看详情"
                                     HorizontalAlignment="Left"
                                     Name="SlideAction" />
@@ -126,22 +126,22 @@
         </Carousel>
         <Grid ColumnDefinitions="Auto,*,Auto">
             <Button
-                Command="{Binding PreviousCommand}"
+                Command="{CompiledBinding PreviousCommand}"
                 Content="上一页"
-                IsEnabled="{Binding CanPrevious}"
+                IsEnabled="{CompiledBinding CanPrevious}"
                 Name="PreviousPage" />
             <TextBlock
                 FontWeight="SemiBold"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 Name="PagePosition"
-                Text="{Binding Position}"
+                Text="{CompiledBinding Position}"
                 VerticalAlignment="Center" />
             <Button
-                Command="{Binding NextCommand}"
+                Command="{CompiledBinding NextCommand}"
                 Content="下一页"
                 Grid.Column="2"
-                IsEnabled="{Binding CanNext}"
+                IsEnabled="{CompiledBinding CanNext}"
                 Name="NextPage" />
         </Grid>
         <Separator />
@@ -152,25 +152,25 @@
                 Maximum="1000"
                 Minimum="1"
                 Name="PageIndex"
-                Value="{Binding Target, Mode=TwoWay}"
+                Value="{CompiledBinding Target, Mode=TwoWay}"
                 Width="144" />
             <Button
-                Command="{Binding JumpCommand}"
+                Command="{CompiledBinding JumpCommand}"
                 Content="跳转"
                 Margin="0,0,8,8"
                 Name="JumpPage" />
             <Button
-                Command="{Binding LastCommand}"
+                Command="{CompiledBinding LastCommand}"
                 Content="最后一页"
                 Margin="0,0,8,8"
                 Name="LastPage" />
             <Button
-                Command="{Binding ReverseCommand}"
+                Command="{CompiledBinding ReverseCommand}"
                 Content="快速往返"
                 Margin="0,0,8,8"
                 Name="ReversePages" />
             <Button
-                Command="{Binding ResetCommand}"
+                Command="{CompiledBinding ResetCommand}"
                 Content="重置"
                 Margin="0,0,8,8"
                 Name="ResetCarousel" />
@@ -178,7 +178,7 @@
         <TextBlock
             Classes="helper"
             Name="CarouselMetrics"
-            Text="{Binding Metrics}" />
+            Text="{CompiledBinding Metrics}" />
         <Border
             Background="{DynamicResource One.Subtle}"
             CornerRadius="8"
@@ -186,7 +186,7 @@
             <StackPanel Spacing="6">
                 <TextBlock
                     Name="CarouselStatus"
-                    Text="{Binding Status}"
+                    Text="{CompiledBinding Status}"
                     TextWrapping="Wrap" />
                 <TextBlock Classes="helper" Text="聚焦轮播后使用 ← / →、Home / End；拖动页面可切换，开启循环后可跨越首尾页。" />
             </StackPanel>
@@ -195,9 +195,9 @@
         <Carousel
             Height="180"
             IsSwipeEnabled="True"
-            ItemsSource="{Binding Slides}"
+            ItemsSource="{CompiledBinding Slides}"
             Name="CompactCarouselSample"
-            SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+            SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
             ViewportFraction="0.8"
             WrapSelection="True">
             <Carousel.ItemTemplate>
@@ -208,11 +208,11 @@
                         Margin="8"
                         Padding="20">
                         <StackPanel Spacing="8" VerticalAlignment="Center">
-                            <TextBlock Foreground="{DynamicResource One.Accent}" Text="{Binding Category}" />
+                            <TextBlock Foreground="{DynamicResource One.Accent}" Text="{CompiledBinding Category}" />
                             <TextBlock
                                 FontSize="20"
                                 FontWeight="SemiBold"
-                                Text="{Binding Title}"
+                                Text="{CompiledBinding Title}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>

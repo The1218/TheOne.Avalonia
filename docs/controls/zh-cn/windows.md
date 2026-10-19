@@ -1,5 +1,7 @@
 # OneWindow、LoginWindow 与窗口服务
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/windows.md)
 
 OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 Content / ContentTemplate、所有者、Closing、窗口状态和平台窗口生命周期；标题栏、消息与对话框位于模板中，不把业务 Content 包装后重新赋值。
@@ -93,8 +95,6 @@ ShowContentAsync 也支持模型与显式 contentTemplate。Control 内容不能
 
 窗口关闭时清理活动和排队请求，防止等待悬空；关闭被取消时继续保留宿主。自定义 OneWindow / LoginWindow 模板必须保留 PART_VisualLayerManager、PART_ContentPresenter、PART_Notifications、PART_Toasts、PART_DialogShield 和 PART_DialogLayer，标题栏自定义继续遵循相应 PART_*。缺失消息部件时 API 报错。
 
-PreviewHost 的“消息与对话框”保留 Toast、Dialog、Notification 独立页面，支持类型、正文、尺寸及动效配置；Toast 不提供标题配置，Notification 和 Dialog 保留标题。通知／Toast 支持位置、显示上限、停留秒数、自动／手动关闭和回调状态；Dialog 支持标题栏、关闭按钮、确认按钮组合、蒙层与 Esc 关闭及 VM 表单返回。OneWindow、LoginWindow、NotificationCard 不再作为目录展示页，控件和底层回归保留；ThemeButton 位于 Button 示例。独立编译绑定与原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
-
 ## 泛型 VM 对话框
 
 ```csharp
@@ -132,8 +132,6 @@ public sealed class EditorViewModel : DialogContext
 RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关联的请求；父页面 await 得到 OneDialogResult。该事件支持后台线程触发，排队中的 VM 也可以主动结束，不会创建其 View 或影响当前对话框。关闭按钮、可选蒙层点击返回 Closed；Escape 返回 Cancel；取消令牌取消 Task；宿主关闭返回 Closed。
 
 完成、取消或宿主关闭都会解绑关闭事件，同一个 VM 可顺序复用。为避免同一个关闭事件误关多个窗口，同一个 DialogContext 不允许同时用于多个请求；同时调用返回故障 Task。千条泛型请求验证仅创建当前显示的一个 View，其余只保留请求数据。PreviewHost「消息与对话框 → Dialog」中的自定义表单可切换标题、关闭按钮、蒙层及 Escape 选项，并通过编译绑定的内部保存／取消命令验证返回值。
-
-Toast 独立检查由 NativeAotSmoke 的 `--verify-toast` 提供，覆盖明暗主题、三档尺寸、四种状态、窄窗口多行居中、回调与自动消失；托管运行不传 `--require-aot`。只有涉及 AOT／绑定／元数据时，才发布并实跑原生产物，附加 `--require-aot`。只构建所需消费项目，使用任务独立产物目录，见[接入与验证约定](../../integration/zh-cn/README.md#6-执行顺序与验收)。PreviewHost 的 `--verify-buttons-messages` 是按钮与消息组合入口，不是 Toast 独占入口。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

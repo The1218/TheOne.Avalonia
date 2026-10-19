@@ -1,5 +1,7 @@
 # ColorPicker and ColorView
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/color-picker.md) · [Controls](README.md)
 
 `OneTheme` includes the official `Avalonia.Controls.ColorPicker` **12.1.4** package
@@ -40,12 +42,6 @@ values Small/Normal/Large provide 30/36/44 px dropdown and text input
 heights. The inline view adapts its native content to widths from 280 to 340 px.
 Disabling a control retains the official input behavior and adds themed feedback.
 The spectrum supports Tab focus and the official arrow-key color adjustment.
-
-The PreviewHost navigation page is **ColorPicker**. `--colorpicker` opens a
-standalone demo; `--verify-colorpicker [output]` runs only ColorPicker / ColorView
-layout, theme, binding, pointer, keyboard and pixel checks.
-`--verify-colorpicker-model-spacing [output]` checks only model-button spacing,
-label fit, native pointer / keyboard switching and gap pixels across themes and sizes.
 
 The official package supplies all control logic and base templates:
 [Avalonia ColorPicker documentation](https://docs.avaloniaui.net/controls/input/selectors/colorpicker).

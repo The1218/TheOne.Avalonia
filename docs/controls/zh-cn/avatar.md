@@ -1,5 +1,7 @@
 # Avatar 头像
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/avatar.md)
 
 `Avatar` 展示本地或网络图片，无图片时显示最多两个 Unicode 文本元素或默认人物图标。使用前加载 `OneTheme`。头像本身用于展示；需要个人资料等点击操作时，将其放入原生 `Button`。
@@ -28,8 +30,6 @@
 图片在挂载到可视树后加载；切换 Source 或移除控件会取消未完成任务，旧响应不会覆盖新头像。控件创建的位图在替换或移除时释放，外部传入的 `IImage` 仍由调用方持有。重新挂载会再次加载当前来源。本地文件和网络响应在后台解码；网络加载总超时 30 秒，响应最大 16 MiB。不提供持久图片缓存、登录认证界面、SVG 解码或动态图播放。相对文件路径基于进程工作目录，HTTPS 使用平台正常证书校验。
 
 加载中及 HTTP、文件、解码失败时均保留占位。伪类为 `:loading`、`:error`、`:has-image`、`:has-text`。默认模板保留 `PART_Surface`、`PART_Fallback`、`PART_Icon`、`PART_Text`、`PART_Image`。用 `AutomationProperties.Name` 标注人物身份；未指定时，无障碍名称使用 Text，最后回退为“Avatar”。
-
-预览入口为“扩展控件 / Avatar”。运行 `dotnet run --project design/PreviewHost -- --verify-avatar .preview/avatar`，检查本地／HTTP 加载、取消、外部图片所有权、密度、Unicode 占位与实际裁剪像素，并导出明暗主题及窄视口截图。原生消费程序支持 `--require-aot --verify-avatar .preview/avatar-native`。网络专项使用可重复的本机 HTTP 服务，不依赖第三方图片网站。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

@@ -46,6 +46,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
 | [ReportDesign 报表设计器](report-design.md) | 自由拖放、固定页眉页脚、接口／图片地址、MVVM JSON 保存与 PDF |
+| [QRCode 二维码](qr-code.md) | 矢量二维码、UTF-8 内容、纠错等级、静区和报表字段绑定 |
 | [ReportPreview 报表预览](report-preview.md) | JSON 只读报表、接口数据与图片、分页浏览、PDF 导出及桌面打印 |
 | [RelationGraph 树形关系图](relation-graph.md) | 单根树、横纵布局、默认 / 自定义模型、ChildrenSource 编译绑定、SelectItem 选择与空值布局 |
 | [Pagination 分页](pagination.md) | 标准／紧凑布局、每页条数、跳页与边界状态 |

@@ -19,7 +19,7 @@ public static class WorkflowSerializer
                 Ports = n.Ports.ToArray(),
                 Properties = n.Properties.Select(p =>
                     new WorkflowPropertySnapshot(p.Key, p.Title, p.DataType, p.Kind, p.IsRequired, p.Value,
-                        p.Reference)).ToArray()
+                        p.Reference, p.SelectedKeys.Count == 0 ? null : p.SelectedKeys.ToArray())).ToArray()
             }).ToArray(),
             Connections = document.Connections.Select(c =>
                 new WorkflowConnectionSnapshot(c.Id, c.SourceNodeId, c.SourcePortId, c.TargetNodeId, c.TargetPortId,
@@ -50,7 +50,8 @@ public static class WorkflowSerializer
                 throw new JsonException("Invalid port identity, fields or direction.");
             if (n.Properties.Any(p =>
                     p is null || string.IsNullOrWhiteSpace(p.Key) || string.IsNullOrWhiteSpace(p.DataType) ||
-                    !Enum.IsDefined(p.Kind) ||
+                    !Enum.IsDefined(p.Kind) || p.SelectedKeys?.Any(string.IsNullOrWhiteSpace) == true ||
+                    (p.SelectedKeys is { } keys && keys.Distinct(StringComparer.Ordinal).Count() != keys.Length) ||
                     (p.Reference is { } r && (string.IsNullOrWhiteSpace(r.NodeId) ||
                                               string.IsNullOrWhiteSpace(r.OutputPortId) || r.FieldPath is null))) ||
                 n.Properties.Select(p => p.Key).Distinct().Count() != n.Properties.Length)
@@ -64,11 +65,15 @@ public static class WorkflowSerializer
             };
             foreach (var p in n.Ports) node.Ports.Add(p);
             foreach (var p in n.Properties)
-                node.Properties.Add(new WorkflowProperty
+            {
+                var property = new WorkflowProperty
                 {
                     Key = p.Key, Title = p.Title, DataType = p.DataType, Kind = p.Kind, IsRequired = p.IsRequired,
                     Value = p.Value, Reference = p.Reference
-                });
+                };
+                foreach (var key in p.SelectedKeys ?? []) property.SelectedKeys.Add(key);
+                node.Properties.Add(property);
+            }
             doc.Nodes.Add(node);
         }
 
@@ -120,7 +125,8 @@ internal sealed record WorkflowPropertySnapshot(
     WorkflowValueKind Kind,
     bool IsRequired,
     string Value,
-    WorkflowDataReference? Reference);
+    WorkflowDataReference? Reference,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] string[]? SelectedKeys = null);
 
 internal sealed record WorkflowConnectionSnapshot(
     string Id,

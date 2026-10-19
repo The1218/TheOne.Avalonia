@@ -1,5 +1,7 @@
 # Form and FormItem
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 `Form` provides validation and a submission entry point for editing pages, reusing `VerificationStep`'s `IStepValidator`, `StepValidation.For<T>`, `StepValidationError`, and `StepCompareAttribute`. `FormItem` adds labels, required markers, help text, and field errors around caller-owned native input. Load `OneTheme`; no additional package or theme is required.
 
 ## Compiled bindings and setup
@@ -101,15 +103,6 @@ This version uses explicit fields and templates rather than a standalone automat
 ## Preview and focused checks
 
 PreviewHost: **Extensions → Form**.
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/form/artifacts
-dotnet .preview/form/artifacts/bin/PreviewHost/debug/PreviewHost.dll --verify-form .preview/form/screenshots
-```
-
-The check runs only Form / FormItem: compiled bindings, attributes and conversion errors, label association, real key/pointer input, cancellation and stale results, command availability, nested ownership, template replacement, reattachment, and rendering/pixels across light/dark × three densities × wide/narrow viewports. Shared field changes additionally run `--verify-verification-step`, without Tag or full-library regression.
-
-`design/PreviewHost/Consumers/NativeAotSmoke` reuses this check. For binding/metadata changes, publish and execute the native program with `--require-aot --verify-form`. Managed checks and cross-RID builds do not establish target-platform native execution or screen-reader validation.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

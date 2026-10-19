@@ -23,19 +23,19 @@
             <TextBlock
                 FontWeight="SemiBold"
                 HorizontalAlignment="Center"
-                Text="{Binding Title}"
+                Text="{CompiledBinding Title}"
                 TextWrapping="Wrap" />
             <TextBlock
                 Foreground="{DynamicResource One.Muted}"
                 HorizontalAlignment="Center"
-                Text="{Binding Description}"
+                Text="{CompiledBinding Description}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
             <Button
                 AutomationProperties.Name="选择上传图片"
                 Classes="primary"
-                Command="{Binding SelectCommand}"
-                Content="{Binding SelectText}"
+                Command="{CompiledBinding SelectCommand}"
+                Content="{CompiledBinding SelectText}"
                 HorizontalAlignment="Center"
                 Name="PART_Select" />
         </StackPanel>
@@ -50,30 +50,30 @@
                 <Grid>
                     <Image
                         Name="PART_Preview"
-                        Source="{Binding PreviewImage}"
+                        Source="{CompiledBinding PreviewImage}"
                         Stretch="Uniform" />
                     <PathIcon
                         Data="M5,2 L14,2 L20,8 L20,22 L4,22 L4,2 Z M6,4 L6,20 L18,20 L18,9 L13,9 L13,4 Z M15,5 L15,7 L17,7 Z M8,12 L16,12 L16,14 L8,14 Z M8,16 L14,16 L14,18 L8,18 Z"
                         Foreground="{DynamicResource One.Muted}"
                         Height="44"
-                        IsVisible="{Binding !HasPreview}"
+                        IsVisible="{CompiledBinding !HasPreview}"
                         Width="44" />
                     <one:LoadingIndicator
                         HorizontalAlignment="Center"
-                        IsVisible="{Binding IsPreviewLoading}"
+                        IsVisible="{CompiledBinding IsPreviewLoading}"
                         VerticalAlignment="Center" />
                 </Grid>
             </Border>
             <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
                 <TextBlock
                     FontWeight="SemiBold"
-                    Text="{Binding SelectedFile.Name}"
+                    Text="{CompiledBinding SelectedFile.Name}"
                     TextTrimming="CharacterEllipsis"
                     VerticalAlignment="Center" />
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
                     Grid.Column="1"
-                    Text="{Binding SelectedFile.SizeText}"
+                    Text="{CompiledBinding SelectedFile.SizeText}"
                     VerticalAlignment="Center" />
             </Grid>
         </StackPanel>
@@ -81,20 +81,20 @@
     <DataTemplate x:DataType="one:Upload" x:Key="One.Upload.ActionsTemplate">
         <WrapPanel>
             <Button
-                Command="{Binding SelectCommand}"
-                Content="{Binding ReplaceText}"
+                Command="{CompiledBinding SelectCommand}"
+                Content="{CompiledBinding ReplaceText}"
                 Margin="0,0,8,8"
                 Name="PART_Replace" />
             <Button
                 Classes="ghost"
-                Command="{Binding RemoveCommand}"
-                Content="{Binding RemoveText}"
+                Command="{CompiledBinding RemoveCommand}"
+                Content="{CompiledBinding RemoveText}"
                 Margin="0,0,8,8"
                 Name="PART_Remove" />
             <Button
                 Classes="primary"
-                Command="{Binding RequestUploadCommand}"
-                Content="{Binding UploadText}"
+                Command="{CompiledBinding RequestUploadCommand}"
+                Content="{CompiledBinding UploadText}"
                 Margin="0,0,0,8"
                 Name="PART_Upload" />
         </WrapPanel>
@@ -123,11 +123,11 @@
                     Padding="{TemplateBinding Padding}">
                     <StackPanel Spacing="12">
                         <ContentPresenter
-                            Content="{Binding $parent[one:Upload]}"
+                            Content="{CompiledBinding $parent[one:Upload]}"
                             ContentTemplate="{TemplateBinding EmptyTemplate}"
                             Name="PART_Empty" />
                         <ContentPresenter
-                            Content="{Binding $parent[one:Upload]}"
+                            Content="{CompiledBinding $parent[one:Upload]}"
                             ContentTemplate="{TemplateBinding FileTemplate}"
                             IsVisible="False"
                             Name="PART_File" />
@@ -150,7 +150,7 @@
                             Text="{TemplateBinding ErrorMessage}"
                             TextWrapping="Wrap" />
                         <ContentPresenter
-                            Content="{Binding $parent[one:Upload]}"
+                            Content="{CompiledBinding $parent[one:Upload]}"
                             ContentTemplate="{TemplateBinding ActionsTemplate}"
                             IsVisible="False"
                             Name="PART_Actions" />

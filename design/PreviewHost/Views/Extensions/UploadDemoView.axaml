@@ -13,11 +13,11 @@
                     BorderThickness="1" CornerRadius="12" Padding="20">
                 <StackPanel Spacing="14">
                     <TextBlock Text="单图上传" FontWeight="SemiBold" FontSize="16" />
-                    <one:Upload Name="UploadSample" SelectedFile="{Binding File}" UploadCommand="{Binding ReadCommand}"
-                                IsBusy="{Binding IsBusy}" Progress="{Binding Progress}" StatusText="{Binding Status}"
+                    <one:Upload Name="UploadSample" SelectedFile="{CompiledBinding File}" UploadCommand="{CompiledBinding ReadCommand}"
+                                IsBusy="{CompiledBinding IsBusy}" Progress="{CompiledBinding Progress}" StatusText="{CompiledBinding Status}"
                                 UploadText="读取文件" Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440"
                                 HorizontalAlignment="Stretch" />
-                    <Button Content="使用内置示例图片" Command="{Binding ExampleCommand}" />
+                    <Button Content="使用内置示例图片" Command="{CompiledBinding ExampleCommand}" />
                     <TextBlock Text="点击“读取文件”演示宿主获取 UploadFile 并打开流；不连接服务器、不模拟网络成功。" TextWrapping="Wrap"
                                Foreground="{DynamicResource One.Muted}" />
                 </StackPanel>
@@ -29,24 +29,24 @@
                     <TextBlock Text="填写支持 multipart/form-data 的真实接口，选好图片后点击“上传文件”。接口地址默认留空，选择文件不会发送请求。"
                                TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
                     <TextBlock Text="UploadApi · 上传地址" FontWeight="SemiBold" />
-                    <TextBox Name="UploadApiInput" Text="{Binding UploadApi, Mode=TwoWay}"
+                    <TextBox Name="UploadApiInput" Text="{CompiledBinding UploadApi, Mode=TwoWay}"
                              PlaceholderText="https://your-server.example/api/upload" />
                     <WrapPanel>
                         <StackPanel Spacing="6" Margin="0,0,16,8">
                             <TextBlock Text="RequestType · 请求方式" />
-                            <ComboBox Name="UploadRequestTypeInput" ItemsSource="{Binding RequestTypes}"
-                                      SelectedItem="{Binding RequestType, Mode=TwoWay}" MinWidth="140" />
+                            <ComboBox Name="UploadRequestTypeInput" ItemsSource="{CompiledBinding RequestTypes}"
+                                      SelectedItem="{CompiledBinding RequestType, Mode=TwoWay}" MinWidth="140" />
                         </StackPanel>
-                        <Button Content="使用内置示例图片" Command="{Binding ApiExampleCommand}" VerticalAlignment="Bottom"
+                        <Button Content="使用内置示例图片" Command="{CompiledBinding ApiExampleCommand}" VerticalAlignment="Bottom"
                                 Margin="0,0,0,8" />
                     </WrapPanel>
-                    <one:Upload Name="ApiUploadSample" SelectedFile="{Binding ApiFile, Mode=TwoWay}"
-                                UploadApi="{Binding UploadApi, Mode=TwoWay}" RequestType="{Binding RequestType}"
-                                SuccessFileUrl="{Binding SuccessFileUrl, Mode=TwoWay}"
+                    <one:Upload Name="ApiUploadSample" SelectedFile="{CompiledBinding ApiFile, Mode=TwoWay}"
+                                UploadApi="{CompiledBinding UploadApi, Mode=TwoWay}" RequestType="{CompiledBinding RequestType}"
+                                SuccessFileUrl="{CompiledBinding SuccessFileUrl, Mode=TwoWay}"
                                 Description="PNG、JPG、WebP、BMP、GIF · 最大 10 MB" MaxWidth="440"
                                 HorizontalAlignment="Stretch" />
                     <TextBlock Text="SuccessFileUrl · 上传成功后的网络路径" FontWeight="SemiBold" />
-                    <TextBox Name="UploadSuccessFileUrl" Text="{Binding SuccessFileUrl, Mode=OneWay}" IsReadOnly="True"
+                    <TextBox Name="UploadSuccessFileUrl" Text="{CompiledBinding SuccessFileUrl, Mode=OneWay}" IsReadOnly="True"
                              PlaceholderText="有效响应解析后显示，可选中复制" />
                     <TextBlock
                         Text="请求包含 filename 文本字段和 filedata 文件字段。响应需包含带有受支持文件后缀的 HTTP(S) 绝对 URL；仅返回 2xx 状态码不代表上传完成。"
@@ -59,22 +59,22 @@
                     <one:Upload Width="280" Margin="0,0,16,16" styling:ControlSizing.Size="Small" Title="选择封面图片"
                                 Description="单张图片 · 默认 Small" />
                     <one:Upload Width="280" Margin="0,0,0,16" styling:ControlSizing.Size="Small"
-                                SelectedFile="{Binding ExampleFile}" IsEnabled="False" StatusText="此图片当前不可编辑" />
+                                SelectedFile="{CompiledBinding ExampleFile}" IsEnabled="False" StatusText="此图片当前不可编辑" />
                 </WrapPanel>
             </StackPanel>
             <StackPanel Spacing="12">
                 <TextBlock Text="自定义文件模板" FontSize="16" FontWeight="SemiBold" />
-                <one:Upload MaxWidth="360" HorizontalAlignment="Stretch" SelectedFile="{Binding ExampleFile}"
-                            UploadCommand="{Binding ReadCommand}" IsBusy="{Binding IsBusy}" UploadText="读取文件">
+                <one:Upload MaxWidth="360" HorizontalAlignment="Stretch" SelectedFile="{CompiledBinding ExampleFile}"
+                            UploadCommand="{CompiledBinding ReadCommand}" IsBusy="{CompiledBinding IsBusy}" UploadText="读取文件">
                     <one:Upload.FileTemplate>
                         <DataTemplate x:DataType="one:Upload">
                             <Grid ColumnDefinitions="72,*" ColumnSpacing="14">
                                 <Border Height="72" Width="72" CornerRadius="8" ClipToBounds="True"
                                         Background="{DynamicResource One.Subtle}">
-                                    <Image Source="{Binding PreviewImage}" Stretch="UniformToFill" />
+                                    <Image Source="{CompiledBinding PreviewImage}" Stretch="UniformToFill" />
                                 </Border>
                                 <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding SelectedFile.Name}" FontWeight="SemiBold"
+                                    <TextBlock Text="{CompiledBinding SelectedFile.Name}" FontWeight="SemiBold"
                                                TextTrimming="CharacterEllipsis" />
                                     <TextBlock Text="自定义横向布局" Foreground="{DynamicResource One.Muted}" />
                                 </StackPanel>

@@ -1,5 +1,7 @@
 # 图标按钮与操作层次
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/icon-button.md)
 
 IconButton 继承官方 Button，保留 Command、CommandParameter、Click、键盘、焦点、Flyout 与禁用行为。只需加载 OneTheme。Icon 为独立属性，Content 继续用于文字／内容；IconTemplate 用于数据图标。IconPlacement 支持 Left（默认）、Right、Top、Bottom，图标与文字始终居中排列，缺少图标或文字时不保留空白间隔。IsLoading 会用加载图标替换原图标并阻止重复操作，详见[加载控件](loading.md)。IconSize、IconSpacing 可通过样式或绑定覆盖，默认随 small / normal / large 使用 13 / 15 / 19px 图标。空 Icon 不占位，空 Content 使用方形图标按钮；纯图标按钮须配置 AutomationProperties.Name 与 Tooltip。
@@ -28,8 +30,6 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 ```
 
 官方 Button 与 IconButton 共用 primary/accent、soft、gradient、outline、ghost、link、success、info、warning、danger 样式。默认样式用于次要操作；primary 推进主要流程，ghost 为轻操作，outline 强调边界，success/info/warning/danger 表达完成、提示、风险与危险操作。悬停、按下、焦点、禁用保留原生状态与 TheOne 语义色。每组按钮宜只保留一个主要操作，文字明确说明操作。
-
-编译绑定声明视图 x:DataType；数据 IconTemplate 声明图标数据类型。实现使用 StyledProperty、TemplateBinding 与编译模板，不反射创建图标。独立编译绑定和原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

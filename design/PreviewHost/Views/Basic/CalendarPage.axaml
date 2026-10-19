@@ -13,13 +13,13 @@
             Foreground="{DynamicResource One.Muted}"
             Text="月份 / 年份 / 十年视图"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <Calendar
                     Margin="0,0,12,12"
                     Name="ControlSample"
-                    SelectedDate="{Binding CalendarDate, Mode=TwoWay}" />
+                    SelectedDate="{CompiledBinding CalendarDate, Mode=TwoWay}" />
                 <Calendar DisplayMode="Year" Margin="0,0,12,12" />
                 <Calendar DisplayMode="Decade" Margin="0,0,12,12" />
             </WrapPanel>

@@ -13,32 +13,32 @@
             Foreground="{DynamicResource One.Muted}"
             Text="标准格式 / 精简格式 / 禁用 · 保留原生日期与时间弹窗"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <TimePicker
                     ClockIdentifier="24HourClock"
                     Margin="0,0,12,12"
                     Name="ControlSample"
-                    SelectedTime="{Binding Time, Mode=TwoWay}"
+                    SelectedTime="{CompiledBinding Time, Mode=TwoWay}"
                     UseSeconds="True" />
                 <TimePicker
                     ClockIdentifier="12HourClock"
                     Margin="0,0,12,12"
-                    SelectedTime="{Binding Time, Mode=TwoWay}"
+                    SelectedTime="{CompiledBinding Time, Mode=TwoWay}"
                     UseSeconds="False" />
                 <TimePicker
                     IsEnabled="False"
                     Margin="0,0,12,12"
-                    SelectedTime="{Binding Time}" />
+                    SelectedTime="{CompiledBinding Time}" />
             </WrapPanel>
         </StackPanel>
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <TimePicker
                 Classes="filled"
                 Name="FilledTimeSample"
-                SelectedTime="{Binding Time, Mode=TwoWay}" />
+                SelectedTime="{CompiledBinding Time, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </local:BasicControlPage>

@@ -7,7 +7,7 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Grid ColumnDefinitions="Auto,*" Background="{TemplateBinding Background}">
-                    <Border Width="{Binding #PART_Menu.Width}" ClipToBounds="True">
+                    <Border Width="{CompiledBinding #PART_Menu.Width}" ClipToBounds="True">
                         <Grid RowDefinitions="Auto,*,Auto">
                             <Grid MinHeight="64">
                                 <Grid Name="PART_DefaultHeader" ColumnDefinitions="Auto,*" Margin="8">
@@ -20,7 +20,7 @@
                                 </Grid>
                                 <ContentPresenter Name="PART_Header" />
                             </Grid>
-                            <one:NavMenu Name="PART_Menu" Grid.Row="1"
+                            <one:NavMenu x:Name="PART_Menu" Grid.Row="1"
                                          ExpandedWidth="{TemplateBinding ExpandedWidth}"
                                          CollapsedWidth="{TemplateBinding CollapsedWidth}"
                                          IsCollapsed="{TemplateBinding IsCollapsed, Mode=TwoWay}"

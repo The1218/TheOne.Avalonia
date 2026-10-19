@@ -7,24 +7,24 @@
         <TextBlock Text="标准 / 紧凑布局 · 页码导航 · 每页条数 · 跳页 · 窄视口自动切换布局" TextWrapping="Wrap"
                    Foreground="{DynamicResource One.Muted}" />
         <WrapPanel>
-            <Button Content="恢复 1,280 条" Command="{Binding ResetCommand}" Margin="0,0,8,8" />
-            <Button Content="缩减到 45 条" Command="{Binding ShrinkCommand}" Margin="0,0,8,8" />
-            <Button Content="空数据" Command="{Binding EmptyCommand}" Margin="0,0,8,8" />
+            <Button Content="恢复 1,280 条" Command="{CompiledBinding ResetCommand}" Margin="0,0,8,8" />
+            <Button Content="缩减到 45 条" Command="{CompiledBinding ShrinkCommand}" Margin="0,0,8,8" />
+            <Button Content="空数据" Command="{CompiledBinding EmptyCommand}" Margin="0,0,8,8" />
         </WrapPanel>
-        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+        <TextBlock Text="{CompiledBinding Status}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
         <TextBlock Text="标准布局" FontWeight="SemiBold" FontSize="18" />
         <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="8" Padding="16">
-            <one:Pagination Name="StandardPagination" TotalCount="{Binding TotalCount}"
-                            PageSize="{Binding PageSize, Mode=TwoWay}" CurrentPage="{Binding CurrentPage, Mode=TwoWay}"
-                            PageSizeOptions="{Binding PageSizeOptions}"
-                            PageChangedCommand="{Binding PageChangedCommand}" />
+            <one:Pagination Name="StandardPagination" TotalCount="{CompiledBinding TotalCount}"
+                            PageSize="{CompiledBinding PageSize, Mode=TwoWay}" CurrentPage="{CompiledBinding CurrentPage, Mode=TwoWay}"
+                            PageSizeOptions="{CompiledBinding PageSizeOptions}"
+                            PageChangedCommand="{CompiledBinding PageChangedCommand}" />
         </Border>
         <TextBlock Text="紧凑布局" FontWeight="SemiBold" FontSize="18" />
         <Border BorderBrush="{DynamicResource One.Line}" BorderThickness="1" CornerRadius="8" Padding="16"
                 MaxWidth="380" HorizontalAlignment="Left">
-            <one:Pagination Name="CompactPagination" Layout="Compact" TotalCount="{Binding TotalCount}"
-                            PageSize="{Binding PageSize, Mode=TwoWay}" CurrentPage="{Binding CurrentPage, Mode=TwoWay}"
-                            PageSizeOptions="{Binding PageSizeOptions}" />
+            <one:Pagination Name="CompactPagination" Layout="Compact" TotalCount="{CompiledBinding TotalCount}"
+                            PageSize="{CompiledBinding PageSize, Mode=TwoWay}" CurrentPage="{CompiledBinding CurrentPage, Mode=TwoWay}"
+                            PageSizeOptions="{CompiledBinding PageSizeOptions}" />
         </Border>
         <TextBlock Text="边界状态" FontWeight="SemiBold" FontSize="18" />
         <TextBlock Text="首页 · 上一页禁用" Foreground="{DynamicResource One.Muted}" />

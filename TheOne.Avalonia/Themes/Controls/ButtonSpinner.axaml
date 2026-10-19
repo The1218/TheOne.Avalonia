@@ -125,9 +125,9 @@
                             </DockPanel>
                         </Border>
                         <Border
-                            BorderBrush="{Binding #PART_Border.BorderBrush}"
-                            BorderThickness="{Binding #PART_Border.BorderThickness}"
-                            CornerRadius="{Binding #PART_Border.CornerRadius}"
+                            BorderBrush="{CompiledBinding #PART_Border.BorderBrush}"
+                            BorderThickness="{CompiledBinding #PART_Border.BorderThickness}"
+                            CornerRadius="{CompiledBinding #PART_Border.CornerRadius}"
                             IsHitTestVisible="False"
                             Name="InputOutline" />
                     </Panel>

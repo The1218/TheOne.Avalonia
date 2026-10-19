@@ -1,5 +1,7 @@
 # Menus and layout
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/layout.md) · **English**
 
 [Back to control documentation](README.md). The host implements bound commands and state below.
@@ -28,8 +30,6 @@ InputGesture displays a shortcut hint; bind the same command in Window.KeyBindin
 </Window.KeyBindings>
 ```
 
-macOS ⌘ is Meta. Menus retain arrow navigation, Enter execution, Esc closure, submenu chains, icon / check / shortcut columns, and long-menu scrolling. Use IsEnabled for disabled items. Native MenuItem ToggleType / IsChecked provide checks; see [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml).
-
 ## ContextMenu and MenuFlyout
 
 ```xml
@@ -51,8 +51,6 @@ macOS ⌘ is Meta. Menus retain arrow navigation, Enter execution, Esc closure, 
   </Button.Flyout>
 </Button>
 ```
-
-Popup commands should bind explicit data contexts rather than finding Window ancestors inside popups. For tree / list context actions that must select first, update business selection in PointerPressed; see [ControlGallery.axaml.cs](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml.cs).
 
 Declare children directly for small static menus. Dynamic / growing menus use ItemsSource, on-demand templates, and models instead of prebuilt MenuItem lists. The theme selects a native panel by collection size: short menus of up to 32 items currently measure all content, including separators, different row heights and wide headings; larger menus retain virtualization. Menu bars, submenus, ContextMenu and MenuFlyoutPresenter use this policy without application configuration.
 
@@ -130,9 +128,6 @@ Native dragging, keyboard resizing, and previews remain. For vertical layout spl
 
 ScrollViewer suits ordinary content; its ScrollBar is themed automatically. Standalone ScrollBar can bind Minimum, Maximum, Value, and ViewportSize. For controls already providing virtualized viewports, such as ListBox, TreeView, DataGrid, bound the control itself instead of adding an infinite outer scrolling viewport.
 
-Examples: [LayoutDemoView.axaml](../../../design/PreviewHost/Verification/Fixtures/Views/NavigationLayout/LayoutDemoView.axaml). Interaction checks: [LayoutControlsPreview.cs](../../../design/PreviewHost/Verification/NavigationLayout/LayoutControlsPreview.cs).
-
-
 ## Flyout and FlyoutPresenter
 
 Flyout is popup behavior; FlyoutPresenter is the content container it creates. OneTheme applies its templates without replacing native controls.
@@ -165,8 +160,6 @@ flyout.Hide();
 Standard mode focuses content; Transient retains trigger focus. Esc, outside clicks, or Hide() close it. Closing supports e.Cancel. Hosts implement apply / cancel / validation; the sample apply button has no business binding yet. FlyoutPresenterTheme based on the native theme overrides appearance. See [theme implementation](../../theme/en/README.md) for resources and examples.
 
 Ordinary long content scrolls with default MaxHeight=480. Large Content still needs a finite-height ListBox or bounded DataGrid rather than unbounded ItemsControl in a popup. PreviewHost uses 10,000 models with real viewport recycling and stable source bindings preserving selection after close.
-
-See [content transitions and notifications](content-feedback.md) and [preview entry points](../../../design/PreviewHost/Program.cs).
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

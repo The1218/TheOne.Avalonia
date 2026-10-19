@@ -1,5 +1,7 @@
 # RelationGraph 树形关系图
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/relation-graph.md)
 
 `RelationGraph` 接收一个根节点，按树形层级绘制关系。`Orientation="Horizontal"` 从左向右展开，`Vertical` 从上向下展开；节点内部始终保持左侧图标、右侧标题和内容。先加载 `OneTheme`。
@@ -21,7 +23,7 @@ root.Children!.Add(new RelationGraphNode
 ```xml
 <ScrollViewer Height="540" HorizontalScrollBarVisibility="Auto"
               VerticalScrollBarVisibility="Auto">
-  <one:RelationGraph RootNode="{Binding Root}" Orientation="Horizontal" />
+  <one:RelationGraph RootNode="{CompiledBinding Root}" Orientation="Horizontal" />
 </ScrollViewer>
 ```
 
@@ -36,14 +38,35 @@ root.Children!.Add(new RelationGraphNode
 假设 `OrganizationUnit` 定义 `Branches`、`Symbol`、`Name`、`Description`，视图模型定义一个 `OrganizationUnit Root`：
 
 ```xml
-<one:RelationGraph RootNode="{Binding Root}" Orientation="Vertical"
-    ChildrenSource="{CompiledBinding Branches, DataType={x:Type vm:OrganizationUnit}}"
-    IconSource="{CompiledBinding Symbol, DataType={x:Type vm:OrganizationUnit}}"
-    TitleSource="{CompiledBinding Name, DataType={x:Type vm:OrganizationUnit}}"
-    ContentSource="{CompiledBinding Description, DataType={x:Type vm:OrganizationUnit}}" />
+<!-- 根视图声明 x:Name="View"；ViewModel 是视图上有变更通知的强类型属性。 -->
+<one:RelationGraph x:DataType="vm:OrganizationUnit"
+    RootNode="{CompiledBinding #View.ViewModel.Root}"
+    SelectItem="{CompiledBinding #View.ViewModel.SelectedNode}"
+    Orientation="Vertical"
+    ChildrenSource="{CompiledBinding Branches}"
+    IconSource="{CompiledBinding Symbol}"
+    TitleSource="{CompiledBinding Name}"
+    ContentSource="{CompiledBinding Description}" />
 ```
 
-这些绑定需要显式声明**节点类型**，不同于视图根元素的视图模型类型。默认模型省略 Source 属性即可；自定义模型必须提供 `ChildrenSource`，其结果必须为 `IEnumerable` 或 `null`（字符串无效）。省略自定义模型的显示 Source 会使对应区域为 `null`。
+在 RelationGraph 上只声明一次**节点类型**，四个捕获的取值绑定即可直接识别属性，无需逐条指定 `DataType` 或类型转换；根视图仍声明页面 ViewModel 的 `x:DataType`。这个类型声明不改变运行时 DataContext。根节点和选择绑定通过命名视图的强类型 `ViewModel` 属性访问页面数据，避免 IDE 将跨作用域的 `DataContext` 识别成 object 或 CompiledBinding。不要通过替换业务 DataContext 消除提示。
+
+视图的 `ViewModel` 应随 DataContext 变化并发出属性通知，不能固定指向最初创建的模型。例如在视图代码中：
+
+```csharp
+public static readonly DirectProperty<OrganizationView, OrganizationViewModel?> ViewModelProperty =
+    AvaloniaProperty.RegisterDirect<OrganizationView, OrganizationViewModel?>(
+        nameof(ViewModel), view => view.ViewModel);
+private OrganizationViewModel? _viewModel;
+public OrganizationViewModel? ViewModel => _viewModel;
+
+private void UpdateViewModel() => SetAndRaise(ViewModelProperty, ref _viewModel,
+    DataContext as OrganizationViewModel);
+// 构造函数中，在加载 XAML 前调用 UpdateViewModel()，再订阅：
+// DataContextChanged += (_, _) => UpdateViewModel();
+```
+
+完整示例见 [RelationGraphDemoView](../../../design/PreviewHost/Views/DataDisplay/RelationGraphDemoView.axaml) 及其 [代码](../../../design/PreviewHost/Views/DataDisplay/RelationGraphDemoView.axaml.cs)。默认模型省略 Source 属性即可；自定义模型必须提供 `ChildrenSource`，其结果必须为 `IEnumerable` 或 `null`（字符串无效）。省略自定义模型的显示 Source 会使对应区域为 `null`。
 
 变化属性实现 `INotifyPropertyChanged`；变化集合实现 `INotifyCollectionChanged`，如 `ObservableCollection<T>`。属性替换和集合增删自动更新；普通 `List<T>` 原地修改后调用 `RefreshData()`。数据与集合变化应发生在 UI 线程。控件脱离可视树后解除订阅，重新挂载时读取最新数据。
 
@@ -64,7 +87,7 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 ```xml
 <one:RelationGraph.IconTemplate>
   <DataTemplate x:DataType="media:Geometry">
-    <PathIcon Data="{Binding}" />
+    <PathIcon Data="{CompiledBinding}" />
   </DataTemplate>
 </one:RelationGraph.IconTemplate>
 ```
@@ -76,8 +99,8 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 `SelectItem` 保存当前选中的**节点模型对象**，默认值为 null，默认绑定方向是 TwoWay。点击任意有效节点会同步选中状态；节点获得键盘焦点后可按 Enter / Space 选中，Tab 导航仍由 Avalonia 处理。点击节点内的按钮或输入框也会选中节点，同时保留这些原生控件的命令和焦点。
 
 ```xml
-<one:RelationGraph RootNode="{Binding Root}"
-                   SelectItem="{Binding SelectedNode, Mode=TwoWay}" />
+<one:RelationGraph RootNode="{CompiledBinding Root}"
+                   SelectItem="{CompiledBinding SelectedNode, Mode=TwoWay}" />
 ```
 
 `SelectedNode` 的类型应与节点模型一致，如 `RelationGraphNode?` 或自定义 `OrganizationUnit?`；自定义模型仍需配置 ChildrenSource 等编译绑定。选中值按对象引用匹配当前树，不能传入另建的相同内容对象或 Presenter。模型属性初始化可早于 RootNode，首轮布局后会校验选择。选中节点被移除、根节点清空或数据变为无效树时，SelectItem 自动清空并写回绑定；运行时设置树外对象也会清空。设置 null 可主动取消选择。
@@ -108,20 +131,7 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 
 PreviewHost 的“数据展示 → RelationGraph”展示方向切换、宽度与间距、根节点空值、集合增删、自定义模型绑定和八种区域组合。
 
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/relation-graph/artifacts --disable-build-servers -m:1
-dotnet .preview/relation-graph/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-relation-graph .preview/relation-graph/managed
-```
-
 专项检查明暗主题、三档尺寸、横纵布局、真实连接线像素、窄视口、自动换行、空值、集合及属性替换、无效树恢复、订阅重挂载、原生控件交互以及 XAML 编译绑定。独立 NativeAOT 消费端复用同一专项：
-
-```sh
-# macOS：仅在涉及 AOT／绑定／元数据时执行原生专项。
-SDKROOT="$(xcrun --sdk macosx --show-sdk-path)" dotnet publish design/PreviewHost/Consumers/NativeAotSmoke -c Release -r osx-arm64 -p:PublishAot=true -p:TrimmerSingleWarn=false -p:CppCompilerAndLinker="$(xcrun --find clang)" --disable-build-servers -m:1 --artifacts-path .preview/relation-graph/native-artifacts -o .preview/relation-graph/native
-.preview/relation-graph/native/NativeAotSmoke --require-aot --verify-relation-graph .preview/relation-graph/native-pixels
-```
-
-选择专项覆盖明暗主题、三档尺寸、两种方向、真实选中像素、指针／键盘选择、节点内按钮命令与焦点、节点移除和无效树的选择清理，以及默认 / 自定义模型的双向编译绑定。原生消费执行同一 `--verify-relation-graph` 专项。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

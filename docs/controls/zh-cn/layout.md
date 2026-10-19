@@ -1,5 +1,7 @@
 # 菜单与布局
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/layout.md)
 
 [返回控件文档](README.md)。以下绑定命令与状态由宿主实现。
@@ -28,8 +30,6 @@ InputGesture 显示快捷键提示；实际快捷键在 Window.KeyBindings 中�
 </Window.KeyBindings>
 ```
 
-macOS 的 ⌘ 对应 Meta。菜单保留方向键导航、Enter 执行、Esc 关闭、子菜单链、图标 / 勾选 / 快捷键列与长菜单滚动；禁用项使用 IsEnabled。需要勾选时使用官方 MenuItem 的 ToggleType 与 IsChecked，参考 [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml)。
-
 ## ContextMenu 与 MenuFlyout
 
 ```xml
@@ -51,8 +51,6 @@ macOS 的 ⌘ 对应 Meta。菜单保留方向键导航、Enter 执行、Esc 关
   </Button.Flyout>
 </Button>
 ```
-
-弹层中的命令应绑定到明确的数据上下文，不依赖弹层内查找 Window 祖先。树或列表的右键操作如需先选择目标，由宿主在 PointerPressed 中更新业务选择；参考 [ControlGallery.axaml.cs](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml.cs)。
 
 少量固定菜单可像示例声明子项。动态或可增长菜单使用 ItemsSource、按需模板与模型，避免预创建大量 MenuItem。主题按集合大小选择原生布局：当前不超过 32 项的短菜单完整测量，包括 Separator、不同项高和较宽标题；更大的菜单使用虚拟化布局。菜单栏、子菜单、ContextMenu 和 MenuFlyoutPresenter 均采用这项策略，无需业务代码配置。
 
@@ -130,9 +128,6 @@ Overlay 的 LightDismissLayer 仅在展开时启用；UseLightDismissOverlayMode
 
 ScrollViewer 适用于普通内容，内部 ScrollBar 自动使用主题。独立 ScrollBar 可绑定 Minimum、Maximum、Value 与 ViewportSize。对本身已带虚拟化视口的 ListBox、TreeView、DataGrid 等，直接约束控件尺寸，避免再套无限滚动视口。
 
-完整布局示例见 [LayoutDemoView.axaml](../../../design/PreviewHost/Verification/Fixtures/Views/NavigationLayout/LayoutDemoView.axaml)，交互检查见 [LayoutControlsPreview.cs](../../../design/PreviewHost/Verification/NavigationLayout/LayoutControlsPreview.cs)。
-
-
 ## Flyout 与 FlyoutPresenter
 
 Flyout 是弹出行为对象，FlyoutPresenter 是由它创建的内容容器。加载 OneTheme 即会应用 TheOne 模板，无需替换官方控件。
@@ -166,7 +161,7 @@ Standard 模式聚焦内容，Transient 保留触发控件焦点；关闭可通�
 
 普通长内容会按默认 MaxHeight=480 滚动。大数据 Content 仍需使用有限 Height 的 ListBox 或有界 DataGrid；不能仅在弹层中放无限高度 ItemsControl。PreviewHost 使用 10,000 条数据，实际按视口创建与回收容器，并通过稳定的源绑定保留关闭后的选择。
 
-内容过渡与通知见[对应 API](content-feedback.md)。验证范围与命令见[预览专项入口](../../../design/PreviewHost/Program.cs)。
+内容过渡与通知见[对应 API](content-feedback.md)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

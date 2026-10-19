@@ -1,5 +1,7 @@
 # 默认主题配色与控件外观
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/theme-colors.md)
 
 本页说明默认配色；新增的 9 套可选资源、配色下拉选择器及独立明暗开关见 [ThemeColorPicker / ThemeButton](theme-color-picker.md)。
@@ -115,9 +117,7 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 
 图表画笔默认对应 `One.Chart.Series1..6`，超过六个系列循环。类别较多时结合图例、标记及线型；颜色不承担唯一识别作用。`ChartSeries.Brush` 优先，`FifthBrush` / `SixthBrush` 与原有四个画笔一样可以显式覆盖并用于导出。
 
-外观类在各控件原有页面中直接展示，不再提供独立主题预览页。验证与定向截图见[预览专项入口](../../../design/PreviewHost/Program.cs)。对比度报告见 [contrast-report.json](../contrast-report.json)。
-
-`underlined` 输入的焦点底线变为 2 px，校验继续使用 Danger，禁用底线保留 InputLine。可编辑 ComboBox 只使用外层底线，不再出现内部编辑器边框；焦点和校验覆盖层使用同一底线颜色。NumericUpDown 的步进按钮在此变体中不绘制边框。PreviewHost 的 `--verify-underlined-inputs [output]` 仅验证 TextBox、可编辑／不可编辑 ComboBox 与 AutoCompleteBox。`pills` 的已选标题使用 Accent / OnAccent。`cards` 仅改变 ListBox 原生容器的间距、圆角与边框，仍使用 VirtualizingStackPanel。`outlined` 卡片保留内容槽、区域分割线与细微页脚色差。
+外观类在各控件原有页面中直接展示，不再提供独立主题预览页。 对比度报告见 [contrast-report.json](../contrast-report.json)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

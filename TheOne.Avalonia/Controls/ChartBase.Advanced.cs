@@ -74,6 +74,8 @@ public partial class ChartBase
     {
         if (!IsPercentCartesian || GetSelection(seriesIndex, pointIndex) is not { } selected ||
             SeriesSource is not { } source) return null;
+        if (_cartesianData is { } cache && cache.Percentages.TryGetValue((seriesIndex, pointIndex), out var cached))
+            return cached;
         if (selected.Point.Y == 0) return 0;
         var negative = selected.Point.Y < 0;
         var maximum = 0d;

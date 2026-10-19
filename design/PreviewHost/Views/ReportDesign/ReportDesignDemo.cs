@@ -46,7 +46,7 @@ internal static class ReportDesignDemo
 
     internal static ReportDesign CreateDesignerSample(bool withData = true)
     {
-        var document = ReportTemplate.CreateSalesDetail();
+        var document = CreateQRCodeSampleDocument();
         var view = new ReportDesign { Document = document, DataSource = withData ? Source(96) : null };
         view.SelectedElement = document.Elements.Single(e => e.Kind == ReportElementKind.Table);
         return view;
@@ -65,8 +65,34 @@ internal static class ReportDesignDemo
     {
         return new ReportPreview
         {
-            DataSource = Source(96), DocumentJson = ReportTemplate.CreateSalesDetail().Save()
+            DataSource = Source(96), DocumentJson = CreateQRCodeSampleDocument().Save()
         };
+    }
+
+    private static ReportDocument CreateQRCodeSampleDocument()
+    {
+        var document = ReportTemplate.CreateSalesDetail();
+        foreach (var element in document.Elements.Where(element => element.Name is "公司名称" or "品牌说明").ToArray())
+            document.Elements.Remove(element);
+        foreach (var element in document.Elements.Where(element => element.Name is "报表标题" or "英文副标题" or "统计期间"))
+            element.Width = 120;
+        document.Elements.Add(new ReportElement
+        {
+            Name = "静态链接二维码", Kind = ReportElementKind.QRCode, X = 144, Y = 14, Width = 26, Height = 26,
+            Text = "https://example.com/reports", Foreground = "#000000"
+        });
+        document.Elements.Add(new ReportElement
+        {
+            Name = "订单字段二维码", Kind = ReportElementKind.QRCode, X = 176, Y = 14, Width = 26, Height = 26,
+            FieldKey = "OrderNo", QRCodeErrorCorrection = QRCodeErrorCorrection.High, Foreground = "#000000"
+        });
+        foreach (var (x, caption) in new[] { (144, "静态链接"), (176, "首条订单字段") })
+            document.Elements.Add(new ReportElement
+            {
+                Name = caption + "说明", Kind = ReportElementKind.Text, X = x, Y = 40, Width = 26, Height = 8,
+                Text = caption, FontSize = 10, TextAlignment = ReportTextAlignment.Center
+            });
+        return document;
     }
 
     internal sealed record Sale(

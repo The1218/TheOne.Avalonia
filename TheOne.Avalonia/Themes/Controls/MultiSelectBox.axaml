@@ -76,7 +76,7 @@
                                     DockPanel.Dock="Right"
                                     IsVisible="{TemplateBinding HasHiddenSelection}"
                                     Margin="4,0"
-                                    Text="{Binding HiddenSelectedCount, RelativeSource={RelativeSource TemplatedParent}, StringFormat='+{0}'}"
+                                    Text="{CompiledBinding $self.((one:MultiSelectBox)TemplatedParent)?.HiddenSelectedCount, StringFormat='+{0}'}"
                                     VerticalAlignment="Center" />
                                 <ItemsControl
                                     ItemsSource="{TemplateBinding DisplayTags}"
@@ -105,16 +105,16 @@
                                                 <Grid ColumnDefinitions="*,Auto">
                                                     <ContentControl
                                                         ClipToBounds="True"
-                                                        Content="{Binding TagContent}"
-                                                        ContentTemplate="{Binding TagTemplate}"
+                                                        Content="{CompiledBinding TagContent}"
+                                                        ContentTemplate="{CompiledBinding TagTemplate}"
                                                         MaxWidth="116"
                                                         VerticalContentAlignment="Center" />
                                                     <Button
-                                                        AutomationProperties.Name="{Binding RemoveLabel}"
-                                                        CommandParameter="{Binding Item}"
+                                                        AutomationProperties.Name="{CompiledBinding RemoveLabel}"
+                                                        CommandParameter="{CompiledBinding Item}"
                                                         Grid.Column="1"
                                                         Height="20"
-                                                        IsEnabled="{Binding CanRemove}"
+                                                        IsEnabled="{CompiledBinding CanRemove}"
                                                         MinHeight="0"
                                                         MinWidth="0"
                                                         Padding="0"
@@ -215,7 +215,7 @@
                                                 BasedOn="{StaticResource {x:Type ListBoxItem}}"
                                                 TargetType="ListBoxItem"
                                                 x:DataType="one:MultiSelectBoxItem">
-                                                <Setter Property="IsEnabled" Value="{Binding IsEnabled}" />
+                                                <Setter Property="IsEnabled" Value="{CompiledBinding IsEnabled}" />
                                                 <Setter Property="Padding" Value="8,2" />
                                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                             </ControlTheme>
@@ -223,11 +223,11 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate x:DataType="one:MultiSelectBoxItem">
                                                 <CheckBox
-                                                    AutomationProperties.Name="{Binding Text}"
-                                                    Content="{Binding DisplayContent}"
-                                                    ContentTemplate="{Binding ContentTemplate}"
+                                                    AutomationProperties.Name="{CompiledBinding Text}"
+                                                    Content="{CompiledBinding DisplayContent}"
+                                                    ContentTemplate="{CompiledBinding ContentTemplate}"
                                                     Focusable="False"
-                                                    IsChecked="{Binding IsSelected, Mode=OneWay}"
+                                                    IsChecked="{CompiledBinding IsSelected, Mode=OneWay}"
                                                     IsHitTestVisible="False"
                                                     MinHeight="20" />
                                             </DataTemplate>

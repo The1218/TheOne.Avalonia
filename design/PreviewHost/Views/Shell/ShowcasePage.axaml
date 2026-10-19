@@ -18,7 +18,7 @@
             <TextBlock
                 FontSize="28"
                 FontWeight="SemiBold"
-                Text="{Binding Title}" />
+                Text="{CompiledBinding Title}" />
             <TextBlock
                 Foreground="{DynamicResource One.Muted}"
                 Text="同类控件集中对比 · 点击名称跳到对应示例 · 顶部可切换主题、尺寸和动效"

@@ -12,20 +12,20 @@
 
     <MenuFlyout ShowMode="{OnFormFactor Desktop=Standard, Mobile=Transient}" x:Key="One.DefaultTextBoxContextFlyout">
         <MenuItem
-            Command="{Binding $parent[TextBox].Cut}"
+            Command="{CompiledBinding $parent[TextBox].Cut}"
             Header="{DynamicResource StringTextFlyoutCutText}"
             InputGesture="{x:Static TextBox.CutGesture}"
-            IsEnabled="{Binding $parent[TextBox].CanCut}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanCut}" />
         <MenuItem
-            Command="{Binding $parent[TextBox].Copy}"
+            Command="{CompiledBinding $parent[TextBox].Copy}"
             Header="{DynamicResource StringTextFlyoutCopyText}"
             InputGesture="{x:Static TextBox.CopyGesture}"
-            IsEnabled="{Binding $parent[TextBox].CanCopy}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanCopy}" />
         <MenuItem
-            Command="{Binding $parent[TextBox].Paste}"
+            Command="{CompiledBinding $parent[TextBox].Paste}"
             Header="{DynamicResource StringTextFlyoutPasteText}"
             InputGesture="{x:Static TextBox.PasteGesture}"
-            IsEnabled="{Binding $parent[TextBox].CanPaste}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanPaste}" />
     </MenuFlyout>
     <MenuFlyout
         FlyoutPresenterTheme="{StaticResource One.HorizontalMenuFlyoutPresenter}"
@@ -34,19 +34,19 @@
                                 Mobile=Transient}"
         x:Key="One.HorizontalTextBoxContextFlyout">
         <MenuItem
-            Command="{Binding $parent[TextBox].Cut}"
+            Command="{CompiledBinding $parent[TextBox].Cut}"
             Header="{DynamicResource StringTextFlyoutCutText}"
-            IsEnabled="{Binding $parent[TextBox].CanCut}"
-            IsVisible="{Binding $parent[TextBox].CanCut}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanCut}"
+            IsVisible="{CompiledBinding $parent[TextBox].CanCut}" />
         <MenuItem
-            Command="{Binding $parent[TextBox].Copy}"
+            Command="{CompiledBinding $parent[TextBox].Copy}"
             Header="{DynamicResource StringTextFlyoutCopyText}"
-            IsEnabled="{Binding $parent[TextBox].CanCopy}"
-            IsVisible="{Binding $parent[TextBox].CanCopy}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanCopy}"
+            IsVisible="{CompiledBinding $parent[TextBox].CanCopy}" />
         <MenuItem
-            Command="{Binding $parent[TextBox].Paste}"
+            Command="{CompiledBinding $parent[TextBox].Paste}"
             Header="{DynamicResource StringTextFlyoutPasteText}"
-            IsEnabled="{Binding $parent[TextBox].CanPaste}" />
+            IsEnabled="{CompiledBinding $parent[TextBox].CanPaste}" />
     </MenuFlyout>
 
     <ControlTheme TargetType="Button" x:Key="One.TextBoxButton">
@@ -55,7 +55,7 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="MinWidth" Value="34" />
         <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
-        <Setter Property="Width" Value="{Binding $self.Bounds.Height}" />
+        <Setter Property="Width" Value="{CompiledBinding $self.Bounds.Height}" />
         <Setter Property="TextElement.Foreground" Value="{DynamicResource One.Text}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -219,9 +219,9 @@
                             </Grid>
                         </Border>
                         <Border
-                            BorderBrush="{Binding #PART_BorderElement.BorderBrush}"
-                            BorderThickness="{Binding #PART_BorderElement.BorderThickness}"
-                            CornerRadius="{Binding #PART_BorderElement.CornerRadius}"
+                            BorderBrush="{CompiledBinding #PART_BorderElement.BorderBrush}"
+                            BorderThickness="{CompiledBinding #PART_BorderElement.BorderThickness}"
+                            CornerRadius="{CompiledBinding #PART_BorderElement.CornerRadius}"
                             IsHitTestVisible="False"
                             Name="InputOutline" />
                     </Panel>
@@ -290,18 +290,18 @@
                     <ToggleButton
                         Classes="one-editor-button"
                         ClipToBounds="True"
-                        IsChecked="{Binding $parent[TextBox].RevealPassword, Mode=TwoWay}"
+                        IsChecked="{CompiledBinding $parent[TextBox].RevealPassword, Mode=TwoWay}"
                         Theme="{StaticResource One.TextBoxToggleButton}">
                         <Panel>
                             <PathIcon
                                 Data="{StaticResource One.PasswordBoxRevealButtonData}"
                                 Height="8"
-                                IsVisible="{Binding !$parent[ToggleButton].IsChecked}"
+                                IsVisible="{CompiledBinding !$parent[ToggleButton].IsChecked}"
                                 Width="12" />
                             <PathIcon
                                 Data="{StaticResource One.PasswordBoxHideButtonData}"
                                 Height="12"
-                                IsVisible="{Binding $parent[ToggleButton].IsChecked}"
+                                IsVisible="{CompiledBinding $parent[ToggleButton].IsChecked}"
                                 Width="12" />
                         </Panel>
                     </ToggleButton>
@@ -315,7 +315,7 @@
                     <Button
                         Classes="one-editor-button"
                         ClipToBounds="True"
-                        Command="{Binding $parent[TextBox].Clear}"
+                        Command="{CompiledBinding $parent[TextBox].Clear}"
                         Theme="{StaticResource One.TextBoxButton}">
                         <PathIcon
                             Data="{StaticResource One.TextBoxClearButtonData}"

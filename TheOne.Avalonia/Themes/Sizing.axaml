@@ -528,7 +528,7 @@
     <Style Selector=":is(SplitButton).one-small /template/ Button#PART_PrimaryButton.one-small">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+        <Setter Property="Padding" Value="{CompiledBinding $parent[SplitButton].Padding}" />
     </Style>
     <Style Selector=":is(SplitButton).one-small /template/ Button#PART_SecondaryButton.one-small">
         <Setter Property="MinHeight" Value="0" />
@@ -538,7 +538,7 @@
     <Style Selector=":is(SplitButton).one-normal /template/ Button#PART_PrimaryButton.one-normal">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+        <Setter Property="Padding" Value="{CompiledBinding $parent[SplitButton].Padding}" />
     </Style>
     <Style Selector=":is(SplitButton).one-normal /template/ Button#PART_SecondaryButton.one-normal">
         <Setter Property="MinHeight" Value="0" />
@@ -548,7 +548,7 @@
     <Style Selector=":is(SplitButton).one-large /template/ Button#PART_PrimaryButton.one-large">
         <Setter Property="MinHeight" Value="0" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="{Binding $parent[SplitButton].Padding}" />
+        <Setter Property="Padding" Value="{CompiledBinding $parent[SplitButton].Padding}" />
     </Style>
     <Style Selector=":is(SplitButton).one-large /template/ Button#PART_SecondaryButton.one-large">
         <Setter Property="MinHeight" Value="0" />

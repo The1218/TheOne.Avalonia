@@ -1,5 +1,7 @@
 # SplitButton and ToggleSplitButton
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/split-button.md) · **English**
 
 Both use native Avalonia controls. The primary area executes Command; the arrow opens Flyout without executing that command. ToggleSplitButton's primary area also toggles its bool IsChecked. The arrow and menu do not change the checked state. It does not provide ToggleButton's bool? three-state behavior.
@@ -26,8 +28,6 @@ Declare the ViewModel's x:DataType; the consumer supplies commands and AutoSync.
 When focused, Enter / Space runs the primary action; F4 or Alt + ↓ opens the menu; Esc closes it and returns focus to the trigger. Each area has its own hover and pressed feedback within a continuous outline. Default, primary, and gradient appearances are supported. small / normal / large inherit minimum heights of 30 / 36 / 44 px; explicit Padding, CornerRadius, and BorderThickness take precedence.
 
 For many options, use MenuFlyout.ItemsSource and typed data templates so native menus create containers on demand instead of pre-creating thousands of MenuItem instances. ItemContainerTheme x:DataType should be the option model, with compiled Command / CommandParameter bindings. Provide an explicit typed data context if Flyout needs a different ViewModel; keep compiled bindings enabled.
-
-The combined button page demonstrates primary actions, toggling, disabled states, and large menus. `--verify-buttons-messages` checks real pointer / keyboard input, command counts, menu selection, and recycling. See the [preview entry points](../../../design/PreviewHost/Program.cs) for native execution and targeted rendering, and [layout documentation](layout.md) for menus and popups.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

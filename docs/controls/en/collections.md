@@ -1,5 +1,7 @@
 # Lists, trees, tabs, and grids
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/collections.md) · **English**
 
 [Back to control documentation](README.md). Bind views to a ViewModel with `x:DataType`; extensions use `xmlns:one="using:TheOne.Avalonia.Controls"`.
@@ -162,8 +164,6 @@ DocumentsTabs.AddHandler(TabFeatures.TabClosingEvent, (_, args) =>
 
 `HasUnsavedChanges` is a business-model property. For asynchronous confirmation, cancel the current close first, then let the host confirm and update collections. Default close / reorder needs mutable IList; readonly or fixed-size collections cannot be deleted / reordered by default. CloseCommand can update their source instead.
 
-Ctrl / macOS ⌘ + W closes current; Ctrl / ⌘ + Shift + ← / → reorders; Esc cancels dragging. Closing selects an adjacent tab; reordering retains the selected model. Override One.CardTabStrip, One.CardTabBorder, and One.CardTabHover for colors. Examples: [ControlGallery.axaml](../../../design/PreviewHost/Verification/Fixtures/LegacyControlGallery.axaml), [CardTabPreview.cs](../../../design/PreviewHost/Verification/Basic/CardTabPreview.cs).
-
 ## DataGrid
 
 The library references native layout extensions based on `Avalonia.Controls.DataGrid` 12.1.2. Load OneTheme to use them; core Avalonia remains 12.1.4.
@@ -198,8 +198,7 @@ See [DataGrid extension contracts](datagrid-extensions.md) for header sorting / 
 
 ## Large-data verification
 
-PreviewHost's large-data page shows ten-thousand-item lists, roots / children, suggestions, tabs, and context menus with realized-container counts. Choose distant-operation, recycling, navigation, and selection checks from [preview entry points](../../../design/PreviewHost/Program.cs); DataGrid has dedicated checks. Inspect real counts and distant operations rather than just ItemsPanel types when maintaining templates.
-
+PreviewHost's large-data page shows ten-thousand-item lists, roots / children, suggestions, tabs, and context menus with realized-container counts. Inspect real counts and distant operations rather than just ItemsPanel types when maintaining templates.
 
 ## Standalone TabStrip
 
@@ -239,9 +238,6 @@ if (SectionTabs.ContainerFromIndex(SectionTabs.SelectedIndex) is TabStripItem it
 `Section.HasUnsavedChanges` is an application property. For asynchronous confirmation, cancel first and let the host confirm before removing the item. `CanClose`, `CloseCommand` and `Close(TabStripItem)` add standalone closing without changing existing TabControl APIs; `CanReorder` and `Move` remain TabControl-only.
 
 The standalone tab-navigation preview has 10,000 actual items, container counts, target / last navigation, and enabled-state changes.
-
-
-See [Carousel / Refresh](collection-content.md), and [preview entry points](../../../design/PreviewHost/Program.cs) for checks.
 
 ## Appearance classes
 

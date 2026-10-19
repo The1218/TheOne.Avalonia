@@ -1,5 +1,7 @@
 # SplitButton 与 ToggleSplitButton
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/split-button.md)
 
 两者沿用 Avalonia 原生控件。主区域执行 Command，箭头区域打开 Flyout；打开菜单不执行主命令。ToggleSplitButton 的主区域额外切换 bool 类型的 IsChecked，箭头和菜单不会改变勾选状态。它不提供 ToggleButton 的 bool? 三态。
@@ -26,8 +28,6 @@
 焦点位于控件时 Enter / Space 执行主操作，F4 或 Alt + ↓ 打开菜单，Esc 关闭并返回触发控件。两区各自反馈悬停和按下，外框保持连续。支持默认、primary 和 gradient 外观，small / normal / large 继承 30 / 36 / 44 px 的最小高度；显式 Padding、CornerRadius、BorderThickness 优先。
 
 大量选项使用 MenuFlyout.ItemsSource 和有类型的数据模板，让原生菜单按需创建容器；不要提前创建成千上万个 MenuItem。ItemContainerTheme 的 x:DataType 应是选项模型，并用编译绑定设置 Command / CommandParameter。Flyout 中需要不同 VM 时显式提供有类型的数据上下文，不能关闭编译绑定。
-
-预览在按钮组合页展示主操作、切换、禁用及大量菜单选项。`--verify-buttons-messages` 包含真实指针／键盘、命令次数、菜单选择与虚拟回收检查。原生执行及定向渲染见[预览专项入口](../../../design/PreviewHost/Program.cs)；菜单与弹层见[布局文档](layout.md)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

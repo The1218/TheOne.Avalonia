@@ -13,8 +13,8 @@
             Foreground="{DynamicResource One.Muted}"
             Text="单行列表 / 图文列表 / 单选与多选 · 每种样式使用 1,000 项数据"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用控件" IsChecked="{Binding Enabled, Mode=TwoWay}" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="16">
+        <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
             <WrapPanel>
                 <StackPanel
                     Margin="0,0,16,16"
@@ -23,9 +23,9 @@
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="默认列表 · 单选" />
                     <ListBox
                         Height="240"
-                        ItemsSource="{Binding Items}"
+                        ItemsSource="{CompiledBinding Items}"
                         Name="ControlSample"
-                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+                        SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}" />
                 </StackPanel>
                 <StackPanel
                     Margin="0,0,16,16"
@@ -34,9 +34,9 @@
                     <TextBlock Foreground="{DynamicResource One.Muted}" Text="自定义内容 · 多选" />
                     <ListBox
                         Height="240"
-                        ItemsSource="{Binding Items}"
+                        ItemsSource="{CompiledBinding Items}"
                         Name="DetailedSample"
-                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                        SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}"
                         SelectionMode="Multiple,Toggle">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="x:String">
@@ -53,7 +53,7 @@
                                             VerticalAlignment="Center" />
                                     </Border>
                                     <StackPanel Grid.Column="1" Spacing="4">
-                                        <TextBlock FontWeight="SemiBold" Text="{Binding}" />
+                                        <TextBlock FontWeight="SemiBold" Text="{CompiledBinding}" />
                                         <TextBlock
                                             FontSize="12"
                                             Foreground="{DynamicResource One.Muted}"
@@ -67,18 +67,18 @@
             </WrapPanel>
         </StackPanel>
         <Button
-            Command="{Binding LastCommand}"
+            Command="{CompiledBinding LastCommand}"
             Content="第 1,000 项"
             HorizontalAlignment="Left" />
         <TextBlock FontWeight="SemiBold" Text="外观样式" />
-        <StackPanel IsEnabled="{Binding Enabled}" Spacing="12">
+        <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="12">
             <ListBox
                 Classes="cards"
                 Height="200"
-                ItemsSource="{Binding Items}"
+                ItemsSource="{CompiledBinding Items}"
                 MaxWidth="700"
                 Name="CardsListSample"
-                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}" />
+                SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}" />
         </StackPanel>
     </StackPanel>
 </local:BasicControlPage>

@@ -19,12 +19,12 @@
         <WrapPanel>
             <CheckBox
                 Content="启用透明度"
-                IsChecked="{Binding AlphaEnabled, Mode=TwoWay}"
+                IsChecked="{CompiledBinding AlphaEnabled, Mode=TwoWay}"
                 Margin="0,0,24,8"
                 Name="AlphaToggle" />
             <CheckBox
                 Content="显示调色板"
-                IsChecked="{Binding PaletteVisible, Mode=TwoWay}"
+                IsChecked="{CompiledBinding PaletteVisible, Mode=TwoWay}"
                 Margin="0,0,0,8"
                 Name="PaletteToggle" />
         </WrapPanel>
@@ -33,9 +33,9 @@
             <WrapPanel>
                 <ColorPicker
                     AutomationProperties.Name="选择颜色"
-                    Color="{Binding SelectedColor, Mode=TwoWay}"
-                    IsAlphaEnabled="{Binding AlphaEnabled}"
-                    IsColorPaletteVisible="{Binding PaletteVisible}"
+                    Color="{CompiledBinding SelectedColor, Mode=TwoWay}"
+                    IsAlphaEnabled="{CompiledBinding AlphaEnabled}"
+                    IsColorPaletteVisible="{CompiledBinding PaletteVisible}"
                     Margin="0,0,16,8"
                     Name="ControlSample" />
                 <ColorPicker
@@ -61,9 +61,9 @@
                 <Border HorizontalAlignment="Left" Name="InlineFrame">
                     <ColorView
                         AutomationProperties.Name="精细颜色选择"
-                        Color="{Binding SelectedColor, Mode=TwoWay}"
-                        IsAlphaEnabled="{Binding AlphaEnabled}"
-                        IsColorPaletteVisible="{Binding PaletteVisible}"
+                        Color="{CompiledBinding SelectedColor, Mode=TwoWay}"
+                        IsAlphaEnabled="{CompiledBinding AlphaEnabled}"
+                        IsColorPaletteVisible="{CompiledBinding PaletteVisible}"
                         Name="ColorViewSample" />
                 </Border>
             </StackPanel>
@@ -80,15 +80,15 @@
                     BorderThickness="1"
                     CornerRadius="6"
                     Height="72">
-                    <Border Background="{Binding SelectedBrush}" CornerRadius="6" />
+                    <Border Background="{CompiledBinding SelectedBrush}" CornerRadius="6" />
                 </Border>
                 <SelectableTextBlock
                     FontSize="22"
                     FontWeight="SemiBold"
-                    Text="{Binding Hex}" />
+                    Text="{CompiledBinding Hex}" />
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
-                    Text="{Binding Channels}"
+                    Text="{CompiledBinding Channels}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     FontSize="12"

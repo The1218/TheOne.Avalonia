@@ -1,5 +1,7 @@
 # NavMenu 搜索
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/nav-menu-search.md)
 
 基础接入见[NavMenu](nav-menu.md)。
@@ -26,9 +28,6 @@
 未绑定 ExpandedBinding 时，展开快照使用现有模型身份缓存，回收后仍可恢复。INotifyPropertyChanged 的节点改名和 INotifyCollectionChanged 的根／子集合更新会刷新当前过滤；卸载取消订阅，重新挂载刷新结果。应在 UI 线程更新菜单模型，并使用有独立身份的节点对象。
 
 普通树及折叠级联弹层均使用过滤后的集合与原生虚拟化面板，搜索不创建整棵树的 UI 容器。SelectPath 的索引对应当前过滤结果。PreviewHost → 扩展控件 → NavMenu 提供搜索三级末项、搜索千条子菜单与清空恢复命令，支持顶部主题／尺寸切换。
-
-执行命令与测试范围见[预览专项入口](../../../design/PreviewHost/Program.cs)。
-
 
 ## 搜索高亮与输入框键盘导航
 
@@ -65,8 +64,6 @@
 
 导航只按需实现目标路径的原生容器，焦点与输入位置保留在搜索框；折叠模式通过不抢焦点的 Transient 弹层定位。没有结果时方向键与 Enter 不调用菜单。未搜索时，以及 Ctrl / Alt / Shift / Meta 修饰的组合键，保持 TextBox 原生行为。
 
-独立 NavMenu 预览页展示上述输入操作和调用次数。`--verify-navmenu-search` 包含三尺寸 × 明暗主题的真实输入、逐项导航至第 1,000 项、容器数量与回收、Enter 单次调用、Esc 快照恢复、折叠级联、高亮分词／大小写／重叠，以及默认与自定义编译模板；完整控件检查及原生 AOT 消费验证复用这些检查。
-
 ## 顶部自动完成搜索
 
 设置 `ShowFilter=True` 在 NavMenu 顶部显示原生 AutoCompleteBox 搜索框；默认 False，保留现有布局。`FilterPlaceholder` 可设置提示文字，搜索框继承菜单的三种尺寸与明暗主题。
@@ -96,8 +93,6 @@ Up / Down 预选建议并保留输入关键词，Enter 或鼠标点击确认。�
 `OpenFilter()` 可用于 ViewModel 命令或快捷键：展开布局聚焦内联输入框，折叠布局打开搜索弹层。`CloseFilter()` 取消折叠搜索；只读 `IsFilterOpen` 可通过编译绑定观察折叠搜索弹层状态。弹层继承当前明暗主题和三种尺寸，打开期间切换主题／尺寸即时更新；输入宽度随窗口可用空间调整，建议保持有界虚拟化视口。
 
 PreviewHost 主导航与独立 NavMenu 页已启用内置搜索。独立页可切换 ShowFilter、尺寸、主题和折叠模式，搜索千条深层数据；专项检查覆盖第 1,000 项建议与菜单的实际容器回收、键盘／鼠标确认、图标激活、动态数据更新、Esc／外部取消、弹层关闭、焦点返回、打开时切换主题／尺寸及窄窗口适配：
-
-执行命令与测试范围见[预览专项入口](../../../design/PreviewHost/Program.cs)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

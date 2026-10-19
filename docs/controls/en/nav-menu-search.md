@@ -1,5 +1,7 @@
 # NavMenu search
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/nav-menu-search.md) · **English**
 
 See [NavMenu](nav-menu.md) for basic setup.
@@ -26,9 +28,6 @@ Filtering preserves model identity, icon / content templates, disabled states, a
 Without ExpandedBinding, expansion snapshots use the model-identity cache and survive recycling. Node renaming via INotifyPropertyChanged and root / child updates via INotifyCollectionChanged refresh active filtering. Unloading removes subscriptions; reattachment refreshes results. Update models on the UI thread and use distinct node identities.
 
 Both inline trees and collapsed cascades use filtered collections and native virtualization panels. Search does not instantiate UI containers for the entire tree. SelectPath indices address the current filtered results. PreviewHost → Extensions → NavMenu provides actions to search the final third-level item, search thousand-item submenus, and clear / restore, with top theme / size switches.
-
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
-
 
 ## Highlighting and search-box keyboard navigation
 
@@ -65,8 +64,6 @@ Unmodified keys in the search box:
 
 Navigation realizes native containers only along the target path. Focus and the caret remain in the search box. Collapsed navigation locates items through Transient popups that do not steal focus. Without results, arrows and Enter invoke nothing. Outside search, or with Ctrl / Alt / Shift / Meta, TextBox retains native keyboard behavior.
 
-The dedicated preview demonstrates input and invocation counts. `--verify-navmenu-search` covers real input across three sizes × light / dark, navigation to item 1,000, container counts / recycling, one Enter invocation, Esc restoration, collapsed cascades, token / case / overlapping highlights, and default / custom compiled templates. Full control and native AOT consumption checks reuse these scenarios.
-
 ## Built-in autocomplete search
 
 `ShowFilter=True` displays a native AutoCompleteBox above NavMenu. It defaults to False, preserving existing layout. `FilterPlaceholder` sets placeholder text; input inherits the menu's sizes and light / dark themes.
@@ -96,8 +93,6 @@ Confirming closes input and suggestion popups, locates the original cascade path
 `OpenFilter()` supports ViewModel commands and shortcuts: it focuses inline input when expanded and opens the popup when collapsed. `CloseFilter()` cancels collapsed search. Read-only `IsFilterOpen` exposes popup state through compiled binding. Popups inherit theme and size, update while open, fit input width to available window space, and keep a bounded virtualized suggestion viewport.
 
 PreviewHost's main sidebar and dedicated NavMenu page enable built-in search. The dedicated page can change ShowFilter, size, theme, and collapse state and search thousand-item deep data. Checks cover recycling for suggestion / menu item 1,000, keyboard / pointer confirmation, icon activation, dynamic updates, Esc / outside cancellation, closure, focus return, theme / size changes while open, and narrow windows:
-
-See the [preview entry points](../../../design/PreviewHost/Program.cs) for commands and scope.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

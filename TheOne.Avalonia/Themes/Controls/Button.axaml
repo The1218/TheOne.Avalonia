@@ -34,13 +34,13 @@
                     x:Name="PART_ContentPresenter">
                     <Grid ColumnDefinitions="Auto,*">
                         <one:LoadingIndicator
-                            IsVisible="{Binding #PART_ContentPresenter.((Button)TemplatedParent).(one:ButtonLoading.IsLoading)}"
+                            IsVisible="{CompiledBinding #PART_ContentPresenter.((Button)TemplatedParent).(one:ButtonLoading.IsLoading)}"
                             Margin="0,0,8,0"
                             Name="PART_LoadingIndicator"
                             VerticalAlignment="Center" />
                         <ContentPresenter
-                            Content="{Binding #PART_ContentPresenter.((Button)TemplatedParent).Content}"
-                            ContentTemplate="{Binding #PART_ContentPresenter.((Button)TemplatedParent).ContentTemplate}"
+                            Content="{CompiledBinding #PART_ContentPresenter.((Button)TemplatedParent).Content}"
+                            ContentTemplate="{CompiledBinding #PART_ContentPresenter.((Button)TemplatedParent).ContentTemplate}"
                             Grid.Column="1"
                             Name="PART_LabelPresenter"
                             RecognizesAccessKey="True"

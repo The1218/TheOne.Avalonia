@@ -2,6 +2,7 @@
 <Styles
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:p="using:Avalonia.Controls.Primitives"
     xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
@@ -140,8 +141,8 @@
         <Setter Property="IsColorPreviewVisible" Value="False" />
     </Style>
     <Style Selector="ColorView /template/ TabControl#PART_TabControl">
-        <Setter Property="MinWidth" Value="{Binding $parent[ColorView].Bounds.Width}" />
-        <Setter Property="MaxWidth" Value="{Binding $parent[ColorView].Bounds.Width}" />
+        <Setter Property="MinWidth" Value="{CompiledBinding $parent[ColorView].Bounds.Width}" />
+        <Setter Property="MaxWidth" Value="{CompiledBinding $parent[ColorView].Bounds.Width}" />
     </Style>
     <Style Selector=":is(ColorView)[IsVisible=True] /template/ Border#TabBackgroundBorder, FlyoutPresenter.one-colorpicker Border#TabBackgroundBorder">
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
@@ -178,8 +179,8 @@
         <Setter Property="AutomationProperties.Name" Value="Custom color" />
         <Setter Property="IsVisible">
             <MultiBinding Converter="{x:Static BoolConverters.Or}">
-                <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
-                <Binding Path="$parent[ColorView].IsColorComponentsVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsColorSpectrumVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsColorComponentsVisible" />
             </MultiBinding>
         </Setter>
     </Style>
@@ -199,7 +200,7 @@
     <Style Selector=":is(ColorView)[IsVisible=True] /template/ p|ColorSpectrum, FlyoutPresenter.one-colorpicker p|ColorSpectrum">
         <Setter Property="Grid.Column" Value="0" />
         <Setter Property="Grid.Row" Value="0" />
-        <Setter Property="IsVisible" Value="{Binding $parent[ColorView].IsColorSpectrumVisible}" />
+        <Setter Property="IsVisible" Value="{CompiledBinding $parent[ColorView].IsColorSpectrumVisible}" />
     </Style>
     <Style Selector=":is(ColorView)[IsVisible=True] /template/ p|ColorSlider#ColorSpectrumThirdComponentSlider, FlyoutPresenter.one-colorpicker p|ColorSlider#ColorSpectrumThirdComponentSlider">
         <Setter Property="Grid.Column" Value="0" />
@@ -209,8 +210,8 @@
         <Setter Property="Margin" Value="0,14,0,0" />
         <Setter Property="IsVisible">
             <MultiBinding Converter="{x:Static BoolConverters.And}">
-                <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
-                <Binding Path="$parent[ColorView].IsColorSpectrumSliderVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsColorSpectrumVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsColorSpectrumSliderVisible" />
             </MultiBinding>
         </Setter>
     </Style>
@@ -222,8 +223,8 @@
         <Setter Property="Margin" Value="0,10,0,0" />
         <Setter Property="IsVisible">
             <MultiBinding Converter="{x:Static BoolConverters.And}">
-                <Binding Path="$parent[ColorView].IsColorSpectrumVisible" />
-                <Binding Path="$parent[ColorView].IsAlphaVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsColorSpectrumVisible" />
+                <markup:CompiledBindingExtension Path="$parent[ColorView].IsAlphaVisible" />
             </MultiBinding>
         </Setter>
     </Style>
@@ -238,7 +239,7 @@
                         BorderThickness="1"
                         CornerRadius="4">
                         <Border.Background>
-                            <SolidColorBrush Color="{Binding}" />
+                            <SolidColorBrush Color="{CompiledBinding}" />
                         </Border.Background>
                     </Border>
                 </Border>

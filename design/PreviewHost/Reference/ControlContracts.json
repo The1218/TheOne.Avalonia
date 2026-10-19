@@ -709,6 +709,226 @@
       "Fields": []
     },
     {
+      "Id": "TheOne.Avalonia.Controls.QRCode",
+      "Name": "QRCode",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": true,
+      "IsStatic": false,
+      "Base": "Avalonia.Controls.Control",
+      "Summary": "A vector QR code with a square symbol and a protected quiet zone.",
+      "Source": "TheOne.Avalonia/Controls/QRCode.cs:11",
+      "Properties": [
+        {
+          "Name": "Background",
+          "Type": "Avalonia.Media.IBrush?",
+          "Summary": "Light modules and quiet zone. Defaults to white independently of the application theme.",
+          "Default": "Brushes.White",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "BackgroundProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:42",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ErrorCorrection",
+          "Type": "TheOne.Avalonia.Controls.QRCodeErrorCorrection",
+          "Summary": "Defaults to Medium. Changes regenerate the cached symbol.",
+          "Default": "QRCodeErrorCorrection.Medium",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E Enum.IsDefined(value)",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ErrorCorrectionProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:36",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [
+            "Low",
+            "Medium",
+            "Quartile",
+            "High"
+          ],
+          "Target": ""
+        },
+        {
+          "Name": "Foreground",
+          "Type": "Avalonia.Media.IBrush?",
+          "Summary": "Dark modules. Defaults to black independently of the application theme.",
+          "Default": "Brushes.Black",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ForegroundProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:40",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "QuietZone",
+          "Type": "int",
+          "Summary": "Clear border on every side, in modules. Range 4\u201332; default 4.",
+          "Default": "4",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E value is \u003E= 4 and \u003C= 32",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "QuietZoneProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:38",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Text",
+          "Type": "string?",
+          "Summary": "Payload, preserved exactly, encoded as UTF-8 with an ECI designator.",
+          "Default": "\u0022\u0022",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "TextProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:34",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ValidationError",
+          "Type": "string?",
+          "Summary": "Read-only encoding or minimum-module-size error; null when the current symbol is valid.",
+          "Default": "computed / state",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "ValidationErrorProperty",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:44",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "override void QRCode.Render(DrawingContext context)",
+          "Summary": "Avalonia \u7ED8\u5236\u56DE\u8C03\uFF1B\u4F7F\u7528\u63D0\u4F9B\u7684 DrawingContext \u7ED8\u5236\u5F53\u524D\u72B6\u6001\uFF0C\u4E1A\u52A1\u4EE3\u7801\u901A\u5E38\u4E0D\u76F4\u63A5\u8C03\u7528\u3002",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:71",
+          "ValueType": ""
+        },
+        {
+          "Signature": "QRCode.QRCode()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:11",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [
+        "TheOne.Avalonia.Controls.QRCodeErrorCorrection"
+      ],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring?\u003E QRCode.TextProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:13",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CQRCodeErrorCorrection\u003E QRCode.ErrorCorrectionProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:15",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cint\u003E QRCode.QuietZoneProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:18",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIBrush?\u003E QRCode.ForegroundProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:20",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIBrush?\u003E QRCode.BackgroundProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:22",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CQRCode, string?\u003E QRCode.ValidationErrorProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:24",
+          "ValueType": ""
+        }
+      ]
+    },
+    {
+      "Id": "TheOne.Avalonia.Controls.QRCodeErrorCorrection",
+      "Name": "QRCodeErrorCorrection",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Enum",
+      "IsControl": false,
+      "IsStatic": false,
+      "Base": "System.Enum",
+      "Summary": "The four QR Code Model 2 error correction levels.",
+      "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+      "Properties": [],
+      "Methods": [
+        {
+          "Signature": "QRCodeErrorCorrection.QRCodeErrorCorrection()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [
+        {
+          "Signature": "Low = 0",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+          "ValueType": ""
+        },
+        {
+          "Signature": "Medium = 1",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+          "ValueType": ""
+        },
+        {
+          "Signature": "Quartile = 2",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+          "ValueType": ""
+        },
+        {
+          "Signature": "High = 3",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/QRCode.cs:8",
+          "ValueType": ""
+        }
+      ],
+      "Related": [],
+      "Fields": []
+    },
+    {
       "Id": "TheOne.Avalonia.Controls.Avatar",
       "Name": "Avatar",
       "Namespace": "TheOne.Avalonia.Controls",
@@ -22139,31 +22359,31 @@
       "IsStatic": false,
       "Base": "Avalonia.Controls.Control",
       "Summary": "WorkflowEditor template part. Graph coordinates are independent of zoom and pan.",
-      "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:16",
+      "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.Rendering.cs:8",
       "Properties": [],
       "Methods": [
         {
           "Signature": "Point WorkflowCanvas.ToWorld(Point point)",
           "Summary": "\u5C06\u753B\u5E03\u89C6\u53E3\u5750\u6807\u6362\u7B97\u4E3A\u6587\u6863\u4E16\u754C\u5750\u6807\uFF0C\u8BA1\u5165\u7F29\u653E\u548C\u5E73\u79FB\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:71",
+          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:97",
           "ValueType": ""
         },
         {
           "Signature": "override void WorkflowCanvas.Render(DrawingContext context)",
           "Summary": "Avalonia \u7ED8\u5236\u56DE\u8C03\uFF1B\u4F7F\u7528\u63D0\u4F9B\u7684 DrawingContext \u7ED8\u5236\u5F53\u524D\u72B6\u6001\uFF0C\u4E1A\u52A1\u4EE3\u7801\u901A\u5E38\u4E0D\u76F4\u63A5\u8C03\u7528\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:133",
+          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:214",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowCanvas.CancelGesture()",
           "Summary": "\u53D6\u6D88\u5F53\u524D\u753B\u5E03\u624B\u52BF\u5E76\u6E05\u7406\u62D6\u52A8\uFF0F\u8FDE\u7EBF\u9884\u89C8\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:276",
+          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:487",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowCanvas.WorkflowCanvas()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:31",
+          "Source": "TheOne.Avalonia/Controls/WorkflowCanvas.cs:32",
           "ValueType": ""
         }
       ],
@@ -22193,7 +22413,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:95",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:344",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22209,7 +22429,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:104",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:353",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22225,7 +22445,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "AllowCyclesProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:88",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:312",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22241,7 +22461,39 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:103",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:352",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ChoiceItemAdapter",
+          "Type": "TheOne.Avalonia.Workflow.WorkflowChoiceAdapter?",
+          "Summary": "\u4F7F\u7528 WorkflowChoiceAdapter.Create\u003CT\u003E \u6307\u5B9A\u5019\u9009\u9879 Key \u548C\u663E\u793A\u6587\u5B57\u7684\u7F16\u8BD1\u59D4\u6258\uFF1B\u4E0D\u4F7F\u7528\u53CD\u5C04\u5C5E\u6027\u8DEF\u5F84\u3002\u672A\u8BBE\u7F6E\u65F6\u6570\u636E\u9879\u5FC5\u987B\u4E3A WorkflowChoice\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ChoiceItemAdapterProperty",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:39",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ChoiceItemsSource",
+          "Type": "System.Collections.IEnumerable?",
+          "Summary": "\u591A\u9009\u5B57\u6BB5\u7684\u9ED8\u8BA4\u5019\u9009\u6570\u636E\u6E90\uFF0C\u652F\u6301\u53CC\u5411\u7ED1\u5B9A\u548C\u96C6\u5408\u901A\u77E5\uFF1B\u4F7F\u7528 ChoiceItemAdapter \u63D0\u4F9B\u7A33\u5B9A Key \u4E0E\u663E\u793A\u6587\u5B57\uFF0C\u5BA1\u6279\u4EBA\u6216\u89D2\u8272\u6570\u636E\u7531\u5BBF\u4E3B\u52A0\u8F7D\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ChoiceItemsSourceProperty",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:33",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22257,7 +22509,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:109",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:359",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22273,7 +22525,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ContentTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:69",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:231",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22289,7 +22541,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:98",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:347",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22305,7 +22557,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "DocumentProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:64",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:201",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22321,7 +22573,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:99",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:348",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22337,7 +22589,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "FitPaddingProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:92",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:336",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22353,7 +22605,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "GraphSummaryProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:83",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:291",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22369,7 +22621,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "HeaderTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:73",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:250",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22385,7 +22637,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "IsPanModeProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:78",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:271",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22401,7 +22653,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "IsReadOnlyProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:85",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:294",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22417,7 +22669,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "LibraryGroupsProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:81",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:289",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22433,7 +22685,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:107",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:356",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22449,7 +22701,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "NodeDefinitionTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:71",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:243",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22465,7 +22717,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "NodeDefinitionsProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:65",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:207",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22481,7 +22733,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "NodeTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:68",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:225",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22497,7 +22749,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "PanProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:91",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:330",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22513,7 +22765,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "PropertyTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:70",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:237",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22529,7 +22781,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:97",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:346",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22545,7 +22797,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SaveCommandProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:75",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:257",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22561,7 +22813,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SearchTextProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:77",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:265",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22577,7 +22829,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SelectedConnectionProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:67",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:219",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22593,7 +22845,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SelectedNodeProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:66",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:213",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22609,7 +22861,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "SelectedNodeEditorProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:76",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:263",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22625,7 +22877,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:63",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:199",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22641,7 +22893,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ShowNodeLibraryProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:86",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:300",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22657,7 +22909,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ShowPropertiesProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:87",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:306",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22673,7 +22925,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ShowRuntimePreviewProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:79",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:277",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22689,7 +22941,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ShowValidationProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:80",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:283",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22705,7 +22957,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "SnapToGridProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:89",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:318",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22721,7 +22973,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "StatusProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:93",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:342",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22737,7 +22989,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:105",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:354",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22753,7 +23005,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:106",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:355",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22769,7 +23021,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:96",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:345",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22785,7 +23037,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:102",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:351",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22801,7 +23053,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "ValidationIssuesProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:82",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:290",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22817,7 +23069,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "ValidationSummaryProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:84",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:292",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22833,7 +23085,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "ZoomProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:90",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:324",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22849,7 +23101,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:100",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:349",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22865,7 +23117,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:101",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:350",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22881,7 +23133,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "ZoomTextProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:94",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:343",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -22892,61 +23144,61 @@
         {
           "Signature": "WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)",
           "Summary": "\u5411\u5F53\u524D\u5DE5\u4F5C\u6D41\u6587\u6863\u52A0\u5165\u8282\u70B9\uFF1B\u901A\u8FC7\u6587\u6863\u5386\u53F2\u5165\u53E3\u4FDD\u5B58\u53EF\u64A4\u9500\u64CD\u4F5C\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:219",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:571",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)",
           "Summary": "\u9009\u62E9\u6307\u5B9A\u7684\u539F\u59CB\u6D41\u7A0B\u8282\u70B9\uFF1B\u4E0E\u8FDE\u7EBF\u9009\u62E9\u6309\u7F16\u8F91\u5668\u89C4\u5219\u534F\u8C03\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:227",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:590",
           "ValueType": ""
         },
         {
           "Signature": "bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)",
           "Summary": "\u5C1D\u8BD5\u521B\u5EFA\u8282\u70B9\u7AEF\u53E3\u8FDE\u63A5\uFF0C\u590D\u7528\u6587\u6863\u8FDE\u63A5\u6821\u9A8C\u548C\u5386\u53F2\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:240",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:612",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.DeleteSelection()",
           "Summary": "\u5220\u9664\u5F53\u524D\u9009\u4E2D\u7684\u8282\u70B9\uFF0F\u8FDE\u7EBF\uFF0C\u5E76\u53C2\u4E0E\u64A4\u9500\u5386\u53F2\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:252",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:635",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.FitToView()",
           "Summary": "\u8C03\u6574\u7F29\u653E\u548C\u5E73\u79FB\u4EE5\u5BB9\u7EB3\u6587\u6863\u8282\u70B9\uFF0C\u4FDD\u7559\u6A21\u578B\u5750\u6807\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:253",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:642",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.Locate(string? nodeId)",
           "Summary": "\u5B9A\u4F4D\u76EE\u6807\u8282\u70B9\uFF0F\u6821\u9A8C\u95EE\u9898\uFF0C\u4F7F\u5176\u8FDB\u5165\u5F53\u524D\u89C6\u53E3\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:261",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:656",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.ArrangeNodes()",
           "Summary": "\u81EA\u52A8\u6574\u7406\u8282\u70B9\u5E03\u5C40\uFF0C\u901A\u8FC7\u6587\u6863\u7F16\u8F91\u5386\u53F2\u8BB0\u5F55\u5750\u6807\u53D8\u66F4\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:266",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:664",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.CopySelection()",
           "Summary": "\u590D\u5236\u5F53\u524D\u9009\u62E9\u4E3A\u7F16\u8F91\u5668\u652F\u6301\u7684\u7247\u6BB5\uFF0C\u4FDD\u6301\u5E8F\u5217\u5316\u8FB9\u754C\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:276",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:680",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowEditor.PasteSelection()",
           "Summary": "\u7C98\u8D34\u5DF2\u590D\u5236\u7247\u6BB5\uFF0C\u521B\u5EFA\u72EC\u7ACB\u6807\u8BC6\u5E76\u8BB0\u5F55\u53EF\u64A4\u9500\u7F16\u8F91\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:285",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:695",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowEditor.WorkflowEditor()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:111",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:150",
           "ValueType": ""
         }
       ],
@@ -22954,12 +23206,13 @@
         {
           "Signature": "event EventHandler? WorkflowEditor.DocumentEdited",
           "Summary": "\u72B6\u6001\uFF0F\u64CD\u4F5C\u901A\u77E5\uFF1B\u5728\u5BBF\u4E3B\u751F\u547D\u5468\u671F\u5185\u8BA2\u9605\u5E76\u5728\u91CA\u653E\u65F6\u89E3\u9664\uFF0C\u4E8B\u4EF6\u53C2\u6570\u7C7B\u578B\u89C1\u7B7E\u540D\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:110",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:364",
           "ValueType": "System.EventHandler?"
         }
       ],
       "Values": [],
       "Related": [
+        "TheOne.Avalonia.Workflow.WorkflowChoiceAdapter",
         "TheOne.Avalonia.Workflow.WorkflowConnection",
         "TheOne.Avalonia.Workflow.WorkflowDocument",
         "TheOne.Avalonia.Workflow.WorkflowNode",
@@ -22979,169 +23232,181 @@
         {
           "Signature": "static readonly StyledProperty\u003CIEnumerable\u003CWorkflowNodeDefinition\u003E?\u003E WorkflowEditor.NodeDefinitionsProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:21",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CWorkflowNode?\u003E WorkflowEditor.SelectedNodeProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:22",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CWorkflowConnection?\u003E WorkflowEditor.SelectedConnectionProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:23",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.NodeTemplateProperty",
-          "Summary": "",
           "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:24",
           "ValueType": ""
         },
         {
-          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.ContentTemplateProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:25",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.PropertyTemplateProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:26",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.NodeDefinitionTemplateProperty",
+          "Signature": "static readonly StyledProperty\u003CIEnumerable?\u003E WorkflowEditor.ChoiceItemsSourceProperty",
           "Summary": "",
           "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:27",
           "ValueType": ""
         },
         {
-          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.HeaderTemplateProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:28",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003CICommand?\u003E WorkflowEditor.SaveCommandProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:29",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, WorkflowNodeEditor?\u003E WorkflowEditor.SelectedNodeEditorProperty",
+          "Signature": "static readonly StyledProperty\u003CWorkflowChoiceAdapter?\u003E WorkflowEditor.ChoiceItemAdapterProperty",
           "Summary": "",
           "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:30",
           "ValueType": ""
         },
         {
-          "Signature": "static readonly StyledProperty\u003Cstring\u003E WorkflowEditor.SearchTextProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:32",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.IsPanModeProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:33",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowRuntimePreviewProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:34",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowValidationProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:35",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, IReadOnlyList\u003CWorkflowNodeGroup\u003E\u003E WorkflowEditor.LibraryGroupsProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:36",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.GraphSummaryProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:37",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.ValidationSummaryProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:38",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, IReadOnlyList\u003CWorkflowValidationIssue\u003E\u003E WorkflowEditor.ValidationIssuesProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:39",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.IsReadOnlyProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:44",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowNodeLibraryProperty",
+          "Signature": "static readonly StyledProperty\u003CWorkflowNode?\u003E WorkflowEditor.SelectedNodeProperty",
           "Summary": "",
           "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:45",
           "ValueType": ""
         },
         {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowPropertiesProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:46",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.AllowCyclesProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:47",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.SnapToGridProperty",
-          "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:48",
-          "ValueType": ""
-        },
-        {
-          "Signature": "static readonly StyledProperty\u003Cdouble\u003E WorkflowEditor.ZoomProperty",
+          "Signature": "static readonly StyledProperty\u003CWorkflowConnection?\u003E WorkflowEditor.SelectedConnectionProperty",
           "Summary": "",
           "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:49",
           "ValueType": ""
         },
         {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.NodeTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:53",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.ContentTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:56",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.PropertyTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:59",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.NodeDefinitionTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:62",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CIDataTemplate?\u003E WorkflowEditor.HeaderTemplateProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:65",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CICommand?\u003E WorkflowEditor.SaveCommandProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:68",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, WorkflowNodeEditor?\u003E WorkflowEditor.SelectedNodeEditorProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:71",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring\u003E WorkflowEditor.SearchTextProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:75",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.IsPanModeProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:78",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowRuntimePreviewProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:81",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowValidationProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:84",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, IReadOnlyList\u003CWorkflowNodeGroup\u003E\u003E WorkflowEditor.LibraryGroupsProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:87",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.GraphSummaryProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:91",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.ValidationSummaryProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:94",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CWorkflowEditor, IReadOnlyList\u003CWorkflowValidationIssue\u003E\u003E WorkflowEditor.ValidationIssuesProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:98",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.IsReadOnlyProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:102",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowNodeLibraryProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:105",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.ShowPropertiesProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:108",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.AllowCyclesProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:111",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cbool\u003E WorkflowEditor.SnapToGridProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:114",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E WorkflowEditor.ZoomProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:117",
+          "ValueType": ""
+        },
+        {
           "Signature": "static readonly StyledProperty\u003CVector\u003E WorkflowEditor.PanProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:50",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:121",
           "ValueType": ""
         },
         {
           "Signature": "static readonly StyledProperty\u003CThickness\u003E WorkflowEditor.FitPaddingProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:51",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:125",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.StatusProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:52",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:129",
           "ValueType": ""
         },
         {
           "Signature": "static readonly DirectProperty\u003CWorkflowEditor, string\u003E WorkflowEditor.ZoomTextProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:53",
+          "Source": "TheOne.Avalonia/Controls/WorkflowEditor.cs:132",
           "ValueType": ""
         }
       ]
@@ -23155,7 +23420,7 @@
       "IsStatic": false,
       "Base": "Avalonia.Controls.Control",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:9",
+      "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:8",
       "Properties": [
         {
           "Name": "Editor",
@@ -23167,7 +23432,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "EditorProperty",
-          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:13",
+          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:24",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23178,13 +23443,13 @@
         {
           "Signature": "override void WorkflowMiniMap.Render(DrawingContext context)",
           "Summary": "Avalonia \u7ED8\u5236\u56DE\u8C03\uFF1B\u4F7F\u7528\u63D0\u4F9B\u7684 DrawingContext \u7ED8\u5236\u5F53\u524D\u72B6\u6001\uFF0C\u4E1A\u52A1\u4EE3\u7801\u901A\u5E38\u4E0D\u76F4\u63A5\u8C03\u7528\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:28",
+          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:97",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowMiniMap.WorkflowMiniMap()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:11",
+          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:19",
           "ValueType": ""
         }
       ],
@@ -23197,7 +23462,7 @@
         {
           "Signature": "static readonly StyledProperty\u003CWorkflowEditor?\u003E WorkflowMiniMap.EditorProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:12",
+          "Source": "TheOne.Avalonia/Controls/WorkflowMiniMap.cs:10",
           "ValueType": ""
         }
       ]
@@ -23481,7 +23746,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "Portable API configuration. Parameters is a JSON object; GET parameters become query values.",
-      "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+      "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:13",
       "Properties": [
         {
           "Name": "Authentication",
@@ -23493,7 +23758,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:12",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:19",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23509,7 +23774,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:15",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23525,7 +23790,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:17",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -23544,7 +23809,39 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:16",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SelectedDataPointers",
+          "Type": "string[]?",
+          "Summary": "JSON Pointers visible in the designer; null retains all available items.",
+          "Default": "null",
+          "Binding": "CLR / init-only",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:22",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SourceName",
+          "Type": "string",
+          "Summary": "\u8BF7\u6C42\u6210\u529F\u540E\u7528\u4E8E\u6570\u636E\u76EE\u5F55\u5206\u7EC4\u7684\u6765\u6E90\u540D\u79F0\uFF1B\u9ED8\u8BA4\u201C\u63A5\u53E3\u6570\u636E\u201D\uFF0C\u4E0D\u4F5C\u4E3A\u8EAB\u4EFD\u6807\u8BC6\u6216\u8BF7\u6C42 URL\u3002",
+          "Default": "\u0022\u63A5\u53E3\u6570\u636E\u0022",
+          "Binding": "CLR / init-only",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:20",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23560,7 +23857,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:14",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23571,7 +23868,7 @@
         {
           "Signature": "ReportApiRequest.ReportApiRequest(string Url, string Method = \u0022GET\u0022, string Parameters = \u0022\u0022, ReportApiParameterMode ParameterMode = ReportApiParameterMode.Json)",
           "Summary": "Portable API configuration. Parameters is a JSON object; GET parameters become query values.",
-          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportApiRequest.cs:13",
           "ValueType": ""
         }
       ],
@@ -23865,7 +24162,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Reporting.ReportObservable",
       "Summary": "A JSON response node, or a field from a consumer supplied typed source.",
-      "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:6",
+      "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:11",
       "Properties": [
         {
           "Name": "Children",
@@ -23877,7 +24174,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:17",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:39",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23893,7 +24190,23 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:18",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:40",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IconKind",
+          "Type": "string",
+          "Summary": "\u53EA\u8BFB\u56FE\u6807\u540D\u79F0\uFF1A\u96C6\u5408\u4E3A Table\u3001\u5BF9\u8C61\u4E3A Folder\u3001\u5355\u503C\u4E3A Text\uFF1B\u7531\u8282\u70B9 Kind \u8BA1\u7B97\uFF0C\u4E0D\u53C2\u4E0E\u5B57\u6BB5\u7ED1\u5B9A\u3002",
+          "Default": "accessor-defined / state",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:37",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23909,7 +24222,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:20",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:43",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23925,7 +24238,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:19",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:41",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23941,7 +24254,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:14",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:30",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -23961,7 +24274,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:12",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:28",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23977,7 +24290,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:13",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:29",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -23993,7 +24306,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:16",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:36",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24009,7 +24322,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:15",
+          "Source": "TheOne.Avalonia/Reporting/ReportDataNode.cs:33",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24158,7 +24471,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Reporting.ReportObservable",
       "Summary": "Mutable single-table report definition. Geometry is in millimetres; text and row sizes are in DIPs.",
-      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:50",
+      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:234",
       "Properties": [
         {
           "Name": "BottomMargin",
@@ -24170,7 +24483,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:74",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:366",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24186,7 +24499,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:83",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:383",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24202,7 +24515,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:70",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:357",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24218,7 +24531,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:69",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:338",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24234,7 +24547,23 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:66",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:320",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "DataSourceName",
+          "Type": "string",
+          "Summary": "\u8BBE\u8BA1\u5668\u5DE6\u4FA7\u6570\u636E\u76EE\u5F55\u7684\u6765\u6E90\u540D\u79F0\uFF0C\u9ED8\u8BA4\u201C\u63A5\u53E3\u6570\u636E\u201D\uFF1B\u968F\u62A5\u8868\u6A21\u677F\u4FDD\u5B58\uFF0C\u4E0D\u6539\u53D8\u63A5\u53E3\u5730\u5740\u6216\u5B57\u6BB5\u952E\u3002",
+          "Default": "\u0022\u63A5\u53E3\u6570\u636E\u0022",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:344",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24250,7 +24579,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:68",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:332",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -24269,7 +24598,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:67",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:326",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24285,7 +24614,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:65",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:314",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24301,7 +24630,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:54",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:248",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24317,7 +24646,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:85",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:386",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24333,7 +24662,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:80",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:370",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24349,7 +24678,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:55",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:254",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24365,7 +24694,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:64",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:308",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24381,7 +24710,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:76",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:368",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24397,7 +24726,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:75",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:367",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24413,7 +24742,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:63",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:302",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24429,7 +24758,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:71",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:363",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24445,7 +24774,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:62",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:296",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24461,7 +24790,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:59",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:278",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24477,7 +24806,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:58",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:272",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24493,7 +24822,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:61",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:290",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24509,7 +24838,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:60",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:284",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24525,7 +24854,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:81",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:376",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24541,7 +24870,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:57",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:266",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24557,7 +24886,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:56",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:260",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24573,7 +24902,23 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:73",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:365",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SelectedDataPointers",
+          "Type": "string[]?",
+          "Summary": "Designer item selection, independent of the data used by existing report bindings.",
+          "Default": "null",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:351",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24589,7 +24934,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:53",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:242",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24605,7 +24950,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:52",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:236",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24621,7 +24966,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:72",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:364",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24632,19 +24977,19 @@
         {
           "Signature": "string ReportDocument.Save()",
           "Summary": "Returns a portable JSON definition including public API/image URLs, but no fetched records.",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:78",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:389",
           "ValueType": ""
         },
         {
           "Signature": "static ReportDocument ReportDocument.Load(string json)",
           "Summary": "\u4ECE JSON \u8F7D\u5165\u7C7B\u578B\u5316\u4E1A\u52A1\u6587\u6863\uFF1B\u7248\u672C\u3001\u5B57\u6BB5\u53CA\u7ED3\u6784\u6821\u9A8C\u89C1\u5BF9\u5E94\u5E8F\u5217\u5316\u5951\u7EA6\u3002",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:79",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:394",
           "ValueType": ""
         },
         {
           "Signature": "ReportDocument.ReportDocument()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:50",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:234",
           "ValueType": ""
         }
       ],
@@ -24667,7 +25012,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Reporting.ReportObservable",
       "Summary": "A freely positioned report element. Geometry is measured in millimetres on the page.",
-      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:17",
+      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:68",
       "Properties": [
         {
           "Name": "BarcodeShowText",
@@ -24679,7 +25024,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:28",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:120",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24695,7 +25040,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:30",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:144",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24711,7 +25056,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:26",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:108",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24727,7 +25072,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:45",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:220",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24743,7 +25088,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:31",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:150",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24759,7 +25104,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:29",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:138",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24775,7 +25120,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:44",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:214",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24791,7 +25136,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:24",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:96",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24807,7 +25152,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:37",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:181",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24823,7 +25168,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:43",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:208",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -24843,7 +25188,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:38",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:187",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24859,7 +25204,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:39",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:193",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24875,7 +25220,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:27",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:114",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24891,7 +25236,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:32",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:156",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24907,7 +25252,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:20",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:76",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -24918,7 +25263,8 @@
             "PageNumber",
             "Image",
             "CheckBox",
-            "Barcode"
+            "Barcode",
+            "QRCode"
           ],
           "Target": ""
         },
@@ -24932,7 +25278,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:35",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:174",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -24952,7 +25298,44 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:19",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:70",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "QRCodeErrorCorrection",
+          "Type": "TheOne.Avalonia.Controls.QRCodeErrorCorrection",
+          "Summary": "\u4E8C\u7EF4\u7801\u5143\u7D20\u7684\u7EA0\u9519\u7B49\u7EA7\uFF0C\u9ED8\u8BA4 Medium\uFF1B\u968F\u6A21\u677F\u3001\u64A4\u9500\u548C\u91CD\u505A\u4FDD\u5B58\u3002",
+          "Default": "QRCodeErrorCorrection.Medium",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:126",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [
+            "Low",
+            "Medium",
+            "Quartile",
+            "High"
+          ],
+          "Target": ""
+        },
+        {
+          "Name": "QRCodeQuietZone",
+          "Type": "int",
+          "Summary": "\u4E8C\u7EF4\u7801\u5143\u7D20\u56DB\u5468\u7684\u9759\u533A\u6A21\u5757\u6570\uFF0C\u8303\u56F4 4\u201332\uFF0C\u9ED8\u8BA4 4\uFF1B\u8BBE\u8BA1\u3001\u9884\u89C8\u548C PDF \u5171\u7528\u3002",
+          "Default": "4",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:132",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24968,7 +25351,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:46",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:226",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -24984,7 +25367,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:42",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:202",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25000,7 +25383,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:25",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:102",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25016,7 +25399,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:34",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:168",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -25037,7 +25420,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:33",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:162",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25053,7 +25436,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:23",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:90",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25069,7 +25452,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:21",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:78",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25085,7 +25468,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:22",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:84",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -25096,13 +25479,14 @@
         {
           "Signature": "ReportElement.ReportElement()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:17",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:68",
           "ValueType": ""
         }
       ],
       "Events": [],
       "Values": [],
       "Related": [
+        "TheOne.Avalonia.Controls.QRCodeErrorCorrection",
         "TheOne.Avalonia.Reporting.ReportElementKind",
         "TheOne.Avalonia.Reporting.ReportImageFit",
         "TheOne.Avalonia.Reporting.ReportTextAlignment",
@@ -25119,13 +25503,13 @@
       "IsStatic": false,
       "Base": "System.Enum",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+      "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:25",
       "Properties": [],
       "Methods": [
         {
           "Signature": "ReportElementKind.ReportElementKind()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:25",
           "ValueType": ""
         }
       ],
@@ -25134,49 +25518,55 @@
         {
           "Signature": "Text = 0",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:27",
           "ValueType": ""
         },
         {
           "Signature": "Table = 1",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:28",
           "ValueType": ""
         },
         {
           "Signature": "Line = 2",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:29",
           "ValueType": ""
         },
         {
           "Signature": "Rectangle = 3",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:30",
           "ValueType": ""
         },
         {
           "Signature": "PageNumber = 4",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:31",
           "ValueType": ""
         },
         {
           "Signature": "Image = 5",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:32",
           "ValueType": ""
         },
         {
           "Signature": "CheckBox = 6",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:33",
           "ValueType": ""
         },
         {
           "Signature": "Barcode = 7",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:10",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:34",
+          "ValueType": ""
+        },
+        {
+          "Signature": "QRCode = 8",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Reporting/ReportDocument.cs:35",
           "ValueType": ""
         }
       ],
@@ -27452,6 +27842,115 @@
       "Fields": []
     },
     {
+      "Id": "TheOne.Avalonia.Workflow.WorkflowChoice",
+      "Name": "WorkflowChoice",
+      "Namespace": "TheOne.Avalonia.Workflow",
+      "Kind": "Class",
+      "IsControl": false,
+      "IsStatic": false,
+      "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
+      "Summary": "Presentation for a stable key. Unresolved saved keys remain editable instead of being discarded.",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:25",
+      "Properties": [
+        {
+          "Name": "IsAvailable",
+          "Type": "bool",
+          "Summary": "\u8BE5 Key \u5F53\u524D\u662F\u5426\u5B58\u5728\u4E8E\u5BBF\u4E3B\u5019\u9009\u6570\u636E\u6E90\uFF1B\u4E0D\u4EE3\u8868\u4E1A\u52A1\u5BA1\u6279\u6743\u9650\u3002",
+          "Default": "true",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:29",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Key",
+          "Type": "string",
+          "Summary": "\u5B57\u6BB5\uFF0F\u53C2\u6570\u952E\uFF0C\u7528\u4E8E\u5173\u8054\u4E1A\u52A1\u503C\uFF1B\u4E0E\u663E\u793A\u540D\u79F0\u5206\u5F00\u7EF4\u62A4\u3002",
+          "Default": "key",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:27",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Text",
+          "Type": "string",
+          "Summary": "\u6587\u672C\u8F93\u5165\uFF0F\u663E\u793A\u503C\uFF1B\u53D8\u66F4\u901A\u77E5\u548C\u6821\u9A8C\u6309\u6240\u5728\u6A21\u578B\u6216\u539F\u751F\u8F93\u5165\u5951\u7EA6\u5904\u7406\u3002",
+          "Default": "text",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:28",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "WorkflowChoice.WorkflowChoice(string key, string text)",
+          "Summary": "Presentation for a stable key. Unresolved saved keys remain editable instead of being discarded.",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:25",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [],
+      "Fields": []
+    },
+    {
+      "Id": "TheOne.Avalonia.Workflow.WorkflowChoiceAdapter",
+      "Name": "WorkflowChoiceAdapter",
+      "Namespace": "TheOne.Avalonia.Workflow",
+      "Kind": "Class",
+      "IsControl": false,
+      "IsStatic": false,
+      "Base": "object",
+      "Summary": "Compiled host projections for stable user/role keys and display text, without property reflection.",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:4",
+      "Properties": [],
+      "Methods": [
+        {
+          "Signature": "abstract string WorkflowChoiceAdapter.GetKey(object item)",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:6",
+          "ValueType": ""
+        },
+        {
+          "Signature": "abstract string WorkflowChoiceAdapter.GetText(object item)",
+          "Summary": "\u4F7F\u7528\u5DF2\u914D\u7F6E\u7684\u7C7B\u578B\u5316\u9002\u914D\u5668\u8BFB\u53D6\u539F\u59CB\u6A21\u578B\u663E\u793A\uFF0F\u641C\u7D22\u6587\u672C\u3002",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:7",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static WorkflowChoiceAdapter WorkflowChoiceAdapter.Create\u003CT\u003E(Func\u003CT, string\u003E key, Func\u003CT, string\u003E text)",
+          "Summary": "\u901A\u8FC7\u663E\u5F0F\u7C7B\u578B\u53C2\u6570\u3001\u6A21\u578B\u53CA\u59D4\u6258\u521B\u5EFA\u9002\u914D\u5668\uFF0F\u6570\u636E\u6E90\uFF1B\u7B7E\u540D\u4E2D\u7684 getter \u4FDD\u7559\u7F16\u8BD1\u7C7B\u578B\u4FE1\u606F\u3002",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowChoice.cs:9",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [],
+      "Fields": []
+    },
+    {
       "Id": "TheOne.Avalonia.Workflow.WorkflowConnection",
       "Name": "WorkflowConnection",
       "Namespace": "TheOne.Avalonia.Workflow",
@@ -27460,7 +27959,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:84",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:213",
       "Properties": [
         {
           "Name": "Id",
@@ -27472,7 +27971,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:87",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:216",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27488,7 +27987,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:92",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:222",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27504,7 +28003,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:88",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:217",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27520,7 +28019,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:89",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:218",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27536,7 +28035,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:90",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:219",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27552,7 +28051,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:91",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:220",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27563,7 +28062,7 @@
         {
           "Signature": "WorkflowConnection.WorkflowConnection()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:84",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:213",
           "ValueType": ""
         }
       ],
@@ -27581,7 +28080,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:48",
       "Properties": [
         {
           "Name": "FieldPath",
@@ -27593,7 +28092,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:48",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27609,7 +28108,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:48",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27625,7 +28124,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:48",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27636,7 +28135,7 @@
         {
           "Signature": "WorkflowDataReference.WorkflowDataReference(string NodeId, string OutputPortId, string FieldPath = \u0022\u0022)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:48",
           "ValueType": ""
         }
       ],
@@ -27654,7 +28153,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
       "Summary": "Observable UI-thread document. Editor operations are reversible; direct host changes reset history.",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:8",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.Index.cs:3",
       "Properties": [
         {
           "Name": "CanRedo",
@@ -27666,7 +28165,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:19",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:45",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27682,7 +28181,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:18",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:44",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27698,7 +28197,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:17",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:43",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27714,7 +28213,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:16",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:42",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27730,7 +28229,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:20",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:46",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27746,7 +28245,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:15",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:33",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27757,85 +28256,91 @@
         {
           "Signature": "void WorkflowDocument.Edit(string title, Action redo, Action undo)",
           "Summary": "Apply a host edit to the same history as graph edits. Actions must be deterministic and not throw.",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:52",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:114",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.Undo()",
           "Summary": "\u64A4\u9500\u6700\u8FD1\u4E00\u6B21\u53EF\u64A4\u9500\u7684\u6587\u6863\u7F16\u8F91\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:59",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:133",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.Redo()",
           "Summary": "\u91CD\u505A\u6700\u8FD1\u64A4\u9500\u7684\u6587\u6863\u7F16\u8F91\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:60",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:152",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.ClearHistory()",
           "Summary": "\u6E05\u7A7A\u64A4\u9500\u4E0E\u91CD\u505A\u8BB0\u5F55\uFF0C\u4FDD\u7559\u5F53\u524D\u6587\u6863\u6570\u636E\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:61",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:171",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.AddNode(WorkflowNode node)",
           "Summary": "\u5411\u5F53\u524D\u5DE5\u4F5C\u6D41\u6587\u6863\u52A0\u5165\u8282\u70B9\uFF1B\u901A\u8FC7\u6587\u6863\u5386\u53F2\u5165\u53E3\u4FDD\u5B58\u53EF\u64A4\u9500\u64CD\u4F5C\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:62",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:179",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.Remove(IEnumerable\u003CWorkflowNode\u003E nodes, WorkflowConnection? connection = null)",
           "Summary": "\u5220\u9664\u6307\u5B9A\u5DE5\u4F5C\u6D41\u5BF9\u8C61\u53CA\u5173\u8054\u5173\u7CFB\uFF0C\u901A\u8FC7\u6587\u6863\u7F16\u8F91\u5386\u53F2\u6267\u884C\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:68",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:187",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.MoveNodes(IEnumerable\u003C(WorkflowNode Node, double X, double Y)\u003E positions)",
           "Summary": "\u6279\u91CF\u66F4\u65B0\u8282\u70B9\u5750\u6807\u5E76\u8BB0\u5F55\u4E00\u6B21\u53EF\u64A4\u9500\u79FB\u52A8\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:77",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:207",
           "ValueType": ""
         },
         {
           "Signature": "void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)",
           "Summary": "\u901A\u8FC7\u6587\u6863\u4FEE\u6539\u6D41\u7A0B\u5C5E\u6027\u7684\u56FA\u5B9A\u503C\uFF0F\u5F15\u7528\uFF0C\u4EE5\u4FDD\u6301\u64A4\u9500\u4E0E\u901A\u77E5\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:84",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:231",
+          "ValueType": ""
+        },
+        {
+          "Signature": "void WorkflowDocument.SetSelectedKeys(WorkflowProperty property, IEnumerable\u003Cstring\u003E keys)",
+          "Summary": "One undoable multi-selection edit, preserving stable keys and their order.",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:248",
           "ValueType": ""
         },
         {
           "Signature": "string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)",
           "Summary": "\u6821\u9A8C\u5019\u9009\u7AEF\u53E3\u8FDE\u63A5\uFF0C\u8FD4\u56DE\u5931\u8D25\u539F\u56E0\u800C\u4E0D\u521B\u5EFA\u8FDE\u7EBF\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:90",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:267",
           "ValueType": ""
         },
         {
           "Signature": "bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)",
           "Summary": "\u6821\u9A8C\u5E76\u5C1D\u8BD5\u521B\u5EFA\u8FDE\u63A5\uFF1B\u8FD4\u56DE\u662F\u5426\u6210\u529F\u53CA\u76F8\u5173\u7ED3\u679C\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:104",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:291",
           "ValueType": ""
         },
         {
           "Signature": "bool WorkflowDocument.IsReachable(string from, string to)",
           "Summary": "\u5224\u65AD\u6D41\u7A0B\u56FE\u4E2D\u76EE\u6807\u8282\u70B9\u662F\u5426\u53EF\u4ECE\u8D77\u70B9\u5230\u8FBE\uFF0C\u7528\u4E8E\u8FDE\u7EBF\u4E0E\u5FAA\u73AF\u5224\u65AD\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:111",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:304",
           "ValueType": ""
         },
         {
           "Signature": "IReadOnlyList\u003CWorkflowReferenceOption\u003E WorkflowDocument.GetReferenceOptions(WorkflowNode target, WorkflowProperty property)",
           "Summary": "\u4E3A\u5F53\u524D\u8282\u70B9\u5C5E\u6027\u5217\u51FA\u517C\u5BB9\u7684\u4E0A\u6E38\u6570\u636E\u5F15\u7528\u9009\u9879\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:117",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:320",
           "ValueType": ""
         },
         {
           "Signature": "IReadOnlyList\u003CWorkflowValidationIssue\u003E WorkflowDocument.Validate(bool allowCycles = false)",
           "Summary": "\u6821\u9A8C\u5DE5\u4F5C\u6D41\u7ED3\u6784\u3001\u7AEF\u53E3\u4E0E\u5C5E\u6027\u5F15\u7528\uFF0C\u8FD4\u56DE\u53EF\u5B9A\u4F4D\u7684\u95EE\u9898\u96C6\u5408\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:121",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:333",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowDocument.WorkflowDocument()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:22",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:17",
           "ValueType": ""
         }
       ],
@@ -27843,7 +28348,7 @@
         {
           "Signature": "event EventHandler? WorkflowDocument.Changed",
           "Summary": "\u72B6\u6001\uFF0F\u64CD\u4F5C\u901A\u77E5\uFF1B\u5728\u5BBF\u4E3B\u751F\u547D\u5468\u671F\u5185\u8BA2\u9605\u5E76\u5728\u91CA\u653E\u65F6\u89E3\u9664\uFF0C\u4E8B\u4EF6\u53C2\u6570\u7C7B\u578B\u89C1\u7B7E\u540D\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:21",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowDocument.cs:47",
           "ValueType": "System.EventHandler?"
         }
       ],
@@ -27867,7 +28372,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:47",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:112",
       "Properties": [
         {
           "Name": "Content",
@@ -27879,7 +28384,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:67",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:198",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27895,7 +28400,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:61",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:156",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27911,7 +28416,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:55",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:135",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27927,7 +28432,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:58",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:138",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27943,7 +28448,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:68",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:204",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27959,7 +28464,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:69",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:205",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -27975,7 +28480,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:57",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:137",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -27995,7 +28500,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:64",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:182",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -28017,7 +28522,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:65",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:191",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28033,7 +28538,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:60",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:150",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28049,7 +28554,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:56",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:136",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28065,7 +28570,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:59",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:140",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28081,7 +28586,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:62",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:162",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28097,7 +28602,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:63",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:172",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28108,7 +28613,7 @@
         {
           "Signature": "WorkflowNode.WorkflowNode()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:70",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:121",
           "ValueType": ""
         }
       ],
@@ -28131,7 +28636,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "The host supplies node kinds and factories. Returned instances must have fresh IDs.",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:96",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:230",
       "Properties": [
         {
           "Name": "Category",
@@ -28143,7 +28648,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:101",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:235",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28159,7 +28664,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:102",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:236",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28175,7 +28680,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:103",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:237",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28191,7 +28696,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:100",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:234",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28207,7 +28712,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:99",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:233",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28223,7 +28728,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:98",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:232",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28234,7 +28739,7 @@
         {
           "Signature": "WorkflowNodeDefinition.WorkflowNodeDefinition()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:96",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:230",
           "ValueType": ""
         }
       ],
@@ -28266,7 +28771,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:12",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:29",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28282,7 +28787,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:8",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:15",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28298,7 +28803,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:10",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:17",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28314,7 +28819,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:16",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28330,7 +28835,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:11",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:19",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28341,13 +28846,19 @@
         {
           "Signature": "void WorkflowNodeEditor.Refresh()",
           "Summary": "Refresh after document edits, including undo and upstream metadata changes.",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:20",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:40",
+          "ValueType": ""
+        },
+        {
+          "Signature": "void WorkflowNodeEditor.Dispose()",
+          "Summary": "\u89E3\u9664\u8BA2\u9605\u5E76\u91CA\u653E\u5B9E\u4F8B\u6301\u6709\u7684\u8D44\u6E90\uFF1B\u91CA\u653E\u540E\u4E0D\u518D\u5C06\u5176\u4F5C\u4E3A\u6D3B\u52A8\u89C6\u56FE\u4F7F\u7528\u3002",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:54",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowNodeEditor.WorkflowNodeEditor(WorkflowDocument document, WorkflowNode node)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:14",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:8",
           "ValueType": ""
         }
       ],
@@ -28369,7 +28880,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:105",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:240",
       "Properties": [
         {
           "Name": "Items",
@@ -28381,7 +28892,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:105",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:240",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28397,7 +28908,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:105",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:240",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28408,7 +28919,7 @@
         {
           "Signature": "WorkflowNodeGroup.WorkflowNodeGroup(string Title, WorkflowNodeDefinition[] Items)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:105",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:240",
           "ValueType": ""
         }
       ],
@@ -28428,13 +28939,13 @@
       "IsStatic": false,
       "Base": "System.Enum",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:11",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:30",
       "Properties": [],
       "Methods": [
         {
           "Signature": "WorkflowNodeShape.WorkflowNodeShape()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:11",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:30",
           "ValueType": ""
         }
       ],
@@ -28443,19 +28954,19 @@
         {
           "Signature": "Card = 0",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:11",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:32",
           "ValueType": ""
         },
         {
           "Signature": "Pill = 1",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:11",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:33",
           "ValueType": ""
         },
         {
           "Signature": "Note = 2",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:11",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:34",
           "ValueType": ""
         }
       ],
@@ -28471,13 +28982,13 @@
       "IsStatic": false,
       "Base": "System.Enum",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:13",
       "Properties": [],
       "Methods": [
         {
           "Signature": "WorkflowNodeState.WorkflowNodeState()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:13",
           "ValueType": ""
         }
       ],
@@ -28486,31 +28997,31 @@
         {
           "Signature": "Pending = 0",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
           "ValueType": ""
         },
         {
           "Signature": "Running = 1",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:16",
           "ValueType": ""
         },
         {
           "Signature": "Completed = 2",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:17",
           "ValueType": ""
         },
         {
           "Signature": "Failed = 3",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
           "ValueType": ""
         },
         {
           "Signature": "Skipped = 4",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:19",
           "ValueType": ""
         }
       ],
@@ -28526,14 +29037,14 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:21",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:54",
       "Properties": [],
       "Methods": [],
       "Events": [
         {
           "Signature": "event PropertyChangedEventHandler? WorkflowObservable.PropertyChanged",
           "Summary": "\u72B6\u6001\uFF0F\u64CD\u4F5C\u901A\u77E5\uFF1B\u5728\u5BBF\u4E3B\u751F\u547D\u5468\u671F\u5185\u8BA2\u9605\u5E76\u5728\u91CA\u653E\u65F6\u89E3\u9664\uFF0C\u4E8B\u4EF6\u53C2\u6570\u7C7B\u578B\u89C1\u7B7E\u540D\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:23",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:56",
           "ValueType": "System.ComponentModel.PropertyChangedEventHandler?"
         }
       ],
@@ -28550,7 +29061,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "Stable, host-defined data type keys; no CLR type lookup or reflection is performed.",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:14",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
       "Properties": [
         {
           "Name": "DataType",
@@ -28562,7 +29073,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:14",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28578,7 +29089,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:14",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28594,7 +29105,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:14",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28605,7 +29116,7 @@
         {
           "Signature": "WorkflowOutputField.WorkflowOutputField(string Path, string Title, string DataType = \u0022text\u0022)",
           "Summary": "Stable, host-defined data type keys; no CLR type lookup or reflection is performed.",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:14",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
           "ValueType": ""
         }
       ],
@@ -28623,7 +29134,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:40",
       "Properties": [
         {
           "Name": "DataType",
@@ -28635,7 +29146,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:16",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:44",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28651,7 +29162,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:43",
           "Inherits": false,
           "Static": false,
           "Choices": [
@@ -28670,7 +29181,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:16",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:46",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28686,7 +29197,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:41",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28702,7 +29213,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:16",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:45",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28718,7 +29229,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:42",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28729,7 +29240,7 @@
         {
           "Signature": "WorkflowPort.WorkflowPort(string Id, string Title, WorkflowPortDirection Direction, string DataType = \u0022flow\u0022, int MaxConnections = 1, WorkflowOutputField[]? Fields = null)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:15",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:40",
           "ValueType": ""
         }
       ],
@@ -28750,13 +29261,13 @@
       "IsStatic": false,
       "Base": "System.Enum",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:8",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:7",
       "Properties": [],
       "Methods": [
         {
           "Signature": "WorkflowPortDirection.WorkflowPortDirection()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:8",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:7",
           "ValueType": ""
         }
       ],
@@ -28765,13 +29276,13 @@
         {
           "Signature": "Input = 0",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:8",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:9",
           "ValueType": ""
         },
         {
           "Signature": "Output = 1",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:8",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
           "ValueType": ""
         }
       ],
@@ -28787,7 +29298,7 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
       "Summary": "A literal or an upstream reference. DataType is a host-defined token, e.g. text, number, email.",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:33",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:73",
       "Properties": [
         {
           "Name": "DataType",
@@ -28799,7 +29310,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:39",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:86",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28815,7 +29326,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:44",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:108",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28831,7 +29342,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:41",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:88",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28847,7 +29358,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:37",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:84",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28863,13 +29374,14 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:40",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:87",
           "Inherits": false,
           "Static": false,
           "Choices": [
             "Text",
             "Number",
-            "Boolean"
+            "Boolean",
+            "MultiSelect"
           ],
           "Target": ""
         },
@@ -28883,7 +29395,23 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:43",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:99",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SelectedKeys",
+          "Type": "System.Collections.ObjectModel.ObservableCollection\u003Cstring\u003E",
+          "Summary": "Stable host identities for MultiSelect fields; display labels and runtime objects are not saved.",
+          "Default": "[]",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:81",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28899,7 +29427,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:38",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:85",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28915,7 +29443,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:42",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:90",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28926,7 +29454,7 @@
         {
           "Signature": "WorkflowProperty.WorkflowProperty()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:33",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:75",
           "ValueType": ""
         }
       ],
@@ -28947,8 +29475,56 @@
       "IsStatic": false,
       "Base": "TheOne.Avalonia.Workflow.WorkflowObservable",
       "Summary": "A literal/reference editor backed by the same document undo history.",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:33",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:58",
       "Properties": [
+        {
+          "Name": "ChoiceError",
+          "Type": "string",
+          "Summary": "\u5019\u9009\u6570\u636E Key \u4E3A\u7A7A\u3001\u91CD\u590D\u6216\u7C7B\u578B\u4E0D\u517C\u5BB9\u65F6\u7684\u9519\u8BEF\u6587\u5B57\uFF1B\u4E0D\u4F1A\u6E05\u9664\u5DF2\u4FDD\u5B58\u7684\u9009\u62E9\u3002",
+          "Default": "\u0022\u0022",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:22",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "Choices",
+          "Type": "System.Collections.Generic.IReadOnlyList\u003CTheOne.Avalonia.Workflow.WorkflowChoice\u003E",
+          "Summary": "\u5F53\u524D\u5B57\u6BB5\u7684\u5019\u9009\u6295\u5F71\uFF0C\u6309 Key \u4FDD\u6301\u6807\u8BC6\uFF1B\u4EC5\u663E\u793A\u7528\uFF0C\u6301\u4E45\u72B6\u6001\u4E3A Property.SelectedKeys\u3002",
+          "Default": "[]",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:21",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "HasMissingChoices",
+          "Type": "bool",
+          "Summary": "\u5DF2\u4FDD\u5B58\u7684 Key \u6682\u65F6\u4E0D\u5728\u5019\u9009\u6570\u636E\u6E90\u4E2D\u65F6\u4E3A true\uFF1B\u4FDD\u7559\u53EF\u79FB\u9664\u6807\u7B7E\uFF0C\u6570\u636E\u6062\u590D\u540E\u91CD\u65B0\u5173\u8054\u3002",
+          "Default": "accessor-defined / state",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:23",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
         {
           "Name": "IsLiteral",
           "Type": "bool",
@@ -28959,7 +29535,39 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:41",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:84",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IsMultiSelect",
+          "Type": "bool",
+          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Default": "accessor-defined / state",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:19",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "IsSingleValue",
+          "Type": "bool",
+          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Default": "accessor-defined / state",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:20",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28975,7 +29583,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:40",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:75",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -28991,7 +29599,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:42",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:85",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29007,7 +29615,23 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:37",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:71",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "SelectedChoices",
+          "Type": "System.Collections.IList",
+          "Summary": "Two-way item selection. Persisted state belongs to Property.SelectedKeys.",
+          "Default": "new ObservableCollection\u003CWorkflowChoice\u003E()",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:26",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29023,7 +29647,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:43",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:87",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29039,7 +29663,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:38",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:72",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29055,7 +29679,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:39",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:73",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29066,19 +29690,33 @@
         {
           "Signature": "void WorkflowPropertyEditor.Refresh()",
           "Summary": "\u4ECE\u5E95\u5C42\u6A21\u578B\u4E0E\u6587\u6863\u91CD\u65B0\u540C\u6B65\u5C5E\u6027\u68C0\u67E5\u5668\uFF0C\u5305\u542B\u64A4\u9500\u540E\u53CA\u4E0A\u6E38\u53D8\u5316\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:57",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:98",
+          "ValueType": ""
+        },
+        {
+          "Signature": "void WorkflowPropertyEditor.ConfigureChoices(IEnumerable? source, WorkflowChoiceAdapter? adapter)",
+          "Summary": "Configure host records with typed key/text projections. Collection and label notifications are observed.",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:44",
+          "ValueType": ""
+        },
+        {
+          "Signature": "void WorkflowPropertyEditor.Dispose()",
+          "Summary": "\u89E3\u9664\u8BA2\u9605\u5E76\u91CA\u653E\u5B9E\u4F8B\u6301\u6709\u7684\u8D44\u6E90\uFF1B\u91CA\u653E\u540E\u4E0D\u518D\u5C06\u5176\u4F5C\u4E3A\u6D3B\u52A8\u89C6\u56FE\u4F7F\u7528\u3002",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowPropertyEditor.Choices.cs:152",
           "ValueType": ""
         },
         {
           "Signature": "WorkflowPropertyEditor.WorkflowPropertyEditor(WorkflowDocument document, WorkflowNode node, WorkflowProperty property)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:53",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowNodeEditor.cs:63",
           "ValueType": ""
         }
       ],
       "Events": [],
       "Values": [],
       "Related": [
+        "TheOne.Avalonia.Workflow.WorkflowChoice",
+        "TheOne.Avalonia.Workflow.WorkflowChoiceAdapter",
         "TheOne.Avalonia.Workflow.WorkflowDocument",
         "TheOne.Avalonia.Workflow.WorkflowNode",
         "TheOne.Avalonia.Workflow.WorkflowProperty",
@@ -29095,7 +29733,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:19",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:52",
       "Properties": [
         {
           "Name": "Reference",
@@ -29107,7 +29745,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:19",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:52",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29123,7 +29761,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:19",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:52",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29134,7 +29772,7 @@
         {
           "Signature": "WorkflowReferenceOption.WorkflowReferenceOption(string Title, WorkflowDataReference Reference)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:19",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:52",
           "ValueType": ""
         }
       ],
@@ -29166,7 +29804,7 @@
         {
           "Signature": "static WorkflowDocument WorkflowSerializer.Load(string json)",
           "Summary": "\u4ECE JSON \u8F7D\u5165\u7C7B\u578B\u5316\u4E1A\u52A1\u6587\u6863\uFF1B\u7248\u672C\u3001\u5B57\u6BB5\u53CA\u7ED3\u6784\u6821\u9A8C\u89C1\u5BF9\u5E94\u5E8F\u5217\u5316\u5951\u7EA6\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowSerializer.cs:23",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowSerializer.cs:30",
           "ValueType": ""
         }
       ],
@@ -29186,7 +29824,7 @@
       "IsStatic": false,
       "Base": "object",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:50",
       "Properties": [
         {
           "Name": "ConnectionId",
@@ -29198,7 +29836,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:50",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29214,7 +29852,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:50",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29230,7 +29868,7 @@
           "Writable": true,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:50",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -29241,7 +29879,7 @@
         {
           "Signature": "WorkflowValidationIssue.WorkflowValidationIssue(string Message, string? NodeId = null, string? ConnectionId = null)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:18",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:50",
           "ValueType": ""
         }
       ],
@@ -29259,13 +29897,13 @@
       "IsStatic": false,
       "Base": "System.Enum",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
+      "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:22",
       "Properties": [],
       "Methods": [
         {
           "Signature": "WorkflowValueKind.WorkflowValueKind()",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:22",
           "ValueType": ""
         }
       ],
@@ -29274,19 +29912,25 @@
         {
           "Signature": "Text = 0",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:24",
           "ValueType": ""
         },
         {
           "Signature": "Number = 1",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:25",
           "ValueType": ""
         },
         {
           "Signature": "Boolean = 2",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:10",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:26",
+          "ValueType": ""
+        },
+        {
+          "Signature": "MultiSelect = 3",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Workflow/WorkflowModels.cs:27",
           "ValueType": ""
         }
       ],

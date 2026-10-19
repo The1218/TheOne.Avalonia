@@ -236,6 +236,8 @@ internal sealed partial class ReportPageSurface
                             DrawCheckBox(context, element, text, area, brush);
                         else if (element.Kind == ReportElementKind.Barcode)
                             DrawBarcode(context, element, text, area, brush);
+                        else if (element.Kind == ReportElementKind.QRCode)
+                            DrawQRCode(context, element, layout?.Elements.ElementAtOrDefault(elementIndex)?.QRCode, area, brush);
                         else if (element.Kind != ReportElementKind.Rectangle)
                             ElementText(context, text, area.Deflate(2), brush, element);
                     }

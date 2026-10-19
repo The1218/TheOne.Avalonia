@@ -1,5 +1,7 @@
 # DataGrid 绑定、排序与单元格密度
 
+历史命令行验证入口与消费测试项目已移除，文中的专项覆盖和测量结果为历史记录。请正常启动 PreviewHost，从菜单进入对应控件演示页；目标平台行为需在实际应用中验证。
+
 **简体中文** · [English](../en/datagrid-binding.md)
 
 DataGridColumnHeader、DataGridRowHeader、DataGridRowGroupHeader 是表头、行头和分组模板的原生结构，OneTheme 已提供主题。优先使用 HeaderTemplate 等公开扩展点；替换完整模板时保留 PART_*、列身份和原生布局合约，不单独创建这些容器。
@@ -35,8 +37,6 @@ DataGrid 预览的 ViewModel 与 GridRecord 直接继承 ReactiveObject，使用
 
 居中文本使用完整内容区宽度，避免排序与回收后按旧文本尺寸裁切，同时保留其他控件的内容对齐。small 单元格为固定 20px 复选标记保留完整高度；按钮／ToggleButton／RepeatButton 使用单元格密度内边距和最小高度，Auto 行高继续适应内容，不压缩字体或强制截断。显式固定 RowHeight 过小时仍由消费方调整。
 
-PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回收验证；专项为 --verify-datagrid-binding，定向图片为 DataGridBinding。未增加对比页面。
-
 [筛选、冻结与统计](datagrid-extensions.md)。
 
 ## NativeAOT
@@ -70,7 +70,7 @@ PreviewHost 的 DataGrid 页包含独立集合操作区域与 1,000 项实际回
 </DataGrid>
 ```
 
-本库替代官方 DataGrid 包，保留原生程序集身份、类型和 Presenter；不要同时引用官方 `Avalonia.Controls.DataGrid` 包。源码与许可见 [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md)。独立编译绑定及原生消费示例见 [NativeAotSmoke](../../../design/PreviewHost/Consumers/NativeAotSmoke/Program.cs)，仅引用包的示例见 [DataGridPackageConsumer](../../../design/PreviewHost/Consumers/DataGridPackageConsumer/Program.cs)。
+本库替代官方 DataGrid 包，保留原生程序集身份、类型和 Presenter；不要同时引用官方 `Avalonia.Controls.DataGrid` 包。源码与许可见 [vendor README](../../../vendor/Avalonia.Controls.DataGrid/README.md)。
 
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API

@@ -6,8 +6,8 @@
     ThemeButtonScope="Application"
     Title="TheOne · 控件库预览"
     Width="1280"
-    styling:ControlSizing.Size="{Binding Size, Mode=TwoWay}"
-    styling:Motion.Enabled="{Binding MotionEnabled, Mode=TwoWay}"
+    styling:ControlSizing.Size="{CompiledBinding Size, Mode=TwoWay}"
+    styling:Motion.Enabled="{CompiledBinding MotionEnabled, Mode=TwoWay}"
     x:Class="TheOne.DesignPreview.MainWindow"
     x:DataType="local:GalleryViewModel"
     xmlns="https://github.com/avaloniaui"
@@ -19,7 +19,7 @@
         <Button
             AutomationProperties.Name="展开或折叠导航"
             Classes="ghost small"
-            Command="{Binding ToggleNavigationCommand}"
+            Command="{CompiledBinding ToggleNavigationCommand}"
             Content="☰"
             Name="NavigationToggle" />
     </one:OneWindow.LeftContent>
@@ -30,7 +30,7 @@
             BorderThickness="0,0,1,0"
             Name="Sidebar"
             Padding="12,20">
-            <Grid RowDefinitions="Auto,*" Width="{Binding #Navigation.DisplayWidth}" ClipToBounds="True">
+            <Grid RowDefinitions="Auto,*" Width="{CompiledBinding #Navigation.DisplayWidth}" ClipToBounds="True">
                 <StackPanel
                     Margin="12,0,0,20"
                     Orientation="Horizontal"
@@ -43,34 +43,34 @@
                     <TextBlock
                         FontSize="20"
                         FontWeight="SemiBold"
-                        IsVisible="{Binding !EffectiveNavigationCollapsed}"
+                        IsVisible="{CompiledBinding !EffectiveNavigationCollapsed}"
                         Name="BrandWordmark"
                         Text="THE ONE"
                         VerticalAlignment="Center" />
                 </StackPanel>
                 <one:NavMenu
                     ExpandedWidth="232"
-                    ChildrenBinding="{Binding Entries}"
-                    ExpandedBinding="{Binding IsExpanded, Mode=TwoWay}"
+                    ChildrenBinding="{CompiledBinding Entries}"
+                    ExpandedBinding="{CompiledBinding IsExpanded, Mode=TwoWay}"
                     Grid.Row="1"
-                    IsCollapsed="{Binding EffectiveNavigationCollapsed}"
-                    IsGroupBinding="{Binding IsGroup}"
-                    ItemsSource="{Binding NavigationRoots}"
+                    IsCollapsed="{CompiledBinding EffectiveNavigationCollapsed}"
+                    IsGroupBinding="{CompiledBinding IsGroup}"
+                    ItemsSource="{CompiledBinding NavigationRoots}"
                     Name="Navigation"
-                    SearchTextBinding="{Binding Title}"
-                    SelectedItem="{Binding SelectedNavigation, Mode=TwoWay}"
+                    SearchTextBinding="{CompiledBinding Title}"
+                    SelectedItem="{CompiledBinding SelectedNavigation, Mode=TwoWay}"
                     ShowFilter="True">
                     <one:NavMenu.IconTemplate>
                         <DataTemplate x:DataType="local:NavEntry">
                             <PathIcon
-                                Data="{Binding Icon}"
+                                Data="{CompiledBinding Icon}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch" />
                         </DataTemplate>
                     </one:NavMenu.IconTemplate>
                     <one:NavMenu.ContentTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{CompiledBinding Title}" TextTrimming="CharacterEllipsis" />
                         </DataTemplate>
                     </one:NavMenu.ContentTemplate>
                 </one:NavMenu>
@@ -87,9 +87,9 @@
                         Orientation="Horizontal"
                         Spacing="12">
                         <ComboBox
-                            ItemsSource="{Binding Sizes}"
+                            ItemsSource="{CompiledBinding Sizes}"
                             Name="DensityPicker"
-                            SelectedItem="{Binding Size, Mode=TwoWay}"
+                            SelectedItem="{CompiledBinding Size, Mode=TwoWay}"
                             VerticalAlignment="Center"
                             Width="110" />
                         <one:ThemeColorPicker
@@ -98,7 +98,7 @@
                             Width="160" />
                         <CheckBox
                             Content="动效"
-                            IsChecked="{Binding MotionEnabled, Mode=TwoWay}"
+                            IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}"
                             VerticalAlignment="Center" />
                     </StackPanel>
                 </Grid>
@@ -114,15 +114,15 @@
                 Margin="24"
                 Name="SearchOverlay"
                 Padding="16">
-                <ListBox ItemsSource="{Binding SearchResults}" SelectedItem="{Binding SelectedSearchResult, Mode=TwoWay}">
+                <ListBox ItemsSource="{CompiledBinding SearchResults}" SelectedItem="{CompiledBinding SelectedSearchResult, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="local:PreviewPageDescriptor">
                             <StackPanel Spacing="4">
-                                <TextBlock Text="{Binding Title}" />
+                                <TextBlock Text="{CompiledBinding Title}" />
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="{DynamicResource One.Muted}"
-                                    Text="{Binding Group}" />
+                                    Text="{CompiledBinding Group}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

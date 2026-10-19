@@ -25,7 +25,7 @@
             <TabStrip
                 AutomationProperties.Name="工作流导航"
                 Name="WorkflowStrip"
-                SelectedIndex="{Binding Workflow, Mode=TwoWay}">
+                SelectedIndex="{CompiledBinding Workflow, Mode=TwoWay}">
                 <TabStripItem Content="_Overview / 概览" />
                 <TabStripItem Content="_Activity / 动态" />
                 <TabStripItem Content="归档（禁用）" IsEnabled="False" />
@@ -36,7 +36,7 @@
                 Padding="16">
                 <TextBlock
                     Name="WorkflowStatus"
-                    Text="{Binding WorkflowStatus}"
+                    Text="{CompiledBinding WorkflowStatus}"
                     TextWrapping="Wrap" />
             </Border>
         </StackPanel>
@@ -51,45 +51,45 @@
                     Maximum="10000"
                     Minimum="1"
                     Name="TargetIndex"
-                    Value="{Binding Target, Mode=TwoWay}"
+                    Value="{CompiledBinding Target, Mode=TwoWay}"
                     Width="156" />
                 <Button
-                    Command="{Binding JumpCommand}"
+                    Command="{CompiledBinding JumpCommand}"
                     Content="跳转"
                     Margin="0,0,8,8"
                     Name="JumpTarget" />
                 <Button
-                    Command="{Binding LastCommand}"
+                    Command="{CompiledBinding LastCommand}"
                     Content="最后一项"
                     Margin="0,0,8,8"
                     Name="JumpLast" />
                 <Button
-                    Command="{Binding ResetCommand}"
+                    Command="{CompiledBinding ResetCommand}"
                     Content="回到首项"
                     Margin="0,0,8,8"
                     Name="ResetTabs" />
                 <CheckBox
                     Content="启用标签"
-                    IsChecked="{Binding Enabled, Mode=TwoWay}"
+                    IsChecked="{CompiledBinding Enabled, Mode=TwoWay}"
                     Name="EnableStrip" />
             </WrapPanel>
             <TabStrip
                 AutomationProperties.Name="一万项标签导航"
                 Height="80"
-                IsEnabled="{Binding Enabled}"
-                ItemsSource="{Binding Rows}"
+                IsEnabled="{CompiledBinding Enabled}"
+                ItemsSource="{CompiledBinding Rows}"
                 Name="HugeStrip"
-                SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                SelectedIndex="{CompiledBinding SelectedIndex, Mode=TwoWay}">
                 <TabStrip.ItemTemplate>
                     <DataTemplate x:DataType="x:String">
-                        <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+                        <TextBlock Text="{CompiledBinding}" VerticalAlignment="Center" />
                     </DataTemplate>
                 </TabStrip.ItemTemplate>
             </TabStrip>
             <TextBlock
                 Classes="helper"
                 Name="TabMetrics"
-                Text="{Binding Metrics}" />
+                Text="{CompiledBinding Metrics}" />
             <Border
                 Background="{DynamicResource One.Subtle}"
                 CornerRadius="8"
@@ -99,7 +99,7 @@
                         FontSize="18"
                         FontWeight="SemiBold"
                         Name="SelectedTitle"
-                        Text="{Binding SelectedTitle}" />
+                        Text="{CompiledBinding SelectedTitle}" />
                     <TextBlock Classes="helper" Text="此内容区域由消费项目绑定 SelectedItem；TabStrip 本身只负责导航，不创建每个标签的内容页面。" />
                 </StackPanel>
             </Border>

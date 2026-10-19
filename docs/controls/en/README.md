@@ -46,6 +46,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |
 | [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
 | [ReportDesign](report-design.md) | Drag-and-drop reports, fixed page regions, API/image URLs, MVVM JSON saving and PDF |
+| [QRCode](qr-code.md) | Vector QR codes, UTF-8 payloads, correction levels, quiet zones and report binding |
 | [ReportPreview](report-preview.md) | Read-only JSON reports, API data/images, paginated viewing, PDF export and desktop printing |
 | [RelationGraph](relation-graph.md) | Single-root relation trees, horizontal/vertical layout, default/custom models, compiled ChildrenSource, SelectItem selection and null regions |
 | [Pagination](pagination.md) | Standard / compact pagination, page sizes, jumping and boundary states |

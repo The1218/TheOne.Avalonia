@@ -81,7 +81,7 @@
                         </ListBox.ItemContainerTheme>
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="one:StepValidationError">
-                                <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                <TextBlock Text="{CompiledBinding Message}" TextWrapping="Wrap" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -179,13 +179,13 @@
                                             <Border
                                                 Background="{DynamicResource One.Line}"
                                                 Height="3"
-                                                IsVisible="{Binding HasPrevious}"
+                                                IsVisible="{CompiledBinding HasPrevious}"
                                                 Name="PART_LeftConnector" />
                                             <Border
                                                 Background="{DynamicResource One.Accent}"
-                                                Classes.reached="{Binding IsReached}"
+                                                Classes.reached="{CompiledBinding IsReached}"
                                                 Height="3"
-                                                IsVisible="{Binding HasPrevious}"
+                                                IsVisible="{CompiledBinding HasPrevious}"
                                                 Name="PART_LeftProgress">
                                                 <Border.Styles>
                                                     <Style Selector="Border">
@@ -198,7 +198,7 @@
                                             </Border>
                                             <one:Tag
                                                 Classes="step-indicator"
-                                                Content="{Binding Indicator}"
+                                                Content="{CompiledBinding Indicator}"
                                                 CornerRadius="100"
                                                 Grid.Column="1"
                                                 HorizontalContentAlignment="Center"
@@ -206,21 +206,21 @@
                                                 MinWidth="0"
                                                 Name="PART_Indicator"
                                                 Padding="0"
-                                                Status="{Binding Status}"
-                                                Variant="{Binding IndicatorVariant}"
+                                                Status="{CompiledBinding Status}"
+                                                Variant="{CompiledBinding IndicatorVariant}"
                                                 VerticalContentAlignment="Center" />
                                             <Border
                                                 Background="{DynamicResource One.Line}"
                                                 Grid.Column="2"
                                                 Height="3"
-                                                IsVisible="{Binding HasNext}"
+                                                IsVisible="{CompiledBinding HasNext}"
                                                 Name="PART_RightConnector" />
                                             <Border
                                                 Background="{DynamicResource One.Accent}"
-                                                Classes.reached="{Binding IsSuccess}"
+                                                Classes.reached="{CompiledBinding IsSuccess}"
                                                 Grid.Column="2"
                                                 Height="3"
-                                                IsVisible="{Binding HasNext}"
+                                                IsVisible="{CompiledBinding HasNext}"
                                                 Name="PART_RightProgress">
                                                 <Border.Styles>
                                                     <Style Selector="Border">
@@ -233,9 +233,9 @@
                                             </Border>
                                         </Grid>
                                         <TextBlock
-                                            Classes.reached="{Binding IsReached}"
+                                            Classes.reached="{CompiledBinding IsReached}"
                                             Grid.Row="1"
-                                            Text="{Binding Title}"
+                                            Text="{CompiledBinding Title}"
                                             TextAlignment="Center"
                                             TextTrimming="CharacterEllipsis">
                                             <TextBlock.Styles>
@@ -252,7 +252,7 @@
                                             FontSize="12"
                                             Foreground="{DynamicResource One.Muted}"
                                             Grid.Row="2"
-                                            Text="{Binding Description}"
+                                            Text="{CompiledBinding Description}"
                                             TextAlignment="Center"
                                             TextTrimming="CharacterEllipsis" />
                                     </Grid>
@@ -279,7 +279,7 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate x:DataType="one:StepValidationError">
-                                    <TextBlock Text="{Binding Message}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{CompiledBinding Message}" TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

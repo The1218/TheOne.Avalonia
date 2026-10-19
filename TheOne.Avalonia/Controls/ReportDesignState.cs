@@ -59,6 +59,7 @@ internal sealed class ReportDesignState : ReportObservable
             Notify(nameof(HasImageElement));
             Notify(nameof(HasCheckBoxElement));
             Notify(nameof(HasBarcodeElement));
+            Notify(nameof(HasQRCodeElement));
             Notify(nameof(StatusDisplay));
         }
     }
@@ -67,10 +68,13 @@ internal sealed class ReportDesignState : ReportObservable
     public bool HasElement => SelectedElement is not null;
 
     public bool HasTextElement =>
-        SelectedElement?.Kind is ReportElementKind.Text or ReportElementKind.CheckBox or ReportElementKind.Barcode;
+        SelectedElement?.Kind is ReportElementKind.Text or ReportElementKind.CheckBox or ReportElementKind.Barcode
+            or ReportElementKind.QRCode;
 
     public bool HasCheckBoxElement => SelectedElement?.Kind == ReportElementKind.CheckBox;
     public bool HasBarcodeElement => SelectedElement?.Kind == ReportElementKind.Barcode;
+    public bool HasQRCodeElement => SelectedElement?.Kind == ReportElementKind.QRCode;
+    public IReadOnlyList<QRCodeErrorCorrection> QRCodeLevels { get; } = Array.AsReadOnly(Enum.GetValues<QRCodeErrorCorrection>());
 
     public bool HasImageElement => SelectedElement?.Kind == ReportElementKind.Image;
 
@@ -107,7 +111,7 @@ internal sealed class ReportDesignState : ReportObservable
     public bool CanExport => HasDocument && !IsExporting;
 
     public bool HasBindableElement => SelectedElement?.Kind is ReportElementKind.Text or ReportElementKind.Table
-        or ReportElementKind.CheckBox or ReportElementKind.Barcode;
+        or ReportElementKind.CheckBox or ReportElementKind.Barcode or ReportElementKind.QRCode;
 
     public bool HasTableColumn => SelectedElement?.Kind == ReportElementKind.Table && SelectedColumn is not null;
 
@@ -148,8 +152,10 @@ internal sealed class ReportDesignState : ReportObservable
     public string ApiUrl
     {
         get;
-        set => Set(ref field, value);
+        set { if (Set(ref field, value)) Notify(nameof(HasApiSource)); }
     } = "";
+
+    public bool HasApiSource => ApiUrl.Length > 0;
 
     public string ApiStatus
     {

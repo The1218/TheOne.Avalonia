@@ -21,16 +21,16 @@
                 <TextBlock Text="状态 / 类型" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Types}"
+                    ItemsSource="{CompiledBinding Types}"
                     Name="MessageType"
-                    SelectedItem="{Binding Type, Mode=TwoWay}" />
+                    SelectedItem="{CompiledBinding Type, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="6">
                 <TextBlock Text="显示尺寸" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Sizes}"
-                    SelectedItem="{Binding Size, Mode=TwoWay}" />
+                    ItemsSource="{CompiledBinding Sizes}"
+                    SelectedItem="{CompiledBinding Size, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
         <TextBox
@@ -38,50 +38,50 @@
             MinHeight="76"
             Name="MessageText"
             PlaceholderText="提示内容"
-            Text="{Binding Message, Mode=TwoWay}"
+            Text="{CompiledBinding Message, Mode=TwoWay}"
             TextWrapping="Wrap" />
-        <CheckBox Content="启用动效" IsChecked="{Binding MotionEnabled, Mode=TwoWay}" />
+        <CheckBox Content="启用动效" IsChecked="{CompiledBinding MotionEnabled, Mode=TwoWay}" />
         <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
             <StackPanel Spacing="6">
                 <TextBlock Text="显示位置" />
                 <ComboBox
                     HorizontalAlignment="Stretch"
-                    ItemsSource="{Binding Positions}"
-                    SelectedItem="{Binding Position, Mode=TwoWay}" />
+                    ItemsSource="{CompiledBinding Positions}"
+                    SelectedItem="{CompiledBinding Position, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="1" Spacing="6">
                 <TextBlock Text="停留秒数" />
                 <NumericUpDown
                     Increment="0.5"
-                    IsEnabled="{Binding AutoClose}"
+                    IsEnabled="{CompiledBinding AutoClose}"
                     Maximum="120"
                     Minimum="0.1"
-                    Value="{Binding Seconds, Mode=TwoWay}" />
+                    Value="{CompiledBinding Seconds, Mode=TwoWay}" />
             </StackPanel>
             <StackPanel Grid.Column="2" Spacing="6">
                 <TextBlock Text="同时显示上限" />
                 <NumericUpDown
                     Maximum="10"
                     Minimum="1"
-                    Value="{Binding Maximum, Mode=TwoWay}" />
+                    Value="{CompiledBinding Maximum, Mode=TwoWay}" />
             </StackPanel>
         </Grid>
-        <CheckBox Content="自动关闭" IsChecked="{Binding AutoClose, Mode=TwoWay}" />
+        <CheckBox Content="自动关闭" IsChecked="{CompiledBinding AutoClose, Mode=TwoWay}" />
         <WrapPanel>
             <Button
                 Classes="primary"
-                Command="{Binding ToastCommand}"
+                Command="{CompiledBinding ToastCommand}"
                 Content="显示 Toast"
                 Margin="0,0,12,0"
                 Name="ShowMessage" />
             <Button
                 Classes="ghost"
-                Command="{Binding CloseToastCommand}"
+                Command="{CompiledBinding CloseToastCommand}"
                 Content="关闭全部" />
         </WrapPanel>
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="{Binding Status}"
+            Text="{CompiledBinding Status}"
             TextWrapping="Wrap" />
     </StackPanel>
 </UserControl>

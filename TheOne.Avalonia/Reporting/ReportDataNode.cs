@@ -11,7 +11,8 @@ public enum ReportDataNodeKind
 public sealed class ReportDataNode : ReportObservable
 {
     internal ReportDataNode(string name, string pointer, ReportDataNodeKind kind, string preview,
-        IReadOnlyList<ReportDataNode> children, string fieldKey = "", bool isJson = true, bool expanded = false)
+        IReadOnlyList<ReportDataNode> children, string fieldKey = "", bool isJson = true, bool expanded = false,
+        string? typeLabel = null)
     {
         Name = name;
         Pointer = pointer;
@@ -21,16 +22,20 @@ public sealed class ReportDataNode : ReportObservable
         FieldKey = fieldKey;
         IsJson = isJson;
         IsExpanded = expanded;
+        _typeLabel = typeLabel;
     }
 
     public string Name { get; }
     public string Pointer { get; }
     public ReportDataNodeKind Kind { get; }
 
-    public string TypeLabel =>
-        Kind switch { ReportDataNodeKind.Collection => "集合", ReportDataNodeKind.Object => "对象", _ => "值" };
+    private readonly string? _typeLabel;
+    public string TypeLabel => _typeLabel ??
+        (Kind switch { ReportDataNodeKind.Collection => "集合", ReportDataNodeKind.Object => "对象", _ => "值" });
 
     public string Preview { get; }
+    public string IconKind => Kind == ReportDataNodeKind.Collection ? "Table" :
+        Kind == ReportDataNodeKind.Object ? "Folder" : "Text";
     public IReadOnlyList<ReportDataNode> Children { get; }
     public string FieldKey { get; }
     public bool IsJson { get; }

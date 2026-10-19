@@ -1,5 +1,7 @@
 # FlowStep and FlowNode
 
+Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
+
 [简体中文](../zh-cn/flow-step.md) · **English**
 
 `FlowStep` is a linear flow display based on native `ItemsControl`; `FlowNode` is its native `ContentControl` container. With `OneTheme`, both orientations, Light / Dark and Small / Normal / Large are supported. Business code sets states explicitly. The control does not advance steps or validate forms.
@@ -85,14 +87,6 @@ The dedicated panel is non-virtualized and intended for finite business flows. U
 ## Examples and verification
 
 PreviewHost's “扩展控件 → Step → FlowStep” page shows both layouts, three states, per-node and shared templates, collection edits, flow advancement and long descriptions.
-
-```sh
-dotnet build design/PreviewHost/PreviewHost.csproj -c Release --artifacts-path .preview/flowstep/artifacts
-dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --verify-flow-step .preview/flowstep/render
-dotnet .preview/flowstep/artifacts/bin/PreviewHost/release/PreviewHost.dll --render-controls .preview/flowstep/render FlowStep
-```
-
-The targeted checks cover both themes, three sizes, narrow viewports, actual connector pixels, collection / model changes, template priority and a custom button command. The independent NativeAotSmoke consumer supports `--verify-flow-step --require-aot`. Publish and run a real PublishAot executable for native verification; a managed run does not replace it.
 
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs

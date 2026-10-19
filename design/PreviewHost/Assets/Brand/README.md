@@ -14,15 +14,7 @@ theme changes.
   The current PreviewHost project does not produce a macOS app bundle.
 
 The sidebar draws `PreviewBrandIcon` directly with Avalonia vector primitives.
-Keep that geometry and this SVG in sync when editing the mark. Export raster
-assets from the same rendering code after building PreviewHost:
-
-```sh
-dotnet <PreviewHost.dll> --export-brand-icon design/PreviewHost/Assets/Brand
-```
-
-Rebuild to embed the exported files, then run the focused verification:
-
-```sh
-dotnet <PreviewHost.dll> --verify-brand-icon .preview/app-icon/render
-```
+Keep that geometry and this SVG in sync when editing the mark. The checked-in
+raster assets are embedded when PreviewHost builds. Historical command-line
+export and verification helpers have been removed; inspect the sidebar icon
+and native application icon after a normal build when updating these assets.

@@ -44,7 +44,8 @@ public abstract partial class ChartBase
         foreach (var candidate in candidates)
         {
             if (frame.DataLabels.Count == 512) break;
-            var text = Text(candidate.Value, candidate.Brush);
+            var text = IsScatterCartesian ? CartesianText(frame, candidate.Value, candidate.Brush)
+                : Text(candidate.Value, candidate.Brush);
             if (text.Width > _cartesianPlot.Width - 8 || text.Height > _cartesianPlot.Height - 4) continue;
             var point = candidate.Position;
             var centered = point.X - text.Width / 2;

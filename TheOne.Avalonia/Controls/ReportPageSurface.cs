@@ -119,7 +119,8 @@ internal sealed partial class ReportPageSurface : Control
             }
             else
             {
-                var template = layout.Columns.Select(c => "{" + c.FieldKey + "}").ToArray();
+                var template = layout.Columns.Select((c, i) => c.FieldKey.Length == 0
+                    ? _document!.Columns[i].Text : "{" + c.FieldKey + "}").ToArray();
                 var templateHeight = Math.Max(36,
                     layout.Columns.Select((c, i) =>
                         ReportPaginator.MeasureText(template[i], c.Width - 16, layout.FontSize).Height + 14).Max());
