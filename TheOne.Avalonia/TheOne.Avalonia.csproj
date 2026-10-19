@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Adds QRCode and report QR elements with stable field binding and vector PDF output. Hardens report data-source steps, table-column editing and transactional PDF saves. Adds bound multi-select workflow identities, consistent property templates, compact node items and resizable side panels. Optimizes Gantt single-task updates and chart subscriptions, sampling and drawing caches; remaining ScatterChart raster p99 limits are documented. Uses explicit compiled bindings and removes historical preview test startup branches. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.6. NuGet upload is manual.</PackageReleaseNotes>
+        <PackageReleaseNotes>Adds TreeSelect with stable-key single/multiple selection, cascading checks, typed model adapters, ancestor-preserving search and virtualized rows. Separates semantic colors and appearances for Button, ToggleButton, RepeatButton and IconButton while preserving native interactions. Adds Tag variants and fixes dynamic style cleanup, TabControl compact content/template switching, and ColorPicker Custom popup sizing. Includes bilingual guides, migration notes and previews. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.7. NuGet upload is manual.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

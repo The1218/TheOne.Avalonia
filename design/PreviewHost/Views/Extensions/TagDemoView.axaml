@@ -14,8 +14,24 @@
             Text="Tag · 状态标签" />
         <TextBlock
             Foreground="{DynamicResource One.Muted}"
-            Text="图标 + 文字 · 六种语义状态 · 浅底 / 描边 / 实心 · 三档尺寸与禁用"
+            Text="六种语义状态 · 浅底 / 描边 / 实心 · 胶囊 / 方角 / 虚线 / 圆点 / 渐变 Classes"
             TextWrapping="Wrap" />
+        <TextBlock FontWeight="SemiBold" Text="Classes · 可与 Status、Variant 组合" />
+        <WrapPanel IsEnabled="{CompiledBinding Enabled}">
+            <WrapPanel.Styles>
+                <Style Selector="one|Tag">
+                    <Setter Property="Margin" Value="0,0,10,8" />
+                </Style>
+            </WrapPanel.Styles>
+            <one:Tag Classes="pill" Content="pill · 胶囊" Status="Processing" />
+            <one:Tag Classes="square" Content="square · 方角" Variant="Outline" />
+            <one:Tag Classes="dashed" Content="dashed · 虚线" Status="Warning" Variant="Outline" />
+            <one:Tag Classes="dot" Content="dot · 已完成" Status="Success" />
+            <one:Tag Classes="gradient" Content="gradient · 品牌渐变" />
+            <one:Tag Classes="pill dot dashed" Content="组合 · 等待处理" Status="Information" Variant="Outline" />
+            <one:Tag Classes="pill gradient" Content="组合 · 渐变胶囊" />
+            <one:Tag Classes="gradient" Content="禁用渐变" IsEnabled="False" />
+        </WrapPanel>
         <WrapPanel>
             <TextBox
                 Margin="0,0,8,8"

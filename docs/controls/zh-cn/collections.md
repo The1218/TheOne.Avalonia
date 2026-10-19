@@ -83,6 +83,12 @@ if (container is not null)
 
 ## TabControl 与 Card 标签页
 
+内容区默认 `Padding="8"`，普通、`card` 以及 `One.CardTabControl` 主题一致，比原 Card 的 16 DIP 更紧凑；不修改标题项内边距。消费端显式设置 `Padding` 仍优先，可用 `Padding="0"` 做贴边工作区。预览示例不再给内容额外叠加 16／24 DIP 的 Margin。
+
+运行时切换 `card` Classes 或 `One.CardTabControl` 主题时，旧内容宿主会先释放视觉子项，再由原生 TabControl 挂载到新宿主，避免“已有视觉父级”异常。选中页及控件内容实例、文本编辑值不会因此重建。内容宿主始终跟随当前 Padding，明暗主题、尺寸和页签切换不会额外叠加旧间距；清除本地 Padding 后恢复 8 DIP。长内容仍需按业务需要放在 ScrollViewer 中，Padding 不提供自动滚动。
+
+模板或标题面板替换后，已实现的自有 TabItem 会重新挂载并应用当前容器主题和继承尺寸，避免旧标题高度挤压内容区。这里只刷新当前实现的自有页签，不重建页面，也不清除 TabItem 的 Header / Content 或用户显式设置的属性。
+
 新增页签图标与右键菜单。`TabFeatures.ShowItemIcon`（TabControl，默认 True）统一控制图标；`TabFeatures.Icon`（TabItem）为图标数据，默认支持 Geometry／文本，可用 `IconTemplate` 自定义。`TabFeatures.IsPinned=True` 固定到左侧，固定页不能关闭；`IsClosable=False` 只禁止关闭，不等于固定。
 
 ```xml

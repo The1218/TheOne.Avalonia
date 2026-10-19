@@ -31,6 +31,19 @@ The consuming application can reference [Material.Icons.Avalonia](https://www.nu
 
 Native Button and IconButton share primary/accent, soft, gradient, outline, ghost, link, success, info, warning, and danger styles. The default style suits secondary actions; primary advances the main workflow, ghost is lightweight, outline emphasizes a boundary, and success/info/warning/danger indicate completion, information, risk, and destructive actions. Hover, pressed, focus, and disabled states keep native behavior and TheOne semantic colors. Prefer one primary action per group and explicit action labels.
 
+## Semantic colors and appearances
+
+IconButton shares [composition and precedence rules](basic.md#button-semantic-colors-and-appearances) with Button, ToggleButton and RepeatButton. Combine `primary/accent`, `danger`, `success`, `warning` or `info` with `solid`, `ghost`, `link`, `outline`, `soft` or `gradient`:
+
+```xml
+<one:IconButton Classes="danger outline" Icon="{CompiledBinding DeleteIcon}"
+                Content="Delete" Command="{CompiledBinding DeleteCommand}" />
+<one:IconButton Classes="success soft" Icon="{CompiledBinding CheckIcon}"
+                Content="Done" IsLoading="{CompiledBinding IsSaving}" />
+```
+
+Standalone classes keep their legacy enabled appearances. Disabled combinations use DisabledSurface / DisabledText / Line. Color conflicts resolve as info > warning > success > danger > primary/accent; appearances resolve as gradient > soft > outline > link > ghost > solid, independently of class order. Switching Classes, Light/Dark or ColorTheme refreshes icon and label foreground without changing IconPlacement, explicit IconSize/IconSpacing, IconTemplate or native commands. Loading still replaces the icon and blocks repeated actions. The separate PreviewHost IconButton page demonstrates combinations, disabled states, placement and loading.
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 
@@ -72,7 +85,7 @@ See [shared theme configuration](../../theme/en/README.md#shared-configuration) 
 
 ### Classes usage
 
-No added public appearance classes; use the default theme and control-specific properties.
+Combine `primary` (`accent`), `danger`, `success`, `warning` or `info` with `solid`, `ghost`, `link`, `outline`, `soft` or `gradient`, as described above.
 These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
 ### Business APIs

@@ -169,6 +169,11 @@
 | [`TheOne.Avalonia.Controls.UploadHttp`](TheOne.Avalonia.Controls.UploadHttp.md) | Class | 0 | 2 | 0 |
 | [`TheOne.Avalonia.Controls.UploadModel`](TheOne.Avalonia.Controls.UploadModel.md) | Class | 3 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.UploadRequestType`](TheOne.Avalonia.Controls.UploadRequestType.md) | Enum | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.TreeSelect`](TheOne.Avalonia.Controls.TreeSelect.md) | Class／控件 | 30 | 7 | 1 |
+| [`TheOne.Avalonia.Controls.TreeSelectCheckMode`](TheOne.Avalonia.Controls.TreeSelectCheckMode.md) | Enum | 0 | 1 | 0 |
+| [`TheOne.Avalonia.Controls.TreeSelectItem`](TheOne.Avalonia.Controls.TreeSelectItem.md) | Class | 18 | 0 | 1 |
+| [`TheOne.Avalonia.Controls.TreeSelectItemAdapter`](TheOne.Avalonia.Controls.TreeSelectItemAdapter.md) | Class | 0 | 5 | 0 |
+| [`TheOne.Avalonia.Controls.TreeSelectNode`](TheOne.Avalonia.Controls.TreeSelectNode.md) | Class | 4 | 1 | 1 |
 | [`TheOne.Avalonia.Controls.Upload`](TheOne.Avalonia.Controls.Upload.md) | Class／控件 | 31 | 4 | 0 |
 | [`TheOne.Avalonia.Controls.VerificationStep`](TheOne.Avalonia.Controls.VerificationStep.md) | Class／控件 | 21 | 5 | 1 |
 | [`TheOne.Avalonia.Controls.Virtualization`](TheOne.Avalonia.Controls.Virtualization.md) | Class | 1 | 5 | 0 |

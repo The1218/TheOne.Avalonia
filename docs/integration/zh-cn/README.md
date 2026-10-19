@@ -4,7 +4,7 @@
 
 **简体中文** · [English](../en/README.md) · [文档总入口](../../README.md)
 
-本文供其他设备上的开发者或 Codex 接入现有项目时使用。版本基线为 TheOne.Avalonia / TheOne.Avalonia.DataGrid **1.0.0-preview.6**、**.NET 10**、**Avalonia 12.1.4**。先确认目标项目的技术栈，再按功能迁移；运行 PreviewHost 不是消费本库的前提。
+本文供其他设备上的开发者或 Codex 接入现有项目时使用。版本基线为 TheOne.Avalonia / TheOne.Avalonia.DataGrid **1.0.0-preview.7**、**.NET 10**、**Avalonia 12.1.4**。先确认目标项目的技术栈，再按功能迁移；运行 PreviewHost 不是消费本库的前提。
 
 ## 1. 先审查目标项目
 
@@ -26,7 +26,7 @@
 已有兼容的 Avalonia 项目安装主包即可：
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.6
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.7
 ```
 
 这是现有应用的配置片段，不是完整新项目：
@@ -37,11 +37,11 @@ dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-previe
   <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
 </PropertyGroup>
 <ItemGroup>
-  <PackageReference Include="TheOne.Avalonia" Version="1.0.0-preview.6" />
+  <PackageReference Include="TheOne.Avalonia" Version="1.0.0-preview.7" />
 </ItemGroup>
 ```
 
-保留应用自己的桌面／单视图启动方式及必要的 Avalonia 平台包，将其 Avalonia 依赖统一到兼容的 12.1.4 基线。主包自动依赖 `TheOne.Avalonia.DataGrid >= 1.0.0-preview.6`；若项目显式引用 DataGrid 配套包，也按同一版本升级。移除官方 `Avalonia.Controls.DataGrid` 的重复引用：本库 fork 保留程序集名 `Avalonia.Controls.DataGrid`、版本 `12.1.2.0` 和公钥标识，不能并存两个实现。主库程序集版本保持 `1.0.0.0`，与 NuGet 版本不是同一概念。
+保留应用自己的桌面／单视图启动方式及必要的 Avalonia 平台包，将其 Avalonia 依赖统一到兼容的 12.1.4 基线。主包自动依赖 `TheOne.Avalonia.DataGrid >= 1.0.0-preview.7`；若项目显式引用 DataGrid 配套包，也按同一版本升级。移除官方 `Avalonia.Controls.DataGrid` 的重复引用：本库 fork 保留程序集名 `Avalonia.Controls.DataGrid`、版本 `12.1.2.0` 和公钥标识，不能并存两个实现。主库程序集版本保持 `1.0.0.0`，与 NuGet 版本不是同一概念。
 
 在 `App.axaml` 用一个 `OneTheme` 替换原来的基础主题注册，保留现有 `x:Class`、DataTemplates 和业务资源：
 
@@ -62,7 +62,7 @@ dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-previe
 
 源码引用是另一种选择：[仓库快速开始](../../../README.zh-cn.md#快速开始)。同一应用不要同时引用本库源码项目和同名 NuGet 包。
 
-核对 API 时使用包内 nuspec 的 repository commit 对应源码，不要把后续 main 分支的接口误认为已存在于目标包中。Preview.6 包含[发行说明](../../releases/zh-cn/1.0.0-preview.6.md)中的控件文档与集合生命周期修复。迁移指南可以使用最新修订，成员声明仍以目标包版本为准。
+核对 API 时使用包内 nuspec 的 repository commit 对应源码，不要把后续 main 分支的接口误认为已存在于目标包中。Preview.7 包含[发行说明](../../releases/zh-cn/1.0.0-preview.7.md)中的TreeSelect、按钮组合及模板/样式修复。迁移指南可以使用最新修订，成员声明仍以目标包版本为准。
 
 ### 主库与预览程序的依赖不同
 
@@ -86,6 +86,7 @@ Preview.6 追加 `WorkflowValueKind.MultiSelect = 3` 和 `ReportElementKind.QRCo
 | 第三方控件／私有控件 | 对照业务行为和目标公开 API 逐项改造，不能只替换 xmlns；禁止猜测同名属性等价 |
 | 编辑页与校验 | [Form / FormItem](../../controls/zh-cn/form.md)，复用 IStepValidator；字段 MemberName 对应模型属性；保留原生输入校验 |
 | 多选输入 | [MultiSelectBox](../../controls/zh-cn/multi-select-box.md)，SelectedItems 集合、强类型 ItemAdapter、禁选项与清空语义需按契约迁移 |
+| 树形选择 | [TreeSelect](../../controls/zh-cn/tree-select.md)，稳定 Key、强类型映射、Independent/Cascade、禁选及源重置规则 |
 | 侧栏与导航 | [NavMenu](../../controls/zh-cn/nav-menu.md)，模型层级、选中项、展开状态和命令保留在 VM 中；只创建有界视口的容器 |
 | 数据表格 | 先读 [DataGrid 绑定](../../controls/zh-cn/datagrid-binding.md)，再读 [筛选／冻结／统计](../../controls/zh-cn/datagrid-extensions.md)；不要复制内部 Presenter |
 | 登录、主窗口与消息 | [OneWindow](../../controls/zh-cn/windows.md)、[LoginWindow](../../controls/zh-cn/login-window.md)、[owner 路由](../../controls/zh-cn/window-owners.md) |
@@ -166,14 +167,14 @@ Application.Current!.RequestedThemeVariant = ThemeVariant.Dark;
 dotnet run --project design/PreviewHost/PreviewHost.csproj --artifacts-path .preview/demo/artifacts
 ```
 
-完成后报告：修改了什么、公开契约是否改变、实际构建／交互／目标 OS 验证、剩余限制及下一步。未运行的检查不能写成通过。[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出本库全部公开类型、属性、构造、方法、事件和枚举，并链接声明；控件指南同时列出额外属性和样式。PreviewHost 在各控件独立页面展示完整示例，附本页样式、属性、API／事件与内置模型；仅 Button、Input、Select 合并比较。画布编辑器使用完整视口，说明单独放在页内标签中。当前发布包尚未附带完整 XML API 说明，仓库新增文档及演示以当前源码为准；消费 preview.6 时仍核对包的提交版本。
+完成后报告：修改了什么、公开契约是否改变、实际构建／交互／目标 OS 验证、剩余限制及下一步。未运行的检查不能写成通过。[完整公共 API 与内置模型](../../api/zh-cn/README.md)列出本库全部公开类型、属性、构造、方法、事件和枚举，并链接声明；控件指南同时列出额外属性和样式。PreviewHost 在各控件独立页面展示完整示例，附本页样式、属性、API／事件与内置模型；仅 Button、Input、Select 合并比较。画布编辑器使用完整视口，说明单独放在页内标签中。当前发布包尚未附带完整 XML API 说明，仓库新增文档及演示以当前源码为准；消费 preview.7 时仍核对包的提交版本。
 
 ## 7. 可复制给其他 Codex 的任务说明
 
 将下列占位项替换为实际信息，并提供本仓库 URL 或这份指南。这里的约定已经随文档分发，不依赖维护者本机被忽略的 AGENTS.md / Skill 文件。
 
 ```text
-目标：将【目标项目／指定页面】接入 TheOne.Avalonia 1.0.0-preview.6。
+目标：将【目标项目／指定页面】接入 TheOne.Avalonia 1.0.0-preview.7。
 目标 OS/RID：【填写】。当前框架/SDK：【填写】。范围：【填写】。
 保留原有认证、业务模型、命令、DI、路由和用户未提交改动。
 
@@ -181,7 +182,7 @@ dotnet run --project design/PreviewHost/PreviewHost.csproj --artifacts-path .pre
 docs/integration/zh-cn/README.md；按功能只读相关控件和主题文档。
 先报告版本/主题/DataGrid/窗口生命周期冲突，再分阶段实现。
 
-当前基线：net10.0、Avalonia 12.1.4、主包及 DataGrid 配套包同为 preview.6。
+当前基线：net10.0、Avalonia 12.1.4、主包及 DataGrid 配套包同为 preview.7。
 只加载一个 OneTheme；保留原生控件，避免批量改成不存在的 TheOne 包装类。
 不复制 PreviewHost 的认证演示或把可选编辑器/打印包当成必需依赖。
 使用正确 x:DataType 和编译绑定；DataGrid 先注册具体行及嵌套类型。

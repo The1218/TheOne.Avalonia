@@ -31,6 +31,19 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 
 官方 Button 与 IconButton 共用 primary/accent、soft、gradient、outline、ghost、link、success、info、warning、danger 样式。默认样式用于次要操作；primary 推进主要流程，ghost 为轻操作，outline 强调边界，success/info/warning/danger 表达完成、提示、风险与危险操作。悬停、按下、焦点、禁用保留原生状态与 TheOne 语义色。每组按钮宜只保留一个主要操作，文字明确说明操作。
 
+## 语义色与外观组合
+
+IconButton 与 Button、ToggleButton、RepeatButton 共用[组合及优先级规则](basic.md#button语义色与外观组合)。颜色 `primary/accent`、`danger`、`success`、`warning`、`info` 可组合 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient`；例如：
+
+```xml
+<one:IconButton Classes="danger outline" Icon="{CompiledBinding DeleteIcon}"
+                Content="删除" Command="{CompiledBinding DeleteCommand}" />
+<one:IconButton Classes="success soft" Icon="{CompiledBinding CheckIcon}"
+                Content="完成" IsLoading="{CompiledBinding IsSaving}" />
+```
+
+单独 Classes 保留旧的启用外观；所有组合禁用时统一为 DisabledSurface / DisabledText / Line。颜色冲突顺序为 info > warning > success > danger > primary/accent，外观为 gradient > soft > outline > link > ghost > solid，与书写顺序无关。动态切换 Classes、Light/Dark 或 ColorTheme 同步刷新图标与文字前景，不改变 IconPlacement、显式 IconSize/IconSpacing、IconTemplate 和原生命令行为。加载时仍以指示器替换图标并阻止重复操作。PreviewHost 的独立 IconButton 页提供组合、禁用、位置和加载演示。
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 
@@ -72,7 +85,7 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 
 ### Classes 用法
 
-没有额外公开外观类，使用默认主题及专属属性。
+`primary`（`accent`）、`danger`、`success`、`warning`、`info` 与 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient` 可组合，详见上文。
 
 以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 

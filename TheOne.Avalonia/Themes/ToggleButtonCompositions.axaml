@@ -1,0 +1,469 @@
+<Styles xmlns="https://github.com/avaloniaui">
+    <!-- Explicit semantic + appearance combinations opt in to selected-state colors.
+         Appearance-only and semantic-only classes retain their legacy enabled states. -->
+    <Style Selector="ToggleButton.primary:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):checked, ToggleButton.primary:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):indeterminate, ToggleButton.accent:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):checked, ToggleButton.accent:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):indeterminate, ToggleButton.solid:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):checked, ToggleButton.solid:not(.danger):not(.success):not(.warning):not(.info):not(:disabled):indeterminate">
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Accent}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.AccentPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Gradient.BrandPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleButton.danger:not(.success):not(.warning):not(.info):not(:disabled):checked, ToggleButton.danger:not(.success):not(.warning):not(.info):not(:disabled):indeterminate">
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.DangerPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.DangerPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.DangerHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.DangerHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.DangerPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.DangerPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DangerSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Danger}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Danger}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.DangerHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.DangerHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.DangerPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.DangerPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.DangerPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.DangerHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.DangerPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.DangerForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleButton.success:not(.warning):not(.info):not(:disabled):checked, ToggleButton.success:not(.warning):not(.info):not(:disabled):indeterminate">
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.SuccessPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.SuccessPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.SuccessHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.SuccessHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.SuccessPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.SuccessPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.SuccessSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Success}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Success}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Success}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.SuccessHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.SuccessHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.SuccessPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.SuccessPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.SuccessPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.SuccessHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.SuccessPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.SuccessForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleButton.warning:not(.info):not(:disabled):checked, ToggleButton.warning:not(.info):not(:disabled):indeterminate">
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.WarningPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.WarningPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.WarningHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.WarningHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.WarningPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.WarningPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.WarningSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Warning}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Warning}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.WarningHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.WarningHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.WarningPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.WarningPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.WarningPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.WarningHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.WarningPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.WarningForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleButton.info:not(:disabled):checked, ToggleButton.info:not(:disabled):indeterminate">
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.InfoPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.InfoPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.InfoHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.InfoHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).solid:not(.ghost):not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.InfoPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.InfoPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).ghost:not(.link):not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).link:not(.outline):not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Info}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.NeutralHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Info}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).outline:not(.soft):not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.InfoSoft}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Info}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Info}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient) /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Info}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Info}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.InfoHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.InfoHover}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).soft:not(.gradient):pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.InfoPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Button.InfoPressed}" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.InfoPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.InfoHover}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:is(ToggleButton).gradient:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.Button.Gradient.InfoPressed}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Button.InfoForeground}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </Style>
+    <Style Selector="ToggleButton:disabled:checked /template/ ContentPresenter#PART_ContentPresenter, ToggleButton:disabled:indeterminate /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+    </Style>
+</Styles>

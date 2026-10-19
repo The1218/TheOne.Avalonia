@@ -22,6 +22,37 @@ Appearance extensions include `soft` / `gradient` buttons, `filled` / `underline
 
 `primary` marks primary actions; `accent` is a compatibility class. `ghost` is lightweight, `link` resembles a link, and `danger` marks destructive actions. Disable with `IsEnabled="False"`. Appearance classes do not implement confirmations or business logic.
 
+### Button: semantic colors and appearances
+
+Button, RepeatButton, ToggleButton and [IconButton](icon-button.md) support one semantic color plus one appearance. Colors are `primary` (`accent` is an alias), `danger`, `success`, `warning`, and `info`. Appearances are `solid`, `ghost`, `link`, `outline`, `soft`, and `gradient`. Sizing follows the shared Home-page rules.
+
+```xml
+<Button Classes="danger outline" Content="Delete" />
+<Button Classes="success soft" Content="Completed" />
+<Button Classes="warning solid" Content="Needs attention" />
+<Button Classes="info link" Content="View details" />
+<Button Classes="success gradient" Content="Confirm completion" />
+<Button Classes="primary ghost" Content="Cancel" />
+```
+
+| Appearance | Normal and interaction behavior |
+| --- | --- |
+| `solid` | Semantic fill with hover / pressed feedback and contrasting text |
+| `outline` | Surface background, semantic text / border; NeutralHover / NeutralPressed feedback retains semantic text / border |
+| `soft` | Semantic soft background and text; borderless normally, semantic border on hover / press. Brand soft retains its previous Text foreground while pressed |
+| `ghost` / `link` | Transparent background, semantic text, no border; hover / pressed feedback backgrounds |
+| `gradient` | Existing Brand gradient for primary; matching semantic gradients for other colors, retained on hover / press |
+
+Without an appearance class, each control retains its legacy defaults. For example, Button primary/accent is filled, while ToggleButton and RepeatButton have different old defaults; use `primary solid` explicitly for a consistent solid appearance. Standalone ghost, link, outline, soft and gradient retain normal / hover / pressed appearances, including ToggleButton checked / null states. Disabled styling uses `One.DisabledSurface`, `One.DisabledText` and `One.Line`; checked / null ToggleButton uses `One.DisabledSelection` to keep selection distinguishable. Inherited disabling, class changes while disabled and re-enabling follow the same rule.
+
+Prefer one class from each group. Conflicts resolve independently of class text / insertion order:
+
+- Color: `info > warning > success > danger > primary/accent`.
+- Appearance: `gradient > soft > outline > link > ghost > solid`.
+- State: disabled overrides pressed, which overrides hover. Removing an appearance restores the current color's legacy default. `danger outline` and `outline danger` are identical.
+
+Semantic filled / gradient feedback brushes are cached per palette rather than created on pointer events; Light / Dark and ColorTheme changes use current resources. `One.Button.{Success|Info|Warning|Danger}Foreground` supplies filled / gradient text, `One.Button.{Success|Info|Warning|Danger}Hover` / `Pressed` supplies solid feedback, and `One.Button.Gradient.{Success|Info|Warning|Danger}` with optional `Hover` / `Pressed` suffixes supplies gradients. Classes style the template ContentPresenter directly; assigning Background / Foreground on Button itself does not necessarily override the displayed colors.
+
 ```xml
 <RepeatButton Content="持续增加" Command="{Binding IncrementCommand}"
               Delay="400" Interval="80" />
@@ -33,7 +64,20 @@ RepeatButton repeats while held. `segment` provides only a segmented appearance;
 
 All three buttons center their content horizontally and vertically by default and use actual content dimensions at every size. Set `HorizontalContentAlignment` / `VerticalContentAlignment` explicitly for left or top alignment.
 
-With `ToggleButton.IsThreeState="True"`, click or Space cycles false → true → null → false. The null state uses the Primary surface and a separate short dash at the bottom. soft, gradient, primary, outline, ghost, and other appearances keep that mark. It follows actual text color and remains distinguishable in gradients and disabled states, so partial selection is not conveyed by background color alone.
+With `ToggleButton.IsThreeState="True"`, click or Space cycles false → true → null → false. The null state shows a separate bottom dash that follows the actual foreground.
+
+With an explicit semantic color and appearance combination, checked / null states retain that color: solid uses its pressed fill, soft uses a solid semantic fill, gradient uses its pressed gradient, outline uses a semantic soft background and border, and ghost/link use a semantic soft background without a border. Hover and press retain their feedback; null additionally shows the dash. Appearance-only classes retain legacy checked / null styling; the new standalone `solid` opts into brand-colored combinations. Auxiliary classes such as `segment` and sizing keep their meaning.
+
+```xml
+<ToggleButton Classes="success soft" Content="Approve"
+              IsChecked="{CompiledBinding Approved, Mode=TwoWay}" />
+<RepeatButton Classes="danger outline" Content="Decrease continuously"
+              Command="{CompiledBinding DecrementCommand}" Delay="400" Interval="80" />
+<one:IconButton Classes="info gradient" Icon="{CompiledBinding RefreshIcon}"
+                Content="Refresh" Command="{CompiledBinding RefreshCommand}" />
+```
+
+Combinations only change template colors. ToggleButton three-state and two-way binding, RepeatButton native hold/release behavior, and IconButton placement, loading replacement, commands and focus remain native. Their three separate PreviewHost pages each show 30 combinations, disabled examples and related interactions, wrapping to narrow viewports.
 
 ## TextBox
 
@@ -130,12 +174,13 @@ See [shared theme configuration](../../theme/en/README.md#shared-configuration) 
 ### Classes usage
 
 - `AutoCompleteBox`: `Classes="filled"` / `Classes="underlined"`
-- `Button`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="soft"` / `Classes="success"` / `Classes="warning"`
+- `Button`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`; see combination rules above.
 - `ComboBox`: `Classes="filled"` / `Classes="underlined"`
 - `NumericUpDown`: `Classes="filled"` / `Classes="underlined"`
 - `ProgressBar`: `Classes="danger"` / `Classes="gradient"` / `Classes="info"` / `Classes="success"` / `Classes="warning"`
+- `RepeatButton`: semantic colors `primary` (`accent`), `danger`, `success`, `warning`, `info` + appearances `solid`, `ghost`, `link`, `outline`, `soft`, `gradient`; see combination rules above.
 - `TextBox`: `Classes="clearButton"` / `Classes="error"` / `Classes="filled"` / `Classes="revealPasswordButton"` / `Classes="underlined"`
-- `ToggleButton`: `Classes="segment"`
+- `ToggleButton`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="segment"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`; see combination rules above.
 These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
 ### Business APIs

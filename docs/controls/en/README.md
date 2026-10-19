@@ -16,6 +16,7 @@ For adoption or migration in an external project, start with [integration and mi
 | --- | --- |
 | [Form and FormItem](form.md) | Editing forms, field labels, shared validation, error summary, cancellation and validated submission |
 | [MultiSelectBox](multi-select-box.md) | Search, selected tags, clearing, disabled options, keyboard navigation and virtualization |
+| [TreeSelect](tree-select.md) | Stable keys, single/multiple selection, cascading checks, ancestor-preserving search and virtualization |
 | [ColorPicker and ColorView](color-picker.md) | Official color controls with TheOne chrome, spectrum, palette, RGB/HSV, alpha and hex input |
 | [WorkflowEditor](workflow-editor.md) | Graph contracts, templates, business configuration, upstream references and JSON persistence |
 | [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |

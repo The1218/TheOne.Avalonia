@@ -32,6 +32,8 @@ public partial class HomePage : UserControl
             "<one:Form Validator=\"{Binding Validator}\">\n  <one:FormItem MemberName=\"Email\" Label=\"邮箱\">\n    <TextBox Text=\"{Binding Email}\" />\n  </one:FormItem>\n</one:Form>");
         AddFeature(323, "MultiSelectBox", "搜索、多选标签、禁选项和虚拟化，在同一个输入控件中完成。",
             "<one:MultiSelectBox\n  ItemsSource=\"{Binding Options}\"\n  SelectedItems=\"{Binding Selected}\" />");
+        AddFeature(330, "TreeSelect", "树形单选、多选和父子级联；稳定 Key 回显，搜索保留祖先，列表按视口回收。",
+            "<one:TreeSelect ItemsSource=\"{CompiledBinding Departments}\"\n  IsMultiSelect=\"True\" CheckMode=\"Cascade\"\n  SelectedKeys=\"{CompiledBinding DepartmentKeys, Mode=TwoWay}\" />");
         AddFeature(10, "DataGrid", "保留原生编辑与选择，叠加列筛选、排序和数值统计。",
             "<!-- Rows 行类型需先注册元数据 -->\n<DataGrid ItemsSource=\"{Binding Rows}\">\n  <DataGrid.Columns>\n    <DataGridTextColumn Header=\"名称\"\n      x:DataType=\"vm:Row\"\n      Binding=\"{Binding Name}\" />\n  </DataGrid.Columns>\n</DataGrid>");
         AddFeature(25, "NavMenu", "树形导航、折叠图标栏与级联子菜单，保持当前页面的选择。",

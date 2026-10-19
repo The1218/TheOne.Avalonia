@@ -17,8 +17,8 @@ internal sealed class ControlPreviewPage : UserControl
         var supplements = new StackPanel { Spacing = 24 };
         if (UsesViewport && ControlStyleShowcase.Create(descriptor.Title) is { } styles)
             supplements.Children.Add(styles);
-        // NavPage authors the same property/API/model Description beside its live shell.
-        if (descriptor.Title != "NavPage") supplements.Children.Add(Details);
+        // These pages author property/API/model Descriptions beside their live examples.
+        if (descriptor.Title is not ("NavPage" or "TreeSelect")) supplements.Children.Add(Details);
         foreach (var name in descriptor.Title switch
                  {
                      "Form" => new[] { "FormItem" }, "FlowStep" => new[] { "FlowNode" },

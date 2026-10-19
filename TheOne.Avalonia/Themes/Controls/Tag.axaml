@@ -1,8 +1,11 @@
 <ResourceDictionary
     x:CompileBindings="True"
     xmlns="https://github.com/avaloniaui"
+    xmlns:conv="using:TheOne.Avalonia.Converters"
+    xmlns:markup="using:Avalonia.Markup.Xaml.MarkupExtensions"
     xmlns:one="using:TheOne.Avalonia.Controls"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <conv:TagDashRadiusConverter x:Key="One.Tag.DashRadiusConverter" />
     <ControlTheme TargetType="one:Tag" x:Key="{x:Type one:Tag}">
         <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
@@ -17,38 +20,76 @@
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="{TemplateBinding CornerRadius}"
-                    Name="PART_Surface"
-                    Padding="{TemplateBinding Padding}">
-                    <Grid
-                        ColumnDefinitions="Auto,Auto"
-                        ColumnSpacing="{TemplateBinding Spacing}"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                        <Viewbox
-                            Height="{TemplateBinding IconSize}"
-                            Stretch="Uniform"
-                            Width="{TemplateBinding IconSize}">
-                            <ContentPresenter
-                                Content="{TemplateBinding Icon}"
-                                ContentTemplate="{TemplateBinding IconTemplate}"
+                <Grid>
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Name="PART_Surface"
+                        Padding="{TemplateBinding Padding}">
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Ellipse
+                                Fill="{TemplateBinding Foreground}"
+                                Height="6"
                                 IsVisible="False"
-                                Name="PART_IconPresenter"
-                                VerticalContentAlignment="Center" />
-                        </Viewbox>
-                        <ContentPresenter
-                            Content="{TemplateBinding Content}"
-                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                            Grid.Column="1"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            Name="PART_ContentPresenter"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Grid>
-                </Border>
+                                Margin="0,0,6,0"
+                                Name="PART_StatusDot"
+                                VerticalAlignment="Center"
+                                Width="6" />
+                            <Grid
+                                ColumnDefinitions="Auto,Auto"
+                                ColumnSpacing="{TemplateBinding Spacing}"
+                                Grid.Column="1"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                Name="PART_ContentLayout"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Viewbox
+                                    Height="{TemplateBinding IconSize}"
+                                    Stretch="Uniform"
+                                    Width="{TemplateBinding IconSize}">
+                                    <ContentPresenter
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding IconTemplate}"
+                                        IsVisible="False"
+                                        Name="PART_IconPresenter"
+                                        VerticalContentAlignment="Center" />
+                                </Viewbox>
+                                <ContentPresenter
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Name="PART_ContentPresenter"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Rectangle
+                        IsHitTestVisible="False"
+                        IsVisible="False"
+                        Margin="0.5"
+                        Name="PART_DashedOutline"
+                        Stroke="{TemplateBinding Foreground}"
+                        StrokeDashArray="3,2"
+                        StrokeThickness="1">
+                        <Rectangle.RadiusX>
+                            <MultiBinding Converter="{StaticResource One.Tag.DashRadiusConverter}">
+                                <markup:CompiledBindingExtension Path="#PART_Surface.CornerRadius" />
+                                <markup:CompiledBindingExtension Path="#PART_DashedOutline.Bounds" />
+                            </MultiBinding>
+                        </Rectangle.RadiusX>
+                        <Rectangle.RadiusY>
+                            <MultiBinding Converter="{StaticResource One.Tag.DashRadiusConverter}">
+                                <markup:CompiledBindingExtension Path="#PART_Surface.CornerRadius" />
+                                <markup:CompiledBindingExtension Path="#PART_DashedOutline.Bounds" />
+                            </MultiBinding>
+                        </Rectangle.RadiusY>
+                    </Rectangle>
+                </Grid>
             </ControlTemplate>
         </Setter>
         <Style Selector="^ /template/ Viewbox">
@@ -60,7 +101,7 @@
         <Style Selector="^:has-icon /template/ ContentPresenter#PART_IconPresenter">
             <Setter Property="IsVisible" Value="True" />
         </Style>
-        <Style Selector="^:not(:has-icon) /template/ Grid, ^:not(:has-content) /template/ Grid">
+        <Style Selector="^:not(:has-icon) /template/ Grid#PART_ContentLayout, ^:not(:has-content) /template/ Grid#PART_ContentLayout">
             <Setter Property="ColumnSpacing" Value="0" />
         </Style>
         <Style Selector="^:outline">
@@ -130,6 +171,26 @@
         <Style Selector="^:processing:solid">
             <Setter Property="Background" Value="{DynamicResource One.Accent}" />
             <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+        </Style>
+        <Style Selector="^.pill">
+            <Setter Property="CornerRadius" Value="999" />
+        </Style>
+        <Style Selector="^.square">
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="^.dashed">
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^.dashed /template/ Rectangle#PART_DashedOutline">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^.dot /template/ Ellipse#PART_StatusDot">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^.gradient">
+            <Setter Property="Background" Value="{DynamicResource One.Gradient.Brand}" />
+            <Setter Property="Foreground" Value="{DynamicResource One.OnAccent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
         </Style>
         <Style Selector="^.one-small">
             <Setter Property="MinHeight" Value="24" />

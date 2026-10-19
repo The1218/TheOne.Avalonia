@@ -10,6 +10,7 @@
     xmlns:styling="using:TheOne.Avalonia.Styling"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel Spacing="18">
+        <StackPanel Name="CombinationsPanel" IsEnabled="{CompiledBinding Enabled}" Spacing="12" />
         <TextBlock FontWeight="SemiBold" Text="IconButton · 图标属性与模板" />
         <WrapPanel>
             <one:IconButton

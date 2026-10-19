@@ -15,6 +15,7 @@
             TextWrapping="Wrap" />
         <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
         <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
+            <StackPanel Name="CombinationsPanel" Spacing="12" />
             <WrapPanel>
                 <ToggleButton
                     Content="点击切换"

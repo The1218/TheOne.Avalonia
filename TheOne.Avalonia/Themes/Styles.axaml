@@ -165,6 +165,8 @@
         <Setter Property="Background" Value="{DynamicResource One.DisabledSelection}" />
         <Setter Property="BorderBrush" Value="Transparent" />
     </Style>
+    <StyleInclude Source="avares://TheOne.Avalonia/Themes/ButtonCompositions.axaml" />
+    <StyleInclude Source="avares://TheOne.Avalonia/Themes/ToggleButtonCompositions.axaml" />
     <Style Selector="n|NotificationCard.one-toast">
         <Setter Property="Theme" Value="{StaticResource One.ToastCard}" />
     </Style>

@@ -1,0 +1,128 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" xmlns:converters="using:TheOne.Avalonia.Converters" x:CompileBindings="True">
+    <converters:TreeSelectTagWidthConverter x:Key="One.TreeSelectTagWidth" />
+    <ControlTheme x:Key="{x:Type one:TreeSelect}" TargetType="one:TreeSelect">
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="MinWidth" Value="120" />
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="6,2" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_Input" Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}"
+                        MinHeight="{TemplateBinding ItemHeight}">
+                    <Border.Styles>
+                        <Style Selector="Button.one-small, Button.one-normal, Button.one-large">
+                            <Setter Property="MinHeight" Value="0" />
+                            <Setter Property="MinWidth" Value="0" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Focusable" Value="False" />
+                        </Style>
+                        <Style Selector="ContentPresenter:disabled">
+                            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
+                        </Style>
+                    </Border.Styles>
+                    <Grid ColumnDefinitions="*,Auto,Auto">
+                        <Grid VerticalAlignment="Center">
+                            <TextBlock Text="{TemplateBinding PlaceholderText}" Foreground="{DynamicResource One.Muted}"
+                                       IsVisible="{TemplateBinding HasSelection, Converter={x:Static BoolConverters.Not}}" Margin="4,0" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <ItemsControl Name="PART_Tags" ItemsSource="{TemplateBinding DisplayTags}">
+                                    <ItemsControl.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                                        </ControlTemplate>
+                                    </ItemsControl.Template>
+                                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="one:TreeSelectItem">
+                                            <Border Name="TreeTagRoot" Background="{DynamicResource One.AccentSoft}" CornerRadius="4" Margin="1,1,3,1" Padding="5,0,0,0" ClipToBounds="True" ToolTip.Tip="{CompiledBinding Text}"
+                                                    MaxWidth="{CompiledBinding $parent[ItemsControl].Bounds.Width, Converter={StaticResource One.TreeSelectTagWidth}}">
+                                                <Grid ColumnDefinitions="*,18" ColumnSpacing="2">
+                                                    <ContentPresenter Content="{CompiledBinding #TreeTagRoot.((one:TreeSelectItem)DataContext).TagContent}" ContentTemplate="{CompiledBinding #TreeTagRoot.((one:TreeSelectItem)DataContext).TagTemplate}"
+                                                                      Foreground="{DynamicResource One.Accent}" VerticalAlignment="Center" MaxWidth="140" ClipToBounds="True" />
+                                                    <Button Grid.Column="1" CommandParameter="{CompiledBinding}" Theme="{StaticResource One.MultiSelectAction}"
+                                                            Width="18" Height="18"
+                                                            IsEnabled="{CompiledBinding CanRemove}" AutomationProperties.Name="{CompiledBinding RemoveText}">
+                                                        <PathIcon Data="M2,0 L5,3 L8,0 L10,2 L7,5 L10,8 L8,10 L5,7 L2,10 L0,8 L3,5 L0,2 Z" Width="9" Height="9" />
+                                                    </Button>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <StackPanel Grid.Column="1" IsVisible="{TemplateBinding HasHiddenSelection}" Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center">
+                                    <TextBlock Text="+" /><TextBlock Text="{TemplateBinding HiddenSelectedCount}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <Button Name="PART_ClearButton" Grid.Column="1" Theme="{StaticResource One.MultiSelectAction}"
+                                IsVisible="{TemplateBinding CanClear}" AutomationProperties.Name="{TemplateBinding ClearText}" VerticalAlignment="Center">
+                            <PathIcon Data="M2,0 L5,3 L8,0 L10,2 L7,5 L10,8 L8,10 L5,7 L2,10 L0,8 L3,5 L0,2 Z" Width="10" Height="10" />
+                        </Button>
+                        <Button Name="PART_OpenButton" Grid.Column="2" Theme="{StaticResource One.MultiSelectAction}"
+                                AutomationProperties.Name="{TemplateBinding OpenText}" VerticalAlignment="Center">
+                            <PathIcon Data="M0,1 L4,5 L8,1 L9,2 L4,7 L-1,2 Z" Width="10" Height="10" />
+                        </Button>
+                        <Popup Name="PART_Popup" IsLightDismissEnabled="True" Placement="BottomEdgeAlignedLeft"
+                               InheritsTransform="True" IsOpen="{TemplateBinding IsDropDownOpen, Mode=TwoWay}">
+                            <Border Background="{DynamicResource One.Surface}" BorderBrush="{DynamicResource One.InputLine}"
+                                    BorderThickness="1" CornerRadius="6" Padding="6">
+                                <Grid RowDefinitions="Auto,*" RowSpacing="4">
+                                    <TextBox Name="PART_SearchBox" Text="{TemplateBinding SearchText, Mode=TwoWay}"
+                                             PlaceholderText="{TemplateBinding SearchPlaceholderText}" />
+                                    <ListBox Name="PART_Results" Grid.Row="1" ItemsSource="{TemplateBinding VisibleItems}"
+                                             Focusable="True"
+                                             Background="Transparent" BorderThickness="0" Padding="0"
+                                             SelectionMode="Single"
+                                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <ListBox.Styles>
+                                            <Style Selector="ListBoxItem.one-small, ListBoxItem.one-normal, ListBoxItem.one-large">
+                                                <Setter Property="Padding" Value="4,2" />
+                                            </Style>
+                                        </ListBox.Styles>
+                                        <ListBox.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></ListBox.ItemsPanel>
+                                        <ListBox.ItemContainerTheme>
+                                            <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                                <Setter Property="Padding" Value="4,2" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            </ControlTheme>
+                                        </ListBox.ItemContainerTheme>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate x:DataType="one:TreeSelectItem">
+                                                <Grid Name="TreeRowRoot" ColumnDefinitions="20,Auto,*" Margin="{CompiledBinding Indent}" MinHeight="24">
+                                                    <Button Content="{CompiledBinding ExpansionGlyph}" CommandParameter="{CompiledBinding}"
+                                                            Theme="{StaticResource One.MultiSelectAction}" Width="20" Height="20" FontSize="16"
+                                                            IsVisible="{CompiledBinding HasChildren}" AutomationProperties.Name="{CompiledBinding ExpandText}" Focusable="False" />
+                                                    <CheckBox Grid.Column="1" IsVisible="{CompiledBinding ShowCheckBox}" IsEnabled="{CompiledBinding IsEnabled}"
+                                                              IsChecked="{CompiledBinding IsChecked, Mode=OneWay}" IsThreeState="True" Focusable="False"
+                                                              IsHitTestVisible="False" MinHeight="20" Padding="0" Margin="0,0,6,0" VerticalAlignment="Center"
+                                                              AutomationProperties.Name="{CompiledBinding Text}" />
+                                                    <ContentPresenter Grid.Column="2" Content="{CompiledBinding #TreeRowRoot.((one:TreeSelectItem)DataContext).DisplayContent}" ContentTemplate="{CompiledBinding #TreeRowRoot.((one:TreeSelectItem)DataContext).ContentTemplate}"
+                                                                      IsEnabled="{CompiledBinding #TreeRowRoot.((one:TreeSelectItem)DataContext).IsEnabled}" VerticalAlignment="Center" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <TextBlock Grid.Row="1" Text="{TemplateBinding EmptyText}" IsVisible="{TemplateBinding HasNoResults}"
+                                               Foreground="{DynamicResource One.Muted}" Margin="8" IsHitTestVisible="False" />
+                                </Grid>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#PART_Input, ^:focus-within /template/ Border#PART_Input, ^:open /template/ Border#PART_Input">
+            <Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" />
+        </Style>
+        <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
+    </ControlTheme>
+</ResourceDictionary>

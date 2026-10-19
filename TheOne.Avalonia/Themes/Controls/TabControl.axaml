@@ -110,7 +110,7 @@
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="{DynamicResource TabItemMargin}" />
+        <Setter Property="Padding" Value="8" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -173,13 +173,8 @@
             <Setter Property="BorderBrush" Value="{DynamicResource One.CardTabBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.TabContent}" />
-            <Setter Property="Padding" Value="16" />
+            <Setter Property="Padding" Value="8" />
             <Setter Property="ItemContainerTheme" Value="{StaticResource One.CardTabItem}" />
-            <Setter Property="ItemsPanel">
-                <ItemsPanelTemplate>
-                    <one:VirtualizingItemsPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </Setter>
             <Setter Property="Template" Value="{StaticResource One.CardTabControlTemplate}" />
             <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
                 <Setter Property="Margin" Value="0" />
@@ -237,13 +232,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource One.CardTabBorder}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.TabContent}" />
-        <Setter Property="Padding" Value="16" />
+        <Setter Property="Padding" Value="8" />
         <Setter Property="ItemContainerTheme" Value="{StaticResource One.CardTabItem}" />
-        <Setter Property="ItemsPanel">
-            <ItemsPanelTemplate>
-                <one:VirtualizingItemsPanel Orientation="Horizontal" />
-            </ItemsPanelTemplate>
-        </Setter>
         <Setter Property="Template" Value="{StaticResource One.CardTabControlTemplate}" />
         <Style Selector="^[TabStripPlacement=Top] /template/ ItemsPresenter#PART_ItemsPresenter">
             <Setter Property="Margin" Value="0" />

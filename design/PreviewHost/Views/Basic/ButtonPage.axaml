@@ -75,6 +75,16 @@
                     IsEnabled="False"
                     Margin="0,0,12,8" />
             </WrapPanel>
+            <TextBlock FontWeight="SemiBold" Text="Button · 语义色 × 外观组合" />
+            <one:Description LabelWidth="130">
+                <one:DescriptionItem Header="语义颜色" Content="primary / accent、danger、success、warning、info。未指定外观时保留原来的单独 Classes 效果。" />
+                <one:DescriptionItem Header="外观" Content="solid、ghost、link、outline、soft、gradient。" />
+                <one:DescriptionItem Header="优先级" Content="颜色：info &gt; warning &gt; success &gt; danger &gt; primary/accent；外观：gradient &gt; soft &gt; outline &gt; link &gt; ghost &gt; solid。与书写顺序无关，禁用统一使用禁用配色。" />
+                <one:DescriptionItem Header="组合示例">
+                    <TextBlock Text="&lt;Button Classes=&quot;danger outline&quot; Content=&quot;删除&quot; /&gt;&#10;&lt;Button Classes=&quot;success soft&quot; Content=&quot;已完成&quot; /&gt;" TextWrapping="Wrap" />
+                </one:DescriptionItem>
+            </one:Description>
+            <StackPanel Name="CombinationsPanel" Spacing="12" />
             <TextBlock FontWeight="SemiBold" Text="ThemeButton · 快捷主题切换" />
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <one:ThemeButton Name="ThemeSample" />

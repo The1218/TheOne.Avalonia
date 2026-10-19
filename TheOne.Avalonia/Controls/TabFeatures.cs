@@ -48,6 +48,8 @@ public sealed partial class TabFeatures : AvaloniaObject
     {
         InitializeStripClosing();
         InitializePages();
+        TemplatedControl.TemplateProperty.Changed.AddClassHandler<TabControl>(ReleaseTemplateContent);
+        ItemsControl.ItemsPanelProperty.Changed.AddClassHandler<TabControl>(ReleaseTemplateContent);
         CanReorderProperty.Changed.AddClassHandler<TabControl>((tabs, _) =>
         {
             Attach(tabs);

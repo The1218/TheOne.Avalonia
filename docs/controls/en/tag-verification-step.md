@@ -8,6 +8,33 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 ## Tag status labels
 
+Five new Classes combine with existing `Status` and `Variant` values without changing enum numbers:
+
+| Classes | Appearance |
+| --- | --- |
+| `pill` | Capsule corners |
+| `square` | Square corners; wins when combined with pill |
+| `dashed` | Foreground-colored dashed outline, including pill/square combinations |
+| `dot` | A 6 DIP foreground-colored status dot before content; Icon remains available |
+| `gradient` | Current `One.Gradient.Brand` / `One.OnAccent`, overriding Status colors |
+
+```xml
+<one:Tag Classes="pill dot" Content="Completed" Status="Success" />
+<one:Tag Classes="dashed square" Content="Awaiting confirmation" Status="Warning" Variant="Outline" />
+<one:Tag Classes="pill gradient" Content="New feature" />
+```
+
+Disabled tags use disabled colors: gradient becomes a solid fill and dots/dashes are muted. These are static status appearances, without button, selection or close behavior. PreviewHost shows each Class, combinations and disabled examples. Dashed corners use the top-left CornerRadius value for uniform corners, pills and squares; explicitly assigned standard properties still override style setters.
+
+Change `Status`, `Variant` and Classes at runtime without recreating the Tag. `gradient` overrides Status / Variant colors; removing it restores the current Status / Variant. `dashed` replaces the solid border; removing it restores the current Variant border. `square` wins over `pill` regardless of class insertion order; removing both restores default corners. Disabled colors take precedence, including inherited disabling, and re-enabling applies the latest configuration. Light / Dark and ColorTheme changes update gradients, dots and dashes. Explicit local property values retain normal Avalonia property precedence.
+
+```csharp
+tag.Status = TagStatus.Success;
+tag.Variant = TagVariant.Outline;
+tag.Classes.Add("dashed");
+tag.Classes.Remove("gradient"); // Restore the current Success / Outline colors.
+```
+
 ```xml
 <one:Tag Content="已完成" Status="Success" Variant="Soft">
   <one:Tag.Icon>
@@ -244,7 +271,7 @@ See [shared theme configuration](../../theme/en/README.md#shared-configuration) 
 
 ### Classes usage
 
-No added public appearance classes; use the default theme and control-specific properties.
+- `Tag`: `Classes="dashed"` / `Classes="dot"` / `Classes="gradient"` / `Classes="pill"` / `Classes="square"`
 These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
 ### Business APIs

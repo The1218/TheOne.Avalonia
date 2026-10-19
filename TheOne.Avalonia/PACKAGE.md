@@ -3,12 +3,12 @@
 TheOne themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows
 and DataGrid entity filters, left/right frozen columns and numeric summaries.
 
-Preview.6 adds QRCode and report QR elements with static/field content and matching vector PDF output. ReportDesign
-includes a validated data-source wizard, column editing and safer cancellable PDF saves. WorkflowEditor adds bound
-multi-select identities, aligned custom property templates, compact palette items and adjustable side panels.
-Gantt and charts reduce repeated subscription, range, sampling and geometry work; documented ScatterChart raster-tail
-limits remain. Ordinary XAML bindings are explicit CompiledBinding; native TemplateBinding is retained. Historical
-verification code and test startup branches are removed from PreviewHost. NuGet upload is performed manually.
+Preview.7 adds TreeSelect with stable-key single/multiple selection, cascading checks, typed model adapters,
+ancestor-preserving search and virtualized rows. Button, ToggleButton, RepeatButton and IconButton combine semantic
+colors with solid/ghost/link/outline/soft/gradient appearances, preserving native interactions. Tag gains pill,
+square, dashed, dot and gradient variants. TabControl uses compact content padding and supports safe runtime template
+switching; ColorPicker Custom popups measure their natural height. Bilingual guides and independent previews document
+the new contracts. NuGet upload is performed manually.
 
 ```xml
 <Application.Styles>

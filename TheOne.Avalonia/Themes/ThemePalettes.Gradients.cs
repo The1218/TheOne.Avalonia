@@ -18,11 +18,14 @@ internal static partial class ThemePalettes
         ("Info", "#395DC6", "#9EB4FF"),
         ("Success", "#007A06", "#57D15D"),
         ("Warning", "#855D00", "#DDB35F"),
+        ("Danger", "#99000D", "#FFBDC2"),
         ("RowSelected", "#DFF1F1", "#162C2C")
     ];
 
     private static void AddGradients(ResourceDictionary resources, Dictionary<string, Color> tokens, bool dark)
     {
+        AddButtonBrushes(resources, tokens);
+
         // Subtle backgrounds keep their contrast gentle; vivid variants emphasize the palette's accent.
         foreach (var (name, target) in new[]
                      { ("Brand", "Accent"), ("Cool", "Info"), ("Natural", "Success"), ("Warm", "Warning") })

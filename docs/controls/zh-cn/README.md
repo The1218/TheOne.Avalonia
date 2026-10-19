@@ -16,6 +16,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | --- | --- |
 | [Form 与 FormItem 表单](form.md) | 普通表单、字段标签、共享校验、错误摘要、异步取消与校验后提交 |
 | [MultiSelectBox 多选框](multi-select-box.md) | 搜索、多选标签、清空、禁选项、键盘操作与虚拟化 |
+| [TreeSelect 树选择器](tree-select.md) | 稳定 Key、单选／多选、父子级联、搜索保留祖先与虚拟化 |
 | [ColorPicker / ColorView 颜色选择器](color-picker.md) | 官方颜色控件的 TheOne 外观、色谱、调色板、RGB/HSV、透明度与 Hex 输入 |
 | [WorkflowEditor 流程编辑器](workflow-editor.md) | 图模型契约、模板、业务配置、上游数据引用和 JSON 保存加载 |
 | [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |

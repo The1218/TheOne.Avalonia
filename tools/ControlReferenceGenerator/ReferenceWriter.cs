@@ -24,6 +24,7 @@ internal static class ReferenceWriter
         ["description"] = ["Description", "DescriptionItem"],
         ["form"] = ["Form", "FormItem", "StepValidation", "StepValidationError", "IStepValidator", "StepCompareAttribute"],
         ["multi-select-box"] = ["MultiSelectBox", "MultiSelectItemAdapter", "MultiSelectBoxItem", "MultiSelectTag"],
+        ["tree-select"] = ["TreeSelect", "TreeSelectNode", "TreeSelectItemAdapter", "TreeSelectItem", "TreeSelectCheckMode"],
         ["nav-menu"] = ["NavMenu", "NavMenuItem", "NavMenuSearchText", "NavMenuFilterBox", "NavMenuFilterResult"],
         ["nav-menu-search"] = ["NavMenu", "NavMenuSearchText", "NavMenuFilterBox", "NavMenuFilterResult"],
         ["nav-menu-popups"] = ["NavMenu", "NavMenuItem"],

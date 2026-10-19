@@ -83,6 +83,12 @@ The path addresses root 0's 9,001st child. Only path-required containers are cre
 
 ## TabControl and Card tabs
 
+Content defaults to `Padding="8"` for standard, `card` and `One.CardTabControl` themes, reduced from Card's previous 16 DIP. Header-item padding is unchanged. Explicit local Padding takes precedence; use `Padding="0"` for edge-to-edge workspaces. Preview content no longer adds another 16/24 DIP margin.
+
+When switching the `card` Class or `One.CardTabControl` theme at runtime, the old content presenters release their visual children before native TabControl mounts them in the new presenters, preventing an already-parented exception. The selected tab, control content instances and edited text are retained. Content presenters follow the current Padding without accumulating old spacing when changing theme variants, density or tabs; clearing local Padding restores 8 DIP. Wrap long content in a ScrollViewer as needed; Padding does not add automatic scrolling.
+
+After replacing the template or header panel, realized caller-owned TabItems are reattached with the current container theme and inherited density, preventing stale header heights from squeezing the content area. This refresh only touches realized caller-owned headers; it does not recreate pages or clear their Header / Content or explicit consumer property values.
+
 Tab icons and context menus are available. `TabFeatures.ShowItemIcon` on TabControl (default True) toggles icons. `TabFeatures.Icon` on TabItem accepts Geometry / text by default; IconTemplate customizes rendering. `TabFeatures.IsPinned=True` pins left and prevents closing. IsClosable=False only prevents closing.
 
 ```xml

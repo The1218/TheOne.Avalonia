@@ -84,7 +84,7 @@ Gradients, soft semantic backgrounds, and chart series combinations are TheOne e
 - Semantic `*Soft` colors mix Primary with the original status colors. InfoCard body uses Primary; Footer mixes 20% Primary Hover into Primary for a subtle distinction.
 - Six chart colors come from Eremex Graphics Blue Green, Blue, Yellow, Purple, Purple Red, and Green scales. Light uses Highest and Dark Lowest for readable pie percentages. This combination is the library's choice, not the reference chart's default order.
 
-Gradients travel at a shallow horizontal angle (0%,0% → 100%,35%), with narrower hue differences at brand endpoints and separate Hover / Pressed brightness levels. ToggleButton null state uses reference Primary surfaces plus a dash, distinguishing it from unchecked.
+Gradients travel at a shallow horizontal angle (0%,0% → 100%,35%), with narrower hue differences at brand endpoints and separate Hover / Pressed brightness levels. Standalone ToggleButton appearances retain reference Primary null surfaces plus a dash; explicit semantic / appearance combinations retain their semantic color and the same dash.
 
 All 65 control theme files were reviewed. Defaults use shared semantic resources; window overlays, gradients, and custom controls are explicit extensions. See [reference-audit.json](../reference-audit.json) for scope. Color consistency does not imply identical Eremex proprietary templates, layouts, or interactions; native Avalonia structures remain.
 
@@ -95,6 +95,7 @@ Brand gradients expose matching `.StartColor` / `.EndColor` resources. Check eve
 | Control | Added styles | Rationale |
 | --- | --- | --- |
 | Button / IconButton / ToggleButton / RepeatButton | `soft`, `gradient` | Secondary / emphasized actions, keeping primary / outline / ghost / link and semantic classes |
+| Button / ToggleButton / RepeatButton / IconButton combinations | `solid / ghost / link / outline / soft / gradient` + `primary / danger / success / warning / info` | Separate color and appearance, e.g. `danger outline` and `success soft`; [precedence and compatibility](../../controls/en/basic.md#button-semantic-colors-and-appearances) |
 | SplitButton / ToggleSplitButton | `gradient` | Shared hierarchy across action areas, retaining native Flyout |
 | TextBox / ComboBox / NumericUpDown / AutoCompleteBox | `filled`, `underlined` | Filled / bottom-line appearances with native input, focus, validation |
 | CalendarDatePicker / DatePicker / TimePicker | `filled` | Filled input with native pickers and centered text |
@@ -113,7 +114,7 @@ Navigation, date/time, menus, and selected grid states use solid fills for clear
 <one:InfoCard Classes="glow" Header="概览" Content="内容" />
 ```
 
-Choose one primary appearance class per control; avoid mutually exclusive combinations such as `primary gradient danger`. Size classes can be added. Local properties and custom themes retain Avalonia property priorities.
+Choose one primary appearance class per control; avoid mutually exclusive combinations such as `primary danger` or `soft outline`. Size classes can be added. Local properties and custom themes retain Avalonia property priorities.
 
 Default chart brushes map to `One.Chart.Series1..6`, cycling after six. For many categories, combine colors with legends, marks, and line styles rather than relying on color alone. `ChartSeries.Brush` wins; `FifthBrush` / `SixthBrush` can be overridden and exported like the original four.
 

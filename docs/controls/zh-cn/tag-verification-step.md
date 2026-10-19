@@ -8,6 +8,33 @@
 
 ## Tag 状态标签
 
+新增五个外观 Classes，可与现有 `Status`、`Variant` 组合，不改变枚举值：
+
+| Classes | 效果 |
+| --- | --- |
+| `pill` | 胶囊圆角 |
+| `square` | 方角；与 pill 同时设置时方角优先 |
+| `dashed` | 当前前景色的虚线边框，支持胶囊和方角组合 |
+| `dot` | 文字前增加随前景色变化的 6 DIP 状态点；可继续使用 Icon |
+| `gradient` | 使用当前主题 `One.Gradient.Brand` 与 `One.OnAccent`，覆盖 Status 的语义配色 |
+
+```xml
+<one:Tag Classes="pill dot" Content="已完成" Status="Success" />
+<one:Tag Classes="dashed square" Content="等待确认" Status="Warning" Variant="Outline" />
+<one:Tag Classes="pill gradient" Content="新功能" />
+```
+
+禁用时统一使用禁用配色，渐变会回退为纯色，圆点和虚线同步变灰。样式为静态状态展示，不增加按钮、选择或关闭行为。PreviewHost Tag 页分别展示每个 Class、组合及禁用样例。虚线圆角取 CornerRadius 的左上角值，适用于等圆角、胶囊和方角；用户显式设置标准属性仍优先于样式 Setter。
+
+运行时可直接切换 `Status`、`Variant` 和 Classes，无需重建 Tag。`gradient` 覆盖各 Status / Variant 的配色；移除后恢复当前 Status / Variant。`dashed` 替换实线边框，移除后恢复当前 Variant 的边框。`square` 优先于 `pill`，与 Classes 添加顺序无关；移除两者后恢复默认圆角。禁用优先于主题配色（含父容器禁用），恢复启用时使用最新配置；Light / Dark 和 ColorTheme 切换会更新渐变、圆点与虚线。显式设置的本地属性值仍按 Avalonia 属性优先级生效。
+
+```csharp
+tag.Status = TagStatus.Success;
+tag.Variant = TagVariant.Outline;
+tag.Classes.Add("dashed");
+tag.Classes.Remove("gradient"); // 恢复当前 Success / Outline 配色
+```
+
 ```xml
 <one:Tag Content="已完成" Status="Success" Variant="Soft">
   <one:Tag.Icon>
@@ -244,7 +271,7 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 ### Classes 用法
 
-没有额外公开外观类，使用默认主题及专属属性。
+- `Tag`: `Classes="dashed"` / `Classes="dot"` / `Classes="gradient"` / `Classes="pill"` / `Classes="square"`
 
 以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 

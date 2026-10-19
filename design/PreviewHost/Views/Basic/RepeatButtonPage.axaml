@@ -15,6 +15,8 @@
             TextWrapping="Wrap" />
         <CheckBox Content="启用控件" IsChecked="{CompiledBinding Enabled, Mode=TwoWay}" />
         <StackPanel IsEnabled="{CompiledBinding Enabled}" Spacing="16">
+            <StackPanel Name="CombinationsPanel" Spacing="12" />
+            <TextBlock Text="{CompiledBinding InvocationCount, StringFormat='执行次数：{0}'}" />
             <WrapPanel>
                 <RepeatButton
                     Command="{CompiledBinding InvokeCommand}"

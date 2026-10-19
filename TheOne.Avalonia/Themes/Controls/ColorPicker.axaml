@@ -166,6 +166,9 @@
     </Style>
     <Style Selector="FlyoutPresenter.one-colorpicker">
         <Setter Property="Padding" Value="0" />
+        <!-- Custom is taller than the generic flyout cap; measure its full content.
+             Keep native screen constraints and Auto scrolling for small work areas. -->
+        <Setter Property="MaxHeight" Value="Infinity" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="{DynamicResource One.Surface}" />

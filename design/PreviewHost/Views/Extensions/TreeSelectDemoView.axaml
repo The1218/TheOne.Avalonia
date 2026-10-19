@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.TreeSelectDemoView" x:DataType="local:TreeSelectDemoViewModel" x:CompileBindings="True">
+    <StackPanel Spacing="16" MaxWidth="760">
+        <TextBlock Text="TreeSelect 树选择器" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock Text="稳定 Key 保存选择；搜索保留祖先，清空搜索恢复展开状态。只渲染可见行，禁选节点仍可展开查看。" TextWrapping="Wrap" />
+        <one:InfoCard Header="单选 · 稳定 Key">
+            <StackPanel Spacing="8">
+                <one:TreeSelect Name="SingleSample" ItemsSource="{CompiledBinding Nodes}" SelectedKey="{CompiledBinding SelectedKey, Mode=TwoWay}" AutomationProperties.Name="选择团队" />
+                <TextBlock Text="{CompiledBinding SelectedKey, StringFormat='SelectedKey: {0}'}" />
+                <one:Description LabelWidth="110">
+                    <one:DescriptionItem Header="内置 Model" Content="new TreeSelectNode { Key = &quot;team-1&quot;, Text = &quot;研发组&quot;, IsEnabled = true, Children = [] }; Key 全树唯一且稳定；保存配置使用业务 Key。" />
+                    <one:DescriptionItem Header="单选绑定" Content="&lt;one:TreeSelect ItemsSource=&quot;{CompiledBinding Nodes}&quot; SelectedKey=&quot;{CompiledBinding SelectedKey, Mode=TwoWay}&quot; /&gt;" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="多选 · 独立勾选与标签上限">
+            <StackPanel Spacing="8">
+                <one:TreeSelect Name="IndependentSample" IsMultiSelect="True" ItemsSource="{CompiledBinding Nodes}"
+                                SelectedKeys="{CompiledBinding IndependentKeys, Mode=TwoWay}" MaxVisibleTags="1" AutomationProperties.Name="独立选择团队" />
+                <one:Description LabelWidth="110">
+                    <one:DescriptionItem Header="额外属性" Content="IsMultiSelect=&quot;True&quot; CheckMode=&quot;Independent&quot; MaxVisibleTags=&quot;1&quot;：父子独立勾选；其余选择折叠为 +N，已选禁用项不能移除。" />
+                    <one:DescriptionItem Header="多选绑定" Content="SelectedKeys=&quot;{CompiledBinding IndependentKeys, Mode=TwoWay}&quot;；SelectedItems 只读返回当前模型，保存配置使用 Key。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="父子级联 · 三态与叶子 Key">
+            <StackPanel Spacing="8">
+                <one:TreeSelect Name="CascadeSample" IsMultiSelect="True" CheckMode="Cascade" ItemsSource="{CompiledBinding Nodes}"
+                                SelectedKeys="{CompiledBinding CascadeKeys, Mode=TwoWay}" AutomationProperties.Name="级联选择团队" />
+                <one:Description LabelWidth="110">
+                    <one:DescriptionItem Header="级联规则" Content="CheckMode=&quot;Cascade&quot;：父项切换可用叶子，SelectedKeys 仅保存叶子；禁用子树保留已有选择，不参与父项全选判断。搜索不会缩小级联作用范围。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="自定义模型 · 强类型字段映射">
+            <StackPanel Spacing="8">
+                <one:TreeSelect Name="CustomSample" IsMultiSelect="True" ItemsSource="{CompiledBinding Departments}" ItemAdapter="{CompiledBinding Adapter}"
+                                SelectedKeys="{CompiledBinding CustomKeys, Mode=TwoWay}">
+                    <one:TreeSelect.ItemTemplate>
+                        <DataTemplate x:DataType="local:TreeSelectDepartment"><TextBlock Text="{CompiledBinding Name}" /></DataTemplate>
+                    </one:TreeSelect.ItemTemplate>
+                    <one:TreeSelect.SelectedItemTemplate>
+                        <DataTemplate x:DataType="local:TreeSelectDepartment"><TextBlock Text="{CompiledBinding Name}" /></DataTemplate>
+                    </one:TreeSelect.SelectedItemTemplate>
+                </one:TreeSelect>
+                <one:Description LabelWidth="110">
+                    <one:DescriptionItem Header="适配器代码" Content="TreeSelectItemAdapter.Create&lt;Department&gt;(x =&gt; x.Id, x =&gt; x.Name, x =&gt; x.Teams, x =&gt; x.Enabled);" />
+                    <one:DescriptionItem Header="模板" Content="ItemTemplate / SelectedItemTemplate 直接接收原始 Department 模型；DataTemplate 声明 x:DataType，并使用 CompiledBinding。默认显示适配器文字。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="虚拟化 · 按需加载一万项示例">
+            <StackPanel Spacing="8">
+                <Button Content="加载并展开一万项" Click="LoadLargeClicked" HorizontalAlignment="Left" />
+                <one:TreeSelect Name="LargeSample" IsMultiSelect="True" ItemsSource="{CompiledBinding LargeNodes}" />
+                <one:Description LabelWidth="110">
+                    <one:DescriptionItem Header="业务 API" Content="tree.SetExpanded(&quot;large-root&quot;, true); tree.OpenDropDown(); tree.CloseDropDown(); tree.ToggleItem(model); tree.ClearSelection(); tree.RefreshItems();" />
+                    <one:DescriptionItem Header="搜索 / 状态" Content="SearchText 支持绑定；IsReadOnly 允许浏览但锁定编辑；IsDropDownOpen 支持双向绑定。MaxDropDownHeight 限定列表视口。ValidationError 报告重复 Key、循环或重复模型引用。" />
+                    <one:DescriptionItem Header="键盘" Content="Enter / Space / ↓ 打开；搜索中 ↓ 进入列表；列表 ↑↓ 移动，←→ 折叠/展开，Enter / Space 选择；Esc 关闭返回焦点，Tab 离开。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+    </StackPanel>
+</UserControl>

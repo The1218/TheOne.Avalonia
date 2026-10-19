@@ -29,6 +29,7 @@ value. A locally supplied `Content`/`ContentTemplate` still overrides that defau
 The compact panel takes inspiration from Eremex's desktop color editor and opens the palette by default (`SelectedIndex="1"`). Only Custom / Palette text tabs remain.
 Custom (`SelectedIndex="0"`) combines the saturation/value spectrum, RGB / HSV switch, four inline channel inputs, Hex, hue and alpha sliders. There is no separate Values page (index 2).
 The RGB / HSV model buttons have a 4 px gap in both inline and dropdown panels.
+The dropdown expands to the current page's natural height, bypassing the generic Flyout's 480 DIP height cap so that Custom's bottom sliders fit without scrolling. When screen space is insufficient, native popup placement and automatic scrolling still keep all content reachable; scrollbars are not forcibly hidden and content is not clipped. This applies only to the ColorPicker dropdown, leaving inline ColorView and other Flyouts unchanged.
 The native input instances, named parts and two-way bindings remain intact. `IsColorComponentsVisible` controls the input group; component-only editing remains available on Custom with `IsColorSpectrumVisible="False"`.
 The default palette has ten hue columns and five shade rows, including neutrals and TheOne teal; the official `Palette` property can replace it.
 The large preview strip and accent colors are hidden by default (`IsColorPreviewVisible="False"`, `IsAccentColorsVisible="False"`); consumers can enable both using the official properties.

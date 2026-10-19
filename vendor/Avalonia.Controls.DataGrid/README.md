@@ -8,6 +8,7 @@
 
 NuGet 包版本与主库共用根目录 [PackageVersions.props](../../PackageVersions.props)，不表示上游版本；程序集名、12.1.2.0
 版本和强名称保持不变。消费方应一起升级 TheOne.Avalonia 和 TheOne.Avalonia.DataGrid。
+preview.7 仅随主库同步包版本及发行说明，没有新增 DataGrid 行为补丁。
 
 变更集中于：
 

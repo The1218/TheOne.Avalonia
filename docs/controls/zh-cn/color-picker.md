@@ -26,6 +26,7 @@
 `ContentTemplate` 时仍以消费者内容为准。面板参考 Eremex 的紧凑颜色编辑器布局，默认打开色板（`SelectedIndex="1"`），仅提供 Custom / Palette 两个文字标签。
 Custom（`SelectedIndex="0"`）在饱和度／亮度色谱下方集中显示 RGB / HSV 切换、横排四个分量输入、Hex、色相与透明度滑条；不再提供独立 Values 页（索引 2）。
 内嵌面板与下拉弹层中的 RGB / HSV 模型按钮均保留 4 px 间距。
+下拉弹层按当前页内容的自然高度展开，不受通用 Flyout 的 480 DIP 高度上限限制，Custom 的底部滑条无需滚动即可显示。若屏幕可用空间不足，仍由原生弹层定位和自动滚动保证所有内容可达；不强制隐藏滚动条或裁剪内容。该规则只作用于 ColorPicker 下拉弹层，不改变内嵌 ColorView 或其他 Flyout。
 RGB / HSV、Hex 和数值编辑仍使用官方控件实例、命名部件与双向绑定。`IsColorComponentsVisible` 控制整个输入组；`IsColorSpectrumVisible="False"` 时仍可在 Custom 使用分量输入。
 默认色板按 10 个色相列、5 档明度排列，包含中性色和主题青绿色；设置官方 `Palette` 属性可替换该色板。
 默认隐藏底部大预览条及衍生颜色（`IsColorPreviewVisible="False"`、`IsAccentColorsVisible="False"`）；这些官方属性仍可由消费者显式开启。

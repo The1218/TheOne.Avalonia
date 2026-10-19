@@ -22,6 +22,37 @@
 
 `primary` 是主操作，`accent` 是兼容类名；`ghost` 为轻操作，`link` 为链接外观，`danger` 为危险操作。禁用使用 `IsEnabled="False"`。外观类不会自动实现确认对话框或业务逻辑。
 
+### Button：语义色与外观组合
+
+Button、RepeatButton、ToggleButton 和 [IconButton](icon-button.md) 均支持“一种语义色 + 一种外观”。语义色是 `primary`（`accent` 为同义类）、`danger`、`success`、`warning`、`info`；外观是 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient`。尺寸仍沿用 Home 页说明的公共规则。
+
+```xml
+<Button Classes="danger outline" Content="删除" />
+<Button Classes="success soft" Content="已完成" />
+<Button Classes="warning solid" Content="需要关注" />
+<Button Classes="info link" Content="查看详情" />
+<Button Classes="success gradient" Content="确认完成" />
+<Button Classes="primary ghost" Content="取消" />
+```
+
+| 外观 | 正常及交互表现 |
+| --- | --- |
+| `solid` | 语义色填充；悬停、按下分别使用反馈色；文字使用与填充匹配的对比色 |
+| `outline` | Surface 底色、语义色文字与边框；悬停／按下使用 NeutralHover／NeutralPressed，保留语义色 |
+| `soft` | 语义浅色底、语义色文字；正常无边框，悬停／按下显示语义边框。品牌 soft 按下时仍保留原来的 Text 前景色 |
+| `ghost` / `link` | 透明底、语义色文字、无边框；悬停／按下显示反馈底色 |
+| `gradient` | 品牌色使用既有 Brand 渐变，其他语义色使用对应的渐变，悬停／按下保留该语义色 |
+
+未指定外观时，各控件保留原来的单独 Classes 效果。例如 Button 的 primary/accent 为实心，而 ToggleButton、RepeatButton 的旧默认不同；需要统一实心外观时明确使用 `primary solid`。单独使用 ghost、link、outline、soft、gradient 的正常、悬停、按下及 ToggleButton 选中／空值效果均保留。禁用统一使用 `One.DisabledSurface`、`One.DisabledText`、`One.Line`；ToggleButton 已选中／空值态使用 `One.DisabledSelection` 底色以区分状态。父容器禁用、禁用时切换 Classes、恢复启用均遵守同一规则。
+
+建议每组只选一个类；冲突时按以下优先级确定，Classes 的书写／添加顺序无关：
+
+- 语义色：`info > warning > success > danger > primary/accent`。
+- 外观：`gradient > soft > outline > link > ghost > solid`。
+- 状态：禁用优先于按下，按下优先于悬停；移除外观类后恢复当前语义色的旧默认。`danger outline` 与 `outline danger` 完全相同。
+
+语义实心与渐变的反馈画刷按调色板缓存，不在每次指针事件中创建；Light / Dark 与 ColorTheme 切换使用当前资源。`One.Button.{Success|Info|Warning|Danger}Foreground` 为实心／渐变文字色，`One.Button.{Success|Info|Warning|Danger}Hover` / `Pressed` 为实心反馈；`One.Button.Gradient.{Success|Info|Warning|Danger}` 及其 `Hover` / `Pressed` 后缀为渐变。Classes 作用于模板内的 ContentPresenter，仅给 Button 本身设置 Background / Foreground 并不保证覆盖其显示颜色。
+
 ```xml
 <RepeatButton Content="持续增加" Command="{Binding IncrementCommand}"
               Delay="400" Interval="80" />
@@ -33,7 +64,20 @@ RepeatButton 长按重复触发；`segment` 只提供分段外观。互斥选择
 
 三个按钮的内容默认水平、垂直居中，small／normal／large 均使用实际内容尺寸布局。需要靠左或靠上时，显式设置 `HorizontalContentAlignment`／`VerticalContentAlignment`。
 
-设置 `ToggleButton.IsThreeState="True"` 后，点击或 Space 按 false → true → null → false 循环。空值态使用 Primary 表面，并在按钮底部显示独立短横线；soft、gradient、primary、outline、ghost 等外观均保留该标记。标记跟随实际文字色，渐变和禁用状态仍保持可辨识。部分选中无需只靠背景色辨认。
+设置 `ToggleButton.IsThreeState="True"` 后，点击或 Space 按 false → true → null → false 循环。空值态在按钮底部显示独立短横线，标记跟随实际文字色。
+
+显式语义色与外观组合时，选中／空值态沿用该语义色：solid 使用按下底色，soft 使用语义实心底色，gradient 使用按下渐变；outline 使用语义浅底与描边，ghost/link 使用语义浅底且不显示边框。悬停、按下保留各自反馈；空值态额外显示短横线。只指定外观类时仍保留旧的选中／空值样式；新增的单独 `solid` 按品牌色组合处理。`segment` 与尺寸等辅助类保持原义。
+
+```xml
+<ToggleButton Classes="success soft" Content="批准"
+              IsChecked="{CompiledBinding Approved, Mode=TwoWay}" />
+<RepeatButton Classes="danger outline" Content="持续减少"
+              Command="{CompiledBinding DecrementCommand}" Delay="400" Interval="80" />
+<one:IconButton Classes="info gradient" Icon="{CompiledBinding RefreshIcon}"
+                Content="刷新" Command="{CompiledBinding RefreshCommand}" />
+```
+
+这些组合只修改模板配色；ToggleButton 的三态与双向绑定、RepeatButton 的原生长按重复／释放停止，以及 IconButton 的图标位置、加载替换、命令和焦点逻辑保持不变。PreviewHost 三个独立控件页分别提供 30 个组合、禁用态及相关交互演示，按窄视口自动换行。
 
 ## TextBox
 
@@ -130,12 +174,13 @@ Slider 保留原生指针与键盘操作。ProgressBar 使用相同业务进度�
 ### Classes 用法
 
 - `AutoCompleteBox`: `Classes="filled"` / `Classes="underlined"`
-- `Button`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="soft"` / `Classes="success"` / `Classes="warning"`
+- `Button`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`；组合规则见上文。
 - `ComboBox`: `Classes="filled"` / `Classes="underlined"`
 - `NumericUpDown`: `Classes="filled"` / `Classes="underlined"`
 - `ProgressBar`: `Classes="danger"` / `Classes="gradient"` / `Classes="info"` / `Classes="success"` / `Classes="warning"`
+- `RepeatButton`: 语义色 `primary`（`accent`）、`danger`、`success`、`warning`、`info` + 外观 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient`；组合规则见上文。
 - `TextBox`: `Classes="clearButton"` / `Classes="error"` / `Classes="filled"` / `Classes="revealPasswordButton"` / `Classes="underlined"`
-- `ToggleButton`: `Classes="segment"`
+- `ToggleButton`: `Classes="accent"` / `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="primary"` / `Classes="segment"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`；组合规则见上文。
 
 以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 

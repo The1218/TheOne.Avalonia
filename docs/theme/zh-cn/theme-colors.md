@@ -84,7 +84,7 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 - 状态 `*Soft` 从 Primary 与对应原始状态色混合；InfoCard 正文为 Primary，Footer 为 Primary 向 Primary Hover 混合 20% 的派生色，保持细微差异。
 - 图表六色取自 Eremex Graphics 的 Blue Green、Blue、Yellow、Purple、Purple Red、Green 色阶；浅色使用 Highest、深色使用 Lowest，以保持饼图百分比文字可读。系列组合属于本库选择，不等同于参考图表默认顺序。
 
-渐变采用浅角度横向过渡（0%,0% → 100%,35%），缩小品牌渐变两端色相差，Hover / Pressed 保持独立明度层级。ToggleButton 空值态按参考使用 Primary 表面，并增加独立短横线，避免与未选态混淆。
+渐变采用浅角度横向过渡（0%,0% → 100%,35%），缩小品牌渐变两端色相差，Hover / Pressed 保持独立明度层级。ToggleButton 单独外观类的空值态按参考使用 Primary 表面及独立短横线；显式语义色与外观组合则保留对应语义色及同一短横线。
 
 本轮审查了全部 65 个控件主题文件，默认颜色由共享语义资源提供；窗口遮罩、渐变和自定义控件为明确扩展。核对范围见 [reference-audit.json](../reference-audit.json)。颜色一致不表示 Eremex 自有控件模板、布局和交互完全相同；本库继续使用 Avalonia 原生结构。
 
@@ -95,6 +95,7 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 | 控件 | 新样式 | 理由 |
 | --- | --- | --- |
 | Button / IconButton / ToggleButton / RepeatButton | `soft`、`gradient` | 区分次要操作与重点操作；保留原有 primary / outline / ghost / link 和状态类 |
+| Button / ToggleButton / RepeatButton / IconButton 组合 | `solid / ghost / link / outline / soft / gradient` + `primary / danger / success / warning / info` | 颜色与外观分离，如 `danger outline`、`success soft`；[优先级与兼容说明](../../controls/zh-cn/basic.md#button语义色与外观组合) |
 | SplitButton / ToggleSplitButton | `gradient` | 双区操作共享视觉层级，保留原生 Flyout |
 | TextBox / ComboBox / NumericUpDown / AutoCompleteBox | `filled`、`underlined` | 填充或底线外观，保留原生输入、焦点与校验 |
 | CalendarDatePicker / DatePicker / TimePicker | `filled` | 填充输入，保留原生选择器与文字居中 |
@@ -113,7 +114,7 @@ Card Tab 标题背景无外围描边，正文保留细边框；正文四角为 4
 <one:InfoCard Classes="glow" Header="概览" Content="内容" />
 ```
 
-每个控件选择一种主要外观类，避免 `primary gradient danger` 等互斥组合。尺寸类可叠加；本地属性与自定义主题仍遵循 Avalonia 的优先级。
+每个控件选择一种主要外观类，避免同时设置 `primary danger` 或 `soft outline` 等同组冲突类。尺寸类可叠加；本地属性与自定义主题仍遵循 Avalonia 的优先级。
 
 图表画笔默认对应 `One.Chart.Series1..6`，超过六个系列循环。类别较多时结合图例、标记及线型；颜色不承担唯一识别作用。`ChartSeries.Brush` 优先，`FifthBrush` / `SixthBrush` 与原有四个画笔一样可以显式覆盖并用于导出。
 

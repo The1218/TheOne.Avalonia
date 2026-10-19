@@ -25,6 +25,23 @@ internal sealed class VirtualizingItemsPanel : VirtualizingStackPanel
         foreach (var child in Children.ToArray()) RemoveInternalChild(child);
     }
 
+    internal void RefreshTabContainers(TabControl owner)
+    {
+        if (!ReferenceEquals(ItemsControl, owner)) return;
+        foreach (var child in Children.OfType<TabItem>().ToArray())
+        {
+            var index = owner.Items.IndexOf(child);
+            if (index < 0) continue;
+            // Own controls must not be cleared: native ClearItemContainer would
+            // erase their Header/Content. Reattach and prepare their existing values.
+            RemoveInternalChild(child);
+            owner.ItemContainerGenerator.PrepareItemContainer(child, child, index);
+            AddInternalChild(child);
+            owner.ItemContainerGenerator.ItemContainerPrepared(child, child, index);
+        }
+        InvalidateMeasure();
+    }
+
     protected override void OnItemsControlChanged(ItemsControl? oldValue)
     {
         if (oldValue is TreeView or TreeViewItem)
