@@ -143,29 +143,29 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Background`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L53) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Background brush; use DynamicResource for theme-dependent surfaces. |
-| [`ChildrenSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L60) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | A binding evaluated against each node, not against the graph's data context. |
-| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L73) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | One.Accent / 1.5 ; Connector color and width; 0 width hides connectors |
-| [`ConnectorCornerRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L75) | `double` | writable; OneWay | `8` | 8 / 3 ; Orthogonal corner and endpoint radii Validation: `NonNegative` |
-| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L74) | `double` | writable; OneWay | `1.5` | One.Accent / 1.5 ; Connector color and width; 0 width hides connectors Validation: `NonNegative` |
-| [`ContentSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L63) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node body content, without reflection paths. |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L66) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`IconSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L61) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node icons. |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L64) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`LevelSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L71) | `double` | writable; OneWay | `80` | 80 ; Depth spacing; each level uses its largest node height or width Validation: `NonNegative` |
-| [`NodeCount`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L79) | `int` | read-only; OneWay | `computed / state` | Read-only ; Displayed valid node count / validation error |
-| [`NodeMinHeight`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L69) | `double` | writable; OneWay | `88` | 260 / 88 ; Fixed card width / minimum natural height Validation: `Positive` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L70) | `double` | writable; OneWay | `36` | 36 ; Cross-axis spacing between subtrees Validation: `NonNegative` |
-| [`NodeTheme`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L67) | `Avalonia.Styling.ControlTheme?` | writable; OneWay | `null` | Default theme ; Replace the `RelationGraphNodePresenter` ControlTheme |
-| [`NodeWidth`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L68) | `double` | writable; OneWay | `260` | 260 / 88 ; Fixed card width / minimum natural height Validation: `Positive` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L58) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal ; Tree expansion direction Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`Padding`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L72) | `Avalonia.Thickness` | writable; OneWay | `inherited registration` | 16 ; Graph edge insets |
-| [`PortRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L76) | `double` | writable; OneWay | `3` | 8 / 3 ; Orthogonal corner and endpoint radii Validation: `NonNegative` |
-| [`RootNode`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L55) | `object?` | writable; OneWay | `null` | Root model for a relation graph; children come from its tree/accessor contract. |
-| [`SelectItem`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L57) | `object?` | writable; TwoWay | `null` | The selected node model, matched by reference. Null clears selection. |
-| [`TitleSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L62) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node titles. |
-| [`TitleTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L65) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`ValidationError`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L78) | `string?` | read-only; OneWay | `computed / state` | Read-only ; Displayed valid node count / validation error |
+| [`Background`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L107) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Background brush; use DynamicResource for theme-dependent surfaces. |
+| [`ChildrenSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L134) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | A binding evaluated against each node, not against the graph's data context. |
+| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L215) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | One.Accent / 1.5 ; Connector color and width; 0 width hides connectors |
+| [`ConnectorCornerRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L227) | `double` | writable; OneWay | `8` | 8 / 3 ; Orthogonal corner and endpoint radii Validation: `NonNegative` |
+| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L221) | `double` | writable; OneWay | `1.5` | One.Accent / 1.5 ; Connector color and width; 0 width hides connectors Validation: `NonNegative` |
+| [`ContentSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L155) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node body content, without reflection paths. |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L173) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`IconSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L141) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node icons. |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L161) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`LevelSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L203) | `double` | writable; OneWay | `80` | 80 ; Depth spacing; each level uses its largest node height or width Validation: `NonNegative` |
+| [`NodeCount`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L242) | `int` | read-only; OneWay | `computed / state` | Read-only ; Displayed valid node count / validation error |
+| [`NodeMinHeight`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L191) | `double` | writable; OneWay | `88` | 260 / 88 ; Fixed card width / minimum natural height Validation: `Positive` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L197) | `double` | writable; OneWay | `36` | 36 ; Cross-axis spacing between subtrees Validation: `NonNegative` |
+| [`NodeTheme`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L179) | `Avalonia.Styling.ControlTheme?` | writable; OneWay | `null` | Default theme ; Replace the `RelationGraphNodePresenter` ControlTheme |
+| [`NodeWidth`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L185) | `double` | writable; OneWay | `260` | 260 / 88 ; Fixed card width / minimum natural height Validation: `Positive` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L126) | `Avalonia.Layout.Orientation` | writable; OneWay | `0 / default` | Horizontal ; Tree expansion direction Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`Padding`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L209) | `Avalonia.Thickness` | writable; OneWay | `inherited registration` | 16 ; Graph edge insets |
+| [`PortRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L233) | `double` | writable; OneWay | `3` | 8 / 3 ; Orthogonal corner and endpoint radii Validation: `NonNegative` |
+| [`RootNode`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L113) | `object?` | writable; OneWay | `null` | Root model for a relation graph; children come from its tree/accessor contract. |
+| [`SelectItem`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L120) | `object?` | writable; TwoWay | `null` | The selected node model, matched by reference. Null clears selection. |
+| [`TitleSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L148) | `Avalonia.Data.BindingBase?` | writable; OneWay | `null` | Typed accessor for relation-node titles. |
+| [`TitleTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L167) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L240) | `string?` | read-only; OneWay | `computed / state` | Read-only ; Displayed valid node count / validation error |
 
 ### RelationGraphNode
 
@@ -173,10 +173,10 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L18) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | writable; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | Child model collection; retain identity/parent relationships and avoid cycles/shared mutable nodes. |
-| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L17) | `object?` | writable; CLR / n/a | `null` | Host content/presentation object; follow the content-template scope and do not persist visual objects as business data. |
+| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L33) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | writable; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | Child model collection; retain identity/parent relationships and avoid cycles/shared mutable nodes. |
+| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L27) | `object?` | writable; CLR / n/a | `null` | Host content/presentation object; follow the content-template scope and do not persist visual objects as business data. |
 | [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L15) | `object?` | writable; CLR / n/a | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
-| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L16) | `object?` | writable; CLR / n/a | `null` | Display title, distinct from business identity or a localization key. |
+| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L21) | `object?` | writable; CLR / n/a | `null` | Display title, distinct from business identity or a localization key. |
 
 ### RelationGraphNodePresenter
 
@@ -184,18 +184,18 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L39) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Node body text brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L38) | `double` | writable; OneWay | `16` | Node-title font size in DIPs, included in actual text measurement. Validation: `Positive` |
-| [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L32) | `object?` | writable; OneWay | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
-| [`IconBackground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L40) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Icon-tile background brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`IconForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L41) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Icon foreground brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`IconSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L34) | `double` | writable; OneWay | `24` | Icon drawing size in DIPs, independent of font size and button hit area. Validation: `Positive` |
-| [`IconSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L36) | `double` | writable; OneWay | `14` | DIP spacing between the icon and adjacent text/content. Validation: `NonNegative` |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L33) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`IconTileSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L35) | `double` | writable; OneWay | `44` | Icon-tile size in DIPs, independent of icon size. Validation: `Positive` |
-| [`IsRoot`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L42) | `bool` | writable; OneWay | `false` | Whether this is the root node, maintained by the graph presenter. |
-| [`IsSelected`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L44) | `bool` | read-only; OneWay | `computed / state` | Selection state maintained by the owning RelationGraph. |
-| [`TextSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L37) | `double` | writable; OneWay | `6` | DIP spacing between title and body text. Validation: `NonNegative` |
+| [`ContentForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L105) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Node body text brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L99) | `double` | writable; OneWay | `16` | Node-title font size in DIPs, included in actual text measurement. Validation: `Positive` |
+| [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L63) | `object?` | writable; OneWay | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
+| [`IconBackground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L111) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Icon-tile background brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`IconForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L117) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Icon foreground brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L75) | `double` | writable; OneWay | `24` | Icon drawing size in DIPs, independent of font size and button hit area. Validation: `Positive` |
+| [`IconSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L87) | `double` | writable; OneWay | `14` | DIP spacing between the icon and adjacent text/content. Validation: `NonNegative` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L69) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`IconTileSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L81) | `double` | writable; OneWay | `44` | Icon-tile size in DIPs, independent of icon size. Validation: `Positive` |
+| [`IsRoot`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L123) | `bool` | writable; OneWay | `false` | Whether this is the root node, maintained by the graph presenter. |
+| [`IsSelected`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L130) | `bool` | read-only; OneWay | `computed / state` | Selection state maintained by the owning RelationGraph. |
+| [`TextSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L93) | `double` | writable; OneWay | `6` | DIP spacing between title and body text. Validation: `NonNegative` |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

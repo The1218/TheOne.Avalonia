@@ -99,16 +99,16 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L40) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L42) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
-| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L43) | `Avalonia.Controls.Templates.IDataTemplate?` | read-only; OneWay | `computed / state` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L44) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L39) | `double` | writable; OneWay | `30` | 24 / 30 / 36 Validation: `value => double.IsFinite(value) && value > 0` |
-| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L46) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L47) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L45) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L38) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L37) | `TheOne.Avalonia.Controls.FlowNodeStatus` | writable; OneWay | `FlowNodeStatus.Pending` | Marker Validation: `Enum.IsDefined` Values: `Pending`, `InProgress`, `Completed` |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L83) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L90) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
+| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L96) | `Avalonia.Controls.Templates.IDataTemplate?` | read-only; OneWay | `computed / state` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L97) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L77) | `double` | writable; OneWay | `30` | 24 / 30 / 36 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L99) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L100) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L98) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L71) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L65) | `TheOne.Avalonia.Controls.FlowNodeStatus` | writable; OneWay | `0 / default` | Marker Validation: `Enum.IsDefined` Values: `Pending`, `InProgress`, `Completed` |
 
 ### FlowNodePanel
 
@@ -116,8 +116,8 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L64) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L63) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L114) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L108) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
 
 ### FlowStep
 
@@ -125,10 +125,10 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L38) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L37) | `double` | writable; OneWay; inherits | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L36) | `double` | writable; OneWay; inherits | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L35) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L62) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L56) | `double` | writable; OneWay | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L50) | `double` | writable; OneWay | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L44) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
 
 ### FlowStepConnectors
 
@@ -136,9 +136,9 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`CompletedConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L17) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Completed-step connector brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L16) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Pending-step connector brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L18) | `double` | writable; OneWay | `2` | Connector stroke width in DIPs, independent of business node state. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`CompletedConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L34) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Completed-step connector brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L28) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Pending-step connector brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L40) | `double` | writable; OneWay | `2` | Connector stroke width in DIPs, independent of business node state. Validation: `value => double.IsFinite(value) && value >= 0` |
 
 ### FlowStepPanel
 
@@ -146,10 +146,10 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L23) | `double` | writable; OneWay; inherits | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L22) | `double` | writable; OneWay; inherits | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L21) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L24) | `double` | writable; OneWay | `0` | Available width supplied to flow layout, normally maintained by the template. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L44) | `double` | writable; OneWay | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L38) | `double` | writable; OneWay | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L32) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L50) | `double` | writable; OneWay | `0 / default` | Available width supplied to flow layout, normally maintained by the template. Validation: `value => double.IsFinite(value) && value >= 0` |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

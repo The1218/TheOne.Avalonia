@@ -30,6 +30,9 @@ public class OneWindow : Window
     public static readonly StyledProperty<ThemeButtonScope> ThemeButtonScopeProperty =
         AvaloniaProperty.Register<OneWindow, ThemeButtonScope>(nameof(ThemeButtonScope));
 
+    public static readonly StyledProperty<bool> ThemeButtonIsThreeStateProperty =
+        AvaloniaProperty.Register<OneWindow, bool>(nameof(ThemeButtonIsThreeState));
+
     public static readonly StyledProperty<bool> ShowTitleBarProperty =
         AvaloniaProperty.Register<OneWindow, bool>(nameof(ShowTitleBar), true);
 
@@ -95,6 +98,13 @@ public class OneWindow : Window
     {
         get => GetValue(ThemeButtonScopeProperty);
         set => SetValue(ThemeButtonScopeProperty, value);
+    }
+
+    /// <summary>Includes Default in the built-in theme button's Light/Dark cycle.</summary>
+    public bool ThemeButtonIsThreeState
+    {
+        get => GetValue(ThemeButtonIsThreeStateProperty);
+        set => SetValue(ThemeButtonIsThreeStateProperty, value);
     }
 
     public bool ShowTitleBar

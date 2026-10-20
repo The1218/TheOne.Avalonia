@@ -36,7 +36,7 @@ OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 C
 
 ## 标题栏与主题
 
-ThemeButton 为无文本的图标 ToggleButton，勾选代表 Dark，仅切换 Light / Dark；配色由独立的 [ThemeColorPicker](../../theme/zh-cn/theme-color-picker.md) 控制。
+ThemeButton 为无文本的图标 ToggleButton，默认双态切换 Light / Dark。设置继承的 `IsThreeState="True"` 后按 Default → Dark → Light → Default 循环，`IsChecked` 分别为 null / true / false；Default 显示系统图标。配色由独立的 [ThemeColorPicker](../../theme/zh-cn/theme-color-picker.md) 控制。
 
 ShowTitleBar 和 ShowThemeButton 默认为 True；TitleBarHeight 可覆盖。默认 small / normal / large 高度为 42 / 48 / 56，正文及对话框字号为 12 / 14 / 16。使用 Classes 或 ControlSizing.Size，沿用窗口主题与动效继承。
 
@@ -46,7 +46,11 @@ ThemeButton 默认切换最近窗口的有效 Light / Dark 主题，图标、提
 
 ```xml
 <one:ThemeButton Scope="Application" Classes="small" />
+<one:ThemeButton Scope="Application" IsThreeState="True" />
+<one:OneWindow ThemeButtonScope="Application" ThemeButtonIsThreeState="True" />
 ```
+
+Application 的 Default 自动跟随系统明暗变化；Window 的 Default 恢复继承应用主题。控制同一界面的按钮应使用相同作用域：窗口显式主题优先于应用主题。按钮同时观察目标的请求主题和实际主题，因此切回 Default 时，即使实际明暗未变，状态也会同步。
 
 点击使用 SetCurrentValue，保留原有绑定；主题快捷按钮切换明暗，跟随系统仍可通过 RequestedThemeVariant=Default 设置。PreviewHost 的主窗体使用 Application 范围，与原主题下拉框同步。
 
@@ -150,15 +154,15 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Buttons`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L14) | `TheOne.Avalonia.Controls.OneDialogButtons` | 可写; CLR / init-only | `OneDialogButtons.OkCancel` | 对话框按钮配置集合／标志；由选项类型和关闭结果契约解释。 可选值：`Ok`, `OkCancel`, `YesNo`, `YesNoCancel` |
-| [`CloseOnEscape`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L12) | `bool` | 可写; CLR / init-only | `true` | 允许 Esc 关闭对话框；结果与取消语义按对话框选项处理。 |
-| [`CloseOnOverlayClick`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L11) | `bool` | 可写; CLR / init-only | `false` | 允许点击遮罩关闭弹窗；取消／返回结果遵循对话框选项。 |
-| [`MotionEnabled`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L7) | `bool?` | 可写; CLR / init-only | `null` | 该弹窗的动效开关；同时遵守继承的 Motion.Enabled。 |
-| [`ShowButtons`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L13) | `bool` | 可写; CLR / init-only | `false` | 显示默认按钮区；自定义内容中的按钮不受此开关控制。 |
-| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L10) | `bool` | 可写; CLR / init-only | `true` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
-| [`ShowTitle`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L9) | `bool` | 可写; CLR / init-only | `true` | 显示对话框标题区；标题值仍保留在选项中。 |
-| [`Size`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L6) | `TheOne.Avalonia.Styling.ControlSize?` | 可写; CLR / init-only | `null` | 对话框尺寸枚举；采用库提供的尺寸档位。 可选值：`Small`, `Normal`, `Large` |
-| [`Title`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L8) | `string?` | 可写; CLR / init-only | `null` | 显示标题；不等于业务主键或本地化资源键。 |
+| [`Buttons`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L16) | `TheOne.Avalonia.Controls.OneDialogButtons` | 可写; CLR / init-only | `OneDialogButtons.OkCancel` | 对话框按钮配置集合／标志；由选项类型和关闭结果契约解释。 可选值：`Ok`, `OkCancel`, `YesNo`, `YesNoCancel` |
+| [`CloseOnEscape`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L14) | `bool` | 可写; CLR / init-only | `true` | 允许 Esc 关闭对话框；结果与取消语义按对话框选项处理。 |
+| [`CloseOnOverlayClick`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L13) | `bool` | 可写; CLR / init-only | `false` | 允许点击遮罩关闭弹窗；取消／返回结果遵循对话框选项。 |
+| [`MotionEnabled`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L9) | `bool?` | 可写; CLR / init-only | `null` | 该弹窗的动效开关；同时遵守继承的 Motion.Enabled。 |
+| [`ShowButtons`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L15) | `bool` | 可写; CLR / init-only | `false` | 显示默认按钮区；自定义内容中的按钮不受此开关控制。 |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L12) | `bool` | 可写; CLR / init-only | `true` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
+| [`ShowTitle`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L11) | `bool` | 可写; CLR / init-only | `true` | 显示对话框标题区；标题值仍保留在选项中。 |
+| [`Size`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L8) | `TheOne.Avalonia.Styling.ControlSize?` | 可写; CLR / init-only | `null` | 对话框尺寸枚举；采用库提供的尺寸档位。 可选值：`Small`, `Normal`, `Large` |
+| [`Title`](../../../TheOne.Avalonia/Controls/DialogOptions.cs#L10) | `string?` | 可写; CLR / init-only | `null` | 显示标题；不等于业务主键或本地化资源键。 |
 
 ### OneDialog
 
@@ -166,7 +170,7 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L123) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
+| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L217) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
 
 ### OneDialogPresenter
 
@@ -174,11 +178,11 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Buttons`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L12) | `TheOne.Avalonia.Controls.OneDialogButtons` | 可写; OneWay | `0 / default` | 对话框按钮配置集合／标志；由选项类型和关闭结果契约解释。 可选值：`Ok`, `OkCancel`, `YesNo`, `YesNoCancel` |
-| [`CloseOnEscape`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L20) | `bool` | 可写; OneWay | `true` | 允许 Esc 关闭对话框；结果与取消语义按对话框选项处理。 |
-| [`ShowButtons`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L18) | `bool` | 可写; OneWay | `true` | 显示默认按钮区；自定义内容中的按钮不受此开关控制。 |
-| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L16) | `bool` | 可写; OneWay | `true` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
-| [`ShowTitle`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L14) | `bool` | 可写; OneWay | `true` | 显示对话框标题区；标题值仍保留在选项中。 |
+| [`Buttons`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L44) | `TheOne.Avalonia.Controls.OneDialogButtons` | 可写; OneWay | `0 / default` | 对话框按钮配置集合／标志；由选项类型和关闭结果契约解释。 可选值：`Ok`, `OkCancel`, `YesNo`, `YesNoCancel` |
+| [`CloseOnEscape`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L68) | `bool` | 可写; OneWay | `true` | 允许 Esc 关闭对话框；结果与取消语义按对话框选项处理。 |
+| [`ShowButtons`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L62) | `bool` | 可写; OneWay | `true` | 显示默认按钮区；自定义内容中的按钮不受此开关控制。 |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L56) | `bool` | 可写; OneWay | `true` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
+| [`ShowTitle`](../../../TheOne.Avalonia/Controls/OneDialogPresenter.cs#L50) | `bool` | 可写; OneWay | `true` | 显示对话框标题区；标题值仍保留在选项中。 |
 
 ### OneNotification
 
@@ -186,7 +190,7 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L86) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
+| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L120) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
 
 ### OneToast
 
@@ -194,7 +198,7 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L103) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
+| [`Owner`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L159) | `Avalonia.Controls.Window?` | 可写; CLR / n/a | `accessor-defined / state` | `child.Show(parent)` / `child.ShowDialog<T>(parent)` 建立的原生窗口所属关系，影响平台窗口生命周期。 |
 
 ### OneWindow
 
@@ -202,16 +206,17 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Current`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L39) | `TheOne.Avalonia.Controls.OneWindow?` | 只读; CLR / n/a | `accessor-defined / state` | UI 线程。 |
-| [`IsDialogOpen`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L38) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`LeftContent`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L30) | `object?` | 可写; OneWay | `null` | 窗口标题栏左侧扩展内容，位于库提供的标题栏结构内。 |
-| [`LeftContentTemplate`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L32) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`RightContent`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L31) | `object?` | 可写; OneWay | `null` | 窗口标题栏右侧扩展内容；避免覆盖原生窗口操作区域。 |
-| [`RightContentTemplate`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L33) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`ShowThemeButton`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L34) | `bool` | 可写; OneWay | `true` | 显示窗口内置明暗切换按钮；配色资源仍由 ThemeColorPicker 或 OneTheme 控制。 |
-| [`ShowTitleBar`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L36) | `bool` | 可写; OneWay | `true` | 显示库提供的标题栏区域；窗口生命周期与 owner 不因此变化。 |
-| [`ThemeButtonScope`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L35) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 窗口内置主题按钮的切换作用域；使用枚举区分应用与窗口。 可选值：`Window`, `Application` |
-| [`TitleBarHeight`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L37) | `double` | 可写; OneWay | `48` | 标题栏区域的 DIP 高度；改变时保留标题与窗口按钮点击空间。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Current`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L123) | `TheOne.Avalonia.Controls.OneWindow?` | 只读; CLR / n/a | `accessor-defined / state` | UI 线程。 |
+| [`IsDialogOpen`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L122) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`LeftContent`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L67) | `object?` | 可写; OneWay | `null` | 窗口标题栏左侧扩展内容，位于库提供的标题栏结构内。 |
+| [`LeftContentTemplate`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L79) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`RightContent`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L73) | `object?` | 可写; OneWay | `null` | 窗口标题栏右侧扩展内容；避免覆盖原生窗口操作区域。 |
+| [`RightContentTemplate`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L85) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`ShowThemeButton`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L91) | `bool` | 可写; OneWay | `true` | 显示窗口内置明暗切换按钮；配色资源仍由 ThemeColorPicker 或 OneTheme 控制。 |
+| [`ShowTitleBar`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L110) | `bool` | 可写; OneWay | `true` | 显示库提供的标题栏区域；窗口生命周期与 owner 不因此变化。 |
+| [`ThemeButtonIsThreeState`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L104) | `bool` | 可写; OneWay | `false` | Includes Default in the built-in theme button's Light/Dark cycle. |
+| [`ThemeButtonScope`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L97) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 窗口内置主题按钮的切换作用域；使用枚举区分应用与窗口。 可选值：`Window`, `Application` |
+| [`TitleBarHeight`](../../../TheOne.Avalonia/Controls/OneWindow.cs#L116) | `double` | 可写; OneWay | `48` | 标题栏区域的 DIP 高度；改变时保留标题与窗口按钮点击空间。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ### ThemeButton
 
@@ -219,7 +224,7 @@ RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L16) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 主题按钮切换的作用域；影响 Light/Dark，不切换 ThemeColor 颜色枚举。 可选值：`Window`, `Application` |
+| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L30) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 主题按钮切换的作用域；影响 Light/Dark，不切换 ThemeColor 颜色枚举。 可选值：`Window`, `Application` |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

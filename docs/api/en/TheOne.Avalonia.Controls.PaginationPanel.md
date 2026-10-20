@@ -12,7 +12,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`IsCompact`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L10) | `bool` | writable; OneWay | `false` | Enables compact layout; the template determines visible fields without altering business data. |
+| [`IsCompact`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L19) | `bool` | writable; OneWay | `false` | Enables compact layout; the template determines visible fields without altering business data. |
 
 ## Methods and constructors
 
@@ -24,7 +24,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static readonly StyledProperty<bool> PaginationPanel.IsCompactProperty`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L9) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<bool> PaginationPanel.IsCompactProperty`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L11) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Styles and density
 

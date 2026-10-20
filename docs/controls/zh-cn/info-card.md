@@ -174,24 +174,24 @@ PreviewHost 的 InfoCard 预览包含标题、图标、操作区、页脚及两�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`BoxShadow`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L50) | `Avalonia.Media.BoxShadows` | 可写; OneWay | `inherited registration` | Outer shadow, supplied by the shadow and hove theme classes. |
-| [`Footer`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L56) | `object?` | 可写; OneWay | `null` | 底部区域内容；与主体和标题分别定制。 |
-| [`FooterBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L61) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 页脚区域背景，默认 `One.InfoCard.Footer` |
-| [`FooterPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L65) | `Avalonia.Thickness` | 只读; OneWay | `computed / state` | Computed footer insets: horizontal Padding and vertical FooterSpacing. |
-| [`FooterSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L74) | `double` | 可写; OneWay | `12` | 页脚区域的上下内边距 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`FooterTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L57) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`HeaderActions`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L54) | `object?` | 可写; OneWay | `null` | 标题区右侧的操作内容；可放置业务按钮，保持命令和焦点行为。 |
-| [`HeaderActionsTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L55) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`HeaderBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L59) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 标题区域背景，默认 `One.Subtle` |
-| [`HeaderContentSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L69) | `double` | 可写; OneWay | `10` | 8 ; 10 ; 12 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L67) | `double` | 可写; OneWay | `16` | 14 ; 16 ; 18 校验：`value => double.IsFinite(value) && value > 0` |
-| [`HeaderIcon`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L52) | `object?` | 可写; OneWay | `null` | 标题区图标内容，与标题文本分开定制。 |
-| [`HeaderIconSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L68) | `double` | 可写; OneWay | `18` | 16 ; 18 ; 20 校验：`value => double.IsFinite(value) && value > 0` |
-| [`HeaderIconTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L53) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`HeaderPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L63) | `Avalonia.Thickness` | 只读; OneWay | `computed / state` | Computed header insets: horizontal Padding and vertical HeaderSpacing. |
-| [`HeaderSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L66) | `double` | 可写; OneWay | `12` | 标题区域的上下内边距 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`ShowFooterSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L73) | `bool` | 可写; OneWay | `true` | Shows a divider before an existing footer when another region precedes it. |
-| [`ShowHeaderSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L71) | `bool` | 可写; OneWay | `true` | Shows an edge-to-edge divider between the header and body. |
+| [`BoxShadow`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L93) | `Avalonia.Media.BoxShadows` | 可写; OneWay | `inherited registration` | Outer shadow, supplied by the shadow and hove theme classes. |
+| [`Footer`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L123) | `object?` | 可写; OneWay | `null` | 底部区域内容；与主体和标题分别定制。 |
+| [`FooterBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L143) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 页脚区域背景，默认 `One.InfoCard.Footer` |
+| [`FooterPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L153) | `Avalonia.Thickness` | 只读; OneWay | `computed / state` | Computed footer insets: horizontal Padding and vertical FooterSpacing. |
+| [`FooterSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L193) | `double` | 可写; OneWay | `12` | 页脚区域的上下内边距 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`FooterTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L129) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`HeaderActions`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L111) | `object?` | 可写; OneWay | `null` | 标题区右侧的操作内容；可放置业务按钮，保持命令和焦点行为。 |
+| [`HeaderActionsTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L117) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`HeaderBackground`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L136) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 标题区域背景，默认 `One.Subtle` |
+| [`HeaderContentSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L173) | `double` | 可写; OneWay | `10` | 8 ; 10 ; 12 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L161) | `double` | 可写; OneWay | `16` | 14 ; 16 ; 18 校验：`value => double.IsFinite(value) && value > 0` |
+| [`HeaderIcon`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L99) | `object?` | 可写; OneWay | `null` | 标题区图标内容，与标题文本分开定制。 |
+| [`HeaderIconSize`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L167) | `double` | 可写; OneWay | `18` | 16 ; 18 ; 20 校验：`value => double.IsFinite(value) && value > 0` |
+| [`HeaderIconTemplate`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L105) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`HeaderPadding`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L150) | `Avalonia.Thickness` | 只读; OneWay | `computed / state` | Computed header insets: horizontal Padding and vertical HeaderSpacing. |
+| [`HeaderSpacing`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L155) | `double` | 可写; OneWay | `12` | 标题区域的上下内边距 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`ShowFooterSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L187) | `bool` | 可写; OneWay | `true` | Shows a divider before an existing footer when another region precedes it. |
+| [`ShowHeaderSeparator`](../../../TheOne.Avalonia/Controls/InfoCard.cs#L180) | `bool` | 可写; OneWay | `true` | Shows an edge-to-edge divider between the header and body. |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

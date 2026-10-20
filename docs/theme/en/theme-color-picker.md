@@ -112,7 +112,7 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L16) | `TheOne.Avalonia.Controls.ThemeButtonScope` | writable; OneWay | `0 / default` | Scope of Light/Dark switching; does not change the ThemeColor palette enum. Values: `Window`, `Application` |
+| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L30) | `TheOne.Avalonia.Controls.ThemeButtonScope` | writable; OneWay | `0 / default` | Scope of Light/Dark switching; does not change the ThemeColor palette enum. Values: `Window`, `Application` |
 
 ### ThemeColorPicker
 
@@ -120,8 +120,8 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`SelectThemeColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L17) | `TheOne.Avalonia.Themes.ThemeColor` | writable; TwoWay | `0 / default` | The selected palette, suitable for a persisted two-way enum binding. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
-| [`SelectedColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L25) | `TheOne.Avalonia.Themes.ThemeColor` | writable; TwoWay | `0 / default` | Compatibility alias of SelectedThemeColor; both represent the same palette enum. Prefer binding SelectedThemeColor. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`SelectThemeColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L60) | `TheOne.Avalonia.Themes.ThemeColor` | writable; TwoWay | `0 / default` | The selected palette, suitable for a persisted two-way enum binding. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`SelectedColor`](../../../TheOne.Avalonia/Controls/ThemeColorPicker.cs#L70) | `TheOne.Avalonia.Themes.ThemeColor` | writable; TwoWay | `0 / default` | Compatibility alias of SelectedThemeColor; both represent the same palette enum. Prefer binding SelectedThemeColor. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
 
 ### OneTheme
 
@@ -129,8 +129,8 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ColorTheme`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L14) | `TheOne.Avalonia.Themes.ThemeColor` | writable; OneWay | `0 / default` | Color palette; changing this does not change the requested Light / Dark variant. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
-| [`ColorThemes`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L15) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Themes.ThemeColor>` | read-only; CLR / n/a | `Array.AsReadOnly(Enum.GetValues<ThemeColor>())` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ColorTheme`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L30) | `TheOne.Avalonia.Themes.ThemeColor` | writable; OneWay | `0 / default` | Color palette; changing this does not change the requested Light / Dark variant. Validation: `value => Enum.IsDefined(value)` Values: `Nova`, `Atlas`, `AtlasDeep`, `Helios`, `HeliosDeep`, `NovaDeep`, `Terra`, `TerraDeep`, `Vega`, `VegaDeep` |
+| [`ColorThemes`](../../../TheOne.Avalonia/Themes/OneTheme.axaml.cs#L36) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Themes.ThemeColor>` | read-only; CLR / n/a | `Array.AsReadOnly(Enum.GetValues<ThemeColor>())` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### ThemeColor
 

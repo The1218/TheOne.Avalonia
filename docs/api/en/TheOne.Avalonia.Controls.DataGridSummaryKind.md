@@ -20,8 +20,8 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Sum = 0`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Average = 1`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Min = 2`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Max = 3`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Count = 4`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Sum = 0`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Average = 1`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Min = 2`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Max = 3`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Count = 4`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L12) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

@@ -1,5 +1,7 @@
 # Dates and times
 
+For a dedicated combined control, see [DateTimePicker](datetime-picker.md), with direct `Format` and `Time` properties. The existing attached mode remains supported.
+
 Historical command-line checks and consumer test projects have been removed. Check coverage and measurements in this guide are historical records. Start PreviewHost normally and open the relevant control page; validate target-platform behavior in the consuming application.
 
 [简体中文](../zh-cn/date-time.md) · **English**
@@ -87,12 +89,12 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`DisplayStyle`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L17) | `TheOne.Avalonia.Controls.DateInputDisplayStyle` | writable; OneWay; attached | `0 / default` | `Date` is the default date mode; `DateTime` adds time; `Month` selects months; `Year` selects years Values: `Date`, `DateTime`, `Month`, `Year` |
-| [`Format`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L16) | `string?` | writable; OneWay; attached | `null` | .NET date/time format string, overriding DisplayStyle's automatic format |
-| [`InitialView`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L18) | `Avalonia.Controls.CalendarMode` | writable; OneWay; attached | `CalendarMode.Month` | `Month` date grid; `Year` month grid; `Decade` year grid; explicit settings take precedence Values: `Month`, `Year`, `Decade` |
-| [`ShowTime`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L21) | `bool` | read-only; OneWay; attached | `false` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Time`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L20) | `System.TimeSpan?` | writable; OneWay; attached | `null` | `TimeSpan?`, synchronized with SelectedDate's time in DateTime mode; valid range `[00:00, 24:00)` Validation: `value => value is null &#124;&#124; value >= TimeSpan.Zero && value < TimeSpan.FromDays(1)` |
-| [`WheelNavigation`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L19) | `bool` | writable; OneWay; attached | `false` | Set on Calendar to control wheel navigation through months / years / decades; enabled by the theme |
+| [`DisplayStyle`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L25) | `TheOne.Avalonia.Controls.DateInputDisplayStyle` | writable; OneWay; attached | `0 / default` | `Date` is the default date mode; `DateTime` adds time; `Month` selects months; `Year` selects years Values: `Date`, `DateTime`, `Month`, `Year` |
+| [`Format`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L22) | `string?` | writable; OneWay; attached | `null` | .NET date/time format string, overriding DisplayStyle's automatic format |
+| [`InitialView`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L28) | `Avalonia.Controls.CalendarMode` | writable; OneWay; attached | `0 / default` | `Month` date grid; `Year` month grid; `Decade` year grid; explicit settings take precedence Values: `Month`, `Year`, `Decade` |
+| [`ShowTime`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L38) | `bool` | read-only; OneWay; attached | `false` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Time`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L34) | `System.TimeSpan?` | writable; OneWay; attached | `null` | `TimeSpan?`, synchronized with SelectedDate's time in DateTime mode; valid range `[00:00, 24:00)` Validation: `value => value is null &#124;&#124; (value >= TimeSpan.Zero && value < TimeSpan.FromDays(1))` |
+| [`WheelNavigation`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L31) | `bool` | writable; OneWay; attached | `false` | Set on Calendar to control wheel navigation through months / years / decades; enabled by the theme |
 
 ### PickerScroll
 
@@ -101,7 +103,7 @@ This section lists project-added control-specific properties, public Classes usa
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
 | [`Enabled`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L17) | `bool` | writable; OneWay; attached | `false` | Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
-| [`HighlightClip`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L18) | `Avalonia.Media.Geometry` | writable; OneWay; attached | `new RectangleGeometry(new Rect())` | Clipping configuration for the wheel highlight, normally maintained by picker templates. |
+| [`HighlightClip`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L20) | `Avalonia.Media.Geometry` | writable; OneWay; attached | `new RectangleGeometry(new Rect())` | Clipping configuration for the wheel highlight, normally maintained by picker templates. |
 
 ### PickerSizing
 
@@ -109,9 +111,9 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ItemHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L9) | `double` | writable; OneWay; attached; inherits | `40` | Item/wheel-cell height in DIPs; theme density or explicit values may override registration defaults. |
-| [`PopupHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L10) | `double` | writable; OneWay; attached; inherits | `340` | Picker-popup height in DIPs, coordinated with ItemHeight and ViewportHeight. |
-| [`ViewportHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L11) | `double` | writable; OneWay; attached; inherits | `200` | Visible picker-wheel height in DIPs, distinct from item count. |
+| [`ItemHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L9) | `double` | writable; OneWay; attached | `40` | Item/wheel-cell height in DIPs; theme density or explicit values may override registration defaults. |
+| [`PopupHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L12) | `double` | writable; OneWay; attached | `340` | Picker-popup height in DIPs, coordinated with ItemHeight and ViewportHeight. |
+| [`ViewportHeight`](../../../TheOne.Avalonia/Styling/PickerSizing.cs#L15) | `double` | writable; OneWay; attached | `200` | Visible picker-wheel height in DIPs, distinct from item count. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

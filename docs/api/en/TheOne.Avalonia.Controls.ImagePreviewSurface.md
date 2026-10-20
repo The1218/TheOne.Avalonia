@@ -12,22 +12,22 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`AlternateCheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L15) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Alternate transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`CheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L14) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`AlternateCheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L48) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Alternate transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`CheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L42) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`override void ImagePreviewSurface.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L103) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
-| [`ImagePreviewSurface.ImagePreviewSurface()`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L33) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`override void ImagePreviewSurface.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L180) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
+| [`ImagePreviewSurface.ImagePreviewSurface()`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L29) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
 
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static readonly StyledProperty<IBrush?> ImagePreviewSurface.CheckerBrushProperty`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L12) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<IBrush?> ImagePreviewSurface.AlternateCheckerBrushProperty`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L13) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<IBrush?> ImagePreviewSurface.AlternateCheckerBrushProperty`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L15) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Styles and density
 

@@ -27,7 +27,10 @@ internal static class PreviewNavigationIcons
     {
         return Get(id switch
         {
+            334 => MaterialIconKind.FormatListNumbered,
+            333 => MaterialIconKind.CalendarMonthOutline,
             0 => MaterialIconKind.HomeOutline,
+            332 => MaterialIconKind.ChevronRight,
             400 or 1 or 305 or 101 or 16 or 12 or 130 => MaterialIconKind.GestureTapButton,
             401 or 2 or 110 or 111 => MaterialIconKind.FormTextbox,
             402 or 3 or 15 or 106 => MaterialIconKind.ToggleSwitchOutline,
@@ -48,6 +51,7 @@ internal static class PreviewNavigationIcons
             10 or 313 => MaterialIconKind.TableHeadersEye,
             18 => MaterialIconKind.ViewCarouselOutline,
             310 => MaterialIconKind.ImageOutline,
+            331 => MaterialIconKind.ShapeOutline,
             315 => MaterialIconKind.FormatListNumbered,
             317 => MaterialIconKind.PaletteOutline,
             318 => MaterialIconKind.FileDocumentEditOutline,

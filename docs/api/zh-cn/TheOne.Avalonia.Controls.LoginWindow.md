@@ -12,20 +12,20 @@ A themed native Window whose caller-owned content performs authentication.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`IsDialogOpen`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L20) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsDialogOpen`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L35) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`void LoginWindow.ShowErrorToast(string message, TimeSpan? expiration = null)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L71) | Shows an error toast in this login window on the UI thread. |
-| [`void LoginWindow.ShowErrorNotification(string message, string title = "登录失败", TimeSpan? expiration = null)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L75) | Shows an error notification in this login window on the UI thread. |
-| [`Task<OneDialogResult> LoginWindow.ShowErrorDialog(string message, string title = "登录失败", CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L79) | Shows an error dialog in this login window; dispatches to the UI thread. |
-| [`bool LoginWindow.CompleteLogin(OneWindow mainWindow)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L84) | Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes login. |
-| [`Task<bool> LoginWindow.CompleteLoginAsync(OneWindow mainWindow)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L91) | Dispatches the handoff of the supplied OneWindow to the UI thread. Construct the window on the UI thread. |
-| [`bool LoginWindow.CompleteLogin(Func<OneWindow> mainWindowFactory)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L105) | After successful authentication, replaces this desktop MainWindow with a fresh OneWindow. Returns false if Closing cancels the transition or a completion is already in progress. Repeated calls after success return true without invoking the factory again. |
-| [`Task<bool> LoginWindow.CompleteLoginAsync(Func<OneWindow> mainWindowFactory)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L188) | Dispatches completion, including window construction, to the UI thread. |
-| [`LoginWindow.LoginWindow()`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L29) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+| [`void LoginWindow.ShowErrorToast(string message, TimeSpan? expiration = null)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L81) | Shows an error toast in this login window on the UI thread. |
+| [`void LoginWindow.ShowErrorNotification(string message, string title = "登录失败", TimeSpan? expiration = null)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L87) | Shows an error notification in this login window on the UI thread. |
+| [`Task<OneDialogResult> LoginWindow.ShowErrorDialog(string message, string title = "登录失败", CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L93) | Shows an error dialog in this login window; dispatches to the UI thread. |
+| [`bool LoginWindow.CompleteLogin(OneWindow mainWindow)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L107) | Installs the supplied fresh, unopened OneWindow as the desktop MainWindow and all message owners, then closes login. |
+| [`Task<bool> LoginWindow.CompleteLoginAsync(OneWindow mainWindow)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L114) | Dispatches the handoff of the supplied OneWindow to the UI thread. Construct the window on the UI thread. |
+| [`bool LoginWindow.CompleteLogin(Func<OneWindow> mainWindowFactory)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L130) | After successful authentication, replaces this desktop MainWindow with a fresh OneWindow. Returns false if Closing cancels the transition or a completion is already in progress. Repeated calls after success return true without invoking the factory again. |
+| [`Task<bool> LoginWindow.CompleteLoginAsync(Func<OneWindow> mainWindowFactory)`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L221) | Dispatches completion, including window construction, to the UI thread. |
+| [`LoginWindow.LoginWindow()`](../../../TheOne.Avalonia/Controls/LoginWindow.cs#L27) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段
 

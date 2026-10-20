@@ -12,7 +12,7 @@ Places three standard groups in a wrapping row, or navigation above a compact su
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`IsCompact`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L10) | `bool` | 可写; OneWay | `false` | 启用紧凑布局；具体显示字段由所属模板决定，不改变业务数据。 |
+| [`IsCompact`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L19) | `bool` | 可写; OneWay | `false` | 启用紧凑布局；具体显示字段由所属模板决定，不改变业务数据。 |
 
 ## 方法与构造
 
@@ -24,7 +24,7 @@ Places three standard groups in a wrapping row, or navigation above a compact su
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static readonly StyledProperty<bool> PaginationPanel.IsCompactProperty`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L9) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<bool> PaginationPanel.IsCompactProperty`](../../../TheOne.Avalonia/Controls/PaginationPanel.cs#L11) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 
 ## 样式与密度
 

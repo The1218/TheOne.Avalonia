@@ -19,7 +19,7 @@ Enables mouse input on the native carousel swipe recognizer, independently of to
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static bool CarouselOptions.GetIsMouseSwipeEnabled(Carousel carousel)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L27) | 读取附加属性。允许鼠标拖动轮播翻页；触摸和原生导航行为仍遵循 Carousel 契约。 |
-| [`static void CarouselOptions.SetIsMouseSwipeEnabled(Carousel carousel, bool value)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L28) | 设置附加属性。允许鼠标拖动轮播翻页；触摸和原生导航行为仍遵循 Carousel 契约。 |
+| [`static void CarouselOptions.SetIsMouseSwipeEnabled(Carousel carousel, bool value)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L32) | 设置附加属性。允许鼠标拖动轮播翻页；触摸和原生导航行为仍遵循 Carousel 契约。 |
 | [`CarouselOptions.CarouselOptions()`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L9) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段

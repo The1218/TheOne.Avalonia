@@ -12,8 +12,8 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | writable; OneWay; inherits | `180` | `double`, `180` ; Label column width in DIPs in two-column layouts. Bindable, styleable and inherited by rows; must be finite and nonnegative. Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L21) | `double` | writable; OneWay; inherits | `520` | `double`, `520` ; Rows narrower than this value place the label above the value. `0` retains two columns; must be finite and nonnegative. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | writable; OneWay | `180` | `double`, `180` ; Label column width in DIPs in two-column layouts. Bindable, styleable and inherited by rows; must be finite and nonnegative. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L25) | `double` | writable; OneWay | `520` | `double`, `520` ; Rows narrower than this value place the label above the value. `0` retains two columns; must be finite and nonnegative. Validation: `value => double.IsFinite(value) && value >= 0` |
 
 ## Methods and constructors
 
@@ -34,7 +34,7 @@ See [shared theme configuration](../../theme/en/README.md#shared-configuration) 
 
 | Class | Selector | Setters/resources |
 | --- | --- | --- |
-| `borderless` | [`^.borderless`](../../../TheOne.Avalonia/Themes/Controls/Description.axaml#L21) | ^.borderless => BorderThickness=0; CornerRadius=0 |
+| `borderless` | [`^.borderless`](../../../TheOne.Avalonia/Themes/Controls/Description.axaml#L33) | ^.borderless => BorderThickness=0; CornerRadius=0 |
 
 ## Related APIs and built-in models
 

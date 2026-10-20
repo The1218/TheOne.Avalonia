@@ -12,12 +12,12 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Background`](../../../TheOne.Avalonia/Controls/QRCode.cs#L42) | `Avalonia.Media.IBrush?` | writable; OneWay | `Brushes.White` | Light modules and quiet zone. Defaults to white independently of the application theme. |
-| [`ErrorCorrection`](../../../TheOne.Avalonia/Controls/QRCode.cs#L36) | `TheOne.Avalonia.Controls.QRCodeErrorCorrection` | writable; OneWay | `QRCodeErrorCorrection.Medium` | Defaults to Medium. Changes regenerate the cached symbol. Validation: `value => Enum.IsDefined(value)` Values: `Low`, `Medium`, `Quartile`, `High` |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/QRCode.cs#L40) | `Avalonia.Media.IBrush?` | writable; OneWay | `Brushes.Black` | Dark modules. Defaults to black independently of the application theme. |
-| [`QuietZone`](../../../TheOne.Avalonia/Controls/QRCode.cs#L38) | `int` | writable; OneWay | `4` | Clear border on every side, in modules. Range 4–32; default 4. Validation: `value => value is >= 4 and <= 32` |
-| [`Text`](../../../TheOne.Avalonia/Controls/QRCode.cs#L34) | `string?` | writable; OneWay | `""` | Payload, preserved exactly, encoded as UTF-8 with an ECI designator. |
-| [`ValidationError`](../../../TheOne.Avalonia/Controls/QRCode.cs#L44) | `string?` | read-only; OneWay | `computed / state` | Read-only encoding or minimum-module-size error; null when the current symbol is valid. |
+| [`Background`](../../../TheOne.Avalonia/Controls/QRCode.cs#L42) | `Avalonia.Media.IBrush?` | writable; OneWay | `Brushes.White` | white ; Light-module and quiet-zone brush; default colors stay black on white in Light and Dark themes. |
+| [`ErrorCorrection`](../../../TheOne.Avalonia/Controls/QRCode.cs#L36) | `TheOne.Avalonia.Controls.QRCodeErrorCorrection` | writable; OneWay | `QRCodeErrorCorrection.Medium` | `Medium` ; `QRCodeErrorCorrection.Low`, `Medium`, `Quartile` or `High`. Uses the requested level without automatic boosting; higher correction reduces capacity. Validation: `value => Enum.IsDefined(value)` Values: `Low`, `Medium`, `Quartile`, `High` |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/QRCode.cs#L40) | `Avalonia.Media.IBrush?` | writable; OneWay | `Brushes.Black` | black ; Dark-module brush; keep strong contrast when overriding. |
+| [`QuietZone`](../../../TheOne.Avalonia/Controls/QRCode.cs#L38) | `int` | writable; OneWay | `4` | `4` ; Clear border on every side, in modules; accepts 4–32. Validation: `value => value is >= 4 and <= 32` |
+| [`Text`](../../../TheOne.Avalonia/Controls/QRCode.cs#L34) | `string?` | writable; OneWay | `""` | `""` ; Exact payload. Null/empty, invalid Unicode or over-capacity content clears the old symbol and sets `ValidationError`. Whitespace is preserved. |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/QRCode.cs#L44) | `string?` | read-only; OneWay | `computed / state` | empty-content error ; Read-only; null for a valid current symbol. Invalid states never retain the previous code. |
 
 ## Methods and constructors
 

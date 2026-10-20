@@ -13,16 +13,16 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
 | [`Enabled`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L17) | `bool` | writable; OneWay; attached | `false` | Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
-| [`HighlightClip`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L18) | `Avalonia.Media.Geometry` | writable; OneWay; attached | `new RectangleGeometry(new Rect())` | Clipping configuration for the wheel highlight, normally maintained by picker templates. |
+| [`HighlightClip`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L20) | `Avalonia.Media.Geometry` | writable; OneWay; attached | `new RectangleGeometry(new Rect())` | Clipping configuration for the wheel highlight, normally maintained by picker templates. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static bool PickerScroll.GetEnabled(DateTimePickerPanel panel)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L21) | Reads the attached property. Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
-| [`static void PickerScroll.SetEnabled(DateTimePickerPanel panel, bool value)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L22) | Sets the attached property. Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
-| [`static Geometry PickerScroll.GetHighlightClip(ListBoxItem item)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L23) | Reads the attached property. Clipping configuration for the wheel highlight, normally maintained by picker templates. |
-| [`static void PickerScroll.SetHighlightClip(ListBoxItem item, Geometry value)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L24) | Sets the attached property. Clipping configuration for the wheel highlight, normally maintained by picker templates. |
+| [`static bool PickerScroll.GetEnabled(DateTimePickerPanel panel)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L54) | Reads the attached property. Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
+| [`static void PickerScroll.SetEnabled(DateTimePickerPanel panel, bool value)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L59) | Sets the attached property. Interaction switch for picker wheels, retaining native commit/cancel/focus behavior. |
+| [`static Geometry PickerScroll.GetHighlightClip(ListBoxItem item)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L64) | Reads the attached property. Clipping configuration for the wheel highlight, normally maintained by picker templates. |
+| [`static void PickerScroll.SetHighlightClip(ListBoxItem item, Geometry value)`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L69) | Sets the attached property. Clipping configuration for the wheel highlight, normally maintained by picker templates. |
 | [`PickerScroll.PickerScroll()`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L15) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
@@ -30,4 +30,4 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static readonly AttachedProperty<bool> PickerScroll.EnabledProperty`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L17) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly AttachedProperty<Geometry> PickerScroll.HighlightClipProperty`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L18) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly AttachedProperty<Geometry> PickerScroll.HighlightClipProperty`](../../../TheOne.Avalonia/Styling/PickerScroll.cs#L20) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |

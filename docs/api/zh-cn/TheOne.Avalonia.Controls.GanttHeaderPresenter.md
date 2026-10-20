@@ -6,7 +6,7 @@
 
 Template part for GanttChart's frozen calendar and task header.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L211)
+[Source / 声明](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L324)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -16,8 +16,8 @@ Template part for GanttChart's frozen calendar and task header.
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`override void GanttHeaderPresenter.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L214) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
-| [`GanttHeaderPresenter.GanttHeaderPresenter()`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L211) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+| [`override void GanttHeaderPresenter.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L328) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
+| [`GanttHeaderPresenter.GanttHeaderPresenter()`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L324) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 样式与密度
 

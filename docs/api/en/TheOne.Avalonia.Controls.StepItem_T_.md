@@ -8,7 +8,7 @@
 
 A model-backed step with built-in attribute validation and an optional default form.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/StepItem.cs#L66)
+[Source / 声明](../../../TheOne.Avalonia/Controls/StepItem.cs#L129)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -18,4 +18,4 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`StepItem<T>.StepItem(T model)`](../../../TheOne.Avalonia/Controls/StepItem.cs#L70) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`StepItem<T>.StepItem(T model)`](../../../TheOne.Avalonia/Controls/StepItem.cs#L135) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |

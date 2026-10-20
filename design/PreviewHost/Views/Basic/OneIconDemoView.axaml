@@ -1,0 +1,94 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.OneIconDemoView" x:DataType="local:OneIconDemoViewModel" x:CompileBindings="True">
+    <UserControl.Resources>
+        <!-- Gallery tiles retain native Button input without the general loading template. -->
+        <ControlTheme x:Key="IconTileTheme" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{DynamicResource One.Accent}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{DynamicResource One.Radius.Control}" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Template" Value="{x:Null}" />
+            <Style Selector="^:pointerover"><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
+            <Style Selector="^:pressed"><Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" /></Style>
+            <Style Selector="^:focus-visible"><Setter Property="BorderBrush" Value="{DynamicResource One.Focus}" /></Style>
+            <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+        </ControlTheme>
+        <DataTemplate x:Key="IconTileTemplate" x:DataType="one:OneIconInfo">
+            <local:OneIconGalleryTile Theme="{StaticResource IconTileTheme}" Width="100" MinHeight="88" Margin="0,0,4,4" Padding="4"
+                                      Click="IconClicked" Info="{CompiledBinding}" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <StackPanel Spacing="16">
+        <TextBlock Text="OneIcon 自有图标" FontSize="24" FontWeight="SemiBold" />
+        <TextBlock Text="{CompiledBinding CatalogSummary}" TextWrapping="Wrap" />
+        <WrapPanel>
+            <TextBox Name="IconSearch" Width="260" Margin="0,0,12,8" PlaceholderText="搜索名称或中文，如 Search、保存" Text="{CompiledBinding SearchText, Mode=TwoWay}" />
+            <ComboBox Name="CategoryFilter" Width="170" Margin="0,0,12,8" ItemsSource="{CompiledBinding Categories}" SelectedItem="{CompiledBinding SelectedCategory, Mode=TwoWay}" AutomationProperties.Name="图标分类">
+                <ComboBox.ItemTemplate><DataTemplate x:DataType="local:OneIconCategoryChoice"><TextBlock Text="{CompiledBinding Title}" /></DataTemplate></ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock Text="{CompiledBinding ResultsText}" VerticalAlignment="Center" Margin="0,0,0,8" />
+        </WrapPanel>
+        <Grid Name="GalleryLayout" ColumnDefinitions="*,280" RowDefinitions="Auto,Auto">
+            <StackPanel Name="Gallery" Grid.Column="0" Spacing="12" Margin="0,0,16,0">
+                <TextBlock Text="没有匹配图标，请调整搜索或分类。" IsVisible="{CompiledBinding IsEmpty}" />
+                <local:OneIconRowsControl Name="IconGroups" ItemsSource="{CompiledBinding Rows}" TileTemplate="{StaticResource IconTileTemplate}">
+                    <local:OneIconRowsControl.Template>
+                        <ControlTemplate><ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" /></ControlTemplate>
+                    </local:OneIconRowsControl.Template>
+                    <local:OneIconRowsControl.ItemsPanel><ItemsPanelTemplate><VirtualizingStackPanel /></ItemsPanelTemplate></local:OneIconRowsControl.ItemsPanel>
+                </local:OneIconRowsControl>
+            </StackPanel>
+            <StackPanel Name="Inspector" Grid.Column="1" Spacing="12">
+                <one:InfoCard Header="图标预览">
+                    <StackPanel Spacing="12">
+                        <Border Padding="24" CornerRadius="8" Background="{DynamicResource One.AccentSoft}">
+                            <one:OneIcon Name="SelectedGlyph" Kind="{CompiledBinding SelectedIcon.Kind}" Variant="{CompiledBinding Variant}" IconSize="72" HorizontalAlignment="Center" Foreground="{DynamicResource One.Accent}" />
+                        </Border>
+                        <TextBlock Text="{CompiledBinding SelectedIcon.Name}" FontWeight="SemiBold" />
+                        <TextBlock Text="{CompiledBinding SelectedIcon.DisplayName}" />
+                        <ComboBox Name="VariantPicker" ItemsSource="{CompiledBinding Variants}" SelectedItem="{CompiledBinding Variant, Mode=TwoWay}" AutomationProperties.Name="图标变体" />
+                        <TextBlock Text="{CompiledBinding VariantHint}" TextWrapping="Wrap" FontSize="12" />
+                        <ComboBox Name="IconSizePicker" ItemsSource="{CompiledBinding Sizes}" SelectedItem="{CompiledBinding PreviewSize, Mode=TwoWay}" AutomationProperties.Name="预览尺寸" />
+                        <one:OneIcon Name="SizedGlyph" Kind="{CompiledBinding SelectedIcon.Kind}" Variant="{CompiledBinding Variant}" IconSize="{CompiledBinding PreviewSize}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </one:InfoCard>
+                <one:InfoCard Header="三档密度 · 16 / 20 / 24">
+                    <StackPanel Orientation="Horizontal" Spacing="20">
+                        <one:OneIcon Name="SmallGlyph" Classes="small" Kind="{CompiledBinding SelectedIcon.Kind}" />
+                        <one:OneIcon Name="NormalGlyph" Classes="normal" Kind="{CompiledBinding SelectedIcon.Kind}" />
+                        <one:OneIcon Name="LargeGlyph" Classes="large" Kind="{CompiledBinding SelectedIcon.Kind}" />
+                    </StackPanel>
+                </one:InfoCard>
+                <one:InfoCard Header="控件搭配 · 前景色继承">
+                    <StackPanel Spacing="10">
+                        <Button Name="IconHostButton" Classes="primary" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal" Spacing="8"><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /><TextBlock Text="执行操作" /></StackPanel>
+                        </Button>
+                        <Button IsEnabled="False"><StackPanel Orientation="Horizontal" Spacing="8"><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /><TextBlock Text="禁用操作" /></StackPanel></Button>
+                        <one:IconButton Content="带图标的按钮"><one:IconButton.Icon><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /></one:IconButton.Icon></one:IconButton>
+                        <ThemeVariantScope RequestedThemeVariant="Dark">
+                            <Border Background="{DynamicResource One.Surface}" Padding="14" CornerRadius="6">
+                                <StackPanel Orientation="Horizontal" Spacing="16" TextElement.Foreground="{DynamicResource One.Text}">
+                                    <one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /><one:OneIcon Kind="Folder" /><one:OneIcon Kind="Bell" />
+                                </StackPanel>
+                            </Border>
+                        </ThemeVariantScope>
+                    </StackPanel>
+                </one:InfoCard>
+            </StackPanel>
+        </Grid>
+        <one:InfoCard Header="额外属性与目录">
+            <one:Description LabelWidth="135">
+                <one:DescriptionItem Header="Kind / 绑定" Content="&lt;one:OneIcon Kind=&quot;{CompiledBinding CurrentIcon}&quot; /&gt;；CurrentIcon 为 OneIconKind。" />
+                <one:DescriptionItem Header="Variant" Content="Variant=&quot;Filled&quot;：32 个图标提供实心几何，其余明确回退 Outline；实心几何首次使用时解析并缓存。" />
+                <one:DescriptionItem Header="IconSize" Content="IconSize=&quot;20&quot;；默认随 small / normal / large 使用 16 / 20 / 24 DIP，可显式覆盖。" />
+                <one:DescriptionItem Header="StrokeThickness" Content="StrokeThickness=&quot;1.75&quot;；24 单位设计网格中的线宽，范围 (0, 3]，随图标等比缩放。" />
+                <one:DescriptionItem Header="目录与 Model" Content="OneIconCatalog.All；OneIconCatalog.Get(OneIconKind.Search) 返回 OneIconInfo：Kind / Category / Name / DisplayName / HasFilledVariant。" />
+                <one:DescriptionItem Header="语义与动画" Content="Tabs 为标签条，Role 为身份卡；日期前后带日历；Parallel 为分叉栅栏，Merge 为汇聚箭头。Loading 为静态图标；不内置计时器。纯图标按钮请在宿主设置 AutomationProperties.Name。" />
+            </one:Description>
+        </one:InfoCard>
+    </StackPanel>
+</UserControl>

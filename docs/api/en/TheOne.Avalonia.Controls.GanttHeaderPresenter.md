@@ -6,7 +6,7 @@
 
 Template part for GanttChart's frozen calendar and task header.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L211)
+[Source / 声明](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L324)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -16,8 +16,8 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`override void GanttHeaderPresenter.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L214) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
-| [`GanttHeaderPresenter.GanttHeaderPresenter()`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L211) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`override void GanttHeaderPresenter.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L328) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
+| [`GanttHeaderPresenter.GanttHeaderPresenter()`](../../../TheOne.Avalonia/Controls/GanttChart.Rendering.cs#L324) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Styles and density
 

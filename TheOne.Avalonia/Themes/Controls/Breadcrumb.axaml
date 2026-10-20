@@ -1,0 +1,75 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+    <ControlTheme x:Key="One.BreadcrumbButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                                  Padding="{TemplateBinding Padding}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /><Setter Property="Background" Value="{DynamicResource One.NeutralHover}" /></Style>
+        <Style Selector="^:pressed"><Setter Property="Foreground" Value="{DynamicResource One.Accent}" /><Setter Property="Background" Value="{DynamicResource One.AccentSoftPressed}" /></Style>
+        <Style Selector="^:focus-visible"><Setter Property="BorderBrush" Value="{DynamicResource One.Accent}" /></Style>
+        <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /><Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="Transparent" /></Style>
+        <Style Selector="^#PART_Navigate:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" /><Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+    </ControlTheme>
+    <DataTemplate x:Key="One.BreadcrumbIcon" x:DataType="one:OneIconKind">
+        <one:OneIcon Kind="{CompiledBinding .}" IconSize="{CompiledBinding $parent[one:BreadcrumbItem].IconSize}" />
+    </DataTemplate>
+    <ControlTheme x:Key="{x:Type one:BreadcrumbItem}" TargetType="one:BreadcrumbItem">
+        <Setter Property="Foreground" Value="{DynamicResource One.Muted}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5,3" />
+        <Setter Property="MinHeight" Value="30" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <ContentPresenter Name="PART_Separator" Content="{TemplateBinding Separator}"
+                                      ContentTemplate="{TemplateBinding SeparatorTemplate}"
+                                      IsVisible="{TemplateBinding ShowSeparator}" IsHitTestVisible="False"
+                                      Margin="4,0" VerticalAlignment="Center" />
+                    <Button Name="PART_Navigate" Theme="{StaticResource One.BreadcrumbButton}"
+                            Padding="{TemplateBinding Padding}" MinHeight="{TemplateBinding MinHeight}"
+                            Command="{TemplateBinding NavigationCommand}" CommandParameter="{TemplateBinding NavigationParameter}"
+                            IsHitTestVisible="{TemplateBinding CanNavigate}" Focusable="{TemplateBinding CanNavigate}">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <ContentPresenter Content="{TemplateBinding Icon}" ContentTemplate="{StaticResource One.BreadcrumbIcon}" VerticalAlignment="Center" />
+                            <ContentPresenter Name="PART_Label" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^ /template/ ContentPresenter#PART_Separator"><Setter Property="Foreground" Value="{DynamicResource One.Muted}" /></Style>
+        <Style Selector="^:current"><Setter Property="Foreground" Value="{DynamicResource One.Text}" /><Setter Property="FontWeight" Value="SemiBold" /></Style>
+        <Style Selector="^.one-small"><Setter Property="MinHeight" Value="26" /><Setter Property="FontSize" Value="12" /><Setter Property="IconSize" Value="14" /><Setter Property="Padding" Value="4,2" /></Style>
+        <Style Selector="^.one-large"><Setter Property="MinHeight" Value="34" /><Setter Property="FontSize" Value="16" /><Setter Property="IconSize" Value="18" /><Setter Property="Padding" Value="6,4" /></Style>
+        <Style Selector="^:disabled"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_Separator"><Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" /></Style>
+    </ControlTheme>
+    <ControlTheme x:Key="{x:Type one:Breadcrumb}" TargetType="one:Breadcrumb">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="ItemsPanel"><ItemsPanelTemplate><WrapPanel Orientation="Horizontal" /></ItemsPanelTemplate></Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}" Padding="{TemplateBinding Padding}">
+                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

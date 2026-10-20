@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:TheOne.DesignPreview" xmlns:one="using:TheOne.Avalonia.Controls"
+             x:Class="TheOne.DesignPreview.DateTimePickerDemoView" x:DataType="local:DateTimePickerDemoViewModel" x:CompileBindings="True">
+    <StackPanel Spacing="18">
+        <TextBlock Text="DateTimePicker 日期时间" FontSize="22" FontWeight="SemiBold" />
+        <one:InfoCard Header="日期与时间 · 双向绑定">
+            <StackPanel Spacing="12">
+                <one:DateTimePicker SelectedDate="{CompiledBinding Appointment, Mode=TwoWay}" MinWidth="240" />
+                <TextBlock Text="{CompiledBinding Appointment}" />
+                <one:Description LabelWidth="150">
+                    <one:DescriptionItem Header="默认用法" Content="&lt;one:DateTimePicker SelectedDate=&quot;{CompiledBinding Appointment, Mode=TwoWay}&quot; /&gt; 日期和时间共同保存在 DateTime? 中；日历选日保留时间，外部赋值同步时间编辑器。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="Format · Time · 空值">
+            <StackPanel Spacing="12">
+                <one:DateTimePicker Format="yyyy/MM/dd HH:mm:ss" SelectedDate="{CompiledBinding Appointment, Mode=TwoWay}" MinWidth="260" />
+                <one:DateTimePicker SelectedDate="{CompiledBinding EmptyDate, Mode=TwoWay}" Time="{CompiledBinding Time, Mode=TwoWay}" PlaceholderText="选择日期和时间" MinWidth="240" />
+                <TextBlock Text="{CompiledBinding Time}" />
+                <Button Content="清空日期时间" Click="ClearDate" HorizontalAlignment="Left" />
+                <one:Description LabelWidth="150">
+                    <one:DescriptionItem Header="Format" Content="Format=&quot;yyyy/MM/dd HH:mm:ss&quot;；null 恢复 yyyy-MM-dd HH:mm。设置格式不截断原值；文本提交遵循原生解析精度，需要编辑秒时应包含 ss。" />
+                    <one:DescriptionItem Header="Time" Content="Time=&quot;{CompiledBinding Time, Mode=TwoWay}&quot;；TimeSpan?，范围 [00:00,24:00)。空日期时可预设时间，选日后合并；清空已有日期同时清空时间。Time=null 且有日期时归零至午夜。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="filled 外观 · 日期范围">
+            <StackPanel Spacing="12">
+                <one:DateTimePicker Classes="filled" DisplayDateStart="2026-01-01" DisplayDateEnd="2026-12-31" DisplayDate="2026-10-20" MinWidth="240" />
+                <one:Description LabelWidth="150">
+                    <one:DescriptionItem Header="filled" Content="&lt;one:DateTimePicker Classes=&quot;filled&quot; /&gt;；沿用 CalendarDatePicker 的主题、尺寸、禁用与校验样式。日期范围和禁选日期限制日历日期，不是时刻级范围。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+    </StackPanel>
+</UserControl>

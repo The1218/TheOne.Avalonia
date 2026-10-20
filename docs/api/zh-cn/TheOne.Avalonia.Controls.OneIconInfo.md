@@ -1,0 +1,30 @@
+# OneIconInfo
+
+[English](../en/TheOne.Avalonia.Controls.OneIconInfo.md) · [简体中文](../zh-cn/TheOne.Avalonia.Controls.OneIconInfo.md) · [API index](README.md)
+
+`TheOne.Avalonia.Controls.OneIconInfo` · Class · `object`
+
+Immutable semantic metadata. Name is the stable English enum name; DisplayName is the Chinese label.
+
+[Source / 声明](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6)
+
+以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Category`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | `TheOne.Avalonia.Controls.OneIconCategory` | 可写; CLR / init-only | `required constructor argument` | 节点库的分类名称；用于组织定义列表。 可选值：`Actions`, `Navigation`, `Files`, `People`, `Feedback`, `Data`, `DateTime`, `Layout`, `Devices`, `Development`, `Workflow`, `Design`, `Finance`, `Industry`, `Medical`, `Infrastructure`, `Transport`, `Commerce`, `Education`, `Weather` |
+| [`DisplayName`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | `string` | 可写; CLR / init-only | `required constructor argument` | OneIconInfo 的 DisplayName 配置字段；值类型和初值如表，通过此模型的公开属性访问器读写。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`HasFilledVariant`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | `bool` | 可写; CLR / init-only | `required constructor argument` | OneIconInfo 的 HasFilledVariant 配置字段；值类型和初值如表，通过此模型的公开属性访问器读写。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`Kind`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | `TheOne.Avalonia.Controls.OneIconKind` | 可写; CLR / init-only | `required constructor argument` | `OneIconKind` / `Add` ; 320 个有效枚举；`Kind="Save"`。未定义枚举值被拒绝。 可选值：`Add`, `Remove`, `Edit`, `Delete`, `Search`, `Save`, `Refresh`, `More`, `Home`, `Menu`, `Back`, `Forward`, `Up`, `Down`, `Expand`, `Collapse`, `File`, `Folder`, `Document`, `Image`, `Upload`, `Download`, `Copy`, `Link`, `User`, `Users`, `Role`, `Lock`, `Unlock`, `Shield`, `Login`, `Logout`, `Info`, `Success`, `Warning`, `Error`, `Question`, `Bell`, `Message`, `Loading`, `Table`, `Database`, `LineChart`, `BarChart`, `PieChart`, `Dashboard`, `Filter`, `Sort`, `Calendar`, `Clock`, `DateRange`, `Timer`, `History`, `Schedule`, `PreviousDay`, `NextDay`, `Window`, `Tabs`, `Sidebar`, `Grid`, `List`, `Split`, `Maximize`, `Minimize`, `Settings`, `Monitor`, `Mobile`, `Printer`, `Keyboard`, `Mouse`, `Sun`, `Moon`, `Code`, `Terminal`, `Api`, `Server`, `Cloud`, `Network`, `Bug`, `Package`, `Start`, `End`, `Approval`, `Task`, `Branch`, `Parallel`, `Merge`, `Workflow`, `Pointer`, `Text`, `Rectangle`, `Line`, `AlignLeft`, `AlignCenter`, `Barcode`, `QrCode`, `Close`, `Undo`, `Redo`, `Share`, `ChevronLeft`, `ChevronRight`, `ChevronUp`, `ChevronDown`, `FileAdd`, `FolderOpen`, `Attachment`, `FileSearch`, `UserAdd`, `UserRemove`, `Key`, `Permission`, `BellOff`, `Mail`, `Send`, `Flag`, `SortAscending`, `SortDescending`, `Statistics`, `TrendUp`, `Alarm`, `CalendarCheck`, `CalendarAdd`, `CalendarRemove`, `Fullscreen`, `FullscreenExit`, `Pin`, `Unpin`, `Play`, `Pause`, `Stop`, `Volume`, `Wifi`, `WifiOff`, `Connection`, `Disconnect`, `Approve`, `Reject`, `Transfer`, `Pending`, `ZoomIn`, `ZoomOut`, `AlignRight`, `Crop`, `Cut`, `Paste`, `PrintPreview`, `Export`, `Compass`, `Location`, `Route`, `BreadcrumbPath`, `FileCheck`, `FileLock`, `Archive`, `TrashRestore`, `UserCheck`, `UserSettings`, `Organization`, `Fingerprint`, `NotificationRead`, `ChatReply`, `Heart`, `Star`, `ScatterPlot`, `AreaChart`, `Heatmap`, `DataImport`, `ClockCheck`, `ClockForward`, `CalendarWeek`, `TimeZone`, `DockBottom`, `PanelLeftClose`, `PanelLeftOpen`, `Layers`, `Camera`, `Microphone`, `Headphones`, `Battery`, `GitBranch`, `GitCommit`, `Braces`, `Container`, `Reassign`, `ApprovalChain`, `WorkflowValidate`, `WorkflowPublish`, `AlignTop`, `AlignBottom`, `DistributeHorizontal`, `Palette`, `Wallet`, `CreditCard`, `Bank`, `Cash`, `Coins`, `Receipt`, `Invoice`, `Calculator`, `Payment`, `Refund`, `Exchange`, `CurrencyYuan`, `CurrencyDollar`, `Safe`, `FinancialReport`, `StockTrend`, `Factory`, `Gear`, `Wrench`, `Hammer`, `RobotArm`, `Conveyor`, `Valve`, `Pump`, `Motor`, `Sensor`, `Gauge`, `Crane`, `Forklift`, `HardHat`, `Welding`, `Toolbox`, `MedicalCross`, `Hospital`, `Stethoscope`, `HeartPulse`, `Pill`, `Syringe`, `Thermometer`, `FirstAid`, `Ambulance`, `Wheelchair`, `Microscope`, `TestTube`, `Dna`, `Lungs`, `Tooth`, `Bandage`, `Building`, `Bridge`, `Road`, `Railway`, `Airport`, `PowerTower`, `PowerPlug`, `WaterDrop`, `WaterPipe`, `WindTurbine`, `SolarPanel`, `StreetLight`, `TrafficLight`, `FireHydrant`, `Warehouse`, `Recycle`, `Truck`, `DeliveryVan`, `Car`, `Bus`, `Bicycle`, `Train`, `Ship`, `FlightTakeoff`, `DeliveryBox`, `DeliveryTracking`, `Map`, `NavigationArrow`, `Parking`, `Fuel`, `Anchor`, `TrafficCone`, `ShoppingCart`, `ShoppingBag`, `Store`, `TagLabel`, `Discount`, `Gift`, `Product`, `Scan`, `ShoppingBasket`, `Order`, `OrderCheck`, `OrderCancel`, `Coupon`, `LoyaltyCard`, `CustomerService`, `ShoppingCompare`, `Book`, `BookOpen`, `GraduationCap`, `School`, `Pen`, `Notebook`, `Library`, `Certificate`, `Lightbulb`, `Flask`, `Ruler`, `Globe`, `Language`, `Presentation`, `ReadAloud`, `Backpack`, `CloudSun`, `CloudMoon`, `Rain`, `Snow`, `Thunderstorm`, `Wind`, `Fog`, `Tornado`, `Rainbow`, `Umbrella`, `TemperatureHigh`, `Leaf`, `Tree`, `Flower`, `Mountain`, `Earth` |
+| [`Name`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | `string` | 可写; CLR / init-only | `required constructor argument` | 名称字段，用于业务展示或标识；与显示模板、键值字段保持一致。 |
+
+## 方法与构造
+
+| 完整签名／值 | 说明 |
+| --- | --- |
+| [`OneIconInfo.OneIconInfo(OneIconKind Kind, OneIconCategory Category, string Name, string DisplayName, bool HasFilledVariant)`](../../../TheOne.Avalonia/Controls/OneIconCatalog.cs#L6) | Immutable semantic metadata. Name is the stable English enum name; DisplayName is the Chinese label. |
+
+## 相关 API 与内置模型
+
+- [`TheOne.Avalonia.Controls.OneIconCategory`](TheOne.Avalonia.Controls.OneIconCategory.md)
+- [`TheOne.Avalonia.Controls.OneIconKind`](TheOne.Avalonia.Controls.OneIconKind.md)

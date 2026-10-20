@@ -10,9 +10,9 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Column`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L13) | `Avalonia.Controls.DataGridColumn` | read-only; CLR / n/a | `column` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`NewCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L15) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | read-only; CLR / n/a | `newCondition` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`OldCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L14) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | read-only; CLR / n/a | `oldCondition` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Column`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L16) | `Avalonia.Controls.DataGridColumn` | read-only; CLR / n/a | `column` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`NewCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L18) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | read-only; CLR / n/a | `newCondition` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`OldCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L17) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | read-only; CLR / n/a | `oldCondition` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ## Methods and constructors
 

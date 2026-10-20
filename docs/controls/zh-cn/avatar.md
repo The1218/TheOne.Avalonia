@@ -42,16 +42,16 @@
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CurrentImage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L34) | `Avalonia.Media.IImage?` | 只读; OneWay | `computed / state` | 只读的已解码图片与成功加载状态 |
-| [`DisplayText`](../../../TheOne.Avalonia/Controls/Avatar.cs#L38) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`EffectiveCornerRadius`](../../../TheOne.Avalonia/Controls/Avatar.cs#L39) | `Avalonia.CornerRadius` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L37) | `string?` | 只读; OneWay | `computed / state` | 只读加载状态与失败原因；清空来源会清除错误 |
-| [`HasImage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L36) | `bool` | 只读; OneWay | `computed / state` | 只读的已解码图片与成功加载状态 |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/Avatar.cs#L35) | `bool` | 只读; OneWay | `computed / state` | 只读加载状态与失败原因；清空来源会清除错误 |
-| [`Shape`](../../../TheOne.Avalonia/Controls/Avatar.cs#L32) | `TheOne.Avalonia.Controls.AvatarShape` | 可写; OneWay | `0 / default` | 默认 `Circle` 圆形，也支持 `Rounded` 圆角方形和 `Square` 方形 校验：`Enum.IsDefined` 可选值：`Circle`, `Rounded`, `Square` |
-| [`Source`](../../../TheOne.Avalonia/Controls/Avatar.cs#L30) | `object?` | 可写; OneWay | `null` | 本地绝对／相对路径、`file://` URI、HTTP(S) 地址、`avares://` URI，或调用方持有的 `IImage`；地址支持字符串和 `Uri` 对象 |
-| [`Stretch`](../../../TheOne.Avalonia/Controls/Avatar.cs#L33) | `Avalonia.Media.Stretch` | 可写; OneWay | `Stretch.UniformToFill` | 原生图片拉伸模式，默认 `UniformToFill`，保持比例并裁剪填充 校验：`Enum.IsDefined` 可选值：`None`, `Fill`, `Uniform`, `UniformToFill` |
-| [`Text`](../../../TheOne.Avalonia/Controls/Avatar.cs#L31) | `string?` | 可写; OneWay | `null` | 占位文字；去除两端空白后最多显示两个字素，不拆分组合 emoji；空文字显示人物图标 |
+| [`CurrentImage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L93) | `Avalonia.Media.IImage?` | 只读; OneWay | `computed / state` | 只读的已解码图片与成功加载状态 |
+| [`DisplayText`](../../../TheOne.Avalonia/Controls/Avatar.cs#L97) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`EffectiveCornerRadius`](../../../TheOne.Avalonia/Controls/Avatar.cs#L98) | `Avalonia.CornerRadius` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L96) | `string?` | 只读; OneWay | `computed / state` | 只读加载状态与失败原因；清空来源会清除错误 |
+| [`HasImage`](../../../TheOne.Avalonia/Controls/Avatar.cs#L95) | `bool` | 只读; OneWay | `computed / state` | 只读的已解码图片与成功加载状态 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/Avatar.cs#L94) | `bool` | 只读; OneWay | `computed / state` | 只读加载状态与失败原因；清空来源会清除错误 |
+| [`Shape`](../../../TheOne.Avalonia/Controls/Avatar.cs#L81) | `TheOne.Avalonia.Controls.AvatarShape` | 可写; OneWay | `0 / default` | 默认 `Circle` 圆形，也支持 `Rounded` 圆角方形和 `Square` 方形 校验：`Enum.IsDefined` 可选值：`Circle`, `Rounded`, `Square` |
+| [`Source`](../../../TheOne.Avalonia/Controls/Avatar.cs#L69) | `object?` | 可写; OneWay | `null` | 本地绝对／相对路径、`file://` URI、HTTP(S) 地址、`avares://` URI，或调用方持有的 `IImage`；地址支持字符串和 `Uri` 对象 |
+| [`Stretch`](../../../TheOne.Avalonia/Controls/Avatar.cs#L87) | `Avalonia.Media.Stretch` | 可写; OneWay | `Stretch.UniformToFill` | 原生图片拉伸模式，默认 `UniformToFill`，保持比例并裁剪填充 校验：`Enum.IsDefined` 可选值：`None`, `Fill`, `Uniform`, `UniformToFill` |
+| [`Text`](../../../TheOne.Avalonia/Controls/Avatar.cs#L75) | `string?` | 可写; OneWay | `null` | 占位文字；去除两端空白后最多显示两个字素，不拆分组合 emoji；空文字显示人物图标 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

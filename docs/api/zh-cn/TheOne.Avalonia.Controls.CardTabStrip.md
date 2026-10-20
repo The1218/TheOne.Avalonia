@@ -12,23 +12,23 @@ Header scrolling and adjacent-tab separators for the card theme.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CanScrollBackward`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L26) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`CanScrollForward`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L27) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasOverflow`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L25) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CanScrollBackward`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L41) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CanScrollForward`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L42) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasOverflow`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L40) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`CardTabStrip.CardTabStrip()`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L30) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+| [`CardTabStrip.CardTabStrip()`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L34) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段
 
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static readonly DirectProperty<CardTabStrip, bool> CardTabStrip.HasOverflowProperty`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L14) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<CardTabStrip, bool> CardTabStrip.CanScrollBackwardProperty`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L15) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<CardTabStrip, bool> CardTabStrip.CanScrollForwardProperty`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L16) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<CardTabStrip, bool> CardTabStrip.CanScrollBackwardProperty`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L17) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<CardTabStrip, bool> CardTabStrip.CanScrollForwardProperty`](../../../TheOne.Avalonia/Controls/CardTabStrip.cs#L21) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 
 ## 样式与密度
 

@@ -19,7 +19,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static bool CarouselOptions.GetIsMouseSwipeEnabled(Carousel carousel)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L27) | Reads the attached property. Allows mouse dragging to swipe the carousel, while touch/native navigation follow Carousel semantics. |
-| [`static void CarouselOptions.SetIsMouseSwipeEnabled(Carousel carousel, bool value)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L28) | Sets the attached property. Allows mouse dragging to swipe the carousel, while touch/native navigation follow Carousel semantics. |
+| [`static void CarouselOptions.SetIsMouseSwipeEnabled(Carousel carousel, bool value)`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L32) | Sets the attached property. Allows mouse dragging to swipe the carousel, while touch/native navigation follow Carousel semantics. |
 | [`CarouselOptions.CarouselOptions()`](../../../TheOne.Avalonia/Controls/CarouselOptions.cs#L9) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields

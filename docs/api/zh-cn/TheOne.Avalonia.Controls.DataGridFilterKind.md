@@ -20,7 +20,7 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Auto = 0`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Text = 1`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Number = 2`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`None = 3`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Auto = 0`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Text = 1`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Number = 2`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`None = 3`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L11) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

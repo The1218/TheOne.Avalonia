@@ -55,17 +55,18 @@ public sealed class CalendarOptions : AvaloniaObject
                 Attach(picker);
                 ApplyFormat(picker);
                 if (GetDisplayStyle(picker) == DateInputDisplayStyle.DateTime)
-                    picker.SetCurrentValue(TimeProperty, picker.SelectedDate?.TimeOfDay ?? TimeSpan.Zero);
+                    picker.SetCurrentValue(TimeProperty, picker.SelectedDate?.TimeOfDay ?? GetTime(picker));
             }
         });
         CalendarDatePicker.SelectedDateProperty.Changed.AddClassHandler<CalendarDatePicker>((picker, change) =>
         {
-            if (picker.GetValue(UpdatingProperty) || GetDisplayStyle(picker) != DateInputDisplayStyle.DateTime ||
-                picker.SelectedDate is not { } date) return;
+            if (picker.GetValue(UpdatingProperty) || GetDisplayStyle(picker) != DateInputDisplayStyle.DateTime) return;
             picker.SetValue(UpdatingProperty, true);
             try
             {
-                if (picker.GetValue(ChoosingDateProperty))
+                if (picker.SelectedDate is not { } date)
+                    picker.SetCurrentValue(TimeProperty, null);
+                else if (picker.GetValue(ChoosingDateProperty))
                     picker.SetCurrentValue(CalendarDatePicker.SelectedDateProperty,
                         date.Date + (GetTime(picker) ?? TimeSpan.Zero));
                 else picker.SetCurrentValue(TimeProperty, date.TimeOfDay);

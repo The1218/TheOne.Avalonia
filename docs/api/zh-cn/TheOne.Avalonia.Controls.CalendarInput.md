@@ -18,8 +18,8 @@ Click-to-open calendar with native date parsing and an Escape path back to the e
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static bool CalendarInput.GetOpenOnClick(CalendarDatePicker picker)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L35) | 读取附加属性。点击日期输入区域时打开原生选择弹层；不替换文本输入和键盘行为。 |
-| [`static void CalendarInput.SetOpenOnClick(CalendarDatePicker picker, bool value)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L36) | 设置附加属性。点击日期输入区域时打开原生选择弹层；不替换文本输入和键盘行为。 |
+| [`static bool CalendarInput.GetOpenOnClick(CalendarDatePicker picker)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L43) | 读取附加属性。点击日期输入区域时打开原生选择弹层；不替换文本输入和键盘行为。 |
+| [`static void CalendarInput.SetOpenOnClick(CalendarDatePicker picker, bool value)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L48) | 设置附加属性。点击日期输入区域时打开原生选择弹层；不替换文本输入和键盘行为。 |
 | [`CalendarInput.CalendarInput()`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L12) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段

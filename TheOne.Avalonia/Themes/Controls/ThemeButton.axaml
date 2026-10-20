@@ -37,6 +37,13 @@
                             IsVisible="False"
                             Name="PART_Sun"
                             Width="16" />
+                        <PathIcon
+                            Data="M 1 2 L 19 2 L 19 15 L 1 15 Z M 2.5 3.5 L 2.5 13.5 L 17.5 13.5 L 17.5 3.5 Z M 9 15 L 11 15 L 11 18 L 16 18 L 16 20 L 4 20 L 4 18 L 9 18 Z"
+                            Foreground="{TemplateBinding Foreground}"
+                            Height="16"
+                            IsVisible="False"
+                            Name="PART_System"
+                            Width="16" />
                     </Panel>
                 </Border>
             </ControlTemplate>
@@ -45,6 +52,15 @@
             <Setter Property="IsVisible" Value="False" />
         </Style>
         <Style Selector="^:dark /template/ PathIcon#PART_Sun">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:default /template/ PathIcon#PART_Moon">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:default /template/ PathIcon#PART_Sun">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:default /template/ PathIcon#PART_System">
             <Setter Property="IsVisible" Value="True" />
         </Style>
         <Style Selector="^:pointerover /template/ Border#PART_Surface">

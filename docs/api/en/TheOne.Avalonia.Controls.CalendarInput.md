@@ -18,8 +18,8 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static bool CalendarInput.GetOpenOnClick(CalendarDatePicker picker)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L35) | Reads the attached property. Opens the native date popup when clicking the input, retaining text and keyboard behavior. |
-| [`static void CalendarInput.SetOpenOnClick(CalendarDatePicker picker, bool value)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L36) | Sets the attached property. Opens the native date popup when clicking the input, retaining text and keyboard behavior. |
+| [`static bool CalendarInput.GetOpenOnClick(CalendarDatePicker picker)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L43) | Reads the attached property. Opens the native date popup when clicking the input, retaining text and keyboard behavior. |
+| [`static void CalendarInput.SetOpenOnClick(CalendarDatePicker picker, bool value)`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L48) | Sets the attached property. Opens the native date popup when clicking the input, retaining text and keyboard behavior. |
 | [`CalendarInput.CalendarInput()`](../../../TheOne.Avalonia/Controls/CalendarInput.cs#L12) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields

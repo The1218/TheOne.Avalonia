@@ -72,8 +72,8 @@ details.Items.Add(new DescriptionItem { Header = "API", Content = "使用原生 
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | 可写; OneWay; 向后代继承 | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L21) | `double` | 可写; OneWay; 向后代继承 | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | 可写; OneWay | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L25) | `double` | 可写; OneWay | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ### DescriptionItem
 
@@ -81,8 +81,8 @@ details.Items.Add(new DescriptionItem { Header = "API", Content = "使用原生 
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L18) | `double` | 可写; OneWay; 向后代继承 | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`StackWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L21) | `double` | 可写; OneWay; 向后代继承 | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L24) | `double` | 可写; OneWay | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`StackWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L31) | `double` | 可写; OneWay | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

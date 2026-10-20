@@ -12,12 +12,12 @@ A vector QR code with a square symbol and a protected quiet zone.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Background`](../../../TheOne.Avalonia/Controls/QRCode.cs#L42) | `Avalonia.Media.IBrush?` | 可写; OneWay | `Brushes.White` | Light modules and quiet zone. Defaults to white independently of the application theme. |
-| [`ErrorCorrection`](../../../TheOne.Avalonia/Controls/QRCode.cs#L36) | `TheOne.Avalonia.Controls.QRCodeErrorCorrection` | 可写; OneWay | `QRCodeErrorCorrection.Medium` | Defaults to Medium. Changes regenerate the cached symbol. 校验：`value => Enum.IsDefined(value)` 可选值：`Low`, `Medium`, `Quartile`, `High` |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/QRCode.cs#L40) | `Avalonia.Media.IBrush?` | 可写; OneWay | `Brushes.Black` | Dark modules. Defaults to black independently of the application theme. |
-| [`QuietZone`](../../../TheOne.Avalonia/Controls/QRCode.cs#L38) | `int` | 可写; OneWay | `4` | Clear border on every side, in modules. Range 4–32; default 4. 校验：`value => value is >= 4 and <= 32` |
-| [`Text`](../../../TheOne.Avalonia/Controls/QRCode.cs#L34) | `string?` | 可写; OneWay | `""` | Payload, preserved exactly, encoded as UTF-8 with an ECI designator. |
-| [`ValidationError`](../../../TheOne.Avalonia/Controls/QRCode.cs#L44) | `string?` | 只读; OneWay | `computed / state` | Read-only encoding or minimum-module-size error; null when the current symbol is valid. |
+| [`Background`](../../../TheOne.Avalonia/Controls/QRCode.cs#L42) | `Avalonia.Media.IBrush?` | 可写; OneWay | `Brushes.White` | 白色 ; 浅色模块及静区画刷，默认在 Light / Dark 下都保持黑白，不随主题反色。 |
+| [`ErrorCorrection`](../../../TheOne.Avalonia/Controls/QRCode.cs#L36) | `TheOne.Avalonia.Controls.QRCodeErrorCorrection` | 可写; OneWay | `QRCodeErrorCorrection.Medium` | `Medium` ; `QRCodeErrorCorrection.Low`、`Medium`、`Quartile`、`High`，使用指定等级，不自动提升；更高纠错等级减少可编码容量。 校验：`value => Enum.IsDefined(value)` 可选值：`Low`, `Medium`, `Quartile`, `High` |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/QRCode.cs#L40) | `Avalonia.Media.IBrush?` | 可写; OneWay | `Brushes.Black` | 黑色 ; 深色模块画刷，自定义时应保留足够扫描对比度。 |
+| [`QuietZone`](../../../TheOne.Avalonia/Controls/QRCode.cs#L38) | `int` | 可写; OneWay | `4` | `4` ; 四边静区宽度，单位为模块，范围 4–32。 校验：`value => value is >= 4 and <= 32` |
+| [`Text`](../../../TheOne.Avalonia/Controls/QRCode.cs#L34) | `string?` | 可写; OneWay | `""` | `""` ; 原样编码。空值、无效 Unicode 或超限时清除旧二维码并设置 `ValidationError`；空格会保留。 |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/QRCode.cs#L44) | `string?` | 只读; OneWay | `computed / state` | 空内容错误 ; 只读；有效时为 null，非法状态不会继续显示旧二维码。 |
 
 ## 方法与构造
 

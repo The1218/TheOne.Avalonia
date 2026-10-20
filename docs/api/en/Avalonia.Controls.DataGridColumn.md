@@ -12,10 +12,10 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L743) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
+| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L430) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L734) | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |
+| [`void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L607) | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |

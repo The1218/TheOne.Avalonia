@@ -16,9 +16,9 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static ReportDocument ReportTemplate.CreateSalesDetail()`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L13) | A source-independent starting template matching the sales report design. |
-| [`static string ReportTemplate.Save(ReportDocument document)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L33) | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
-| [`static ReportDocument ReportTemplate.Load(string json)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L40) | Loads a typed business document from JSON under its version/field/structure validation contract. |
+| [`static ReportDocument ReportTemplate.CreateSalesDetail()`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L14) | A source-independent starting template matching the sales report design. |
+| [`static string ReportTemplate.Save(ReportDocument document)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L84) | Saves portable business-document JSON, excluding runtime credentials, visual objects and transient state. |
+| [`static ReportDocument ReportTemplate.Load(string json)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L93) | Loads a typed business document from JSON under its version/field/structure validation contract. |
 
 ## Public fields
 

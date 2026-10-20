@@ -12,8 +12,8 @@ A naturally sized list of labelled values, with automatic stacking in narrow lay
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | 可写; OneWay; 向后代继承 | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L21) | `double` | 可写; OneWay; 向后代继承 | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L18) | `double` | 可写; OneWay | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`StackWidth`](../../../TheOne.Avalonia/Controls/Description.cs#L25) | `double` | 可写; OneWay | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ## 方法与构造
 
@@ -34,7 +34,7 @@ A naturally sized list of labelled values, with automatic stacking in narrow lay
 
 | 类名 | 选择器 | Setter／资源 |
 | --- | --- | --- |
-| `borderless` | [`^.borderless`](../../../TheOne.Avalonia/Themes/Controls/Description.axaml#L21) | ^.borderless => BorderThickness=0; CornerRadius=0 |
+| `borderless` | [`^.borderless`](../../../TheOne.Avalonia/Themes/Controls/Description.axaml#L33) | ^.borderless => BorderThickness=0; CornerRadius=0 |
 
 ## 相关 API 与内置模型
 

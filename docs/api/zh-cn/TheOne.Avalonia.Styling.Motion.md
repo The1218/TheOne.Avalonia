@@ -12,14 +12,14 @@ Set Enabled=False on a subtree to suppress theme motion.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性; 向后代继承 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | 可写; OneWay; 附加属性 | `true` | 向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static bool Motion.GetEnabled(Control control)`](../../../TheOne.Avalonia/Styling/Motion.cs#L15) | 读取附加属性。向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
-| [`static void Motion.SetEnabled(Control control, bool value)`](../../../TheOne.Avalonia/Styling/Motion.cs#L16) | 设置附加属性。向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+| [`static bool Motion.GetEnabled(Control control)`](../../../TheOne.Avalonia/Styling/Motion.cs#L17) | 读取附加属性。向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
+| [`static void Motion.SetEnabled(Control control, bool value)`](../../../TheOne.Avalonia/Styling/Motion.cs#L22) | 设置附加属性。向后代继承的动效开关；关闭时转入最终布局和状态，保留原生输入。 |
 | [`Motion.Motion()`](../../../TheOne.Avalonia/Styling/Motion.cs#L7) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段

@@ -22,10 +22,13 @@ For adoption or migration in an external project, start with [integration and mi
 | [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |
 | [Upload](upload.md) | Single-file selection, image preview, replace/remove and host-owned upload commands |
 | [IconButton and button hierarchy](icon-button.md) | Icon properties, Geometry / PathIcon / Material templates, primary and secondary actions, semantic states |
+| [OneIcon built-in icons](one-icon.md) | 320 vectors in 20 categories including transport, commerce, education and weather; 32 filled variants and a virtualized gallery |
+| [Breadcrumb](breadcrumb.md) | Navigation paths, icons, custom separators, commands, compiled binding and keyboard focus |
 | [Split buttons](split-button.md) | SplitButton, ToggleSplitButton, primary actions, menus, keyboard input, virtualization |
 | [Text display](text-display.md) | TextBlock, Label, SelectableTextBlock, selection, copying, field association |
 | [Buttons, inputs, selection, and feedback](basic.md) | Button, RepeatButton, ToggleButton, TextBox, CheckBox, RadioButton, ToggleSwitch, ComboBox, AutoCompleteBox, NumericUpDown, ButtonSpinner, Slider, ProgressBar, ToolTip |
 | [Dates and times](date-time.md) | Calendar, CalendarDatePicker, DatePicker, TimePicker, formatting, date/time, month, and year input |
+| [DateTimePicker](datetime-picker.md) | Combined date/time input, Format, TwoWay Time synchronization and nullable values |
 | [Lists, trees, tabs, and grids](collections.md) | ItemsControl, ListBox, TreeView, TabControl, TabStrip, Card tabs, DataGrid, recycling, distant navigation |
 | [DataGrid extensions](datagrid-extensions.md) | Automatic entity-property filters, combined column filters, right frozen columns, numeric summaries |
 | [DataGrid binding and sorting](datagrid-binding.md) | Type inference, registered metadata, compiled editing, sort buttons, virtualization |
@@ -44,6 +47,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
 | [Description](description.md) | Labels/content, native collections and templates, wide/narrow layout, borderless, three sizes and property/API/model descriptions |
+| [Timeline](timeline.md) | Event history, left/right/alternate layouts, reverse order, semantic/custom markers, observable models and templates |
 | [ImagePreview](image-preview.md) | HTTP(S), Bitmap and local paths; single/multiple images, zoom, pan and full screen |
 | [GanttChart](gantt-chart.md) | Read-only hierarchy, progress and milestones, native virtual scrolling and compiled bindings |
 | [ReportDesign](report-design.md) | Drag-and-drop reports, fixed page regions, API/image URLs, MVVM JSON saving and PDF |

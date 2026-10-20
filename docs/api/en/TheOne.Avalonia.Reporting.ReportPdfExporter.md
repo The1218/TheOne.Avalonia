@@ -16,9 +16,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportPdfExporter.cs#L38) | Stages a complete paginated PDF before commit. Honors cancellation before destination commit; concurrent jobs need distinct streams. Readable seekable targets restore original bytes/length/position on write failure. |
-
-Overwriting a nonempty seekable write-only stream throws `NotSupportedException`; overlapping jobs on the same stream throw `InvalidOperationException`. Failed restoration throws `AggregateException` with both errors. Nonseekable I/O cannot roll back accepted bytes. See [ReportDesign export safety](../../controls/en/report-design.md#export-cancellation-retries-and-destination-ownership) for retries, cancellation timing and file opening modes.
+| [`static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportPdfExporter.cs#L38) | Stages a complete PDF; concurrent jobs require separate destination streams. |
 
 ## Related APIs and built-in models
 

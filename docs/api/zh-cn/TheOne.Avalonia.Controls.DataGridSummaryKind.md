@@ -20,8 +20,8 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Sum = 0`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Average = 1`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Min = 2`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Max = 3`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Count = 4`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Sum = 0`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Average = 1`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Min = 2`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Max = 3`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L11) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Count = 4`](../../../TheOne.Avalonia/Controls/DataGridSummary.cs#L12) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

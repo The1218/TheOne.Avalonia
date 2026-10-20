@@ -12,25 +12,25 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L38) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L37) | `double` | writable; OneWay; inherits | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L36) | `double` | writable; OneWay; inherits | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L35) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L62) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L56) | `double` | writable; OneWay | `180` | 150 / 180 / 210 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L50) | `double` | writable; OneWay | `24` | 20 / 24 / 32 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L44) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`FlowStep.FlowStep()`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L26) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`FlowStep.FlowStep()`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L31) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
 
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static readonly StyledProperty<Orientation> FlowStep.OrientationProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L13) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<double> FlowStep.NodeSpacingProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L14) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<double> FlowStep.MinNodeWidthProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L15) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<IDataTemplate?> FlowStep.ContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L16) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<double> FlowStep.NodeSpacingProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L17) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<double> FlowStep.MinNodeWidthProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L21) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<IDataTemplate?> FlowStep.ContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L25) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Styles and density
 

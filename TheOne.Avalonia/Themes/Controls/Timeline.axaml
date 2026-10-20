@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+    <ControlTheme x:Key="{x:Type one:Timeline}" TargetType="one:Timeline">
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="ItemsPanel"><ItemsPanelTemplate><one:TimelinePanel /></ItemsPanelTemplate></Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                    <ItemsPresenter Name="PART_ItemsPresenter" ItemsPanel="{TemplateBinding ItemsPanel}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^.one-small"><Setter Property="ItemSpacing" Value="12" /><Setter Property="FontSize" Value="12" /></Style>
+        <Style Selector="^.one-large"><Setter Property="ItemSpacing" Value="20" /><Setter Property="FontSize" Value="16" /></Style>
+    </ControlTheme>
+    <ControlTheme x:Key="{x:Type one:TimelineItem}" TargetType="one:TimelineItem">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid Name="PART_Layout" ColumnDefinitions="0,24,*" RowDefinitions="Auto,Auto" MinHeight="24">
+                    <Border Name="PART_Line" Grid.Column="1" Grid.RowSpan="2" Width="2" Margin="0,10,0,-10" Background="{DynamicResource One.Line}" />
+                    <Border Name="PART_DefaultDot" Grid.Column="1" Width="12" Height="12" Margin="0,4,0,0" VerticalAlignment="Top"
+                            CornerRadius="6" Background="{DynamicResource One.Accent}" BorderBrush="{DynamicResource One.Accent}" BorderThickness="2" />
+                    <ContentPresenter Name="PART_Dot" Grid.Column="1" Content="{TemplateBinding Dot}" ContentTemplate="{TemplateBinding DotTemplate}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Top" IsVisible="False" />
+                    <ContentPresenter Name="PART_Timestamp" Grid.Column="2" Content="{TemplateBinding Timestamp}" ContentTemplate="{TemplateBinding TimestampTemplate}"
+                                      Foreground="{DynamicResource One.Muted}" TextBlock.TextWrapping="Wrap" HorizontalContentAlignment="Stretch" />
+                    <StackPanel Name="PART_Body" Grid.Column="2" Grid.Row="1" Spacing="4">
+                        <ContentPresenter Name="PART_Header" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          FontWeight="SemiBold" TextBlock.TextWrapping="Wrap" HorizontalContentAlignment="Stretch" IsVisible="False" />
+                        <ContentPresenter Name="PART_ContentPresenter" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          TextBlock.TextWrapping="Wrap" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                    </StackPanel>
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:has-header /template/ ContentPresenter#PART_Header"><Setter Property="IsVisible" Value="True" /></Style>
+        <Style Selector="^:last /template/ Border#PART_Line"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:success /template/ Border#PART_DefaultDot"><Setter Property="Background" Value="{DynamicResource One.Success}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Success}" /></Style>
+        <Style Selector="^:warning /template/ Border#PART_DefaultDot"><Setter Property="Background" Value="{DynamicResource One.Warning}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Warning}" /></Style>
+        <Style Selector="^:error /template/ Border#PART_DefaultDot"><Setter Property="Background" Value="{DynamicResource One.Danger}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Danger}" /></Style>
+        <Style Selector="^:pending /template/ Border#PART_DefaultDot"><Setter Property="Background" Value="{DynamicResource One.Surface}" /><Setter Property="BorderBrush" Value="{DynamicResource One.Muted}" /></Style>
+        <Style Selector="^:custom-dot /template/ Border#PART_DefaultDot"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:custom-dot /template/ ContentPresenter#PART_Dot"><Setter Property="IsVisible" Value="True" /></Style>
+        <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
+    </ControlTheme>
+</ResourceDictionary>

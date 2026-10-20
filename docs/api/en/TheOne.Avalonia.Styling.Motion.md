@@ -12,14 +12,14 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached; inherits | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+| [`Enabled`](../../../TheOne.Avalonia/Styling/Motion.cs#L9) | `bool` | writable; OneWay; attached | `true` | Inherited motion switch; disabling goes to final layout/state while preserving native input. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static bool Motion.GetEnabled(Control control)`](../../../TheOne.Avalonia/Styling/Motion.cs#L15) | Reads the attached property. Inherited motion switch; disabling goes to final layout/state while preserving native input. |
-| [`static void Motion.SetEnabled(Control control, bool value)`](../../../TheOne.Avalonia/Styling/Motion.cs#L16) | Sets the attached property. Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+| [`static bool Motion.GetEnabled(Control control)`](../../../TheOne.Avalonia/Styling/Motion.cs#L17) | Reads the attached property. Inherited motion switch; disabling goes to final layout/state while preserving native input. |
+| [`static void Motion.SetEnabled(Control control, bool value)`](../../../TheOne.Avalonia/Styling/Motion.cs#L22) | Sets the attached property. Inherited motion switch; disabling goes to final layout/state while preserving native input. |
 | [`Motion.Motion()`](../../../TheOne.Avalonia/Styling/Motion.cs#L7) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields

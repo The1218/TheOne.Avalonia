@@ -20,7 +20,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Auto = 0`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Text = 1`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Number = 2`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`None = 3`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Auto = 0`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Text = 1`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Number = 2`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`None = 3`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

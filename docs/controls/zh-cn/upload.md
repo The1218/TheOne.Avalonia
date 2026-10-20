@@ -93,37 +93,37 @@ HTTP 请求成功后，从响应体中查找路径以允许文件后缀结尾的
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ActionsTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L59) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`AllowedExtensions`](../../../TheOne.Avalonia/Controls/Upload.cs#L55) | `string` | 可写; OneWay | `".png,.jpg,.jpeg,.webp,.bmp,.gif"` | 以逗号、分号或空格分隔的扩展名，默认为 PNG、JPEG、WebP、BMP、GIF。空字符串接受任意扩展名。显式允许的非图片文件使用文件图标占位，仍可上传。 |
-| [`Description`](../../../TheOne.Avalonia/Controls/Upload.cs#L50) | `string` | 可写; OneWay | `"PNG、JPG、WebP 等图片 · 单文件"` | 可本地化文案。 |
-| [`EmptyTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L57) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Upload.cs#L65) | `string?` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`FilePicker`](../../../TheOne.Avalonia/Controls/Upload.cs#L45) | `TheOne.Avalonia.Controls.IUploadFilePicker?` | 可写; OneWay | `null` | 可选的 `IUploadFilePicker` 服务。`PickAsync` 返回一个 `UploadFile`，取消则返回 null。 |
-| [`FileTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L58) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`HasFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L61) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`HasPreview`](../../../TheOne.Avalonia/Controls/Upload.cs#L62) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`HttpClient`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L24) | `System.Net.Http.HttpClient?` | 可写; OneWay | `null` | 内置上传可使用的消费端客户端。 |
-| [`IsBusy`](../../../TheOne.Avalonia/Controls/Upload.cs#L46) | `bool` | 可写; OneWay | `false` | 上传处理中的状态；由异步上传过程维护，业务提交应尊重此状态。 |
-| [`IsPreviewLoading`](../../../TheOne.Avalonia/Controls/Upload.cs#L63) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`IsSelecting`](../../../TheOne.Avalonia/Controls/Upload.cs#L64) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`IsUploading`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L25) | `bool` | 只读; OneWay | `computed / state` | 内置请求执行中的只读状态。 |
-| [`MaxFileSize`](../../../TheOne.Avalonia/Controls/Upload.cs#L56) | `long` | 可写; OneWay | `10 * 1024 * 1024` | 默认 10 MiB，零关闭声明大小限制。预览读取另有 64 MiB 上限；缺少大小元数据时仍校验实际读取字节。 校验：`value => value >= 0` |
-| [`PreviewImage`](../../../TheOne.Avalonia/Controls/Upload.cs#L60) | `Avalonia.Media.IImage?` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
-| [`Progress`](../../../TheOne.Avalonia/Controls/Upload.cs#L47) | `double` | 可写; OneWay | `0` | 完成进度数值；范围／单位由所属上传或甘特模型契约定义，不用作成功标志。 校验：`value => double.IsFinite(value) && value is >= 0 and <= 100` |
-| [`RemoveCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L67) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 清除文件、缩略图和错误。 |
-| [`RemoveText`](../../../TheOne.Avalonia/Controls/Upload.cs#L53) | `string` | 可写; OneWay | `"移除"` | 可本地化文案。 |
-| [`ReplaceText`](../../../TheOne.Avalonia/Controls/Upload.cs#L52) | `string` | 可写; OneWay | `"替换"` | 可本地化文案。 |
-| [`RequestType`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L20) | `TheOne.Avalonia.Controls.UploadRequestType` | 可写; OneWay | `UploadRequestType.Post` | HTTP 请求方法，默认为 `Post`，默认单向绑定。 校验：`value => Enum.IsDefined(value)` 可选值：`Post`, `Put`, `Patch` |
-| [`RequestUploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L68) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 检查启用、忙碌、预览和校验状态后，执行宿主命令或内置上传。 |
-| [`SelectCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L66) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 系统单文件选择器，取消后保留原选中项。 |
-| [`SelectText`](../../../TheOne.Avalonia/Controls/Upload.cs#L51) | `string` | 可写; OneWay | `"选择图片"` | 可本地化文案。 |
-| [`SelectedFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L43) | `TheOne.Avalonia.Controls.UploadFile?` | 可写; TwoWay | `null` | 当前选中的原始上传文件模型；空值取消当前项选择。 |
-| [`StatusText`](../../../TheOne.Avalonia/Controls/Upload.cs#L48) | `string?` | 可写; OneWay | `null` | 当前操作状态的展示文本；业务逻辑使用状态枚举和结果，而不解析此文本。 |
-| [`SuccessFileUrl`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L22) | `string?` | 可写; TwoWay | `null` | 解析后的结果 URL 字符串，默认双向绑定。 |
-| [`Title`](../../../TheOne.Avalonia/Controls/Upload.cs#L49) | `string` | 可写; OneWay | `"上传图片"` | 可本地化文案。 |
-| [`UploadApi`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L19) | `string?` | 可写; TwoWay | `null` | 上传地址字符串，默认双向绑定。 |
-| [`UploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L44) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`UploadText`](../../../TheOne.Avalonia/Controls/Upload.cs#L54) | `string` | 可写; OneWay | `"上传文件"` | 可本地化文案。 |
+| [`ActionsTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L202) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`AllowedExtensions`](../../../TheOne.Avalonia/Controls/Upload.cs#L178) | `string` | 可写; OneWay | `".png,.jpg,.jpeg,.webp,.bmp,.gif"` | 以逗号、分号或空格分隔的扩展名，默认为 PNG、JPEG、WebP、BMP、GIF。空字符串接受任意扩展名。显式允许的非图片文件使用文件图标占位，仍可上传。 |
+| [`Description`](../../../TheOne.Avalonia/Controls/Upload.cs#L148) | `string` | 可写; OneWay | `"PNG、JPG、WebP 等图片 · 单文件"` | 可本地化文案。 |
+| [`EmptyTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L190) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Upload.cs#L213) | `string?` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`FilePicker`](../../../TheOne.Avalonia/Controls/Upload.cs#L118) | `TheOne.Avalonia.Controls.IUploadFilePicker?` | 可写; OneWay | `null` | 可选的 `IUploadFilePicker` 服务。`PickAsync` 返回一个 `UploadFile`，取消则返回 null。 |
+| [`FileTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L196) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`HasFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L209) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`HasPreview`](../../../TheOne.Avalonia/Controls/Upload.cs#L210) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`HttpClient`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L56) | `System.Net.Http.HttpClient?` | 可写; OneWay | `null` | 内置上传可使用的消费端客户端。 |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Upload.cs#L124) | `bool` | 可写; OneWay | `false` | 上传处理中的状态；由异步上传过程维护，业务提交应尊重此状态。 |
+| [`IsPreviewLoading`](../../../TheOne.Avalonia/Controls/Upload.cs#L211) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`IsSelecting`](../../../TheOne.Avalonia/Controls/Upload.cs#L212) | `bool` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`IsUploading`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L62) | `bool` | 只读; OneWay | `computed / state` | 内置请求执行中的只读状态。 |
+| [`MaxFileSize`](../../../TheOne.Avalonia/Controls/Upload.cs#L184) | `long` | 可写; OneWay | `10 * 1024 * 1024` | 默认 10 MiB，零关闭声明大小限制。预览读取另有 64 MiB 上限；缺少大小元数据时仍校验实际读取字节。 校验：`value => value >= 0` |
+| [`PreviewImage`](../../../TheOne.Avalonia/Controls/Upload.cs#L208) | `Avalonia.Media.IImage?` | 只读; OneWay | `computed / state` | 可绑定的只读展示状态。 |
+| [`Progress`](../../../TheOne.Avalonia/Controls/Upload.cs#L130) | `double` | 可写; OneWay | `0 / default` | 完成进度数值；范围／单位由所属上传或甘特模型契约定义，不用作成功标志。 校验：`value => double.IsFinite(value) && value is >= 0 and <= 100` |
+| [`RemoveCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L215) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 清除文件、缩略图和错误。 |
+| [`RemoveText`](../../../TheOne.Avalonia/Controls/Upload.cs#L166) | `string` | 可写; OneWay | `"移除"` | 可本地化文案。 |
+| [`ReplaceText`](../../../TheOne.Avalonia/Controls/Upload.cs#L160) | `string` | 可写; OneWay | `"替换"` | 可本地化文案。 |
+| [`RequestType`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L42) | `TheOne.Avalonia.Controls.UploadRequestType` | 可写; OneWay | `0 / default` | HTTP 请求方法，默认为 `Post`，默认单向绑定。 校验：`value => Enum.IsDefined(value)` 可选值：`Post`, `Put`, `Patch` |
+| [`RequestUploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L216) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 检查启用、忙碌、预览和校验状态后，执行宿主命令或内置上传。 |
+| [`SelectCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L214) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `accessor-defined / state` | 系统单文件选择器，取消后保留原选中项。 |
+| [`SelectText`](../../../TheOne.Avalonia/Controls/Upload.cs#L154) | `string` | 可写; OneWay | `"选择图片"` | 可本地化文案。 |
+| [`SelectedFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L106) | `TheOne.Avalonia.Controls.UploadFile?` | 可写; TwoWay | `null` | 当前选中的原始上传文件模型；空值取消当前项选择。 |
+| [`StatusText`](../../../TheOne.Avalonia/Controls/Upload.cs#L136) | `string?` | 可写; OneWay | `null` | 当前操作状态的展示文本；业务逻辑使用状态枚举和结果，而不解析此文本。 |
+| [`SuccessFileUrl`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L49) | `string?` | 可写; TwoWay | `null` | 解析后的结果 URL 字符串，默认双向绑定。 |
+| [`Title`](../../../TheOne.Avalonia/Controls/Upload.cs#L142) | `string` | 可写; OneWay | `"上传图片"` | 可本地化文案。 |
+| [`UploadApi`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L36) | `string?` | 可写; TwoWay | `null` | 上传地址字符串，默认双向绑定。 |
+| [`UploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L112) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`UploadText`](../../../TheOne.Avalonia/Controls/Upload.cs#L172) | `string` | 可写; OneWay | `"上传文件"` | 可本地化文案。 |
 
 ### UploadFile
 
@@ -131,10 +131,10 @@ HTTP 请求成功后，从响应体中查找路径以允许文件后缀结尾的
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L16) | `string?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L14) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 名称字段，用于业务展示或标识；与显示模板、键值字段保持一致。 |
-| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | `long?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L17) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L29) | `string?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L27) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 名称字段，用于业务展示或标识；与显示模板、键值字段保持一致。 |
+| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L28) | `long?` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L31) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

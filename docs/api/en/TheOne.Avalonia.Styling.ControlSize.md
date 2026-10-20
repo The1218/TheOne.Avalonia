@@ -20,6 +20,6 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Small = 0`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Normal = 1`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Large = 2`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Small = 0`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Normal = 1`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Large = 2`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

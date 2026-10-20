@@ -40,7 +40,7 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L13) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L12) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
 
 ### LoadingContainer
 
@@ -48,16 +48,16 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`HasCustomLoadingIcon`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L31) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasLoadingText`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L33) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L24) | `bool` | 可写; OneWay | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
-| [`LoadingIcon`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L28) | `object?` | 可写; OneWay | `null` | 加载状态图标；为空时沿用默认指示器。 |
-| [`LoadingIconSize`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L30) | `double` | 可写; OneWay | `28` | 加载图标的 DIP 尺寸；不控制覆盖层的面积。 校验：`value => double.IsFinite(value) && value > 0` |
-| [`LoadingIconTemplate`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L29) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`LoadingText`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L25) | `string?` | 可写; OneWay | `"正在加载…"` | 加载中的说明文本，可本地化；不代表任务完成结果。 |
-| [`OverlayBrush`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L27) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 加载覆盖层画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`OverlayOpacity`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L26) | `double` | 可写; OneWay | `.65` | 覆盖层不透明度；范围及有限数约束见校验列。 校验：`value => double.IsFinite(value) && value is >= 0 and <= 1` |
-| [`ShowDefaultLoadingIndicator`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L32) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasCustomLoadingIcon`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L95) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasLoadingText`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L107) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L53) | `bool` | 可写; OneWay | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`LoadingIcon`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L77) | `object?` | 可写; OneWay | `null` | 加载状态图标；为空时沿用默认指示器。 |
+| [`LoadingIconSize`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L89) | `double` | 可写; OneWay | `28` | 加载图标的 DIP 尺寸；不控制覆盖层的面积。 校验：`value => double.IsFinite(value) && value > 0` |
+| [`LoadingIconTemplate`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L83) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`LoadingText`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L59) | `string?` | 可写; OneWay | `"正在加载…"` | 加载中的说明文本，可本地化；不代表任务完成结果。 |
+| [`OverlayBrush`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L71) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 加载覆盖层画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`OverlayOpacity`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L65) | `double` | 可写; OneWay | `.65` | 覆盖层不透明度；范围及有限数约束见校验列。 校验：`value => double.IsFinite(value) && value is >= 0 and <= 1` |
+| [`ShowDefaultLoadingIndicator`](../../../TheOne.Avalonia/Controls/LoadingContainer.cs#L101) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### LoadingIndicator
 
@@ -65,9 +65,9 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L19) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
-| [`IsActive`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L20) | `bool` | 可写; OneWay | `true` | 指示器是否运行动画；关闭时保留控件布局，全局动效开关仍生效。 |
-| [`IsSpinning`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L21) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L43) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
+| [`IsActive`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L49) | `bool` | 可写; OneWay | `true` | 指示器是否运行动画；关闭时保留控件布局，全局动效开关仍生效。 |
+| [`IsSpinning`](../../../TheOne.Avalonia/Controls/LoadingIndicator.cs#L55) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

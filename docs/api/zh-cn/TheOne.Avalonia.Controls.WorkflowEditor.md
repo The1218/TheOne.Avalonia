@@ -6,7 +6,7 @@
 
 Template-based graph editing. Persistence, execution and business validation belong to the host.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L18)
+[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowEditor.Panels.cs#L6)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -63,15 +63,15 @@ Template-based graph editing. Persistence, execution and business validation bel
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L571) | 向当前工作流文档加入节点；通过文档历史入口保存可撤销操作。 |
-| [`void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L590) | 选择指定的原始流程节点；与连线选择按编辑器规则协调。 |
-| [`bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L612) | 尝试创建节点端口连接，复用文档连接校验和历史。 |
-| [`void WorkflowEditor.DeleteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L635) | 删除当前选中的节点／连线，并参与撤销历史。 |
-| [`void WorkflowEditor.FitToView()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L642) | 调整缩放和平移以容纳文档节点，保留模型坐标。 |
-| [`void WorkflowEditor.Locate(string? nodeId)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L656) | 定位目标节点／校验问题，使其进入当前视口。 |
-| [`void WorkflowEditor.ArrangeNodes()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L664) | 自动整理节点布局，通过文档编辑历史记录坐标变更。 |
-| [`void WorkflowEditor.CopySelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L680) | 复制当前选择为编辑器支持的片段，保持序列化边界。 |
-| [`void WorkflowEditor.PasteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L695) | 粘贴已复制片段，创建独立标识并记录可撤销编辑。 |
+| [`WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L573) | 向当前工作流文档加入节点；通过文档历史入口保存可撤销操作。 |
+| [`void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L592) | 选择指定的原始流程节点；与连线选择按编辑器规则协调。 |
+| [`bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L614) | 尝试创建节点端口连接，复用文档连接校验和历史。 |
+| [`void WorkflowEditor.DeleteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L637) | 删除当前选中的节点／连线，并参与撤销历史。 |
+| [`void WorkflowEditor.FitToView()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L644) | 调整缩放和平移以容纳文档节点，保留模型坐标。 |
+| [`void WorkflowEditor.Locate(string? nodeId)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L658) | 定位目标节点／校验问题，使其进入当前视口。 |
+| [`void WorkflowEditor.ArrangeNodes()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L666) | 自动整理节点布局，通过文档编辑历史记录坐标变更。 |
+| [`void WorkflowEditor.CopySelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L682) | 复制当前选择为编辑器支持的片段，保持序列化边界。 |
+| [`void WorkflowEditor.PasteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L697) | 粘贴已复制片段，创建独立标识并记录可撤销编辑。 |
 | [`WorkflowEditor.WorkflowEditor()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L150) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 事件

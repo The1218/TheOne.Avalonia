@@ -6,7 +6,7 @@
 
 Optional host picker service. Results transfer to the consumer if accepted; rejected results are disposed. Null preserves selection.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/UploadFile.cs#L106)
+[Source / 声明](../../../TheOne.Avalonia/Controls/UploadFile.cs#L229)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -16,7 +16,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Task<UploadFile?> IUploadFilePicker.PickAsync(TopLevel owner, CancellationToken cancellationToken)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L108) | Asynchronously picks files via the host picker; interpret cancellation through its returned collection. |
+| [`Task<UploadFile?> IUploadFilePicker.PickAsync(TopLevel owner, CancellationToken cancellationToken)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L231) | Asynchronously picks files via the host picker; interpret cancellation through its returned collection. |
 
 ## Related APIs and built-in models
 

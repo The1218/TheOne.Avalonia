@@ -99,16 +99,16 @@ PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L40) | `double` | 可写; OneWay | `12` | 10 / 12 / 16 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L42) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
-| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L43) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; OneWay | `computed / state` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L44) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L39) | `double` | 可写; OneWay | `30` | 24 / 30 / 36 校验：`value => double.IsFinite(value) && value > 0` |
-| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L46) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L47) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L45) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L38) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
-| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L37) | `TheOne.Avalonia.Controls.FlowNodeStatus` | 可写; OneWay | `FlowNodeStatus.Pending` | 标记 校验：`Enum.IsDefined` 可选值：`Pending`, `InProgress`, `Completed` |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L83) | `double` | 可写; OneWay | `12` | 10 / 12 / 16 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L90) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
+| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L96) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; OneWay | `computed / state` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L97) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L77) | `double` | 可写; OneWay | `30` | 24 / 30 / 36 校验：`value => double.IsFinite(value) && value > 0` |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L99) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L100) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L98) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L71) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L65) | `TheOne.Avalonia.Controls.FlowNodeStatus` | 可写; OneWay | `0 / default` | 标记 校验：`Enum.IsDefined` 可选值：`Pending`, `InProgress`, `Completed` |
 
 ### FlowNodePanel
 
@@ -116,8 +116,8 @@ PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L64) | `double` | 可写; OneWay | `12` | 10 / 12 / 16 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L63) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L114) | `double` | 可写; OneWay | `12` | 10 / 12 / 16 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L108) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
 
 ### FlowStep
 
@@ -125,10 +125,10 @@ PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L38) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L37) | `double` | 可写; OneWay; 向后代继承 | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L36) | `double` | 可写; OneWay; 向后代继承 | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L35) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L62) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L56) | `double` | 可写; OneWay | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L50) | `double` | 可写; OneWay | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStep.cs#L44) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
 
 ### FlowStepConnectors
 
@@ -136,9 +136,9 @@ PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CompletedConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L17) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 已完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L16) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 未完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L18) | `double` | 可写; OneWay | `2` | 连接线描边宽度，单位 DIP；不改变节点的业务状态。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`CompletedConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L34) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 已完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L28) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 未完成步骤连接线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/FlowStepConnectors.cs#L40) | `double` | 可写; OneWay | `2` | 连接线描边宽度，单位 DIP；不改变节点的业务状态。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ### FlowStepPanel
 
@@ -146,10 +146,10 @@ PreviewHost 的“扩展控件 → Step → FlowStep”展示两种布局、三�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L23) | `double` | 可写; OneWay; 向后代继承 | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L22) | `double` | 可写; OneWay; 向后代继承 | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L21) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
-| [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L24) | `double` | 可写; OneWay | `0` | 宿主提供给流程布局的可用宽度；用于节点排布，通常由模板维护。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`MinNodeWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L44) | `double` | 可写; OneWay | `180` | 150 / 180 / 210 校验：`value => double.IsFinite(value) && value > 0` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L38) | `double` | 可写; OneWay | `24` | 20 / 24 / 32 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L32) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Horizontal` | 横向或纵向排列；切换后同时更新节点、连线及内容布局，不改变业务顺序。 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`ViewportWidth`](../../../TheOne.Avalonia/Controls/FlowStepPanel.cs#L50) | `double` | 可写; OneWay | `0 / default` | 宿主提供给流程布局的可用宽度；用于节点排布，通常由模板维护。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

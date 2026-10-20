@@ -15,7 +15,7 @@ Presentation options for a simple confirm/cancel message box.
 | [`CancelText`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L11) | `string` | 可写; CLR / init-only | `"取消"` | 取消按钮的本地化文本；不改变取消返回值。 |
 | [`ConfirmText`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L10) | `string` | 可写; CLR / init-only | `"确认"` | 确认按钮的本地化文本；不自动执行宿主业务操作。 |
 | [`IsDangerous`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L12) | `bool` | 可写; CLR / init-only | `false` | 将确认操作显示为危险语义样式；授权和执行仍由业务决定。 |
-| [`Size`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L14) | `TheOne.Avalonia.Styling.ControlSize?` | 可写; CLR / init-only | `null` | Overrides the owner window's inherited density when specified. 可选值：`Small`, `Normal`, `Large` |
+| [`Size`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L15) | `TheOne.Avalonia.Styling.ControlSize?` | 可写; CLR / init-only | `null` | Overrides the owner window's inherited density when specified. 可选值：`Small`, `Normal`, `Large` |
 
 ## 方法与构造
 

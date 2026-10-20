@@ -22,11 +22,11 @@ Gauge layouts. Other visual and data differences are configured by properties.
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Semicircle = 0`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Basic = 1`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Speed = 2`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Progress = 3`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`StageSpeed = 4`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Grade = 5`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Temperature = 6`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Barometer = 7`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Semicircle = 0`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L11) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Basic = 1`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L12) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Speed = 2`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L13) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Progress = 3`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L14) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`StageSpeed = 4`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L15) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Grade = 5`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L16) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Temperature = 6`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L17) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Barometer = 7`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L18) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

@@ -115,20 +115,20 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`CanSubmit`](../../../TheOne.Avalonia/Controls/Form.cs#L56) | `bool` | read-only; OneWay | `computed / state` | Read-only; a submission attempt is currently allowed, not a guarantee of valid data |
-| [`HasErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L51) | `bool` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
-| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L53) | `bool` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
-| [`IsBusy`](../../../TheOne.Avalonia/Controls/Form.cs#L54) | `bool` | read-only; OneWay | `computed / state` | Read-only; validation is running, content is disabled, duplicate validation/submission returns `false` |
-| [`IsValidated`](../../../TheOne.Avalonia/Controls/Form.cs#L55) | `bool` | read-only; OneWay | `computed / state` | Read-only; last validation succeeded, reset by relevant notifications, clearing, detachment, or replacing content/validator |
-| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/Form.cs#L48) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Vertical` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Form.cs#L49) | `double` | writable; OneWay; inherits | `120` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `value => double.IsFinite(value) && value > 0` |
-| [`ShowErrorSummary`](../../../TheOne.Avalonia/Controls/Form.cs#L47) | `bool` | writable; OneWay | `true` | Defaults to `true`; displays model-level and unmapped errors only; mapped errors remain below their fields |
-| [`SubmitCommand`](../../../TheOne.Avalonia/Controls/Form.cs#L45) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
-| [`SubmitCommandParameter`](../../../TheOne.Avalonia/Controls/Form.cs#L46) | `object?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
-| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L52) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
-| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L50) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
-| [`ValidationModel`](../../../TheOne.Avalonia/Controls/Form.cs#L44) | `object?` | writable; OneWay | `null` | Optional notification source for custom validators; attribute validators use their registered model instead |
-| [`Validator`](../../../TheOne.Avalonia/Controls/Form.cs#L42) | `TheOne.Avalonia.Controls.IStepValidator?` | writable; OneWay | `null` | Optional `IStepValidator`; reuse step validators or scope attributes with `StepValidation.For(model, memberNames)` |
+| [`CanSubmit`](../../../TheOne.Avalonia/Controls/Form.cs#L125) | `bool` | read-only; OneWay | `computed / state` | Read-only; a submission attempt is currently allowed, not a guarantee of valid data |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L120) | `bool` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
+| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L122) | `bool` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Form.cs#L123) | `bool` | read-only; OneWay | `computed / state` | Read-only; validation is running, content is disabled, duplicate validation/submission returns `false` |
+| [`IsValidated`](../../../TheOne.Avalonia/Controls/Form.cs#L124) | `bool` | read-only; OneWay | `computed / state` | Read-only; last validation succeeded, reset by relevant notifications, clearing, detachment, or replacing content/validator |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/Form.cs#L107) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Vertical` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/Form.cs#L113) | `double` | writable; OneWay | `120` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `value => double.IsFinite(value) && value > 0` |
+| [`ShowErrorSummary`](../../../TheOne.Avalonia/Controls/Form.cs#L101) | `bool` | writable; OneWay | `true` | Defaults to `true`; displays model-level and unmapped errors only; mapped errors remain below their fields |
+| [`SubmitCommand`](../../../TheOne.Avalonia/Controls/Form.cs#L89) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
+| [`SubmitCommandParameter`](../../../TheOne.Avalonia/Controls/Form.cs#L95) | `object?` | writable; OneWay | `null` | Host command and parameter; `CanExecute` is checked before and after asynchronous validation |
+| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L121) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only errors without a matching field; these populate the summary without repeating inline messages |
+| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/Form.cs#L119) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | read-only; OneWay | `computed / state` | Read-only deduplicated errors from the latest validation and whether it failed |
+| [`ValidationModel`](../../../TheOne.Avalonia/Controls/Form.cs#L83) | `object?` | writable; OneWay | `null` | Optional notification source for custom validators; attribute validators use their registered model instead |
+| [`Validator`](../../../TheOne.Avalonia/Controls/Form.cs#L73) | `TheOne.Avalonia.Controls.IStepValidator?` | writable; OneWay | `null` | Optional `IStepValidator`; reuse step validators or scope attributes with `StepValidation.For(model, memberNames)` |
 
 ### FormItem
 
@@ -136,15 +136,15 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L37) | `double` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
-| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L39) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
-| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L38) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
-| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L31) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
-| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L33) | `bool` | writable; OneWay | `false` | Defaults to `false`; visual marker only, with actual rules owned by the validator |
-| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L30) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
-| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L36) | `Avalonia.Controls.Dock` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width Values: `Left`, `Bottom`, `Right`, `Top` |
-| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L34) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Vertical` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L35) | `double` | writable; OneWay; inherits | `120` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `value => double.IsFinite(value) && value > 0` |
+| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L84) | `double` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L86) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L85) | `bool` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width |
+| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L58) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
+| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L65) | `bool` | writable; OneWay | `false` | Defaults to `false`; visual marker only, with actual rules owned by the validator |
+| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L52) | `string?` | writable; OneWay | `null` | Label and help below input; empty values hide their regions |
+| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L83) | `Avalonia.Controls.Dock` | read-only; OneWay | `computed / state` | Read-only template state for region visibility, label docking, and effective label width Values: `Left`, `Bottom`, `Right`, `Top` |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L71) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Vertical` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L77) | `double` | writable; OneWay | `120` | Defaults to `Vertical` / `120`, inherited by items; width must be positive and finite Validation: `value => double.IsFinite(value) && value > 0` |
 
 ### IStepValidator
 
@@ -158,7 +158,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L10) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L17) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### StepValidation
 

@@ -6,7 +6,7 @@
 
 Creates attribute validators for concrete bound model types without dynamic binding or assembly-wide preservation.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/StepValidation.cs#L22)
+[Source / 声明](../../../TheOne.Avalonia/Controls/StepValidation.cs#L25)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -16,7 +16,7 @@ Creates attribute validators for concrete bound model types without dynamic bind
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static IStepValidator StepValidation.For<T>(T model, params string[] memberNames) where T : class`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L24) | 为指定模型／属性集合创建类型化步骤校验器。 |
+| [`static IStepValidator StepValidation.For<T>(T model, params string[] memberNames) where T : class`](../../../TheOne.Avalonia/Controls/StepValidation.cs#L27) | 为指定模型／属性集合创建类型化步骤校验器。 |
 
 ## 相关 API 与内置模型
 

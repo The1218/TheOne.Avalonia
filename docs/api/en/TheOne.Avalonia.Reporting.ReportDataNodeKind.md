@@ -20,6 +20,6 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Object = 0`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Scalar = 1`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Collection = 2`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Object = 0`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L5) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Scalar = 1`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Collection = 2`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

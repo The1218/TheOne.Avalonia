@@ -6,7 +6,7 @@
 
 Loads public HTTP resources with bounded responses. Hosts can supply an authenticated HttpClient.
 
-[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L8)
+[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L9)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -16,10 +16,10 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L43) | Fetches one bounded JSON response using the same request path as the independent preview. |
-| [`static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L68) | Loads records asynchronously from report API configuration without persisting fetched rows in the template. |
-| [`static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L75) | Resolves report images asynchronously with batch-owned caching/failure state. |
-| [`static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client, CancellationToken cancellationToken, ReportDataSource? source)`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L78) | Resolves report images asynchronously with batch-owned caching/failure state. |
+| [`static Task<string> ReportResources.FetchJsonAsync(ReportApiRequest request, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L55) | Fetches one bounded JSON response using the same request path as the independent preview. |
+| [`static Task<ReportDataSource?> ReportResources.LoadDataAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L100) | Loads records asynchronously from report API configuration without persisting fetched rows in the template. |
+| [`static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L110) | Resolves report images asynchronously with batch-owned caching/failure state. |
+| [`static Task ReportResources.LoadImagesAsync(ReportDocument document, HttpClient? client, CancellationToken cancellationToken, ReportDataSource? source)`](../../../TheOne.Avalonia/Reporting/ReportResources.cs#L116) | Resolves report images asynchronously with batch-owned caching/failure state. |
 
 ## Related APIs and built-in models
 

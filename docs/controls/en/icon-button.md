@@ -55,7 +55,7 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L13) | `bool` | writable; OneWay; attached | `false` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L12) | `bool` | writable; OneWay; attached | `false` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
 
 ### IconButton
 
@@ -63,15 +63,15 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`HasIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L30) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`HasLabel`](../../../TheOne.Avalonia/Controls/IconButton.cs#L31) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Icon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L24) | `object?` | writable; OneWay | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
-| [`IconPlacement`](../../../TheOne.Avalonia/Controls/IconButton.cs#L22) | `TheOne.Avalonia.Controls.IconPlacement` | writable; OneWay | `0 / default` | Icon position relative to text; the template arranges horizontal/vertical placement. Validation: `value => Enum.IsDefined(value)` Values: `Left`, `Right`, `Top`, `Bottom` |
-| [`IconSize`](../../../TheOne.Avalonia/Controls/IconButton.cs#L26) | `double` | writable; OneWay | `15` | Icon drawing size in DIPs, independent of font size and button hit area. Validation: `value => double.IsFinite(value) && value > 0` |
-| [`IconSpacing`](../../../TheOne.Avalonia/Controls/IconButton.cs#L27) | `double` | writable; OneWay | `8` | DIP spacing between the icon and adjacent text/content. Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/IconButton.cs#L25) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L23) | `bool` | writable; OneWay | `false` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
-| [`ShowIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L21) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HasIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L89) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/IconButton.cs#L95) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Icon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L65) | `object?` | writable; OneWay | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
+| [`IconPlacement`](../../../TheOne.Avalonia/Controls/IconButton.cs#L53) | `TheOne.Avalonia.Controls.IconPlacement` | writable; OneWay | `0 / default` | Icon position relative to text; the template arranges horizontal/vertical placement. Validation: `value => Enum.IsDefined(value)` Values: `Left`, `Right`, `Top`, `Bottom` |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/IconButton.cs#L77) | `double` | writable; OneWay | `15` | Icon drawing size in DIPs, independent of font size and button hit area. Validation: `value => double.IsFinite(value) && value > 0` |
+| [`IconSpacing`](../../../TheOne.Avalonia/Controls/IconButton.cs#L83) | `double` | writable; OneWay | `8` | DIP spacing between the icon and adjacent text/content. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/IconButton.cs#L71) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L59) | `bool` | writable; OneWay | `false` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
+| [`ShowIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L47) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### ThemeButton
 
@@ -79,13 +79,13 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L16) | `TheOne.Avalonia.Controls.ThemeButtonScope` | writable; OneWay | `0 / default` | Scope of Light/Dark switching; does not change the ThemeColor palette enum. Values: `Window`, `Application` |
+| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L30) | `TheOne.Avalonia.Controls.ThemeButtonScope` | writable; OneWay | `0 / default` | Scope of Light/Dark switching; does not change the ThemeColor palette enum. Values: `Window`, `Application` |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
 ### Classes usage
 
-Combine `primary` (`accent`), `danger`, `success`, `warning` or `info` with `solid`, `ghost`, `link`, `outline`, `soft` or `gradient`, as described above.
+- `IconButton`: `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`
 These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
 ### Business APIs

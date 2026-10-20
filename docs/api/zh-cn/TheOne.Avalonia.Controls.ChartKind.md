@@ -20,17 +20,17 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Line = 0`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Area = 1`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Bar = 2`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`HorizontalBar = 3`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Scatter = 4`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Pie = 5`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Doughnut = 6`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Gauge = 7`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`StackedBar = 8`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`StackedHorizontalBar = 9`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`StackedArea = 10`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Line = 0`](../../../TheOne.Avalonia/Controls/ChartData.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Area = 1`](../../../TheOne.Avalonia/Controls/ChartData.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Bar = 2`](../../../TheOne.Avalonia/Controls/ChartData.cs#L11) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`HorizontalBar = 3`](../../../TheOne.Avalonia/Controls/ChartData.cs#L12) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Scatter = 4`](../../../TheOne.Avalonia/Controls/ChartData.cs#L13) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Pie = 5`](../../../TheOne.Avalonia/Controls/ChartData.cs#L14) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Doughnut = 6`](../../../TheOne.Avalonia/Controls/ChartData.cs#L15) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Gauge = 7`](../../../TheOne.Avalonia/Controls/ChartData.cs#L16) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`StackedBar = 8`](../../../TheOne.Avalonia/Controls/ChartData.cs#L17) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`StackedHorizontalBar = 9`](../../../TheOne.Avalonia/Controls/ChartData.cs#L18) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`StackedArea = 10`](../../../TheOne.Avalonia/Controls/ChartData.cs#L19) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L20) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L21) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L22) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

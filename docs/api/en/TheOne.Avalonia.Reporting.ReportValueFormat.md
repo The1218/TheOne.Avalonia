@@ -4,7 +4,7 @@
 
 `TheOne.Avalonia.Reporting.ReportValueFormat` · Enum · `System.Enum`
 
-[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9)
+[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L16)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -14,14 +14,14 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`ReportValueFormat.ReportValueFormat()`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`ReportValueFormat.ReportValueFormat()`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L16) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Enum values
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Automatic = 0`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Text = 1`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Number = 2`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Currency = 3`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Date = 4`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Automatic = 0`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L18) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Text = 1`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L19) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Number = 2`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L20) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Currency = 3`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L21) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Date = 4`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L22) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

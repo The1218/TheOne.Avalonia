@@ -89,7 +89,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L743) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
+| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L430) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
 
 ### DataGridRowMetadata
 
@@ -109,13 +109,13 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`FilterCondition`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L14) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | writable; TwoWay; attached | `null` | DataGridFilterCondition? / null ; Applied immutable condition; TwoWay supported; null means none; popup drafts are separate |
-| [`FilterEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L12) | `bool` | writable; OneWay; attached | `true` | bool / true ; Disable an individual entry point after grid filtering is enabled; disabling filtering clears that column's condition |
-| [`FilterError`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L15) | `string?` | read-only; OneWay; attached | `null` | string? / null ; Read-only phase-2 query property describing condition / field errors; read with GetFilterError |
-| [`FilterKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L13) | `TheOne.Avalonia.Controls.DataGridFilterKind` | writable; OneWay; attached | `DataGridFilterKind.Auto` | DataGridFilterKind / Auto ; `Auto`, `Text`, `Number`, `None`; Auto uses ValueAccessor's raw field type Values: `Auto`, `Text`, `Number`, `None` |
-| [`SummaryEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L16) | `bool` | writable; OneWay; attached | `false` | bool / false ; Explicitly enable the column; numeric or nullable numeric properties only |
-| [`SummaryFormat`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L18) | `string?` | writable; OneWay; attached | `null` | string? / null ; .NET numeric format, independent of display Converter, using the view Culture |
-| [`SummaryKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L17) | `TheOne.Avalonia.Controls.DataGridSummaryKind` | writable; OneWay; attached | `DataGridSummaryKind.Sum` | DataGridSummaryKind / Sum ; Sum, Average, Min, Max, Count; one per column Validation: `Enum.IsDefined` Values: `Sum`, `Average`, `Min`, `Max`, `Count` |
+| [`FilterCondition`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L21) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | writable; TwoWay; attached | `null` | DataGridFilterCondition? / null ; Applied immutable condition; TwoWay supported; null means none; popup drafts are separate |
+| [`FilterEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L15) | `bool` | writable; OneWay; attached | `true` | bool / true ; Disable an individual entry point after grid filtering is enabled; disabling filtering clears that column's condition |
+| [`FilterError`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L25) | `string?` | read-only; OneWay; attached | `null` | string? / null ; Read-only phase-2 query property describing condition / field errors; read with GetFilterError |
+| [`FilterKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L18) | `TheOne.Avalonia.Controls.DataGridFilterKind` | writable; OneWay; attached | `0 / default` | DataGridFilterKind / Auto ; `Auto`, `Text`, `Number`, `None`; Auto uses ValueAccessor's raw field type Values: `Auto`, `Text`, `Number`, `None` |
+| [`SummaryEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L28) | `bool` | writable; OneWay; attached | `false` | bool / false ; Explicitly enable the column; numeric or nullable numeric properties only |
+| [`SummaryFormat`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L35) | `string?` | writable; OneWay; attached | `null` | string? / null ; .NET numeric format, independent of display Converter, using the view Culture |
+| [`SummaryKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L31) | `TheOne.Avalonia.Controls.DataGridSummaryKind` | writable; OneWay; attached | `0 / default` | DataGridSummaryKind / Sum ; Sum, Average, Min, Max, Count; one per column Validation: `Enum.IsDefined` Values: `Sum`, `Average`, `Min`, `Max`, `Count` |
 | [`ValueAccessor`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L11) | `TheOne.Avalonia.Controls.IDataGridValueAccessor?` | writable; OneWay; attached | `null` | IDataGridValueAccessor? / null ; Optional override; ordinary bound columns infer it, while template columns or computed fields can supply a typed delegate |
 
 ### DataGridSortButton
@@ -124,8 +124,8 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Direction`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L40) | `System.ComponentModel.ListSortDirection?` | read-only; OneWay | `computed / state` | Reveal/port direction enum; choices are defined by its concrete enum type. Values: `Ascending`, `Descending` |
-| [`SortPriority`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L41) | `int` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Direction`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L78) | `System.ComponentModel.ListSortDirection?` | read-only; OneWay | `computed / state` | Reveal/port direction enum; choices are defined by its concrete enum type. Values: `Ascending`, `Descending` |
+| [`SortPriority`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L84) | `int` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### DataGridValueAccessor
 

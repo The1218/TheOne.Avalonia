@@ -4,7 +4,7 @@
 
 `TheOne.Avalonia.Reporting.ReportObservable` · Class · `object`
 
-[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L105)
+[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L476)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -14,4 +14,4 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`event PropertyChangedEventHandler? ReportObservable.PropertyChanged`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L107) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`event PropertyChangedEventHandler? ReportObservable.PropertyChanged`](../../../TheOne.Avalonia/Reporting/ReportDocument.cs#L478) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |

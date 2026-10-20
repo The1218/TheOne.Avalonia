@@ -4,7 +4,7 @@
 
 `TheOne.Avalonia.Controls.DataGridValueAccessor` · Class · `object`
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L15)
+[Source / 声明](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L26)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -14,7 +14,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static IDataGridValueAccessor DataGridValueAccessor.Create<TItem, TValue>(Func<TItem, TValue> getter)`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L17) | Creates an adapter/source from explicit types, models and delegates; typed getters preserve compile-time information. |
+| [`static IDataGridValueAccessor DataGridValueAccessor.Create<TItem, TValue>(Func<TItem, TValue> getter)`](../../../TheOne.Avalonia/Controls/DataGridFilterCondition.cs#L28) | Creates an adapter/source from explicit types, models and delegates; typed getters preserve compile-time information. |
 
 ## Related APIs and built-in models
 

@@ -16,9 +16,9 @@ Versioned, portable report templates. Data rows and API responses are never seri
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static ReportDocument ReportTemplate.CreateSalesDetail()`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L13) | A source-independent starting template matching the sales report design. |
-| [`static string ReportTemplate.Save(ReportDocument document)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L33) | 将业务文档保存为可移植 JSON；不包含运行期凭据、视觉对象或非持久化状态。 |
-| [`static ReportDocument ReportTemplate.Load(string json)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L40) | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
+| [`static ReportDocument ReportTemplate.CreateSalesDetail()`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L14) | A source-independent starting template matching the sales report design. |
+| [`static string ReportTemplate.Save(ReportDocument document)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L84) | 将业务文档保存为可移植 JSON；不包含运行期凭据、视觉对象或非持久化状态。 |
+| [`static ReportDocument ReportTemplate.Load(string json)`](../../../TheOne.Avalonia/Reporting/ReportTemplate.cs#L93) | 从 JSON 载入类型化业务文档；版本、字段及结构校验见对应序列化契约。 |
 
 ## 公开字段
 

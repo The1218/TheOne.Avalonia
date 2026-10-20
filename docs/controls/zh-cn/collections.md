@@ -263,11 +263,17 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
 | [`CanClose`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L21) | `bool` | 可写; OneWay; 附加属性 | `false` | 允许关闭；可显式设为 False |
-| [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `false` | 允许当前 TabControl 内拖动与键盘排序 |
+| [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | 可写; OneWay; 附加属性 | `false` | 允许当前 TabControl 内拖动与键盘排序 |
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | 可写; OneWay; 附加属性 | `null` | 宿主关闭命令，参数为数据项；指定后由命令负责更新集合 |
-| [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L35) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `new CloseTab()` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | 可写; OneWay; 附加属性 | `true` | 设置在单个 TabItem 上，False 禁止关闭，排序仍允许 |
-| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
+| [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L66) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `new CloseTab()` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`EnableContextMenu`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L12) | `bool` | 可写; OneWay; 附加属性 | `false` | TabFeatures 的 EnableContextMenu 配置字段；值类型和初值如表，通过 EnableContextMenuProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L18) | `object?` | 可写; OneWay; 附加属性 | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L20) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay; 附加属性 | `DefaultIconTemplate` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L27) | `bool` | 可写; OneWay; 附加属性 | `true` | 设置在单个 TabItem 上，False 禁止关闭，排序仍允许 |
+| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `bool` | 只读; OneWay; 附加属性 | `false` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `false` | TabFeatures 的 IsPinned 配置字段；值类型和初值如表，通过 IsPinnedProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L30) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
+| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L16) | `bool` | 可写; OneWay; 附加属性 | `true` | TabFeatures 的 ShowItemIcon 配置字段；值类型和初值如表，通过 ShowItemIconProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
 
 ### Virtualization
 
@@ -275,7 +281,7 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Controls/Virtualization.cs#L15) | `bool` | 可写; OneWay; 附加属性 | `false` | 启用库支持的虚拟化方案；仍需有限视口和模型数据源，不预建全部控件。 |
+| [`Enabled`](../../../TheOne.Avalonia/Controls/Virtualization.cs#L16) | `bool` | 可写; OneWay; 附加属性 | `false` | 启用库支持的虚拟化方案；仍需有限视口和模型数据源，不预建全部控件。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
@@ -292,6 +298,8 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 | 类型 | 动作签名 | 用途 |
 | --- | --- | --- |
 | [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabStripItem item)` | 尝试关闭容器对应的数据项 |
+| [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Pin(TabItem item, bool pinned = true)` | Pins a page before all unpinned pages, preserving selection. Does not require drag reordering. |
+| [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static int TabFeatures.CloseAll(TabControl tabs)` | Closes a snapshot of closable pages, honoring cancellation, commands and pin state. |
 | [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabItem item)` | 尝试关闭容器对应的数据项 |
 | [`TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Move(TabControl tabs, int from, int to)` | 按零基索引尝试重排 |
 | [`Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | `static TreeViewItem? Virtualization.BringIntoView(TreeView tree, params int[] path)` | Materializes only the ancestor path and target of a large tree. |
@@ -301,7 +309,7 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 
 | 模型 | 属性／枚举值 |
 | --- | ---: |
-| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | 6 |
+| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/zh-cn/TheOne.Avalonia.Controls.TabFeatures.md) | 12 |
 | [`TheOne.Avalonia.Controls.Virtualization`](../../api/zh-cn/TheOne.Avalonia.Controls.Virtualization.md) | 1 |
 
 [完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)

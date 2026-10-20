@@ -6,7 +6,7 @@
 
 Optional query/summary contract, separate from the existing tree presentation API.
 
-[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L38)
+[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L39)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -18,11 +18,11 @@ Optional query/summary contract, separate from the existing tree presentation AP
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`bool IDataGridTreeQueryView.IsFilterMatch(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L42) | 查询原始节点是否直接命中当前筛选条件。 |
-| [`bool IDataGridTreeQueryView.IsLeaf(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L43) | 查询原始节点是否为没有子项的叶节点。 |
+| [`bool IDataGridTreeQueryView.IsFilterMatch(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L43) | 查询原始节点是否直接命中当前筛选条件。 |
+| [`bool IDataGridTreeQueryView.IsLeaf(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L44) | 查询原始节点是否为没有子项的叶节点。 |
 
 ## 事件
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`event EventHandler? IDataGridTreeQueryView.LoadedItemsChanged`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L40) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`event EventHandler? IDataGridTreeQueryView.LoadedItemsChanged`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L42) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |

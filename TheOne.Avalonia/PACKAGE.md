@@ -3,12 +3,11 @@
 TheOne themes and extended controls for .NET 10 and Avalonia 12.1.4. Includes independent charts, navigation, windows
 and DataGrid entity filters, left/right frozen columns and numeric summaries.
 
-Preview.7 adds TreeSelect with stable-key single/multiple selection, cascading checks, typed model adapters,
-ancestor-preserving search and virtualized rows. Button, ToggleButton, RepeatButton and IconButton combine semantic
-colors with solid/ghost/link/outline/soft/gradient appearances, preserving native interactions. Tag gains pill,
-square, dashed, dot and gradient variants. TabControl uses compact content padding and supports safe runtime template
-switching; ColorPicker Custom popups measure their natural height. Bilingual guides and independent previews document
-the new contracts. NuGet upload is performed manually.
+Preview.8 adds OneIcon (320 vectors in 20 categories, 32 filled variants), Breadcrumb, DateTimePicker and Timeline.
+The icon gallery reuses native Button slots and caches text layouts, reducing desktop opening/scrolling tails in the
+documented macOS workload. New controls include compiled bindings, observable models, templates, independent previews
+and bilingual guides. ThemeButton and OneWindow support explicit theme scope and optional Default/Light/Dark cycling.
+NuGet upload is performed manually; source release availability does not establish NuGet indexing.
 
 ```xml
 <Application.Styles>

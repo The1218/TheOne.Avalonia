@@ -12,37 +12,37 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L40) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
-| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L42) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
-| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L43) | `Avalonia.Controls.Templates.IDataTemplate?` | read-only; OneWay | `computed / state` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L44) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L39) | `double` | writable; OneWay | `30` | 24 / 30 / 36 Validation: `value => double.IsFinite(value) && value > 0` |
-| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L46) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L47) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L45) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L38) | `Avalonia.Layout.Orientation` | writable; OneWay; inherits | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
-| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L37) | `TheOne.Avalonia.Controls.FlowNodeStatus` | writable; OneWay | `FlowNodeStatus.Pending` | Marker Validation: `Enum.IsDefined` Values: `Pending`, `InProgress`, `Completed` |
+| [`ContentSpacing`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L83) | `double` | writable; OneWay | `12` | 10 / 12 / 16 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`DefaultContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L90) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Fallback for FlowNodeContent; OneTheme supplies the default four-field template. |
+| [`EffectiveContentTemplate`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L96) | `Avalonia.Controls.Templates.IDataTemplate?` | read-only; OneWay | `computed / state` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`EffectiveStateText`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L97) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L77) | `double` | writable; OneWay | `30` | 24 / 30 / 36 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L99) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsInProgress`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L100) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsVertical`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L98) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L71) | `Avalonia.Layout.Orientation` | writable; OneWay | `Orientation.Horizontal` | Horizontal/vertical arrangement; updates node, connector and content layout without changing business order. Validation: `Enum.IsDefined` Values: `Horizontal`, `Vertical` |
+| [`Status`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L65) | `TheOne.Avalonia.Controls.FlowNodeStatus` | writable; OneWay | `0 / default` | Marker Validation: `Enum.IsDefined` Values: `Pending`, `InProgress`, `Completed` |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`FlowNode.FlowNode()`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L36) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`FlowNode.FlowNode()`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L57) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
 
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static readonly StyledProperty<FlowNodeStatus> FlowNode.StatusProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L19) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<Orientation> FlowNode.OrientationProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L20) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<double> FlowNode.IndicatorSizeProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L21) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<double> FlowNode.ContentSpacingProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L22) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<IDataTemplate?> FlowNode.DefaultContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L23) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<FlowNode, IDataTemplate?> FlowNode.EffectiveContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L24) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<FlowNode, string> FlowNode.EffectiveStateTextProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L25) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsVerticalProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L26) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsCompletedProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L27) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsInProgressProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L28) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<Orientation> FlowNode.OrientationProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L22) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<double> FlowNode.IndicatorSizeProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L25) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<double> FlowNode.ContentSpacingProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L29) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<IDataTemplate?> FlowNode.DefaultContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L33) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<FlowNode, IDataTemplate?> FlowNode.EffectiveContentTemplateProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L36) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<FlowNode, string> FlowNode.EffectiveStateTextProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L40) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsVerticalProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L43) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsCompletedProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L46) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<FlowNode, bool> FlowNode.IsInProgressProperty`](../../../TheOne.Avalonia/Controls/FlowNode.cs#L49) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Styles and density
 

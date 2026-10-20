@@ -6,7 +6,7 @@
 
 Registers public row properties and the parameterless constructor used by the native DataGrid. Compiled column bindings alone do not retain metadata needed for editing, sorting and grouping.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/DataGridAot.cs#L8)
+[Source / 声明](../../../TheOne.Avalonia/Controls/DataGridAot.cs#L10)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -16,4 +16,4 @@ Registers public row properties and the parameterless constructor used by the na
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static Type DataGridAot.PreserveRowType<T>()`](../../../TheOne.Avalonia/Controls/DataGridAot.cs#L13) | Call before creating views or grids for each row or nested property type. Only that type's public properties and public parameterless constructor are retained. |
+| [`static Type DataGridAot.PreserveRowType<T>()`](../../../TheOne.Avalonia/Controls/DataGridAot.cs#L19) | Call before creating views or grids for each row or nested property type. Only that type's public properties and public parameterless constructor are retained. |

@@ -12,10 +12,10 @@ TheOne additions to the native column; inherited/upstream APIs are omitted.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L743) | `int` | 只读; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
+| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L430) | `int` | 只读; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L734) | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |
+| [`void DataGridColumn.CycleSort(KeyModifiers modifiers = KeyModifiers.None)`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L607) | Cycles unsorted, ascending, descending, then unsorted through the native edit pipeline. |

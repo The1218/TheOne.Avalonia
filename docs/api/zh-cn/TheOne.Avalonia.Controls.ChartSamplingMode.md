@@ -20,5 +20,5 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`MinMax = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`MinMax = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

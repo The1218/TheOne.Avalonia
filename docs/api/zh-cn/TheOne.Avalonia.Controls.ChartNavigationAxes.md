@@ -20,7 +20,7 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Horizontal = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Vertical = 2`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Both = 3`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Horizontal = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L11) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Vertical = 2`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L12) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Both = 3`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L13) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

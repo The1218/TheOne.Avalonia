@@ -61,28 +61,28 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`CanNext`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L56) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`CanPrevious`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L55) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`ChromeHeight`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L49) | `double` | writable; OneWay | `44` | Height of the image-preview chrome/tool area in DIPs. Validation: `value => double.IsFinite(value) && value > 0` |
-| [`CurrentImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L64) | `Avalonia.Media.IImage?` | read-only; CLR / n/a | `null` | The currently decoded image. Images created from paths are owned by the viewer. |
-| [`DisplayTitle`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L59) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L58) | `string?` | read-only; OneWay | `computed / state` | Current failure/validation message; an error display is not evidence of successful completion. |
-| [`HasError`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L53) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`HasImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L52) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`ImageCount`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L50) | `int` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsFitToWindow`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L47) | `bool` | writable; TwoWay | `true` | Fits the image into the viewport; see image-preview interaction rules for manual zoom behavior. |
-| [`IsFullScreen`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L57) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L51) | `bool` | read-only; OneWay | `computed / state` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
-| [`IsMultiple`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L54) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`ItemsSource`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L42) | `System.Collections.IEnumerable?` | writable; OneWay | `null` | Bind source models rather than precreated controls; use notified collections for changes and a bounded viewport. |
-| [`PageText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L60) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L43) | `int` | writable; TwoWay | `0` | Zero-based displayed-item index; range handling follows the owning control's selection contract. |
-| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L46) | `bool` | writable; OneWay | `false` | Shows the close button; the host and associated commands retain control over closing. |
-| [`ShowHeader`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L45) | `bool` | writable; OneWay | `true` | Shows the header area without deleting the model's title content. |
-| [`Source`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L41) | `object?` | writable; OneWay | `null` | Source object/address of a supported type; usage documentation defines resource ownership/loading limits. |
-| [`Title`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L44) | `string?` | writable; OneWay | `null` | Display title, distinct from business identity or a localization key. |
-| [`ZoomFactor`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L48) | `double` | writable; TwoWay | `1` | Image display scale factor; changes the view rather than source pixels. Validation: `value => double.IsFinite(value) && value is >= .001 and <= 64` |
-| [`ZoomText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L61) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`CanNext`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L188) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`CanPrevious`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L182) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ChromeHeight`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L146) | `double` | writable; OneWay | `44` | Height of the image-preview chrome/tool area in DIPs. Validation: `value => double.IsFinite(value) && value > 0` |
+| [`CurrentImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L225) | `Avalonia.Media.IImage?` | read-only; CLR / n/a | `accessor-defined / state` | The currently decoded image. Images created from paths are owned by the viewer. |
+| [`DisplayTitle`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L206) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L200) | `string?` | read-only; OneWay | `computed / state` | Current failure/validation message; an error display is not evidence of successful completion. |
+| [`HasError`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L170) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`HasImage`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L164) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ImageCount`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L152) | `int` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsFitToWindow`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L134) | `bool` | writable; TwoWay | `true` | Fits the image into the viewport; see image-preview interaction rules for manual zoom behavior. |
+| [`IsFullScreen`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L194) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L158) | `bool` | read-only; OneWay | `computed / state` | Shows busy feedback; buttons retain size and prevent repeated actions, while containers show a loading layer. The host resets it when work finishes. |
+| [`IsMultiple`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L176) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L104) | `System.Collections.IEnumerable?` | writable; OneWay | `null` | Bind source models rather than precreated controls; use notified collections for changes and a bounded viewport. |
+| [`PageText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L212) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L110) | `int` | writable; TwoWay | `0 / default` | Zero-based displayed-item index; range handling follows the owning control's selection contract. |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L128) | `bool` | writable; OneWay | `false` | Shows the close button; the host and associated commands retain control over closing. |
+| [`ShowHeader`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L122) | `bool` | writable; OneWay | `true` | Shows the header area without deleting the model's title content. |
+| [`Source`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L98) | `object?` | writable; OneWay | `null` | Source object/address of a supported type; usage documentation defines resource ownership/loading limits. |
+| [`Title`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L116) | `string?` | writable; OneWay | `null` | Display title, distinct from business identity or a localization key. |
+| [`ZoomFactor`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L140) | `double` | writable; TwoWay | `1` | Image display scale factor; changes the view rather than source pixels. Validation: `value => double.IsFinite(value) && value is >= .001 and <= 64` |
+| [`ZoomText`](../../../TheOne.Avalonia/Controls/ImagePreview.cs#L218) | `string` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ### ImagePreviewSurface
 
@@ -90,8 +90,8 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`AlternateCheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L15) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Alternate transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`CheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L14) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`AlternateCheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L48) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Alternate transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`CheckerBrush`](../../../TheOne.Avalonia/Controls/ImagePreviewSurface.cs#L42) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary transparency checker brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

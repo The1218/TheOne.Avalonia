@@ -2,6 +2,8 @@
 
 评估日期：2026-10-19。本文保存本次源码及 ECharts 官网对照分析，属于建议路线，不代表所有项目已经排期。优先级基于本库当前表单、流程、报表与桌面业务系统的用途。没有进行跨库性能实测。
 
+图表专项复评见 [Chart 对照 ECharts 的缺口与优化方案](chart-echarts-gap-and-optimization.md)，包含当前代码证据、公共能力缺口、性能入口与分批验收标准。
+
 ## 判断与边界
 
 优先补业务选择控件与图表基础能力，再逐步增加图种。已有 Form、MultiSelectBox、NavPage、WorkflowEditor、ReportDesign、Upload、ImagePreview、QRCode 等不重复建设。基础 Avalonia 能力优先通过主题和行为扩展，避免仅为换外观增加包装控件。
@@ -16,9 +18,10 @@
 | P1 | Drawer | 遮罩、焦点、Esc/外部关闭、方向、尺寸、异步关闭确认；复用现有布局及消息设施 |
 | P1 | Skeleton / EmptyState | 首次加载骨架、空数据、无搜索结果、失败状态；不重复 LoadingContainer 的忙碌覆盖 |
 | P1 | 多文件上传 / 附件列表 | 基于现有 Upload 扩展队列、进度、取消重试、并发限制及附件模板 |
-| P1 | Timeline | 按时间排列的操作记录、审批历史、事件；与 FlowStep 的步骤进度不同 |
+| 已实现 | [Timeline](../controls/zh-cn/timeline.md) | 事件历史、左右／交错布局、倒序、状态节点、可观察模型和模板；与 FlowStep 的步骤进度不同 |
 | P2 | Badge / Statistic | 菜单角标、待办数量、指标值、趋势；保持轻量 |
-| P2 | Breadcrumb / CommandPalette | 路径导航、全局搜索与键盘命令；与 NavPage 共用导航状态 |
+| 已实现 | Breadcrumb | 路径导航、图标、分隔符、命令和编译绑定；使用者可连接 NavPage 导航状态，见 [用法](../controls/zh-cn/breadcrumb.md) |
+| P2 | CommandPalette | 全局搜索与键盘命令；与 NavPage 共用导航状态 |
 | P2 | Transfer | 搜索、虚拟化、禁选、稳定 Key 与双列表转移 |
 
 富文本、代码编辑器、Docking 和地图引擎暂不优先自研。TreeSelect 与 Cascader 不合并成万能控件。

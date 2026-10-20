@@ -34,6 +34,10 @@ public partial class HomePage : UserControl
             "<one:MultiSelectBox\n  ItemsSource=\"{Binding Options}\"\n  SelectedItems=\"{Binding Selected}\" />");
         AddFeature(330, "TreeSelect", "树形单选、多选和父子级联；稳定 Key 回显，搜索保留祖先，列表按视口回收。",
             "<one:TreeSelect ItemsSource=\"{CompiledBinding Departments}\"\n  IsMultiSelect=\"True\" CheckMode=\"Cascade\"\n  SelectedKeys=\"{CompiledBinding DepartmentKeys, Mode=TwoWay}\" />");
+        AddFeature(331, "OneIcon 自有图标", "20 类 320 个原生矢量图标，涵盖行业、交通、商业、教育与天气，支持枚举绑定、主题和三档密度。",
+            "<one:OneIcon Kind=\"{CompiledBinding CurrentIcon}\" />\n<!-- CurrentIcon: OneIconKind；颜色继承宿主 -->");
+        AddFeature(332, "Breadcrumb 面包屑", "宿主管理导航路径，末项标识当前页；支持图标、分隔符、命令与键盘访问。",
+            "<one:Breadcrumb ItemsSource=\"{CompiledBinding Path}\"\n  ItemInvokedCommand=\"{CompiledBinding NavigateCommand}\" />");
         AddFeature(10, "DataGrid", "保留原生编辑与选择，叠加列筛选、排序和数值统计。",
             "<!-- Rows 行类型需先注册元数据 -->\n<DataGrid ItemsSource=\"{Binding Rows}\">\n  <DataGrid.Columns>\n    <DataGridTextColumn Header=\"名称\"\n      x:DataType=\"vm:Row\"\n      Binding=\"{Binding Name}\" />\n  </DataGrid.Columns>\n</DataGrid>");
         AddFeature(25, "NavMenu", "树形导航、折叠图标栏与级联子菜单，保持当前页面的选择。",

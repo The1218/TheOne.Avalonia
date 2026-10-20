@@ -144,29 +144,29 @@ PreviewHost 的“数据展示 → RelationGraph”展示方向切换、宽度�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Background`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L53) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
-| [`ChildrenSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L60) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | A binding evaluated against each node, not against the graph's data context. |
-| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L73) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | One.Accent / 1.5 ; 连接线颜色与宽度，宽度为 0 时隐藏 |
-| [`ConnectorCornerRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L75) | `double` | 可写; OneWay | `8` | 8 / 3 ; 正交拐角与连接端点半径 校验：`NonNegative` |
-| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L74) | `double` | 可写; OneWay | `1.5` | One.Accent / 1.5 ; 连接线颜色与宽度，宽度为 0 时隐藏 校验：`NonNegative` |
-| [`ContentSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L63) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点正文的类型化字段访问器；不使用字符串反射路径。 |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L66) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`IconSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L61) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点图标的类型化字段访问器。 |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L64) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`LevelSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L71) | `double` | 可写; OneWay | `80` | 80 ; 层级间距；每层按最大节点高度或宽度计算 校验：`NonNegative` |
-| [`NodeCount`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L79) | `int` | 只读; OneWay | `computed / state` | 只读 ; 当前有效树的节点数量 / 数据校验错误 |
-| [`NodeMinHeight`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L69) | `double` | 可写; OneWay | `88` | 260 / 88 ; 固定卡片宽度 / 自然内容高度下限 校验：`Positive` |
-| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L70) | `double` | 可写; OneWay | `36` | 36 ; 相邻子树在横截方向的间距 校验：`NonNegative` |
-| [`NodeTheme`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L67) | `Avalonia.Styling.ControlTheme?` | 可写; OneWay | `null` | 默认主题 ; 替换 `RelationGraphNodePresenter` 的 ControlTheme |
-| [`NodeWidth`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L68) | `double` | 可写; OneWay | `260` | 260 / 88 ; 固定卡片宽度 / 自然内容高度下限 校验：`Positive` |
-| [`Orientation`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L58) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Horizontal` | Horizontal ; 树的展开方向 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
-| [`Padding`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L72) | `Avalonia.Thickness` | 可写; OneWay | `inherited registration` | 16 ; 整张图边缘留白 |
-| [`PortRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L76) | `double` | 可写; OneWay | `3` | 8 / 3 ; 正交拐角与连接端点半径 校验：`NonNegative` |
-| [`RootNode`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L55) | `object?` | 可写; OneWay | `null` | 关系图的根模型；子节点通过模型树或访问器获取。 |
-| [`SelectItem`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L57) | `object?` | 可写; TwoWay | `null` | The selected node model, matched by reference. Null clears selection. |
-| [`TitleSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L62) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点标题的类型化字段访问器。 |
-| [`TitleTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L65) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`ValidationError`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L78) | `string?` | 只读; OneWay | `computed / state` | 只读 ; 当前有效树的节点数量 / 数据校验错误 |
+| [`Background`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L107) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
+| [`ChildrenSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L134) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | A binding evaluated against each node, not against the graph's data context. |
+| [`ConnectorBrush`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L215) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | One.Accent / 1.5 ; 连接线颜色与宽度，宽度为 0 时隐藏 |
+| [`ConnectorCornerRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L227) | `double` | 可写; OneWay | `8` | 8 / 3 ; 正交拐角与连接端点半径 校验：`NonNegative` |
+| [`ConnectorThickness`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L221) | `double` | 可写; OneWay | `1.5` | One.Accent / 1.5 ; 连接线颜色与宽度，宽度为 0 时隐藏 校验：`NonNegative` |
+| [`ContentSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L155) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点正文的类型化字段访问器；不使用字符串反射路径。 |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L173) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`IconSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L141) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点图标的类型化字段访问器。 |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L161) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`LevelSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L203) | `double` | 可写; OneWay | `80` | 80 ; 层级间距；每层按最大节点高度或宽度计算 校验：`NonNegative` |
+| [`NodeCount`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L242) | `int` | 只读; OneWay | `computed / state` | 只读 ; 当前有效树的节点数量 / 数据校验错误 |
+| [`NodeMinHeight`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L191) | `double` | 可写; OneWay | `88` | 260 / 88 ; 固定卡片宽度 / 自然内容高度下限 校验：`Positive` |
+| [`NodeSpacing`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L197) | `double` | 可写; OneWay | `36` | 36 ; 相邻子树在横截方向的间距 校验：`NonNegative` |
+| [`NodeTheme`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L179) | `Avalonia.Styling.ControlTheme?` | 可写; OneWay | `null` | 默认主题 ; 替换 `RelationGraphNodePresenter` 的 ControlTheme |
+| [`NodeWidth`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L185) | `double` | 可写; OneWay | `260` | 260 / 88 ; 固定卡片宽度 / 自然内容高度下限 校验：`Positive` |
+| [`Orientation`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L126) | `Avalonia.Layout.Orientation` | 可写; OneWay | `0 / default` | Horizontal ; 树的展开方向 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`Padding`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L209) | `Avalonia.Thickness` | 可写; OneWay | `inherited registration` | 16 ; 整张图边缘留白 |
+| [`PortRadius`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L233) | `double` | 可写; OneWay | `3` | 8 / 3 ; 正交拐角与连接端点半径 校验：`NonNegative` |
+| [`RootNode`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L113) | `object?` | 可写; OneWay | `null` | 关系图的根模型；子节点通过模型树或访问器获取。 |
+| [`SelectItem`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L120) | `object?` | 可写; TwoWay | `null` | The selected node model, matched by reference. Null clears selection. |
+| [`TitleSource`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L148) | `Avalonia.Data.BindingBase?` | 可写; OneWay | `null` | 读取关系节点标题的类型化字段访问器。 |
+| [`TitleTemplate`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L167) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/RelationGraph.cs#L240) | `string?` | 只读; OneWay | `computed / state` | 只读 ; 当前有效树的节点数量 / 数据校验错误 |
 
 ### RelationGraphNode
 
@@ -174,10 +174,10 @@ PreviewHost 的“数据展示 → RelationGraph”展示方向切换、宽度�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L18) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | 可写; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | 子级模型集合；保持父子与对象身份，避免循环和跨父级共享可变节点。 |
-| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L17) | `object?` | 可写; CLR / n/a | `null` | 宿主内容或业务展示对象；具体模板作用域见内容模板契约，不把视图对象当作持久化数据。 |
+| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L33) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | 可写; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | 子级模型集合；保持父子与对象身份，避免循环和跨父级共享可变节点。 |
+| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L27) | `object?` | 可写; CLR / n/a | `null` | 宿主内容或业务展示对象；具体模板作用域见内容模板契约，不把视图对象当作持久化数据。 |
 | [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L15) | `object?` | 可写; CLR / n/a | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
-| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L16) | `object?` | 可写; CLR / n/a | `null` | 显示标题；不等于业务主键或本地化资源键。 |
+| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L21) | `object?` | 可写; CLR / n/a | `null` | 显示标题；不等于业务主键或本地化资源键。 |
 
 ### RelationGraphNodePresenter
 
@@ -185,18 +185,18 @@ PreviewHost 的“数据展示 → RelationGraph”展示方向切换、宽度�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`ContentForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L39) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 节点正文文字画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L38) | `double` | 可写; OneWay | `16` | 节点标题字号，单位 DIP，按实际文本度量参与布局。 校验：`Positive` |
-| [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L32) | `object?` | 可写; OneWay | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
-| [`IconBackground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L40) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 图标底板画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`IconForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L41) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 图标前景画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`IconSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L34) | `double` | 可写; OneWay | `24` | 图标绘制尺寸，单位 DIP；独立于文本字号与按钮点击区域。 校验：`Positive` |
-| [`IconSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L36) | `double` | 可写; OneWay | `14` | 图标与相邻文本／内容的 DIP 间距。 校验：`NonNegative` |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L33) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`IconTileSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L35) | `double` | 可写; OneWay | `44` | 图标承载底板的 DIP 尺寸，独立于图标自身尺寸。 校验：`Positive` |
-| [`IsRoot`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L42) | `bool` | 可写; OneWay | `false` | 此节点是否为根节点；由关系图生成器维护。 |
-| [`IsSelected`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L44) | `bool` | 只读; OneWay | `computed / state` | Selection state maintained by the owning RelationGraph. |
-| [`TextSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L37) | `double` | 可写; OneWay | `6` | 标题与正文之间的 DIP 间距。 校验：`NonNegative` |
+| [`ContentForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L105) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 节点正文文字画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`HeaderFontSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L99) | `double` | 可写; OneWay | `16` | 节点标题字号，单位 DIP，按实际文本度量参与布局。 校验：`Positive` |
+| [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L63) | `object?` | 可写; OneWay | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
+| [`IconBackground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L111) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 图标底板画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`IconForeground`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L117) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 图标前景画刷；动态主题使用 One.* 资源，显式局部值优先。 |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L75) | `double` | 可写; OneWay | `24` | 图标绘制尺寸，单位 DIP；独立于文本字号与按钮点击区域。 校验：`Positive` |
+| [`IconSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L87) | `double` | 可写; OneWay | `14` | 图标与相邻文本／内容的 DIP 间距。 校验：`NonNegative` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L69) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`IconTileSize`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L81) | `double` | 可写; OneWay | `44` | 图标承载底板的 DIP 尺寸，独立于图标自身尺寸。 校验：`Positive` |
+| [`IsRoot`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L123) | `bool` | 可写; OneWay | `false` | 此节点是否为根节点；由关系图生成器维护。 |
+| [`IsSelected`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L130) | `bool` | 只读; OneWay | `computed / state` | Selection state maintained by the owning RelationGraph. |
+| [`TextSpacing`](../../../TheOne.Avalonia/Controls/RelationGraphNodePresenter.cs#L93) | `double` | 可写; OneWay | `6` | 标题与正文之间的 DIP 间距。 校验：`NonNegative` |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

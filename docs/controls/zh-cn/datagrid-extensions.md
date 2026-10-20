@@ -143,7 +143,7 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L743) | `int` | 只读; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
+| [`SortPriority`](../../../vendor/Avalonia.Controls.DataGrid/DataGridColumn.cs#L430) | `int` | 只读; CLR / n/a | `accessor-defined / state` | Gets the one-based priority, or zero if this column is not sorted. |
 
 ### DataGridColumnOptions
 
@@ -151,13 +151,13 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`FilterCondition`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L14) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 可写; TwoWay; 附加属性 | `null` | DataGridFilterCondition?／null ; 已应用的不可变条件；支持 TwoWay；null 表示无条件；弹层草稿单独保存 |
-| [`FilterEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L12) | `bool` | 可写; OneWay; 附加属性 | `true` | bool／true ; 表格开启筛选入口后，允许关闭单列入口；关闭该列筛选能力时清除其条件 |
-| [`FilterError`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L15) | `string?` | 只读; OneWay; 附加属性 | `null` | string?／null ; 阶段 2 的只读查询属性；条件／字段错误说明，使用 GetFilterError 查询 |
-| [`FilterKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L13) | `TheOne.Avalonia.Controls.DataGridFilterKind` | 可写; OneWay; 附加属性 | `DataGridFilterKind.Auto` | DataGridFilterKind／Auto ; `Auto`、`Text`、`Number`、`None`；Auto 根据 ValueAccessor 的原始字段类型判断 可选值：`Auto`, `Text`, `Number`, `None` |
-| [`SummaryEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L16) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 显式启用该列，限数值或可空数值属性 |
-| [`SummaryFormat`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L18) | `string?` | 可写; OneWay; 附加属性 | `null` | string?／null ; .NET 数值格式，独立于列显示 Converter，使用数据视图 Culture |
-| [`SummaryKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L17) | `TheOne.Avalonia.Controls.DataGridSummaryKind` | 可写; OneWay; 附加属性 | `DataGridSummaryKind.Sum` | DataGridSummaryKind／Sum ; Sum、Average、Min、Max、Count，每列一个 校验：`Enum.IsDefined` 可选值：`Sum`, `Average`, `Min`, `Max`, `Count` |
+| [`FilterCondition`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L21) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 可写; TwoWay; 附加属性 | `null` | DataGridFilterCondition?／null ; 已应用的不可变条件；支持 TwoWay；null 表示无条件；弹层草稿单独保存 |
+| [`FilterEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L15) | `bool` | 可写; OneWay; 附加属性 | `true` | bool／true ; 表格开启筛选入口后，允许关闭单列入口；关闭该列筛选能力时清除其条件 |
+| [`FilterError`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L25) | `string?` | 只读; OneWay; 附加属性 | `null` | string?／null ; 阶段 2 的只读查询属性；条件／字段错误说明，使用 GetFilterError 查询 |
+| [`FilterKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L18) | `TheOne.Avalonia.Controls.DataGridFilterKind` | 可写; OneWay; 附加属性 | `0 / default` | DataGridFilterKind／Auto ; `Auto`、`Text`、`Number`、`None`；Auto 根据 ValueAccessor 的原始字段类型判断 可选值：`Auto`, `Text`, `Number`, `None` |
+| [`SummaryEnabled`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L28) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 显式启用该列，限数值或可空数值属性 |
+| [`SummaryFormat`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L35) | `string?` | 可写; OneWay; 附加属性 | `null` | string?／null ; .NET 数值格式，独立于列显示 Converter，使用数据视图 Culture |
+| [`SummaryKind`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L31) | `TheOne.Avalonia.Controls.DataGridSummaryKind` | 可写; OneWay; 附加属性 | `0 / default` | DataGridSummaryKind／Sum ; Sum、Average、Min、Max、Count，每列一个 校验：`Enum.IsDefined` 可选值：`Sum`, `Average`, `Min`, `Max`, `Count` |
 | [`ValueAccessor`](../../../TheOne.Avalonia/Controls/DataGridColumnOptions.cs#L11) | `TheOne.Avalonia.Controls.IDataGridValueAccessor?` | 可写; OneWay; 附加属性 | `null` | IDataGridValueAccessor?／null ; 可选覆盖：普通绑定列自动识别；模板列或特殊计算字段可提供强类型委托 |
 
 ### DataGridFeatures
@@ -166,13 +166,13 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`FrozenRightColumnCount`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L29) | `int` | 可写; OneWay; 附加属性 | `0 / default` | 右侧冻结列数；与左侧冻结区域共同占用可用宽度。 校验：`value => value >= 0` |
-| [`ShowColumnFilters`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L33) | `bool` | 可写; OneWay; 附加属性 | `false` | 启用表格列筛选入口；具体列还必须允许对应筛选能力。 |
-| [`ShowSummaryRow`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L36) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 独立统计行；关闭停止计算与订阅，保留列配置 |
-| [`SummaryEmptyText`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L40) | `string` | 可写; OneWay; 附加属性 | `"—"` | string／— ; 无有效数值时的 Sum／Average／Min／Max 文字；Count 为 0 |
-| [`SummaryLabel`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L39) | `string` | 可写; OneWay; 附加属性 | `"合计"` | string／合计 ; 原生行头槽可见时显示，不覆盖第一列结果 |
-| [`SummaryLeavesOnly`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L38) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 树视图仅统计原始叶节点，避免父级与子项重复累加；普通行均视为叶节点 |
-| [`SummaryScope`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L37) | `TheOne.Avalonia.Controls.DataGridSummaryScope` | 可写; OneWay; 附加属性 | `DataGridSummaryScope.FilteredItems` | DataGridSummaryScope／FilteredItems ; 业务与列筛选后的本地源模型、分页前；SourceItems 忽略筛选，VisibleItems 使用当前视图枚举；树视图 FilteredItems 只计直接命中节点 校验：`Enum.IsDefined` 可选值：`FilteredItems`, `SourceItems`, `VisibleItems` |
+| [`FrozenRightColumnCount`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L35) | `int` | 可写; OneWay; 附加属性 | `0 / default` | 右侧冻结列数；与左侧冻结区域共同占用可用宽度。 校验：`value => value >= 0` |
+| [`ShowColumnFilters`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L38) | `bool` | 可写; OneWay; 附加属性 | `false` | 启用表格列筛选入口；具体列还必须允许对应筛选能力。 |
+| [`ShowSummaryRow`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L47) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 独立统计行；关闭停止计算与订阅，保留列配置 |
+| [`SummaryEmptyText`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L60) | `string` | 可写; OneWay; 附加属性 | `"—"` | string／— ; 无有效数值时的 Sum／Average／Min／Max 文字；Count 为 0 |
+| [`SummaryLabel`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L57) | `string` | 可写; OneWay; 附加属性 | `"合计"` | string／合计 ; 原生行头槽可见时显示，不覆盖第一列结果 |
+| [`SummaryLeavesOnly`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L54) | `bool` | 可写; OneWay; 附加属性 | `false` | bool／false ; 树视图仅统计原始叶节点，避免父级与子项重复累加；普通行均视为叶节点 |
+| [`SummaryScope`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L50) | `TheOne.Avalonia.Controls.DataGridSummaryScope` | 可写; OneWay; 附加属性 | `0 / default` | DataGridSummaryScope／FilteredItems ; 业务与列筛选后的本地源模型、分页前；SourceItems 忽略筛选，VisibleItems 使用当前视图枚举；树视图 FilteredItems 只计直接命中节点 校验：`Enum.IsDefined` 可选值：`FilteredItems`, `SourceItems`, `VisibleItems` |
 
 ### DataGridFilterButton
 
@@ -186,8 +186,8 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Direction`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L40) | `System.ComponentModel.ListSortDirection?` | 只读; OneWay | `computed / state` | 展开或端口方向枚举；具体枚举类型列明可选值，不用布尔值代替方向。 可选值：`Ascending`, `Descending` |
-| [`SortPriority`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L41) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Direction`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L78) | `System.ComponentModel.ListSortDirection?` | 只读; OneWay | `computed / state` | 展开或端口方向枚举；具体枚举类型列明可选值，不用布尔值代替方向。 可选值：`Ascending`, `Descending` |
+| [`SortPriority`](../../../TheOne.Avalonia/Controls/DataGridSortButton.cs#L84) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### DataGridSummaryPresenter
 
@@ -195,8 +195,8 @@ FrozenRightColumnCount 为 int，默认 0，可绑定／由 Style 设置；C# �
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Background`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L22) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L23) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
+| [`Background`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L38) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridSummaryPresenter.cs#L44) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

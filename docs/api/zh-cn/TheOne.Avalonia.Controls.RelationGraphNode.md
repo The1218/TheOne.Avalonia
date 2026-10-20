@@ -12,10 +12,10 @@ The default model for a single-root relation tree.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L18) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | 可写; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | 子级模型集合；保持父子与对象身份，避免循环和跨父级共享可变节点。 |
-| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L17) | `object?` | 可写; CLR / n/a | `null` | 宿主内容或业务展示对象；具体模板作用域见内容模板契约，不把视图对象当作持久化数据。 |
+| [`Children`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L33) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.RelationGraphNode>?` | 可写; CLR / n/a | `new ObservableCollection<RelationGraphNode>()` | 子级模型集合；保持父子与对象身份，避免循环和跨父级共享可变节点。 |
+| [`Content`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L27) | `object?` | 可写; CLR / n/a | `null` | 宿主内容或业务展示对象；具体模板作用域见内容模板契约，不把视图对象当作持久化数据。 |
 | [`Icon`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L15) | `object?` | 可写; CLR / n/a | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
-| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L16) | `object?` | 可写; CLR / n/a | `null` | 显示标题；不等于业务主键或本地化资源键。 |
+| [`Title`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L21) | `object?` | 可写; CLR / n/a | `null` | 显示标题；不等于业务主键或本地化资源键。 |
 
 ## 方法与构造
 
@@ -27,4 +27,4 @@ The default model for a single-root relation tree.
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`event PropertyChangedEventHandler? RelationGraphNode.PropertyChanged`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L19) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`event PropertyChangedEventHandler? RelationGraphNode.PropertyChanged`](../../../TheOne.Avalonia/Controls/RelationGraphNode.cs#L39) | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |

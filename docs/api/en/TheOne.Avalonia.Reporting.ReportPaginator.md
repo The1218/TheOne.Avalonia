@@ -6,7 +6,7 @@
 
 Single table pagination: repeated title/header, atomic wrapped rows, last-page totals and page numbers.
 
-[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L30)
+[Source / 声明](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L59)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -16,13 +16,13 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)`](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L49) | Validates the document and computes immutable paginated layout shared by preview/printing. |
+| [`static ReportLayout ReportPaginator.Paginate(ReportDocument document, ReportDataSource? source = null)`](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L98) | Validates the document and computes immutable paginated layout shared by preview/printing. |
 
 ## Public fields
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`const double ReportPaginator.DipsPerMillimetre`](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L32) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`const double ReportPaginator.DipsPerMillimetre`](../../../TheOne.Avalonia/Reporting/ReportPaginator.cs#L67) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Related APIs and built-in models
 

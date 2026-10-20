@@ -261,11 +261,17 @@ This section lists project-added control-specific properties, public Classes usa
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
 | [`CanClose`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L21) | `bool` | writable; OneWay; attached | `false` | Enables closing; explicit False supported |
-| [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L22) | `bool` | writable; OneWay; attached | `false` | Enables pointer / keyboard ordering within a TabControl |
+| [`CanReorder`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | writable; OneWay; attached | `false` | Enables pointer / keyboard ordering within a TabControl |
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | writable; OneWay; attached | `null` | Host command receives the data item and updates the collection when provided |
-| [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L35) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `new CloseTab()` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L23) | `bool` | writable; OneWay; attached | `true` | Per-TabItem closing; False prevents closing but still allows reordering |
-| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L24) | `bool` | writable; OneWay; attached | `false` | Shows the close button; the host and associated commands retain control over closing. |
+| [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L66) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `new CloseTab()` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`EnableContextMenu`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L12) | `bool` | writable; OneWay; attached | `false` | EnableContextMenu configuration on TabFeatures; type and initial value are listed here. EnableContextMenuProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
+| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L18) | `object?` | writable; OneWay; attached | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L20) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay; attached | `DefaultIconTemplate` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L27) | `bool` | writable; OneWay; attached | `true` | Per-TabItem closing; False prevents closing but still allows reordering |
+| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `bool` | read-only; OneWay; attached | `false` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | writable; OneWay; attached | `false` | IsPinned configuration on TabFeatures; type and initial value are listed here. IsPinnedProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
+| [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L30) | `bool` | writable; OneWay; attached | `false` | Shows the close button; the host and associated commands retain control over closing. |
+| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L16) | `bool` | writable; OneWay; attached | `true` | ShowItemIcon configuration on TabFeatures; type and initial value are listed here. ShowItemIconProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
 
 ### Virtualization
 
@@ -273,7 +279,7 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Enabled`](../../../TheOne.Avalonia/Controls/Virtualization.cs#L15) | `bool` | writable; OneWay; attached | `false` | Enables supported virtualization; still requires a bounded viewport and model source rather than precreated controls. |
+| [`Enabled`](../../../TheOne.Avalonia/Controls/Virtualization.cs#L16) | `bool` | writable; OneWay; attached | `false` | Enables supported virtualization; still requires a bounded viewport and model source rather than precreated controls. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 
@@ -289,6 +295,8 @@ These are individually supported public classes. Hover, pressed, disabled and se
 | Type | Action signature | Purpose |
 | --- | --- | --- |
 | [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabStripItem item)` | Attempts to close the container's data item |
+| [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Pin(TabItem item, bool pinned = true)` | Pins a page before all unpinned pages, preserving selection. Does not require drag reordering. |
+| [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static int TabFeatures.CloseAll(TabControl tabs)` | Closes a snapshot of closable pages, honoring cancellation, commands and pin state. |
 | [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Close(TabItem item)` | Attempts to close the container's data item |
 | [`TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | `static bool TabFeatures.Move(TabControl tabs, int from, int to)` | Attempts reordering by zero-based indices |
 | [`Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | `static TreeViewItem? Virtualization.BringIntoView(TreeView tree, params int[] path)` | Materializes only the ancestor path and target of a large tree. |
@@ -298,7 +306,7 @@ These are individually supported public classes. Hover, pressed, disabled and se
 
 | Model | Properties/enum values |
 | --- | ---: |
-| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | 6 |
+| [`TheOne.Avalonia.Controls.TabFeatures`](../../api/en/TheOne.Avalonia.Controls.TabFeatures.md) | 12 |
 | [`TheOne.Avalonia.Controls.Virtualization`](../../api/en/TheOne.Avalonia.Controls.Virtualization.md) | 1 |
 
 [Complete source contract (including constructors, property accessors and identifiers for precise lookup)](../../api/en/README.md)

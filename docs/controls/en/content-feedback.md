@@ -86,7 +86,7 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L17) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L14) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
 
 ### NotificationMotion
 
@@ -94,9 +94,9 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`EnterDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L26) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(200)` | Notification entrance duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
-| [`ExitDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L28) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(140)` | Notification exit duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L24) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+| [`EnterDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L23) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(200)` | Notification entrance duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
+| [`ExitDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L27) | `System.TimeSpan` | writable; OneWay; attached | `TimeSpan.FromMilliseconds(140)` | Notification exit duration, respecting shared motion settings. Validation: `value => value >= TimeSpan.Zero` |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L20) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

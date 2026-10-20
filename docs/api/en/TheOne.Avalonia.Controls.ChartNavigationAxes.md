@@ -20,7 +20,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Horizontal = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Vertical = 2`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Both = 3`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Horizontal = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Vertical = 2`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L12) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Both = 3`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L13) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

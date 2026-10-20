@@ -22,10 +22,13 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |
 | [Upload 上传](upload.md) | 单文件选择、图片预览、替换／删除及宿主上传命令 |
 | [IconButton 与按钮层次](icon-button.md) | 属性图标、Geometry／PathIcon／Material 模板、主次操作与语义状态 |
+| [OneIcon 自有图标](one-icon.md) | 20 类 320 个矢量图标，含行业、交通、商业、教育与天气；32 个实心变体、枚举绑定与虚拟化画廊 |
+| [Breadcrumb 面包屑](breadcrumb.md) | 路径导航、图标、自定义分隔符、命令、编译绑定与键盘焦点 |
 | [分裂按钮](split-button.md) | SplitButton、ToggleSplitButton、主操作、菜单、键盘和虚拟回收 |
 | [文本展示](text-display.md) | TextBlock、Label、SelectableTextBlock、选择复制和字段关联 |
 | [按钮、输入、选择与反馈](basic.md) | Button、RepeatButton、ToggleButton、TextBox、CheckBox、RadioButton、ToggleSwitch、ComboBox、AutoCompleteBox、NumericUpDown、ButtonSpinner、Slider、ProgressBar、ToolTip |
 | [日期与时间](date-time.md) | Calendar、CalendarDatePicker、DatePicker、TimePicker、格式、日期时间 / 月份 / 年份输入 |
+| [DateTimePicker 日期时间](datetime-picker.md) | 独立日期时间输入、Format、Time 双向同步、可空值与原生日历交互 |
 | [列表、树、标签与表格](collections.md) | ItemsControl、ListBox、TreeView、TabControl、TabStrip、Card 标签、DataGrid、回收与远距离定位 |
 | [DataGrid 扩展](datagrid-extensions.md) | 自动实体属性筛选、多列组合、右侧冻结、底部数值统计 |
 | [DataGrid 绑定与排序](datagrid-binding.md) | 类型推断、注册元数据、编译编辑、排序按钮和虚拟化 |
@@ -44,6 +47,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
 | [Description 说明列表](description.md) | 标签／内容、原生集合与模板、宽窄布局、borderless、三档尺寸及属性／API／模型说明 |
+| [Timeline 时间线](timeline.md) | 事件历史、左右／交错布局、倒序、状态与自定义节点、可观察模型和模板 |
 | [ImagePreview 图片预览](image-preview.md) | 网络地址、Bitmap、本地路径、单图／多图、缩放平移和全屏 |
 | [GanttChart 甘特图](gantt-chart.md) | 只读任务层级、进度与里程碑、原生虚拟滚动和编译绑定 |
 | [ReportDesign 报表设计器](report-design.md) | 自由拖放、固定页眉页脚、接口／图片地址、MVVM JSON 保存与 PDF |

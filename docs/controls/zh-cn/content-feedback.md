@@ -86,7 +86,7 @@ Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L17) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/ContentTransitionOptions.cs#L14) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
 
 ### NotificationMotion
 
@@ -94,9 +94,9 @@ Motion.Enabled 从窗口、管理器或卡片继承。默认入场 200 ms、离�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`EnterDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L26) | `System.TimeSpan` | 可写; OneWay; 附加属性 | `TimeSpan.FromMilliseconds(200)` | 通知入场持续时间；遵守共享动效开关。 校验：`value => value >= TimeSpan.Zero` |
-| [`ExitDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L28) | `System.TimeSpan` | 可写; OneWay; 附加属性 | `TimeSpan.FromMilliseconds(140)` | 通知退场持续时间；遵守共享动效开关。 校验：`value => value >= TimeSpan.Zero` |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L24) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+| [`EnterDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L23) | `System.TimeSpan` | 可写; OneWay; 附加属性 | `TimeSpan.FromMilliseconds(200)` | 通知入场持续时间；遵守共享动效开关。 校验：`value => value >= TimeSpan.Zero` |
+| [`ExitDuration`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L27) | `System.TimeSpan` | 可写; OneWay; 附加属性 | `TimeSpan.FromMilliseconds(140)` | 通知退场持续时间；遵守共享动效开关。 校验：`value => value >= TimeSpan.Zero` |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/NotificationMotion.cs#L20) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

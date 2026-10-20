@@ -14,15 +14,15 @@ A labelled field with caller-owned native input and shared step validation messa
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L37) | `double` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
-| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L39) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
-| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L38) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
-| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L31) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
-| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L33) | `bool` | 可写; OneWay | `false` | 默认 `false`，仅展示标记；实际必填规则由校验器提供 |
-| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L30) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
-| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L36) | `Avalonia.Controls.Dock` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 可选值：`Left`, `Bottom`, `Right`, `Top` |
-| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L34) | `Avalonia.Layout.Orientation` | 可写; OneWay; 向后代继承 | `Orientation.Vertical` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L35) | `double` | 可写; OneWay; 向后代继承 | `120` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`value => double.IsFinite(value) && value > 0` |
+| [`EffectiveLabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L84) | `double` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HasHelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L86) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/FormItem.cs#L85) | `bool` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 |
+| [`HelpText`](../../../TheOne.Avalonia/Controls/FormItem.cs#L58) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
+| [`IsRequired`](../../../TheOne.Avalonia/Controls/FormItem.cs#L65) | `bool` | 可写; OneWay | `false` | 默认 `false`，仅展示标记；实际必填规则由校验器提供 |
+| [`Label`](../../../TheOne.Avalonia/Controls/FormItem.cs#L52) | `string?` | 可写; OneWay | `null` | 标签及输入下方帮助文本，空值隐藏对应区域 |
+| [`LabelDock`](../../../TheOne.Avalonia/Controls/FormItem.cs#L83) | `Avalonia.Controls.Dock` | 只读; OneWay | `computed / state` | 只读模板状态：区域可见性、标签停靠位置和实际标签宽度 可选值：`Left`, `Bottom`, `Right`, `Top` |
+| [`LabelOrientation`](../../../TheOne.Avalonia/Controls/FormItem.cs#L71) | `Avalonia.Layout.Orientation` | 可写; OneWay | `Orientation.Vertical` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`Enum.IsDefined` 可选值：`Horizontal`, `Vertical` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/FormItem.cs#L77) | `double` | 可写; OneWay | `120` | 默认 `Vertical` / `120`，向字段继承；宽度必须为正有限数 校验：`value => double.IsFinite(value) && value > 0` |
 
 ## 方法与构造
 
@@ -35,14 +35,14 @@ A labelled field with caller-owned native input and shared step validation messa
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static readonly StyledProperty<string?> FormItem.LabelProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L15) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly StyledProperty<string?> FormItem.HelpTextProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L16) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly StyledProperty<bool> FormItem.IsRequiredProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L17) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly StyledProperty<Orientation> FormItem.LabelOrientationProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L18) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly StyledProperty<double> FormItem.LabelWidthProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L19) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<FormItem, Dock> FormItem.LabelDockProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L20) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<FormItem, double> FormItem.EffectiveLabelWidthProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L21) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<FormItem, bool> FormItem.HasLabelProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L22) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<FormItem, bool> FormItem.HasHelpTextProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L23) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<string?> FormItem.HelpTextProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L18) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<bool> FormItem.IsRequiredProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L21) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<Orientation> FormItem.LabelOrientationProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L24) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<double> FormItem.LabelWidthProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L28) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<FormItem, Dock> FormItem.LabelDockProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L32) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<FormItem, double> FormItem.EffectiveLabelWidthProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L35) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<FormItem, bool> FormItem.HasLabelProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L39) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<FormItem, bool> FormItem.HasHelpTextProperty`](../../../TheOne.Avalonia/Controls/FormItem.cs#L42) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 
 ## 样式与密度
 

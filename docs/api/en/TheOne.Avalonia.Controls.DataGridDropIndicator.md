@@ -12,14 +12,14 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L15) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Foreground brush; retain text, status and disabled contrast when overriding. |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L27) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Foreground brush; retain text, status and disabled contrast when overriding. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`override void DataGridDropIndicator.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L52) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
-| [`DataGridDropIndicator.DataGridDropIndicator()`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L18) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`override void DataGridDropIndicator.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L98) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
+| [`DataGridDropIndicator.DataGridDropIndicator()`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L20) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
 

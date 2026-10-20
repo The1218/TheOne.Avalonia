@@ -1,0 +1,61 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.TimelineDemoView" x:DataType="local:TimelineDemoViewModel" x:CompileBindings="True">
+    <StackPanel Spacing="20">
+        <TextBlock Classes="h2" Text="Timeline 时间线" />
+        <TextBlock Text="按数据顺序展示事件历史；不同于 FlowStep 的步骤进度。支持状态、模板和动态更新，不排序、不触发业务操作。" TextWrapping="Wrap" />
+        <one:InfoCard Header="事件绑定 · 布局 · 倒序 · 动态更新">
+            <StackPanel Spacing="16">
+                <WrapPanel Orientation="Horizontal">
+                    <ComboBox ItemsSource="{CompiledBinding Modes}" SelectedItem="{CompiledBinding Mode, Mode=TwoWay}" MinWidth="140" Margin="0,0,12,8" />
+                    <CheckBox Content="倒序显示" IsChecked="{CompiledBinding Reverse, Mode=TwoWay}" Margin="0,0,12,8" />
+                    <Button Content="追加事件" Click="AddEvent" Margin="0,0,8,8" />
+                    <Button Content="删除末项" Click="RemoveEvent" Margin="0,0,8,8" />
+                    <Button Content="重置" Click="ResetEvents" Margin="0,0,0,8" />
+                </WrapPanel>
+                <one:Timeline Name="BoundTimeline" ItemsSource="{CompiledBinding Events}" Mode="{CompiledBinding Mode}" Reverse="{CompiledBinding Reverse}" />
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="Mode / Reverse" Content="&lt;one:Timeline ItemsSource=&quot;{CompiledBinding Events}&quot; Mode=&quot;Alternate&quot; Reverse=&quot;True&quot; /&gt;&#10;Left：轴在左侧；Right：轴在右侧；Alternate：内容交错。Reverse 只改变视觉顺序，不修改数据源。" />
+                    <one:DescriptionItem Header="ItemSpacing" Content="&lt;one:Timeline ItemSpacing=&quot;24&quot; /&gt;&#10;事件下方留白，最后一个可视事件无尾线。公共尺寸规则见 Home。" />
+                    <one:DescriptionItem Header="TimelineItemModel" Content="new TimelineItemModel { Key = &quot;review&quot;, Header = &quot;审批&quot;, Content = &quot;已通过&quot;, Timestamp = &quot;09:30&quot;, Status = TimelineStatus.Success };&#10;属性可观察，Key 由宿主管理；Timestamp 由宿主格式化，不用于自动排序。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="状态 · 自定义节点 · 富内容">
+            <StackPanel Spacing="16">
+                <one:Timeline>
+                    <one:TimelineItem Header="默认事件" Timestamp="10:00" Content="默认强调色节点。" />
+                    <one:TimelineItem Header="执行完成" Status="Success" Content="Success 成功。" />
+                    <one:TimelineItem Header="需要关注" Status="Warning" Content="Warning 警告。" />
+                    <one:TimelineItem Header="执行失败" Status="Error" Content="Error 失败，宿主决定重试操作。" />
+                    <one:TimelineItem Header="等待处理" Status="Pending" Content="Pending 静态空心节点，无循环动画。" />
+                    <one:TimelineItem Header="自定义节点" Timestamp="10:30">
+                        <one:TimelineItem.Dot><one:OneIcon Kind="Approval" IconSize="18" /></one:TimelineItem.Dot>
+                        <StackPanel Spacing="8"><TextBlock Text="Content 可放入业务界面和原生按钮，保留其键盘与命令行为。" TextWrapping="Wrap" /><Button Content="查看详情" HorizontalAlignment="Left" /></StackPanel>
+                    </one:TimelineItem>
+                </one:Timeline>
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="Status / Dot" Content="&lt;one:TimelineItem Status=&quot;Success&quot; Header=&quot;审核通过&quot; /&gt;&#10;&lt;one:TimelineItem.Dot&gt;&lt;one:OneIcon Kind=&quot;Approval&quot; IconSize=&quot;18&quot; /&gt;&lt;/one:TimelineItem.Dot&gt;&#10;Dot 优先于默认状态圆点；恢复为 null 后显示当前 Status。一个 Control 实例只能属于一个宿主，重复使用图标时用模板。" />
+                    <one:DescriptionItem Header="附加模板" Content="TimelineItem 支持 TimestampTemplate、DotTemplate，及原生 HeaderTemplate / ContentTemplate。模板声明 x:DataType，使用 CompiledBinding。ItemTemplate 接收原始数据项并展示在内容区。无额外命令或业务方法。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="ItemTemplate · 原始模型 · 动态状态">
+            <StackPanel Spacing="16">
+                <one:Timeline ItemsSource="{CompiledBinding Events}">
+                    <one:Timeline.ItemTemplate>
+                        <DataTemplate x:DataType="one:TimelineItemModel">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="{CompiledBinding Content}" TextWrapping="Wrap" />
+                                <Button Content="切换此事件的状态" Click="CycleStatus" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </one:Timeline.ItemTemplate>
+                </one:Timeline>
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="模板与自定义模型" Content="&lt;one:Timeline.ItemTemplate&gt;&lt;DataTemplate x:DataType=&quot;vm:Event&quot;&gt;&lt;TextBlock Text=&quot;{CompiledBinding Message}&quot; /&gt;&lt;/DataTemplate&gt;&lt;/one:Timeline.ItemTemplate&gt;&#10;任意业务类型可通过 ItemTemplate 定义内容。需要单独设置 Header、Timestamp、Status 时，使用内置 TimelineItemModel 或 ItemContainerTheme 的编译绑定。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+    </StackPanel>
+</UserControl>

@@ -4,7 +4,7 @@
 
 `TheOne.Avalonia.Controls.PaginationLayout` · Enum · `System.Enum`
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L5)
+[Source / 声明](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L6)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -14,11 +14,11 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`PaginationLayout.PaginationLayout()`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L5) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`PaginationLayout.PaginationLayout()`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L6) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Enum values
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Standard = 0`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L5) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Compact = 1`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L5) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Standard = 0`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Compact = 1`](../../../TheOne.Avalonia/Controls/PaginationModels.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

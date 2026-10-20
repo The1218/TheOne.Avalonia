@@ -91,7 +91,7 @@ PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/RefreshMotion.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/RefreshMotion.cs#L20) | `bool` | 可写; OneWay; 附加属性 | `false` | 使用库的共享动效配置；全局关闭或目标控件关闭时不强制播放。 |
 
 ### RefreshOptions
 
@@ -99,8 +99,8 @@ PreviewHost 仅保留 RefreshContainer 页面；RefreshVisualizer 作为其内�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L12) | `double` | 可写; OneWay; 附加属性; 向后代继承 | `22` | 刷新指示器的 DIP 尺寸；不改变触发刷新所需的拉动距离。 |
-| [`UseThemeVisualizerSizing`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L14) | `bool` | 可写; OneWay; 附加属性 | `false` | 让刷新指示器跟随共享主题密度；显式定制时可关闭。 |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L12) | `double` | 可写; OneWay; 附加属性 | `22` | 刷新指示器的 DIP 尺寸；不改变触发刷新所需的拉动距离。 |
+| [`UseThemeVisualizerSizing`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L15) | `bool` | 可写; OneWay; 附加属性 | `false` | 让刷新指示器跟随共享主题密度；显式定制时可关闭。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

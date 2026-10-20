@@ -20,5 +20,5 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`MinMax = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L6) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`None = 0`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L8) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`MinMax = 1`](../../../TheOne.Avalonia/Controls/ChartBase.Sampling.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

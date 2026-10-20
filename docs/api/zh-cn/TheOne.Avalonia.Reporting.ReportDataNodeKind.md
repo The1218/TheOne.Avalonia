@@ -20,6 +20,6 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Object = 0`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Scalar = 1`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Collection = 2`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L3) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Object = 0`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L5) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Scalar = 1`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Collection = 2`](../../../TheOne.Avalonia/Reporting/ReportDataNode.cs#L7) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

@@ -6,7 +6,7 @@
 
 Explicit metadata for native DataGrid editing, path sorting and automatic columns.
 
-[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L14)
+[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L15)
 
 以下默认值为源码注册／模型初始化值，OneTheme 样式或调用方局部值可能覆盖它；只读成员由状态计算，不能双向写入。复杂对象、模板、命令与集合需遵循相应控件用法文档。
 
@@ -16,5 +16,5 @@ Explicit metadata for native DataGrid editing, path sorting and automatic column
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static Type DataGridRowMetadata.Register<T>()`](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L23) | Registers only public properties and the parameterless constructor of a known row type. Register nested property and custom comparable types separately. |
-| [`static void DataGridRowMetadata.RegisterCollection<TCollection, TRow>() where TCollection : IEnumerable<TRow>`](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L37) | Registers an additional collection shape, including empty custom collections. |
+| [`static Type DataGridRowMetadata.Register<T>()`](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L27) | Registers only public properties and the parameterless constructor of a known row type. Register nested property and custom comparable types separately. |
+| [`static void DataGridRowMetadata.RegisterCollection<TCollection, TRow>() where TCollection : IEnumerable<TRow>`](../../../vendor/Avalonia.Controls.DataGrid/DataGridRowMetadata.cs#L44) | Registers an additional collection shape, including empty custom collections. |

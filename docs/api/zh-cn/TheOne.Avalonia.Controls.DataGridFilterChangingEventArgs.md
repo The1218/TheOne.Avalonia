@@ -10,9 +10,9 @@
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Column`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L13) | `Avalonia.Controls.DataGridColumn` | 只读; CLR / n/a | `column` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`NewCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L15) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 只读; CLR / n/a | `newCondition` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`OldCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L14) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 只读; CLR / n/a | `oldCondition` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Column`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L16) | `Avalonia.Controls.DataGridColumn` | 只读; CLR / n/a | `column` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`NewCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L18) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 只读; CLR / n/a | `newCondition` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`OldCondition`](../../../TheOne.Avalonia/Controls/DataGridFeatures.cs#L17) | `TheOne.Avalonia.Controls.DataGridFilterCondition?` | 只读; CLR / n/a | `oldCondition` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ## 方法与构造
 

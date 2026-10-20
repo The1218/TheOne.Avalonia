@@ -12,7 +12,7 @@ Prototype tree text column. Editing uses the original native TextBox and binding
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Indent`](../../../TheOne.Avalonia/Controls/DataGridTreeTextColumn.cs#L21) | `double` | 可写; OneWay | `16` | 每一级层次增加的 DIP 缩进；不改变父子关系。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Indent`](../../../TheOne.Avalonia/Controls/DataGridTreeTextColumn.cs#L23) | `double` | 可写; OneWay | `16` | 每一级层次增加的 DIP 缩进；不改变父子关系。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ## 方法与构造
 

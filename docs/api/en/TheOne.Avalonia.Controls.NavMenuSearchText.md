@@ -12,15 +12,15 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`HighlightQuery`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L12) | `string?` | writable; OneWay; attached; inherits | `null` | Query highlighted within source text; affects rendering without changing SourceText. |
-| [`SourceText`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L13) | `string?` | writable; OneWay | `null` | Full unhighlighted source text, without rich-text markup. |
+| [`HighlightQuery`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | `string?` | writable; OneWay; attached; inherits | `null` | Query highlighted within source text; affects rendering without changing SourceText. |
+| [`SourceText`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L17) | `string?` | writable; OneWay | `null` | Full unhighlighted source text, without rich-text markup. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static string? NavMenuSearchText.GetHighlightQuery(Control control)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | Reads the attached property. Query highlighted within source text; affects rendering without changing SourceText. |
-| [`static void NavMenuSearchText.SetHighlightQuery(Control control, string? value)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L15) | Sets the attached property. Query highlighted within source text; affects rendering without changing SourceText. |
+| [`static string? NavMenuSearchText.GetHighlightQuery(Control control)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L25) | Reads the attached property. Query highlighted within source text; affects rendering without changing SourceText. |
+| [`static void NavMenuSearchText.SetHighlightQuery(Control control, string? value)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L30) | Sets the attached property. Query highlighted within source text; affects rendering without changing SourceText. |
 | [`NavMenuSearchText.NavMenuSearchText()`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L9) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
@@ -28,7 +28,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Complete signature/value | Contract |
 | --- | --- |
 | [`static readonly StyledProperty<string?> NavMenuSearchText.SourceTextProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L11) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly AttachedProperty<string?> NavMenuSearchText.HighlightQueryProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L12) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly AttachedProperty<string?> NavMenuSearchText.HighlightQueryProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Styles and density
 

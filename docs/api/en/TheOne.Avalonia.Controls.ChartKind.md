@@ -20,17 +20,17 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Line = 0`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Area = 1`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Bar = 2`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`HorizontalBar = 3`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Scatter = 4`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Pie = 5`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Doughnut = 6`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Gauge = 7`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`StackedBar = 8`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`StackedHorizontalBar = 9`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`StackedArea = 10`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Line = 0`](../../../TheOne.Avalonia/Controls/ChartData.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Area = 1`](../../../TheOne.Avalonia/Controls/ChartData.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Bar = 2`](../../../TheOne.Avalonia/Controls/ChartData.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`HorizontalBar = 3`](../../../TheOne.Avalonia/Controls/ChartData.cs#L12) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Scatter = 4`](../../../TheOne.Avalonia/Controls/ChartData.cs#L13) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Pie = 5`](../../../TheOne.Avalonia/Controls/ChartData.cs#L14) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Doughnut = 6`](../../../TheOne.Avalonia/Controls/ChartData.cs#L15) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Gauge = 7`](../../../TheOne.Avalonia/Controls/ChartData.cs#L16) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`StackedBar = 8`](../../../TheOne.Avalonia/Controls/ChartData.cs#L17) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`StackedHorizontalBar = 9`](../../../TheOne.Avalonia/Controls/ChartData.cs#L18) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`StackedArea = 10`](../../../TheOne.Avalonia/Controls/ChartData.cs#L19) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L20) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L21) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L22) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

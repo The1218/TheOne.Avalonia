@@ -12,16 +12,16 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L16) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L14) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Name used for presentation/identity; keep it consistent with templates and keys. |
-| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L17) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L29) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L27) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Name used for presentation/identity; keep it consistent with templates and keys. |
+| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L28) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L31) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Task<Stream> UploadFile.OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L27) | Asynchronously opens an upload file's readable stream; the caller disposes it after use. |
-| [`static Task<UploadFile> UploadFile.FromStorageFileAsync(IStorageFile file, CancellationToken cancellationToken = default(CancellationToken), bool ownsStorageFile = false)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L42) | The storage file must remain usable for as long as this selection is used. |
-| [`void UploadFile.Dispose()`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L62) | Rejects new reads and releases an owned storage source after all open streams close. |
-| [`UploadFile.UploadFile(string name, Func<CancellationToken, Task<Stream>> openRead, long? size = null, string? contentType = null)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L19) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`void UploadFile.Dispose()`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L36) | Rejects new reads and releases an owned storage source after all open streams close. |
+| [`Task<Stream> UploadFile.OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L53) | Asynchronously opens an upload file's readable stream; the caller disposes it after use. |
+| [`static Task<UploadFile> UploadFile.FromStorageFileAsync(IStorageFile file, CancellationToken cancellationToken = default(CancellationToken), bool ownsStorageFile = false)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L87) | The storage file must remain usable for as long as this selection is used. |
+| [`UploadFile.UploadFile(string name, Func<CancellationToken, Task<Stream>> openRead, long? size = null, string? contentType = null)`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |

@@ -20,6 +20,6 @@
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Small = 0`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Normal = 1`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Large = 2`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L6) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Small = 0`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L8) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Normal = 1`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L9) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Large = 2`](../../../TheOne.Avalonia/Styling/ControlSizing.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Adds TreeSelect with stable-key single/multiple selection, cascading checks, typed model adapters, ancestor-preserving search and virtualized rows. Separates semantic colors and appearances for Button, ToggleButton, RepeatButton and IconButton while preserving native interactions. Adds Tag variants and fixes dynamic style cleanup, TabControl compact content/template switching, and ColorPicker Custom popup sizing. Includes bilingual guides, migration notes and previews. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.7. NuGet upload is manual.</PackageReleaseNotes>
+        <PackageReleaseNotes>Adds OneIcon with 320 vectors in 20 categories, Breadcrumb navigation, DateTimePicker and Timeline event history. Optimizes the icon gallery with recycled native buttons and cached text layout; desktop scrolling p95 improved from 33.48ms to 17.46ms in the documented macOS workload. Includes icon variants, observable models, compiled-binding templates, theme/window updates, independent previews and bilingual guides. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.8. NuGet upload is manual.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

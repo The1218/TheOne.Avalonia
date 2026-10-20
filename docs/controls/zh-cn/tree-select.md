@@ -102,3 +102,137 @@ Enter/Space/↓、Alt+↓ 或 F4 打开；搜索中 ↓ 进入列表，列表 �
 独立 PreviewHost 页包含单选、独立多选、级联、自定义模型、标签上限及按需加载一万节点示例。
 
 精确声明：[TreeSelect](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md)、[默认模型](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectNode.md)、[适配器](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md)、[展示行](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItem.md)、[勾选枚举](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectCheckMode.md)。
+
+<!-- generated-contracts:start -->
+## 专属属性、Classes 用法与业务 API
+
+本节只列本项目的专属属性、公开 Classes 用法、实际业务动作及关联模型，不重复原生继承 API、构造器、属性 Get/Set 包装或公开标识符。注册默认值与主题生效值不同，显式局部值优先。PreviewHost 用实际标签样例展示 Classes，不展示模板选择器／Setter 明细；Description 中的属性与业务动作附短用法代码。ControlSizing、Motion 等通用配置集中在 Home。仅 Button、Input、Select 合并比较，其余控件保留独立完整示例。
+
+### TreeSelect
+
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`CanClear`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L132) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CheckMode`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L35) | `TheOne.Avalonia.Controls.TreeSelectCheckMode` | 可写; OneWay | `TreeSelectCheckMode.Independent` | false / Independent；单选忽略勾选模式 校验：`value => Enum.IsDefined(value)` 可选值：`Independent`, `Cascade` |
+| [`ClearText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L67) | `string` | 可写; OneWay | `"清空可编辑选择"` | “无匹配节点” / “清空可编辑选择” / “展开或收起树”；空状态及可访问操作文字 |
+| [`DisplayTags`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L97) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.TreeSelectItem>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`EmptyText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L63) | `string` | 可写; OneWay | `"无匹配节点"` | “无匹配节点” / “清空可编辑选择” / “展开或收起树”；空状态及可访问操作文字 |
+| [`HasHiddenSelection`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L122) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasNoResults`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L127) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasSelection`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L117) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HiddenSelectedCount`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L112) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsDropDownOpen`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L79) | `bool` | 可写; TwoWay | `false` | false / false；浏览不改变选择 / TwoWay 展开状态 |
+| [`IsMultiSelect`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L31) | `bool` | 可写; OneWay | `false` | false / Independent；单选忽略勾选模式 |
+| [`IsReadOnly`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L75) | `bool` | 可写; OneWay | `false` | false / false；浏览不改变选择 / TwoWay 展开状态 |
+| [`ItemAdapter`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L39) | `TheOne.Avalonia.Controls.TreeSelectItemAdapter?` | 可写; OneWay | `null` | IEnumerable? 根集合 / 可选强类型模型映射 |
+| [`ItemHeight`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L142) | `double` | 只读; OneWay | `computed / state` | 单项／滚轮单元的 DIP 高度；主题密度和显式局部值可能覆盖注册初值。 |
+| [`ItemTemplate`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L43) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | null；列表 / 标签模板 |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L15) | `System.Collections.IEnumerable?` | 可写; OneWay | `null` | IEnumerable? 根集合 / 可选强类型模型映射 |
+| [`MaxDropDownHeight`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L87) | `double` | 可写; OneWay | `320` | 320 DIP，有限且 ≥80；列表视口高度上限 校验：`value => double.IsFinite(value) && value >= 80` |
+| [`MaxVisibleTags`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L83) | `int` | 可写; OneWay | `3` | 3，0–100；单选显示一项，多选超出显示 +N，0 仅计数 校验：`value => value is >= 0 and <= 100` |
+| [`OpenText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L71) | `string` | 可写; OneWay | `"展开或收起树"` | “无匹配节点” / “清空可编辑选择” / “展开或收起树”；空状态及可访问操作文字 |
+| [`PlaceholderText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L55) | `string` | 可写; OneWay | `"请选择"` | “请选择” / “搜索节点” |
+| [`SearchPlaceholderText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L59) | `string` | 可写; OneWay | `"搜索节点"` | “请选择” / “搜索节点” |
+| [`SearchText`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L51) | `string` | 可写; TwoWay | `""` | 空字符串，TwoWay；忽略大小写搜索，保留匹配节点的祖先 |
+| [`SelectedCount`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L107) | `int` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`SelectedItem`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L27) | `object?` | 可写; TwoWay | `null` | object?，TwoWay；单项 Key / 原始对象 |
+| [`SelectedItemTemplate`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L47) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | null；列表 / 标签模板 |
+| [`SelectedItems`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L102) | `System.Collections.Generic.IReadOnlyList<object>` | 只读; OneWay | `computed / state` | 多选模型集合；元素必须来自源集合，变更与清空行为遵循控件的禁选／只读契约。 |
+| [`SelectedKey`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L23) | `object?` | 可写; TwoWay | `null` | object?，TwoWay；单项 Key / 原始对象 |
+| [`SelectedKeys`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L19) | `System.Collections.IList?` | 可写; TwoWay | `null` | IList?，TwoWay；默认独立可观察集合 |
+| [`ValidationError`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L137) | `string?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`VisibleItems`](../../../TheOne.Avalonia/Controls/TreeSelect.Properties.cs#L92) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.TreeSelectItem>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+
+### TreeSelectCheckMode
+
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectCheckMode.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### TreeSelectItem
+
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItem.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`CanRemove`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L28) | `bool` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L33) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; CLR / n/a | `accessor-defined / state` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`Depth`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L21) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 节点深度，根级从 0 开始；用于计算缩进。 |
+| [`DisplayContent`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L32) | `object` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ExpandText`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L30) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ExpansionGlyph`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L29) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasChildren`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L23) | `bool` | 只读; CLR / n/a | `accessor-defined / state` | 节点是否存在子项；用于显示展开入口，不代表当前已展开。 |
+| [`Indent`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L22) | `Avalonia.Thickness` | 只读; CLR / n/a | `accessor-defined / state` | 每一级层次增加的 DIP 缩进；不改变父子关系。 |
+| [`IsChecked`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L26) | `bool?` | 只读; CLR / n/a | `accessor-defined / state` | 报表复选框元素的勾选状态。 |
+| [`IsEnabled`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L24) | `bool` | 只读; CLR / n/a | `accessor-defined / state` | 业务可用性；不可用项的选择、移除和命令行为遵循控件禁用规则。 |
+| [`IsExpanded`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L25) | `bool` | 只读; CLR / n/a | `accessor-defined / state` | 当前节点展开状态；需要在回收或数据重新加载后保留时，将其绑定到稳定模型。 |
+| [`Item`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L18) | `object` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Key`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L19) | `object` | 只读; CLR / n/a | `accessor-defined / state` | 字段／参数键，用于关联业务值；与显示名称分开维护。 |
+| [`RemoveText`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L31) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`ShowCheckBox`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L27) | `bool` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`TagContent`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L34) | `object` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`TagTemplate`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L35) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; CLR / n/a | `accessor-defined / state` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`Text`](../../../TheOne.Avalonia/Controls/TreeSelectItem.cs#L20) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 文本输入／显示值；变更通知和校验按所在模型或原生输入契约处理。 |
+
+### TreeSelectItemAdapter
+
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md)
+
+没有在该类型上另外声明 CLR／附加属性；继承成员见其基类。
+
+### TreeSelectNode
+
+[完整源码契约](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectNode.md)
+
+| 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
+| --- | --- | --- | --- | --- |
+| [`Children`](../../../TheOne.Avalonia/Controls/TreeSelectNode.cs#L17) | `System.Collections.ObjectModel.ObservableCollection<TheOne.Avalonia.Controls.TreeSelectNode>?` | 可写; CLR / n/a | `[]` | 子级模型集合；保持父子与对象身份，避免循环和跨父级共享可变节点。 |
+| [`IsEnabled`](../../../TheOne.Avalonia/Controls/TreeSelectNode.cs#L16) | `bool` | 可写; CLR / n/a | `true` | 业务可用性；不可用项的选择、移除和命令行为遵循控件禁用规则。 |
+| [`Key`](../../../TheOne.Avalonia/Controls/TreeSelectNode.cs#L14) | `object` | 可写; CLR / n/a | `Guid.NewGuid().ToString("N")` | 字段／参数键，用于关联业务值；与显示名称分开维护。 |
+| [`Text`](../../../TheOne.Avalonia/Controls/TreeSelectNode.cs#L15) | `string` | 可写; CLR / n/a | `""` | 文本输入／显示值；变更通知和校验按所在模型或原生输入契约处理。 |
+
+尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
+
+### Classes 用法
+
+没有额外公开外观类，使用默认主题及专属属性。
+
+以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
+
+### 业务 API
+
+| 类型 | 动作签名 | 用途 |
+| --- | --- | --- |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `bool TreeSelect.OpenDropDown()` | 打开多选弹层并聚焦搜索；控件必须已挂载且可用，返回是否打开。 |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `void TreeSelect.CloseDropDown()` | 关闭多选弹层，按交互上下文将焦点返回输入区。 |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `void TreeSelect.RefreshItems()` | Re-read model structure and mapping; search alone never rebuilds subscriptions. |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `bool TreeSelect.ToggleItem(object item)` | Toggle a model's selection. Cascade affects enabled leaves only; disabled selections remain locked. |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `bool TreeSelect.ClearSelection()` | Clear editable selections; selected disabled nodes remain. |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `bool TreeSelect.SetExpanded(object key, bool expanded)` |  |
+| [`TreeSelectItemAdapter`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md) | `abstract object TreeSelectItemAdapter.GetKey(object item)` |  |
+| [`TreeSelectItemAdapter`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md) | `abstract string TreeSelectItemAdapter.GetText(object item)` | 使用已配置的类型化适配器读取原始模型显示／搜索文本。 |
+| [`TreeSelectItemAdapter`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md) | `abstract IEnumerable? TreeSelectItemAdapter.GetChildren(object item)` |  |
+| [`TreeSelectItemAdapter`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItemAdapter.md) | `virtual bool TreeSelectItemAdapter.IsEnabled(object item)` | 使用适配器判断原始模型能否参与用户选择。 |
+
+### 事件订阅
+
+按需订阅下列通知，并在宿主释放时解除订阅；这里只列事件入口，不列路由事件标识字段。
+
+| 类型 | 事件 | 用途 |
+| --- | --- | --- |
+| [`TreeSelect`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelect.md) | `SelectionChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`TreeSelectItem`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItem.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+| [`TreeSelectNode`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectNode.md) | `PropertyChanged` | 状态／操作通知；在宿主生命周期内订阅并在释放时解除，事件参数类型见签名。 |
+
+### 关联模型
+
+| 模型 | 属性／枚举值 |
+| --- | ---: |
+| [`TheOne.Avalonia.Controls.TreeSelectCheckMode`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectCheckMode.md) | 2 |
+| [`TheOne.Avalonia.Controls.TreeSelectItem`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectItem.md) | 18 |
+| [`TheOne.Avalonia.Controls.TreeSelectNode`](../../api/zh-cn/TheOne.Avalonia.Controls.TreeSelectNode.md) | 4 |
+
+[完整源码契约（含构造、属性访问器和标识符，供精确查阅）](../../api/zh-cn/README.md)
+<!-- generated-contracts:end -->

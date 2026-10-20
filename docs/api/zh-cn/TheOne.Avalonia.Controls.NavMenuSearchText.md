@@ -12,15 +12,15 @@ Search-aware text for NavMenu content templates. SourceText remains bindable whe
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`HighlightQuery`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L12) | `string?` | 可写; OneWay; 附加属性; 向后代继承 | `null` | 需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
-| [`SourceText`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L13) | `string?` | 可写; OneWay | `null` | 高亮前的完整源文本；不要传入格式化的富文本标记。 |
+| [`HighlightQuery`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | `string?` | 可写; OneWay; 附加属性; 向后代继承 | `null` | 需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
+| [`SourceText`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L17) | `string?` | 可写; OneWay | `null` | 高亮前的完整源文本；不要传入格式化的富文本标记。 |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static string? NavMenuSearchText.GetHighlightQuery(Control control)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | 读取附加属性。需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
-| [`static void NavMenuSearchText.SetHighlightQuery(Control control, string? value)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L15) | 设置附加属性。需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
+| [`static string? NavMenuSearchText.GetHighlightQuery(Control control)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L25) | 读取附加属性。需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
+| [`static void NavMenuSearchText.SetHighlightQuery(Control control, string? value)`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L30) | 设置附加属性。需在源文本中高亮的查询；只改变绘制，不修改 SourceText。 |
 | [`NavMenuSearchText.NavMenuSearchText()`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L9) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段
@@ -28,7 +28,7 @@ Search-aware text for NavMenu content templates. SourceText remains bindable whe
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static readonly StyledProperty<string?> NavMenuSearchText.SourceTextProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L11) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly AttachedProperty<string?> NavMenuSearchText.HighlightQueryProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L12) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly AttachedProperty<string?> NavMenuSearchText.HighlightQueryProperty`](../../../TheOne.Avalonia/Controls/NavMenuSearchText.cs#L14) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 
 ## 样式与密度
 

@@ -12,14 +12,14 @@ Native column insertion caret with a short, cancellable settling motion.
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L15) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
+| [`Foreground`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L27) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
 
 ## 方法与构造
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`override void DataGridDropIndicator.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L52) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
-| [`DataGridDropIndicator.DataGridDropIndicator()`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L18) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
+| [`override void DataGridDropIndicator.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L98) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
+| [`DataGridDropIndicator.DataGridDropIndicator()`](../../../TheOne.Avalonia/Controls/DataGridDropIndicator.cs#L20) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段
 

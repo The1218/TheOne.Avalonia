@@ -12,8 +12,8 @@ A label and value row. Header and Content accept text, controls or typed data te
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`LabelWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L18) | `double` | 可写; OneWay; 向后代继承 | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`StackWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L21) | `double` | 可写; OneWay; 向后代继承 | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`LabelWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L24) | `double` | 可写; OneWay | `180` | `double`，`180` ; 双列布局中名称列宽度，单位 DIP。可绑定、可通过样式设置，并继承至行；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`StackWidth`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L31) | `double` | 可写; OneWay | `520` | `double`，`520` ; 行可用宽度小于此值时，名称移到内容上方。`0` 保持双列；必须为有限非负值。 校验：`value => double.IsFinite(value) && value >= 0` |
 
 ## 方法与构造
 
@@ -26,7 +26,7 @@ A label and value row. Header and Content accept text, controls or typed data te
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`static readonly StyledProperty<double> DescriptionItem.LabelWidthProperty`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L12) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly StyledProperty<double> DescriptionItem.StackWidthProperty`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L13) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<double> DescriptionItem.StackWidthProperty`](../../../TheOne.Avalonia/Controls/DescriptionItem.cs#L15) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 
 ## 样式与密度
 

@@ -6,6 +6,7 @@ namespace TheOne.DesignPreview;
 internal sealed class ControlPreviewPage : UserControl
 {
     private readonly List<Control> _sourceViews = [];
+    private readonly Lazy<ControlDetailsView> _details;
 
     internal ControlPreviewPage(PreviewPageDescriptor descriptor, UserControl demo)
     {
@@ -13,12 +14,12 @@ internal sealed class ControlPreviewPage : UserControl
         var plan = PreviewPageContentPolicy.For(descriptor.Title);
         if (plan.ShowOriginalDemo) _sourceViews.Add(demo);
         UsesViewport = plan.UsesViewport;
-        Details = new ControlDetailsView(descriptor.Title);
+        _details = new Lazy<ControlDetailsView>(() => new ControlDetailsView(descriptor.Title));
         var supplements = new StackPanel { Spacing = 24 };
         if (UsesViewport && ControlStyleShowcase.Create(descriptor.Title) is { } styles)
             supplements.Children.Add(styles);
         // These pages author property/API/model Descriptions beside their live examples.
-        if (descriptor.Title is not ("NavPage" or "TreeSelect")) supplements.Children.Add(Details);
+        if (descriptor.Title is not ("NavPage" or "TreeSelect" or "OneIcon" or "Breadcrumb" or "DateTimePicker" or "Timeline")) supplements.Children.Add(Details);
         foreach (var name in descriptor.Title switch
                  {
                      "Form" => new[] { "FormItem" }, "FlowStep" => new[] { "FlowNode" },
@@ -46,7 +47,7 @@ internal sealed class ControlPreviewPage : UserControl
     }
 
     internal UserControl Demo { get; }
-    internal ControlDetailsView Details { get; }
+    internal ControlDetailsView Details => _details.Value;
     internal bool UsesViewport { get; }
     internal IEnumerable<Control> SourceViews => _sourceViews;
 

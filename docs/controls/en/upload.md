@@ -93,37 +93,37 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ActionsTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L59) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`AllowedExtensions`](../../../TheOne.Avalonia/Controls/Upload.cs#L55) | `string` | writable; OneWay | `".png,.jpg,.jpeg,.webp,.bmp,.gif"` | Comma/semicolon/space separated extensions. Defaults to PNG, JPEG, WebP, BMP and GIF. Empty accepts any extension. Explicitly allowed non-image files use a file icon and can be uploaded without thumbnail decoding. |
-| [`Description`](../../../TheOne.Avalonia/Controls/Upload.cs#L50) | `string` | writable; OneWay | `"PNG、JPG、WebP 等图片 · 单文件"` | Localizable captions. |
-| [`EmptyTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L57) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Upload.cs#L65) | `string?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`FilePicker`](../../../TheOne.Avalonia/Controls/Upload.cs#L45) | `TheOne.Avalonia.Controls.IUploadFilePicker?` | writable; OneWay | `null` | Optional `IUploadFilePicker` host service. `PickAsync` returns one `UploadFile` or null on cancellation. |
-| [`FileTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L58) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
-| [`HasFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L61) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`HasPreview`](../../../TheOne.Avalonia/Controls/Upload.cs#L62) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`HttpClient`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L24) | `System.Net.Http.HttpClient?` | writable; OneWay | `null` | Optional consumer-owned client for the built-in transport. |
-| [`IsBusy`](../../../TheOne.Avalonia/Controls/Upload.cs#L46) | `bool` | writable; OneWay | `false` | Upload-in-progress state maintained by the async operation; business submissions should respect it. |
-| [`IsPreviewLoading`](../../../TheOne.Avalonia/Controls/Upload.cs#L63) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`IsSelecting`](../../../TheOne.Avalonia/Controls/Upload.cs#L64) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`IsUploading`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L25) | `bool` | read-only; OneWay | `computed / state` | Read-only state for an active built-in request. |
-| [`MaxFileSize`](../../../TheOne.Avalonia/Controls/Upload.cs#L56) | `long` | writable; OneWay | `10 * 1024 * 1024` | Default 10 MiB; zero disables the declared-size limit. Thumbnail reads are capped at 64 MiB independently. Actual read size is checked when metadata is unavailable. Validation: `value => value >= 0` |
-| [`PreviewImage`](../../../TheOne.Avalonia/Controls/Upload.cs#L60) | `Avalonia.Media.IImage?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
-| [`Progress`](../../../TheOne.Avalonia/Controls/Upload.cs#L47) | `double` | writable; OneWay | `0` | Progress value with range/unit defined by its upload/Gantt model, distinct from a success flag. Validation: `value => double.IsFinite(value) && value is >= 0 and <= 100` |
-| [`RemoveCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L67) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Clears the selection, thumbnail and errors. |
-| [`RemoveText`](../../../TheOne.Avalonia/Controls/Upload.cs#L53) | `string` | writable; OneWay | `"移除"` | Localizable captions. |
-| [`ReplaceText`](../../../TheOne.Avalonia/Controls/Upload.cs#L52) | `string` | writable; OneWay | `"替换"` | Localizable captions. |
-| [`RequestType`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L20) | `TheOne.Avalonia.Controls.UploadRequestType` | writable; OneWay | `UploadRequestType.Post` | HTTP request verb, default `Post`; uses one-way binding by default. Validation: `value => Enum.IsDefined(value)` Values: `Post`, `Put`, `Patch` |
-| [`RequestUploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L68) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Checks enabled, busy, preview and validation state, then uses the host command or the built-in upload. |
-| [`SelectCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L66) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Native single-file picker; cancellation preserves the current selection. |
-| [`SelectText`](../../../TheOne.Avalonia/Controls/Upload.cs#L51) | `string` | writable; OneWay | `"选择图片"` | Localizable captions. |
-| [`SelectedFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L43) | `TheOne.Avalonia.Controls.UploadFile?` | writable; TwoWay | `null` | Selected original upload-file model; null clears the current selection. |
-| [`StatusText`](../../../TheOne.Avalonia/Controls/Upload.cs#L48) | `string?` | writable; OneWay | `null` | Display text for operation status; business logic should use state/results rather than parse this text. |
-| [`SuccessFileUrl`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L22) | `string?` | writable; TwoWay | `null` | Parsed result URL string with two-way binding by default. |
-| [`Title`](../../../TheOne.Avalonia/Controls/Upload.cs#L49) | `string` | writable; OneWay | `"上传图片"` | Localizable captions. |
-| [`UploadApi`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L19) | `string?` | writable; TwoWay | `null` | Endpoint string with two-way binding by default. |
-| [`UploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L44) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
-| [`UploadText`](../../../TheOne.Avalonia/Controls/Upload.cs#L54) | `string` | writable; OneWay | `"上传文件"` | Localizable captions. |
+| [`ActionsTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L202) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`AllowedExtensions`](../../../TheOne.Avalonia/Controls/Upload.cs#L178) | `string` | writable; OneWay | `".png,.jpg,.jpeg,.webp,.bmp,.gif"` | Comma/semicolon/space separated extensions. Defaults to PNG, JPEG, WebP, BMP and GIF. Empty accepts any extension. Explicitly allowed non-image files use a file icon and can be uploaded without thumbnail decoding. |
+| [`Description`](../../../TheOne.Avalonia/Controls/Upload.cs#L148) | `string` | writable; OneWay | `"PNG、JPG、WebP 等图片 · 单文件"` | Localizable captions. |
+| [`EmptyTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L190) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`ErrorMessage`](../../../TheOne.Avalonia/Controls/Upload.cs#L213) | `string?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`FilePicker`](../../../TheOne.Avalonia/Controls/Upload.cs#L118) | `TheOne.Avalonia.Controls.IUploadFilePicker?` | writable; OneWay | `null` | Optional `IUploadFilePicker` host service. `PickAsync` returns one `UploadFile` or null on cancellation. |
+| [`FileTemplate`](../../../TheOne.Avalonia/Controls/Upload.cs#L196) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay | `null` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`HasFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L209) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`HasPreview`](../../../TheOne.Avalonia/Controls/Upload.cs#L210) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`HttpClient`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L56) | `System.Net.Http.HttpClient?` | writable; OneWay | `null` | Optional consumer-owned client for the built-in transport. |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/Upload.cs#L124) | `bool` | writable; OneWay | `false` | Upload-in-progress state maintained by the async operation; business submissions should respect it. |
+| [`IsPreviewLoading`](../../../TheOne.Avalonia/Controls/Upload.cs#L211) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`IsSelecting`](../../../TheOne.Avalonia/Controls/Upload.cs#L212) | `bool` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`IsUploading`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L62) | `bool` | read-only; OneWay | `computed / state` | Read-only state for an active built-in request. |
+| [`MaxFileSize`](../../../TheOne.Avalonia/Controls/Upload.cs#L184) | `long` | writable; OneWay | `10 * 1024 * 1024` | Default 10 MiB; zero disables the declared-size limit. Thumbnail reads are capped at 64 MiB independently. Actual read size is checked when metadata is unavailable. Validation: `value => value >= 0` |
+| [`PreviewImage`](../../../TheOne.Avalonia/Controls/Upload.cs#L208) | `Avalonia.Media.IImage?` | read-only; OneWay | `computed / state` | Read-only bindable display state. |
+| [`Progress`](../../../TheOne.Avalonia/Controls/Upload.cs#L130) | `double` | writable; OneWay | `0 / default` | Progress value with range/unit defined by its upload/Gantt model, distinct from a success flag. Validation: `value => double.IsFinite(value) && value is >= 0 and <= 100` |
+| [`RemoveCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L215) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Clears the selection, thumbnail and errors. |
+| [`RemoveText`](../../../TheOne.Avalonia/Controls/Upload.cs#L166) | `string` | writable; OneWay | `"移除"` | Localizable captions. |
+| [`ReplaceText`](../../../TheOne.Avalonia/Controls/Upload.cs#L160) | `string` | writable; OneWay | `"替换"` | Localizable captions. |
+| [`RequestType`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L42) | `TheOne.Avalonia.Controls.UploadRequestType` | writable; OneWay | `0 / default` | HTTP request verb, default `Post`; uses one-way binding by default. Validation: `value => Enum.IsDefined(value)` Values: `Post`, `Put`, `Patch` |
+| [`RequestUploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L216) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Checks enabled, busy, preview and validation state, then uses the host command or the built-in upload. |
+| [`SelectCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L214) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `accessor-defined / state` | Native single-file picker; cancellation preserves the current selection. |
+| [`SelectText`](../../../TheOne.Avalonia/Controls/Upload.cs#L154) | `string` | writable; OneWay | `"选择图片"` | Localizable captions. |
+| [`SelectedFile`](../../../TheOne.Avalonia/Controls/Upload.cs#L106) | `TheOne.Avalonia.Controls.UploadFile?` | writable; TwoWay | `null` | Selected original upload-file model; null clears the current selection. |
+| [`StatusText`](../../../TheOne.Avalonia/Controls/Upload.cs#L136) | `string?` | writable; OneWay | `null` | Display text for operation status; business logic should use state/results rather than parse this text. |
+| [`SuccessFileUrl`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L49) | `string?` | writable; TwoWay | `null` | Parsed result URL string with two-way binding by default. |
+| [`Title`](../../../TheOne.Avalonia/Controls/Upload.cs#L142) | `string` | writable; OneWay | `"上传图片"` | Localizable captions. |
+| [`UploadApi`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L36) | `string?` | writable; TwoWay | `null` | Endpoint string with two-way binding by default. |
+| [`UploadCommand`](../../../TheOne.Avalonia/Controls/Upload.cs#L112) | `System.Windows.Input.ICommand?` | writable; OneWay | `null` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
+| [`UploadText`](../../../TheOne.Avalonia/Controls/Upload.cs#L172) | `string` | writable; OneWay | `"上传文件"` | Localizable captions. |
 
 ### UploadFile
 
@@ -131,10 +131,10 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L16) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L14) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Name used for presentation/identity; keep it consistent with templates and keys. |
-| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L15) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L17) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`ContentType`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L29) | `string?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`Name`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L27) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Name used for presentation/identity; keep it consistent with templates and keys. |
+| [`Size`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L28) | `long?` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`SizeText`](../../../TheOne.Avalonia/Controls/UploadFile.cs#L31) | `string` | read-only; CLR / n/a | `accessor-defined / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

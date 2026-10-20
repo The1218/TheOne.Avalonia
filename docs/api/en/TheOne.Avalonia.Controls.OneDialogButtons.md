@@ -4,7 +4,7 @@
 
 `TheOne.Avalonia.Controls.OneDialogButtons` · Enum · `System.Enum`
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117)
+[Source / 声明](../../../TheOne.Avalonia/Controls/OneMessages.cs#L195)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -14,13 +14,13 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`OneDialogButtons.OneDialogButtons()`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`OneDialogButtons.OneDialogButtons()`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L195) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Enum values
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Ok = 0`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`OkCancel = 1`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`YesNo = 2`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`YesNoCancel = 3`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L117) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Ok = 0`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L197) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`OkCancel = 1`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L198) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`YesNo = 2`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L199) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`YesNoCancel = 3`](../../../TheOne.Avalonia/Controls/OneMessages.cs#L200) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

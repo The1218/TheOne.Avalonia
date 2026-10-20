@@ -1,0 +1,56 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             x:Class="TheOne.DesignPreview.BreadcrumbDemoView" x:DataType="local:BreadcrumbDemoViewModel" x:CompileBindings="True">
+    <StackPanel Spacing="20">
+        <TextBlock Classes="h2" Text="Breadcrumb 面包屑" />
+        <TextBlock Text="路径数据由宿主管理。祖先项支持鼠标、Enter / Space 和命令；方向键、Home / End 移动焦点，当前页不跳转。" TextWrapping="Wrap" />
+        <one:InfoCard Header="数据绑定 · 图标 · 命令导航">
+            <StackPanel Spacing="12">
+                <one:Breadcrumb Name="BoundBreadcrumb" ItemsSource="{CompiledBinding Path}" ItemInvokedCommand="{CompiledBinding NavigateCommand}" />
+                <TextBlock Text="{CompiledBinding NavigationText}" TextWrapping="Wrap" />
+                <Button Content="恢复演示路径" Click="ResetPath" HorizontalAlignment="Left" />
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="ItemInvokedCommand" Content="&lt;one:Breadcrumb ItemsSource=&quot;{CompiledBinding Path}&quot; ItemInvokedCommand=&quot;{CompiledBinding NavigateCommand}&quot; /&gt;&#10;命令参数为原始数据项；CanExecute 控制祖先项是否可点击。" />
+                    <one:DescriptionItem Header="CurrentItem / 事件" Content="breadcrumb.CurrentItem 为末项；breadcrumb.ItemInvoked += (_, e) =&gt; Navigate(e.Item, e.Index);&#10;控件不删除路径、不创建页面，使用者在命令或事件中更新导航状态。" />
+                    <one:DescriptionItem Header="BreadcrumbItemModel" Content="new BreadcrumbItemModel { Header = &quot;首页&quot;, Key = &quot;home&quot;, Icon = OneIconKind.Home, IsEnabled = true };&#10;Header 为内容，Key 为业务导航标识，Icon 可空；属性变化会更新界面。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="分隔符 · 无分隔符 · 禁用项">
+            <StackPanel Spacing="12">
+                <one:Breadcrumb Separator="›">
+                    <one:BreadcrumbItem Content="首页" Icon="Home" /><one:BreadcrumbItem Content="设置" Icon="Settings" /><one:BreadcrumbItem Content="主题" />
+                </one:Breadcrumb>
+                <one:Breadcrumb Separator="{x:Null}">
+                    <one:BreadcrumbItem Content="首页" /><one:BreadcrumbItem Content="无分隔符" /><one:BreadcrumbItem Content="当前页" />
+                </one:Breadcrumb>
+                <one:Breadcrumb>
+                    <one:BreadcrumbItem Content="首页" /><one:BreadcrumbItem Content="无访问权限" IsEnabled="False" /><one:BreadcrumbItem Content="当前页" />
+                </one:Breadcrumb>
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="Separator" Content="Separator=&quot;›&quot; 或 Separator=&quot;{x:Null}&quot;；首项之前不显示分隔符。" />
+                    <one:DescriptionItem Header="SeparatorTemplate" Content="&lt;one:Breadcrumb.SeparatorTemplate&gt;&lt;DataTemplate&gt;&lt;one:OneIcon Kind=&quot;ChevronRight&quot; IconSize=&quot;12&quot; /&gt;&lt;/DataTemplate&gt;&lt;/one:Breadcrumb.SeparatorTemplate&gt;" />
+                </one:Description>
+                <one:Breadcrumb Separator="›">
+                    <one:Breadcrumb.SeparatorTemplate><DataTemplate><one:OneIcon Kind="ChevronRight" IconSize="12" /></DataTemplate></one:Breadcrumb.SeparatorTemplate>
+                    <one:BreadcrumbItem Content="首页" /><one:BreadcrumbItem Content="图标分隔符" /><one:BreadcrumbItem Content="当前页" />
+                </one:Breadcrumb>
+            </StackPanel>
+        </one:InfoCard>
+        <one:InfoCard Header="自定义数据模板 · 窄窗口自动换行">
+            <StackPanel Spacing="12">
+                <one:Breadcrumb ItemsSource="{CompiledBinding Path}" ItemInvokedCommand="{CompiledBinding NavigateCommand}" MaxWidth="360" HorizontalAlignment="Left">
+                    <one:Breadcrumb.ItemTemplate>
+                        <DataTemplate x:DataType="one:BreadcrumbItemModel">
+                            <StackPanel Orientation="Horizontal" Spacing="5"><TextBlock Text="{CompiledBinding Header}" /><TextBlock Text="{CompiledBinding Key}" FontSize="10" VerticalAlignment="Center" /></StackPanel>
+                        </DataTemplate>
+                    </one:Breadcrumb.ItemTemplate>
+                </one:Breadcrumb>
+                <one:Description LabelWidth="180">
+                    <one:DescriptionItem Header="自定义数据项" Content="ItemsSource 可绑定任意数据项；在 ItemTemplate 中声明 x:DataType 并使用 CompiledBinding。自定义模板收到原始数据项，不使用属性名字符串或反射 getter。" />
+                    <one:DescriptionItem Header="布局与样式" Content="默认 WrapPanel 随可用宽度换行，不固定高度；单项过长时可在自定义模板中设置 MaxWidth 与 TextTrimming。无额外 Classes，公共尺寸规则见 Home。" />
+                </one:Description>
+            </StackPanel>
+        </one:InfoCard>
+    </StackPanel>
+</UserControl>

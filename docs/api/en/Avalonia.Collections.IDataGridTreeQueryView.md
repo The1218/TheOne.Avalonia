@@ -6,7 +6,7 @@
 
 Optional query/summary contract, separate from the existing tree presentation API.
 
-[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L38)
+[Source / 声明](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L39)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -18,11 +18,11 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`bool IDataGridTreeQueryView.IsFilterMatch(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L42) | Checks whether an original node directly matches the current filter. |
-| [`bool IDataGridTreeQueryView.IsLeaf(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L43) | Checks whether an original node is a leaf with no children. |
+| [`bool IDataGridTreeQueryView.IsFilterMatch(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L43) | Checks whether an original node directly matches the current filter. |
+| [`bool IDataGridTreeQueryView.IsLeaf(object item)`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L44) | Checks whether an original node is a leaf with no children. |
 
 ## Events
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`event EventHandler? IDataGridTreeQueryView.LoadedItemsChanged`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L40) | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |
+| [`event EventHandler? IDataGridTreeQueryView.LoadedItemsChanged`](../../../vendor/Avalonia.Controls.DataGrid/Collections/DataGridTreeCollectionView.cs#L42) | State/operation notification; subscribe for the host lifetime and detach on disposal. The signature defines event arguments. |

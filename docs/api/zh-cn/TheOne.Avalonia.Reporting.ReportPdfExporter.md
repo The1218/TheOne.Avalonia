@@ -16,9 +16,7 @@ Exports an immutable definition snapshot through the same drawing path as Report
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportPdfExporter.cs#L38) | 完整生成分页 PDF 后再提交；取消在目标提交前生效，并发任务使用独立流。可读可寻址目标写入失败时恢复原内容、长度及位置。 |
-
-覆盖非空可寻址只写流会抛出 `NotSupportedException`；同一流的并发任务抛出 `InvalidOperationException`。恢复失败时，`AggregateException` 同时包含写入与恢复错误。不可寻址流无法回退已接收字节。失败重试、取消时机及文件打开方式见 [ReportDesign 导出保护](../../controls/zh-cn/report-design.md#导出取消失败重试与目标占用)。
+| [`static Task ReportPdfExporter.ExportAsync(ReportDocument definition, ReportDataSource? source, Stream destination, HttpClient? client = null, CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Reporting/ReportPdfExporter.cs#L38) | Stages a complete PDF; concurrent jobs require separate destination streams. |
 
 ## 相关 API 与内置模型
 

@@ -91,7 +91,7 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/RefreshMotion.cs#L22) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
+| [`UseMotionSettings`](../../../TheOne.Avalonia/Controls/RefreshMotion.cs#L20) | `bool` | writable; OneWay; attached | `false` | Uses shared motion configuration without forcing animation when globally/locally disabled. |
 
 ### RefreshOptions
 
@@ -99,8 +99,8 @@ This section lists project-added control-specific properties, public Classes usa
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L12) | `double` | writable; OneWay; attached; inherits | `22` | Refresh-indicator size in DIPs, independent of the pull threshold. |
-| [`UseThemeVisualizerSizing`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L14) | `bool` | writable; OneWay; attached | `false` | Makes the refresh visualizer follow shared theme density; disable for explicit sizing. |
+| [`IndicatorSize`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L12) | `double` | writable; OneWay; attached | `22` | Refresh-indicator size in DIPs, independent of the pull threshold. |
+| [`UseThemeVisualizerSizing`](../../../TheOne.Avalonia/Controls/RefreshOptions.cs#L15) | `bool` | writable; OneWay; attached | `false` | Makes the refresh visualizer follow shared theme density; disable for explicit sizing. |
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home.
 

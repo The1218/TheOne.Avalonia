@@ -20,6 +20,6 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Pending = 0`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`InProgress = 1`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Completed = 2`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L7) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Pending = 0`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`InProgress = 1`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Completed = 2`](../../../TheOne.Avalonia/Controls/FlowNodeContent.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

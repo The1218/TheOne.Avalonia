@@ -22,6 +22,6 @@ The HTTP method used by the built-in multipart upload.
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Post = 0`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Put = 1`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
-| [`Patch = 2`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Post = 0`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L12) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Put = 1`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L13) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Patch = 2`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L14) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

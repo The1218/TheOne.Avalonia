@@ -22,11 +22,11 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Semicircle = 0`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Basic = 1`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Speed = 2`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Progress = 3`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`StageSpeed = 4`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Grade = 5`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Temperature = 6`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Barometer = 7`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L9) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Semicircle = 0`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Basic = 1`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L12) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Speed = 2`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L13) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Progress = 3`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L14) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`StageSpeed = 4`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L15) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Grade = 5`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L16) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Temperature = 6`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L17) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Barometer = 7`](../../../TheOne.Avalonia/Controls/GaugeChart.Properties.cs#L18) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

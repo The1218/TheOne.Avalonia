@@ -6,7 +6,7 @@
 
 Template-based graph editing. Persistence, execution and business validation belong to the host.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L18)
+[Source / 声明](../../../TheOne.Avalonia/Controls/WorkflowEditor.Panels.cs#L6)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
@@ -63,15 +63,15 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L571) | Adds a workflow node through document history so the edit can be undone. |
-| [`void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L590) | Selects an original workflow node under the editor's connection-selection rules. |
-| [`bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L612) | Attempts a port connection using document validation/history. |
-| [`void WorkflowEditor.DeleteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L635) | Deletes selected nodes/connections through undo history. |
-| [`void WorkflowEditor.FitToView()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L642) | Adjusts zoom/pan to fit document nodes without changing model coordinates. |
-| [`void WorkflowEditor.Locate(string? nodeId)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L656) | Locates a node/validation issue in the current viewport. |
-| [`void WorkflowEditor.ArrangeNodes()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L664) | Arranges node layout while recording coordinate changes in document history. |
-| [`void WorkflowEditor.CopySelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L680) | Copies the selection into a supported editor fragment under serialization boundaries. |
-| [`void WorkflowEditor.PasteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L695) | Pastes a copied fragment with independent identities and undoable edits. |
+| [`WorkflowNode? WorkflowEditor.AddNode(WorkflowNodeDefinition definition, Point position)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L573) | Adds a workflow node through document history so the edit can be undone. |
+| [`void WorkflowEditor.SelectNode(WorkflowNode? node, bool additive = false)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L592) | Selects an original workflow node under the editor's connection-selection rules. |
+| [`bool WorkflowEditor.Connect(string sourceNode, string sourcePort, string targetNode, string targetPort)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L614) | Attempts a port connection using document validation/history. |
+| [`void WorkflowEditor.DeleteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L637) | Deletes selected nodes/connections through undo history. |
+| [`void WorkflowEditor.FitToView()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L644) | Adjusts zoom/pan to fit document nodes without changing model coordinates. |
+| [`void WorkflowEditor.Locate(string? nodeId)`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L658) | Locates a node/validation issue in the current viewport. |
+| [`void WorkflowEditor.ArrangeNodes()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L666) | Arranges node layout while recording coordinate changes in document history. |
+| [`void WorkflowEditor.CopySelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L682) | Copies the selection into a supported editor fragment under serialization boundaries. |
+| [`void WorkflowEditor.PasteSelection()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L697) | Pastes a copied fragment with independent identities and undoable edits. |
 | [`WorkflowEditor.WorkflowEditor()`](../../../TheOne.Avalonia/Controls/WorkflowEditor.cs#L150) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Events

@@ -15,7 +15,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | [`CancelText`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L11) | `string` | writable; CLR / init-only | `"取消"` | Localized cancel-button text without changing its result value. |
 | [`ConfirmText`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L10) | `string` | writable; CLR / init-only | `"确认"` | Localized confirmation text; it does not execute host business logic itself. |
 | [`IsDangerous`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L12) | `bool` | writable; CLR / init-only | `false` | Applies danger semantics to confirmation; the business layer owns authorization/execution. |
-| [`Size`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L14) | `TheOne.Avalonia.Styling.ControlSize?` | writable; CLR / init-only | `null` | Overrides the owner window's inherited density when specified. Values: `Small`, `Normal`, `Large` |
+| [`Size`](../../../TheOne.Avalonia/Controls/OneMessageBox.cs#L15) | `TheOne.Avalonia.Styling.ControlSize?` | writable; CLR / init-only | `null` | Overrides the owner window's inherited density when specified. Values: `Small`, `Normal`, `Large` |
 
 ## Methods and constructors
 

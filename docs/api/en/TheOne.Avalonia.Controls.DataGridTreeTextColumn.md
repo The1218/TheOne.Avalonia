@@ -12,7 +12,7 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Indent`](../../../TheOne.Avalonia/Controls/DataGridTreeTextColumn.cs#L21) | `double` | writable; OneWay | `16` | Additional DIP indentation per hierarchy level, without changing parent/child relationships. Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`Indent`](../../../TheOne.Avalonia/Controls/DataGridTreeTextColumn.cs#L23) | `double` | writable; OneWay | `16` | Additional DIP indentation per hierarchy level, without changing parent/child relationships. Validation: `value => double.IsFinite(value) && value >= 0` |
 
 ## Methods and constructors
 

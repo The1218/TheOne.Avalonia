@@ -22,6 +22,6 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Post = 0`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Put = 1`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Patch = 2`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L10) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Post = 0`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L12) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Put = 1`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L13) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Patch = 2`](../../../TheOne.Avalonia/Controls/UploadRequest.cs#L14) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

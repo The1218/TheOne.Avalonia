@@ -55,7 +55,7 @@ IconButton 与 Button、ToggleButton、RepeatButton 共用[组合及优先级规
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L13) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/ButtonLoading.cs#L12) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
 
 ### IconButton
 
@@ -63,15 +63,15 @@ IconButton 与 Button、ToggleButton、RepeatButton 共用[组合及优先级规
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`HasIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L30) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasLabel`](../../../TheOne.Avalonia/Controls/IconButton.cs#L31) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`Icon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L24) | `object?` | 可写; OneWay | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
-| [`IconPlacement`](../../../TheOne.Avalonia/Controls/IconButton.cs#L22) | `TheOne.Avalonia.Controls.IconPlacement` | 可写; OneWay | `0 / default` | 图标相对文本的位置枚举；左右或上下布局由模板处理。 校验：`value => Enum.IsDefined(value)` 可选值：`Left`, `Right`, `Top`, `Bottom` |
-| [`IconSize`](../../../TheOne.Avalonia/Controls/IconButton.cs#L26) | `double` | 可写; OneWay | `15` | 图标绘制尺寸，单位 DIP；独立于文本字号与按钮点击区域。 校验：`value => double.IsFinite(value) && value > 0` |
-| [`IconSpacing`](../../../TheOne.Avalonia/Controls/IconButton.cs#L27) | `double` | 可写; OneWay | `8` | 图标与相邻文本／内容的 DIP 间距。 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/IconButton.cs#L25) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
-| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L23) | `bool` | 可写; OneWay | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
-| [`ShowIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L21) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L89) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasLabel`](../../../TheOne.Avalonia/Controls/IconButton.cs#L95) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`Icon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L65) | `object?` | 可写; OneWay | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
+| [`IconPlacement`](../../../TheOne.Avalonia/Controls/IconButton.cs#L53) | `TheOne.Avalonia.Controls.IconPlacement` | 可写; OneWay | `0 / default` | 图标相对文本的位置枚举；左右或上下布局由模板处理。 校验：`value => Enum.IsDefined(value)` 可选值：`Left`, `Right`, `Top`, `Bottom` |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/IconButton.cs#L77) | `double` | 可写; OneWay | `15` | 图标绘制尺寸，单位 DIP；独立于文本字号与按钮点击区域。 校验：`value => double.IsFinite(value) && value > 0` |
+| [`IconSpacing`](../../../TheOne.Avalonia/Controls/IconButton.cs#L83) | `double` | 可写; OneWay | `8` | 图标与相邻文本／内容的 DIP 间距。 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/IconButton.cs#L71) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`IsLoading`](../../../TheOne.Avalonia/Controls/IconButton.cs#L59) | `bool` | 可写; OneWay | `false` | 显示忙碌指示；按钮保留尺寸并阻止重复操作，容器显示加载层。任务完成后由宿主复位。 |
+| [`ShowIcon`](../../../TheOne.Avalonia/Controls/IconButton.cs#L47) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### ThemeButton
 
@@ -79,13 +79,13 @@ IconButton 与 Button、ToggleButton、RepeatButton 共用[组合及优先级规
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L16) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 主题按钮切换的作用域；影响 Light/Dark，不切换 ThemeColor 颜色枚举。 可选值：`Window`, `Application` |
+| [`Scope`](../../../TheOne.Avalonia/Controls/ThemeButton.cs#L30) | `TheOne.Avalonia.Controls.ThemeButtonScope` | 可写; OneWay | `0 / default` | 主题按钮切换的作用域；影响 Light/Dark，不切换 ThemeColor 颜色枚举。 可选值：`Window`, `Application` |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
 ### Classes 用法
 
-`primary`（`accent`）、`danger`、`success`、`warning`、`info` 与 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient` 可组合，详见上文。
+- `IconButton`: `Classes="danger"` / `Classes="ghost"` / `Classes="gradient"` / `Classes="info"` / `Classes="link"` / `Classes="outline"` / `Classes="soft"` / `Classes="solid"` / `Classes="success"` / `Classes="warning"`
 
 以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 

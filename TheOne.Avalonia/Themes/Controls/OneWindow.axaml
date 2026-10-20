@@ -71,6 +71,7 @@
                                             chrome:WindowDecorationProperties.ElementRole="User" />
                                         <one:ThemeButton
                                             Grid.Column="4"
+                                            IsThreeState="{TemplateBinding ThemeButtonIsThreeState}"
                                             IsVisible="{TemplateBinding ShowThemeButton}"
                                             Name="PART_ThemeButton"
                                             Scope="{TemplateBinding ThemeButtonScope}"

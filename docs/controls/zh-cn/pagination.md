@@ -84,43 +84,43 @@ PreviewHost 的“扩展控件 → Pagination”展示标准／紧凑共享绑�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CanGoNext`](../../../TheOne.Avalonia/Controls/Pagination.cs#L103) | `bool` | 只读; OneWay | `computed / state` | 只读，前后导航是否有目标页 |
-| [`CanGoPrevious`](../../../TheOne.Avalonia/Controls/Pagination.cs#L102) | `bool` | 只读; OneWay | `computed / state` | 只读，前后导航是否有目标页 |
-| [`CompactBreakpoint`](../../../TheOne.Avalonia/Controls/Pagination.cs#L82) | `double` | 可写; OneWay | `640` | 640；内容区在此宽度以下，或实际数字导航无法完整放下时自动紧凑；0 关闭自动切换 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`CurrentPage`](../../../TheOne.Avalonia/Controls/Pagination.cs#L78) | `long` | 可写; TwoWay | `1` | 从 1 开始的 long 页码，默认 1，默认双向绑定 校验：`value => value >= 1` |
-| [`CurrentPageText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L111) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`EmptyText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L97) | `string` | 可写; OneWay | `"暂无记录"` | 没有可显示数据时的提示文本；由应用覆盖以进行本地化。 |
-| [`FirstItem`](../../../TheOne.Avalonia/Controls/Pagination.cs#L100) | `long` | 只读; OneWay | `computed / state` | 只读，当前页记录范围，从 1 开始；空数据均为 0 |
-| [`HasJumpError`](../../../TheOne.Avalonia/Controls/Pagination.cs#L107) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasPages`](../../../TheOne.Avalonia/Controls/Pagination.cs#L104) | `bool` | 只读; OneWay | `computed / state` | 只读，是否存在记录页 |
-| [`HasSummary`](../../../TheOne.Avalonia/Controls/Pagination.cs#L106) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsCompact`](../../../TheOne.Avalonia/Controls/Pagination.cs#L105) | `bool` | 只读; OneWay | `computed / state` | 启用紧凑布局；具体显示字段由所属模板决定，不改变业务数据。 |
-| [`ItemHeight`](../../../TheOne.Avalonia/Controls/Pagination.cs#L84) | `double` | 可写; OneWay | `36` | Small / Normal / Large 为 30 / 36 / 44，导航与输入的最小高度 校验：`value => double.IsFinite(value) && value > 0` |
-| [`JumpError`](../../../TheOne.Avalonia/Controls/Pagination.cs#L108) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`JumpPrefixText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L95) | `string` | 可写; OneWay | `"跳至"` | 页码跳转框前的本地化提示。 |
-| [`JumpText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L94) | `string` | 可写; OneWay | `"跳转"` | 执行页码跳转的按钮文本。 |
-| [`LastItem`](../../../TheOne.Avalonia/Controls/Pagination.cs#L101) | `long` | 只读; OneWay | `computed / state` | 只读，当前页记录范围，从 1 开始；空数据均为 0 |
-| [`Layout`](../../../TheOne.Avalonia/Controls/Pagination.cs#L81) | `TheOne.Avalonia.Controls.PaginationLayout` | 可写; OneWay | `0 / default` | Standard / Compact，默认 Standard 校验：`Enum.IsDefined` 可选值：`Standard`, `Compact` |
-| [`NextText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L93) | `string` | 可写; OneWay | `"下一页"` | 下一页按钮的可访问／显示文本。 |
-| [`PageChangedCommand`](../../../TheOne.Avalonia/Controls/Pagination.cs#L98) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`PageCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L99) | `long` | 只读; OneWay | `computed / state` | 只读，总页数；空数据为 0 |
-| [`PageItems`](../../../TheOne.Avalonia/Controls/Pagination.cs#L112) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.PaginationPageItem>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`PageSize`](../../../TheOne.Avalonia/Controls/Pagination.cs#L79) | `int` | 可写; TwoWay | `20` | 正整数，每页条数，默认 20，默认双向绑定 校验：`value => value > 0` |
-| [`PageSizeOptions`](../../../TheOne.Avalonia/Controls/Pagination.cs#L80) | `System.Collections.Generic.IEnumerable<int>?` | 可写; OneWay | `DefaultSizes` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
-| [`PageSizeTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L91) | `string` | 可写; OneWay | `"{0} 条 / 页"` | 每页条数选择的格式文本；占位参数与分页文档一致。 |
-| [`PageSizes`](../../../TheOne.Avalonia/Controls/Pagination.cs#L113) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.PaginationPageSize>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`PageUnitText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L96) | `string` | 可写; OneWay | `"页"` | 页码后面的本地化单位文本。 |
-| [`PreviousText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L92) | `string` | 可写; OneWay | `"上一页"` | 上一页按钮的可访问／显示文本。 |
-| [`RangeText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L110) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`RangeTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L90) | `string` | 可写; OneWay | `"第 {0:N0}–{1:N0} 条，共 {2:N0} 条"` | 当前数据范围的格式文本；不更改分页计算。 |
-| [`ShowJump`](../../../TheOne.Avalonia/Controls/Pagination.cs#L88) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
-| [`ShowPageSizeSelector`](../../../TheOne.Avalonia/Controls/Pagination.cs#L87) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
-| [`ShowRange`](../../../TheOne.Avalonia/Controls/Pagination.cs#L86) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
-| [`ShowTotal`](../../../TheOne.Avalonia/Controls/Pagination.cs#L85) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
-| [`SiblingCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L83) | `int` | 可写; OneWay | `2` | 2，当前页两侧邻居数量，允许 0–5 校验：`value => value is >= 0 and <= 5` |
-| [`TotalCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L77) | `long` | 可写; OneWay | `0` | 非负 long，总记录数，默认 0 校验：`value => value >= 0` |
-| [`TotalText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L109) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`TotalTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L89) | `string` | 可写; OneWay | `"共 {0:N0} 条"` | 总条数的格式文本；仅负责展示。 |
+| [`CanGoNext`](../../../TheOne.Avalonia/Controls/Pagination.cs#L322) | `bool` | 只读; OneWay | `computed / state` | 只读，前后导航是否有目标页 |
+| [`CanGoPrevious`](../../../TheOne.Avalonia/Controls/Pagination.cs#L316) | `bool` | 只读; OneWay | `computed / state` | 只读，前后导航是否有目标页 |
+| [`CompactBreakpoint`](../../../TheOne.Avalonia/Controls/Pagination.cs#L196) | `double` | 可写; OneWay | `640` | 640；内容区在此宽度以下，或实际数字导航无法完整放下时自动紧凑；0 关闭自动切换 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`CurrentPage`](../../../TheOne.Avalonia/Controls/Pagination.cs#L172) | `long` | 可写; TwoWay | `1` | 从 1 开始的 long 页码，默认 1，默认双向绑定 校验：`value => value >= 1` |
+| [`CurrentPageText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L370) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`EmptyText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L286) | `string` | 可写; OneWay | `"暂无记录"` | 没有可显示数据时的提示文本；由应用覆盖以进行本地化。 |
+| [`FirstItem`](../../../TheOne.Avalonia/Controls/Pagination.cs#L304) | `long` | 只读; OneWay | `computed / state` | 只读，当前页记录范围，从 1 开始；空数据均为 0 |
+| [`HasJumpError`](../../../TheOne.Avalonia/Controls/Pagination.cs#L346) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasPages`](../../../TheOne.Avalonia/Controls/Pagination.cs#L328) | `bool` | 只读; OneWay | `computed / state` | 只读，是否存在记录页 |
+| [`HasSummary`](../../../TheOne.Avalonia/Controls/Pagination.cs#L340) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsCompact`](../../../TheOne.Avalonia/Controls/Pagination.cs#L334) | `bool` | 只读; OneWay | `computed / state` | 启用紧凑布局；具体显示字段由所属模板决定，不改变业务数据。 |
+| [`ItemHeight`](../../../TheOne.Avalonia/Controls/Pagination.cs#L208) | `double` | 可写; OneWay | `36` | Small / Normal / Large 为 30 / 36 / 44，导航与输入的最小高度 校验：`value => double.IsFinite(value) && value > 0` |
+| [`JumpError`](../../../TheOne.Avalonia/Controls/Pagination.cs#L352) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`JumpPrefixText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L274) | `string` | 可写; OneWay | `"跳至"` | 页码跳转框前的本地化提示。 |
+| [`JumpText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L268) | `string` | 可写; OneWay | `"跳转"` | 执行页码跳转的按钮文本。 |
+| [`LastItem`](../../../TheOne.Avalonia/Controls/Pagination.cs#L310) | `long` | 只读; OneWay | `computed / state` | 只读，当前页记录范围，从 1 开始；空数据均为 0 |
+| [`Layout`](../../../TheOne.Avalonia/Controls/Pagination.cs#L190) | `TheOne.Avalonia.Controls.PaginationLayout` | 可写; OneWay | `0 / default` | Standard / Compact，默认 Standard 校验：`Enum.IsDefined` 可选值：`Standard`, `Compact` |
+| [`NextText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L262) | `string` | 可写; OneWay | `"下一页"` | 下一页按钮的可访问／显示文本。 |
+| [`PageChangedCommand`](../../../TheOne.Avalonia/Controls/Pagination.cs#L292) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`PageCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L298) | `long` | 只读; OneWay | `computed / state` | 只读，总页数；空数据为 0 |
+| [`PageItems`](../../../TheOne.Avalonia/Controls/Pagination.cs#L376) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.PaginationPageItem>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`PageSize`](../../../TheOne.Avalonia/Controls/Pagination.cs#L178) | `int` | 可写; TwoWay | `20` | 正整数，每页条数，默认 20，默认双向绑定 校验：`value => value > 0` |
+| [`PageSizeOptions`](../../../TheOne.Avalonia/Controls/Pagination.cs#L184) | `System.Collections.Generic.IEnumerable<int>?` | 可写; OneWay | `DefaultSizes` | 模型或结果集合；集合及元素类型见签名。动态业务数据需提供通知；只读集合由控件维护，不直接替换。 |
+| [`PageSizeTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L250) | `string` | 可写; OneWay | `"{0} 条 / 页"` | 每页条数选择的格式文本；占位参数与分页文档一致。 |
+| [`PageSizes`](../../../TheOne.Avalonia/Controls/Pagination.cs#L382) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.PaginationPageSize>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`PageUnitText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L280) | `string` | 可写; OneWay | `"页"` | 页码后面的本地化单位文本。 |
+| [`PreviousText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L256) | `string` | 可写; OneWay | `"上一页"` | 上一页按钮的可访问／显示文本。 |
+| [`RangeText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L364) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`RangeTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L244) | `string` | 可写; OneWay | `"第 {0:N0}–{1:N0} 条，共 {2:N0} 条"` | 当前数据范围的格式文本；不更改分页计算。 |
+| [`ShowJump`](../../../TheOne.Avalonia/Controls/Pagination.cs#L232) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
+| [`ShowPageSizeSelector`](../../../TheOne.Avalonia/Controls/Pagination.cs#L226) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
+| [`ShowRange`](../../../TheOne.Avalonia/Controls/Pagination.cs#L220) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
+| [`ShowTotal`](../../../TheOne.Avalonia/Controls/Pagination.cs#L214) | `bool` | 可写; OneWay | `true` | 默认均为 true；Compact 始终隐藏范围与跳页 |
+| [`SiblingCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L202) | `int` | 可写; OneWay | `2` | 2，当前页两侧邻居数量，允许 0–5 校验：`value => value is >= 0 and <= 5` |
+| [`TotalCount`](../../../TheOne.Avalonia/Controls/Pagination.cs#L166) | `long` | 可写; OneWay | `0 / default` | 非负 long，总记录数，默认 0 校验：`value => value >= 0` |
+| [`TotalText`](../../../TheOne.Avalonia/Controls/Pagination.cs#L358) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`TotalTextFormat`](../../../TheOne.Avalonia/Controls/Pagination.cs#L238) | `string` | 可写; OneWay | `"共 {0:N0} 条"` | 总条数的格式文本；仅负责展示。 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 

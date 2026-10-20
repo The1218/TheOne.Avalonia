@@ -20,7 +20,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Date = 0`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`DateTime = 1`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Month = 2`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
-| [`Year = 3`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L11) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Date = 0`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L13) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`DateTime = 1`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L14) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Month = 2`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L15) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Year = 3`](../../../TheOne.Avalonia/Controls/CalendarOptions.cs#L16) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

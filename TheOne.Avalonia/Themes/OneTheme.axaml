@@ -21,6 +21,8 @@
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Button.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/IconButton.axaml" />
+                <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/OneIcon.axaml" />
+                <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Breadcrumb.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/CalendarCells.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/CalendarItem.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Calendar.axaml" />
@@ -53,6 +55,7 @@
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Chart.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/InfoCard.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Description.axaml" />
+                <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Timeline.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/ImagePreview.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/FlowStep.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Pagination.axaml" />

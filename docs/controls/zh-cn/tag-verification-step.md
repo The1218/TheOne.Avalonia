@@ -199,7 +199,7 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L10) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`OtherProperty`](../../../TheOne.Avalonia/Controls/StepCompareAttribute.cs#L17) | `string` | 只读; CLR / n/a | `accessor-defined / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 
 ### StepField
 
@@ -207,9 +207,9 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Errors`](../../../TheOne.Avalonia/Controls/StepField.cs#L16) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasErrors`](../../../TheOne.Avalonia/Controls/StepField.cs#L17) | `bool` | 只读; OneWay | `computed / state` | 全部验证错误 |
-| [`MemberName`](../../../TheOne.Avalonia/Controls/StepField.cs#L15) | `string` | 可写; OneWay | `""` | 对应模型成员的准确名称；用于将校验错误映射到字段，不是显示标签。 |
+| [`Errors`](../../../TheOne.Avalonia/Controls/StepField.cs#L28) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/StepField.cs#L29) | `bool` | 只读; OneWay | `computed / state` | 全部验证错误 |
+| [`MemberName`](../../../TheOne.Avalonia/Controls/StepField.cs#L22) | `string` | 可写; OneWay | `""` | 对应模型成员的准确名称；用于将校验错误映射到字段，不是显示标签。 |
 
 ### StepValidation
 
@@ -232,12 +232,12 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`Icon`](../../../TheOne.Avalonia/Controls/Tag.cs#L23) | `object?` | 可写; OneWay | `null` | 可选图标槽，支持 PathIcon、Image 或模型模板；保留控件逻辑树与 DataContext |
-| [`IconSize`](../../../TheOne.Avalonia/Controls/Tag.cs#L21) | `double` | 可写; OneWay | `13` | 图标缩放边长，默认 13 px，比原 14 px 基准减小一号；三档密度共用，可覆盖，不修改调用方图标尺寸 校验：`value => double.IsFinite(value) && value > 0` |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/Tag.cs#L24) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 可选图标槽，支持 PathIcon、Image 或模型模板；保留控件逻辑树与 DataContext |
-| [`Spacing`](../../../TheOne.Avalonia/Controls/Tag.cs#L27) | `double` | 可写; OneWay | `6` | 图标与内容间距，默认 6；没有图标或文字时不保留空隙 校验：`value => double.IsFinite(value) && value >= 0` |
-| [`Status`](../../../TheOne.Avalonia/Controls/Tag.cs#L25) | `TheOne.Avalonia.Controls.TagStatus` | 可写; OneWay | `0 / default` | `Default`、`Information`、`Success`、`Warning`、`Error`、`Processing` 校验：`Enum.IsDefined` 可选值：`Default`, `Information`, `Success`, `Warning`, `Error`, `Processing` |
-| [`Variant`](../../../TheOne.Avalonia/Controls/Tag.cs#L26) | `TheOne.Avalonia.Controls.TagVariant` | 可写; OneWay | `0 / default` | `Soft` 浅底、`Outline` 描边、`Solid` 实心 校验：`Enum.IsDefined` 可选值：`Soft`, `Outline`, `Solid` |
+| [`Icon`](../../../TheOne.Avalonia/Controls/Tag.cs#L59) | `object?` | 可写; OneWay | `null` | 可选图标槽，支持 PathIcon、Image 或模型模板；保留控件逻辑树与 DataContext |
+| [`IconSize`](../../../TheOne.Avalonia/Controls/Tag.cs#L53) | `double` | 可写; OneWay | `13` | 图标缩放边长，默认 13 px，比原 14 px 基准减小一号；三档密度共用，可覆盖，不修改调用方图标尺寸 校验：`value => double.IsFinite(value) && value > 0` |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/Tag.cs#L65) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 可选图标槽，支持 PathIcon、Image 或模型模板；保留控件逻辑树与 DataContext |
+| [`Spacing`](../../../TheOne.Avalonia/Controls/Tag.cs#L83) | `double` | 可写; OneWay | `6` | 图标与内容间距，默认 6；没有图标或文字时不保留空隙 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`Status`](../../../TheOne.Avalonia/Controls/Tag.cs#L71) | `TheOne.Avalonia.Controls.TagStatus` | 可写; OneWay | `0 / default` | `Default`、`Information`、`Success`、`Warning`、`Error`、`Processing` 校验：`Enum.IsDefined` 可选值：`Default`, `Information`, `Success`, `Warning`, `Error`, `Processing` |
+| [`Variant`](../../../TheOne.Avalonia/Controls/Tag.cs#L77) | `TheOne.Avalonia.Controls.TagVariant` | 可写; OneWay | `0 / default` | `Soft` 浅底、`Outline` 描边、`Solid` 实心 校验：`Enum.IsDefined` 可选值：`Soft`, `Outline`, `Solid` |
 
 ### VerificationStep
 
@@ -245,27 +245,27 @@ VerificationStep 默认最大高度 720；默认表单最大宽度 640，使用�
 
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
-| [`CanGoBack`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L73) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`CanGoNext`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L74) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`CompleteText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L66) | `string` | 可写; OneWay | `"完成"` | 默认“下一步”／“上一步”／“完成” |
-| [`CompletedCommand`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L78) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
-| [`CompletedCommandParameter`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L79) | `object?` | 可写; OneWay | `null` | 校验通过并完成步骤时传给 CompletedCommand 的业务参数。 |
-| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L62) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 文字、控件或有类型的数据模板 |
-| [`CurrentContent`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L69) | `object?` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
-| [`CurrentContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L70) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
-| [`ForwardText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L75) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`HasErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L77) | `bool` | 只读; OneWay | `computed / state` | 全部验证错误 |
-| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L81) | `bool` | 只读; OneWay | `computed / state` | 整步或没有对应输入承载位置的错误 |
-| [`HeaderHorizontalAlignment`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L64) | `Avalonia.Layout.HorizontalAlignment` | 可写; OneWay | `HorizontalAlignment.Center` | 默认 Center，与内容同轴居中；Stretch 均分可用宽度；也支持 Left / Right 校验：`Enum.IsDefined` 可选值：`Stretch`, `Left`, `Center`, `Right` |
-| [`HeaderMaxWidth`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L63) | `double` | 可写; OneWay | `960` | 标题视口宽度上限，默认 960，必须为有限正数 校验：`value => double.IsFinite(value) && value > 0` |
-| [`IsBusy`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L71) | `bool` | 只读; OneWay | `computed / state` | 校验中与最终完成状态 |
-| [`IsCompleted`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L72) | `bool` | 只读; OneWay | `computed / state` | 校验中与最终完成状态 |
-| [`ItemsSource`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L61) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Controls.StepItem>?` | 可写; OneWay | `null` | IEnumerable&lt;StepItem&gt;；默认使用 StepItem&lt;具体模型类型&gt;；集合变化使用 ObservableCollection，每项保持独立身份 |
-| [`NextText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L65) | `string` | 可写; OneWay | `"下一步"` | 默认“下一步”／“上一步”／“完成” |
-| [`PreviousText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L67) | `string` | 可写; OneWay | `"上一步"` | 默认“下一步”／“上一步”／“完成” |
-| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L68) | `int` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
-| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L80) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 整步或没有对应输入承载位置的错误 |
-| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L76) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 全部验证错误 |
+| [`CanGoBack`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L160) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CanGoNext`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L161) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`CompleteText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L143) | `string` | 可写; OneWay | `"完成"` | 默认“下一步”／“上一步”／“完成” |
+| [`CompletedCommand`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L166) | `System.Windows.Input.ICommand?` | 可写; OneWay | `null` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
+| [`CompletedCommandParameter`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L172) | `object?` | 可写; OneWay | `null` | 校验通过并完成步骤时传给 CompletedCommand 的业务参数。 |
+| [`ContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L119) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay | `null` | 文字、控件或有类型的数据模板 |
+| [`CurrentContent`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L156) | `object?` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
+| [`CurrentContentTemplate`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L157) | `Avalonia.Controls.Templates.IDataTemplate?` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
+| [`ForwardText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L162) | `string` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`HasErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L164) | `bool` | 只读; OneWay | `computed / state` | 全部验证错误 |
+| [`HasUnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L179) | `bool` | 只读; OneWay | `computed / state` | 整步或没有对应输入承载位置的错误 |
+| [`HeaderHorizontalAlignment`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L131) | `Avalonia.Layout.HorizontalAlignment` | 可写; OneWay | `HorizontalAlignment.Center` | 默认 Center，与内容同轴居中；Stretch 均分可用宽度；也支持 Left / Right 校验：`Enum.IsDefined` 可选值：`Stretch`, `Left`, `Center`, `Right` |
+| [`HeaderMaxWidth`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L125) | `double` | 可写; OneWay | `960` | 标题视口宽度上限，默认 960，必须为有限正数 校验：`value => double.IsFinite(value) && value > 0` |
+| [`IsBusy`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L158) | `bool` | 只读; OneWay | `computed / state` | 校验中与最终完成状态 |
+| [`IsCompleted`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L159) | `bool` | 只读; OneWay | `computed / state` | 校验中与最终完成状态 |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L113) | `System.Collections.Generic.IEnumerable<TheOne.Avalonia.Controls.StepItem>?` | 可写; OneWay | `null` | IEnumerable&lt;StepItem&gt;；默认使用 StepItem&lt;具体模型类型&gt;；集合变化使用 ObservableCollection，每项保持独立身份 |
+| [`NextText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L137) | `string` | 可写; OneWay | `"下一步"` | 默认“下一步”／“上一步”／“完成” |
+| [`PreviousText`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L149) | `string` | 可写; OneWay | `"上一步"` | 默认“下一步”／“上一步”／“完成” |
+| [`SelectedIndex`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L155) | `int` | 只读; OneWay | `computed / state` | 只读当前位置、模型／内容、实际内容模板；不能设置索引绕过校验 |
+| [`UnmappedErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L178) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 整步或没有对应输入承载位置的错误 |
+| [`ValidationErrors`](../../../TheOne.Avalonia/Controls/VerificationStep.cs#L163) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.StepValidationError>` | 只读; OneWay | `computed / state` | 全部验证错误 |
 
 尺寸、动效等通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 集中演示。
 
