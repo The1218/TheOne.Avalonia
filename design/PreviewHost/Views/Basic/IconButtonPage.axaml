@@ -14,6 +14,11 @@
         <TextBlock FontWeight="SemiBold" Text="IconButton · 图标属性与模板" />
         <WrapPanel>
             <one:IconButton
+                Content="内置 OneIcon"
+                Icon="{x:Static one:OneIconKind.Save}"
+                Command="{CompiledBinding InvokeCommand}"
+                Margin="0,0,12,8" />
+            <one:IconButton
                 Classes="primary"
                 Command="{CompiledBinding InvokeCommand}"
                 Content="新建项目"

@@ -13,6 +13,8 @@
 
 `one` 命名空间为 `using:TheOne.Avalonia.Controls`。标题、图标与操作区均为空时移除整个标题行；`Header` 为 null、空字符串或空白字符串时只移除标题文字，图标或操作区仍可独立显示。各空内容区域自动隐藏，不保留额外间隔。
 
+`HeaderIcon` 支持 OneIconKind、Geometry 及编译绑定，例如 `HeaderIcon="{x:Static one:OneIconKind.Home}"`，在 HeaderIconSize 图标框内等比居中；自定义模板中的显式宽高也受该图标框约束。`HeaderIconTemplate` 的自定义优先级及 null 隐藏规则保持不变；见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

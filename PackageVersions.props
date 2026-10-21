@@ -1,7 +1,7 @@
 <Project>
   <!-- One release train for our packages; upstream/framework/assembly versions are separate. -->
   <PropertyGroup>
-    <TheOnePackageVersion Condition="'$(TheOnePackageVersion)' == ''">1.0.0-preview.9</TheOnePackageVersion>
+    <TheOnePackageVersion Condition="'$(TheOnePackageVersion)' == ''">1.0.0-preview.11</TheOnePackageVersion>
   </PropertyGroup>
   <Target Name="ValidateTheOnePackageVersion" BeforeTargets="GenerateNuspec" Condition="'$(IsPackable)' == 'true'">
     <Error Condition="'$(Version)' != '$(TheOnePackageVersion)' or '$(PackageVersion)' != '$(TheOnePackageVersion)'"

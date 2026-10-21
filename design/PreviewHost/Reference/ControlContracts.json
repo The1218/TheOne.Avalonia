@@ -17932,7 +17932,7 @@
       "IsStatic": false,
       "Base": "Avalonia.Interactivity.RoutedEventArgs",
       "Summary": "",
-      "Source": "TheOne.Avalonia/Controls/NavMenu.cs:688",
+      "Source": "TheOne.Avalonia/Controls/NavMenu.cs:692",
       "Properties": [
         {
           "Name": "Item",
@@ -17944,7 +17944,7 @@
           "Writable": false,
           "Attached": false,
           "Identifier": "",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:690",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:694",
           "Inherits": false,
           "Static": false,
           "Choices": [],
@@ -17955,7 +17955,7 @@
         {
           "Signature": "NavMenuItemInvokedEventArgs.NavMenuItemInvokedEventArgs(RoutedEvent routedEvent, object item)",
           "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
-          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:688",
+          "Source": "TheOne.Avalonia/Controls/NavMenu.cs:692",
           "ValueType": ""
         }
       ],
@@ -27864,7 +27864,7 @@
           "Writable": true,
           "Attached": true,
           "Identifier": "IconProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:18",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -27880,7 +27880,7 @@
           "Writable": true,
           "Attached": true,
           "Identifier": "IconTemplateProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:20",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:26",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -27912,7 +27912,7 @@
           "Writable": false,
           "Attached": true,
           "Identifier": "IsIconVisibleProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:30",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -27928,7 +27928,7 @@
           "Writable": true,
           "Attached": true,
           "Identifier": "IsPinnedProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:28",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -27960,7 +27960,7 @@
           "Writable": true,
           "Attached": true,
           "Identifier": "ShowItemIconProperty",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:16",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
           "Inherits": false,
           "Static": true,
           "Choices": [],
@@ -28025,79 +28025,79 @@
         {
           "Signature": "static bool TabFeatures.GetShowItemIcon(TabControl tabs)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 ShowItemIcon \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ShowItemIconProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:31",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:37",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetEnableContextMenu(TabControl tabs)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 EnableContextMenu \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 EnableContextMenuProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:32",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:38",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetEnableContextMenu(TabControl tabs, bool value)",
           "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 EnableContextMenu \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 EnableContextMenuProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:33",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:39",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetShowItemIcon(TabControl tabs, bool value)",
           "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 ShowItemIcon \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ShowItemIconProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:34",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:40",
           "ValueType": ""
         },
         {
           "Signature": "static object? TabFeatures.GetIcon(TabItem item)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u56FE\u6807\u5185\u5BB9\u6216\u77E2\u91CF\u51E0\u4F55\uFF0C\u5177\u4F53\u7C7B\u578B\u89C1\u7B7E\u540D\uFF1B\u5916\u90E8\u4F4D\u56FE\u6240\u6709\u6743\u4ECD\u7531\u5BBF\u4E3B\u8D1F\u8D23\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:35",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:41",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetIcon(TabItem item, object? value)",
           "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u56FE\u6807\u5185\u5BB9\u6216\u77E2\u91CF\u51E0\u4F55\uFF0C\u5177\u4F53\u7C7B\u578B\u89C1\u7B7E\u540D\uFF1B\u5916\u90E8\u4F4D\u56FE\u6240\u6709\u6743\u4ECD\u7531\u5BBF\u4E3B\u8D1F\u8D23\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:36",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:42",
           "ValueType": ""
         },
         {
           "Signature": "static IDataTemplate? TabFeatures.GetIconTemplate(TabItem item)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u539F\u751F\u6570\u636E\u6A21\u677F\u6269\u5C55\u70B9\uFF1B\u4FDD\u6301\u6B63\u786E x:DataType\uFF0C\u6A21\u677F\u6570\u636E\u4F5C\u7528\u57DF\u89C1\u672C\u63A7\u4EF6\u63A5\u5165\u7AE0\u8282\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:37",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:43",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetIconTemplate(TabItem item, IDataTemplate? value)",
           "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002\u539F\u751F\u6570\u636E\u6A21\u677F\u6269\u5C55\u70B9\uFF1B\u4FDD\u6301\u6B63\u786E x:DataType\uFF0C\u6A21\u677F\u6570\u636E\u4F5C\u7528\u57DF\u89C1\u672C\u63A7\u4EF6\u63A5\u5165\u7AE0\u8282\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:38",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:44",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetIsPinned(TabItem item)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 IsPinned \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 IsPinnedProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:39",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:45",
           "ValueType": ""
         },
         {
           "Signature": "static void TabFeatures.SetIsPinned(TabItem item, bool value)",
           "Summary": "\u8BBE\u7F6E\u9644\u52A0\u5C5E\u6027\u3002TabFeatures \u7684 IsPinned \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 IsPinnedProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:40",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:46",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.GetIsIconVisible(TabItem item)",
           "Summary": "\u8BFB\u53D6\u9644\u52A0\u5C5E\u6027\u3002\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:41",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:47",
           "ValueType": ""
         },
         {
           "Signature": "static bool TabFeatures.Pin(TabItem item, bool pinned = true)",
           "Summary": "Pins a page before all unpinned pages, preserving selection. Does not require drag reordering.",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:130",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:136",
           "ValueType": ""
         },
         {
           "Signature": "static int TabFeatures.CloseAll(TabControl tabs)",
           "Summary": "Closes a snapshot of closable pages, honoring cancellation, commands and pin state.",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:149",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:155",
           "ValueType": ""
         },
         {
@@ -28192,31 +28192,31 @@
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.ShowItemIconProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:16",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003Cobject?\u003E TabFeatures.IconProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:18",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003CIDataTemplate?\u003E TabFeatures.IconTemplateProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:20",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:26",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.IsPinnedProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:22",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:28",
           "ValueType": ""
         },
         {
           "Signature": "static readonly AttachedProperty\u003Cbool\u003E TabFeatures.IsIconVisibleProperty",
           "Summary": "",
-          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:24",
+          "Source": "TheOne.Avalonia/Controls/TabFeatures.Pages.cs:30",
           "ValueType": ""
         },
         {
@@ -41178,6 +41178,14 @@
     },
     {
       "Target": "FlyoutPresenter",
+      "Name": "one-image-upload-preview",
+      "Selector": "^.one-image-upload-preview",
+      "Effect": "^.one-image-upload-preview =\u003E MinWidth=0; MaxWidth=Infinity; MaxHeight=Infinity; Padding=0; BorderThickness=0; Template=template/resource",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/FlyoutPresenter.axaml:58"
+    },
+    {
+      "Target": "FlyoutPresenter",
       "Name": "one-large",
       "Selector": "FlyoutPresenter.one-large",
       "Effect": "FlyoutPresenter.one-large =\u003E FontSize=16; Padding={DynamicResource One.Flyout.Large.Padding}",
@@ -41294,7 +41302,7 @@
       "Selector": "^.one-large:icon-only",
       "Effect": "^.one-large:icon-only =\u003E MinWidth=44; ^.one-large =\u003E IconSize=19; IconSpacing=10",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/IconButton.axaml:67"
+      "Source": "TheOne.Avalonia/Themes/Controls/IconButton.axaml:71"
     },
     {
       "Target": "IconButton",
@@ -41302,7 +41310,7 @@
       "Selector": "^.one-small:icon-only",
       "Effect": "^.one-small:icon-only =\u003E MinWidth=30; ^.one-small =\u003E IconSize=13; IconSpacing=6",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/IconButton.axaml:64"
+      "Source": "TheOne.Avalonia/Themes/Controls/IconButton.axaml:68"
     },
     {
       "Target": "IconButton",
@@ -41406,7 +41414,7 @@
       "Selector": "^.hove:pointerover:not(:disabled)",
       "Effect": "^.hove:pointerover:not(:disabled) =\u003E BorderBrush={DynamicResource One.Accent}; Background={DynamicResource One.SurfaceHover}; BoxShadow={DynamicResource One.InfoCard.HoverShadow}",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/InfoCard.axaml:207"
+      "Source": "TheOne.Avalonia/Themes/Controls/InfoCard.axaml:219"
     },
     {
       "Target": "InfoCard",
@@ -41446,7 +41454,7 @@
       "Selector": "^.shadow:not(:disabled)",
       "Effect": "^.shadow:not(:disabled) =\u003E BoxShadow={DynamicResource One.InfoCard.Shadow}",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/InfoCard.axaml:204"
+      "Source": "TheOne.Avalonia/Themes/Controls/InfoCard.axaml:216"
     },
     {
       "Target": "Label",
@@ -41558,7 +41566,7 @@
       "Selector": "^.one-large",
       "Effect": "^.one-large =\u003E LoadingIconSize=34",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml:94"
+      "Source": "TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml:102"
     },
     {
       "Target": "LoadingContainer",
@@ -41566,7 +41574,7 @@
       "Selector": "^.one-small",
       "Effect": "^.one-small =\u003E LoadingIconSize=22",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml:91"
+      "Source": "TheOne.Avalonia/Themes/Controls/LoadingContainer.axaml:99"
     },
     {
       "Target": "LoadingIndicator",
@@ -42062,7 +42070,7 @@
       "Selector": "^.one-large",
       "Effect": "^.one-large =\u003E Padding=20,18; FontSize=16; HeaderFontSize=18; IconSize=28; IconTileSize=52; IconSpacing=18; TextSpacing=8",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/RelationGraph.axaml:165"
+      "Source": "TheOne.Avalonia/Themes/Controls/RelationGraph.axaml:176"
     },
     {
       "Target": "RelationGraphNodePresenter",
@@ -42070,7 +42078,7 @@
       "Selector": "^.one-small",
       "Effect": "^.one-small =\u003E Padding=12,10; FontSize=12; HeaderFontSize=14; IconSize=20; IconTileSize=36; IconSpacing=10; TextSpacing=4",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/RelationGraph.axaml:156"
+      "Source": "TheOne.Avalonia/Themes/Controls/RelationGraph.axaml:167"
     },
     {
       "Target": "RepeatButton",
@@ -42390,7 +42398,7 @@
       "Selector": "^:selected /template/ Border#PART_Separator, ^.before-selected /template/ Border#PART_Separator, ^.last-tab /template/ Border#PART_Separator",
       "Effect": "^:selected /template/ Border#PART_Separator, ^.before-selected /template/ Border#PART_Separator, ^.last-tab /template/ Border#PART_Separator =\u003E IsVisible=False",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/TabItem.axaml:260"
+      "Source": "TheOne.Avalonia/Themes/Controls/TabItem.axaml:278"
     },
     {
       "Target": "TabItem",
@@ -42406,7 +42414,7 @@
       "Selector": "^:selected /template/ Border#PART_Separator, ^.before-selected /template/ Border#PART_Separator, ^.last-tab /template/ Border#PART_Separator",
       "Effect": "^:selected /template/ Border#PART_Separator, ^.before-selected /template/ Border#PART_Separator, ^.last-tab /template/ Border#PART_Separator =\u003E IsVisible=False",
       "Internal": true,
-      "Source": "TheOne.Avalonia/Themes/Controls/TabItem.axaml:260"
+      "Source": "TheOne.Avalonia/Themes/Controls/TabItem.axaml:278"
     },
     {
       "Target": "TabItem",
@@ -42494,7 +42502,7 @@
       "Selector": "^.dashed",
       "Effect": "^.dashed =\u003E BorderBrush=Transparent; ^.dashed /template/ Rectangle#PART_DashedOutline =\u003E IsVisible=True",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:181"
+      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:191"
     },
     {
       "Target": "Tag",
@@ -42502,7 +42510,7 @@
       "Selector": "^.dot /template/ Ellipse#PART_StatusDot",
       "Effect": "^.dot /template/ Ellipse#PART_StatusDot =\u003E IsVisible=True",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:187"
+      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:197"
     },
     {
       "Target": "Tag",
@@ -42510,7 +42518,7 @@
       "Selector": "^.gradient",
       "Effect": "^.gradient =\u003E Background={DynamicResource One.Gradient.Brand}; Foreground={DynamicResource One.OnAccent}; BorderBrush=Transparent",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:190"
+      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:200"
     },
     {
       "Target": "Tag",
@@ -42542,7 +42550,7 @@
       "Selector": "^.pill",
       "Effect": "^.pill =\u003E CornerRadius=999",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:175"
+      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:185"
     },
     {
       "Target": "Tag",
@@ -42550,7 +42558,7 @@
       "Selector": "^.square",
       "Effect": "^.square =\u003E CornerRadius=0",
       "Internal": false,
-      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:178"
+      "Source": "TheOne.Avalonia/Themes/Controls/Tag.axaml:188"
     },
     {
       "Target": "Tag",

@@ -7,10 +7,10 @@
 - 为按钮、输入、选择、日期时间、列表、树、菜单和布局控件提供统一主题。
 - 提供 21 种图表，以及 Form/FormItem、MultiSelectBox、TreeSelect、NavMenu、InfoCard、Description、Tag、VerificationStep、窗口与消息扩展。
 - DataGrid 支持编译绑定、自动实体属性筛选、左右冻结列与底部数值统计。
-- QRCode、ReportDesign/ReportPreview、WorkflowEditor、GanttChart 和 NavPage 提供报表、工作流及工作区扩展，参见 [preview.9 发行说明](docs/releases/zh-cn/1.0.0-preview.9.md)。
+- QRCode、ReportDesign/ReportPreview、WorkflowEditor、GanttChart 和 NavPage 提供报表、工作流及工作区扩展，参见 [preview.11 发行说明](docs/releases/zh-cn/1.0.0-preview.11.md)。
 
 
-本次新增七种图表、统一图表动画、AttachmentList、DataGrid 行号及工作流/对话框扩展，优化预览首次打开和返回开销，并保留编辑与焦点状态。NuGet 包需要维护者手动上传，当前源码版本不表示包已上架。
+本次统一图标宿主的 OneIcon 接入，修复 Geometry／模板动态切换时的尺寸与禁用前景，并修正 ImageUpload 查看弹层的滚动条问题；包含双语图文指南。NuGet 包需要维护者手动上传，当前源码版本不表示包已上架。
 
 ## 环境与版本
 
@@ -19,7 +19,7 @@
 | .NET SDK / TargetFramework | .NET 10 / `net10.0` |
 | Avalonia 核心、Skia、Fluent | 12.1.4 |
 | DataGrid | 基于 12.1.2，包名 `TheOne.Avalonia.DataGrid` |
-| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.9 |
+| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.11 |
 | PreviewHost MVVM | ReactiveUI.Avalonia 12.1.4 |
 
 ## 快速开始
@@ -35,10 +35,10 @@ dotnet run --project design/PreviewHost
 在消费项目中安装预览包，配套 DataGrid 包会自动还原：
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.9
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.11
 ```
 
-远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.9) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.9)。也可引用源码（路径按项目位置调整）：
+远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.11) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.11)。也可引用源码（路径按项目位置调整）：
 
 ```sh
 dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.csproj

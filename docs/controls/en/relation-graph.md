@@ -6,6 +6,8 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `RelationGraph` displays a tree with one root. `Orientation="Horizontal"` expands left to right; `Vertical` expands top to bottom. Node interiors always keep the icon on the left and title/content on the right. Load `OneTheme` first.
 
+The field selected by `IconSource` and standalone presenter `Icon` accept `OneIconKind` without IconTemplate. For an enum node field Glyph, use `IconSource="{CompiledBinding Glyph}"`. Explicit IconTemplate still receives the icon field value and supports Filled OneIcon and existing third-party templates. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 
@@ -96,7 +98,7 @@ C# consumers can use `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node =
 
 When both title and content exist, the combined stack centers vertically. An icon-only node centers the icon across the whole card. An entirely null node retains its outline and connections. Templates alone never reserve regions for null data; empty strings still count as non-null.
 
-Strings wrap; content may grow a node beyond `NodeMinHeight`. `Icon` can be a native control such as `PathIcon`, or Geometry / application data rendered using a template:
+Strings wrap; content may grow a node beyond `NodeMinHeight`. `Icon` accepts OneIconKind, Geometry or native controls such as `PathIcon` directly. Use a template for application data, custom brushes or appearance:
 
 ```xml
 <one:RelationGraph.IconTemplate>

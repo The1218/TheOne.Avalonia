@@ -16,6 +16,8 @@ var shell = new NavPage
 
 使用宿主 DataTemplates 将 ViewModel 映射为视图，或指定 PageTemplate。放在具有有限视口的区域，例如 Grid 的 `*` 行，库内不写死整体高度。
 
+默认品牌栏 `HeaderIcon`、`NavPageModel.Icon` 和 `IconBinding` 字段支持 OneIconKind，例如 `HeaderIcon="{x:Static one:OneIconKind.Menu}"`。OneIconKind 与 Geometry 可动态互换。品牌栏图标框为 24 DIP；菜单按 IconSize、页签按 14 DIP 等比适配，切换图标类型不撑大布局。独立图标 Control 仍只能属于一个视觉父级，导航模型优先共享枚举或 Geometry。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

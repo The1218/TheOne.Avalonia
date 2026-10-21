@@ -117,6 +117,59 @@ public sealed class IconViewModel : INotifyPropertyChanged
 
 `OneIcon` 是 Control，不能作为一个实例被多个宿主共享。可共享枚举和元数据，通过模板创建各自图标实例。与 [IconButton](icon-button.md) 已有 Geometry、自定义模板和外部图标接入兼容。
 
+## 图标宿主与 IconTemplate
+
+加载 OneTheme 后，下列图标数据可直接使用 `OneIconKind`，无需额外声明模板。使用 `{x:Static one:OneIconKind.Save}` 或绑定一个枚举属性；不要将字符串 `"Save"` 当作枚举传给 object 类型属性。
+
+| 控件 | 图标数据／模板 |
+| --- | --- |
+| IconButton / Tag | `Icon` / `IconTemplate` |
+| InfoCard | `HeaderIcon` / `HeaderIconTemplate` |
+| LoadingContainer | `LoadingIcon` / `LoadingIconTemplate` |
+| RelationGraph / RelationGraphNodePresenter | `IconSource` 指定节点字段，或节点的 `Icon`；`IconTemplate` 接收该字段值 |
+| TabControl / TabItem | `TabFeatures.Icon` / `TabFeatures.IconTemplate`；支持普通及 card 样式 |
+| NavPage | `HeaderIcon`、`NavPageModel.Icon` 或 `IconBinding` 指定的字段；品牌栏、菜单和页签使用同一规则 |
+| NavMenu | `IconTemplate` 接收完整导航项，在其中使用 OneIcon 并绑定该项的枚举字段 |
+
+```xml
+<one:IconButton Icon="{x:Static one:OneIconKind.Save}" Content="保存" />
+<one:Tag Icon="{CompiledBinding Glyph}" Content="状态" />
+<one:InfoCard Header="工作区" HeaderIcon="{CompiledBinding Glyph}" />
+<one:LoadingContainer IsLoading="{CompiledBinding IsBusy}"
+                      LoadingIcon="{x:Static one:OneIconKind.Loading}" />
+<TabItem Header="首页" one:TabFeatures.Icon="{x:Static one:OneIconKind.Home}" />
+```
+
+需要 Filled、线宽或自定义数据结构时继续设置模板。普通图标宿主的模板数据为图标字段，NavMenu 的模板数据为完整导航模型；下面示例的 `vm:MenuNode.Glyph` 是 `OneIconKind` 属性。
+
+```xml
+<one:NavMenu.IconTemplate>
+    <DataTemplate x:DataType="vm:MenuNode">
+        <one:OneIcon Kind="{CompiledBinding Glyph}" Variant="Filled"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+    </DataTemplate>
+</one:NavMenu.IconTemplate>
+<!-- 用于 IconButton.IconTemplate 等枚举字段模板 -->
+<DataTemplate x:Key="FilledIcon" x:DataType="one:OneIconKind">
+    <one:OneIcon Kind="{CompiledBinding}" Variant="Filled"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+</DataTemplate>
+```
+
+原有自定义模板优先于内置回退；清除自定义模板后恢复内置图标。Geometry 默认渲染为 PathIcon，字符串及独立图标 Control 保持原有承载规则；OneIcon 实例和其他 Control 一样只能属于一个视觉父级，复用时共享枚举或模板。动态枚举、模板、Light/Dark、主题色和禁用状态继续更新，不写死图标前景。尺寸由宿主的 IconSize／HeaderIconSize／LoadingIconSize 或页签图标框约束；直接使用 OneIcon 时仍按其自身三档尺寸。
+
+基础接入专项覆盖 Light/Dark × 三档尺寸 × 740/360 DIP 视口，共 12 组、1,776 项断言；Headless+Skia 与 osx-arm64 NativeAOT 原生消费运行同一套检查均通过。包括动态枚举、显式模板覆盖与清除、普通/card 页签、NavMenu 模型模板、NavPage 三处图标、Geometry/Control 兼容、禁用色恢复、主题色切换及卸载重挂载。未执行全量回归或 Windows/Linux 实跑；该结果不代表真实桌面输入验证。
+
+### 动态类型、尺寸与前景
+
+IconButton、Tag、InfoCard、LoadingContainer、关系图节点及 TabItem 的内置图标模板同时识别 OneIconKind 和 Geometry。可直接替换绑定字段，无需为 Geometry 临时设置模板；TabItem 清空自定义 IconTemplate 后也可恢复任一内置类型。自定义模板仍优先，设为 null 后移除旧图标及其颜色。
+
+图标区域按宿主尺寸等比适配并居中，包括自定义模板内显式设置 Width/Height 的 OneIcon、PathIcon。InfoCard 使用 HeaderIconSize，LoadingContainer 使用 LoadingIconSize，关系图和 NavMenu 使用 IconSize；NavPage 默认品牌图标框为 24 DIP、页签为 14 DIP。调整这些宿主尺寸不会改写消费方图标上的绑定、原始 Width/Height 或 Foreground。
+
+默认图标前景跟随当前主题、状态及调色板；LoadingContainer 禁用时，OneIcon 和 Geometry 都使用 One.DisabledText，重新启用后恢复当前强调色。模板或图标上显式设置的局部 Foreground 保留 Avalonia 原生优先级；若希望自动跟随状态，请继承前景，不要写死颜色。NavMenu 仅为图标模板增加适配层，文字模板、菜单项身份和原有模板回收能力保持不变。
+
+动态切换专项在 12 组明暗／三档／宽窄布局中通过 9,204 项断言，并以相同检查完成 osx-arm64 NativeAOT 消费实跑。验证图标类型和数据身份、Geometry 替换、显式 64×64 / 64×32 模板的适配与居中、清除模板和空值恢复、禁用时切换主题、调色板更新、局部前景优先级及 NavMenu 回收后的编译绑定。初始基线中的 Geometry 显示文字、尺寸越界及 LoadingContainer 禁用色差异已修复。没有额外发现旧图标残留问题；未执行全量或 Windows/Linux 回归，也未将 Headless 绘制视为桌面输入验证。
+
 ## 变体与完整目录
 
 32 个图标提供专门的实心几何：`Search`、`Home`、`File`、`Folder`、`User`、`Lock`、`Shield`、`Info`、`Success`、`Warning`、`Error`、`Question`、`Bell`、`Message`、`Start`、`End`、`Heart`、`Star`、`Camera`、`Battery`、`Wallet`、`Bank`、`Factory`、`HardHat`、`MedicalCross`、`FirstAid`、`Building`、`WaterDrop`、`Car`、`ShoppingBag`、`Book`、`Leaf`。其余 `Filled` 明确回退为 Outline，不把开放路径简单填黑。动态切换 Kind/Variant 不保留旧填充。

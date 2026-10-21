@@ -6,6 +6,8 @@
 
 [返回控件文档](README.md)。视图绑定需有对应的 ViewModel 和 `x:DataType`；扩展使用 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+TabItem 的 `TabFeatures.Icon` 支持 OneIconKind 和 Geometry：`one:TabFeatures.Icon="{x:Static one:OneIconKind.Home}"`，普通和 card 样式一致；ShowItemIcon 继续控制显隐。自定义 IconTemplate 优先，清空后恢复枚举／Geometry 回退；显式宽高的自定义图标也等比适配紧凑页签图标框。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 
@@ -322,13 +324,13 @@ PreviewHost 的“独立标签导航”页提供 10,000 项实际数据与容器
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | 可写; OneWay; 附加属性 | `null` | 宿主关闭命令，参数为数据项；指定后由命令负责更新集合 |
 | [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L66) | `System.Windows.Input.ICommand` | 只读; CLR / n/a | `new CloseTab()` | 宿主提供的命令入口；具体操作与权限由业务实现，配对的 CommandParameter 作为命令参数。 |
 | [`EnableContextMenu`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L12) | `bool` | 可写; OneWay; 附加属性 | `false` | TabFeatures 的 EnableContextMenu 配置字段；值类型和初值如表，通过 EnableContextMenuProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
-| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L18) | `object?` | 可写; OneWay; 附加属性 | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L20) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay; 附加属性 | `DefaultIconTemplate` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
+| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `object?` | 可写; OneWay; 附加属性 | `null` | 图标内容或矢量几何，具体类型见签名；外部位图所有权仍由宿主负责。 |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L26) | `Avalonia.Controls.Templates.IDataTemplate?` | 可写; OneWay; 附加属性 | `DefaultIconTemplate` | 原生数据模板扩展点；保持正确 x:DataType，模板数据作用域见本控件接入章节。 |
 | [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L27) | `bool` | 可写; OneWay; 附加属性 | `true` | 设置在单个 TabItem 上，False 禁止关闭，排序仍允许 |
-| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `bool` | 只读; OneWay; 附加属性 | `false` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `false` | TabFeatures 的 IsPinned 配置字段；值类型和初值如表，通过 IsPinnedProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L30) | `bool` | 只读; OneWay; 附加属性 | `false` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L28) | `bool` | 可写; OneWay; 附加属性 | `false` | TabFeatures 的 IsPinned 配置字段；值类型和初值如表，通过 IsPinnedProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
 | [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L30) | `bool` | 可写; OneWay; 附加属性 | `false` | 显示关闭按钮；关闭行为和权限仍由宿主及相关命令决定。 |
-| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L16) | `bool` | 可写; OneWay; 附加属性 | `true` | TabFeatures 的 ShowItemIcon 配置字段；值类型和初值如表，通过 ShowItemIconProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
+| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | 可写; OneWay; 附加属性 | `true` | TabFeatures 的 ShowItemIcon 配置字段；值类型和初值如表，通过 ShowItemIconProperty 参与 Avalonia 属性系统与通知。具体上下文见控件用法及链接处的声明／访问器。 |
 
 ### Virtualization
 

@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Adds Heatmap, Radar, Funnel, BoxPlot, Candlestick, Treemap and Sunburst; shared chart animation and cache improvements; AttachmentList, DataGrid row numbers and workflow/dialog integration. Preview pages retain visited content, editing and focus without repeated editor mounting; removes the shared source footer and empty reference placeholders. Includes bilingual guides and measured performance limits. Requires .NET 10 and Avalonia 12.1.4; upgrade both TheOne packages to preview.9. NuGet upload is manual.</PackageReleaseNotes>
+        <PackageReleaseNotes>Integrates OneIcon enum values with icon hosts while preserving custom templates and compiled bindings. Fixes Geometry fallback, custom icon sizing, LoadingContainer disabled foreground and ImageUpload viewer popup scrolling. Includes ImageUpload and illustrated bilingual guides. Coordinated preview.11 release with TheOne.Avalonia.DataGrid. Requires .NET 10 and Avalonia 12.1.4. NuGet upload is manual.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

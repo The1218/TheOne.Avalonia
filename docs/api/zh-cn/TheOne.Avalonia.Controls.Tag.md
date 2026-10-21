@@ -42,11 +42,11 @@ A compact status label with optional caller-owned icon and content.
 
 | 类名 | 选择器 | Setter／资源 |
 | --- | --- | --- |
-| `dashed` | [`^.dashed`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L181) | ^.dashed => BorderBrush=Transparent; ^.dashed /template/ Rectangle#PART_DashedOutline => IsVisible=True |
-| `dot` | [`^.dot /template/ Ellipse#PART_StatusDot`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L187) | ^.dot /template/ Ellipse#PART_StatusDot => IsVisible=True |
-| `gradient` | [`^.gradient`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L190) | ^.gradient => Background={DynamicResource One.Gradient.Brand}; Foreground={DynamicResource One.OnAccent}; BorderBrush=Transparent |
-| `pill` | [`^.pill`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L175) | ^.pill => CornerRadius=999 |
-| `square` | [`^.square`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L178) | ^.square => CornerRadius=0 |
+| `dashed` | [`^.dashed`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L191) | ^.dashed => BorderBrush=Transparent; ^.dashed /template/ Rectangle#PART_DashedOutline => IsVisible=True |
+| `dot` | [`^.dot /template/ Ellipse#PART_StatusDot`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L197) | ^.dot /template/ Ellipse#PART_StatusDot => IsVisible=True |
+| `gradient` | [`^.gradient`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L200) | ^.gradient => Background={DynamicResource One.Gradient.Brand}; Foreground={DynamicResource One.OnAccent}; BorderBrush=Transparent |
+| `pill` | [`^.pill`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L185) | ^.pill => CornerRadius=999 |
+| `square` | [`^.square`](../../../TheOne.Avalonia/Themes/Controls/Tag.axaml#L188) | ^.square => CornerRadius=0 |
 
 ## 相关 API 与内置模型
 

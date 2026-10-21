@@ -13,6 +13,8 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `one` is `using:TheOne.Avalonia.Controls`. An empty heading, icon, and action area removes the whole header row. Null, empty, or whitespace `Header` removes only its text; icons / actions can remain independently. Empty regions hide automatically with no reserved spacing.
 
+`HeaderIcon` supports OneIconKind, Geometry and compiled bindings, such as `HeaderIcon="{x:Static one:OneIconKind.Home}"`. Glyphs fit uniformly and center within HeaderIconSize, including explicit dimensions in custom templates. Custom HeaderIconTemplate precedence and null visibility rules remain unchanged. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

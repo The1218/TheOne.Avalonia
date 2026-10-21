@@ -532,7 +532,7 @@ public partial class NavMenu : TreeView
         }
     }
 
-    private sealed class RecyclingTemplateConverter(IDataTemplate? fallback = null) : IValueConverter
+    private sealed class RecyclingTemplateConverter(IDataTemplate? fallback = null, bool fitIcon = false) : IValueConverter
     {
         private IDataTemplate? _source;
         private IDataTemplate? _wrapped;
@@ -549,7 +549,7 @@ public partial class NavMenu : TreeView
             if (!ReferenceEquals(_source, template))
             {
                 _source = template;
-                _wrapped = new RowContentTemplate(template);
+                _wrapped = new RowContentTemplate(template, fitIcon);
             }
 
             return _wrapped;
@@ -561,9 +561,10 @@ public partial class NavMenu : TreeView
         }
     }
 
-    private sealed class RowContentTemplate(IDataTemplate template) : IDataTemplate
+    private sealed class RowContentTemplate(IDataTemplate template, bool fitIcon) : IDataTemplate
     {
         private readonly Border _empty = new();
+        private readonly Viewbox? _iconBox = fitIcon ? new Viewbox { Stretch = Stretch.Uniform } : null;
         private Control? _content;
 
         public bool Match(object? data)
@@ -574,9 +575,12 @@ public partial class NavMenu : TreeView
         public Control? Build(object? data)
         {
             if (data is null) return _empty;
-            return _content = template is IRecyclingDataTemplate recycling
+            _content = template is IRecyclingDataTemplate recycling
                 ? recycling.Build(data, _content)
                 : template.Build(data);
+            if (_iconBox is null) return _content;
+            _iconBox.Child = _content;
+            return _iconBox;
         }
     }
 
@@ -648,7 +652,7 @@ public partial class NavMenu : TreeView
             };
             icon.Bind(ContentPresenter.ContentTemplateProperty,
                 CompiledBinding.Create<NavMenu, IDataTemplate?>(menu => menu.DisplayIconTemplate, owner,
-                    new RecyclingTemplateConverter()));
+                    new RecyclingTemplateConverter(fitIcon: true)));
             icon.Bind(WidthProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.IconSize, owner));
             icon.Bind(HeightProperty, CompiledBinding.Create<NavMenu, double>(menu => menu.IconSize, owner));
             icon.Bind(IsVisibleProperty,

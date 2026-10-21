@@ -6,6 +6,8 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 [Back to control documentation](README.md). Bind views to a ViewModel with `x:DataType`; extensions use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+TabItem TabFeatures.Icon accepts OneIconKind and Geometry: `one:TabFeatures.Icon="{x:Static one:OneIconKind.Home}"`, consistently in standard and card styles. ShowItemIcon still controls visibility. Custom IconTemplate takes precedence; clearing it restores enum/Geometry fallback. Explicit custom dimensions also fit uniformly within the compact tab icon box. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 
@@ -320,13 +322,13 @@ This section lists project-added control-specific properties, public Classes usa
 | [`CloseCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L33) | `System.Windows.Input.ICommand?` | writable; OneWay; attached | `null` | Host command receives the data item and updates the collection when provided |
 | [`CloseTabCommand`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L66) | `System.Windows.Input.ICommand` | read-only; CLR / n/a | `new CloseTab()` | Host command entry; business code owns the operation/authorization and the paired CommandParameter supplies its argument. |
 | [`EnableContextMenu`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L12) | `bool` | writable; OneWay; attached | `false` | EnableContextMenu configuration on TabFeatures; type and initial value are listed here. EnableContextMenuProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
-| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L18) | `object?` | writable; OneWay; attached | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
-| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L20) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay; attached | `DefaultIconTemplate` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
+| [`Icon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `object?` | writable; OneWay; attached | `null` | Icon content/vector geometry as defined by the signature; the host owns external bitmap lifetimes. |
+| [`IconTemplate`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L26) | `Avalonia.Controls.Templates.IDataTemplate?` | writable; OneWay; attached | `DefaultIconTemplate` | Native data-template extension point; retain the correct x:DataType and follow the control's template data scope. |
 | [`IsClosable`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L27) | `bool` | writable; OneWay; attached | `true` | Per-TabItem closing; False prevents closing but still allows reordering |
-| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L24) | `bool` | read-only; OneWay; attached | `false` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | writable; OneWay; attached | `false` | IsPinned configuration on TabFeatures; type and initial value are listed here. IsPinnedProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
+| [`IsIconVisible`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L30) | `bool` | read-only; OneWay; attached | `false` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsPinned`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L28) | `bool` | writable; OneWay; attached | `false` | IsPinned configuration on TabFeatures; type and initial value are listed here. IsPinnedProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
 | [`ShowCloseButton`](../../../TheOne.Avalonia/Controls/TabFeatures.cs#L30) | `bool` | writable; OneWay; attached | `false` | Shows the close button; the host and associated commands retain control over closing. |
-| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L16) | `bool` | writable; OneWay; attached | `true` | ShowItemIcon configuration on TabFeatures; type and initial value are listed here. ShowItemIconProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
+| [`ShowItemIcon`](../../../TheOne.Avalonia/Controls/TabFeatures.Pages.cs#L22) | `bool` | writable; OneWay; attached | `true` | ShowItemIcon configuration on TabFeatures; type and initial value are listed here. ShowItemIconProperty participates in Avalonia property notifications. See the usage contract and linked declaration/accessor for its context. |
 
 ### Virtualization
 

@@ -16,6 +16,8 @@ var shell = new NavPage
 
 Map ViewModels to views through host DataTemplates or PageTemplate. Place the shell in a finite viewport, such as a Grid `*` row. Its overall height is not hard-coded.
 
+Default brand HeaderIcon, NavPageModel.Icon and IconBinding values accept OneIconKind, for example `HeaderIcon="{x:Static one:OneIconKind.Menu}"`, and can switch between enum and Geometry. The brand uses a 24 DIP box; menu IconSize and 14 DIP tab boxes fit glyphs uniformly without changing layout. A Control instance still has one visual parent; prefer shared enum or Geometry values in navigation models. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

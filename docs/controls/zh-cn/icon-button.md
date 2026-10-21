@@ -31,6 +31,8 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 
 官方 Button 与 IconButton 共用 primary/accent、soft、gradient、outline、ghost、link、success、info、warning、danger 样式。默认样式用于次要操作；primary 推进主要流程，ghost 为轻操作，outline 强调边界，success/info/warning/danger 表达完成、提示、风险与危险操作。悬停、按下、焦点、禁用保留原生状态与 TheOne 语义色。每组按钮宜只保留一个主要操作，文字明确说明操作。
 
+`Icon` 现可直接传入或绑定 `OneIconKind`，如 `Icon="{x:Static one:OneIconKind.Save}"`；内置模板创建独立 OneIcon。`IconTemplate` 仍可自定义 Filled、业务模型或第三方图标，且优先于内置回退；见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

@@ -48,18 +48,30 @@
                                 Name="PART_HeaderHost"
                                 Padding="{TemplateBinding HeaderPadding}">
                                 <Grid ColumnDefinitions="Auto,Auto,*,Auto,Auto">
-                                    <ContentPresenter
-                                        Content="{TemplateBinding HeaderIcon}"
-                                        ContentTemplate="{TemplateBinding HeaderIconTemplate}"
-                                        FontSize="{TemplateBinding HeaderIconSize}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Height="{TemplateBinding HeaderIconSize}"
-                                        HorizontalContentAlignment="Stretch"
-                                        IsVisible="False"
-                                        Name="PART_HeaderIconPresenter"
-                                        VerticalAlignment="Center"
-                                        VerticalContentAlignment="Stretch"
-                                        Width="{TemplateBinding HeaderIconSize}" />
+                                    <Viewbox Width="{TemplateBinding HeaderIconSize}" Height="{TemplateBinding HeaderIconSize}"
+                                             VerticalAlignment="Center" Stretch="Uniform"
+                                             IsVisible="{CompiledBinding #PART_HeaderIconPresenter.IsVisible}">
+                                        <ContentPresenter
+                                            Content="{TemplateBinding HeaderIcon}"
+                                            ContentTemplate="{TemplateBinding HeaderIconTemplate}"
+                                            FontSize="{TemplateBinding HeaderIconSize}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            HorizontalContentAlignment="Stretch"
+                                            IsVisible="False"
+                                            Name="PART_HeaderIconPresenter"
+                                            VerticalAlignment="Center"
+                                            VerticalContentAlignment="Stretch">
+                                            <ContentPresenter.DataTemplates>
+                                                <DataTemplate DataType="{x:Type one:OneIconKind}" x:DataType="one:OneIconKind">
+                                                    <one:OneIcon Kind="{CompiledBinding}"
+                                                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
+                                                    <PathIcon Data="{CompiledBinding}" />
+                                                </DataTemplate>
+                                            </ContentPresenter.DataTemplates>
+                                        </ContentPresenter>
+                                    </Viewbox>
                                     <Border
                                         Grid.Column="1"
                                         IsVisible="False"

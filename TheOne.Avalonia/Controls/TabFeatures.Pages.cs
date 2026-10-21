@@ -12,7 +12,13 @@ public sealed partial class TabFeatures
     public static readonly AttachedProperty<bool> EnableContextMenuProperty =
         AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("EnableContextMenu");
     internal static readonly IDataTemplate DefaultIconTemplate = new FuncDataTemplate<object>((value, _) =>
-        value is Geometry geometry ? new PathIcon { Data = geometry } : new TextBlock { Text = value?.ToString() });
+        value switch
+        {
+            OneIconKind kind => new OneIcon { Kind = kind },
+            Geometry geometry => new PathIcon { Data = geometry },
+            Control control => control,
+            _ => new TextBlock { Text = value?.ToString() }
+        });
     public static readonly AttachedProperty<bool> ShowItemIconProperty =
         AvaloniaProperty.RegisterAttached<TabFeatures, TabControl, bool>("ShowItemIcon", true);
     public static readonly AttachedProperty<object?> IconProperty =

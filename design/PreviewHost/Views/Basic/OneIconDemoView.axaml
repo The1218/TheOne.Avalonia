@@ -68,7 +68,16 @@
                             <StackPanel Orientation="Horizontal" Spacing="8"><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /><TextBlock Text="执行操作" /></StackPanel>
                         </Button>
                         <Button IsEnabled="False"><StackPanel Orientation="Horizontal" Spacing="8"><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /><TextBlock Text="禁用操作" /></StackPanel></Button>
-                        <one:IconButton Content="带图标的按钮"><one:IconButton.Icon><one:OneIcon Kind="{CompiledBinding SelectedIcon.Kind}" /></one:IconButton.Icon></one:IconButton>
+                        <one:IconButton Content="枚举绑定 · 无需 IconTemplate" Icon="{CompiledBinding SelectedIcon.Kind}" />
+                        <one:Tag Content="枚举标签" Icon="{CompiledBinding SelectedIcon.Kind}" />
+                        <one:InfoCard Header="HeaderIcon 枚举绑定" HeaderIcon="{CompiledBinding SelectedIcon.Kind}">
+                            <TextBlock Text="点击左侧图标同步更新所有宿主。" TextWrapping="Wrap" />
+                        </one:InfoCard>
+                        <TabControl Classes="card">
+                            <TabItem Header="枚举图标" one:TabFeatures.Icon="{CompiledBinding SelectedIcon.Kind}">
+                                <TextBlock Text="TabFeatures.Icon 支持 OneIconKind。" TextWrapping="Wrap" />
+                            </TabItem>
+                        </TabControl>
                         <ThemeVariantScope RequestedThemeVariant="Dark">
                             <Border Background="{DynamicResource One.Surface}" Padding="14" CornerRadius="6">
                                 <StackPanel Orientation="Horizontal" Spacing="16" TextElement.Foreground="{DynamicResource One.Text}">
@@ -83,6 +92,7 @@
         <one:InfoCard Header="额外属性与目录">
             <one:Description LabelWidth="135">
                 <one:DescriptionItem Header="Kind / 绑定" Content="&lt;one:OneIcon Kind=&quot;{CompiledBinding CurrentIcon}&quot; /&gt;；CurrentIcon 为 OneIconKind。" />
+                <one:DescriptionItem Header="图标宿主 / 模板" Content="Icon / HeaderIcon / LoadingIcon 可直接绑定 OneIconKind，无需模板。需 Filled 或自定义模型时：&lt;DataTemplate x:DataType=&quot;vm:Item&quot;&gt;&lt;one:OneIcon Kind=&quot;{CompiledBinding Glyph}&quot; Variant=&quot;Filled&quot; /&gt;&lt;/DataTemplate&gt;。NavMenu 模板的数据仍为完整导航项。" />
                 <one:DescriptionItem Header="Variant" Content="Variant=&quot;Filled&quot;：32 个图标提供实心几何，其余明确回退 Outline；实心几何首次使用时解析并缓存。" />
                 <one:DescriptionItem Header="IconSize" Content="IconSize=&quot;20&quot;；默认随 small / normal / large 使用 16 / 20 / 24 DIP，可显式覆盖。" />
                 <one:DescriptionItem Header="StrokeThickness" Content="StrokeThickness=&quot;1.75&quot;；24 单位设计网格中的线宽，范围 (0, 3]，随图标等比缩放。" />

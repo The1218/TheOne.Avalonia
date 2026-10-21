@@ -6,6 +6,8 @@
 
 [返回控件索引](README.md)。加载 OneTheme 后可用，命名空间为 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+Tag 的 `Icon` 支持直接绑定 OneIconKind 或 Geometry，例如 `Icon="{x:Static one:OneIconKind.Success}"`，使用 IconSize 并继承状态与主题颜色。显式 IconTemplate 仍优先，清除模板可恢复内置枚举／Geometry 图标，不沿用前一模板的配色。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

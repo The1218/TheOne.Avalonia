@@ -6,6 +6,8 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `NavMenu` inherits native `TreeView`, using `NavMenuItem` containers and TheOne themes. It supports multilevel menus, separate icon and text templates, page selection, group headers, native keyboard navigation, virtualization, and recycling at every level. Loading `OneTheme` enables Light / Dark and all three sizes.
 
+Use built-in OneIcon in `IconTemplate`: `<DataTemplate x:DataType="vm:MenuNode"><one:OneIcon Kind="{CompiledBinding Glyph}" /></DataTemplate>`, where Glyph is a OneIconKind field. Templates receive the entire navigation item in expanded, collapsed and submenu views. IconSize fits and centers glyphs uniformly, including explicit custom dimensions, while preserving compiled bindings and template recycling. Text content is unaffected. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

@@ -31,6 +31,8 @@ The consuming application can reference [Material.Icons.Avalonia](https://www.nu
 
 Native Button and IconButton share primary/accent, soft, gradient, outline, ghost, link, success, info, warning, and danger styles. The default style suits secondary actions; primary advances the main workflow, ghost is lightweight, outline emphasizes a boundary, and success/info/warning/danger indicate completion, information, risk, and destructive actions. Hover, pressed, focus, and disabled states keep native behavior and TheOne semantic colors. Prefer one primary action per group and explicit action labels.
 
+`Icon` now accepts a bound `OneIconKind` or `Icon="{x:Static one:OneIconKind.Save}"`; the built-in template creates a separate OneIcon. Custom `IconTemplate` values still take precedence for Filled, business models and third-party icons. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

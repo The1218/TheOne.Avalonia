@@ -6,6 +6,8 @@
 
 `NavMenu` 继承官方 `TreeView`，使用 `NavMenuItem` 容器和 TheOne 主题。支持多级菜单、独立图标与文字模板、页面选择、分组标题、原生键盘导航，以及所有层级的虚拟化和容器回收。加载 `OneTheme` 后自动支持 Light / Dark 和三种尺寸。
 
+`IconTemplate` 可使用内置 OneIcon：`<DataTemplate x:DataType="vm:MenuNode"><one:OneIcon Kind="{CompiledBinding Glyph}" /></DataTemplate>`，其中 Glyph 是导航模型的 OneIconKind 字段。模板仍接收完整导航项，展开、收缩及子菜单复用同一契约；图标按 IconSize 等比居中，模板内显式宽高不会撑出图标区域，原有模板回收和编译绑定保持有效。文字区域不受此适配影响。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

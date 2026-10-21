@@ -36,7 +36,16 @@
                             Content="{TemplateBinding one:TabFeatures.Icon}"
                             ContentTemplate="{TemplateBinding one:TabFeatures.IconTemplate}"
                             IsVisible="{TemplateBinding one:TabFeatures.IsIconVisible}"
-                            Name="PART_ItemIcon" />
+                            Name="PART_ItemIcon">
+                            <ContentPresenter.DataTemplates>
+                                <DataTemplate DataType="{x:Type one:OneIconKind}" x:DataType="one:OneIconKind">
+                                    <one:OneIcon Kind="{CompiledBinding}" />
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
+                                    <PathIcon Data="{CompiledBinding}" />
+                                </DataTemplate>
+                            </ContentPresenter.DataTemplates>
+                        </ContentPresenter>
                         </Viewbox>
                         <ContentPresenter
                             Content="{TemplateBinding Header}"
@@ -193,7 +202,16 @@
                                 Content="{TemplateBinding one:TabFeatures.Icon}"
                                 ContentTemplate="{TemplateBinding one:TabFeatures.IconTemplate}"
                                 IsVisible="{TemplateBinding one:TabFeatures.IsIconVisible}"
-                                Name="PART_ItemIcon" />
+                                Name="PART_ItemIcon">
+                                <ContentPresenter.DataTemplates>
+                                    <DataTemplate DataType="{x:Type one:OneIconKind}" x:DataType="one:OneIconKind">
+                                        <one:OneIcon Kind="{CompiledBinding}" />
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
+                                        <PathIcon Data="{CompiledBinding}" />
+                                    </DataTemplate>
+                                </ContentPresenter.DataTemplates>
+                            </ContentPresenter>
                             </Viewbox>
                             <ContentPresenter
                                 Content="{TemplateBinding Header}"

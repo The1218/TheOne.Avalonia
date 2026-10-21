@@ -49,25 +49,30 @@
                                         IsVisible="{TemplateBinding ShowDefaultLoadingIndicator}"
                                         Name="PART_LoadingIndicator"
                                         Width="{CompiledBinding #PART_ContentPresenter.((one:LoadingContainer)TemplatedParent).LoadingIconSize}" />
-                                    <ContentPresenter
-                                        Content="{TemplateBinding LoadingIcon}"
-                                        ContentTemplate="{TemplateBinding LoadingIconTemplate}"
-                                        Foreground="{DynamicResource One.Accent}"
-                                        Height="{TemplateBinding LoadingIconSize}"
-                                        HorizontalContentAlignment="Stretch"
-                                        IsVisible="{TemplateBinding HasCustomLoadingIcon}"
-                                        Name="PART_LoadingIconPresenter"
-                                        VerticalContentAlignment="Stretch"
-                                        Width="{TemplateBinding LoadingIconSize}">
-                                        <ContentPresenter.DataTemplates>
-                                            <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
-                                                <PathIcon
-                                                    Data="{CompiledBinding}"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch" />
-                                            </DataTemplate>
-                                        </ContentPresenter.DataTemplates>
-                                    </ContentPresenter>
+                                    <Viewbox Width="{TemplateBinding LoadingIconSize}" Height="{TemplateBinding LoadingIconSize}"
+                                             IsVisible="{TemplateBinding HasCustomLoadingIcon}" Stretch="Uniform">
+                                        <ContentPresenter
+                                            Content="{TemplateBinding LoadingIcon}"
+                                            ContentTemplate="{TemplateBinding LoadingIconTemplate}"
+                                            Foreground="{DynamicResource One.Accent}"
+                                            HorizontalContentAlignment="Stretch"
+                                            IsVisible="{TemplateBinding HasCustomLoadingIcon}"
+                                            Name="PART_LoadingIconPresenter"
+                                            VerticalContentAlignment="Stretch">
+                                            <ContentPresenter.DataTemplates>
+                                                <DataTemplate DataType="{x:Type one:OneIconKind}" x:DataType="one:OneIconKind">
+                                                    <one:OneIcon Kind="{CompiledBinding}"
+                                                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                                </DataTemplate>
+                                                <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
+                                                    <PathIcon
+                                                        Data="{CompiledBinding}"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch" />
+                                                </DataTemplate>
+                                            </ContentPresenter.DataTemplates>
+                                        </ContentPresenter>
+                                    </Viewbox>
                                     <Border IsVisible="{TemplateBinding HasLoadingText}">
                                         <TextBlock
                                             AutomationProperties.LiveSetting="Polite"
@@ -87,6 +92,9 @@
         <Style Selector="^:loading /template/ ContentPresenter#PART_ContentPresenter">
             <Setter Property="IsEnabled" Value="False" />
             <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_LoadingIconPresenter">
+            <Setter Property="Foreground" Value="{DynamicResource One.DisabledText}" />
         </Style>
         <Style Selector="^.one-small">
             <Setter Property="LoadingIconSize" Value="22" />

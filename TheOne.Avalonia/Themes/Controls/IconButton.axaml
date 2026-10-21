@@ -32,6 +32,10 @@
                                 Name="PART_IconPresenter"
                                 VerticalAlignment="Center">
                                 <ContentPresenter.DataTemplates>
+                                    <DataTemplate DataType="{x:Type one:OneIconKind}" x:DataType="one:OneIconKind">
+                                        <one:OneIcon Kind="{CompiledBinding}"
+                                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                    </DataTemplate>
                                     <DataTemplate DataType="{x:Type Geometry}" x:DataType="Geometry">
                                         <PathIcon
                                             Data="{CompiledBinding}"

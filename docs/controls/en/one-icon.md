@@ -115,6 +115,59 @@ With IconButton:
 
 A OneIcon control instance can belong to only one host. Share enum values and metadata, and create separate instances in templates. Existing [IconButton](icon-button.md) Geometry, custom templates, and third-party icon integration remain supported.
 
+## Icon hosts and IconTemplate
+
+With OneTheme loaded, the following icon values accept `OneIconKind` without a custom template. Use `{x:Static one:OneIconKind.Save}` or bind an enum property. The string `"Save"` is not an enum value when assigned to an object-typed icon property.
+
+| Host | Icon value / template |
+| --- | --- |
+| IconButton / Tag | `Icon` / `IconTemplate` |
+| InfoCard | `HeaderIcon` / `HeaderIconTemplate` |
+| LoadingContainer | `LoadingIcon` / `LoadingIconTemplate` |
+| RelationGraph / RelationGraphNodePresenter | Node field selected by `IconSource`, or presenter `Icon`; `IconTemplate` receives the field value |
+| TabControl / TabItem | `TabFeatures.Icon` / `TabFeatures.IconTemplate`; standard and card styles |
+| NavPage | `HeaderIcon`, `NavPageModel.Icon` or the field selected by `IconBinding`; brand, menu and tabs share the same rules |
+| NavMenu | `IconTemplate` receives the entire navigation item; create OneIcon and bind its enum field |
+
+```xml
+<one:IconButton Icon="{x:Static one:OneIconKind.Save}" Content="Save" />
+<one:Tag Icon="{CompiledBinding Glyph}" Content="Status" />
+<one:InfoCard Header="Workspace" HeaderIcon="{CompiledBinding Glyph}" />
+<one:LoadingContainer IsLoading="{CompiledBinding IsBusy}"
+                      LoadingIcon="{x:Static one:OneIconKind.Loading}" />
+<TabItem Header="Home" one:TabFeatures.Icon="{x:Static one:OneIconKind.Home}" />
+```
+
+Provide a template for Filled, custom strokes or business models. Icon field templates receive the field value; NavMenu templates receive the whole navigation model. Here `vm:MenuNode.Glyph` is a `OneIconKind` property.
+
+```xml
+<one:NavMenu.IconTemplate>
+    <DataTemplate x:DataType="vm:MenuNode">
+        <one:OneIcon Kind="{CompiledBinding Glyph}" Variant="Filled"
+                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+    </DataTemplate>
+</one:NavMenu.IconTemplate>
+<!-- Enum field template for IconButton.IconTemplate and similar properties -->
+<DataTemplate x:Key="FilledIcon" x:DataType="one:OneIconKind">
+    <one:OneIcon Kind="{CompiledBinding}" Variant="Filled"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+</DataTemplate>
+```
+
+Existing explicit templates take precedence over the built-in fallback. Clearing the template restores the built-in glyph. Geometry renders as PathIcon by default; strings and Control values retain native hosting rules. A OneIcon instance can have only one visual parent; share enum values or templates instead. Enum, template, Light/Dark, palette and disabled changes keep updating without fixing the foreground to a local color. Host IconSize / HeaderIconSize / LoadingIconSize or the tab icon box constrains the glyph; standalone OneIcon retains its own three density sizes.
+
+Initial host verification covered 12 Light/Dark × density × 740/360 DIP viewport combinations and 1,776 assertions. The same suite passed on Headless+Skia and an osx-arm64 NativeAOT consumer. It checks changing enum values, explicit templates and clearing them, standard/card tabs, NavMenu model templates, the three NavPage icon regions, Geometry/Control compatibility, disabled-color restoration, palette changes and detach/reattach. No full regression or Windows/Linux runtime checks were performed; these results are not a desktop input test.
+
+### Dynamic types, sizing and foreground
+
+Built-in icon templates in IconButton, Tag, InfoCard, LoadingContainer, relation nodes and TabItem recognize both OneIconKind and Geometry. Replace the bound field directly without installing a temporary Geometry template. Clearing a custom TabItem IconTemplate restores either built-in type. Explicit templates retain priority; clearing them removes the previous glyph and its color.
+
+Icon regions fit their content uniformly and center it, including OneIcon and PathIcon with explicit Width/Height inside custom templates. InfoCard uses HeaderIconSize, LoadingContainer uses LoadingIconSize, and relation nodes and NavMenu use IconSize. The default NavPage brand icon box is 24 DIP and tab icons use 14 DIP. Sizing the host does not rewrite consumer bindings, original Width/Height or Foreground.
+
+Default foreground follows the current theme, state and palette. Disabled LoadingContainer uses One.DisabledText for both OneIcon and Geometry; enabling it restores the current accent. A locally assigned Foreground retains native Avalonia priority. Inherit foreground instead of fixing a local color when automatic state colors are required. NavMenu adds fitting only around icon templates, preserving text templates, item identity and template recycling.
+
+Dynamic switching verification passed 9,204 assertions across 12 light/dark, density and viewport combinations; the same suite passed in an executed osx-arm64 NativeAOT consumer. Coverage includes glyph type/data identity, Geometry replacement, fitting/centering explicit 64×64 and 64×32 templates, template clearing and null restoration, changing theme while disabled, palette updates, local foreground priority and recycled NavMenu compiled bindings. Baseline failures for Geometry text, overflow and LoadingContainer disabled-color differences are fixed. No additional stale-glyph issue was found. No full or Windows/Linux regression was performed, and headless drawing is not desktop input verification.
+
 ## Variants and complete catalog
 
 Dedicated filled geometry is provided for 32 glyphs: `Search`, `Home`, `File`, `Folder`, `User`, `Lock`, `Shield`, `Info`, `Success`, `Warning`, `Error`, `Question`, `Bell`, `Message`, `Start`, `End`, `Heart`, `Star`, `Camera`, `Battery`, `Wallet`, `Bank`, `Factory`, `HardHat`, `MedicalCross`, `FirstAid`, `Building`, `WaterDrop`, `Car`, `ShoppingBag`, `Book`, and `Leaf`. All others explicitly fall back to Outline; open paths are never blindly filled. Changing Kind/Variant removes stale fills.

@@ -6,6 +6,8 @@
 
 `RelationGraph` 接收一个根节点，按树形层级绘制关系。`Orientation="Horizontal"` 从左向右展开，`Vertical` 从上向下展开；节点内部始终保持左侧图标、右侧标题和内容。先加载 `OneTheme`。
 
+`IconSource` 指定的节点字段和独立节点呈现器的 `Icon` 支持 `OneIconKind`，无需 IconTemplate；如节点 `Glyph` 为枚举时设置 `IconSource="{CompiledBinding Glyph}"`。显式 IconTemplate 仍接收图标字段值，支持 OneIcon Filled 和原有第三方模板。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 
@@ -97,7 +99,7 @@ C# 可用 `Avalonia.Data.CompiledBinding.Create<TNode, TValue>(node => node.Bran
 
 标题和内容同时存在时，整个文字组合竖向居中。只有图标时，在整个节点中居中。所有区域为 `null` 时保留空节点外框及连接关系。模板本身不会为 `null` 数据预留区域；空字符串仍为非 null 数据。
 
-文本自动换行，内容可让节点高于 `NodeMinHeight`。`Icon` 可直接提供 `PathIcon` 等原生控件，或提供 Geometry / 业务对象并设置模板。例如：
+文本自动换行，内容可让节点高于 `NodeMinHeight`。`Icon` 可直接提供 OneIconKind、Geometry 或 `PathIcon` 等原生控件。业务对象、特殊画刷或外观可设置模板，例如：
 
 ```xml
 <one:RelationGraph.IconTemplate>

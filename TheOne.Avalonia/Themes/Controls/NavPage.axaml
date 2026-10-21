@@ -13,7 +13,9 @@
                                 <Grid Name="PART_DefaultHeader" ColumnDefinitions="Auto,*" Margin="8">
                                     <Button Name="PART_Toggle" Classes="ghost" Width="44" Height="44" Padding="8"
                                             AutomationProperties.Name="展开或收起导航栏">
-                                        <ContentControl Name="PART_HeaderIcon" Content="{TemplateBinding HeaderIcon}" />
+                                        <Viewbox Width="24" Height="24" Stretch="Uniform">
+                                            <ContentControl Name="PART_HeaderIcon" Content="{TemplateBinding HeaderIcon}" />
+                                        </Viewbox>
                                     </Button>
                                     <TextBlock Name="PART_HeaderTitle" Grid.Column="1" Text="{TemplateBinding HeaderTitle}"
                                                FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10,0,8,0" />

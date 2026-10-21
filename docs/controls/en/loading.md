@@ -29,6 +29,8 @@ LoadingContainer inherits ContentControl and supports Content / ContentTemplate,
 
 `ControlSizing.Size` supports Small / Normal / Large. Button indicator sizes are 14 / 16 / 20 px; container indicators are 22 / 28 / 34 px. One.* semantic colors follow Light / Dark themes. `Motion.Enabled=False` stops rotation but retains the static icon and text; setting it to true during loading resumes rotation. Hiding or unloading cancels animation. LoadingIndicator can also be used independently: IsActive controls operation and Foreground controls color.
 
+`LoadingIcon` accepts OneIconKind or Geometry, for example `LoadingIcon="{x:Static one:OneIconKind.Loading}"`. LoadingIconSize uniformly fits custom glyphs, including explicit dimensions. Default foreground becomes One.DisabledText while disabled and returns to the current accent when enabled; consumer local Foreground retains priority. A custom LoadingIconTemplate takes precedence. The Loading enum glyph is static; retain the default indicator or provide animation when rotation is needed. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

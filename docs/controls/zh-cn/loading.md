@@ -29,6 +29,8 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 `ControlSizing.Size` 支持 Small／Normal／Large，按钮指示图标为 14／16／20px，容器为 22／28／34px。使用 One.* 语义色，跟随 Light／Dark。`Motion.Enabled=False` 停止旋转、保留静态图标和文字；在加载中重新设置 true 恢复旋转，隐藏／卸载时取消动画。LoadingIndicator 也可独立使用，IsActive 控制运行状态，Foreground 控制颜色。
 
+`LoadingIcon` 支持直接绑定 OneIconKind 或 Geometry，例如 `LoadingIcon="{x:Static one:OneIconKind.Loading}"`；按 LoadingIconSize 等比适配，显式宽高的自定义图标不会溢出。默认前景在禁用时统一为 One.DisabledText，重新启用后恢复当前主题强调色；消费方局部 Foreground 仍优先。自定义 `LoadingIconTemplate` 优先；内置 Loading 枚举图形不会自动旋转，需动画时继续使用默认指示器或自定义动效。见 [OneIcon 图标宿主](one-icon.md#图标宿主与-icontemplate)。
+
 <!-- visual-guide:start -->
 ## 外观与场景图示
 

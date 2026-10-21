@@ -6,6 +6,8 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 [Back to controls](README.md). Load OneTheme and use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+Tag Icon accepts OneIconKind or Geometry, such as `Icon="{x:Static one:OneIconKind.Success}"`, using IconSize and inherited status/theme colors. Explicit IconTemplate still takes precedence; clearing it restores enum/Geometry fallback without retaining the previous template's color. See [OneIcon hosts](one-icon.md#icon-hosts-and-icontemplate).
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 
