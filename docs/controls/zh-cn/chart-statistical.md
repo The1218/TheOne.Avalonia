@@ -4,6 +4,29 @@
 
 `BoxPlotChart` 和 `CandlestickChart` 继承 `StatisticalChartBase`，直接绘制缓存后的图形、坐标和文本，不为每条数据创建控件。语义参考 [ECharts 箱线图](https://echarts.apache.org/en/llms-documents/option-parts/option.series-boxplot.md)和 [K 线图](https://echarts.apache.org/en/llms-documents/option-parts/option.series-candlestick.md)，使用本库强类型模型，不依赖 ECharts 运行时。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### BoxPlotChart
+
+![BoxPlotChart — 箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。](../images/BoxPlotChart-light.png)
+
+箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。
+
+[查看 Dark 对照](../images/BoxPlotChart-dark.png)
+
+### CandlestickChart
+
+![CandlestickChart — 烛体和影线表达 Open/Close/Low/High；涨跌配色可独立设置。](../images/CandlestickChart-light.png)
+
+烛体和影线表达 Open/Close/Low/High；涨跌配色可独立设置。
+
+[查看 Dark 对照](../images/CandlestickChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 共用配置
 
 加载 `OneTheme` 后支持 Light / Dark、三档尺寸、`SeriesSource`、图例、单点提示、选择和 PNG 导出。通用配置见 [Chart](charts.md)，动画见[渲染说明](chart-rendering.md)。以下仅列本组图表的差异。

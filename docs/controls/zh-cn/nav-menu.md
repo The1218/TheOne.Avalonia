@@ -6,6 +6,29 @@
 
 `NavMenu` 继承官方 `TreeView`，使用 `NavMenuItem` 容器和 TheOne 主题。支持多级菜单、独立图标与文字模板、页面选择、分组标题、原生键盘导航，以及所有层级的虚拟化和容器回收。加载 `OneTheme` 后自动支持 Light / Dark 和三种尺寸。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavMenu
+
+![NavMenu — 多级导航、选择和侧栏配置；折叠浮层与搜索行为使用同一数据身份。](../images/NavMenu-light.png)
+
+多级导航、选择和侧栏配置；折叠浮层与搜索行为使用同一数据身份。
+
+[查看 Dark 对照](../images/NavMenu-dark.png)
+
+### NavMenu · 多级搜索
+
+![NavMenu · 多级搜索 — 匹配三级页面时保留祖先路径，并突出匹配文字；搜索不会改写业务层级。](../images/NavMenuSearch-light.png)
+
+匹配三级页面时保留祖先路径，并突出匹配文字；搜索不会改写业务层级。
+
+[查看 Dark 对照](../images/NavMenuSearch-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 指定子级属性与模板
 
 `ItemsSource` 提供根菜单，`ChildrenBinding` 指定每个节点的子级来源。节点绑定及图标／内容模板从强类型 ItemsSource 自动推断节点类型，通过编译绑定访问任意业务属性路径，例如 `Entries`、`Children` 或 `Navigation.Children`；不通过属性名称反射读取对象。

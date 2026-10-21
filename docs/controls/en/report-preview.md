@@ -13,6 +13,21 @@ Declare the correct `x:DataType`; `one` is `using:TheOne.Avalonia.Controls`.
 
 Templates may include [QRCode elements](report-design.md#qr-code-components). The viewer uses the same UTF-8 encoding, correction level, quiet zone and vector geometry as ReportDesign/PDF. Static `Text` is supported; bound `FieldKey` uses the first source record or a registered root JSON value. Missing/empty payloads, unresolved bound data, capacity overflow and insufficient size fail loading rather than displaying a stale or placeholder code. PreviewHost's sales sample includes both static and bound header codes.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ReportPreview
+
+![ReportPreview — Paginated paper, toolbar and zoom; a screenshot does not establish PDF or physical-print parity.](../images/ReportPreview-light.png)
+
+Paginated paper, toolbar and zoom; a screenshot does not establish PDF or physical-print parity.
+
+[View Dark comparison](../images/ReportPreview-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Loading definitions and data
 
 Setting `DocumentJson` starts asynchronous loading. To await completion or supply cancellation, call `LoadAsync(json, cancellationToken)` on the UI thread. `Document`, `Layout` and `Error` expose the parsed definition, pagination snapshot and failure message; `Document` / `Error` are read-only Avalonia properties. Failed loads clear the displayed layout. `LoadAsync` sets `Error` and throws to its caller; property-driven loading displays errors.

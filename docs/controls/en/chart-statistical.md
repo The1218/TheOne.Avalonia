@@ -4,6 +4,29 @@
 
 `BoxPlotChart` and `CandlestickChart` inherit `StatisticalChartBase`. They draw cached geometry, axes and text directly, without a control per observation. Semantics reference [ECharts boxplot](https://echarts.apache.org/en/llms-documents/option-parts/option.series-boxplot.md) and [candlestick](https://echarts.apache.org/en/llms-documents/option-parts/option.series-candlestick.md); the API uses this library's typed models with no ECharts runtime dependency.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### BoxPlotChart
+
+![BoxPlotChart — Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.](../images/BoxPlotChart-light.png)
+
+Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.
+
+[View Dark comparison](../images/BoxPlotChart-dark.png)
+
+### CandlestickChart
+
+![CandlestickChart — Bodies and wicks represent Open/Close/Low/High; up/down brushes are configurable.](../images/CandlestickChart-light.png)
+
+Bodies and wicks represent Open/Close/Low/High; up/down brushes are configurable.
+
+[View Dark comparison](../images/CandlestickChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Shared configuration
 
 Load `OneTheme` for Light / Dark, three sizes, `SeriesSource`, legends, single-point tooltips, selection and PNG export. Common configuration is covered in [Chart](charts.md), animation in [rendering](chart-rendering.md). This page describes the differences.

@@ -31,6 +31,21 @@ Image loading starts on visual attachment. Replacing Source or detaching cancels
 
 Fallback remains visible during loading and on HTTP, file, or decode errors. Pseudoclasses: `:loading`, `:error`, `:has-image`, `:has-text`. The default template preserves `PART_Surface`, `PART_Fallback`, `PART_Icon`, `PART_Text`, and `PART_Image`. Set `AutomationProperties.Name` to describe the person; the automation peer otherwise uses Text, then “Avatar”.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Avatar
+
+![Avatar — Image/text placeholders, shapes and states; failures retain an identifiable placeholder.](../images/Avatar-light.png)
+
+Image/text placeholders, shapes and states; failures retain an identifiable placeholder.
+
+[View Dark comparison](../images/Avatar-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

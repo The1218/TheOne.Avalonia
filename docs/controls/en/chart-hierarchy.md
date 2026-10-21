@@ -2,6 +2,29 @@
 
 `TreemapChart` represents hierarchy weights through nested rectangular areas. `SunburstChart` represents the same hierarchy through concentric sectors. Both draw natively and cache layout and hit information without creating a control for each node. See [Charts](charts.md) for common titles, themes, animation and PNG export.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### TreemapChart
+
+![TreemapChart — Nested rectangle areas represent valid leaf weights; branches support drilling.](../images/TreemapChart-light.png)
+
+Nested rectangle areas represent valid leaf weights; branches support drilling.
+
+[View Dark comparison](../images/TreemapChart-dark.png)
+
+### SunburstChart
+
+![SunburstChart — Concentric rings express hierarchy and sector angles follow weights.](../images/SunburstChart-light.png)
+
+Concentric rings express hierarchy and sector angles follow weights.
+
+[View Dark comparison](../images/SunburstChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Data and binding
 
 ```csharp

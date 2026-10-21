@@ -33,6 +33,21 @@
 
 PreviewHost 独立的 **QRCode** 页可修改文本、纠错等级和静区，显示校验结果，并通过 `Description` 展示简短代码。报表元素、字段绑定、撤销和 PDF 用法见 [ReportDesign](report-design.md#二维码组件)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### QRCode
+
+![QRCode — 二维码内容和配置的实际输出；静态文本与字段绑定的示例见代码。](../images/QRCode-light.png)
+
+二维码内容和配置的实际输出；静态文本与字段绑定的示例见代码。
+
+[查看 Dark 对照](../images/QRCode-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

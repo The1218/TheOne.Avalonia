@@ -4,6 +4,29 @@
 
 See [collections](collections.md) for lists, trees, and grids.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Carousel
+
+![Carousel — Current content, previous/next navigation and multiple-item presentation; the host retains data ownership.](../images/Carousel-light.png)
+
+Current content, previous/next navigation and multiple-item presentation; the host retains data ownership.
+
+[View Dark comparison](../images/Carousel-dark.png)
+
+### RefreshContainer
+
+![RefreshContainer — Refreshable-list host in a static state; the host still completes the refresh lifecycle.](../images/RefreshContainer-light.png)
+
+Refreshable-list host in a static state; the host still completes the refresh lifecycle.
+
+[View Dark comparison](../images/RefreshContainer-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Carousel
 
 ```xml

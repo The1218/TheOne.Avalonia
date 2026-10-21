@@ -8,6 +8,133 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 Appearance extensions include `soft` / `gradient` buttons, `filled` / `underlined` inputs, `filled` date/time controls, and status progress bars. See [theme colors and styles](../../theme/en/theme-colors.md) for supported controls, gradient resources, and choosing a style. Choose one primary appearance per control; size classes can be combined with it.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Button
+
+![Button — Semantic colors and appearances compose independently. The figure shows standalone Classes and loading; combination precedence is described below.](../images/Button-light.png)
+
+Semantic colors and appearances compose independently. The figure shows standalone Classes and loading; combination precedence is described below.
+
+[View Dark comparison](../images/Button-dark.png)
+
+### RepeatButton
+
+![RepeatButton — Shares button colors and appearances while retaining repeat-on-hold behavior; loading retains the button footprint.](../images/RepeatButton-light.png)
+
+Shares button colors and appearances while retaining repeat-on-hold behavior; loading retains the button footprint.
+
+[View Dark comparison](../images/RepeatButton-dark.png)
+
+### ToggleButton
+
+![ToggleButton — Checked state composes with semantic colors and appearance. Samples are checked; this is not a separate color enum.](../images/ToggleButton-light.png)
+
+Checked state composes with semantic colors and appearance. Samples are checked; this is not a separate color enum.
+
+[View Dark comparison](../images/ToggleButton-dark.png)
+
+### TextBox
+
+![TextBox — Compares border, fill, underline and clear/password affordances; actual button visibility also depends on focus.](../images/TextBox-light.png)
+
+Compares border, fill, underline and clear/password affordances; actual button visibility also depends on focus.
+
+[View Dark comparison](../images/TextBox-dark.png)
+
+### CheckBox
+
+![CheckBox — Checked state in the default theme; binding and command contracts remain native.](../images/CheckBox-light.png)
+
+Checked state in the default theme; binding and command contracts remain native.
+
+[View Dark comparison](../images/CheckBox-dark.png)
+
+### RadioButton
+
+![RadioButton — Selected state in the default theme; native grouping owns mutual exclusion.](../images/RadioButton-light.png)
+
+Selected state in the default theme; native grouping owns mutual exclusion.
+
+[View Dark comparison](../images/RadioButton-dark.png)
+
+### ToggleSwitch
+
+![ToggleSwitch — On-state track and thumb, colored by semantic theme resources.](../images/ToggleSwitch-light.png)
+
+On-state track and thumb, colored by semantic theme resources.
+
+[View Dark comparison](../images/ToggleSwitch-dark.png)
+
+### ComboBox
+
+![ComboBox — Compares default, filled and underlined; see the open list for item insets and selection backgrounds.](../images/ComboBox-light.png)
+
+Compares default, filled and underlined; see the open list for item insets and selection backgrounds.
+
+[View Dark comparison](../images/ComboBox-dark.png)
+
+### ComboBox · Open dropdown
+
+![ComboBox · Open dropdown — Actual dropdown: the current item is highlighted, item backgrounds have spacing, and popup content is laid out separately from the field.](../images/ComboBoxPopup-light.png)
+
+Actual dropdown: the current item is highlighted, item backgrounds have spacing, and popup content is laid out separately from the field.
+
+[View Dark comparison](../images/ComboBoxPopup-dark.png)
+
+### AutoCompleteBox
+
+![AutoCompleteBox — The suggestion field uses the same three input appearances; text and source determine the suggestions.](../images/AutoCompleteBox-light.png)
+
+The suggestion field uses the same three input appearances; text and source determine the suggestions.
+
+[View Dark comparison](../images/AutoCompleteBox-dark.png)
+
+### NumericUpDown
+
+![NumericUpDown — Numeric field, spinner buttons and dividers share one appearance; underlined does not add a full outline.](../images/NumericUpDown-light.png)
+
+Numeric field, spinner buttons and dividers share one appearance; underlined does not add a full outline.
+
+[View Dark comparison](../images/NumericUpDown-dark.png)
+
+### ButtonSpinner
+
+![ButtonSpinner — Themed native spinner container with custom content.](../images/ButtonSpinner-light.png)
+
+Themed native spinner container with custom content.
+
+[View Dark comparison](../images/ButtonSpinner-dark.png)
+
+### Slider
+
+![Slider — Filled and remaining track segments stay distinct; native dragging and keyboard behavior are retained.](../images/Slider-light.png)
+
+Filled and remaining track segments stay distinct; native dragging and keyboard behavior are retained.
+
+[View Dark comparison](../images/Slider-dark.png)
+
+### ProgressBar
+
+![ProgressBar — Semantic status colors are compared with the default track. This is determinate progress, not a captured looping animation.](../images/ProgressBar-light.png)
+
+Semantic status colors are compared with the default track. This is determinate progress, not a captured looping animation.
+
+[View Dark comparison](../images/ProgressBar-dark.png)
+
+### ToolTip
+
+![ToolTip — Actual hover tooltip content and themed frame; the tooltip is anchored to its target.](../images/ToolTip-light.png)
+
+Actual hover tooltip content and themed frame; the tooltip is anchored to its target.
+
+[View Dark comparison](../images/ToolTip-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Button, RepeatButton, ToggleButton
 
 ```xml

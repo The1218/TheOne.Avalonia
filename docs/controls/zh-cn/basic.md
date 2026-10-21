@@ -8,6 +8,133 @@
 
 外观扩展包括 `soft` / `gradient` 按钮、`filled` / `underlined` 输入、日期时间的 `filled` 及状态进度条。适用控件、渐变资源及选型见 [主题配色与样式](../../theme/zh-cn/theme-colors.md)；每个控件选择一种主要外观，尺寸类可叠加。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Button
+
+![Button — 语义色与外观分开组合；图中展示单独 Classes 及加载状态，组合优先级见下文。](../images/Button-light.png)
+
+语义色与外观分开组合；图中展示单独 Classes 及加载状态，组合优先级见下文。
+
+[查看 Dark 对照](../images/Button-dark.png)
+
+### RepeatButton
+
+![RepeatButton — 复用按钮配色与外观，按住连续触发；加载态仍保留原按钮尺寸。](../images/RepeatButton-light.png)
+
+复用按钮配色与外观，按住连续触发；加载态仍保留原按钮尺寸。
+
+[查看 Dark 对照](../images/RepeatButton-dark.png)
+
+### ToggleButton
+
+![ToggleButton — 选中态叠加语义色与外观，图中按钮已选中；不是另一套颜色枚举。](../images/ToggleButton-light.png)
+
+选中态叠加语义色与外观，图中按钮已选中；不是另一套颜色枚举。
+
+[查看 Dark 对照](../images/ToggleButton-dark.png)
+
+### TextBox
+
+![TextBox — 对比边框、填充、下划线及清空/密码按钮相关样式；按钮的实际出现还取决于焦点。](../images/TextBox-light.png)
+
+对比边框、填充、下划线及清空/密码按钮相关样式；按钮的实际出现还取决于焦点。
+
+[查看 Dark 对照](../images/TextBox-dark.png)
+
+### CheckBox
+
+![CheckBox — 默认主题中的勾选态；绑定和命令仍采用原生控件契约。](../images/CheckBox-light.png)
+
+默认主题中的勾选态；绑定和命令仍采用原生控件契约。
+
+[查看 Dark 对照](../images/CheckBox-dark.png)
+
+### RadioButton
+
+![RadioButton — 默认主题中的单选态；同组互斥关系由原生分组处理。](../images/RadioButton-light.png)
+
+默认主题中的单选态；同组互斥关系由原生分组处理。
+
+[查看 Dark 对照](../images/RadioButton-dark.png)
+
+### ToggleSwitch
+
+![ToggleSwitch — 开关开启态的轨道与滑块；颜色跟随主题语义资源。](../images/ToggleSwitch-light.png)
+
+开关开启态的轨道与滑块；颜色跟随主题语义资源。
+
+[查看 Dark 对照](../images/ToggleSwitch-dark.png)
+
+### ComboBox
+
+![ComboBox — 对比默认、filled 和 underlined；下拉项的留白与选择背景见展开图。](../images/ComboBox-light.png)
+
+对比默认、filled 和 underlined；下拉项的留白与选择背景见展开图。
+
+[查看 Dark 对照](../images/ComboBox-dark.png)
+
+### ComboBox · 下拉展开
+
+![ComboBox · 下拉展开 — 实际下拉列表：当前项高亮，项目间留有间距，弹出内容与输入框分别布局。](../images/ComboBoxPopup-light.png)
+
+实际下拉列表：当前项高亮，项目间留有间距，弹出内容与输入框分别布局。
+
+[查看 Dark 对照](../images/ComboBoxPopup-dark.png)
+
+### AutoCompleteBox
+
+![AutoCompleteBox — 输入建议框沿用一致的三种输入外观；建议列表由输入和数据源共同决定。](../images/AutoCompleteBox-light.png)
+
+输入建议框沿用一致的三种输入外观；建议列表由输入和数据源共同决定。
+
+[查看 Dark 对照](../images/AutoCompleteBox-dark.png)
+
+### NumericUpDown
+
+![NumericUpDown — 数字输入、增减按钮和分隔线采用同一外观；underlined 不额外叠加整框边线。](../images/NumericUpDown-light.png)
+
+数字输入、增减按钮和分隔线采用同一外观；underlined 不额外叠加整框边线。
+
+[查看 Dark 对照](../images/NumericUpDown-dark.png)
+
+### ButtonSpinner
+
+![ButtonSpinner — 原生微调容器的主题外观，可承载自定义内容。](../images/ButtonSpinner-light.png)
+
+原生微调容器的主题外观，可承载自定义内容。
+
+[查看 Dark 对照](../images/ButtonSpinner-dark.png)
+
+### Slider
+
+![Slider — 当前值与未完成轨道保持区分；原生拖动和键盘行为不变。](../images/Slider-light.png)
+
+当前值与未完成轨道保持区分；原生拖动和键盘行为不变。
+
+[查看 Dark 对照](../images/Slider-dark.png)
+
+### ProgressBar
+
+![ProgressBar — 状态配色与默认进度轨道对比；截图为确定进度，不代表循环动画帧。](../images/ProgressBar-light.png)
+
+状态配色与默认进度轨道对比；截图为确定进度，不代表循环动画帧。
+
+[查看 Dark 对照](../images/ProgressBar-dark.png)
+
+### ToolTip
+
+![ToolTip — 实际悬停提示的内容与主题外框；提示依附触发目标显示。](../images/ToolTip-light.png)
+
+实际悬停提示的内容与主题外框；提示依附触发目标显示。
+
+[查看 Dark 对照](../images/ToolTip-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Button、RepeatButton、ToggleButton
 
 ```xml

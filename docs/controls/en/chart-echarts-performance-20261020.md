@@ -2,6 +2,37 @@
 
 Recorded 2026-10-20. [简体中文](../zh-cn/chart-echarts-performance-20261020.md) · **English**
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### HeatmapChart
+
+![HeatmapChart — X/Y locate cells and Value independently controls color; blank cells are gaps.](../images/HeatmapChart-light.png)
+
+X/Y locate cells and Value independently controls color; blank cells are gaps.
+
+[View Dark comparison](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — Each dimension normalizes against its own limits while models retain original values.](../images/RadarChart-light.png)
+
+Each dimension normalizes against its own limits while models retain original values.
+
+[View Dark comparison](../images/RadarChart-dark.png)
+
+### FunnelChart
+
+![FunnelChart — Stage width represents value; business stage order is preserved by default.](../images/FunnelChart-light.png)
+
+Stage width represents value; business stage order is preserved by default.
+
+[View Dark comparison](../images/FunnelChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Scope and outcome
 
 The agreed [first roadmap batch](../../plans/chart-echarts-gap-and-optimization.md) adds HeatmapChart, RadarChart and FunnelChart, and Auto / None / Fade / Reveal animation styles across seventeen ChartBase controls. Existing series, sampling, hit testing, selection and raw-value semantics remain. Maps, networks, Sankey and hierarchy charts remain future work; GanttChart is outside this statistical-chart change.

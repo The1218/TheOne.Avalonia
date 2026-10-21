@@ -4,6 +4,29 @@
 
 日期：2026-10-20。新增 BoxPlot、Candlestick、Treemap、Sunburst，当前共 21 种 ChartBase 控件。配置、模型和限制见[统计图](chart-statistical.md)、[层级图](chart-hierarchy.md)。本页区分既有预览页的前后对照与新图表的首次性能基线。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### BoxPlotChart
+
+![BoxPlotChart — 箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。](../images/BoxPlotChart-light.png)
+
+箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。
+
+[查看 Dark 对照](../images/BoxPlotChart-dark.png)
+
+### TreemapChart
+
+![TreemapChart — 嵌套矩形面积表达有效叶子权重，分支可下钻。](../images/TreemapChart-light.png)
+
+嵌套矩形面积表达有效叶子权重，分支可下钻。
+
+[查看 Dark 对照](../images/TreemapChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 环境与方法
 
 - macOS / Apple M4、.NET 10、Avalonia 12.1.4、Release；前后使用本轮开始时的工作区基线与各优化路径的冻结构建，未使用旧 Git 提交替代工作区基线。既有预览页测量完成后，只调整新增图表；其性能数据与最终新图表构建分别记录程序集身份。

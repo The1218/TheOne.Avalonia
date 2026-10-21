@@ -49,8 +49,8 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Complete signature/value | Contract |
 | --- | --- |
 | [`Task Upload.UploadAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L111) | Uploads explicitly. A supplied UploadCommand takes precedence over built-in HTTP. Errors are exposed through ErrorMessage; cancellation and stale responses never publish a URL. |
-| [`Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.cs#L375) | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
-| [`void Upload.ReloadPreview()`](../../../TheOne.Avalonia/Controls/Upload.cs#L441) | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
+| [`Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.cs#L386) | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
+| [`void Upload.ReloadPreview()`](../../../TheOne.Avalonia/Controls/Upload.cs#L452) | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
 | [`Upload.Upload()`](../../../TheOne.Avalonia/Controls/Upload.cs#L97) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields

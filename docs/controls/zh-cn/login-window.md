@@ -8,6 +8,21 @@
 
 登录窗的显式 owner、错误提示辅助方法、Toast / Notification / Dialog 生命周期和交接后的消息归属详见[窗口 owner 与消息服务](window-owners.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### LoginWindow
+
+![LoginWindow — 登录表单承载在 LoginWindow 内，消息和主窗口交接有独立 owner 规则。](../images/LoginWindow-light.png)
+
+登录表单承载在 LoginWindow 内，消息和主窗口交接有独立 owner 规则。
+
+[查看 Dark 对照](../images/LoginWindow-dark.png)
+
+<!-- visual-guide:end -->
+
 ## LoginWindow 与主窗体交接
 
 LoginWindow 直接继承官方 Window，使用 OneTheme 的语义色、字号和 small / normal / large 密度。默认保留平台完整窗口装饰及标题栏，大小 440 × 540、内容内边距 24、居中显示，关闭按钮保留原生行为；默认禁止缩放和最大化，可按应用需要覆盖。类库不提供账号、密码或认证规则，Content / ContentTemplate 均由开发者定义，支持控件和有明确 x:DataType 的模型模板。

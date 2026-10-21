@@ -14,6 +14,21 @@
 
 视图声明正确的 `x:DataType`；`one` 为 `using:TheOne.Avalonia.Controls`，模型位于 `TheOne.Avalonia.Reporting`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ReportDesign
+
+![ReportDesign — 左侧组件/结构、中央纸张和右侧属性组成设计工作区，图中含表格和二维码。](../images/ReportDesign-light.png)
+
+左侧组件/结构、中央纸张和右侧属性组成设计工作区，图中含表格和二维码。
+
+[查看 Dark 对照](../images/ReportDesign-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 工作台与拖放编辑
 
 顶部报表名称使用原生 `TabStrip`，包含文档标题和内置关闭操作，旁边为保存状态及文档操作，下面为格式工具栏。沿用原生标签项内容布局，移除标签栏外层重复边框与留白。关闭当前唯一文档会清空 `Document`、`DataSource`，禁用保存与 PDF 导出；新建／打开仍可恢复文档。左侧组件／数据栏贯穿工作区高度，设计／预览页签只位于纸张区域顶部。右侧采用“属性／数据”两个页签，几何、内容、字体和颜色在属性页分块排列。组件／数据（`SourceTabs`）、属性／数据（`PropertyTabs`）及设计／预览（`ViewTabs`）统一使用内置 `TabControl` 的 `Classes="card"` 样式，不自定义页签模板，保留原生键盘交互。这些固定功能页显式关闭 `TabFeatures.CanClose` 与 `TabFeatures.CanReorder`，不可关闭或重排。报表名称栏使用 [TabFeatures 关闭能力](collections.md#tabstrip-独立标签导航)。

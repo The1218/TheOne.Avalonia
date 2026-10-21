@@ -6,6 +6,29 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `NavMenu` inherits native `TreeView`, using `NavMenuItem` containers and TheOne themes. It supports multilevel menus, separate icon and text templates, page selection, group headers, native keyboard navigation, virtualization, and recycling at every level. Loading `OneTheme` enables Light / Dark and all three sizes.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### NavMenu
+
+![NavMenu — Hierarchical navigation, selection and sidebar configuration; collapsed flyouts and search share data identity.](../images/NavMenu-light.png)
+
+Hierarchical navigation, selection and sidebar configuration; collapsed flyouts and search share data identity.
+
+[View Dark comparison](../images/NavMenu-dark.png)
+
+### NavMenu · Multilevel search
+
+![NavMenu · Multilevel search — Matching a third-level page retains its ancestor path and highlights matching text without rewriting the business hierarchy.](../images/NavMenuSearch-light.png)
+
+Matching a third-level page retains its ancestor path and highlights matching text without rewriting the business hierarchy.
+
+[View Dark comparison](../images/NavMenuSearch-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Child properties and templates
 
 `ItemsSource` provides the roots; `ChildrenBinding` provides each node's children. Node bindings and icon / content templates infer node types from strongly typed ItemsSource and use compiled bindings for arbitrary business paths such as `Entries`, `Children`, or `Navigation.Children`. They do not reflect over property names.

@@ -13,6 +13,21 @@
 
 `one` 命名空间为 `using:TheOne.Avalonia.Controls`。标题、图标与操作区均为空时移除整个标题行；`Header` 为 null、空字符串或空白字符串时只移除标题文字，图标或操作区仍可独立显示。各空内容区域自动隐藏，不保留额外间隔。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### InfoCard
+
+![InfoCard — 对比公开 Classes、头部、正文、页脚和区域分隔；额外属性可独立配置。](../images/InfoCard-light.png)
+
+对比公开 Classes、头部、正文、页脚和区域分隔；额外属性可独立配置。
+
+[查看 Dark 对照](../images/InfoCard-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 自定义标题与内容
 
 标题和内容支持字符串、控件或数据模型。控件实例直接成为对应 presenter 的子元素，输入、焦点、命令及验证仍由原生控件负责。

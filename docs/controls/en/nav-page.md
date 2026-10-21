@@ -16,6 +16,21 @@ var shell = new NavPage
 
 Map ViewModels to views through host DataTemplates or PageTemplate. Place the shell in a finite viewport, such as a Grid `*` row. Its overall height is not hard-coded.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### NavPage
+
+![NavPage — Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.](../images/NavPage-light.png)
+
+Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.
+
+[View Dark comparison](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Added properties
 
 | Property | Purpose and short example |

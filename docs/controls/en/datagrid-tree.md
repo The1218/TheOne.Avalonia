@@ -31,6 +31,21 @@ var tree = new DataGridTreeCollectionView<Node>(roots, node => node.Children);
 
 Rows remain the original models, without an `Item` wrapper. The generic view supplies the compiled row type and explicitly registers its collection shape, including empty sources. Register concrete row and nested property types before creating the view; see [NativeAOT](datagrid-binding.md#nativeaot). A typed delegate reads Children without property-name reflection. Bind each tree view to only one attached grid; create separate views for independent state.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### DataGridTree
+
+![DataGridTree — Tree rows retain native DataGrid editing and scrolling; expansion, sorting and filtering follow the tree contract.](../images/DataGridTree-light.png)
+
+Tree rows retain native DataGrid editing and scrolling; expansion, sorting and filtering follow the tree contract.
+
+[View Dark comparison](../images/DataGridTree-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Tree and editing contract
 
 - Initially collapsed. `TrySetExpanded(node, true/false)` returns success; `TryGetNodeState` reports depth, parent, filtered children and effective expansion state, with `IsFilterMatch` / `IsForcedExpanded`.

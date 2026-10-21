@@ -1,0 +1,1526 @@
+{
+  "date": "2026-10-21",
+  "backend": "Avalonia 12.1.4 Headless \u002B Skia RenderTargetBitmap, not native OS chrome",
+  "density": "Normal",
+  "palette": "Nova",
+  "language": "Shared PreviewHost Chinese demo labels; English captions in guides",
+  "preview": "1.0.0.0",
+  "previewSha256": "5c2ed3df1b03d898d401587b1534db235fdd45157689ebd36a70e46a9dfcc07d",
+  "librarySha256": "a0f035cda74a3392452c2f56de66b266200efbd23d8ae7d3881758fa1948b9b6",
+  "sourceBaseCommit": "87cf6aeec277bb247035a536247ffeef0c7f2ac9",
+  "sourceNotes": "Working tree includes ImageUpload additions; hashes identify the assemblies actually used. Static rendering is not behavioral regression evidence.",
+  "results": [
+    {
+      "name": "Button",
+      "theme": "Light",
+      "file": "Button-light.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "Button",
+      "theme": "Dark",
+      "file": "Button-dark.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "IconButton",
+      "theme": "Light",
+      "file": "IconButton-light.png",
+      "width": 1080,
+      "height": 1010
+    },
+    {
+      "name": "IconButton",
+      "theme": "Dark",
+      "file": "IconButton-dark.png",
+      "width": 1080,
+      "height": 1010
+    },
+    {
+      "name": "OneIcon",
+      "theme": "Light",
+      "file": "OneIcon-light.png",
+      "width": 1080,
+      "height": 1400
+    },
+    {
+      "name": "OneIcon",
+      "theme": "Dark",
+      "file": "OneIcon-dark.png",
+      "width": 1080,
+      "height": 1400
+    },
+    {
+      "name": "Breadcrumb",
+      "theme": "Light",
+      "file": "Breadcrumb-light.png",
+      "width": 1080,
+      "height": 841
+    },
+    {
+      "name": "Breadcrumb",
+      "theme": "Dark",
+      "file": "Breadcrumb-dark.png",
+      "width": 1080,
+      "height": 841
+    },
+    {
+      "name": "LoadingContainer",
+      "theme": "Light",
+      "file": "LoadingContainer-light.png",
+      "width": 1080,
+      "height": 722
+    },
+    {
+      "name": "LoadingContainer",
+      "theme": "Dark",
+      "file": "LoadingContainer-dark.png",
+      "width": 1080,
+      "height": 722
+    },
+    {
+      "name": "RelationGraph",
+      "theme": "Light",
+      "file": "RelationGraph-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "RelationGraph",
+      "theme": "Dark",
+      "file": "RelationGraph-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "GanttChart",
+      "theme": "Light",
+      "file": "GanttChart-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "GanttChart",
+      "theme": "Dark",
+      "file": "GanttChart-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "ImagePreview",
+      "theme": "Light",
+      "file": "ImagePreview-light.png",
+      "width": 1080,
+      "height": 1395
+    },
+    {
+      "name": "ImagePreview",
+      "theme": "Dark",
+      "file": "ImagePreview-dark.png",
+      "width": 1080,
+      "height": 1395
+    },
+    {
+      "name": "WorkflowEditor",
+      "theme": "Light",
+      "file": "WorkflowEditor-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "WorkflowEditor",
+      "theme": "Dark",
+      "file": "WorkflowEditor-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "ColorPicker",
+      "theme": "Light",
+      "file": "ColorPicker-light.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "ColorPicker",
+      "theme": "Dark",
+      "file": "ColorPicker-dark.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "ReportDesign",
+      "theme": "Light",
+      "file": "ReportDesign-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "ReportDesign",
+      "theme": "Dark",
+      "file": "ReportDesign-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "ReportPreview",
+      "theme": "Light",
+      "file": "ReportPreview-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "ReportPreview",
+      "theme": "Dark",
+      "file": "ReportPreview-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "MessageBox",
+      "theme": "Light",
+      "file": "MessageBox-light.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "MessageBox",
+      "theme": "Dark",
+      "file": "MessageBox-dark.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "Upload",
+      "theme": "Light",
+      "file": "Upload-light.png",
+      "width": 1080,
+      "height": 652
+    },
+    {
+      "name": "Upload",
+      "theme": "Dark",
+      "file": "Upload-dark.png",
+      "width": 1080,
+      "height": 652
+    },
+    {
+      "name": "ImageUpload",
+      "theme": "Light",
+      "file": "ImageUpload-light.png",
+      "width": 1080,
+      "height": 1067
+    },
+    {
+      "name": "ImageUpload",
+      "theme": "Dark",
+      "file": "ImageUpload-dark.png",
+      "width": 1080,
+      "height": 1067
+    },
+    {
+      "name": "Form",
+      "theme": "Light",
+      "file": "Form-light.png",
+      "width": 1080,
+      "height": 707
+    },
+    {
+      "name": "Form",
+      "theme": "Dark",
+      "file": "Form-dark.png",
+      "width": 1080,
+      "height": 707
+    },
+    {
+      "name": "MultiSelectBox",
+      "theme": "Light",
+      "file": "MultiSelectBox-light.png",
+      "width": 1080,
+      "height": 384
+    },
+    {
+      "name": "MultiSelectBox",
+      "theme": "Dark",
+      "file": "MultiSelectBox-dark.png",
+      "width": 1080,
+      "height": 384
+    },
+    {
+      "name": "TreeSelect",
+      "theme": "Light",
+      "file": "TreeSelect-light.png",
+      "width": 1080,
+      "height": 974
+    },
+    {
+      "name": "TreeSelect",
+      "theme": "Dark",
+      "file": "TreeSelect-dark.png",
+      "width": 1080,
+      "height": 974
+    },
+    {
+      "name": "ThemeColorPicker",
+      "theme": "Light",
+      "file": "ThemeColorPicker-light.png",
+      "width": 1080,
+      "height": 247
+    },
+    {
+      "name": "ThemeColorPicker",
+      "theme": "Dark",
+      "file": "ThemeColorPicker-dark.png",
+      "width": 1080,
+      "height": 247
+    },
+    {
+      "name": "ThemeButton",
+      "theme": "Light",
+      "file": "ThemeButton-light.png",
+      "width": 1080,
+      "height": 367
+    },
+    {
+      "name": "ThemeButton",
+      "theme": "Dark",
+      "file": "ThemeButton-dark.png",
+      "width": 1080,
+      "height": 367
+    },
+    {
+      "name": "OneWindow",
+      "theme": "Light",
+      "file": "OneWindow-light.png",
+      "width": 640,
+      "height": 480
+    },
+    {
+      "name": "OneWindow",
+      "theme": "Dark",
+      "file": "OneWindow-dark.png",
+      "width": 640,
+      "height": 480
+    },
+    {
+      "name": "LoginWindow",
+      "theme": "Light",
+      "file": "LoginWindow-light.png",
+      "width": 640,
+      "height": 480
+    },
+    {
+      "name": "LoginWindow",
+      "theme": "Dark",
+      "file": "LoginWindow-dark.png",
+      "width": 640,
+      "height": 480
+    },
+    {
+      "name": "Description",
+      "theme": "Light",
+      "file": "Description-light.png",
+      "width": 1080,
+      "height": 479
+    },
+    {
+      "name": "Description",
+      "theme": "Dark",
+      "file": "Description-dark.png",
+      "width": 1080,
+      "height": 479
+    },
+    {
+      "name": "Timeline",
+      "theme": "Light",
+      "file": "Timeline-light.png",
+      "width": 1080,
+      "height": 582
+    },
+    {
+      "name": "Timeline",
+      "theme": "Dark",
+      "file": "Timeline-dark.png",
+      "width": 1080,
+      "height": 582
+    },
+    {
+      "name": "NavPage",
+      "theme": "Light",
+      "file": "NavPage-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "NavPage",
+      "theme": "Dark",
+      "file": "NavPage-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "QRCode",
+      "theme": "Light",
+      "file": "QRCode-light.png",
+      "width": 1080,
+      "height": 547
+    },
+    {
+      "name": "QRCode",
+      "theme": "Dark",
+      "file": "QRCode-dark.png",
+      "width": 1080,
+      "height": 547
+    },
+    {
+      "name": "ToggleButton",
+      "theme": "Light",
+      "file": "ToggleButton-light.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "ToggleButton",
+      "theme": "Dark",
+      "file": "ToggleButton-dark.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "RepeatButton",
+      "theme": "Light",
+      "file": "RepeatButton-light.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "RepeatButton",
+      "theme": "Dark",
+      "file": "RepeatButton-dark.png",
+      "width": 1080,
+      "height": 867
+    },
+    {
+      "name": "TextBox",
+      "theme": "Light",
+      "file": "TextBox-light.png",
+      "width": 1080,
+      "height": 491
+    },
+    {
+      "name": "TextBox",
+      "theme": "Dark",
+      "file": "TextBox-dark.png",
+      "width": 1080,
+      "height": 491
+    },
+    {
+      "name": "CheckBox",
+      "theme": "Light",
+      "file": "CheckBox-light.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "CheckBox",
+      "theme": "Dark",
+      "file": "CheckBox-dark.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "RadioButton",
+      "theme": "Light",
+      "file": "RadioButton-light.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "RadioButton",
+      "theme": "Dark",
+      "file": "RadioButton-dark.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "ToggleSwitch",
+      "theme": "Light",
+      "file": "ToggleSwitch-light.png",
+      "width": 640,
+      "height": 268
+    },
+    {
+      "name": "ToggleSwitch",
+      "theme": "Dark",
+      "file": "ToggleSwitch-dark.png",
+      "width": 640,
+      "height": 268
+    },
+    {
+      "name": "NumericUpDown",
+      "theme": "Light",
+      "file": "NumericUpDown-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "NumericUpDown",
+      "theme": "Dark",
+      "file": "NumericUpDown-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "Slider",
+      "theme": "Light",
+      "file": "Slider-light.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "Slider",
+      "theme": "Dark",
+      "file": "Slider-dark.png",
+      "width": 640,
+      "height": 248
+    },
+    {
+      "name": "ProgressBar",
+      "theme": "Light",
+      "file": "ProgressBar-light.png",
+      "width": 1080,
+      "height": 378
+    },
+    {
+      "name": "ProgressBar",
+      "theme": "Dark",
+      "file": "ProgressBar-dark.png",
+      "width": 1080,
+      "height": 378
+    },
+    {
+      "name": "ComboBox",
+      "theme": "Light",
+      "file": "ComboBox-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "ComboBox",
+      "theme": "Dark",
+      "file": "ComboBox-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "AutoCompleteBox",
+      "theme": "Light",
+      "file": "AutoCompleteBox-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "AutoCompleteBox",
+      "theme": "Dark",
+      "file": "AutoCompleteBox-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "CalendarDatePicker",
+      "theme": "Light",
+      "file": "CalendarDatePicker-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "CalendarDatePicker",
+      "theme": "Dark",
+      "file": "CalendarDatePicker-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "DateTimePicker",
+      "theme": "Light",
+      "file": "DateTimePicker-light.png",
+      "width": 1080,
+      "height": 742
+    },
+    {
+      "name": "DateTimePicker",
+      "theme": "Dark",
+      "file": "DateTimePicker-dark.png",
+      "width": 1080,
+      "height": 742
+    },
+    {
+      "name": "Calendar",
+      "theme": "Light",
+      "file": "Calendar-light.png",
+      "width": 640,
+      "height": 566
+    },
+    {
+      "name": "Calendar",
+      "theme": "Dark",
+      "file": "Calendar-dark.png",
+      "width": 640,
+      "height": 566
+    },
+    {
+      "name": "DatePicker",
+      "theme": "Light",
+      "file": "DatePicker-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "DatePicker",
+      "theme": "Dark",
+      "file": "DatePicker-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "TimePicker",
+      "theme": "Light",
+      "file": "TimePicker-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "TimePicker",
+      "theme": "Dark",
+      "file": "TimePicker-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "Label",
+      "theme": "Light",
+      "file": "Label-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "Label",
+      "theme": "Dark",
+      "file": "Label-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "SelectableTextBlock",
+      "theme": "Light",
+      "file": "SelectableTextBlock-light.png",
+      "width": 1080,
+      "height": 323
+    },
+    {
+      "name": "SelectableTextBlock",
+      "theme": "Dark",
+      "file": "SelectableTextBlock-dark.png",
+      "width": 1080,
+      "height": 323
+    },
+    {
+      "name": "ListBox",
+      "theme": "Light",
+      "file": "ListBox-light.png",
+      "width": 1080,
+      "height": 444
+    },
+    {
+      "name": "ListBox",
+      "theme": "Dark",
+      "file": "ListBox-dark.png",
+      "width": 1080,
+      "height": 444
+    },
+    {
+      "name": "ItemsControl",
+      "theme": "Light",
+      "file": "ItemsControl-light.png",
+      "width": 640,
+      "height": 272
+    },
+    {
+      "name": "ItemsControl",
+      "theme": "Dark",
+      "file": "ItemsControl-dark.png",
+      "width": 640,
+      "height": 272
+    },
+    {
+      "name": "TabControl",
+      "theme": "Light",
+      "file": "TabControl-light.png",
+      "width": 1080,
+      "height": 400
+    },
+    {
+      "name": "TabControl",
+      "theme": "Dark",
+      "file": "TabControl-dark.png",
+      "width": 1080,
+      "height": 400
+    },
+    {
+      "name": "TreeView",
+      "theme": "Light",
+      "file": "TreeView-light.png",
+      "width": 1080,
+      "height": 640
+    },
+    {
+      "name": "TreeView",
+      "theme": "Dark",
+      "file": "TreeView-dark.png",
+      "width": 1080,
+      "height": 640
+    },
+    {
+      "name": "Menu",
+      "theme": "Light",
+      "file": "Menu-light.png",
+      "width": 640,
+      "height": 256
+    },
+    {
+      "name": "Menu",
+      "theme": "Dark",
+      "file": "Menu-dark.png",
+      "width": 640,
+      "height": 256
+    },
+    {
+      "name": "ContextMenu",
+      "theme": "Light",
+      "file": "ContextMenu-light.png",
+      "width": 220,
+      "height": 94
+    },
+    {
+      "name": "ContextMenu",
+      "theme": "Dark",
+      "file": "ContextMenu-dark.png",
+      "width": 220,
+      "height": 94
+    },
+    {
+      "name": "Expander",
+      "theme": "Light",
+      "file": "Expander-light.png",
+      "width": 640,
+      "height": 301
+    },
+    {
+      "name": "Expander",
+      "theme": "Dark",
+      "file": "Expander-dark.png",
+      "width": 640,
+      "height": 301
+    },
+    {
+      "name": "ScrollViewer",
+      "theme": "Light",
+      "file": "ScrollViewer-light.png",
+      "width": 640,
+      "height": 352
+    },
+    {
+      "name": "ScrollViewer",
+      "theme": "Dark",
+      "file": "ScrollViewer-dark.png",
+      "width": 640,
+      "height": 352
+    },
+    {
+      "name": "ScrollBar",
+      "theme": "Light",
+      "file": "ScrollBar-light.png",
+      "width": 640,
+      "height": 228
+    },
+    {
+      "name": "ScrollBar",
+      "theme": "Dark",
+      "file": "ScrollBar-dark.png",
+      "width": 640,
+      "height": 228
+    },
+    {
+      "name": "Separator",
+      "theme": "Light",
+      "file": "Separator-light.png",
+      "width": 640,
+      "height": 285
+    },
+    {
+      "name": "Separator",
+      "theme": "Dark",
+      "file": "Separator-dark.png",
+      "width": 640,
+      "height": 285
+    },
+    {
+      "name": "ToolTip",
+      "theme": "Light",
+      "file": "ToolTip-light.png",
+      "width": 162,
+      "height": 34
+    },
+    {
+      "name": "ToolTip",
+      "theme": "Dark",
+      "file": "ToolTip-dark.png",
+      "width": 162,
+      "height": 34
+    },
+    {
+      "name": "SplitButton",
+      "theme": "Light",
+      "file": "SplitButton-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "SplitButton",
+      "theme": "Dark",
+      "file": "SplitButton-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "ToggleSplitButton",
+      "theme": "Light",
+      "file": "ToggleSplitButton-light.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "ToggleSplitButton",
+      "theme": "Dark",
+      "file": "ToggleSplitButton-dark.png",
+      "width": 1080,
+      "height": 338
+    },
+    {
+      "name": "SplitView",
+      "theme": "Light",
+      "file": "SplitView-light.png",
+      "width": 640,
+      "height": 298
+    },
+    {
+      "name": "SplitView",
+      "theme": "Dark",
+      "file": "SplitView-dark.png",
+      "width": 640,
+      "height": 298
+    },
+    {
+      "name": "GridSplitter",
+      "theme": "Light",
+      "file": "GridSplitter-light.png",
+      "width": 640,
+      "height": 332
+    },
+    {
+      "name": "GridSplitter",
+      "theme": "Dark",
+      "file": "GridSplitter-dark.png",
+      "width": 640,
+      "height": 332
+    },
+    {
+      "name": "DataGrid",
+      "theme": "Light",
+      "file": "DataGrid-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "DataGrid",
+      "theme": "Dark",
+      "file": "DataGrid-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "DataGridTree",
+      "theme": "Light",
+      "file": "DataGridTree-light.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "DataGridTree",
+      "theme": "Dark",
+      "file": "DataGridTree-dark.png",
+      "width": 1080,
+      "height": 765
+    },
+    {
+      "name": "FlyoutPresenter",
+      "theme": "Light",
+      "file": "FlyoutPresenter-light.png",
+      "width": 640,
+      "height": 294
+    },
+    {
+      "name": "FlyoutPresenter",
+      "theme": "Dark",
+      "file": "FlyoutPresenter-dark.png",
+      "width": 640,
+      "height": 294
+    },
+    {
+      "name": "TabStrip",
+      "theme": "Light",
+      "file": "TabStrip-light.png",
+      "width": 1080,
+      "height": 709
+    },
+    {
+      "name": "TabStrip",
+      "theme": "Dark",
+      "file": "TabStrip-dark.png",
+      "width": 1080,
+      "height": 709
+    },
+    {
+      "name": "Carousel",
+      "theme": "Light",
+      "file": "Carousel-light.png",
+      "width": 1080,
+      "height": 1146
+    },
+    {
+      "name": "Carousel",
+      "theme": "Dark",
+      "file": "Carousel-dark.png",
+      "width": 1080,
+      "height": 1146
+    },
+    {
+      "name": "RefreshContainer",
+      "theme": "Light",
+      "file": "RefreshContainer-light.png",
+      "width": 1080,
+      "height": 903
+    },
+    {
+      "name": "RefreshContainer",
+      "theme": "Dark",
+      "file": "RefreshContainer-dark.png",
+      "width": 1080,
+      "height": 903
+    },
+    {
+      "name": "TransitioningContentControl",
+      "theme": "Light",
+      "file": "TransitioningContentControl-light.png",
+      "width": 1080,
+      "height": 903
+    },
+    {
+      "name": "TransitioningContentControl",
+      "theme": "Dark",
+      "file": "TransitioningContentControl-dark.png",
+      "width": 1080,
+      "height": 903
+    },
+    {
+      "name": "InfoCard",
+      "theme": "Light",
+      "file": "InfoCard-light.png",
+      "width": 1080,
+      "height": 967
+    },
+    {
+      "name": "InfoCard",
+      "theme": "Dark",
+      "file": "InfoCard-dark.png",
+      "width": 1080,
+      "height": 967
+    },
+    {
+      "name": "NavMenu",
+      "theme": "Light",
+      "file": "NavMenu-light.png",
+      "width": 1080,
+      "height": 880
+    },
+    {
+      "name": "NavMenu",
+      "theme": "Dark",
+      "file": "NavMenu-dark.png",
+      "width": 1080,
+      "height": 880
+    },
+    {
+      "name": "Tag",
+      "theme": "Light",
+      "file": "Tag-light.png",
+      "width": 1080,
+      "height": 1102
+    },
+    {
+      "name": "Tag",
+      "theme": "Dark",
+      "file": "Tag-dark.png",
+      "width": 1080,
+      "height": 1102
+    },
+    {
+      "name": "Avatar",
+      "theme": "Light",
+      "file": "Avatar-light.png",
+      "width": 1080,
+      "height": 879
+    },
+    {
+      "name": "Avatar",
+      "theme": "Dark",
+      "file": "Avatar-dark.png",
+      "width": 1080,
+      "height": 879
+    },
+    {
+      "name": "VerificationStep",
+      "theme": "Light",
+      "file": "VerificationStep-light.png",
+      "width": 1080,
+      "height": 894
+    },
+    {
+      "name": "VerificationStep",
+      "theme": "Dark",
+      "file": "VerificationStep-dark.png",
+      "width": 1080,
+      "height": 894
+    },
+    {
+      "name": "FlowStep",
+      "theme": "Light",
+      "file": "FlowStep-light.png",
+      "width": 1080,
+      "height": 1245
+    },
+    {
+      "name": "FlowStep",
+      "theme": "Dark",
+      "file": "FlowStep-dark.png",
+      "width": 1080,
+      "height": 1245
+    },
+    {
+      "name": "Pagination",
+      "theme": "Light",
+      "file": "Pagination-light.png",
+      "width": 1080,
+      "height": 1106
+    },
+    {
+      "name": "Pagination",
+      "theme": "Dark",
+      "file": "Pagination-dark.png",
+      "width": 1080,
+      "height": 1106
+    },
+    {
+      "name": "Toast",
+      "theme": "Light",
+      "file": "Toast-light.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "Toast",
+      "theme": "Dark",
+      "file": "Toast-dark.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "Dialog",
+      "theme": "Light",
+      "file": "Dialog-light.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "Dialog",
+      "theme": "Dark",
+      "file": "Dialog-dark.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "OneNotification",
+      "theme": "Light",
+      "file": "OneNotification-light.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "OneNotification",
+      "theme": "Dark",
+      "file": "OneNotification-dark.png",
+      "width": 760,
+      "height": 420
+    },
+    {
+      "name": "LineChart",
+      "theme": "Light",
+      "file": "LineChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "LineChart",
+      "theme": "Dark",
+      "file": "LineChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "AreaChart",
+      "theme": "Light",
+      "file": "AreaChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "AreaChart",
+      "theme": "Dark",
+      "file": "AreaChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "BarChart",
+      "theme": "Light",
+      "file": "BarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "BarChart",
+      "theme": "Dark",
+      "file": "BarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "HorizontalBarChart",
+      "theme": "Light",
+      "file": "HorizontalBarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "HorizontalBarChart",
+      "theme": "Dark",
+      "file": "HorizontalBarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "ScatterChart",
+      "theme": "Light",
+      "file": "ScatterChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "ScatterChart",
+      "theme": "Dark",
+      "file": "ScatterChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PieChart",
+      "theme": "Light",
+      "file": "PieChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PieChart",
+      "theme": "Dark",
+      "file": "PieChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "DoughnutChart",
+      "theme": "Light",
+      "file": "DoughnutChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "DoughnutChart",
+      "theme": "Dark",
+      "file": "DoughnutChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "GaugeChart",
+      "theme": "Light",
+      "file": "GaugeChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "GaugeChart",
+      "theme": "Dark",
+      "file": "GaugeChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedBarChart",
+      "theme": "Light",
+      "file": "StackedBarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedBarChart",
+      "theme": "Dark",
+      "file": "StackedBarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedHorizontalBarChart",
+      "theme": "Light",
+      "file": "StackedHorizontalBarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedHorizontalBarChart",
+      "theme": "Dark",
+      "file": "StackedHorizontalBarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedAreaChart",
+      "theme": "Light",
+      "file": "StackedAreaChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "StackedAreaChart",
+      "theme": "Dark",
+      "file": "StackedAreaChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedBarChart",
+      "theme": "Light",
+      "file": "PercentStackedBarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedBarChart",
+      "theme": "Dark",
+      "file": "PercentStackedBarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedHorizontalBarChart",
+      "theme": "Light",
+      "file": "PercentStackedHorizontalBarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedHorizontalBarChart",
+      "theme": "Dark",
+      "file": "PercentStackedHorizontalBarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedAreaChart",
+      "theme": "Light",
+      "file": "PercentStackedAreaChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "PercentStackedAreaChart",
+      "theme": "Dark",
+      "file": "PercentStackedAreaChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "HeatmapChart",
+      "theme": "Light",
+      "file": "HeatmapChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "HeatmapChart",
+      "theme": "Dark",
+      "file": "HeatmapChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "RadarChart",
+      "theme": "Light",
+      "file": "RadarChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "RadarChart",
+      "theme": "Dark",
+      "file": "RadarChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "FunnelChart",
+      "theme": "Light",
+      "file": "FunnelChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "FunnelChart",
+      "theme": "Dark",
+      "file": "FunnelChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "BoxPlotChart",
+      "theme": "Light",
+      "file": "BoxPlotChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "BoxPlotChart",
+      "theme": "Dark",
+      "file": "BoxPlotChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "CandlestickChart",
+      "theme": "Light",
+      "file": "CandlestickChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "CandlestickChart",
+      "theme": "Dark",
+      "file": "CandlestickChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "TreemapChart",
+      "theme": "Light",
+      "file": "TreemapChart-light.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "TreemapChart",
+      "theme": "Dark",
+      "file": "TreemapChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "SunburstChart",
+      "theme": "Light",
+      "file": "SunburstChart-light.png",
+      "width": 1080,
+      "height": 463
+    },
+    {
+      "name": "SunburstChart",
+      "theme": "Dark",
+      "file": "SunburstChart-dark.png",
+      "width": 1080,
+      "height": 525
+    },
+    {
+      "name": "AttachmentList",
+      "theme": "Light",
+      "file": "AttachmentList-light.png",
+      "width": 1080,
+      "height": 745
+    },
+    {
+      "name": "AttachmentList",
+      "theme": "Dark",
+      "file": "AttachmentList-dark.png",
+      "width": 1080,
+      "height": 745
+    },
+    {
+      "name": "ColorView",
+      "theme": "Light",
+      "file": "ColorView-light.png",
+      "width": 500,
+      "height": 345
+    },
+    {
+      "name": "ColorView",
+      "theme": "Dark",
+      "file": "ColorView-dark.png",
+      "width": 500,
+      "height": 345
+    },
+    {
+      "name": "ColorViewCustom",
+      "theme": "Light",
+      "file": "ColorViewCustom-light.png",
+      "width": 500,
+      "height": 679
+    },
+    {
+      "name": "ColorViewCustom",
+      "theme": "Dark",
+      "file": "ColorViewCustom-dark.png",
+      "width": 500,
+      "height": 679
+    },
+    {
+      "name": "ButtonSpinner",
+      "theme": "Light",
+      "file": "ButtonSpinner-light.png",
+      "width": 1080,
+      "height": 180
+    },
+    {
+      "name": "ButtonSpinner",
+      "theme": "Dark",
+      "file": "ButtonSpinner-dark.png",
+      "width": 1080,
+      "height": 180
+    },
+    {
+      "name": "NotificationCard",
+      "theme": "Light",
+      "file": "NotificationCard-light.png",
+      "width": 1080,
+      "height": 191
+    },
+    {
+      "name": "NotificationCard",
+      "theme": "Dark",
+      "file": "NotificationCard-dark.png",
+      "width": 1080,
+      "height": 191
+    },
+    {
+      "name": "ComboBoxPopup",
+      "theme": "Light",
+      "file": "ComboBoxPopup-light.png",
+      "width": 380,
+      "height": 170
+    },
+    {
+      "name": "ComboBoxPopup",
+      "theme": "Dark",
+      "file": "ComboBoxPopup-dark.png",
+      "width": 380,
+      "height": 170
+    },
+    {
+      "name": "MultiSelectBoxPopup",
+      "theme": "Light",
+      "file": "MultiSelectBoxPopup-light.png",
+      "width": 420,
+      "height": 216
+    },
+    {
+      "name": "MultiSelectBoxPopup",
+      "theme": "Dark",
+      "file": "MultiSelectBoxPopup-dark.png",
+      "width": 420,
+      "height": 216
+    },
+    {
+      "name": "TreeSelectPopup",
+      "theme": "Light",
+      "file": "TreeSelectPopup-light.png",
+      "width": 420,
+      "height": 214
+    },
+    {
+      "name": "TreeSelectPopup",
+      "theme": "Dark",
+      "file": "TreeSelectPopup-dark.png",
+      "width": 420,
+      "height": 214
+    },
+    {
+      "name": "ThemeColorPickerPopup",
+      "theme": "Light",
+      "file": "ThemeColorPickerPopup-light.png",
+      "width": 380,
+      "height": 410
+    },
+    {
+      "name": "ThemeColorPickerPopup",
+      "theme": "Dark",
+      "file": "ThemeColorPickerPopup-dark.png",
+      "width": 380,
+      "height": 410
+    },
+    {
+      "name": "NavMenuSearch",
+      "theme": "Light",
+      "file": "NavMenuSearch-light.png",
+      "width": 500,
+      "height": 294
+    },
+    {
+      "name": "NavMenuSearch",
+      "theme": "Dark",
+      "file": "NavMenuSearch-dark.png",
+      "width": 500,
+      "height": 294
+    },
+    {
+      "name": "NavMenuPopup",
+      "theme": "Light",
+      "file": "NavMenuPopup-light.png",
+      "width": 720,
+      "height": 555
+    },
+    {
+      "name": "NavMenuPopup",
+      "theme": "Dark",
+      "file": "NavMenuPopup-dark.png",
+      "width": 720,
+      "height": 555
+    }
+  ]
+}

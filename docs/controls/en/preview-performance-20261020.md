@@ -4,6 +4,29 @@
 
 > This document preserves phase one's historical implementation and measurements. The current preview removes the bottom source panel and further optimizes return after a full browse; see [phase two](preview-return-performance-20261020.md).
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### TextBox
+
+![TextBox — Compares border, fill, underline and clear/password affordances; actual button visibility also depends on focus.](../images/TextBox-light.png)
+
+Compares border, fill, underline and clear/password affordances; actual button visibility also depends on focus.
+
+[View Dark comparison](../images/TextBox-dark.png)
+
+### BoxPlotChart
+
+![BoxPlotChart — Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.](../images/BoxPlotChart-light.png)
+
+Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.
+
+[View Dark comparison](../images/BoxPlotChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Presentation policy
 
 Additional-property descriptions retain project-added public writable bindable properties: Avalonia properties on controls, attached properties, and public writable properties on related models. Both `Binding` and `CompiledBinding` are supported. The default binding mode does not have to be `TwoWay`; writable properties that default to `OneWay` can explicitly use `Mode=TwoWay`. Applications must supply the appropriate `x:DataType`, data context and change notifications.

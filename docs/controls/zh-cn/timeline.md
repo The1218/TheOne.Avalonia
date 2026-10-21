@@ -9,6 +9,21 @@
 </one:Timeline>
 ```
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Timeline
+
+![Timeline — 事件按集合顺序展示，成功、警告与待处理状态各有标记；最后一项不继续画尾线。](../images/Timeline-light.png)
+
+事件按集合顺序展示，成功、警告与待处理状态各有标记；最后一项不继续画尾线。
+
+[查看 Dark 对照](../images/Timeline-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 额外属性与布局
 
 | 属性 | 默认值 | 说明 |

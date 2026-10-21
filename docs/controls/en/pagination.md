@@ -14,6 +14,21 @@ Historical command-line checks and consumer test projects have been removed. Che
                 PageChangedCommand="{Binding LoadPageCommand}" />
 ```
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Pagination
+
+![Pagination — Pages, ellipses, page size and jumping; page indices start at one and hosts perform loading.](../images/Pagination-light.png)
+
+Pages, ellipses, page size and jumping; page indices start at one and hosts perform loading.
+
+[View Dark comparison](../images/Pagination-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Page numbers and bounds
 
 | Property | Contract |

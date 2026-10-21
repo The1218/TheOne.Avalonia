@@ -4,6 +4,21 @@
 
 TheOne.Avalonia provides themes and behaviors for Avalonia's native controls, plus windows, messaging, InfoCard, and chart extensions. Follow the [repository README](../../../README.en.md#quick-start) to reference the library and load `OneTheme`, then use the examples here. Your application views can continue to use native Avalonia controls.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### NavPage
+
+![NavPage — Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.](../images/NavPage-light.png)
+
+Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.
+
+[View Dark comparison](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Documentation
 
 Each control guide and preview page presents project-added properties, practical Classes usage, business APIs and related models. Classes appear as labeled examples rather than raw selector/setter tables. Business APIs are actual actions such as saving, loading, exporting, validating and undoing, rather than constructors, property Get/Set wrappers, AvaloniaProperty/RoutedEvent identifiers or field inventories. PreviewHost property and business-action descriptions include short code examples. Inherited native properties and APIs are omitted.
@@ -21,6 +36,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [WorkflowEditor](workflow-editor.md) | Graph contracts, templates, business configuration, upstream references and JSON persistence |
 | [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |
 | [Upload](upload.md) | Single-file selection, image preview, replace/remove and host-owned upload commands |
+| [ImageUpload](image-upload.md) | Single-image card with upload/preview modes and edit/view/delete actions |
 | [AttachmentList](attachment-list.md) | Multiple-file selection, collections, status/progress and host-owned upload, preview and removal |
 | [IconButton and button hierarchy](icon-button.md) | Icon properties, Geometry / PathIcon / Material templates, primary and secondary actions, semantic states |
 | [OneIcon built-in icons](one-icon.md) | 320 vectors in 20 categories including transport, commerce, education and weather; 32 filled variants and a virtualized gallery |

@@ -16,6 +16,21 @@ var shell = new NavPage
 
 使用宿主 DataTemplates 将 ViewModel 映射为视图，或指定 PageTemplate。放在具有有限视口的区域，例如 Grid 的 `*` 行，库内不写死整体高度。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavPage
+
+![NavPage — 默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。](../images/NavPage-light.png)
+
+默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。
+
+[查看 Dark 对照](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 附加属性
 
 | 属性 | 说明与简短示例 |

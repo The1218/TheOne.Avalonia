@@ -25,6 +25,21 @@ if (confirmed)
 
 PreviewHost 的 MessageBox 页面通过 ViewModel 命令打开确认框，展示可配置确认和危险操作确认；等待布尔结果后才执行业务操作，全部使用编译绑定。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### MessageBox
+
+![MessageBox — 危险操作确认框强调取消与删除；确认后是否删除仍由宿主业务决定。](../images/MessageBox-light.png)
+
+危险操作确认框强调取消与删除；确认后是否删除仍由宿主业务决定。
+
+[查看 Dark 对照](../images/MessageBox-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

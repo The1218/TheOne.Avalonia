@@ -39,6 +39,21 @@ Centered text uses the full content width, avoiding clipping to stale measuremen
 
 [Filtering, frozen columns, and summaries](datagrid-extensions.md).
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### DataGrid
+
+![DataGrid — A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.](../images/DataGrid-light.png)
+
+A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.
+
+[View Dark comparison](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## NativeAOT
 
 Library templates use TemplateBinding or compiled bindings. Declare correct `x:DataType` on consumer views / data templates; code-behind DataContext assignment cannot provide static types. Non-generic collection-view columns need explicit row types, and nested binding scopes need their model type. Do not bypass checks by disabling compiled binding or using ReflectionBinding.

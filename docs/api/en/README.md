@@ -117,6 +117,8 @@ This is the complete same-version source contract for integration review and pre
 | [`TheOne.Avalonia.Controls.IconPlacement`](TheOne.Avalonia.Controls.IconPlacement.md) | Enum | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.ImagePreview`](TheOne.Avalonia.Controls.ImagePreview.md) | Class/control | 22 | 9 | 1 |
 | [`TheOne.Avalonia.Controls.ImagePreviewSurface`](TheOne.Avalonia.Controls.ImagePreviewSurface.md) | Class/control | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.ImageUpload`](TheOne.Avalonia.Controls.ImageUpload.md) | Class/control | 7 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.ImageUploadMode`](TheOne.Avalonia.Controls.ImageUploadMode.md) | Enum | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.InfoCard`](TheOne.Avalonia.Controls.InfoCard.md) | Class/control | 18 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.LineChart`](TheOne.Avalonia.Controls.LineChart.md) | Class/control | 1 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.LoadingContainer`](TheOne.Avalonia.Controls.LoadingContainer.md) | Class/control | 10 | 1 | 0 |

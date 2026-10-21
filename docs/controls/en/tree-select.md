@@ -4,6 +4,29 @@
 
 Load OneTheme and use `TheOne.Avalonia.Controls.TreeSelect`. Single selection accepts any enabled node; multiple selection supports Independent or Cascade checks. Stable keys remap selection to new model instances after source replacement. Visible rows use a bounded native virtual ListBox, not a Control per tree node.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### TreeSelect
+
+![TreeSelect — Single selection, independent/cascaded checks and custom-model examples; persist stable keys.](../images/TreeSelect-light.png)
+
+Single selection, independent/cascaded checks and custom-model examples; persist stable keys.
+
+[View Dark comparison](../images/TreeSelect-dark.png)
+
+### TreeSelect · Tree popup
+
+![TreeSelect · Tree popup — Expanded tree choices retain ancestors and indentation; display text is separate from persisted keys.](../images/TreeSelectPopup-light.png)
+
+Expanded tree choices retain ancestors and indentation; display text is separate from persisted keys.
+
+[View Dark comparison](../images/TreeSelectPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Default model and binding
 
 ```csharp

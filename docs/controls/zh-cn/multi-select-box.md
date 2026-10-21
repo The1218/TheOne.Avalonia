@@ -6,6 +6,29 @@
 
 `MultiSelectBox` 提供本地搜索、多选标签、清空和原生虚拟化结果列表。选择绑定模型对象，搜索只改变结果投影；隐藏的已选项不会因搜索而丢失。加载 `OneTheme` 后即可使用。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### MultiSelectBox
+
+![MultiSelectBox — 标签上限、只读和禁选等额外配置对比；多余标签以 +N 汇总。](../images/MultiSelectBox-light.png)
+
+标签上限、只读和禁选等额外配置对比；多余标签以 +N 汇总。
+
+[查看 Dark 对照](../images/MultiSelectBox-dark.png)
+
+### MultiSelectBox · 搜索与多选列表
+
+![MultiSelectBox · 搜索与多选列表 — 搜索框与复选列表使用独立滚动视口；关闭弹层不清除已选数据。](../images/MultiSelectBoxPopup-light.png)
+
+搜索框与复选列表使用独立滚动视口；关闭弹层不清除已选数据。
+
+[查看 Dark 对照](../images/MultiSelectBoxPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 编译绑定接入
 
 ```csharp

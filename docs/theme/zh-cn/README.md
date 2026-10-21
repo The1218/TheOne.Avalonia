@@ -6,6 +6,29 @@
 
 OneTheme 是类库默认主题，使用 `One.*` 全库资源，包含 DataGrid。[加载](../../../README.zh-cn.md#快速开始) · [配色与变体](theme-colors.md) · [控件 API](../../controls/zh-cn/README.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](../../controls/zh-cn/visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ThemeColorPicker
+
+![ThemeColorPicker — 枚举配色选择入口，与明暗主题切换相互独立。](../../controls/images/ThemeColorPicker-light.png)
+
+枚举配色选择入口，与明暗主题切换相互独立。
+
+[查看 Dark 对照](../../controls/images/ThemeColorPicker-dark.png)
+
+### ThemeButton
+
+![ThemeButton — 无文字的明暗图标切换；两态/三态及作用域按属性决定。](../../controls/images/ThemeButton-light.png)
+
+无文字的明暗图标切换；两态/三态及作用域按属性决定。
+
+[查看 Dark 对照](../../controls/images/ThemeButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 官方模板
 
 每个[控件指南](../../controls/zh-cn/README.md)只列专属属性、公开 Classes 用法、实际业务动作和关联模型。PreviewHost 用标签样例直接展示 Classes，属性与业务动作说明附短用法代码，不展示选择器／Setter 明细。构造、附加属性访问器、公开标识符等精确声明另见[完整源码契约](../../api/zh-cn/README.md)。`one-*` 等模板内部类由主题自动维护。

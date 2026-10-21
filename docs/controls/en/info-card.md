@@ -13,6 +13,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `one` is `using:TheOne.Avalonia.Controls`. An empty heading, icon, and action area removes the whole header row. Null, empty, or whitespace `Header` removes only its text; icons / actions can remain independently. Empty regions hide automatically with no reserved spacing.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### InfoCard
+
+![InfoCard — Compares public Classes, header, body, footer and separators; added properties are independently configurable.](../images/InfoCard-light.png)
+
+Compares public Classes, header, body, footer and separators; added properties are independently configurable.
+
+[View Dark comparison](../images/InfoCard-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Custom headers and content
 
 Headers / content accept strings, controls, or models. Control instances become presenter children directly and retain native input, focus, commands, and validation.

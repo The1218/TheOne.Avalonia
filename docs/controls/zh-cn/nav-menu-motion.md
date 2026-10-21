@@ -6,6 +6,29 @@
 
 基础接入见[NavMenu](nav-menu.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavMenu
+
+![NavMenu — 多级导航、选择和侧栏配置；折叠浮层与搜索行为使用同一数据身份。](../images/NavMenu-light.png)
+
+多级导航、选择和侧栏配置；折叠浮层与搜索行为使用同一数据身份。
+
+[查看 Dark 对照](../images/NavMenu-dark.png)
+
+### NavMenu · 折叠弹层
+
+![NavMenu · 折叠弹层 — 折叠后保留根图标，在旁边展开当前分支；每层仍是独立的有限视口。](../images/NavMenuPopup-light.png)
+
+折叠后保留根图标，在旁边展开当前分支；每层仍是独立的有限视口。
+
+[查看 Dark 对照](../images/NavMenuPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 展开、收起与侧栏切换动效
 
 `TransitionDuration` 是可样式化／编译绑定的 TimeSpan，主题默认使用 `One.Motion.Expand`（200ms），节点收起用 70% 时长；设为零立即切换。`Motion.Enabled=False` 在动画中也会直接到达当前目标，重新开启不重放旧动作。

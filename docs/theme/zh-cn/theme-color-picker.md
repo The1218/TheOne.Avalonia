@@ -17,6 +17,37 @@ OneTheme.SetColor(ThemeColor.Nova); // 恢复默认 Nova。
 
 此 API 更新应用配色，保留属性绑定，不改变 Light / Dark。无效枚举抛出 ArgumentOutOfRangeException；未在 Application.Styles 注册 OneTheme 时抛出 InvalidOperationException。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](../../controls/zh-cn/visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ThemeColorPicker
+
+![ThemeColorPicker — 枚举配色选择入口，与明暗主题切换相互独立。](../../controls/images/ThemeColorPicker-light.png)
+
+枚举配色选择入口，与明暗主题切换相互独立。
+
+[查看 Dark 对照](../../controls/images/ThemeColorPicker-dark.png)
+
+### ThemeColorPicker · 配色列表
+
+![ThemeColorPicker · 配色列表 — 实际配色下拉列表的可见部分；更多枚举项通过列表滚动访问。](../../controls/images/ThemeColorPickerPopup-light.png)
+
+实际配色下拉列表的可见部分；更多枚举项通过列表滚动访问。
+
+[查看 Dark 对照](../../controls/images/ThemeColorPickerPopup-dark.png)
+
+### ThemeButton
+
+![ThemeButton — 无文字的明暗图标切换；两态/三态及作用域按属性决定。](../../controls/images/ThemeButton-light.png)
+
+无文字的明暗图标切换；两态/三态及作用域按属性决定。
+
+[查看 Dark 对照](../../controls/images/ThemeButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 配色资源
 
 ```xml

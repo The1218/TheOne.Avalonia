@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:one="using:TheOne.Avalonia.Controls" xmlns:local="using:TheOne.DesignPreview"
+             xmlns:styling="using:TheOne.Avalonia.Styling" x:Class="TheOne.DesignPreview.ImageUploadDemoView"
+             x:DataType="local:UploadDemoViewModel" x:CompileBindings="True">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="24" Spacing="24" MaxWidth="960">
+            <StackPanel Spacing="8">
+                <TextBlock Text="ImageUpload · 图片上传" FontSize="24" FontWeight="SemiBold" />
+                <TextBlock Text="单图卡片，上传和只读预览两种模式。悬停或使用 Tab 聚焦后显示操作栏。"
+                           TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+            </StackPanel>
+            <WrapPanel>
+                <StackPanel Width="280" Spacing="12" Margin="0,0,24,24">
+                    <TextBlock Text="上传模式 · 编辑 / 查看 / 删除" FontWeight="SemiBold" />
+                    <one:ImageUpload Name="UploadCard" SelectedFile="{CompiledBinding File, Mode=TwoWay}" />
+                    <Button Content="恢复示例图片" Command="{CompiledBinding ExampleCommand}" />
+                </StackPanel>
+                <StackPanel Width="280" Spacing="12" Margin="0,0,24,24">
+                    <TextBlock Text="预览模式 · 仅查看" FontWeight="SemiBold" />
+                    <one:ImageUpload Name="PreviewCard" Mode="Preview" SelectedFile="{CompiledBinding ExampleFile}"
+                                     HintText="有图（禁用编辑、删除）" />
+                </StackPanel>
+                <StackPanel Width="240" Spacing="12" Margin="0,0,0,24">
+                    <TextBlock Text="空状态 · 选择图片" FontWeight="SemiBold" />
+                    <one:ImageUpload Name="EmptyCard" styling:ControlSizing.Size="Small" />
+                </StackPanel>
+            </WrapPanel>
+            <StackPanel Spacing="12">
+                <TextBlock Text="预览空状态与禁用状态" FontSize="16" FontWeight="SemiBold" />
+                <WrapPanel>
+                    <one:ImageUpload Width="240" Mode="Preview" Margin="0,0,24,24" styling:ControlSizing.Size="Small" />
+                    <one:ImageUpload Width="240" SelectedFile="{CompiledBinding ExampleFile}" IsEnabled="False"
+                                     HintText="禁用状态" Margin="0,0,0,24" styling:ControlSizing.Size="Small" />
+                </WrapPanel>
+            </StackPanel>
+            <TextBlock Text="“编辑”重新选择并替换图片；取消选择会保留原图。“查看”打开支持缩放、平移和实际大小的图片查看器，Esc 关闭。默认最大 3 MB，可通过 MaxFileSize 设置。选择图片后由业务决定何时提交，控件不会自动发送请求。"
+                       TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

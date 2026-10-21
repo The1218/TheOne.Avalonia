@@ -34,6 +34,37 @@ Code-behind must also inherit OneWindow. LeftContent / RightContent accept objec
 
 See [LoginWindow](login-window.md) for login UI, authenticated handoff, and process shutdown.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### OneWindow
+
+![OneWindow — Actual themed client area and custom title bar; external operating-system decorations are outside the image.](../images/OneWindow-light.png)
+
+Actual themed client area and custom title bar; external operating-system decorations are outside the image.
+
+[View Dark comparison](../images/OneWindow-dark.png)
+
+### ThemeButton
+
+![ThemeButton — Icon-only theme toggle; properties determine two/three-state behavior and scope.](../images/ThemeButton-light.png)
+
+Icon-only theme toggle; properties determine two/three-state behavior and scope.
+
+[View Dark comparison](../images/ThemeButton-dark.png)
+
+### LoginWindow
+
+![LoginWindow — Login content inside LoginWindow; messaging and main-window handoff have distinct owner rules.](../images/LoginWindow-light.png)
+
+Login content inside LoginWindow; messaging and main-window handoff have distinct owner rules.
+
+[View Dark comparison](../images/LoginWindow-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Title bar and theme
 
 ThemeButton is an icon-only ToggleButton. By default it switches Light / Dark. Set the inherited `IsThreeState="True"` to cycle Default → Dark → Light → Default; `IsChecked` is null / true / false respectively. Default displays a system icon. The independent [ThemeColorPicker](../../theme/en/theme-color-picker.md) selects color resources.

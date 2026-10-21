@@ -10,6 +10,45 @@ CalendarItem, CalendarButton, and CalendarDayButton belong to calendar templates
 
 [Back to control documentation](README.md). Extension properties use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### CalendarDatePicker
+
+![CalendarDatePicker — Three date-field appearances; the popup reuses native calendar selection without changing date semantics.](../images/CalendarDatePicker-light.png)
+
+Three date-field appearances; the popup reuses native calendar selection without changing date semantics.
+
+[View Dark comparison](../images/CalendarDatePicker-dark.png)
+
+### Calendar
+
+![Calendar — Selected-day and today indicators; month/year/day modes keep the outer height stable.](../images/Calendar-light.png)
+
+Selected-day and today indicators; month/year/day modes keep the outer height stable.
+
+[View Dark comparison](../images/Calendar-dark.png)
+
+### DatePicker
+
+![DatePicker — Native segmented date picker across the three input appearances.](../images/DatePicker-light.png)
+
+Native segmented date picker across the three input appearances.
+
+[View Dark comparison](../images/DatePicker-dark.png)
+
+### TimePicker
+
+![TimePicker — Hour/minute field appearances; native clock configuration determines formatting.](../images/TimePicker-light.png)
+
+Hour/minute field appearances; native clock configuration determines formatting.
+
+[View Dark comparison](../images/TimePicker-dark.png)
+
+<!-- visual-guide:end -->
+
 ## CalendarDatePicker
 
 ```xml

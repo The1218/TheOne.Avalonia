@@ -4,6 +4,21 @@ Use [AttachmentList](attachment-list.md) for multiple-file selection and attachm
 
 `TheOne.Avalonia.Controls.Upload` selects one image and renders a thumbnail. It includes default templates, the native file picker and optional single-file HTTP upload. Configure `UploadApi` for the built-in transport, or supply `UploadCommand` to implement the operation in your application.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Upload
+
+![Upload — Single-image empty state and host-command entry; no network upload was performed for this image.](../images/Upload-light.png)
+
+Single-image empty state and host-command entry; no network upload was performed for this image.
+
+[View Dark comparison](../images/Upload-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Built-in API upload
 
 ```xml

@@ -9,6 +9,21 @@ A vertical history of operations, deliveries or approvals. Timeline displays col
 </one:Timeline>
 ```
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Timeline
+
+![Timeline — Events follow collection order with success, warning and pending markers; the final item has no continuation tail.](../images/Timeline-light.png)
+
+Events follow collection order with success, warning and pending markers; the final item has no continuation tail.
+
+[View Dark comparison](../images/Timeline-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Added properties and layout
 
 | Property | Default | Meaning |

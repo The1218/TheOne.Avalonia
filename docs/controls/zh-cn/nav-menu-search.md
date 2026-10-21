@@ -6,6 +6,21 @@
 
 基础接入见[NavMenu](nav-menu.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavMenu · 多级搜索
+
+![NavMenu · 多级搜索 — 匹配三级页面时保留祖先路径，并突出匹配文字；搜索不会改写业务层级。](../images/NavMenuSearch-light.png)
+
+匹配三级页面时保留祖先路径，并突出匹配文字；搜索不会改写业务层级。
+
+[查看 Dark 对照](../images/NavMenuSearch-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 多级搜索过滤
 
 使用 SearchText 指定搜索词，SearchTextBinding 指定节点搜索字段；ChildrenBinding 继续指定子级来源。搜索输入可以放在页面或侧栏中，独立 NavMenu 预览页使用编译双向绑定：

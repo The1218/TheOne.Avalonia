@@ -6,6 +6,29 @@
 
 [返回控件索引](README.md)。加载 OneTheme 后可用，命名空间为 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Tag
+
+![Tag — 状态、外观和新增 Classes 组合对比，包括胶囊、方角、虚线、状态点和渐变。](../images/Tag-light.png)
+
+状态、外观和新增 Classes 组合对比，包括胶囊、方角、虚线、状态点和渐变。
+
+[查看 Dark 对照](../images/Tag-dark.png)
+
+### VerificationStep
+
+![VerificationStep — 步骤导航、当前表单与下方字段提示；前进需要当前步骤校验通过。](../images/VerificationStep-light.png)
+
+步骤导航、当前表单与下方字段提示；前进需要当前步骤校验通过。
+
+[查看 Dark 对照](../images/VerificationStep-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Tag 状态标签
 
 新增五个外观 Classes，可与现有 `Status`、`Variant` 组合，不改变枚举值：

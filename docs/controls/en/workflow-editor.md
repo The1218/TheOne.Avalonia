@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 WorkflowEditor edits a bound WorkflowDocument: nodes, named ports, edges and business data references. It includes default templates; the host supplies factories, data, persistence and execution, and can replace individual templates. There is no built-in approval, HTTP or script engine.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### WorkflowEditor
+
+![WorkflowEditor — Node library, canvas, property inspector and minimap; the approval example uses business models and stable identities.](../images/WorkflowEditor-light.png)
+
+Node library, canvas, property inspector and minimap; the approval example uses business models and stable identities.
+
+[View Dark comparison](../images/WorkflowEditor-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Contracts
 
 ### Host connection factories and node policies

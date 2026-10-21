@@ -25,6 +25,21 @@ The optional `owner` parameter selects an open `OneWindow` or `LoginWindow`. Wit
 
 The PreviewHost MessageBox page binds its launch buttons to ViewModel commands and shows both a configurable confirmation and a dangerous confirmation. It demonstrates awaiting the boolean result before applying business work, with compiled bindings throughout.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### MessageBox
+
+![MessageBox — Dangerous-action confirmation distinguishes cancel and delete; the host still owns the actual deletion.](../images/MessageBox-light.png)
+
+Dangerous-action confirmation distinguishes cancel and delete; the host still owns the actual deletion.
+
+[View Dark comparison](../images/MessageBox-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

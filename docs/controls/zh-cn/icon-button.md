@@ -31,6 +31,21 @@ Material 图标由消费项目引用 [Material.Icons.Avalonia](https://www.nuget
 
 官方 Button 与 IconButton 共用 primary/accent、soft、gradient、outline、ghost、link、success、info、warning、danger 样式。默认样式用于次要操作；primary 推进主要流程，ghost 为轻操作，outline 强调边界，success/info/warning/danger 表达完成、提示、风险与危险操作。悬停、按下、焦点、禁用保留原生状态与 TheOne 语义色。每组按钮宜只保留一个主要操作，文字明确说明操作。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### IconButton
+
+![IconButton — 图标与正文在各 Classes 下对齐；图标来源、位置和间距可独立配置。](../images/IconButton-light.png)
+
+图标与正文在各 Classes 下对齐；图标来源、位置和间距可独立配置。
+
+[查看 Dark 对照](../images/IconButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 语义色与外观组合
 
 IconButton 与 Button、ToggleButton、RepeatButton 共用[组合及优先级规则](basic.md#button语义色与外观组合)。颜色 `primary/accent`、`danger`、`success`、`warning`、`info` 可组合 `solid`、`ghost`、`link`、`outline`、`soft`、`gradient`；例如：

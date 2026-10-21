@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `GanttChart` displays read-only all-day schedules. A native ListBox provides selection, keyboard navigation and row virtualization. Each visible row draws both task information and its timeline, so vertical scrolling cannot separate them. The horizontal ScrollBar moves only the timeline; the header stays fixed.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### GanttChart
+
+![GanttChart — Task hierarchy and timeline align, showing progress, dependencies and the current-date line.](../images/GanttChart-light.png)
+
+Task hierarchy and timeline align, showing progress, dependencies and the current-date line.
+
+[View Dark comparison](../images/GanttChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Compiled binding example
 
 Load OneTheme and declare the actual ViewModel as the view's `x:DataType`:

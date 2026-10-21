@@ -8,6 +8,21 @@ Native DataGrid, column types, virtualized presenters, and keyboard behavior are
 
 See [DataGrid binding and sorting](datagrid-binding.md) for type inference, generic collection views, header sort buttons, and cell sizing.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### DataGrid
+
+![DataGrid — A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.](../images/DataGrid-light.png)
+
+A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.
+
+[View Dark comparison](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Paged row numbers
 
 `DataGridRowNumbers` uses native row headers, without custom drawing or reflection over business fields. Like Pagination, its page index is a 1-based `long`. The displayed number is `(PageIndex - 1) * PageSize + row index + 1`: an ordinal in the current view, never a record ID.

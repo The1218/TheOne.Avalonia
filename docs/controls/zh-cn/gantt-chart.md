@@ -6,6 +6,21 @@
 
 `GanttChart` 是全天任务的只读甘特图。任务列表使用原生 ListBox 的选择、键盘导航和行虚拟化；每个可见行同时绘制任务信息与时间条，共用垂直滚动。水平 ScrollBar 只移动时间轴，表头保持固定。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### GanttChart
+
+![GanttChart — 任务树与时间轴联动，展示进度、依赖与当前日期线。](../images/GanttChart-light.png)
+
+任务树与时间轴联动，展示进度、依赖与当前日期线。
+
+[查看 Dark 对照](../images/GanttChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 编译绑定示例
 
 视图加载 OneTheme，并声明实际 ViewModel 的 `x:DataType`：

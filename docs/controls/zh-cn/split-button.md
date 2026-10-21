@@ -29,6 +29,29 @@
 
 大量选项使用 MenuFlyout.ItemsSource 和有类型的数据模板，让原生菜单按需创建容器；不要提前创建成千上万个 MenuItem。ItemContainerTheme 的 x:DataType 应是选项模型，并用编译绑定设置 Command / CommandParameter。Flyout 中需要不同 VM 时显式提供有类型的数据上下文，不能关闭编译绑定。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### SplitButton
+
+![SplitButton — 主操作与展开区域分开，图中对比默认、accent、gradient 和 primary。](../images/SplitButton-light.png)
+
+主操作与展开区域分开，图中对比默认、accent、gradient 和 primary。
+
+[查看 Dark 对照](../images/SplitButton-dark.png)
+
+### ToggleSplitButton
+
+![ToggleSplitButton — 保留切换按钮的选中状态，同时提供独立下拉入口。](../images/ToggleSplitButton-light.png)
+
+保留切换按钮的选中状态，同时提供独立下拉入口。
+
+[查看 Dark 对照](../images/ToggleSplitButton-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

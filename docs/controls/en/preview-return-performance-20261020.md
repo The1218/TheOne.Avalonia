@@ -2,6 +2,29 @@
 
 [简体中文](../zh-cn/preview-return-performance-20261020.md) · [Phase one](preview-performance-20261020.md) · [Control documentation](README.md)
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### SplitButton
+
+![SplitButton — Primary action and dropdown affordance are separate; default, accent, gradient and primary are compared.](../images/SplitButton-light.png)
+
+Primary action and dropdown affordance are separate; default, accent, gradient and primary are compared.
+
+[View Dark comparison](../images/SplitButton-dark.png)
+
+### NavPage
+
+![NavPage — Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.](../images/NavPage-light.png)
+
+Default header, navigation pane and card tabs form a workspace; navigation opens the right-hand pages.
+
+[View Dark comparison](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Changes
 
 Phase one reduced first-opening work, but fully visited pages still reattached their documentation and editors on return. The preview-only `PreviewPageHost` now retains visited pages in the tree and hides inactive frames. Only the active frame is measured and arranged; hidden frames do not draw, receive hits or participate in keyboard navigation. Normal navigation preserves page, description, editor and business-model instances.

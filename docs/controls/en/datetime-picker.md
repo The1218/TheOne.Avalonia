@@ -12,6 +12,21 @@
 
 `Appointment` is a nullable `DateTime` containing both parts. Changing the display format itself does not truncate seconds or milliseconds; the control performs no time zone conversion. The default format is `yyyy-MM-dd HH:mm`. Text submission parses the formatted value using native precision and `DateTime.Kind` rules: include `ss` to edit seconds and `fffffff` for fractional seconds. Parsing and `DateValidationError` retain native behavior. Picking a calendar date preserves the time; editing the time preserves the date.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### DateTimePicker
+
+![DateTimePicker — Date and time in one field; format configuration and independent time-binding limits are explained below.](../images/DateTimePicker-light.png)
+
+Date and time in one field; format configuration and independent time-binding limits are explained below.
+
+[View Dark comparison](../images/DateTimePicker-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Additional properties
 
 | Property | Type / default | Behavior |

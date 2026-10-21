@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 A lightweight single/multiple image viewer for HTTP(S), local paths / file URIs and Bitmap (also accepts IImage). Load OneTheme and declare the view's correct x:DataType for compiled bindings.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ImagePreview
+
+![ImagePreview — Embedded single/multiple-image examples, including transparency and navigation affordances.](../images/ImagePreview-light.png)
+
+Embedded single/multiple-image examples, including transparency and navigation affordances.
+
+[View Dark comparison](../images/ImagePreview-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Single and multiple images
 
 ```xml

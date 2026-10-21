@@ -6,6 +6,29 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 See [charts](charts.md) for models and setup.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### AreaChart
+
+![AreaChart — Area fill emphasizes trend magnitude without changing source values.](../images/AreaChart-light.png)
+
+Area fill emphasizes trend magnitude without changing source values.
+
+[View Dark comparison](../images/AreaChart-dark.png)
+
+### GaugeChart
+
+![GaugeChart — Distinguishes the current value from the remaining range; the preview contains additional gauge styles.](../images/GaugeChart-light.png)
+
+Distinguishes the current value from the remaining range; the preview contains additional gauge styles.
+
+[View Dark comparison](../images/GaugeChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Data update animation
 
 All 21 chart controls derived from `ChartBase` share the same animation settings, including Heatmap, Radar, Funnel, BoxPlot, Candlestick, Treemap and Sunburst. `AnimationStyle` is a validated `ChartAnimationStyle` enum; the default is `Auto`.

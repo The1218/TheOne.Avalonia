@@ -6,6 +6,29 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 [Back to controls](README.md). Load OneTheme and use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Tag
+
+![Tag — Compares Status, Variant and added Classes, including pill, square, dashed, dot and gradient.](../images/Tag-light.png)
+
+Compares Status, Variant and added Classes, including pill, square, dashed, dot and gradient.
+
+[View Dark comparison](../images/Tag-dark.png)
+
+### VerificationStep
+
+![VerificationStep — Step navigation, current form and field-level feedback; advancing requires current-step validation.](../images/VerificationStep-light.png)
+
+Step navigation, current form and field-level feedback; advancing requires current-step validation.
+
+[View Dark comparison](../images/VerificationStep-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Tag status labels
 
 Five new Classes combine with existing `Status` and `Variant` values without changing enum numbers:

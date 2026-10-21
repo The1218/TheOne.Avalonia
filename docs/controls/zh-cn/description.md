@@ -14,6 +14,21 @@
 
 命名空间：`xmlns:one="using:TheOne.Avalonia.Controls"`。每行内容自然增高，文本自动换行，不内置滚动容器。长页面由外层 `ScrollViewer` 统一滚动；不要为整个说明列表设置固定高度。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Description
+
+![Description — 字段标题与内容按行排列；实际说明和短代码可作为内容放入。](../images/Description-light.png)
+
+字段标题与内容按行排列；实际说明和短代码可作为内容放入。
+
+[查看 Dark 对照](../images/Description-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 公共属性
 
 | 控件 / 属性 | 类型与默认值 | 说明 |

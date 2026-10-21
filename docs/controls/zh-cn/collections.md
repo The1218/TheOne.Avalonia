@@ -6,6 +6,61 @@
 
 [返回控件文档](README.md)。视图绑定需有对应的 ViewModel 和 `x:DataType`；扩展使用 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ItemsControl
+
+![ItemsControl — 默认项目排版；自定义内容由宿主的 ItemTemplate 提供。](../images/ItemsControl-light.png)
+
+默认项目排版；自定义内容由宿主的 ItemTemplate 提供。
+
+[查看 Dark 对照](../images/ItemsControl-dark.png)
+
+### ListBox
+
+![ListBox — 选中项目的背景与外框保留留白；默认、filled、outlined 使用一致的项目规则。](../images/ListBox-light.png)
+
+选中项目的背景与外框保留留白；默认、filled、outlined 使用一致的项目规则。
+
+[查看 Dark 对照](../images/ListBox-dark.png)
+
+### TreeView
+
+![TreeView — 层级缩进与项目选择采用同一主题；大量数据仅实现可见容器。](../images/TreeView-light.png)
+
+层级缩进与项目选择采用同一主题；大量数据仅实现可见容器。
+
+[查看 Dark 对照](../images/TreeView-dark.png)
+
+### TabControl
+
+![TabControl — card 页签包含右侧固钉、关闭入口及内容区域；固定页不能拖动或关闭。](../images/TabControl-light.png)
+
+card 页签包含右侧固钉、关闭入口及内容区域；固定页不能拖动或关闭。
+
+[查看 Dark 对照](../images/TabControl-dark.png)
+
+### TabStrip
+
+![TabStrip — 独立标签条的选中背景、关闭及重排演示；内容宿主由应用决定。](../images/TabStrip-light.png)
+
+独立标签条的选中背景、关闭及重排演示；内容宿主由应用决定。
+
+[查看 Dark 对照](../images/TabStrip-dark.png)
+
+### DataGrid
+
+![DataGrid — 真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。](../images/DataGrid-light.png)
+
+真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。
+
+[查看 Dark 对照](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## ItemsControl 与 ListBox
 
 ```xml

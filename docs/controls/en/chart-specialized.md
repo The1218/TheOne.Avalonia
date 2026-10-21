@@ -6,6 +6,37 @@ These native direct-drawing controls derive from `SpecializedChartBase`, without
 
 Load `OneTheme` to use Light / Dark, small / normal / large density, `SeriesSource`, two-way `SelectedSeriesIndex` / `SelectedIndex`, keyboard selection, legends, single-point tooltips and `ExportPng`. See [animation](chart-rendering.md). This edition does not implement geo/calendar coordinates, Cartesian viewport navigation, dual Y axes, stacking, shared-X tooltips or sampling for these three types.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### HeatmapChart
+
+![HeatmapChart — X/Y locate cells and Value independently controls color; blank cells are gaps.](../images/HeatmapChart-light.png)
+
+X/Y locate cells and Value independently controls color; blank cells are gaps.
+
+[View Dark comparison](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — Each dimension normalizes against its own limits while models retain original values.](../images/RadarChart-light.png)
+
+Each dimension normalizes against its own limits while models retain original values.
+
+[View Dark comparison](../images/RadarChart-dark.png)
+
+### FunnelChart
+
+![FunnelChart — Stage width represents value; business stage order is preserved by default.](../images/FunnelChart-light.png)
+
+Stage width represents value; business stage order is preserved by default.
+
+[View Dark comparison](../images/FunnelChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## HeatmapChart
 
 Supply `HeatmapPoint` objects through `ChartSeries.ItemsSource`; ordinary `ChartPoint` objects do not produce cells.

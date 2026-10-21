@@ -6,6 +6,21 @@
 
 `FlowStep` 是基于原生 `ItemsControl` 的线性流程展示控件，`FlowNode` 是基于原生 `ContentControl` 的节点容器。加载 `OneTheme` 后支持横向／纵向、Light／Dark 和 Small／Normal／Large。状态由业务显式设置，不自动推进或校验表单。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### FlowStep
+
+![FlowStep — 水平与垂直流程节点可展示状态和富内容；不承担表单验证职责。](../images/FlowStep-light.png)
+
+水平与垂直流程节点可展示状态和富内容；不承担表单验证职责。
+
+[查看 Dark 对照](../images/FlowStep-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 默认内容
 
 ```xml

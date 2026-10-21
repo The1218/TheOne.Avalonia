@@ -4,6 +4,29 @@
 
 > 本文保留第一阶段的历史实现与测量。当前预览已移除底部源码面板，并继续优化完整浏览后的返回，见[第二阶段记录](preview-return-performance-20261020.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### TextBox
+
+![TextBox — 对比边框、填充、下划线及清空/密码按钮相关样式；按钮的实际出现还取决于焦点。](../images/TextBox-light.png)
+
+对比边框、填充、下划线及清空/密码按钮相关样式；按钮的实际出现还取决于焦点。
+
+[查看 Dark 对照](../images/TextBox-dark.png)
+
+### BoxPlotChart
+
+![BoxPlotChart — 箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。](../images/BoxPlotChart-light.png)
+
+箱体、须与离群点展示五数摘要；不是从任意样本自动计算分位数。
+
+[查看 Dark 对照](../images/BoxPlotChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 预览内容规则
 
 预览页的额外属性说明仅保留本项目公开、可写且可绑定的属性：控件的 Avalonia 属性、附加属性，以及关联模型的公开可写属性。支持 `Binding` 和 `CompiledBinding`，不按默认绑定模式是否为 `TwoWay` 筛选。默认 `OneWay` 的可写属性仍可显式指定 `Mode=TwoWay`；应用负责提供正确的 `x:DataType`、数据上下文和变更通知。

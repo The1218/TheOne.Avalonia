@@ -23,6 +23,29 @@ SelectableTextBlock 保留原生 SelectionStart / SelectionEnd、SelectedText、
 
 small / normal / large 正文字号为 12 / 14 / 16 px，Label 与输入行共享最小高度。显式 FontSize、LineHeight 等局部值优先。不要为只读段落固定单行 Height，以免换行或字体缩放被裁切。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Label
+
+![Label — 标签的默认与语义样式，展示正文色和强调色的区别。](../images/Label-light.png)
+
+标签的默认与语义样式，展示正文色和强调色的区别。
+
+[查看 Dark 对照](../images/Label-dark.png)
+
+### SelectableTextBlock
+
+![SelectableTextBlock — 可选择文本的主题表现，保留原生选择与复制。](../images/SelectableTextBlock-light.png)
+
+可选择文本的主题表现，保留原生选择与复制。
+
+[查看 Dark 对照](../images/SelectableTextBlock-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

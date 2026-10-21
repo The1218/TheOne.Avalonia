@@ -6,6 +6,29 @@ The popup owns a bounded viewport: overflow displays a native vertical scrollbar
 
 `MultiSelectBox` combines local search, selected-item tags, clearing, and a native virtualized results list. Selection contains model objects and survives filtering, including queries that hide every selected item. Load `OneTheme` to use it.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### MultiSelectBox
+
+![MultiSelectBox — Compares tag limits, read-only and disabled-option configuration; extra selections collapse into +N.](../images/MultiSelectBox-light.png)
+
+Compares tag limits, read-only and disabled-option configuration; extra selections collapse into +N.
+
+[View Dark comparison](../images/MultiSelectBox-dark.png)
+
+### MultiSelectBox · Search and checkable list
+
+![MultiSelectBox · Search and checkable list — Search and checkable items use a separate scroll viewport; closing the popup retains selected data.](../images/MultiSelectBoxPopup-light.png)
+
+Search and checkable items use a separate scroll viewport; closing the popup retains selected data.
+
+[View Dark comparison](../images/MultiSelectBoxPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Compiled bindings
 
 ```csharp

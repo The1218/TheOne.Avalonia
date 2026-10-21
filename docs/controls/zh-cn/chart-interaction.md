@@ -6,6 +6,29 @@
 
 Scatter 选择保持同步事件与原始模型身份，复用基础样本、Pen 和已排版文字；实测行为与边界见[选择 p99 与分配复用](chart-rendering.md#scatter-selection-p99)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### LineChart
+
+![LineChart — 连接有效采样点表达趋势；坐标与图例保留数据含义。](../images/LineChart-light.png)
+
+连接有效采样点表达趋势；坐标与图例保留数据含义。
+
+[查看 Dark 对照](../images/LineChart-dark.png)
+
+### ScatterChart
+
+![ScatterChart — 点在连续 XY 坐标中分布；大量数据采用预算抽样而非逐点创建控件。](../images/ScatterChart-light.png)
+
+点在连续 XY 坐标中分布；大量数据采用预算抽样而非逐点创建控件。
+
+[查看 Dark 对照](../images/ScatterChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 显示与选择
 
 | 属性 | 默认值 / 用途 |

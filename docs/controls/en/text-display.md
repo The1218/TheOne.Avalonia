@@ -23,6 +23,29 @@ SelectableTextBlock keeps native SelectionStart / SelectionEnd, SelectedText, po
 
 Body font sizes for small / normal / large are 12 / 14 / 16 px. Label shares the minimum height of an input row. Explicit FontSize, LineHeight, and other local values take precedence. Avoid a fixed single-line Height for read-only paragraphs, which can clip wrapping or scaled fonts.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Label
+
+![Label — Default and semantic label appearances, distinguishing body and emphasis colors.](../images/Label-light.png)
+
+Default and semantic label appearances, distinguishing body and emphasis colors.
+
+[View Dark comparison](../images/Label-dark.png)
+
+### SelectableTextBlock
+
+![SelectableTextBlock — Themed selectable text, retaining native selection and copy behavior.](../images/SelectableTextBlock-light.png)
+
+Themed selectable text, retaining native selection and copy behavior.
+
+[View Dark comparison](../images/SelectableTextBlock-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

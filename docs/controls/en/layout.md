@@ -6,6 +6,93 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 [Back to control documentation](README.md). The host implements bound commands and state below.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Menu
+
+![Menu — Default menu bar theme; submenus use separate popup containers.](../images/Menu-light.png)
+
+Default menu bar theme; submenus use separate popup containers.
+
+[View Dark comparison](../images/Menu-dark.png)
+
+### ContextMenu
+
+![ContextMenu — An open context menu with both items fully visible and backgrounds inset from the frame.](../images/ContextMenu-light.png)
+
+An open context menu with both items fully visible and backgrounds inset from the frame.
+
+[View Dark comparison](../images/ContextMenu-dark.png)
+
+### Expander
+
+![Expander — Expanded header and body; motion affects the transition rather than the content contract.](../images/Expander-light.png)
+
+Expanded header and body; motion affects the transition rather than the content contract.
+
+[View Dark comparison](../images/Expander-dark.png)
+
+### SplitView
+
+![SplitView — Default pane/body separation; DisplayMode determines collapse behavior.](../images/SplitView-light.png)
+
+Default pane/body separation; DisplayMode determines collapse behavior.
+
+[View Dark comparison](../images/SplitView-dark.png)
+
+### GridSplitter
+
+![GridSplitter — The splitter sits between two content regions and resizes their layout allocation.](../images/GridSplitter-light.png)
+
+The splitter sits between two content regions and resizes their layout allocation.
+
+[View Dark comparison](../images/GridSplitter-dark.png)
+
+### ScrollViewer
+
+![ScrollViewer — Content and scrollbar in a bounded viewport; scroll boundaries and popup isolation are explained below.](../images/ScrollViewer-light.png)
+
+Content and scrollbar in a bounded viewport; scroll boundaries and popup isolation are explained below.
+
+[View Dark comparison](../images/ScrollViewer-dark.png)
+
+### ScrollBar
+
+![ScrollBar — Standalone horizontal scrollbar; thumb length represents the viewport.](../images/ScrollBar-light.png)
+
+Standalone horizontal scrollbar; thumb length represents the viewport.
+
+[View Dark comparison](../images/ScrollBar-dark.png)
+
+### Separator
+
+![Separator — A separator distinguishes neighboring content and is not an action.](../images/Separator-light.png)
+
+A separator distinguishes neighboring content and is not an action.
+
+[View Dark comparison](../images/Separator-dark.png)
+
+### FlyoutPresenter
+
+![FlyoutPresenter — The themed content popup frame, corners and padding.](../images/FlyoutPresenter-light.png)
+
+The themed content popup frame, corners and padding.
+
+[View Dark comparison](../images/FlyoutPresenter-dark.png)
+
+### ToolTip
+
+![ToolTip — Actual hover tooltip content and themed frame; the tooltip is anchored to its target.](../images/ToolTip-light.png)
+
+Actual hover tooltip content and themed frame; the tooltip is anchored to its target.
+
+[View Dark comparison](../images/ToolTip-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Menu and shortcuts
 
 ```xml

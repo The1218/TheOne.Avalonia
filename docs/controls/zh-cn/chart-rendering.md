@@ -6,6 +6,29 @@
 
 数据模型与接入见[图表入口](charts.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### AreaChart
+
+![AreaChart — 面积填充用于观察趋势规模，不改变原始数值。](../images/AreaChart-light.png)
+
+面积填充用于观察趋势规模，不改变原始数值。
+
+[查看 Dark 对照](../images/AreaChart-dark.png)
+
+### GaugeChart
+
+![GaugeChart — 仪表当前值与剩余区间区分；多种仪表样式见独立预览。](../images/GaugeChart-light.png)
+
+仪表当前值与剩余区间区分；多种仪表样式见独立预览。
+
+[查看 Dark 对照](../images/GaugeChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 数据更新动画
 
 全部 21 个继承 `ChartBase` 的图表控件统一使用以下动画设置，包括 Heatmap、Radar、Funnel、BoxPlot、Candlestick、Treemap 和 Sunburst。`AnimationStyle` 是经过枚举值校验的 `ChartAnimationStyle` 属性，默认 `Auto`。

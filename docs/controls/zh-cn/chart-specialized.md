@@ -6,6 +6,37 @@
 
 加载 `OneTheme` 后，每种控件都能使用 Light / Dark、`small / normal / large` 密度、`SeriesSource`、`SelectedSeriesIndex` / `SelectedIndex` 双向绑定、键盘选择、图例、单点提示和 `ExportPng`。动画见[渲染说明](chart-rendering.md)。首版没有地图／日历坐标、Cartesian 视口缩放、双 Y 轴、堆积、共享 X 提示或抽样；这些属性不会改变三种新图表的坐标含义。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### HeatmapChart
+
+![HeatmapChart — X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。](../images/HeatmapChart-light.png)
+
+X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。
+
+[查看 Dark 对照](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — 每维按自己的上下限归一化，原始值仍保留在数据模型中。](../images/RadarChart-light.png)
+
+每维按自己的上下限归一化，原始值仍保留在数据模型中。
+
+[查看 Dark 对照](../images/RadarChart-dark.png)
+
+### FunnelChart
+
+![FunnelChart — 各阶段宽度表达数值，默认保持业务阶段顺序。](../images/FunnelChart-light.png)
+
+各阶段宽度表达数值，默认保持业务阶段顺序。
+
+[查看 Dark 对照](../images/FunnelChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## HeatmapChart
 
 输入 `ChartSeries.ItemsSource` 中的 `HeatmapPoint`，普通 `ChartPoint` 不生成热力格。

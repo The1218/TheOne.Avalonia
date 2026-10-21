@@ -10,6 +10,101 @@ ScatterChart 保留逐个椭圆、原始源顺序、透明重叠、描边以及�
 
 选择未入样的 Scatter 原始点，使用基础样本上的不可变单点拼接视图，保留源顺序绘制，无需复制基础坐标数组；同时复用坐标／数据标签的已排版文字，以及未变的 Pen 和绘制操作。事件与抽样诊断仍同步更新。测量边界、缓存生命周期及剩余光栅化成本见[选择 p99](chart-rendering.md#scatter-selection-p99)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### LineChart
+
+![LineChart — 连接有效采样点表达趋势；坐标与图例保留数据含义。](../images/LineChart-light.png)
+
+连接有效采样点表达趋势；坐标与图例保留数据含义。
+
+[查看 Dark 对照](../images/LineChart-dark.png)
+
+### AreaChart
+
+![AreaChart — 面积填充用于观察趋势规模，不改变原始数值。](../images/AreaChart-light.png)
+
+面积填充用于观察趋势规模，不改变原始数值。
+
+[查看 Dark 对照](../images/AreaChart-dark.png)
+
+### BarChart
+
+![BarChart — 纵向柱形比较不同类别的值。](../images/BarChart-light.png)
+
+纵向柱形比较不同类别的值。
+
+[查看 Dark 对照](../images/BarChart-dark.png)
+
+### HorizontalBarChart
+
+![HorizontalBarChart — 横向柱形为较长的类别名留出空间。](../images/HorizontalBarChart-light.png)
+
+横向柱形为较长的类别名留出空间。
+
+[查看 Dark 对照](../images/HorizontalBarChart-dark.png)
+
+### ScatterChart
+
+![ScatterChart — 点在连续 XY 坐标中分布；大量数据采用预算抽样而非逐点创建控件。](../images/ScatterChart-light.png)
+
+点在连续 XY 坐标中分布；大量数据采用预算抽样而非逐点创建控件。
+
+[查看 Dark 对照](../images/ScatterChart-dark.png)
+
+### StackedBarChart
+
+![StackedBarChart — 同一类别的系列值按堆积规则排列；高度/长度表达合计量。](../images/StackedBarChart-light.png)
+
+同一类别的系列值按堆积规则排列；高度/长度表达合计量。
+
+[查看 Dark 对照](../images/StackedBarChart-dark.png)
+
+### StackedHorizontalBarChart
+
+![StackedHorizontalBarChart — 同一类别的系列值按堆积规则排列；高度/长度表达合计量。](../images/StackedHorizontalBarChart-light.png)
+
+同一类别的系列值按堆积规则排列；高度/长度表达合计量。
+
+[查看 Dark 对照](../images/StackedHorizontalBarChart-dark.png)
+
+### StackedAreaChart
+
+![StackedAreaChart — 同一类别的系列值按堆积规则排列；高度/长度表达合计量。](../images/StackedAreaChart-light.png)
+
+同一类别的系列值按堆积规则排列；高度/长度表达合计量。
+
+[查看 Dark 对照](../images/StackedAreaChart-dark.png)
+
+### PercentStackedBarChart
+
+![PercentStackedBarChart — 堆积结果归一为占比，用于比较构成而非绝对总量。](../images/PercentStackedBarChart-light.png)
+
+堆积结果归一为占比，用于比较构成而非绝对总量。
+
+[查看 Dark 对照](../images/PercentStackedBarChart-dark.png)
+
+### PercentStackedHorizontalBarChart
+
+![PercentStackedHorizontalBarChart — 堆积结果归一为占比，用于比较构成而非绝对总量。](../images/PercentStackedHorizontalBarChart-light.png)
+
+堆积结果归一为占比，用于比较构成而非绝对总量。
+
+[查看 Dark 对照](../images/PercentStackedHorizontalBarChart-dark.png)
+
+### PercentStackedAreaChart
+
+![PercentStackedAreaChart — 堆积结果归一为占比，用于比较构成而非绝对总量。](../images/PercentStackedAreaChart-light.png)
+
+堆积结果归一为占比，用于比较构成而非绝对总量。
+
+[查看 Dark 对照](../images/PercentStackedAreaChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## X 轴标签与窄视口
 
 折线、柱状和其他坐标图按实际文字宽度计算标签数量，不使用固定 36px 最小槽位跳过仍能容纳的短标签。Small 下 240px 宽的月份示例可完整显示六个月份；标签按屏幕位置检查间距，递减 X 数据也适用。确实放不下时减少标签数量，数据点、坐标和提示信息保持完整。

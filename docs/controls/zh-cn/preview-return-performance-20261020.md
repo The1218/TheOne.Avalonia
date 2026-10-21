@@ -2,6 +2,29 @@
 
 [English](../en/preview-return-performance-20261020.md) · [第一阶段记录](preview-performance-20261020.md) · [控件文档](README.md)
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### SplitButton
+
+![SplitButton — 主操作与展开区域分开，图中对比默认、accent、gradient 和 primary。](../images/SplitButton-light.png)
+
+主操作与展开区域分开，图中对比默认、accent、gradient 和 primary。
+
+[查看 Dark 对照](../images/SplitButton-dark.png)
+
+### NavPage
+
+![NavPage — 默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。](../images/NavPage-light.png)
+
+默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。
+
+[查看 Dark 对照](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 改动
 
 第一阶段减少了首次打开的创建量，但完整浏览后，返回仍会把说明区和代码编辑器重新挂载。本阶段引入预览专用的 `PreviewPageHost`：已访问页面保留在树中，由独立容器隐藏非当前页；只测量、排列当前页，隐藏页不参与绘制、命中或键盘导航。页面、说明行、代码编辑器和业务模型不因正常切页而重建。

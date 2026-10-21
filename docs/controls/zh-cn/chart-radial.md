@@ -4,6 +4,37 @@
 
 数据模型与接入见[图表入口](charts.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### PieChart
+
+![PieChart — 扇区角度表达占比，图例与分区颜色对应。](../images/PieChart-light.png)
+
+扇区角度表达占比，图例与分区颜色对应。
+
+[查看 Dark 对照](../images/PieChart-dark.png)
+
+### DoughnutChart
+
+![DoughnutChart — 环形分区保留占比语义，内孔比例可配置。](../images/DoughnutChart-light.png)
+
+环形分区保留占比语义，内孔比例可配置。
+
+[查看 Dark 对照](../images/DoughnutChart-dark.png)
+
+### GaugeChart
+
+![GaugeChart — 仪表当前值与剩余区间区分；多种仪表样式见独立预览。](../images/GaugeChart-light.png)
+
+仪表当前值与剩余区间区分；多种仪表样式见独立预览。
+
+[查看 Dark 对照](../images/GaugeChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 饼图与环形图
 
 ```xml

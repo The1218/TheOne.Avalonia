@@ -2,6 +2,21 @@
 
 `AttachmentList` 提供一次选择多个文件、附件空态、状态、进度、打开和移除入口。它不发送 HTTP 请求、不删除服务端文件，也不维护业务附件关系。单文件选择继续使用 [Upload](upload.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### AttachmentList
+
+![AttachmentList — 已完成、上传中和失败三种文件状态；进度只是模型数据，不伪造网络传输。](../images/AttachmentList-light.png)
+
+已完成、上传中和失败三种文件状态；进度只是模型数据，不伪造网络传输。
+
+[查看 Dark 对照](../images/AttachmentList-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 接入
 
 ```xml

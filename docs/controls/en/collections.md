@@ -6,6 +6,61 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 [Back to control documentation](README.md). Bind views to a ViewModel with `x:DataType`; extensions use `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ItemsControl
+
+![ItemsControl — Default item presentation; hosts supply custom content through ItemTemplate.](../images/ItemsControl-light.png)
+
+Default item presentation; hosts supply custom content through ItemTemplate.
+
+[View Dark comparison](../images/ItemsControl-dark.png)
+
+### ListBox
+
+![ListBox — Selected backgrounds stay inset from the frame; default, filled and outlined share item-spacing rules.](../images/ListBox-light.png)
+
+Selected backgrounds stay inset from the frame; default, filled and outlined share item-spacing rules.
+
+[View Dark comparison](../images/ListBox-dark.png)
+
+### TreeView
+
+![TreeView — Hierarchy indentation and selection share the theme; large datasets realize visible containers only.](../images/TreeView-light.png)
+
+Hierarchy indentation and selection share the theme; large datasets realize visible containers only.
+
+[View Dark comparison](../images/TreeView-dark.png)
+
+### TabControl
+
+![TabControl — Card tabs show the trailing pin, close affordance and content region; pinned tabs cannot be dragged or closed.](../images/TabControl-light.png)
+
+Card tabs show the trailing pin, close affordance and content region; pinned tabs cannot be dragged or closed.
+
+[View Dark comparison](../images/TabControl-dark.png)
+
+### TabStrip
+
+![TabStrip — Standalone strip selection, closing and reordering; applications own the content host.](../images/TabStrip-light.png)
+
+Standalone strip selection, closing and reordering; applications own the content host.
+
+[View Dark comparison](../images/TabStrip-dark.png)
+
+### DataGrid
+
+![DataGrid — A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.](../images/DataGrid-light.png)
+
+A business grid with headers, rows and frozen/summary regions; filter affordances belong only to filter-enabled columns.
+
+[View Dark comparison](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## ItemsControl and ListBox
 
 ```xml

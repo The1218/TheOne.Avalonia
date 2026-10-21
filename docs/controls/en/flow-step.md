@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `FlowStep` is a linear flow display based on native `ItemsControl`; `FlowNode` is its native `ContentControl` container. With `OneTheme`, both orientations, Light / Dark and Small / Normal / Large are supported. Business code sets states explicitly. The control does not advance steps or validate forms.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### FlowStep
+
+![FlowStep — Horizontal/vertical flow nodes present state and rich content, rather than form validation.](../images/FlowStep-light.png)
+
+Horizontal/vertical flow nodes present state and rich content, rather than form validation.
+
+[View Dark comparison](../images/FlowStep-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Default content
 
 ```xml

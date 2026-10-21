@@ -2,6 +2,29 @@
 
 `TreemapChart` 使用矩形面积展示树形数据；`SunburstChart` 使用从内向外的环形层级展示同一棵树。两者采用原生直接绘制、缓存布局和命中信息，不为节点创建控件。通用图表标题、主题、动画和 PNG 导出参见 [图表](charts.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### TreemapChart
+
+![TreemapChart — 嵌套矩形面积表达有效叶子权重，分支可下钻。](../images/TreemapChart-light.png)
+
+嵌套矩形面积表达有效叶子权重，分支可下钻。
+
+[查看 Dark 对照](../images/TreemapChart-dark.png)
+
+### SunburstChart
+
+![SunburstChart — 同心环表达层级，扇区角度由权重决定。](../images/SunburstChart-light.png)
+
+同心环表达层级，扇区角度由权重决定。
+
+[查看 Dark 对照](../images/SunburstChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 数据与绑定
 
 ```csharp

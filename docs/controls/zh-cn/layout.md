@@ -6,6 +6,93 @@
 
 [返回控件文档](README.md)。以下绑定命令与状态由宿主实现。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Menu
+
+![Menu — 菜单栏的默认主题；子菜单使用独立弹出容器。](../images/Menu-light.png)
+
+菜单栏的默认主题；子菜单使用独立弹出容器。
+
+[查看 Dark 对照](../images/Menu-dark.png)
+
+### ContextMenu
+
+![ContextMenu — 实际打开的右键菜单；两项菜单完整可见，项目背景与边框留有间距。](../images/ContextMenu-light.png)
+
+实际打开的右键菜单；两项菜单完整可见，项目背景与边框留有间距。
+
+[查看 Dark 对照](../images/ContextMenu-dark.png)
+
+### Expander
+
+![Expander — 展开后的标题与内容区域；动效只改变展开过程。](../images/Expander-light.png)
+
+展开后的标题与内容区域；动效只改变展开过程。
+
+[查看 Dark 对照](../images/Expander-dark.png)
+
+### SplitView
+
+![SplitView — 侧栏与主区域的默认分隔关系；具体收缩方式由 DisplayMode 决定。](../images/SplitView-light.png)
+
+侧栏与主区域的默认分隔关系；具体收缩方式由 DisplayMode 决定。
+
+[查看 Dark 对照](../images/SplitView-dark.png)
+
+### GridSplitter
+
+![GridSplitter — 分隔条位于两块内容之间，拖动后调整对应布局尺寸。](../images/GridSplitter-light.png)
+
+分隔条位于两块内容之间，拖动后调整对应布局尺寸。
+
+[查看 Dark 对照](../images/GridSplitter-dark.png)
+
+### ScrollViewer
+
+![ScrollViewer — 有限视口中的内容和滚动条；滚动边界与弹层隔离规则见下文。](../images/ScrollViewer-light.png)
+
+有限视口中的内容和滚动条；滚动边界与弹层隔离规则见下文。
+
+[查看 Dark 对照](../images/ScrollViewer-dark.png)
+
+### ScrollBar
+
+![ScrollBar — 独立横向滚动条，滑块长度表达当前视口。](../images/ScrollBar-light.png)
+
+独立横向滚动条，滑块长度表达当前视口。
+
+[查看 Dark 对照](../images/ScrollBar-dark.png)
+
+### Separator
+
+![Separator — 分隔线用于区分相邻内容，不承载可点击操作。](../images/Separator-light.png)
+
+分隔线用于区分相邻内容，不承载可点击操作。
+
+[查看 Dark 对照](../images/Separator-dark.png)
+
+### FlyoutPresenter
+
+![FlyoutPresenter — 主题化内容弹层的外框、圆角和内边距。](../images/FlyoutPresenter-light.png)
+
+主题化内容弹层的外框、圆角和内边距。
+
+[查看 Dark 对照](../images/FlyoutPresenter-dark.png)
+
+### ToolTip
+
+![ToolTip — 实际悬停提示的内容与主题外框；提示依附触发目标显示。](../images/ToolTip-light.png)
+
+实际悬停提示的内容与主题外框；提示依附触发目标显示。
+
+[查看 Dark 对照](../images/ToolTip-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Menu 与快捷键
 
 ```xml

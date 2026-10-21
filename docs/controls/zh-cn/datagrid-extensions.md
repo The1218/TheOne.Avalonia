@@ -8,6 +8,21 @@
 
 绑定类型推断、泛型集合视图、列头排序按钮及单元格尺寸见 [DataGrid 绑定与排序](datagrid-binding.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### DataGrid
+
+![DataGrid — 真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。](../images/DataGrid-light.png)
+
+真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。
+
+[查看 Dark 对照](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 分页行号
 
 `DataGridRowNumbers` 使用原生行头显示序号，无需自绘表格或反射读取业务字段。页码与 Pagination 同为 `long`，从 1 开始；序号为 `(PageIndex - 1) * PageSize + 行索引 + 1`，表示当前视图中的显示顺序，不能作为记录 ID。

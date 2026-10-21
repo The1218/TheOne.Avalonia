@@ -34,6 +34,37 @@ OneWindow 继承官方 Window，加载 OneTheme 后即可使用。保留原生 C
 
 登录界面、认证后交接与进程退出策略见 [LoginWindow](login-window.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### OneWindow
+
+![OneWindow — 实际主题窗口客户区和自绘标题栏；操作系统外部窗口装饰不在图片范围内。](../images/OneWindow-light.png)
+
+实际主题窗口客户区和自绘标题栏；操作系统外部窗口装饰不在图片范围内。
+
+[查看 Dark 对照](../images/OneWindow-dark.png)
+
+### ThemeButton
+
+![ThemeButton — 无文字的明暗图标切换；两态/三态及作用域按属性决定。](../images/ThemeButton-light.png)
+
+无文字的明暗图标切换；两态/三态及作用域按属性决定。
+
+[查看 Dark 对照](../images/ThemeButton-dark.png)
+
+### LoginWindow
+
+![LoginWindow — 登录表单承载在 LoginWindow 内，消息和主窗口交接有独立 owner 规则。](../images/LoginWindow-light.png)
+
+登录表单承载在 LoginWindow 内，消息和主窗口交接有独立 owner 规则。
+
+[查看 Dark 对照](../images/LoginWindow-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 标题栏与主题
 
 ThemeButton 为无文本的图标 ToggleButton，默认双态切换 Light / Dark。设置继承的 `IsThreeState="True"` 后按 Default → Dark → Light → Default 循环，`IsChecked` 分别为 null / true / false；Default 显示系统图标。配色由独立的 [ThemeColorPicker](../../theme/zh-cn/theme-color-picker.md) 控制。

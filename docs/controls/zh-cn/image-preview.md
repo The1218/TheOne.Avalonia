@@ -6,6 +6,21 @@
 
 轻量单图／多图预览器，支持 HTTP(S) 地址、本地路径／file URI 和 Bitmap（也接受 IImage）。使用已加载 OneTheme 的视图，并声明正确的 x:DataType 以启用编译绑定。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ImagePreview
+
+![ImagePreview — 内置示例图片的单图与多图预览，包含透明背景及导航入口。](../images/ImagePreview-light.png)
+
+内置示例图片的单图与多图预览，包含透明背景及导航入口。
+
+[查看 Dark 对照](../images/ImagePreview-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 单图与多图
 
 ```xml

@@ -117,6 +117,8 @@
 | [`TheOne.Avalonia.Controls.IconPlacement`](TheOne.Avalonia.Controls.IconPlacement.md) | Enum | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.ImagePreview`](TheOne.Avalonia.Controls.ImagePreview.md) | Class／控件 | 22 | 9 | 1 |
 | [`TheOne.Avalonia.Controls.ImagePreviewSurface`](TheOne.Avalonia.Controls.ImagePreviewSurface.md) | Class／控件 | 2 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.ImageUpload`](TheOne.Avalonia.Controls.ImageUpload.md) | Class／控件 | 7 | 2 | 0 |
+| [`TheOne.Avalonia.Controls.ImageUploadMode`](TheOne.Avalonia.Controls.ImageUploadMode.md) | Enum | 0 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.InfoCard`](TheOne.Avalonia.Controls.InfoCard.md) | Class／控件 | 18 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.LineChart`](TheOne.Avalonia.Controls.LineChart.md) | Class／控件 | 1 | 1 | 0 |
 | [`TheOne.Avalonia.Controls.LoadingContainer`](TheOne.Avalonia.Controls.LoadingContainer.md) | Class／控件 | 10 | 1 | 0 |

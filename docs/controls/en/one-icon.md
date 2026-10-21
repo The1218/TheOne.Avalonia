@@ -17,6 +17,21 @@ This expansion adds Transport, Commerce, Education and Weather with 16 glyphs ea
 
 These examples use the `one` namespace below. New glyphs use the same enum bindings, foreground inheritance and sizing configuration as existing glyphs.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### OneIcon
+
+![OneIcon — Visible portion of the real icon gallery and inspector; use the preview for the complete enum/catalog.](../images/OneIcon-light.png)
+
+Visible portion of the real icon gallery and inspector; use the preview for the complete enum/catalog.
+
+[View Dark comparison](../images/OneIcon-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Usage and compiled binding
 
 After loading `OneTheme`:

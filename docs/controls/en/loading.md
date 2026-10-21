@@ -29,6 +29,21 @@ LoadingContainer inherits ContentControl and supports Content / ContentTemplate,
 
 `ControlSizing.Size` supports Small / Normal / Large. Button indicator sizes are 14 / 16 / 20 px; container indicators are 22 / 28 / 34 px. One.* semantic colors follow Light / Dark themes. `Motion.Enabled=False` stops rotation but retains the static icon and text; setting it to true during loading resumes rotation. Hiding or unloading cancels animation. LoadingIndicator can also be used independently: IsActive controls operation and Foreground controls color.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### LoadingContainer
+
+![LoadingContainer — Loading overlay and busy buttons; busy presentation does not replace host task cancellation.](../images/LoadingContainer-light.png)
+
+Loading overlay and busy buttons; busy presentation does not replace host task cancellation.
+
+[View Dark comparison](../images/LoadingContainer-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

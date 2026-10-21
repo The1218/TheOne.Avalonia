@@ -29,6 +29,29 @@ When focused, Enter / Space runs the primary action; F4 or Alt + ↓ opens the m
 
 For many options, use MenuFlyout.ItemsSource and typed data templates so native menus create containers on demand instead of pre-creating thousands of MenuItem instances. ItemContainerTheme x:DataType should be the option model, with compiled Command / CommandParameter bindings. Provide an explicit typed data context if Flyout needs a different ViewModel; keep compiled bindings enabled.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### SplitButton
+
+![SplitButton — Primary action and dropdown affordance are separate; default, accent, gradient and primary are compared.](../images/SplitButton-light.png)
+
+Primary action and dropdown affordance are separate; default, accent, gradient and primary are compared.
+
+[View Dark comparison](../images/SplitButton-dark.png)
+
+### ToggleSplitButton
+
+![ToggleSplitButton — Retains checked-state interaction and a separate dropdown entry.](../images/ToggleSplitButton-light.png)
+
+Retains checked-state interaction and a separate dropdown entry.
+
+[View Dark comparison](../images/ToggleSplitButton-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

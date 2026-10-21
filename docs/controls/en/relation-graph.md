@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `RelationGraph` displays a tree with one root. `Orientation="Horizontal"` expands left to right; `Vertical` expands top to bottom. Node interiors always keep the icon on the left and title/content on the right. Load `OneTheme` first.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### RelationGraph
+
+![RelationGraph — Hierarchical nodes and edges; business bindings drive content templates and selected models.](../images/RelationGraph-light.png)
+
+Hierarchical nodes and edges; business bindings drive content templates and selected models.
+
+[View Dark comparison](../images/RelationGraph-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Default model
 
 ```csharp

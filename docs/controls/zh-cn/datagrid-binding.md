@@ -39,6 +39,21 @@ DataGrid 预览的 ViewModel 与 GridRecord 直接继承 ReactiveObject，使用
 
 [筛选、冻结与统计](datagrid-extensions.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### DataGrid
+
+![DataGrid — 真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。](../images/DataGrid-light.png)
+
+真实业务表格中的列头、数据、冻结/汇总区域；筛选入口只在已启用筛选的列出现。
+
+[查看 Dark 对照](../images/DataGrid-dark.png)
+
+<!-- visual-guide:end -->
+
 ## NativeAOT
 
 类库模板采用 TemplateBinding 或编译绑定。消费视图和数据模板声明正确的 `x:DataType`；代码后置设置运行时 DataContext 不能提供静态类型。非泛型集合视图的列需显式声明行类型；嵌套绑定作用域也需声明对应模型类型，不通过关闭编译绑定或 ReflectionBinding 绕过检查。

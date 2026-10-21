@@ -4,6 +4,21 @@
 
 `TheOne.Avalonia.Controls.Upload` 选择一张图片并显示缩略图，内置默认模板、系统文件选择器和可选的单文件 HTTP 上传。配置 `UploadApi` 可使用内置上传，也可提供 `UploadCommand` 接入业务上传逻辑。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Upload
+
+![Upload — 单图选择的空态与宿主命令入口；截图没有发出网络上传。](../images/Upload-light.png)
+
+单图选择的空态与宿主命令入口；截图没有发出网络上传。
+
+[查看 Dark 对照](../images/Upload-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 内置 API 上传
 
 ```xml

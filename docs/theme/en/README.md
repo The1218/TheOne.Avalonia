@@ -6,6 +6,29 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 OneTheme is the library's default theme. It uses shared `One.*` resources and includes DataGrid. [Setup](../../../README.en.md#quick-start) · [Colors and variants](theme-colors.md) · [Control APIs](../../controls/en/README.md).
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](../../controls/en/visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ThemeColorPicker
+
+![ThemeColorPicker — Enum palette entry, independent of Light/Dark switching.](../../controls/images/ThemeColorPicker-light.png)
+
+Enum palette entry, independent of Light/Dark switching.
+
+[View Dark comparison](../../controls/images/ThemeColorPicker-dark.png)
+
+### ThemeButton
+
+![ThemeButton — Icon-only theme toggle; properties determine two/three-state behavior and scope.](../../controls/images/ThemeButton-light.png)
+
+Icon-only theme toggle; properties determine two/three-state behavior and scope.
+
+[View Dark comparison](../../controls/images/ThemeButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Native control templates
 
 Each [control guide](../../controls/en/README.md) lists only control-specific properties, public Classes usage, actual business actions and related models. PreviewHost shows Classes through labeled examples and adds short usage snippets to property and business-action descriptions, without selector/setter inventories. See the separate [complete source contract](../../api/en/README.md) for exact constructors, attached-property accessors and public identifiers. Template-only `one-*` classes remain automatic.

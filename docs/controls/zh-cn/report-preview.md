@@ -13,6 +13,21 @@
 
 模板支持 [QRCode 二维码元素](report-design.md#二维码组件)，与 ReportDesign / PDF 复用相同的 UTF-8 编码、纠错等级、静区和矢量几何。静态内容使用 `Text`，`FieldKey` 则使用数据源第一条记录或已注册的 JSON 根属性。缺失／空内容、绑定数据尚未就绪、容量超限和尺寸不足会导致加载失败，不会显示旧码或把占位文字编码进去。PreviewHost 销售示例页眉同时包含静态和字段二维码。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ReportPreview
+
+![ReportPreview — 分页后的报表纸张、工具栏和缩放；截图不等同于 PDF 或物理打印验证。](../images/ReportPreview-light.png)
+
+分页后的报表纸张、工具栏和缩放；截图不等同于 PDF 或物理打印验证。
+
+[查看 Dark 对照](../images/ReportPreview-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 加载模板与数据
 
 设置 `DocumentJson` 会异步加载；需要等待完成或传入取消令牌时，在 UI 线程调用 `LoadAsync(json, cancellationToken)`。`Document`、`Layout`、`Error` 分别提供已解析文档、分页快照及错误消息；`Document`、`Error` 为只读 Avalonia 属性。加载失败清空显示布局。`LoadAsync` 设置 `Error` 并向调用方抛出异常；属性驱动加载在界面显示错误。

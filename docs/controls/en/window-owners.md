@@ -4,6 +4,45 @@
 
 `OneWindow` and `LoginWindow` each contain independent Toast, Notification, and Dialog hosts. Messages appear inside their target window; Notification here means an in-app notification. Load `OneTheme`, show the window, then call a service. See [OneWindow](windows.md) for templates, themes, and basic usage, and [LoginWindow](login-window.md) for login handoff.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### OneWindow
+
+![OneWindow — Actual themed client area and custom title bar; external operating-system decorations are outside the image.](../images/OneWindow-light.png)
+
+Actual themed client area and custom title bar; external operating-system decorations are outside the image.
+
+[View Dark comparison](../images/OneWindow-dark.png)
+
+### Toast
+
+![Toast — Success feedback appears at the owner’s top center with body/icon, without requiring acknowledgement.](../images/Toast-light.png)
+
+Success feedback appears at the owner’s top center with body/icon, without requiring acknowledgement.
+
+[View Dark comparison](../images/Toast-dark.png)
+
+### OneNotification
+
+![OneNotification — Title, body and close affordance appear in the owner’s top-right corner; this is an in-app notification.](../images/OneNotification-light.png)
+
+Title, body and close affordance appear in the owner’s top-right corner; this is an in-app notification.
+
+[View Dark comparison](../images/OneNotification-dark.png)
+
+### Dialog
+
+![Dialog — An actual window-modal overlay covers the workspace with title, body and confirm/cancel actions.](../images/Dialog-light.png)
+
+An actual window-modal overlay covers the workspace with title, body and confirm/cancel actions.
+
+[View Dark comparison](../images/Dialog-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Four kinds of ownership
 
 | Concept | Purpose |

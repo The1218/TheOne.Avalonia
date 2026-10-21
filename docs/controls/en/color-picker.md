@@ -47,6 +47,37 @@ The spectrum supports Tab focus and the official arrow-key color adjustment.
 The official package supplies all control logic and base templates:
 [Avalonia ColorPicker documentation](https://docs.avaloniaui.net/controls/input/selectors/colorpicker).
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ColorPicker
+
+![ColorPicker — Compact color entry; open it to access the full color editor.](../images/ColorPicker-light.png)
+
+Compact color entry; open it to access the full color editor.
+
+[View Dark comparison](../images/ColorPicker-dark.png)
+
+### ColorView · Custom editor
+
+![ColorView · Custom editor — Custom contains spectrum, RGB/HSV modes, channels, hex, hue and alpha; mode buttons are spaced apart.](../images/ColorViewCustom-light.png)
+
+Custom contains spectrum, RGB/HSV modes, channels, hex, hue and alpha; mode buttons are spaced apart.
+
+[View Dark comparison](../images/ColorViewCustom-dark.png)
+
+### ColorView
+
+![ColorView — Palette offers themed swatches, separate from the detailed Custom editor.](../images/ColorView-light.png)
+
+Palette offers themed swatches, separate from the detailed Custom editor.
+
+[View Dark comparison](../images/ColorView-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

@@ -6,6 +6,21 @@
 
 `WorkflowEditor` 绑定 `WorkflowDocument`，编辑节点、命名端口、连线与业务字段引用。控件内置默认模板，宿主提供节点工厂、业务数据、持久化和执行逻辑，并可按需替换模板；控件不内置审批引擎、HTTP 或脚本执行。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### WorkflowEditor
+
+![WorkflowEditor — 左侧节点库、中央画布、右侧属性与小地图；审批示例使用业务模型和稳定身份。](../images/WorkflowEditor-light.png)
+
+左侧节点库、中央画布、右侧属性与小地图；审批示例使用业务模型和稳定身份。
+
+[查看 Dark 对照](../images/WorkflowEditor-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 公共契约
 
 ### 宿主连线工厂与节点保护

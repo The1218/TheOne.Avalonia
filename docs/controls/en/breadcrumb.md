@@ -6,6 +6,21 @@
 
 This guide describes current development source; use a subsequent package containing this control or reference source. Load `OneTheme` and declare `xmlns:one="using:TheOne.Avalonia.Controls"`.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Breadcrumb
+
+![Breadcrumb — Path, separators and current-page state; ancestors navigate while the current page does not navigate again.](../images/Breadcrumb-light.png)
+
+Path, separators and current-page state; ancestors navigate while the current page does not navigate again.
+
+[View Dark comparison](../images/Breadcrumb-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Basic usage
 
 ```xml

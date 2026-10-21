@@ -29,4 +29,10 @@ Only Button, Input and Select share comparison pages. The original demo is never
 
 After updating preview behavior, build only PreviewHost with isolated artifacts and inspect the affected control pages. PreviewHost starts the normal demo window and no longer contains command-line verification branches or consumer test projects. Keep any temporary checks under the task-specific `.preview/` directory.
 
+## Illustrated guides
+
+Control guides now include actual Light/Dark renders, localized captions and a [visual index](../../docs/controls/en/visual-index.md). The `visual-guide` section must stay outside the `generated-contracts` markers; `--generate` updates contracts without replacing authored screenshots or captions. Image provenance, capture configuration and the local regeneration workflow are documented in [docs/controls/images](../../docs/controls/images/README.md). Update only affected screenshots when a control changes, inspect both themes, and verify image/link coverage. Rendering a screenshot does not replace native interaction, export or platform verification.
+
+控件图文区位于 `generated-contracts` 标记之外，API 重建不会替换人工图注。控件外观改变时同步对应明暗图片；检查实际场景、可读性、图片路径与图注，而不是给非可视 API 拼接无关截图。图鉴见[中文入口](../../docs/controls/zh-cn/visual-index.md)。
+
 默认值是源码注册、构造参数或模型初值；主题 Setter、构造逻辑和局部值可能覆盖它。`CLR / init-only` 表示仅可在初始化时赋值，`CLR / n/a` 不声明 Avalonia 默认绑定模式。只读状态和访问器定义值不会被错误地当成可写默认配置。公开模板辅助类可供审查，但不意味着应由业务页面独立创建；使用入口以控件指南为准。

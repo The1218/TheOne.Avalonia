@@ -4,6 +4,45 @@
 
 `OneWindow` 和 `LoginWindow` 都自带独立的 Toast、Notification 和 Dialog 宿主。消息显示在所属窗口内部；这里的 Notification 是应用内通知。先加载 `OneTheme`，再显示窗口，最后调用服务。窗口模板、主题和基础用法见 [OneWindow](windows.md)，登录交接见 [LoginWindow](login-window.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### OneWindow
+
+![OneWindow — 实际主题窗口客户区和自绘标题栏；操作系统外部窗口装饰不在图片范围内。](../images/OneWindow-light.png)
+
+实际主题窗口客户区和自绘标题栏；操作系统外部窗口装饰不在图片范围内。
+
+[查看 Dark 对照](../images/OneWindow-dark.png)
+
+### Toast
+
+![Toast — 成功提示显示在所属窗口顶部中央；仅正文和状态图标，不要求用户确认。](../images/Toast-light.png)
+
+成功提示显示在所属窗口顶部中央；仅正文和状态图标，不要求用户确认。
+
+[查看 Dark 对照](../images/Toast-dark.png)
+
+### OneNotification
+
+![OneNotification — 标题、正文与关闭入口显示在所属窗口右上角；不是系统通知。](../images/OneNotification-light.png)
+
+标题、正文与关闭入口显示在所属窗口右上角；不是系统通知。
+
+[查看 Dark 对照](../images/OneNotification-dark.png)
+
+### Dialog
+
+![Dialog — 实际窗口内模态层覆盖工作区，包含标题、正文及确认/取消操作。](../images/Dialog-light.png)
+
+实际窗口内模态层覆盖工作区，包含标题、正文及确认/取消操作。
+
+[查看 Dark 对照](../images/Dialog-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 四种归属概念
 
 | 概念 | 作用 |

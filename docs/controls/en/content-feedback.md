@@ -4,6 +4,37 @@
 
 See [layout](layout.md) for menus and popups.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### TransitioningContentControl
+
+![TransitioningContentControl — Current content and transition configuration; a still image does not demonstrate animation smoothness.](../images/TransitioningContentControl-light.png)
+
+Current content and transition configuration; a still image does not demonstrate animation smoothness.
+
+[View Dark comparison](../images/TransitioningContentControl-dark.png)
+
+### NotificationCard
+
+![NotificationCard — Notification card container; delivery also requires its window message host.](../images/NotificationCard-light.png)
+
+Notification card container; delivery also requires its window message host.
+
+[View Dark comparison](../images/NotificationCard-dark.png)
+
+### OneNotification
+
+![OneNotification — Title, body and close affordance appear in the owner’s top-right corner; this is an in-app notification.](../images/OneNotification-light.png)
+
+Title, body and close affordance appear in the owner’s top-right corner; this is an in-app notification.
+
+[View Dark comparison](../images/OneNotification-dark.png)
+
+<!-- visual-guide:end -->
+
 ## TransitioningContentControl
 
 Use the native control and data templates, binding the current business page to Content:

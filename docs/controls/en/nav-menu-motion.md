@@ -6,6 +6,29 @@ Historical command-line checks have been removed. Start PreviewHost normally and
 
 See [NavMenu](nav-menu.md) for basic setup.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### NavMenu
+
+![NavMenu — Hierarchical navigation, selection and sidebar configuration; collapsed flyouts and search share data identity.](../images/NavMenu-light.png)
+
+Hierarchical navigation, selection and sidebar configuration; collapsed flyouts and search share data identity.
+
+[View Dark comparison](../images/NavMenu-dark.png)
+
+### NavMenu · Collapsed flyout
+
+![NavMenu · Collapsed flyout — Collapsed roots retain icons and open the current branch alongside them; each level remains a bounded viewport.](../images/NavMenuPopup-light.png)
+
+Collapsed roots retain icons and open the current branch alongside them; each level remains a bounded viewport.
+
+[View Dark comparison](../images/NavMenuPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Expanding, collapsing, and switching the sidebar
 
 `TransitionDuration` is a styleable TimeSpan that supports compiled binding. The theme defaults to `One.Motion.Expand` (200 ms); node collapse takes 70% of that duration. Zero switches immediately. `Motion.Enabled=False` immediately reaches the current target even during animation; re-enabling it does not replay prior actions.

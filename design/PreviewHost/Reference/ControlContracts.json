@@ -14706,6 +14706,233 @@
       ]
     },
     {
+      "Id": "TheOne.Avalonia.Controls.ImageUpload",
+      "Name": "ImageUpload",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Class",
+      "IsControl": true,
+      "IsStatic": false,
+      "Base": "TheOne.Avalonia.Controls.Upload",
+      "Summary": "A single-image card with an accessible hover toolbar and a read-only preview mode.",
+      "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:22",
+      "Properties": [
+        {
+          "Name": "DisplayHint",
+          "Type": "string",
+          "Summary": "\u53EA\u8BFB\u8FD0\u884C\u72B6\u6001\u6216\u6D3E\u751F\u7ED3\u679C\uFF1B\u7531\u5BF9\u5E94\u63A7\u4EF6\uFF0F\u6A21\u578B\u66F4\u65B0\uFF0C\u4F9B\u5C55\u793A\u548C\u547D\u4EE4\u6761\u4EF6\u8BFB\u53D6\uFF0C\u4E0D\u4F5C\u4E3A\u53CC\u5411\u8F93\u5165\u3002",
+          "Default": "computed / state",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "DisplayHintProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:65",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "HintText",
+          "Type": "string?",
+          "Summary": "ImageUpload \u7684 HintText \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 HintTextProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
+          "Default": "null",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "HintTextProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:62",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ImageHeight",
+          "Type": "double",
+          "Summary": "ImageUpload \u7684 ImageHeight \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ImageHeightProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
+          "Default": "240",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E 0",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ImageHeightProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:63",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ImageStretch",
+          "Type": "Avalonia.Media.Stretch",
+          "Summary": "ImageUpload \u7684 ImageStretch \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ImageStretchProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
+          "Default": "Stretch.Uniform",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ImageStretchProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:64",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [
+            "None",
+            "Fill",
+            "Uniform",
+            "UniformToFill"
+          ],
+          "Target": ""
+        },
+        {
+          "Name": "Mode",
+          "Type": "TheOne.Avalonia.Controls.ImageUploadMode",
+          "Summary": "ImageUpload \u7684 Mode \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ModeProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
+          "Default": "0 / default",
+          "Binding": "OneWay",
+          "Validation": "value =\u003E value is ImageUploadMode.Upload or ImageUploadMode.Preview",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ModeProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:60",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [
+            "Upload",
+            "Preview"
+          ],
+          "Target": ""
+        },
+        {
+          "Name": "ViewCommand",
+          "Type": "System.Windows.Input.ICommand",
+          "Summary": "\u5BBF\u4E3B\u63D0\u4F9B\u7684\u547D\u4EE4\u5165\u53E3\uFF1B\u5177\u4F53\u64CD\u4F5C\u4E0E\u6743\u9650\u7531\u4E1A\u52A1\u5B9E\u73B0\uFF0C\u914D\u5BF9\u7684 CommandParameter \u4F5C\u4E3A\u547D\u4EE4\u53C2\u6570\u3002",
+          "Default": "null",
+          "Binding": "CLR / n/a",
+          "Validation": "",
+          "Writable": false,
+          "Attached": false,
+          "Identifier": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:66",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        },
+        {
+          "Name": "ViewText",
+          "Type": "string",
+          "Summary": "ImageUpload \u7684 ViewText \u914D\u7F6E\u5B57\u6BB5\uFF1B\u503C\u7C7B\u578B\u548C\u521D\u503C\u5982\u8868\uFF0C\u901A\u8FC7 ViewTextProperty \u53C2\u4E0E Avalonia \u5C5E\u6027\u7CFB\u7EDF\u4E0E\u901A\u77E5\u3002\u5177\u4F53\u4E0A\u4E0B\u6587\u89C1\u63A7\u4EF6\u7528\u6CD5\u53CA\u94FE\u63A5\u5904\u7684\u58F0\u660E\uFF0F\u8BBF\u95EE\u5668\u3002",
+          "Default": "\u0022\u67E5\u770B\u0022",
+          "Binding": "OneWay",
+          "Validation": "",
+          "Writable": true,
+          "Attached": false,
+          "Identifier": "ViewTextProperty",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:61",
+          "Inherits": false,
+          "Static": false,
+          "Choices": [],
+          "Target": ""
+        }
+      ],
+      "Methods": [
+        {
+          "Signature": "void ImageUpload.View()",
+          "Summary": "Opens the image viewer; Escape or the close button dismisses it.",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:99",
+          "ValueType": ""
+        },
+        {
+          "Signature": "ImageUpload.ImageUpload()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:55",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [],
+      "Related": [
+        "TheOne.Avalonia.Controls.ImageUploadMode"
+      ],
+      "Fields": [
+        {
+          "Signature": "static readonly StyledProperty\u003CImageUploadMode\u003E ImageUpload.ModeProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:24",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring\u003E ImageUpload.ViewTextProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:28",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cstring?\u003E ImageUpload.HintTextProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:31",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003Cdouble\u003E ImageUpload.ImageHeightProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:34",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly StyledProperty\u003CStretch\u003E ImageUpload.ImageStretchProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:38",
+          "ValueType": ""
+        },
+        {
+          "Signature": "static readonly DirectProperty\u003CImageUpload, string\u003E ImageUpload.DisplayHintProperty",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:41",
+          "ValueType": ""
+        }
+      ]
+    },
+    {
+      "Id": "TheOne.Avalonia.Controls.ImageUploadMode",
+      "Name": "ImageUploadMode",
+      "Namespace": "TheOne.Avalonia.Controls",
+      "Kind": "Enum",
+      "IsControl": false,
+      "IsStatic": false,
+      "Base": "System.Enum",
+      "Summary": "Determines whether an image can be selected, replaced or removed.",
+      "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:14",
+      "Properties": [],
+      "Methods": [
+        {
+          "Signature": "ImageUploadMode.ImageUploadMode()",
+          "Summary": "\u521B\u5EFA\u8BE5\u7C7B\u578B\u5B9E\u4F8B\uFF1B\u6784\u9020\u53C2\u6570\u53CA\u53EF\u9009\u521D\u503C\u89C1\u5B8C\u6574\u7B7E\u540D\u3002\u5171\u4EAB\u6A21\u578B\u4E0E\u8D44\u6E90\u7684\u6240\u6709\u6743\u7531\u8C03\u7528\u65B9\u7EF4\u62A4\u3002",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:14",
+          "ValueType": ""
+        }
+      ],
+      "Events": [],
+      "Values": [
+        {
+          "Signature": "Upload = 0",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:16",
+          "ValueType": ""
+        },
+        {
+          "Signature": "Preview = 1",
+          "Summary": "",
+          "Source": "TheOne.Avalonia/Controls/ImageUpload.cs:17",
+          "ValueType": ""
+        }
+      ],
+      "Related": [],
+      "Fields": []
+    },
+    {
       "Id": "TheOne.Avalonia.Controls.InfoCard",
       "Name": "InfoCard",
       "Namespace": "TheOne.Avalonia.Controls",
@@ -31000,13 +31227,13 @@
         {
           "Signature": "Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))",
           "Summary": "Selects one file through the host service or native storage provider. Cancellation preserves the current file.",
-          "Source": "TheOne.Avalonia/Controls/Upload.cs:375",
+          "Source": "TheOne.Avalonia/Controls/Upload.cs:386",
           "ValueType": ""
         },
         {
           "Signature": "void Upload.ReloadPreview()",
           "Summary": "Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails.",
-          "Source": "TheOne.Avalonia/Controls/Upload.cs:441",
+          "Source": "TheOne.Avalonia/Controls/Upload.cs:452",
           "ValueType": ""
         },
         {
@@ -41140,6 +41367,22 @@
       "Effect": "one|ImagePreview.one-small =\u003E ChromeHeight=36; FontSize=12",
       "Internal": true,
       "Source": "TheOne.Avalonia/Themes/Sizing.axaml:94"
+    },
+    {
+      "Target": "ImageUpload",
+      "Name": "one-large",
+      "Selector": "^.one-large",
+      "Effect": "^.one-large =\u003E FontSize=16; ImageHeight=280",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/ImageUpload.axaml:119"
+    },
+    {
+      "Target": "ImageUpload",
+      "Name": "one-small",
+      "Selector": "^.one-small",
+      "Effect": "^.one-small =\u003E FontSize=12; ImageHeight=200",
+      "Internal": true,
+      "Source": "TheOne.Avalonia/Themes/Controls/ImageUpload.axaml:118"
     },
     {
       "Target": "InfoCard",

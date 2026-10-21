@@ -4,6 +4,29 @@
 
 Date: 2026-10-20. BoxPlot, Candlestick, Treemap and Sunburst bring ChartBase controls to 21 types. See [statistical charts](chart-statistical.md) and [hierarchy charts](chart-hierarchy.md) for configuration, models and limitations. This report separates before/after measurements of existing preview pages from initial baselines for newly introduced charts.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### BoxPlotChart
+
+![BoxPlotChart — Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.](../images/BoxPlotChart-light.png)
+
+Boxes, whiskers and outliers show supplied five-number summaries; arbitrary samples are not automatically converted into quantiles.
+
+[View Dark comparison](../images/BoxPlotChart-dark.png)
+
+### TreemapChart
+
+![TreemapChart — Nested rectangle areas represent valid leaf weights; branches support drilling.](../images/TreemapChart-light.png)
+
+Nested rectangle areas represent valid leaf weights; branches support drilling.
+
+[View Dark comparison](../images/TreemapChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Environment and method
 
 - macOS / Apple M4, .NET 10, Avalonia 12.1.4, Release. Comparisons use the task's starting working tree and frozen builds of each optimized path, rather than substituting an older Git commit. Later changes affect only new charts; native existing-preview measurements and final new-chart results record their respective assembly identities separately.

@@ -6,6 +6,21 @@
 
 `RelationGraph` 接收一个根节点，按树形层级绘制关系。`Orientation="Horizontal"` 从左向右展开，`Vertical` 从上向下展开；节点内部始终保持左侧图标、右侧标题和内容。先加载 `OneTheme`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### RelationGraph
+
+![RelationGraph — 节点及连线的层级布局；内容模板和选中模型由业务绑定驱动。](../images/RelationGraph-light.png)
+
+节点及连线的层级布局；内容模板和选中模型由业务绑定驱动。
+
+[查看 Dark 对照](../images/RelationGraph-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 默认模型
 
 ```csharp

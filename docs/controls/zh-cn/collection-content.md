@@ -4,6 +4,29 @@
 
 列表、树及表格见[集合入口](collections.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Carousel
+
+![Carousel — 当前内容、前后切换及多项预览；数据项继续由宿主管理。](../images/Carousel-light.png)
+
+当前内容、前后切换及多项预览；数据项继续由宿主管理。
+
+[查看 Dark 对照](../images/Carousel-dark.png)
+
+### RefreshContainer
+
+![RefreshContainer — 可刷新列表的宿主示例；截图为静止状态，刷新生命周期仍由宿主完成。](../images/RefreshContainer-light.png)
+
+可刷新列表的宿主示例；截图为静止状态，刷新生命周期仍由宿主完成。
+
+[查看 Dark 对照](../images/RefreshContainer-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Carousel 内容轮播
 
 ```xml

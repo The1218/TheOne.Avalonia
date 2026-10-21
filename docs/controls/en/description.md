@@ -14,6 +14,21 @@
 
 Use `xmlns:one="using:TheOne.Avalonia.Controls"`. Rows grow to fit their contents and wrap text. The control has no internal scrolling container; use an outer `ScrollViewer` for the page rather than fixing the description list height.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Description
+
+![Description — Labels and content form rows; explanations and short snippets can be placed in the content.](../images/Description-light.png)
+
+Labels and content form rows; explanations and short snippets can be placed in the content.
+
+[View Dark comparison](../images/Description-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Public properties
 
 | Control / property | Type and default | Details |

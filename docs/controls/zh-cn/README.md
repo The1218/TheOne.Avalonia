@@ -4,6 +4,21 @@
 
 TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口、消息、InfoCard 信息卡片与 Chart 图表扩展。先按[仓库 README](../../../README.zh-cn.md#快速开始)引用类库并加载 `OneTheme`，再使用本目录的示例。无需把业务视图迁移成 TheOne 包装控件。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavPage
+
+![NavPage — 默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。](../images/NavPage-light.png)
+
+默认头部、导航侧栏与右侧 card 页签整合为工作区，右侧页内容按导航打开。
+
+[查看 Dark 对照](../images/NavPage-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 文档导航
 
 每个控件指南和预览页展示本项目专属属性、Classes 实际用法、业务 API 与关联模型。Classes 通过标签样例直接对照，不展示原始选择器／Setter 表。业务 API 指保存、加载、导出、校验、撤销等实际动作，不是构造器、属性 Get/Set 包装、AvaloniaProperty／RoutedEvent 标识或字段清单；PreviewHost 的属性与业务动作说明附短示例代码。原生继承属性和 API 不重复列出。
@@ -21,6 +36,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [WorkflowEditor 流程编辑器](workflow-editor.md) | 图模型契约、模板、业务配置、上游数据引用和 JSON 保存加载 |
 | [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |
 | [Upload 上传](upload.md) | 单文件选择、图片预览、替换／删除及宿主上传命令 |
+| [ImageUpload 图片上传](image-upload.md) | 单图卡片、上传／只读预览模式、编辑／查看／删除 |
 | [AttachmentList 附件列表](attachment-list.md) | 一次多选、文件集合、状态进度、宿主上传与预览／移除 |
 | [IconButton 与按钮层次](icon-button.md) | 属性图标、Geometry／PathIcon／Material 模板、主次操作与语义状态 |
 | [OneIcon 自有图标](one-icon.md) | 20 类 320 个矢量图标，含行业、交通、商业、教育与天气；32 个实心变体、枚举绑定与虚拟化画廊 |

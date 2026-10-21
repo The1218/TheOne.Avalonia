@@ -8,6 +8,21 @@ See [windows](windows.md) for themes and shared services.
 
 See [window owners and message services](window-owners.md) for explicit login owners, error helpers, Toast / Notification / Dialog lifetimes, and message routing after handoff.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### LoginWindow
+
+![LoginWindow — Login content inside LoginWindow; messaging and main-window handoff have distinct owner rules.](../images/LoginWindow-light.png)
+
+Login content inside LoginWindow; messaging and main-window handoff have distinct owner rules.
+
+[View Dark comparison](../images/LoginWindow-dark.png)
+
+<!-- visual-guide:end -->
+
 ## LoginWindow and main-window handoff
 
 LoginWindow inherits native Window with OneTheme semantic colors, fonts, and densities. Defaults retain full platform decorations / title bar, size 440 × 540, padding 24, centered placement, and native close. Resizing / maximization are disabled by default but overridable. The library supplies no accounts, passwords, or authentication rules. Developers provide Content / ContentTemplate as controls or typed x:DataType model templates.

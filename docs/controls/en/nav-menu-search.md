@@ -6,6 +6,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 See [NavMenu](nav-menu.md) for basic setup.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### NavMenu · Multilevel search
+
+![NavMenu · Multilevel search — Matching a third-level page retains its ancestor path and highlights matching text without rewriting the business hierarchy.](../images/NavMenuSearch-light.png)
+
+Matching a third-level page retains its ancestor path and highlights matching text without rewriting the business hierarchy.
+
+[View Dark comparison](../images/NavMenuSearch-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Multilevel filtering
 
 SearchText supplies the query; SearchTextBinding supplies each node's searchable field. ChildrenBinding still supplies children. Search input can be placed in the page or sidebar; the dedicated NavMenu preview uses compiled TwoWay bindings:

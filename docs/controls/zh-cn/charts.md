@@ -8,6 +8,53 @@
 
 `ChartBase`、`CartesianChartBase` 与 `RadialChartBase` 是抽象基础设施。原先的可切换 `Chart` / `Kind` 属性已移除：`<Chart Kind="Line">` 改为 `<LineChart>`，`<Chart Kind="Gauge">` 改为 `<GaugeChart>`，其他类型按下表迁移。`Kind` 仅为具体控件的只读类型标识；动态切换时创建新的具体控件并替换宿主内容，保留共享数据或 ViewModel。PNG 导出快照也创建相同具体类型。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### LineChart
+
+![LineChart — 连接有效采样点表达趋势；坐标与图例保留数据含义。](../images/LineChart-light.png)
+
+连接有效采样点表达趋势；坐标与图例保留数据含义。
+
+[查看 Dark 对照](../images/LineChart-dark.png)
+
+### HeatmapChart
+
+![HeatmapChart — X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。](../images/HeatmapChart-light.png)
+
+X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。
+
+[查看 Dark 对照](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — 每维按自己的上下限归一化，原始值仍保留在数据模型中。](../images/RadarChart-light.png)
+
+每维按自己的上下限归一化，原始值仍保留在数据模型中。
+
+[查看 Dark 对照](../images/RadarChart-dark.png)
+
+### CandlestickChart
+
+![CandlestickChart — 烛体和影线表达 Open/Close/Low/High；涨跌配色可独立设置。](../images/CandlestickChart-light.png)
+
+烛体和影线表达 Open/Close/Low/High；涨跌配色可独立设置。
+
+[查看 Dark 对照](../images/CandlestickChart-dark.png)
+
+### TreemapChart
+
+![TreemapChart — 嵌套矩形面积表达有效叶子权重，分支可下钻。](../images/TreemapChart-light.png)
+
+嵌套矩形面积表达有效叶子权重，分支可下钻。
+
+[查看 Dark 对照](../images/TreemapChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 图表类型
 
 | 独立控件 | 图形 | 数据 |

@@ -41,6 +41,37 @@ RGB / HSV、Hex 和数值编辑仍使用官方控件实例、命名部件与双�
 控件逻辑及基础模板由官方包提供：
 [Avalonia ColorPicker 文档](https://docs.avaloniaui.net/controls/input/selectors/colorpicker)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### ColorPicker
+
+![ColorPicker — 紧凑的颜色入口；点击展开完整调色内容。](../images/ColorPicker-light.png)
+
+紧凑的颜色入口；点击展开完整调色内容。
+
+[查看 Dark 对照](../images/ColorPicker-dark.png)
+
+### ColorView · Custom 精细调色
+
+![ColorView · Custom 精细调色 — Custom 页包含色谱、RGB/HSV 模式、通道值、十六进制和色相/透明度；模式按钮之间有留白。](../images/ColorViewCustom-light.png)
+
+Custom 页包含色谱、RGB/HSV 模式、通道值、十六进制和色相/透明度；模式按钮之间有留白。
+
+[查看 Dark 对照](../images/ColorViewCustom-dark.png)
+
+### ColorView
+
+![ColorView — Palette 页按主题提供色块选择，与 Custom 精细调色分开。](../images/ColorView-light.png)
+
+Palette 页按主题提供色块选择，与 Custom 精细调色分开。
+
+[查看 Dark 对照](../images/ColorView-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

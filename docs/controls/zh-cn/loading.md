@@ -29,6 +29,21 @@ LoadingContainer 继承 ContentControl，支持 Content／ContentTemplate、Padd
 
 `ControlSizing.Size` 支持 Small／Normal／Large，按钮指示图标为 14／16／20px，容器为 22／28／34px。使用 One.* 语义色，跟随 Light／Dark。`Motion.Enabled=False` 停止旋转、保留静态图标和文字；在加载中重新设置 true 恢复旋转，隐藏／卸载时取消动画。LoadingIndicator 也可独立使用，IsActive 控制运行状态，Foreground 控制颜色。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### LoadingContainer
+
+![LoadingContainer — 覆盖式加载区域与忙碌按钮；忙碌显示不替代宿主任务取消。](../images/LoadingContainer-light.png)
+
+覆盖式加载区域与忙碌按钮；忙碌显示不替代宿主任务取消。
+
+[查看 Dark 对照](../images/LoadingContainer-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

@@ -2,6 +2,37 @@
 
 记录日期：2026-10-20。**简体中文** · [English](../en/chart-echarts-performance-20261020.md)
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### HeatmapChart
+
+![HeatmapChart — X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。](../images/HeatmapChart-light.png)
+
+X/Y 决定网格位置，Value 独立决定色阶；空白格为缺口。
+
+[查看 Dark 对照](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — 每维按自己的上下限归一化，原始值仍保留在数据模型中。](../images/RadarChart-light.png)
+
+每维按自己的上下限归一化，原始值仍保留在数据模型中。
+
+[查看 Dark 对照](../images/RadarChart-dark.png)
+
+### FunnelChart
+
+![FunnelChart — 各阶段宽度表达数值，默认保持业务阶段顺序。](../images/FunnelChart-light.png)
+
+各阶段宽度表达数值，默认保持业务阶段顺序。
+
+[查看 Dark 对照](../images/FunnelChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 本轮范围与结果
 
 按用户确认的[原方案第一批](../../plans/chart-echarts-gap-and-optimization.md)，增加 HeatmapChart、RadarChart、FunnelChart；为 17 种 ChartBase 图表提供统一 Auto / None / Fade / Reveal 动画，保留已有系列、抽样、命中、选择和原始数值语义。地图、网络、Sankey、层级图等后续批次仍未实现。GanttChart 不在本轮统计图表改动范围。

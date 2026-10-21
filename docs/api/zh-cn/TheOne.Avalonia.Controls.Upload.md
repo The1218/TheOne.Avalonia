@@ -49,8 +49,8 @@ Single-file selection and preview, with optional HTTP upload or a host command.
 | 完整签名／值 | 说明 |
 | --- | --- |
 | [`Task Upload.UploadAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.Http.cs#L111) | Uploads explicitly. A supplied UploadCommand takes precedence over built-in HTTP. Errors are exposed through ErrorMessage; cancellation and stale responses never publish a URL. |
-| [`Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.cs#L375) | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
-| [`void Upload.ReloadPreview()`](../../../TheOne.Avalonia/Controls/Upload.cs#L441) | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
+| [`Task Upload.SelectAsync(CancellationToken cancellationToken = default(CancellationToken))`](../../../TheOne.Avalonia/Controls/Upload.cs#L386) | Selects one file through the host service or native storage provider. Cancellation preserves the current file. |
+| [`void Upload.ReloadPreview()`](../../../TheOne.Avalonia/Controls/Upload.cs#L452) | Reloads the thumbnail from a fresh file stream. The control owns and releases decoded thumbnails. |
 | [`Upload.Upload()`](../../../TheOne.Avalonia/Controls/Upload.cs#L97) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 公开字段

@@ -6,6 +6,7 @@
 | --- | --- | --- |
 | Integrate an existing project, migrate a UI, or hand work to Codex | [Integration and migration](integration/en/README.md) | [项目接入与迁移](integration/zh-cn/README.md) |
 | Use project-added properties, labeled Classes examples and business actions | [Control usage](controls/en/README.md) | [控件用法](controls/zh-cn/README.md) |
+| Browse actual control images and Light / Dark comparisons | [Visual index](controls/en/visual-index.md) | [控件图鉴与明暗对照](controls/zh-cn/visual-index.md) |
 | Precisely inspect all public declarations, constructors, accessors and identifiers | [Complete source contract](api/en/README.md) | [完整源码契约](api/zh-cn/README.md) |
 | Configure colors, sizes and motion | [Themes](theme/en/README.md) | [主题](theme/zh-cn/README.md) |
 | Use the 320 built-in vector icons | [OneIcon](controls/en/one-icon.md) | [自有图标](controls/zh-cn/one-icon.md) |

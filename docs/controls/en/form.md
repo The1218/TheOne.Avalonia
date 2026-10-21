@@ -4,6 +4,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 `Form` provides validation and a submission entry point for editing pages, reusing `VerificationStep`'s `IStepValidator`, `StepValidation.For<T>`, `StepValidationError`, and `StepCompareAttribute`. `FormItem` adds labels, required markers, help text, and field errors around caller-owned native input. Load `OneTheme`; no additional package or theme is required.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### Form
+
+![Form — Labels, fields, help text and submission; errors stay beside fields by default, with an optional summary.](../images/Form-light.png)
+
+Labels, fields, help text and submission; errors stay beside fields by default, with an optional summary.
+
+[View Dark comparison](../images/Form-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Compiled bindings and setup
 
 Create the validator with the concrete model type in the view model:

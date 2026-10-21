@@ -14,6 +14,21 @@
                 PageChangedCommand="{Binding LoadPageCommand}" />
 ```
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Pagination
+
+![Pagination — 页码、省略号、每页条数和跳页示例；页码从 1 开始，加载由宿主执行。](../images/Pagination-light.png)
+
+页码、省略号、每页条数和跳页示例；页码从 1 开始，加载由宿主执行。
+
+[查看 Dark 对照](../images/Pagination-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 页码与边界
 
 | 属性 | 契约 |

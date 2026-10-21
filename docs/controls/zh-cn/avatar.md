@@ -31,6 +31,21 @@
 
 加载中及 HTTP、文件、解码失败时均保留占位。伪类为 `:loading`、`:error`、`:has-image`、`:has-text`。默认模板保留 `PART_Surface`、`PART_Fallback`、`PART_Icon`、`PART_Text`、`PART_Image`。用 `AutomationProperties.Name` 标注人物身份；未指定时，无障碍名称使用 Text，最后回退为“Avatar”。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Avatar
+
+![Avatar — 头像、占位文字、形状与状态展示；图片加载失败时保留可识别占位。](../images/Avatar-light.png)
+
+头像、占位文字、形状与状态展示；图片加载失败时保留可识别占位。
+
+[查看 Dark 对照](../images/Avatar-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## 专属属性、Classes 用法与业务 API
 

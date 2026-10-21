@@ -4,6 +4,37 @@
 
 菜单、浮层与布局见[布局入口](layout.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### TransitioningContentControl
+
+![TransitioningContentControl — 当前内容与过渡配置示例；静态图片不用于证明动画流畅度。](../images/TransitioningContentControl-light.png)
+
+当前内容与过渡配置示例；静态图片不用于证明动画流畅度。
+
+[查看 Dark 对照](../images/TransitioningContentControl-dark.png)
+
+### NotificationCard
+
+![NotificationCard — 通知卡片的容器外观；实际通知投递还需要所属窗口的消息宿主。](../images/NotificationCard-light.png)
+
+通知卡片的容器外观；实际通知投递还需要所属窗口的消息宿主。
+
+[查看 Dark 对照](../images/NotificationCard-dark.png)
+
+### OneNotification
+
+![OneNotification — 标题、正文与关闭入口显示在所属窗口右上角；不是系统通知。](../images/OneNotification-light.png)
+
+标题、正文与关闭入口显示在所属窗口右上角；不是系统通知。
+
+[查看 Dark 对照](../images/OneNotification-dark.png)
+
+<!-- visual-guide:end -->
+
 ## TransitioningContentControl 内容切换
 
 使用官方控件与数据模板，将当前业务页面绑定到 Content：

@@ -8,6 +8,53 @@ Twenty-one independently drawn controls live in `TheOne.Avalonia.Controls`, each
 
 `ChartBase`, `CartesianChartBase`, and `RadialChartBase` are abstract infrastructure. The former switchable `Chart` / `Kind` API was removed: replace `<Chart Kind="Line">` with `<LineChart>` and `<Chart Kind="Gauge">` with `<GaugeChart>`, migrating other types as listed below. `Kind` is only a read-only type identifier. Dynamic switching creates a new concrete control and replaces host content while retaining shared data / ViewModels. PNG snapshots also use the same concrete type.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### LineChart
+
+![LineChart — Connects valid samples to show trends while preserving coordinate and legend meaning.](../images/LineChart-light.png)
+
+Connects valid samples to show trends while preserving coordinate and legend meaning.
+
+[View Dark comparison](../images/LineChart-dark.png)
+
+### HeatmapChart
+
+![HeatmapChart — X/Y locate cells and Value independently controls color; blank cells are gaps.](../images/HeatmapChart-light.png)
+
+X/Y locate cells and Value independently controls color; blank cells are gaps.
+
+[View Dark comparison](../images/HeatmapChart-dark.png)
+
+### RadarChart
+
+![RadarChart — Each dimension normalizes against its own limits while models retain original values.](../images/RadarChart-light.png)
+
+Each dimension normalizes against its own limits while models retain original values.
+
+[View Dark comparison](../images/RadarChart-dark.png)
+
+### CandlestickChart
+
+![CandlestickChart — Bodies and wicks represent Open/Close/Low/High; up/down brushes are configurable.](../images/CandlestickChart-light.png)
+
+Bodies and wicks represent Open/Close/Low/High; up/down brushes are configurable.
+
+[View Dark comparison](../images/CandlestickChart-dark.png)
+
+### TreemapChart
+
+![TreemapChart — Nested rectangle areas represent valid leaf weights; branches support drilling.](../images/TreemapChart-light.png)
+
+Nested rectangle areas represent valid leaf weights; branches support drilling.
+
+[View Dark comparison](../images/TreemapChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Chart types
 
 | Control | Shape | Data |

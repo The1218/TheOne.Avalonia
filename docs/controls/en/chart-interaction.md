@@ -6,6 +6,29 @@ See [charts](charts.md) for models and setup.
 
 Scatter selection preserves synchronous events and original model identity while reusing base samples, pens and shaped text. See [selection p99 and allocation reuse](chart-rendering.md#scatter-selection-p99) for the measured behavior and limits.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### LineChart
+
+![LineChart — Connects valid samples to show trends while preserving coordinate and legend meaning.](../images/LineChart-light.png)
+
+Connects valid samples to show trends while preserving coordinate and legend meaning.
+
+[View Dark comparison](../images/LineChart-dark.png)
+
+### ScatterChart
+
+![ScatterChart — Points use continuous XY coordinates; dense data uses budgeted sampling rather than per-point controls.](../images/ScatterChart-light.png)
+
+Points use continuous XY coordinates; dense data uses budgeted sampling rather than per-point controls.
+
+[View Dark comparison](../images/ScatterChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Display and selection
 
 | Property | Default / purpose |

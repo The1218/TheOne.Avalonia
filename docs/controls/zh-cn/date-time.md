@@ -8,6 +8,45 @@ CalendarItem、CalendarButton、CalendarDayButton 属于日历模板；DatePicke
 
 [返回控件文档](README.md)。扩展属性使用 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### CalendarDatePicker
+
+![CalendarDatePicker — 日期输入的三种外观；展开后复用原生日历选择，不改变日期语义。](../images/CalendarDatePicker-light.png)
+
+日期输入的三种外观；展开后复用原生日历选择，不改变日期语义。
+
+[查看 Dark 对照](../images/CalendarDatePicker-dark.png)
+
+### Calendar
+
+![Calendar — 日视图中的选中日和今天标记；切换年月日视图保持外部高度稳定。](../images/Calendar-light.png)
+
+日视图中的选中日和今天标记；切换年月日视图保持外部高度稳定。
+
+[查看 Dark 对照](../images/Calendar-dark.png)
+
+### DatePicker
+
+![DatePicker — 原生分段日期选择器在三种输入外观下的对比。](../images/DatePicker-light.png)
+
+原生分段日期选择器在三种输入外观下的对比。
+
+[查看 Dark 对照](../images/DatePicker-dark.png)
+
+### TimePicker
+
+![TimePicker — 小时与分钟选择的输入外观；时间格式由原生 ClockIdentifier 等配置决定。](../images/TimePicker-light.png)
+
+小时与分钟选择的输入外观；时间格式由原生 ClockIdentifier 等配置决定。
+
+[查看 Dark 对照](../images/TimePicker-dark.png)
+
+<!-- visual-guide:end -->
+
 ## CalendarDatePicker
 
 ```xml

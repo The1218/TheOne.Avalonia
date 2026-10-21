@@ -6,6 +6,21 @@
 
 本文对应当前开发源码；使用包含此控件的后续包，或直接引用源码。加载 `OneTheme`，命名空间为 `xmlns:one="using:TheOne.Avalonia.Controls"`。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Breadcrumb
+
+![Breadcrumb — 路径、分隔符与当前页状态；祖先可导航，当前页不重复执行导航。](../images/Breadcrumb-light.png)
+
+路径、分隔符与当前页状态；祖先可导航，当前页不重复执行导航。
+
+[查看 Dark 对照](../images/Breadcrumb-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 最小用法
 
 ```xml

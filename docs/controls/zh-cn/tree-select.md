@@ -4,6 +4,29 @@
 
 加载 OneTheme 后使用 `TheOne.Avalonia.Controls.TreeSelect`。单选默认允许选择任意可用节点；多选可独立勾选或父子级联。选择保存稳定 Key，更换为同 Key 的新实例后，选中项指向新实例。使用有界原生虚拟 ListBox，不为所有节点创建 Control。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### TreeSelect
+
+![TreeSelect — 单选、独立多选、父子级联和自定义模型示例，持久化时保存稳定 Key。](../images/TreeSelect-light.png)
+
+单选、独立多选、父子级联和自定义模型示例，持久化时保存稳定 Key。
+
+[查看 Dark 对照](../images/TreeSelect-dark.png)
+
+### TreeSelect · 树形弹层
+
+![TreeSelect · 树形弹层 — 展开后的树形选项保留祖先与缩进；显示文字与持久化 Key 分离。](../images/TreeSelectPopup-light.png)
+
+展开后的树形选项保留祖先与缩进；显示文字与持久化 Key 分离。
+
+[查看 Dark 对照](../images/TreeSelectPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 默认模型与绑定
 
 ```csharp

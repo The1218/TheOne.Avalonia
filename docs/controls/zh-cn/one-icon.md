@@ -17,6 +17,21 @@
 
 以上示例沿用下方的 `one` 命名空间；新增项与原有图标使用相同的枚举绑定、前景色继承和尺寸配置。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### OneIcon
+
+![OneIcon — 真实图标画廊的可见部分及预览区域；全部图标和枚举目录在独立预览页查看。](../images/OneIcon-light.png)
+
+真实图标画廊的可见部分及预览区域；全部图标和枚举目录在独立预览页查看。
+
+[查看 Dark 对照](../images/OneIcon-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 使用与绑定
 
 加载 `OneTheme` 后直接使用：

@@ -97,9 +97,9 @@ public partial class Upload : TemplatedControl
     public Upload()
     {
         SelectCommand = new UploadAction(() => _ = SelectAsync(),
-            () => IsEffectivelyEnabled && !IsBusy && !IsUploading && !IsSelecting);
+            () => CanEditFile && IsEffectivelyEnabled && !IsBusy && !IsUploading && !IsSelecting);
         RemoveCommand = new UploadAction(() => SetCurrentValue(SelectedFileProperty, null),
-            () => IsEffectivelyEnabled && !IsBusy && !IsUploading && HasFile);
+            () => CanEditFile && IsEffectivelyEnabled && !IsBusy && !IsUploading && HasFile);
         RequestUploadCommand = new UploadAction(() => _ = UploadAsync(), CanUpload);
     }
 
@@ -216,9 +216,20 @@ public partial class Upload : TemplatedControl
     public ICommand RequestUploadCommand { get; }
     protected override Type StyleKeyOverride => typeof(Upload);
 
+    /// <summary>Allows specialized upload controls to prevent user changes.</summary>
+    protected virtual bool CanEditFile => true;
+
+    /// <summary>Invalidates pending operations when the editing policy changes.</summary>
+    protected void RefreshEditingPolicy()
+    {
+        CancelPicker();
+        if (!CanEditFile) InvalidateHttpUpload(false);
+        RefreshCommands();
+    }
+
     private bool CanUpload()
     {
-        return IsEffectivelyEnabled && !IsBusy && !IsUploading && !IsPreviewLoading && _previewError is null &&
+        return CanEditFile && IsEffectivelyEnabled && !IsBusy && !IsUploading && !IsPreviewLoading && _previewError is null &&
                SelectedFile is { } file && ValidateFile(file) is null
                && (UploadCommand is { } command ? command.CanExecute(file) : IsUploadEndpoint(UploadApi));
     }
@@ -353,7 +364,7 @@ public partial class Upload : TemplatedControl
         SetSelecting(false);
     }
 
-    private string? ValidateFile(UploadFile file)
+    protected virtual string? ValidateFile(UploadFile file)
     {
         var extensions = Extensions();
         if (extensions.Length > 0 &&
@@ -412,7 +423,7 @@ public partial class Upload : TemplatedControl
                 file = files.Count > 0 ? await UploadFile.FromStorageFileAsync(files[0], token, true) : null;
             }
 
-            if (version != _pickVersion || token.IsCancellationRequested || !_attached || !IsEffectivelyEnabled ||
+            if (version != _pickVersion || token.IsCancellationRequested || !_attached || !CanEditFile || !IsEffectivelyEnabled ||
                 IsBusy || IsUploading || file == null) return;
             if (ValidateFile(file) is { } error)
             {
@@ -458,7 +469,7 @@ public partial class Upload : TemplatedControl
         _ = LoadPreviewAsync(file, _version, _previewCancellation.Token);
     }
 
-    private static bool IsImageFile(UploadFile file)
+    protected static bool IsImageFile(UploadFile file)
     {
         return file.ContentType?.StartsWith("image/", StringComparison.OrdinalIgnoreCase) == true ||
                new[] { ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif", ".ico", ".tif", ".tiff" }.Contains(
@@ -486,7 +497,7 @@ public partial class Upload : TemplatedControl
 
                 token.ThrowIfCancellationRequested();
                 buffer.Position = 0;
-                return Bitmap.DecodeToWidth(buffer, 640, BitmapInterpolationMode.MediumQuality);
+                return DecodePreview(buffer);
             }, token).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
@@ -510,6 +521,10 @@ public partial class Upload : TemplatedControl
             SetLoading(false);
         });
     }
+
+    /// <summary>Decodes the selected image on a worker thread.</summary>
+    protected virtual Bitmap DecodePreview(Stream stream) =>
+        Bitmap.DecodeToWidth(stream, 640, BitmapInterpolationMode.MediumQuality);
 
     private sealed class UploadAction(Action execute, Func<bool> canExecute) : ICommand
     {

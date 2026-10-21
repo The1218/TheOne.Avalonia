@@ -31,6 +31,21 @@ The consuming application can reference [Material.Icons.Avalonia](https://www.nu
 
 Native Button and IconButton share primary/accent, soft, gradient, outline, ghost, link, success, info, warning, and danger styles. The default style suits secondary actions; primary advances the main workflow, ghost is lightweight, outline emphasizes a boundary, and success/info/warning/danger indicate completion, information, risk, and destructive actions. Hover, pressed, focus, and disabled states keep native behavior and TheOne semantic colors. Prefer one primary action per group and explicit action labels.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### IconButton
+
+![IconButton — Icons and content align across Classes; icon source, placement and spacing can be configured independently.](../images/IconButton-light.png)
+
+Icons and content align across Classes; icon source, placement and spacing can be configured independently.
+
+[View Dark comparison](../images/IconButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Semantic colors and appearances
 
 IconButton shares [composition and precedence rules](basic.md#button-semantic-colors-and-appearances) with Button, ToggleButton and RepeatButton. Combine `primary/accent`, `danger`, `success`, `warning` or `info` with `solid`, `ghost`, `link`, `outline`, `soft` or `gradient`:

@@ -4,6 +4,37 @@
 
 See [charts](charts.md) for models and setup.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### PieChart
+
+![PieChart — Sector angles represent proportions and colors correspond to the legend.](../images/PieChart-light.png)
+
+Sector angles represent proportions and colors correspond to the legend.
+
+[View Dark comparison](../images/PieChart-dark.png)
+
+### DoughnutChart
+
+![DoughnutChart — Ring sectors preserve proportion semantics with a configurable inner radius.](../images/DoughnutChart-light.png)
+
+Ring sectors preserve proportion semantics with a configurable inner radius.
+
+[View Dark comparison](../images/DoughnutChart-dark.png)
+
+### GaugeChart
+
+![GaugeChart — Distinguishes the current value from the remaining range; the preview contains additional gauge styles.](../images/GaugeChart-light.png)
+
+Distinguishes the current value from the remaining range; the preview contains additional gauge styles.
+
+[View Dark comparison](../images/GaugeChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Pie and doughnut
 
 ```xml

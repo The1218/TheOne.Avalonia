@@ -4,6 +4,21 @@
 
 `Form` 为普通编辑页提供统一校验与提交入口，复用 `VerificationStep` 的 `IStepValidator`、`StepValidation.For<T>`、`StepValidationError` 和 `StepCompareAttribute`。`FormItem` 为调用方的原生输入提供标签、必填标记、帮助文本与字段错误。加载 `OneTheme` 后即可使用，无需额外包或主题。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### Form
+
+![Form — 字段标签、输入、帮助文字与提交动作；错误默认贴近字段显示，摘要可按需开启。](../images/Form-light.png)
+
+字段标签、输入、帮助文字与提交动作；错误默认贴近字段显示，摘要可按需开启。
+
+[查看 Dark 对照](../images/Form-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 编译绑定与接入
 
 在 ViewModel 中为具体模型类型创建校验器：

@@ -31,6 +31,21 @@ var tree = new DataGridTreeCollectionView<Node>(roots, node => node.Children);
 
 视图和列始终使用原业务模型，不添加 `Item` 包装层；泛型视图为编译绑定提供行类型，空源也通过显式集合形状注册识别。创建视图前注册具体行及嵌套属性类型，见 [NativeAOT](datagrid-binding.md#nativeaot)。Children 通过强类型委托读取，不按属性名反射。一次只将一个树视图绑定到一个已挂载表格；独立状态需要独立视图。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### DataGridTree
+
+![DataGridTree — 树型行仍使用原生 DataGrid 编辑与滚动区域；展开、排序和筛选按树契约执行。](../images/DataGridTree-light.png)
+
+树型行仍使用原生 DataGrid 编辑与滚动区域；展开、排序和筛选按树契约执行。
+
+[查看 Dark 对照](../images/DataGridTree-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 树与编辑契约
 
 - 默认折叠。`TrySetExpanded(node, true/false)` 返回是否成功；`TryGetNodeState` 查询深度、父节点、筛选后是否有子节点和有效展开状态，以及 `IsFilterMatch`／`IsForcedExpanded`。

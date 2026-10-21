@@ -17,6 +17,37 @@ OneTheme.SetColor(ThemeColor.Nova); // Restore the default Nova palette.
 
 This API updates the application palette, preserves property bindings, and leaves Light / Dark unchanged. Invalid enum values throw ArgumentOutOfRangeException; calling without OneTheme registered in Application.Styles throws InvalidOperationException.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](../../controls/en/visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ThemeColorPicker
+
+![ThemeColorPicker — Enum palette entry, independent of Light/Dark switching.](../../controls/images/ThemeColorPicker-light.png)
+
+Enum palette entry, independent of Light/Dark switching.
+
+[View Dark comparison](../../controls/images/ThemeColorPicker-dark.png)
+
+### ThemeColorPicker · Palette list
+
+![ThemeColorPicker · Palette list — Visible portion of the real palette dropdown; scroll to reach more enum entries.](../../controls/images/ThemeColorPickerPopup-light.png)
+
+Visible portion of the real palette dropdown; scroll to reach more enum entries.
+
+[View Dark comparison](../../controls/images/ThemeColorPickerPopup-dark.png)
+
+### ThemeButton
+
+![ThemeButton — Icon-only theme toggle; properties determine two/three-state behavior and scope.](../../controls/images/ThemeButton-light.png)
+
+Icon-only theme toggle; properties determine two/three-state behavior and scope.
+
+[View Dark comparison](../../controls/images/ThemeButton-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Palette resources
 
 ```xml

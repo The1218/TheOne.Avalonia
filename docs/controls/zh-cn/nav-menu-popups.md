@@ -6,6 +6,21 @@
 
 基础接入见[NavMenu](nav-menu.md)。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### NavMenu · 折叠弹层
+
+![NavMenu · 折叠弹层 — 折叠后保留根图标，在旁边展开当前分支；每层仍是独立的有限视口。](../images/NavMenuPopup-light.png)
+
+折叠后保留根图标，在旁边展开当前分支；每层仍是独立的有限视口。
+
+[查看 Dark 对照](../images/NavMenuPopup-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 折叠侧栏与子菜单弹层
 
 设置 `IsCollapsed="True"` 后，主导航只显示根菜单图标，隐藏文字、缩进、行内箭头及子级区域。没有 IconTemplate 时提供默认图形，避免把模型文字挤进图标栏；有子级的图标默认悬停打开菜单；没有子级的图标仍通过原内容模板显示提示。折叠不修改模型的 IsExpanded 或当前 SelectedItem。

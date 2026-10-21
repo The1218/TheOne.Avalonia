@@ -14,6 +14,21 @@ Historical command-line checks and consumer test projects have been removed. Che
 
 Declare the view's correct `x:DataType`; `one` is `using:TheOne.Avalonia.Controls`. Models are in `TheOne.Avalonia.Reporting`.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### ReportDesign
+
+![ReportDesign — Components/structure, paper and properties form the design workspace, including table and QR components.](../images/ReportDesign-light.png)
+
+Components/structure, paper and properties form the design workspace, including table and QR components.
+
+[View Dark comparison](../images/ReportDesign-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Workbench and editing
 
 The report-name header uses a native `TabStrip`, with the document title, built-in close action, saved state and document actions in the top bar above the formatting toolbar. It retains the native tab item's content layout while removing duplicate border and spacing around the strip. Closing its single document clears `Document` and `DataSource`, disables Save/PDF export and leaves New/Open available to restore a document. The component/data sidebar spans the work area vertically; design/preview tabs sit above the paper area. The compact inspector has Properties and Data tabs, with grouped geometry, content, typography and colors in Properties. Component/data (`SourceTabs`), Properties/Data (`PropertyTabs`) and design/preview (`ViewTabs`) all use the built-in `TabControl` with `Classes="card"`, without custom tab templates, retaining native keyboard behavior. These fixed editor pages explicitly disable `TabFeatures.CanClose` and `TabFeatures.CanReorder`, so they cannot be closed or reordered. The report-name strip uses [TabFeatures closing](collections.md#standalone-tabstrip).

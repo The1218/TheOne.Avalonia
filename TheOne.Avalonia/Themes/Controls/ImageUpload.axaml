@@ -1,0 +1,121 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:one="using:TheOne.Avalonia.Controls" x:CompileBindings="True">
+    <ControlTheme x:Key="One.ImageUpload.Action" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Padding" Value="4,12" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_ActionSurface" Background="{TemplateBinding Background}" CornerRadius="6"
+                        Padding="4,12">
+                    <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#PART_ActionSurface">
+            <Setter Property="Background" Value="#30FFFFFF" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#PART_ActionSurface">
+            <Setter Property="Background" Value="#50FFFFFF" />
+        </Style>
+        <Style Selector="^:focus-visible /template/ Border#PART_ActionSurface">
+            <Setter Property="BorderBrush" Value="White" />
+            <Setter Property="BorderThickness" Value="2" />
+        </Style>
+        <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.4" /></Style>
+    </ControlTheme>
+    <ControlTheme x:Key="{x:Type one:ImageUpload}" TargetType="one:ImageUpload">
+        <Setter Property="Background" Value="{DynamicResource One.Subtle}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.InputLine}" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MaxWidth" Value="320" />
+        <Setter Property="ImageHeight" Value="240" />
+        <Setter Property="Focusable" Value="True" />
+        <Setter Property="FocusAdorner" Value="{x:Null}" />
+        <Setter Property="AutomationProperties.Name" Value="{CompiledBinding $self.Title}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Spacing="12">
+                    <Grid Height="{TemplateBinding ImageHeight}">
+                        <Border Name="PART_Surface" Background="{TemplateBinding Background}"
+                                CornerRadius="{TemplateBinding CornerRadius}" ClipToBounds="True" Margin="2">
+                            <Grid>
+                                <Image Name="PART_Image" Source="{TemplateBinding PreviewImage}"
+                                       Stretch="{TemplateBinding ImageStretch}" />
+                                <Button Name="PART_Select" Command="{CompiledBinding $parent[one:ImageUpload].SelectCommand}"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Center" Background="Transparent" BorderThickness="0"
+                                        AutomationProperties.Name="{TemplateBinding SelectText}">
+                                    <StackPanel Spacing="12" VerticalAlignment="Center">
+                                        <one:OneIcon Kind="Add" Width="32" Height="32" HorizontalAlignment="Center" />
+                                        <TextBlock Name="PART_EmptyLabel" Text="{TemplateBinding SelectText}" TextAlignment="Center" />
+                                    </StackPanel>
+                                </Button>
+                                <Border Name="PART_EmptyPreview" IsVisible="False" IsHitTestVisible="False">
+                                    <StackPanel VerticalAlignment="Center" Spacing="12">
+                                        <one:OneIcon Kind="Image" Width="32" Height="32" HorizontalAlignment="Center"
+                                                     Foreground="{DynamicResource One.Muted}" />
+                                        <TextBlock Text="暂无图片" TextAlignment="Center" Foreground="{DynamicResource One.Muted}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Name="PART_Actions" Background="#99000000" IsVisible="False"
+                                        CornerRadius="{TemplateBinding CornerRadius}" Padding="8">
+                                    <Grid ColumnDefinitions="*,*,*" VerticalAlignment="Center" ColumnSpacing="2">
+                                        <Button Name="PART_Edit" Theme="{StaticResource One.ImageUpload.Action}" Padding="4,12"
+                                                Command="{CompiledBinding $parent[one:ImageUpload].SelectCommand}"
+                                                AutomationProperties.Name="{TemplateBinding ReplaceText}">
+                                            <StackPanel Spacing="8">
+                                                <one:OneIcon Kind="Edit" Width="24" Height="24" HorizontalAlignment="Center" />
+                                                <TextBlock Text="{TemplateBinding ReplaceText}" TextAlignment="Center" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Name="PART_View" Grid.Column="1" Theme="{StaticResource One.ImageUpload.Action}" Padding="4,12"
+                                                Command="{CompiledBinding $parent[one:ImageUpload].ViewCommand}"
+                                                AutomationProperties.Name="{TemplateBinding ViewText}">
+                                            <StackPanel Spacing="8">
+                                                <one:OneIcon Kind="ZoomIn" Width="24" Height="24" HorizontalAlignment="Center" />
+                                                <TextBlock Text="{TemplateBinding ViewText}" TextAlignment="Center" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Button>
+                                        <Button Name="PART_Remove" Grid.Column="2" Theme="{StaticResource One.ImageUpload.Action}" Padding="4,12"
+                                                Command="{CompiledBinding $parent[one:ImageUpload].RemoveCommand}"
+                                                AutomationProperties.Name="{TemplateBinding RemoveText}">
+                                            <StackPanel Spacing="8">
+                                                <one:OneIcon Kind="Delete" Width="24" Height="24" HorizontalAlignment="Center" />
+                                                <TextBlock Text="{TemplateBinding RemoveText}" TextAlignment="Center" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                                <one:LoadingIndicator IsVisible="{TemplateBinding IsPreviewLoading}" HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center" IsHitTestVisible="False" />
+                            </Grid>
+                        </Border>
+                        <Rectangle Name="PART_Outline" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="1.5"
+                                   StrokeDashArray="3,2" RadiusX="12" RadiusY="12" Margin="1" IsHitTestVisible="False" />
+                    </Grid>
+                    <TextBlock Text="{TemplateBinding DisplayHint}" TextAlignment="Center" TextWrapping="Wrap"
+                               Foreground="{DynamicResource One.Muted}" />
+                    <TextBlock Text="{TemplateBinding ErrorMessage}" TextWrapping="Wrap" Foreground="{DynamicResource One.Danger}" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:has-file /template/ Button#PART_Select"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:has-file:pointerover /template/ Border#PART_Actions"><Setter Property="IsVisible" Value="True" /></Style>
+        <Style Selector="^:has-file:focus-within /template/ Border#PART_Actions"><Setter Property="IsVisible" Value="True" /></Style>
+        <Style Selector="^:pointerover /template/ Rectangle#PART_Outline"><Setter Property="Stroke" Value="{DynamicResource One.Accent}" /></Style>
+        <Style Selector="^:focus-within /template/ Rectangle#PART_Outline"><Setter Property="Stroke" Value="{DynamicResource One.Accent}" /></Style>
+        <Style Selector="^:preview /template/ Button#PART_Select"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:preview:not(:has-file) /template/ Border#PART_EmptyPreview"><Setter Property="IsVisible" Value="True" /></Style>
+        <Style Selector="^:preview /template/ Button#PART_Edit"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:preview /template/ Button#PART_Remove"><Setter Property="IsVisible" Value="False" /></Style>
+        <Style Selector="^:error /template/ Rectangle#PART_Outline"><Setter Property="Stroke" Value="{DynamicResource One.Danger}" /></Style>
+        <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
+        <Style Selector="^.one-small"><Setter Property="FontSize" Value="12" /><Setter Property="ImageHeight" Value="200" /></Style>
+        <Style Selector="^.one-large"><Setter Property="FontSize" Value="16" /><Setter Property="ImageHeight" Value="280" /></Style>
+    </ControlTheme>
+</ResourceDictionary>

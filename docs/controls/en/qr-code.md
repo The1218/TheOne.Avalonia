@@ -33,6 +33,21 @@ Input is limited to 7089 UTF-8 bytes before encoding to bound work. Actual capac
 
 PreviewHost's **QRCode** page provides editable payload, correction, quiet zone and error feedback, with short code examples in `Description`. See [ReportDesign](report-design.md#qr-code-components) for report elements, field binding, history and PDF.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### QRCode
+
+![QRCode — Actual QR output and configuration; code examples distinguish static text from field binding.](../images/QRCode-light.png)
+
+Actual QR output and configuration; code examples distinguish static text from field binding.
+
+[View Dark comparison](../images/QRCode-dark.png)
+
+<!-- visual-guide:end -->
+
 <!-- generated-contracts:start -->
 ## Control-specific properties, Classes usage and business APIs
 

@@ -2,6 +2,21 @@
 
 `AttachmentList` provides true multiple-file selection, empty state, attachment status, progress, open and remove actions. It sends no HTTP requests, deletes no server files and owns no business relationships. Use [Upload](upload.md) for a single-file selection.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### AttachmentList
+
+![AttachmentList — Completed, uploading and failed file states; progress is fixture model data, not a simulated network transfer.](../images/AttachmentList-light.png)
+
+Completed, uploading and failed file states; progress is fixture model data, not a simulated network transfer.
+
+[View Dark comparison](../images/AttachmentList-dark.png)
+
+<!-- visual-guide:end -->
+
 ## Usage
 
 ```xml

@@ -12,6 +12,21 @@
 
 `Appointment` 使用 `DateTime?`，包含日期与时间；空值表示未选择。设置显示格式本身不截断秒或毫秒，控件不进行时区转换。默认格式为 `yyyy-MM-dd HH:mm`。文本提交按格式重新解析，精度及 `DateTime.Kind` 遵循原生解析规则；需编辑秒时使用含 `ss` 的格式，需编辑小数秒时加入 `fffffff`。文本解析和 `DateValidationError` 沿用原生行为。选择日历日期保留现有时间，修改时间只更新日期中的时间部分。
 
+<!-- visual-guide:start -->
+## 外观与场景图示
+
+[配图口径与控件图鉴](visual-index.md)；下图是当前源码的真实渲染，绑定与交互以本页用法说明为准。
+
+### DateTimePicker
+
+![DateTimePicker — 同一输入中呈现日期与时间；格式配置和独立时间绑定的边界见下文。](../images/DateTimePicker-light.png)
+
+同一输入中呈现日期与时间；格式配置和独立时间绑定的边界见下文。
+
+[查看 Dark 对照](../images/DateTimePicker-dark.png)
+
+<!-- visual-guide:end -->
+
 ## 附加能力
 
 | 属性 | 类型 / 默认值 | 用法 |

@@ -10,6 +10,101 @@ ScatterChart keeps individual ellipses, original source ordering, alpha overlap,
 
 Selecting an omitted Scatter original uses an immutable one-point splice over the base sample, preserving source-order drawing without copying its coordinate array. Axis/data-label text layouts and stable pens/operations are also reused. Events and sampling diagnostics remain synchronous. See [selection p99](chart-rendering.md#scatter-selection-p99) for the measured boundary, cache lifecycle and remaining raster work.
 
+<!-- visual-guide:start -->
+## Appearance and example states
+
+[Capture scope and visual index](visual-index.md). These are actual source-rendered examples; use this page’s usage notes for interaction and binding contracts.
+
+### LineChart
+
+![LineChart — Connects valid samples to show trends while preserving coordinate and legend meaning.](../images/LineChart-light.png)
+
+Connects valid samples to show trends while preserving coordinate and legend meaning.
+
+[View Dark comparison](../images/LineChart-dark.png)
+
+### AreaChart
+
+![AreaChart — Area fill emphasizes trend magnitude without changing source values.](../images/AreaChart-light.png)
+
+Area fill emphasizes trend magnitude without changing source values.
+
+[View Dark comparison](../images/AreaChart-dark.png)
+
+### BarChart
+
+![BarChart — Vertical bars compare values across categories.](../images/BarChart-light.png)
+
+Vertical bars compare values across categories.
+
+[View Dark comparison](../images/BarChart-dark.png)
+
+### HorizontalBarChart
+
+![HorizontalBarChart — Horizontal bars accommodate longer category labels.](../images/HorizontalBarChart-light.png)
+
+Horizontal bars accommodate longer category labels.
+
+[View Dark comparison](../images/HorizontalBarChart-dark.png)
+
+### ScatterChart
+
+![ScatterChart — Points use continuous XY coordinates; dense data uses budgeted sampling rather than per-point controls.](../images/ScatterChart-light.png)
+
+Points use continuous XY coordinates; dense data uses budgeted sampling rather than per-point controls.
+
+[View Dark comparison](../images/ScatterChart-dark.png)
+
+### StackedBarChart
+
+![StackedBarChart — Series values stack within categories; total height/length represents the aggregate.](../images/StackedBarChart-light.png)
+
+Series values stack within categories; total height/length represents the aggregate.
+
+[View Dark comparison](../images/StackedBarChart-dark.png)
+
+### StackedHorizontalBarChart
+
+![StackedHorizontalBarChart — Series values stack within categories; total height/length represents the aggregate.](../images/StackedHorizontalBarChart-light.png)
+
+Series values stack within categories; total height/length represents the aggregate.
+
+[View Dark comparison](../images/StackedHorizontalBarChart-dark.png)
+
+### StackedAreaChart
+
+![StackedAreaChart — Series values stack within categories; total height/length represents the aggregate.](../images/StackedAreaChart-light.png)
+
+Series values stack within categories; total height/length represents the aggregate.
+
+[View Dark comparison](../images/StackedAreaChart-dark.png)
+
+### PercentStackedBarChart
+
+![PercentStackedBarChart — Stacks normalize to proportions, comparing composition rather than absolute totals.](../images/PercentStackedBarChart-light.png)
+
+Stacks normalize to proportions, comparing composition rather than absolute totals.
+
+[View Dark comparison](../images/PercentStackedBarChart-dark.png)
+
+### PercentStackedHorizontalBarChart
+
+![PercentStackedHorizontalBarChart — Stacks normalize to proportions, comparing composition rather than absolute totals.](../images/PercentStackedHorizontalBarChart-light.png)
+
+Stacks normalize to proportions, comparing composition rather than absolute totals.
+
+[View Dark comparison](../images/PercentStackedHorizontalBarChart-dark.png)
+
+### PercentStackedAreaChart
+
+![PercentStackedAreaChart — Stacks normalize to proportions, comparing composition rather than absolute totals.](../images/PercentStackedAreaChart-light.png)
+
+Stacks normalize to proportions, comparing composition rather than absolute totals.
+
+[View Dark comparison](../images/PercentStackedAreaChart-dark.png)
+
+<!-- visual-guide:end -->
+
 ## X-axis labels and narrow viewports
 
 Line, column, and other Cartesian charts use actual text widths to determine label counts rather than skipping short labels because of a fixed 36 px minimum slot. The Small 240 px month example shows all six labels. Spacing is checked in screen order, including decreasing X data. Genuine crowding reduces labels while retaining all points, coordinates, and tooltip information.
