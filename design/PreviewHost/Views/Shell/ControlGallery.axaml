@@ -4,15 +4,9 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:TheOne.DesignPreview"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid RowDefinitions="*,Auto">
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="PageScroll">
-            <Border Name="PageFrame" Padding="28">
-                <ContentControl HorizontalContentAlignment="Stretch" Name="PageHost" />
-            </Border>
-        </ScrollViewer>
-        <local:PreviewSourcePanel
-            Grid.Row="1"
-            Margin="28,0,28,12"
-            Name="SourcePanel" />
-    </Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" Name="PageScroll">
+        <Border Name="PageFrame" Padding="28">
+            <local:PreviewPageHost Name="PageHost" />
+        </Border>
+    </ScrollViewer>
 </UserControl>

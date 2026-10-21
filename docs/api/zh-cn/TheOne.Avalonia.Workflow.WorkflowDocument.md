@@ -33,12 +33,14 @@ Observable UI-thread document. Editor operations are reversible; direct host cha
 | [`void WorkflowDocument.Remove(IEnumerable<WorkflowNode> nodes, WorkflowConnection? connection = null)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L187) | 删除指定工作流对象及关联关系，通过文档编辑历史执行。 |
 | [`void WorkflowDocument.MoveNodes(IEnumerable<(WorkflowNode Node, double X, double Y)> positions)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L207) | 批量更新节点坐标并记录一次可撤销移动。 |
 | [`void WorkflowDocument.SetProperty(WorkflowProperty property, string value, WorkflowDataReference? reference)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L231) | 通过文档修改流程属性的固定值／引用，以保持撤销与通知。 |
-| [`void WorkflowDocument.SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L248) | One undoable multi-selection edit, preserving stable keys and their order. |
-| [`string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L267) | 校验候选端口连接，返回失败原因而不创建连线。 |
-| [`bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L291) | 校验并尝试创建连接；返回是否成功及相关结果。 |
-| [`bool WorkflowDocument.IsReachable(string from, string to)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L304) | 判断流程图中目标节点是否可从起点到达，用于连线与循环判断。 |
-| [`IReadOnlyList<WorkflowReferenceOption> WorkflowDocument.GetReferenceOptions(WorkflowNode target, WorkflowProperty property)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L320) | 为当前节点属性列出兼容的上游数据引用选项。 |
-| [`IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L333) | 校验工作流结构、端口与属性引用，返回可定位的问题集合。 |
+| [`void WorkflowDocument.SetConnectionProperty(WorkflowConnection connection, WorkflowProperty property, string value, WorkflowDataReference? reference = null)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L248) | 修改本图中指定连线的固定值或引用，保留原字段的撤销记录；不允许编辑其他文档的字段。 |
+| [`void WorkflowDocument.SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L259) | One undoable multi-selection edit, preserving stable keys and their order. |
+| [`string? WorkflowDocument.CheckConnection(string sourceNode, string sourcePort, string targetNode, string targetPort, bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L278) | 校验候选端口连接，返回失败原因而不创建连线。 |
+| [`bool WorkflowDocument.TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort, out string? error, bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L302) | 校验并尝试创建连接；返回是否成功及相关结果。 |
+| [`bool WorkflowDocument.TryConnect(WorkflowConnection connection, out string? error, bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L313) | Adds a host-created connection in one undoable edit after validating identity and topology. |
+| [`bool WorkflowDocument.IsReachable(string from, string to)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L326) | 判断流程图中目标节点是否可从起点到达，用于连线与循环判断。 |
+| [`IReadOnlyList<WorkflowReferenceOption> WorkflowDocument.GetReferenceOptions(WorkflowNode target, WorkflowProperty property)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L342) | 为当前节点属性列出兼容的上游数据引用选项。 |
+| [`IReadOnlyList<WorkflowValidationIssue> WorkflowDocument.Validate(bool allowCycles = false)`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L355) | 校验工作流结构、端口与属性引用，返回可定位的问题集合。 |
 | [`WorkflowDocument.WorkflowDocument()`](../../../TheOne.Avalonia/Workflow/WorkflowDocument.cs#L17) | 创建该类型实例；构造参数及可选初值见完整签名。共享模型与资源的所有权由调用方维护。 |
 
 ## 事件

@@ -126,7 +126,12 @@ DialogOptions is an immutable record; omitted options create fresh defaults, not
 public sealed class EditorViewModel : DialogContext
 {
     private string _name = "新资料";
-    public string Name { get => _name; set => SetProperty(ref _name, value); }
+    public string Name
+    {
+        get => _name;
+        set { if (SetProperty(ref _name, value)) OnPropertyChanged(nameof(Summary)); }
+    }
+    public string Summary => $"Name: {Name}";
     // 在绑定的 SaveCommand / CancelCommand 中调用：
     public void Save() => RequestClose(OneDialogResult.Ok);
     public void Cancel() => RequestClose(OneDialogResult.Cancel);
@@ -134,6 +139,8 @@ public sealed class EditorViewModel : DialogContext
 ```
 
 RequestClose raises CloseRequested; the coordinator closes only requests associated with that ViewModel and resolves the parent's awaited OneDialogResult. It supports background triggering and queued ViewModels can end before their View is created, without affecting active dialogs. Close buttons / optional overlay clicks return Closed; Escape returns Cancel; cancellation cancels Tasks; host closure returns Closed.
+
+`SetProperty` raises a notification only when its backing value changes. Derived ViewModels use protected `OnPropertyChanged(nameof(Summary))` to notify computed properties or command conditions, without redeclaring PropertyChanged or using reflection bindings. Notifications do not dispatch threads; update bound state on the UI context. Keep typed business results in the ViewModel and read them only after OneDialogResult.Ok and a successful API operation; Cancel / Closed must not enter the saved-result branch.
 
 Completion, cancellation, and host closure detach events, allowing sequential ViewModel reuse. A DialogContext cannot serve concurrent requests across windows, avoiding one close event ending multiple dialogs; concurrent use returns a faulted Task. A thousand queued generic requests create only the active View, retaining request data for the rest. PreviewHost's Messages and dialogs → Dialog form changes title / close / overlay / Escape settings and verifies results through compiled save / cancel commands.
 

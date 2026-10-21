@@ -1,5 +1,7 @@
 # Upload 上传
 
+一次选择多个附件并展示文件集合请使用 [AttachmentList 附件列表](attachment-list.md)。本控件保持单文件契约。
+
 `TheOne.Avalonia.Controls.Upload` 选择一张图片并显示缩略图，内置默认模板、系统文件选择器和可选的单文件 HTTP 上传。配置 `UploadApi` 可使用内置上传，也可提供 `UploadCommand` 接入业务上传逻辑。
 
 ## 内置 API 上传

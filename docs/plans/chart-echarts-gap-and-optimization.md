@@ -2,6 +2,8 @@
 
 评估日期：2026-10-19。源码基线：`d2b8169` / `1.0.0-preview.7`。
 
+2026-10-20 实施进度：第一批 `HeatmapChart`、`RadarChart`、`FunnelChart` 已实现；第二批增加 `BoxPlotChart`、`CandlestickChart`、`TreemapChart`、`SunburstChart`，共 21 种 ChartBase 图表复用 Auto / None / Fade / Reveal、主题和绘制缓存。第二批提供预计算统计模型、数值视口、稳定层级 Key / Root 下钻，预览按真实可视区创建样式、动画和代码区。详见[首批图表](../controls/zh-cn/chart-specialized.md)、[统计图](../controls/zh-cn/chart-statistical.md)、[层级图](../controls/zh-cn/chart-hierarchy.md)及[第二批性能／专项记录](../controls/zh-cn/chart-next-batch-performance-20261020.md)。下文保留原评估基线；交易日历、自动分位统计、squarified 布局、地理／网络等后续能力仍是计划，不表示本轮已实现。
+
 本文是源码审查与官方资料对照方案，不是性能实测报告，不表示已排期或已实现。未修改图表实现、未执行全量回归、未重新运行历史性能专项。优先级按桌面业务应用、监控看板、工作流与报表场景判断。
 
 ## 1. 建议结论

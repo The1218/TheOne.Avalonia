@@ -107,6 +107,8 @@ internal static class ControlUsageExamples
             "WorkflowDocument.MoveNodes" => "document.MoveNodes(new[] { (Node: node, X: 160d, Y: 120d) });",
             "WorkflowDocument.SetProperty" =>
                 "// property 是当前节点的 WorkflowProperty。\ndocument.SetProperty(property, \"approved\", reference: null);",
+            "WorkflowDocument.SetConnectionProperty" =>
+                "// connection 属于当前 document，property 属于该连线的 Properties。\ndocument.SetConnectionProperty(connection, property, \"approved\", reference: null);",
             "WorkflowDocument.SetSelectedKeys" =>
                 "// property.Kind 为 WorkflowValueKind.MultiSelect；按稳定 Key 保存，一次编辑可撤销。\ndocument.SetSelectedKeys(property, [\"user:42\", \"role:finance\"]);",
             "WorkflowDocument.Edit" =>

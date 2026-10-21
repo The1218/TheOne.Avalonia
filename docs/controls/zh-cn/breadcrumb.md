@@ -111,7 +111,7 @@ Tab 按原生焦点顺序访问可用祖先；Left / Right、Home / End 在路�
 
 容器按原生 ItemsControl 生命周期准备和清理，仅为默认模型建立属性订阅。移除、Replace、Move、Reset 与更换 ItemsSource 后重新计算末项和分隔符，清理旧模型订阅、命令参数与当前页状态。不要同时复用同一个 Control 实例作为多个 Header 或分隔符；需要视觉重复时使用模板。
 
-PreviewHost → 导航与布局 → **Breadcrumb**：命令返回祖先、恢复路径、图标、文字/图标/空分隔符、禁用项和带编译绑定的自定义模板。说明由 Description 展示；源码面板可查看完整示例。
+PreviewHost → 导航与布局 → **Breadcrumb**：命令返回祖先、恢复路径、图标、文字/图标/空分隔符、禁用项和带编译绑定的自定义模板。说明和短代码示例由对应 Description 直接展示。
 
 专项仅覆盖 Breadcrumb、容器、默认模型及直接演示绑定，验证结果与当前宿主实跑范围见本次交付，不代表其他平台已实跑。
 

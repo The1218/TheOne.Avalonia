@@ -11,7 +11,7 @@
                 <Button Content="恢复演示路径" Click="ResetPath" HorizontalAlignment="Left" />
                 <one:Description LabelWidth="180">
                     <one:DescriptionItem Header="ItemInvokedCommand" Content="&lt;one:Breadcrumb ItemsSource=&quot;{CompiledBinding Path}&quot; ItemInvokedCommand=&quot;{CompiledBinding NavigateCommand}&quot; /&gt;&#10;命令参数为原始数据项；CanExecute 控制祖先项是否可点击。" />
-                    <one:DescriptionItem Header="CurrentItem / 事件" Content="breadcrumb.CurrentItem 为末项；breadcrumb.ItemInvoked += (_, e) =&gt; Navigate(e.Item, e.Index);&#10;控件不删除路径、不创建页面，使用者在命令或事件中更新导航状态。" />
+                    <one:DescriptionItem Header="ItemInvoked" Content="breadcrumb.ItemInvoked += (_, e) =&gt; Navigate(e.Item, e.Index);&#10;使用者在命令或事件中更新导航状态。" />
                     <one:DescriptionItem Header="BreadcrumbItemModel" Content="new BreadcrumbItemModel { Header = &quot;首页&quot;, Key = &quot;home&quot;, Icon = OneIconKind.Home, IsEnabled = true };&#10;Header 为内容，Key 为业务导航标识，Icon 可空；属性变化会更新界面。" />
                 </one:Description>
             </StackPanel>

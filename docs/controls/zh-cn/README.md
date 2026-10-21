@@ -21,6 +21,7 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [WorkflowEditor 流程编辑器](workflow-editor.md) | 图模型契约、模板、业务配置、上游数据引用和 JSON 保存加载 |
 | [MessageBox 确认框](message-box.md) | 轻量确认／取消、默认焦点、命令与布尔结果 |
 | [Upload 上传](upload.md) | 单文件选择、图片预览、替换／删除及宿主上传命令 |
+| [AttachmentList 附件列表](attachment-list.md) | 一次多选、文件集合、状态进度、宿主上传与预览／移除 |
 | [IconButton 与按钮层次](icon-button.md) | 属性图标、Geometry／PathIcon／Material 模板、主次操作与语义状态 |
 | [OneIcon 自有图标](one-icon.md) | 20 类 320 个矢量图标，含行业、交通、商业、教育与天气；32 个实心变体、枚举绑定与虚拟化画廊 |
 | [Breadcrumb 面包屑](breadcrumb.md) | 路径导航、图标、自定义分隔符、命令、编译绑定与键盘焦点 |
@@ -44,7 +45,10 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [主题实现说明](../../theme/zh-cn/README.md) | 资源、模板、动画、验证范围与实现约束 |
 | [OneWindow 与窗口服务](windows.md) | 主题主窗口、ThemeButton、LeftContent、RightContent、静态通知／Toast／对话框 API |
 | [ThemeColorPicker / ThemeButton](../../theme/zh-cn/theme-color-picker.md) | 配色下拉选择、独立明暗图标开关与 PreviewHost 代码高亮 |
-| [Chart 图表](charts.md) | 十四种图形、堆叠／双轴／采样、视口导航、共享提示与图例、平滑／动画／PNG 导出、指针仪表 |
+| [Chart 图表](charts.md) | 二十一种图形、堆叠／双轴／采样、视口导航、共享提示与图例、动画样式／PNG 导出、指针仪表 |
+| [Heatmap / Radar / Funnel](chart-specialized.md) | 网格热力、多维雷达、转化漏斗的额外属性、模型及示例 |
+| [BoxPlot / Candlestick](chart-statistical.md) | 五数摘要、离群点、OHLC、数值视口、模型与更新规则 |
+| [Treemap / Sunburst](chart-hierarchy.md) | 层级权重、Root 下钻、稳定身份、循环防护、模型与 API |
 | [InfoCard 信息卡片](info-card.md) | Header、图标、操作、Content、Footer、hove / shadow、编译模板与三档尺寸 |
 | [Description 说明列表](description.md) | 标签／内容、原生集合与模板、宽窄布局、borderless、三档尺寸及属性／API／模型说明 |
 | [Timeline 时间线](timeline.md) | 事件历史、左右／交错布局、倒序、状态与自定义节点、可观察模型和模板 |
@@ -60,6 +64,10 @@ TheOne.Avalonia 为官方 Avalonia 控件提供主题与行为，并提供窗口
 | [Tag 与 VerificationStep](tag-verification-step.md) | 图标状态标签、模型属性自动表单与单步验证导航 |
 
 ComboBoxItem、ListBoxItem、TreeViewItem、TabItem、MenuItem、日历单元格和表格内部 Presenter 的样式由主题提供。动态集合优先绑定模型，由模板按需创建容器。
+
+PreviewHost 属性与模型说明只保留公开可写、支持 Binding / CompiledBinding 的本库成员；不以默认 TwoWay 为条件。只读运行状态、init-only 成员与内部字段不在预览属性区展示。筛选规则、延迟创建与桌面数据见[预览页性能与说明优化](preview-performance-20261020.md)。
+
+预览页底部不再提供整页源码展开框；短示例直接放在 Description，必要业务片段保留内联编辑器。已访问页面保留实例并隐藏非当前页，无说明内容的控件不预留空白占位；状态、焦点边界和返回性能见[完整浏览后的返回优化](preview-return-performance-20261020.md)。
 
 ## 示例约定
 

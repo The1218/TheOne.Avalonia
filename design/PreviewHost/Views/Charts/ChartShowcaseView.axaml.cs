@@ -7,6 +7,8 @@ namespace TheOne.DesignPreview;
 public partial class ChartShowcaseView : UserControl
 {
     private ChartDemoView? _interactiveDemo;
+    private readonly List<ChartBase> _samples = [];
+    private readonly List<int> _sampleStyles = [];
 
     public ChartShowcaseView()
     {
@@ -22,35 +24,45 @@ public partial class ChartShowcaseView : UserControl
     {
         Kind = kind;
         DataContext = PreviewPageCatalog.Controls.First(control => control.Title == $"{kind}Chart");
-        var samples = new List<ChartBase>();
+        IList<ChartPoint>[] points = kind == ChartKind.Gauge ? [] : ChartPreviewData.CreatePoints();
         for (var style = 0; style < (kind == ChartKind.Gauge ? Enum.GetValues<GaugeStyle>().Length : 3); style++)
         {
-            var chart = CreateSample(kind, style);
-            samples.Add(chart);
+            var capturedStyle = style;
+            Control CreateVariant()
+            {
+                var chart = CreateSample(kind, capturedStyle, points);
+                var insertion = ~_sampleStyles.BinarySearch(capturedStyle);
+                _sampleStyles.Insert(insertion, capturedStyle);
+                _samples.Insert(insertion, chart);
+                return chart;
+            }
             Variants.Children.Add(new StackPanel
             {
                 Classes = { "chart-variant" }, Margin = new Thickness(0, 0, 16, 16), Spacing = 8,
                 Children =
                 {
-                    chart
+                    style == 0 ? CreateVariant() : new PreviewDeferredContent(CreateVariant, keyboardEntry: true)
                 }
             });
         }
 
-        Samples = samples;
+        AnimationExample.Content = new PreviewDeferredContent(() =>
+        {
+            var animated = CreateSample(kind, 0, kind == ChartKind.Gauge ? [] : ChartPreviewData.CreatePoints());
+            animated.Title = "首次出现与数据更新";
+            return ChartAnimationShowcase.Create(animated);
+        }, 620, keyboardEntry: true);
     }
 
     public ChartKind Kind { get; }
-    public IReadOnlyList<ChartBase> Samples { get; private set; } = [];
+    public IReadOnlyList<ChartBase> Samples => _samples;
 
-    private static ChartBase CreateSample(ChartKind kind, int style)
+    private static ChartBase CreateSample(ChartKind kind, int style, IList<ChartPoint>[] points)
     {
         var chart = ChartControlFactory.CreateControl(kind);
-        var data = new ChartDemoViewModel();
-        data.StopObservingSeries();
-        chart.SeriesSource = style == 2 && kind is not (ChartKind.Pie or ChartKind.Doughnut or ChartKind.Gauge)
-            ? data.Series.Take(1).ToArray()
-            : data.Series;
+        if (kind != ChartKind.Gauge)
+            chart.SeriesSource = ChartPreviewData.CreateSeries(points,
+                style == 2 && kind is not (ChartKind.Pie or ChartKind.Doughnut));
         chart.Title = StyleTitle(kind, style);
         chart.IsAnimationEnabled = false;
         chart.ShowCrosshair = true;

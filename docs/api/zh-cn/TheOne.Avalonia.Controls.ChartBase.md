@@ -13,8 +13,9 @@ A native, AOT-safe chart. Data is drawn directly without creating item controls.
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
 | [`AccentBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L297) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 主序列／强调色画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L44) | `System.TimeSpan` | 可写; OneWay | `TimeSpan.FromMilliseconds(200)` | 数据过渡的持续时间；是否启用动画还受控件开关和 Motion.Enabled 约束。 校验：`value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
-| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L51) | `double` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L52) | `System.TimeSpan` | 可写; OneWay | `TimeSpan.FromMilliseconds(200)` | 数据过渡的持续时间；是否启用动画还受控件开关和 Motion.Enabled 约束。 校验：`value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
+| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | 可写; OneWay | `0 / default` | 首次非空展示 ; 后续数据变化 校验：`value => Enum.IsDefined(value)` 可选值：`Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
 | [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | 可写; OneWay | `12` | 8 ; 12 ; 16 校验：`value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
@@ -31,13 +32,13 @@ A native, AOT-safe chart. Data is drawn directly without creating item controls.
 | [`GridBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L285) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 绘图区网格线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
 | [`HoveredPoints`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L55) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.ChartSelection>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 | [`InnerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L207) | `double` | 可写; OneWay | `0.62` | 径向图内半径比例；控制中空区域，保留扇区数值和比例含义。 校验：`value => double.IsFinite(value) && value >= 0 && value < 1` |
-| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L50) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L38) | `bool` | 可写; OneWay | `true` | 启用该图表的数据过渡；全局 Motion.Enabled=False 时仍关闭动画。 |
+| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L65) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L46) | `bool` | 可写; OneWay | `true` | 启用该图表的数据过渡；全局 Motion.Enabled=False 时仍关闭动画。 |
 | [`IsLegendInteractive`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L27) | `bool` | 可写; OneWay | `true` | `True`，允许坐标图图例切换系列及键盘操作 |
 | [`IsPanEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L67) | `bool` | 可写; OneWay | `false` | 默认 `False`；启用鼠标左键拖动及键盘平移 |
 | [`IsSmooth`](../../../TheOne.Avalonia/Controls/ChartBase.Smoothing.cs#L12) | `bool` | 可写; OneWay | `false` | `False`，折线／普通面积的单调平滑路径 |
 | [`IsZoomEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L60) | `bool` | 可写; OneWay | `false` | 默认 `False`；启用滚轮及键盘缩放 |
-| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | 只读; CLR / n/a | `accessor-defined / state` | 所属字段、属性或元素的种类枚举；具体可选值见该枚举定义。 可选值：`Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea` |
+| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | 只读; CLR / n/a | `accessor-defined / state` | 所属字段、属性或元素的种类枚举；具体可选值见该枚举定义。 可选值：`Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
 | [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | 可写; OneWay | `3.5` | 3 ; 3.5 ; 4.25 校验：`value => double.IsFinite(value) && value > 0` |
@@ -103,10 +104,10 @@ A native, AOT-safe chart. Data is drawn directly without creating item controls.
 | [`void ChartBase.Pan(double horizontal, double vertical)`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L127) | Pan by fractions of the visible spans. Positive deltas move towards larger axis values/category indices. |
 | [`void ChartBase.ResetViewport()`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L143) | 恢复完整数据视图 |
 | [`bool ChartBase.BringDataPointIntoView(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L150) | Reveal a valid data mark without changing the current zoom. This explicit operation can move both axes. |
-| [`void ChartBase.RefreshData()`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L464) | Refresh a plain IList after modifying its contents. Use observable collections for automatic updates. |
-| [`Point? ChartBase.GetDataPointPosition(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L709) | The center of a visible mark in local coordinates; null for a missing or clipped point. |
-| [`ChartSelection? ChartBase.HitTestDataPoint(Point point)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L719) | Find the data mark under a local-coordinate pointer. |
-| [`override void ChartBase.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L728) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
+| [`void ChartBase.RefreshData()`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L474) | Refresh a plain IList after modifying its contents. Use observable collections for automatic updates. |
+| [`Point? ChartBase.GetDataPointPosition(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L725) | The center of a visible mark in local coordinates; null for a missing or clipped point. |
+| [`ChartSelection? ChartBase.HitTestDataPoint(Point point)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L735) | Find the data mark under a local-coordinate pointer. |
+| [`override void ChartBase.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L745) | Avalonia 绘制回调；使用提供的 DrawingContext 绘制当前状态，业务代码通常不直接调用。 |
 
 ## 事件
 
@@ -128,8 +129,9 @@ A native, AOT-safe chart. Data is drawn directly without creating item controls.
 | [`static readonly StyledProperty<bool> ChartBase.ShowSecondaryAxisProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Advanced.cs#L27) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 | [`static readonly StyledProperty<bool> ChartBase.IsAnimationEnabledProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L13) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 | [`static readonly StyledProperty<TimeSpan> ChartBase.AnimationDurationProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L16) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<ChartBase, bool> ChartBase.IsAnimatingProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L20) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
-| [`static readonly DirectProperty<ChartBase, double> ChartBase.AnimationProgressProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L23) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly StyledProperty<ChartAnimationStyle> ChartBase.AnimationStyleProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L20) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<ChartBase, bool> ChartBase.IsAnimatingProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L24) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
+| [`static readonly DirectProperty<ChartBase, double> ChartBase.AnimationProgressProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L27) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 | [`static readonly StyledProperty<bool> ChartBase.ShowGaugeNeedleProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L7) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 | [`static readonly StyledProperty<bool> ChartBase.ShowGaugeTicksProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L10) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
 | [`static readonly StyledProperty<int> ChartBase.GaugeMajorTickCountProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L13) | 公开标识符／常量；Property、Event 后缀字段分别用于原生 Avalonia 属性系统和路由事件，对应的 CLR 属性／事件见上文。 |
@@ -193,10 +195,15 @@ A native, AOT-safe chart. Data is drawn directly without creating item controls.
 
 尺寸、动效等所有控件通用配置见[统一主题说明](../../theme/zh-cn/README.md#shared-configuration)，PreviewHost 在 Home 统一演示。`one-*` 为模板维护类；伪类由实际输入与状态驱动，不手工赋值。
 
-没有额外公开外观类；通过公开属性和默认主题配置。
+| 类名 | 选择器 | Setter／资源 |
+| --- | --- | --- |
+| `animation-fade` | [`^.animation-fade`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L27) | ^.animation-fade => AnimationStyle=Fade |
+| `animation-none` | [`^.animation-none`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L33) | ^.animation-none => AnimationStyle=None |
+| `animation-reveal` | [`^.animation-reveal`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L30) | ^.animation-reveal => AnimationStyle=Reveal |
 
 ## 相关 API 与内置模型
 
+- [`TheOne.Avalonia.Controls.ChartAnimationStyle`](TheOne.Avalonia.Controls.ChartAnimationStyle.md)
 - [`TheOne.Avalonia.Controls.ChartKind`](TheOne.Avalonia.Controls.ChartKind.md)
 - [`TheOne.Avalonia.Controls.ChartNavigationAxes`](TheOne.Avalonia.Controls.ChartNavigationAxes.md)
 - [`TheOne.Avalonia.Controls.ChartSamplingMode`](TheOne.Avalonia.Controls.ChartSamplingMode.md)

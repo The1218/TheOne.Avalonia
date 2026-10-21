@@ -14,8 +14,6 @@
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets/**"/>
-        <EmbeddedResource Include="Views/**/*.axaml;Views/**/*.cs;ViewModels/**/*.cs"/>
-        <EmbeddedResource Include="Infrastructure/Printing/PreviewPrinting.cs"/>
         <EmbeddedResource Include="Reference/ControlContracts.json"/>
     </ItemGroup>
     <ItemGroup>

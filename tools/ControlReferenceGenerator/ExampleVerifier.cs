@@ -71,7 +71,8 @@ internal static class ExampleVerifier
         {
             "Undo" or "Redo" or "Remove" => ", WorkflowEditor editor",
             "MoveNodes" or "Edit" => ", WorkflowNode node",
-            "SetProperty" => ", WorkflowProperty property",
+            "SetProperty" or "SetSelectedKeys" => ", WorkflowProperty property",
+            "SetConnectionProperty" => ", WorkflowConnection connection, WorkflowProperty property",
             "GetReferenceOptions" => ", WorkflowNode targetNode, WorkflowProperty property",
             _ => ""
         }),

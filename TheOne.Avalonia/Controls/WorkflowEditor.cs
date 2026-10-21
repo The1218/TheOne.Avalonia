@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Templates;
 using Avalonia.Data;
@@ -15,6 +16,7 @@ using TheOne.Avalonia.Workflow;
 namespace TheOne.Avalonia.Controls;
 
 /// <summary>Template-based graph editing. Persistence, execution and business validation belong to the host.</summary>
+[PseudoClasses(":connection-properties")]
 public partial class WorkflowEditor : TemplatedControl
 {
     public static readonly StyledProperty<WorkflowDocument?> DocumentProperty =
@@ -58,6 +60,9 @@ public partial class WorkflowEditor : TemplatedControl
 
     public static readonly StyledProperty<IDataTemplate?> PropertyTemplateProperty =
         AvaloniaProperty.Register<WorkflowEditor, IDataTemplate?>(nameof(PropertyTemplate));
+
+    public static readonly StyledProperty<IDataTemplate?> ConnectionPropertyTemplateProperty =
+        AvaloniaProperty.Register<WorkflowEditor, IDataTemplate?>(nameof(ConnectionPropertyTemplate));
 
     public static readonly StyledProperty<IDataTemplate?> NodeDefinitionTemplateProperty =
         AvaloniaProperty.Register<WorkflowEditor, IDataTemplate?>(nameof(NodeDefinitionTemplate));
@@ -240,6 +245,13 @@ public partial class WorkflowEditor : TemplatedControl
         set => SetValue(PropertyTemplateProperty, value);
     }
 
+    /// <summary>Optional connection inspector; its data context is the original SelectedConnection.</summary>
+    public IDataTemplate? ConnectionPropertyTemplate
+    {
+        get => GetValue(ConnectionPropertyTemplateProperty);
+        set => SetValue(ConnectionPropertyTemplateProperty, value);
+    }
+
     public IDataTemplate? NodeDefinitionTemplate
     {
         get => GetValue(NodeDefinitionTemplateProperty);
@@ -357,6 +369,15 @@ public partial class WorkflowEditor : TemplatedControl
 
     /// <summary>Host can reject business-specific connections in addition to structural checks.</summary>
     public Func<WorkflowNode, WorkflowPort, WorkflowNode, WorkflowPort, string?>? ConnectionValidator { get; set; }
+
+    /// <summary>Creates connection metadata before its single history edit. Endpoints must match the requested ports; null rejects creation.</summary>
+    public Func<WorkflowNode, WorkflowPort, WorkflowNode, WorkflowPort, WorkflowConnection?>? ConnectionFactory { get; set; }
+
+    /// <summary>Optional host policy for adding and pasting nodes. A non-null message rejects that candidate.</summary>
+    public Func<WorkflowNode, string?>? NodeCreationValidator { get; set; }
+
+    /// <summary>Optional host policy for deletion. Rejected nodes are retained while other selected nodes may be removed.</summary>
+    public Func<WorkflowNode, string?>? NodeDeletionValidator { get; set; }
 
     internal Size ViewportSize => _canvas?.Bounds.Size ?? default;
     internal event EventHandler? CanvasLayoutChanged;
@@ -487,6 +508,8 @@ public partial class WorkflowEditor : TemplatedControl
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == SelectedConnectionProperty || change.Property == ConnectionPropertyTemplateProperty)
+            PseudoClasses.Set(":connection-properties", SelectedConnection != null && ConnectionPropertyTemplate != null);
         if (change.Property == ChoiceItemsSourceProperty || change.Property == ChoiceItemAdapterProperty) RefreshNodeEditor();
         if (change.Property == ShowNodeLibraryProperty || change.Property == ShowPropertiesProperty) UpdatePanelLayout();
         if (change.Property == NodeDefinitionsProperty) ObserveDefinitions();
@@ -576,6 +599,11 @@ public partial class WorkflowEditor : TemplatedControl
         var n = definition.CreateNode();
         if (n.TypeId != definition.TypeId)
             throw new InvalidOperationException("Factory TypeId must match its node definition.");
+        if (NodeCreationValidator?.Invoke(n) is { } rejection)
+        {
+            Report(rejection);
+            return null;
+        }
         n.X = Snap(position.X);
         n.Y = Snap(position.Y);
         Document.AddNode(n);
@@ -629,7 +657,22 @@ public partial class WorkflowEditor : TemplatedControl
             return false;
         }
 
-        var result = Document.TryConnect(sourceNode, sourcePort, targetNode, targetPort, out error, AllowCycles);
+        var source = Document.Nodes.First(node => node.Id == sourceNode);
+        var target = Document.Nodes.First(node => node.Id == targetNode);
+        var candidate = ConnectionFactory is { } factory
+            ? factory(source, source.Ports.First(port => port.Id == sourcePort), target,
+                target.Ports.First(port => port.Id == targetPort))
+            : new WorkflowConnection
+            {
+                SourceNodeId = sourceNode, SourcePortId = sourcePort, TargetNodeId = targetNode, TargetPortId = targetPort
+            };
+        if (candidate == null || candidate.SourceNodeId != sourceNode || candidate.SourcePortId != sourcePort ||
+            candidate.TargetNodeId != targetNode || candidate.TargetPortId != targetPort)
+        {
+            Report("连接工厂必须返回与请求端点一致的连线");
+            return false;
+        }
+        var result = Document.TryConnect(candidate, out error, AllowCycles);
         Report(result ? "已连接节点" : error!);
         return result;
     }
@@ -637,8 +680,16 @@ public partial class WorkflowEditor : TemplatedControl
     public void DeleteSelection()
     {
         if (IsReadOnly || Document is null) return;
-        Document.Remove(_selection.ToArray(), SelectedConnection);
+        string? rejection = null;
+        var nodes = _selection.Where(node =>
+        {
+            var error = NodeDeletionValidator?.Invoke(node);
+            rejection ??= error;
+            return error is null;
+        }).ToArray();
+        Document.Remove(nodes, SelectedConnection);
         SelectNode(null);
+        if (rejection != null) Report(rejection);
     }
 
     public void FitToView()
@@ -699,11 +750,36 @@ public partial class WorkflowEditor : TemplatedControl
         if (IsReadOnly || Document is null || _clipboard is null) return;
         var part = WorkflowSerializer.Load(_clipboard);
         var ids = part.Nodes.ToDictionary(n => n.Id, _ => Guid.NewGuid().ToString("N"));
-        var nodes = part.Nodes.Select(n => Clone(n, ids)).ToArray();
-        var edges = part.Connections.Select(c => new WorkflowConnection
+        string? rejection = null;
+        var candidates = part.Nodes.Select(n => Clone(n, ids)).ToArray();
+        var nodes = candidates.Where(node =>
         {
-            SourceNodeId = ids[c.SourceNodeId], SourcePortId = c.SourcePortId, TargetNodeId = ids[c.TargetNodeId],
-            TargetPortId = c.TargetPortId, Label = c.Label
+            var error = NodeCreationValidator?.Invoke(node);
+            rejection ??= error;
+            return error is null;
+        }).ToArray();
+        if (nodes.Length == 0)
+        {
+            if (rejection != null) Report(rejection);
+            return;
+        }
+        var accepted = nodes.Select(node => node.Id).ToHashSet(StringComparer.Ordinal);
+        var originals = ids.ToDictionary(pair => pair.Value, pair => pair.Key, StringComparer.Ordinal);
+        // A rejected node is external to the pasted subgraph; references retain its original identity.
+        foreach (var node in nodes)
+        foreach (var property in node.Properties)
+            if (property.Reference is { } reference && originals.TryGetValue(reference.NodeId, out var original) &&
+                !accepted.Contains(reference.NodeId)) property.Reference = reference with { NodeId = original };
+        ids = ids.Where(pair => accepted.Contains(pair.Value)).ToDictionary(pair => pair.Key, pair => pair.Value, StringComparer.Ordinal);
+        var edges = part.Connections.Where(connection => ids.ContainsKey(connection.SourceNodeId) && ids.ContainsKey(connection.TargetNodeId)).Select(c =>
+        {
+            var edge = new WorkflowConnection
+            {
+                SourceNodeId = ids[c.SourceNodeId], SourcePortId = c.SourcePortId, TargetNodeId = ids[c.TargetNodeId],
+                TargetPortId = c.TargetPortId, Label = c.Label
+            };
+            foreach (var property in c.Properties) edge.Properties.Add(CloneProperty(property, ids));
+            return edge;
         }).ToArray();
         Document.Edit("粘贴", () =>
         {
@@ -715,6 +791,7 @@ public partial class WorkflowEditor : TemplatedControl
             foreach (var n in nodes) Document.Nodes.Remove(n);
         });
         SelectMany(nodes);
+        if (rejection != null) Report(rejection);
     }
 
     private static WorkflowNode Clone(WorkflowNode source, Dictionary<string, string> ids)
@@ -727,17 +804,22 @@ public partial class WorkflowEditor : TemplatedControl
         };
         foreach (var p in source.Ports) n.Ports.Add(p);
         foreach (var p in source.Properties)
-        {
-            var property = new WorkflowProperty
-            {
-                Key = p.Key, Title = p.Title, Kind = p.Kind, DataType = p.DataType, IsRequired = p.IsRequired,
-                Value = p.Value,
-                Reference = p.Reference is { } r ? r with { NodeId = ids.GetValueOrDefault(r.NodeId, r.NodeId) } : null
-            };
-            foreach (var key in p.SelectedKeys) property.SelectedKeys.Add(key);
-            n.Properties.Add(property);
-        }
+            n.Properties.Add(CloneProperty(p, ids));
         return n;
+    }
+
+    /// <summary>深复制节点或连线字段；选中图内的引用重映射，图外引用继续保留原身份。</summary>
+    private static WorkflowProperty CloneProperty(WorkflowProperty source, Dictionary<string, string> ids)
+    {
+        var property = new WorkflowProperty
+        {
+            Key = source.Key, Title = source.Title, Kind = source.Kind, DataType = source.DataType,
+            IsRequired = source.IsRequired, Value = source.Value,
+            Reference = source.Reference is { } reference
+                ? reference with { NodeId = ids.GetValueOrDefault(reference.NodeId, reference.NodeId) } : null
+        };
+        foreach (var key in source.SelectedKeys) property.SelectedKeys.Add(key);
+        return property;
     }
 
     protected override void OnKeyDown(KeyEventArgs e)

@@ -19,7 +19,14 @@ public enum ChartKind
     StackedArea,
     PercentStackedBar,
     PercentStackedHorizontalBar,
-    PercentStackedArea
+    PercentStackedArea,
+    Heatmap,
+    Radar,
+    Funnel,
+    BoxPlot,
+    Candlestick,
+    Treemap,
+    Sunburst
 }
 
 public enum ChartYAxis
@@ -31,7 +38,7 @@ public enum ChartYAxis
 internal readonly record struct ChartRenderPoint(int Index, Point Position, Point Baseline);
 
 /// <summary>A mutable, observable data point. Non-finite coordinates are treated as gaps.</summary>
-public sealed class ChartPoint : AvaloniaObject
+public class ChartPoint : AvaloniaObject
 {
     public static readonly StyledProperty<double> XProperty = AvaloniaProperty.Register<ChartPoint, double>(nameof(X));
     public static readonly StyledProperty<double> YProperty = AvaloniaProperty.Register<ChartPoint, double>(nameof(Y));

@@ -27,7 +27,6 @@ internal sealed class QRCodeDemoView : UserControl
                 new DescriptionItem { Header = "Text", Content = text },
                 new DescriptionItem { Header = "ErrorCorrection", Content = level },
                 new DescriptionItem { Header = "QuietZone · 4–32 模块", Content = quiet },
-                new DescriptionItem { Header = "ValidationError · 只读", Content = error },
                 new DescriptionItem { Header = "属性示例", Content = new PreviewCodeBlock
                 {
                     Text = "<one:QRCode Text=\"{CompiledBinding QrText}\"\n    ErrorCorrection=\"Medium\" QuietZone=\"4\"\n    Width=\"192\" Height=\"192\" />"
@@ -38,7 +37,7 @@ internal sealed class QRCodeDemoView : UserControl
         {
             Spacing = 20, Children =
             {
-                PreviewSection.Create("QRCode · 文本、纠错与静区", new StackPanel { Spacing = 16, Children = { qr, properties } }),
+                PreviewSection.Create("QRCode · 文本、纠错与静区", new StackPanel { Spacing = 16, Children = { qr, error, properties } }),
                 PreviewSection.Create("ReportDesign · 静态文本与字段绑定", new Description
                 {
                     Items =

@@ -21,6 +21,7 @@ For adoption or migration in an external project, start with [integration and mi
 | [WorkflowEditor](workflow-editor.md) | Graph contracts, templates, business configuration, upstream references and JSON persistence |
 | [MessageBox](message-box.md) | Lightweight confirm/cancel dialogs, safe default focus, commands and boolean results |
 | [Upload](upload.md) | Single-file selection, image preview, replace/remove and host-owned upload commands |
+| [AttachmentList](attachment-list.md) | Multiple-file selection, collections, status/progress and host-owned upload, preview and removal |
 | [IconButton and button hierarchy](icon-button.md) | Icon properties, Geometry / PathIcon / Material templates, primary and secondary actions, semantic states |
 | [OneIcon built-in icons](one-icon.md) | 320 vectors in 20 categories including transport, commerce, education and weather; 32 filled variants and a virtualized gallery |
 | [Breadcrumb](breadcrumb.md) | Navigation paths, icons, custom separators, commands, compiled binding and keyboard focus |
@@ -44,7 +45,10 @@ For adoption or migration in an external project, start with [integration and mi
 | [Theme implementation](../../theme/en/README.md) | Resources, templates, animation, verification scope, implementation constraints |
 | [OneWindow and window services](windows.md) | Themed main window, ThemeButton, LeftContent, RightContent, static notification / Toast / dialog APIs |
 | [ThemeColorPicker / ThemeButton](../../theme/en/theme-color-picker.md) | Palette dropdown, independent Light / Dark icon toggle, PreviewHost code highlighting |
-| [Charts](charts.md) | Fourteen chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, smoothing, animation, PNG export, needle gauges |
+| [Charts](charts.md) | Twenty-one chart types, stacking, dual axes, sampling, viewport navigation, shared tooltips, legends, animation styles, PNG export, needle gauges |
+| [Heatmap / Radar / Funnel](chart-specialized.md) | Grid heatmaps, multidimensional radar and conversion funnels: added properties, models and examples |
+| [BoxPlot / Candlestick](chart-statistical.md) | Five-number summaries, outliers, OHLC, numeric viewports, models and update rules |
+| [Treemap / Sunburst](chart-hierarchy.md) | Hierarchy weights, Root navigation, stable identity, cycle guards, models and APIs |
 | [InfoCard](info-card.md) | Header, icons, actions, Content, Footer, hove / shadow, compiled templates, three sizes |
 | [Description](description.md) | Labels/content, native collections and templates, wide/narrow layout, borderless, three sizes and property/API/model descriptions |
 | [Timeline](timeline.md) | Event history, left/right/alternate layouts, reverse order, semantic/custom markers, observable models and templates |
@@ -60,6 +64,10 @@ For adoption or migration in an external project, start with [integration and mi
 | [Tag and VerificationStep](tag-verification-step.md) | Icon status tags, automatic forms from model properties, navigation with per-step validation |
 
 ComboBoxItem, ListBoxItem, TreeViewItem, TabItem, MenuItem, calendar cells, and internal DataGrid presenters receive their styles from the theme. Bind models for dynamic collections and let templates create containers on demand.
+
+PreviewHost property/model descriptions retain only public writable project members usable with Binding / CompiledBinding, irrespective of the default TwoWay mode. Read-only runtime state, init-only members and internal fields are omitted. See [preview presentation and desktop performance](preview-performance-20261020.md) for filtering, deferred creation and measurements.
+
+Pages no longer have a bottom full-source expander. Short snippets appear in Description entries, with inline editors retained for necessary business examples. Visited pages retain instances while inactive frames are hidden; controls without documentation do not reserve empty placeholders. See [return after a full browse](preview-return-performance-20261020.md) for state, focus boundaries and performance.
 
 ## Using the examples
 

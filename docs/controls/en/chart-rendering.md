@@ -8,21 +8,45 @@ See [charts](charts.md) for models and setup.
 
 ## Data update animation
 
+All 21 chart controls derived from `ChartBase` share the same animation settings, including Heatmap, Radar, Funnel, BoxPlot, Candlestick, Treemap and Sunburst. `AnimationStyle` is a validated `ChartAnimationStyle` enum; the default is `Auto`.
+
+| AnimationStyle | First nonempty presentation | Subsequent data changes |
+| --- | --- | --- |
+| `Auto` | Reveal the prepared plot from left to right | Compatible Cartesian frames interpolate coordinates; structural changes crossfade cached data layers. Pie / doughnut interpolate angles and gauges interpolate value, arc and needle. All specialized types, including the statistical and hierarchy charts, fade their prepared target plot. |
+| `None` | Immediate target frame | Immediate target frame |
+| `Fade` | Fade in the prepared plot | Fade in the prepared target plot |
+| `Reveal` | Reveal from left to right | Reveal the prepared target plot from left to right |
+
 ```xml
+<!-- The containing view declares x:DataType for the Revenue property. -->
 <one:LineChart IsSmooth="True"
            SeriesSource="{CompiledBinding Revenue}"
-           IsAnimationEnabled="True" AnimationDuration="0:0:0.2" />
+           AnimationStyle="Reveal" AnimationDuration="0:0:0.2" />
+
+<!-- Alternatively choose the same effect through a theme class. -->
+<one:LineChart SeriesSource="{CompiledBinding Revenue}"
+           Classes="animation-fade" />
 ```
 
-`IsAnimationEnabled` defaults to `True`; `AnimationDuration` is a `TimeSpan`, default 200 ms, accepting zero to 10 seconds. Mounted Cartesian charts interpolate data coordinates when original point identities / order are stable, or crossfade cached layers after structural changes. Pie / doughnut interpolate sector angles; gauges interpolate value, arcs, and needles. Axes, titles, and legends show target states directly. Continuous updates coalesce preparation without changing model values, source indices, selection, or viewport.
+The public animation classes are `animation-fade`, `animation-reveal` and `animation-none`. If several are present, precedence is **animation-none > animation-reveal > animation-fade**, independent of their order in `Classes`. An explicit local `AnimationStyle` value takes precedence over these class setters; remove the local value when classes should control the effect. No animation class means the default `Auto` behavior.
 
-If either data layer exceeds 6,000 prepared marks, updates are immediate to avoid rebuilding large geometry per frame. Charts beyond logical side 4,096 or area 4,194,304 also skip animation. Radial sectors match original indices; new sectors grow from zero, removed sectors disappear. Keep source order stable in business code if identities must persist across reordering.
+`IsAnimationEnabled` defaults to `True`; `AnimationDuration` is a `TimeSpan`, default 200 ms, accepting zero to 10 seconds. The first nonempty plot animates once, rather than replaying merely because the chart was detached and reattached. Geometry or legend queries before the first drawing prepare target coordinates without consuming this initial effect. In Cartesian `Auto` data transitions, axes show their target state immediately. Specialized `Auto` updates fade the complete prepared target plot, including their axes, just as `Fade` does; `Reveal` clips the prepared plot from left to right. Titles and legends remain stable. Continuous updates coalesce preparation without changing model values, original indices, sampling, hit testing, selection, or viewport. Radial sectors match original indices; new sectors grow from zero and removed sectors disappear in automatic data transitions. Keep source order stable in business code if identities must persist across reordering.
 
-Disabling `IsAnimationEnabled`, setting zero duration, or using `Motion.Enabled=False` immediately shows the target frame. Detaching stops animation. Size, style, viewport, and navigation changes apply directly. Read-only `IsAnimating` / `AnimationProgress` expose state; progress notifications dispatch on the UI thread instead of synchronously changing bindings while drawing.
+Animation is bounded to **6,000 prepared/rendered marks** across the chart, rather than 6,000 source rows or a separate budget per series. `Auto` also checks the old Cartesian/radial layer before capturing it. Larger layers show the target immediately. Charts with a logical side greater than **4,096**, or logical area greater than **4,194,304**, also skip motion. Sampling can reduce the rendered mark count; it does not make unrestricted source preparation free.
+
+`AnimationStyle=None`, `IsAnimationEnabled=False`, zero duration, `Motion.Enabled=False`, disabling or hiding the chart immediately completes an active animation to the target frame. Detaching stops callbacks and releases transient animation state; queued callbacks from old transitions cannot restart it. Changing animation style ends the current transition; the new choice applies to the next data change. Size, theme, style, viewport, and navigation changes apply directly. Read-only `IsAnimating` / `AnimationProgress` expose state; progress notifications dispatch on the UI thread instead of synchronously changing bindings while drawing.
 
 Hover overlays pause during animation. Pointer / keyboard input and geometry queries such as `GetDataPointPosition`, `HitTestDataPoint`, and `GetSharedDataPoints` first finish to target geometry, ensuring hits match display without changing selection. Disable update animation when business code needs per-frame coordinates.
 
-References for optional motion disabling: [Chart.js updates](https://www.chartjs.org/docs/latest/developers/updates.html). Data-layer transitions and stable export: [ECharts transitions](https://echarts.apache.org/handbook/en/how-to/animation/transition/).
+Animation reuses prepared geometry instead of rebuilding data subscriptions. Compatible Cartesian transitions allocate their source-point lookup, frame, point arrays and label anchors once per transition; ticks update coordinates in place. Multiple render passes at the same progress reuse their prepared paths. Labels retain the target layout and interpolate existing anchors, without repeating label collision placement every tick. Scatter text layouts retain the active interpolation frame. Pie / doughnut reuse the latest sector geometry and formatted label; cache size is bounded by the current sectors. Fade / Reveal reuse target geometry, and the animation-frame callback is created once per transition. This reduces repeated preparation and allocations; it does not eliminate the raster work of visible marks or claim a guaranteed frame time. PNG export always renders an independent **target-state** snapshot, regardless of the current animation progress.
+
+For the ECharts reference behavior, see [data transitions](https://echarts.apache.org/handbook/en/how-to/animation/transition/). Historical performance tables below retain their dates and original measurement conditions; they are not measurements of the new animation styles.
+
+## PreviewHost construction and visible content
+
+Each chart retains an independent page with labeled configuration variants. The first sample is created immediately; other variants, offscreen animation sections and highlighted code examples are created synchronously only when their reserved region intersects the actual viewport. Scrolling reveals every example; this does not replace the grid with a single selector or omit content. Temporary measurement estimates reserve space before creation; after creation, content uses its actual desired size without a forced placeholder height. Created content is reused on scrolling and reattachment.
+
+Small display-only samples no longer construct the interactive editor view model for each chart. Each static chart owns its series wrappers, so legend visibility remains independent; the animated example uses separate point models. The interactive editor is still created on explicit expansion. The first visible highlighted code editor retains its real creation/layout cost; deferring offscreen examples reduces unnecessary work, without promising to remove visible rendering costs or moving them to a Dispatcher callback.
 
 ## PNG export
 
@@ -228,7 +252,7 @@ The remaining avoidable work was preparation: copying the selected sample and co
 
 - An omitted selected point is an immutable one-point splice over the base sample. Count and source-index order remain identical, including synchronous sampling diagnostics and selection events. The renderer retains base positions plus source indices and inserts the selected marker at its original drawing position. It copies no base coordinate array when selection alone changes. Clearing selection restores the same base sample; gaps, equal extrema, soft-budget overflow and original hit buckets are unchanged.
 - Stable marker paint, drawing operations and the four axes/selected-ring/focus Pen slots are reused. Mutable pen brushes keep their normal native resource behavior. A changed color, opacity, radius, thickness, data source or mapping refreshes the appropriate state. Existing-sample selection can reuse all marker-operation instances; changing a pinned point replaces only its operation. Rasterization still draws all required ellipses in source order, preserving alpha overlap.
-- Axis and data-label TextLayout caches are bounded to 512 entries per frame, with explicit culture, typeface, size and flow direction. Data-label measurements also reuse cached metrics. Layouts are disposed on eviction, when an obsolete frame leaves the active animation, on detach, and in export's finally block. Current/active-animation frames retain their layouts; transient interpolation frames are released after drawing. Title/legend text retains its previous path.
+- Axis and data-label TextLayout caches are bounded to 512 entries per frame, with explicit culture, typeface, size and flow direction. Data-label measurements also reuse cached metrics. Layouts are disposed on eviction, when an obsolete frame leaves the active animation, on detach, and in export's finally block. Current frames, active animation sources and the reusable interpolation frame retain their layouts; obsolete interpolation frames are released. Title/legend text retains its previous path.
 - Cached marker capacity now uses about 20 bytes per slot (position and source index); extra selection state has constant size rather than a sample-sized copy. Text caches add bounded retained glyph resources and first-use shaping work. A 512-entry bound is not a byte limit for arbitrarily long labels. No bitmap cache, skipped circles or extra per-point controls are introduced.
 
 #### Selection measurement record (2026-10-18)
@@ -301,8 +325,9 @@ This section lists project-added control-specific properties, public Classes usa
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
 | [`AccentBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L297) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary-series/accent brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L44) | `System.TimeSpan` | writable; OneWay | `TimeSpan.FromMilliseconds(200)` | Duration of data transitions, also gated by the control animation switch and Motion.Enabled. Validation: `value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
-| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L51) | `double` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L52) | `System.TimeSpan` | writable; OneWay | `TimeSpan.FromMilliseconds(200)` | Duration of data transitions, also gated by the control animation switch and Motion.Enabled. Validation: `value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
+| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | writable; OneWay | `0 / default` | First nonempty presentation ; Subsequent data changes Validation: `value => Enum.IsDefined(value)` Values: `Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Background brush; use DynamicResource for theme-dependent surfaces. |
 | [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | writable; OneWay | `12` | 8 ; 12 ; 16 Validation: `value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
@@ -319,13 +344,13 @@ This section lists project-added control-specific properties, public Classes usa
 | [`GridBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L285) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Plot grid-line brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
 | [`HoveredPoints`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L55) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.ChartSelection>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 | [`InnerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L207) | `double` | writable; OneWay | `0.62` | Inner-radius ratio for radial charts, controlling the hole without changing sector values/proportions. Validation: `value => double.IsFinite(value) && value >= 0 && value < 1` |
-| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L50) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L38) | `bool` | writable; OneWay | `true` | Enables chart data transitions; global Motion.Enabled=False still disables them. |
+| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L65) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L46) | `bool` | writable; OneWay | `true` | Enables chart data transitions; global Motion.Enabled=False still disables them. |
 | [`IsLegendInteractive`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L27) | `bool` | writable; OneWay | `true` | `True`; Cartesian series toggling and legend keyboard input |
 | [`IsPanEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L67) | `bool` | writable; OneWay | `false` | Default `False`; enables left-pointer dragging / keyboard pan |
 | [`IsSmooth`](../../../TheOne.Avalonia/Controls/ChartBase.Smoothing.cs#L12) | `bool` | writable; OneWay | `false` | `False`; monotone smoothing for line / ordinary area |
 | [`IsZoomEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L60) | `bool` | writable; OneWay | `false` | Default `False`; enables wheel / keyboard zoom |
-| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | read-only; CLR / n/a | `accessor-defined / state` | Kind enum for the owning field/property/element; see its concrete enum for choices. Values: `Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea` |
+| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | read-only; CLR / n/a | `accessor-defined / state` | Kind enum for the owning field/property/element; see its concrete enum for choices. Values: `Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
 | [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | writable; OneWay | `3.5` | 3 ; 3.5 ; 4.25 Validation: `value => double.IsFinite(value) && value > 0` |
@@ -377,7 +402,7 @@ See [shared theme configuration](../../theme/en/README.md#shared-configuration) 
 
 ### Classes usage
 
-No added public appearance classes; use the default theme and control-specific properties.
+- `ChartBase`: `Classes="animation-fade"` / `Classes="animation-none"` / `Classes="animation-reveal"`
 These are individually supported public classes. Hover, pressed, disabled and selected states are control-owned; do not assign template classes manually. See the labeled PreviewHost examples for their appearance.
 
 ### Business APIs
@@ -415,7 +440,9 @@ Subscribe when needed and detach when the host is disposed. These are event entr
 
 | Model | Properties/enum values |
 | --- | ---: |
-| [`TheOne.Avalonia.Controls.ChartKind`](../../api/en/TheOne.Avalonia.Controls.ChartKind.md) | 14 |
+| [`TheOne.Avalonia.Controls.ChartAnimationStyle`](../../api/en/TheOne.Avalonia.Controls.ChartAnimationStyle.md) | 4 |
+| [`TheOne.Avalonia.Controls.ChartHierarchyNode`](../../api/en/TheOne.Avalonia.Controls.ChartHierarchyNode.md) | 3 |
+| [`TheOne.Avalonia.Controls.ChartKind`](../../api/en/TheOne.Avalonia.Controls.ChartKind.md) | 21 |
 | [`TheOne.Avalonia.Controls.ChartNavigationAxes`](../../api/en/TheOne.Avalonia.Controls.ChartNavigationAxes.md) | 4 |
 | [`TheOne.Avalonia.Controls.ChartPoint`](../../api/en/TheOne.Avalonia.Controls.ChartPoint.md) | 3 |
 | [`TheOne.Avalonia.Controls.ChartSamplingMode`](../../api/en/TheOne.Avalonia.Controls.ChartSamplingMode.md) | 2 |

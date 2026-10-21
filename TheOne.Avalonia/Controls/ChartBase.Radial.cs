@@ -8,6 +8,8 @@ public partial class ChartBase
     private readonly Dictionary<(int Series, int Index), double> _radialFractions = [];
     private readonly Dictionary<(int Series, int Index), RadialSector> _radialSectorLookup = [];
     private readonly List<RadialSector> _radialSectors = [];
+    private readonly Dictionary<(int Series, int Index), RadialDrawCache> _radialDrawCache = [];
+    private Pen? _radialSelectionPen;
     private Point _radialCenter;
     private double _radialInnerRadius;
     private double _radialOuterRadius;
@@ -31,6 +33,7 @@ public partial class ChartBase
 
     private protected void PrepareGaugeGeometry()
     {
+        ClearRadialDrawCache();
         _radialSectors.Clear();
         _radialSectorLookup.Clear();
         _radialFractions.Clear();
@@ -38,6 +41,7 @@ public partial class ChartBase
 
     private void BuildRadialSectors(Rect plot)
     {
+        ClearRadialDrawCache();
         _radialSectors.Clear();
         _radialSectorLookup.Clear();
         _radialFractions.Clear();
@@ -113,26 +117,32 @@ public partial class ChartBase
     private void DrawRadialSector(DrawingContext context, RadialSector sector)
     {
         var presentation = PresentSector(sector, true);
-        var geometry = AnnularSector(presentation.Center, presentation.Outer, presentation.Inner, presentation.Start,
-            presentation.Sweep);
-        Geometry fill = geometry;
-        if (HasRadialHole && _radialInnerRadius > 0)
-            fill = new CombinedGeometry
-            {
-                GeometryCombineMode = GeometryCombineMode.Exclude,
-                Geometry1 = geometry,
-                Geometry2 = new EllipseGeometry(new Rect(_radialCenter.X - _radialInnerRadius,
-                    _radialCenter.Y - _radialInnerRadius, _radialInnerRadius * 2, _radialInnerRadius * 2))
-            };
+        var key = (sector.Series, sector.Index);
+        if (!_radialDrawCache.TryGetValue(key, out var cached))
+            _radialDrawCache[key] = cached = new RadialDrawCache();
+        if (cached.Fill is null || cached.Presentation != presentation)
+        {
+            var geometry = AnnularSector(presentation.Center, presentation.Outer, presentation.Inner,
+                presentation.Start, presentation.Sweep);
+            cached.Fill = HasRadialHole && _radialInnerRadius > 0
+                ? new CombinedGeometry
+                {
+                    GeometryCombineMode = GeometryCombineMode.Exclude,
+                    Geometry1 = geometry,
+                    Geometry2 = new EllipseGeometry(new Rect(_radialCenter.X - _radialInnerRadius,
+                        _radialCenter.Y - _radialInnerRadius, _radialInnerRadius * 2, _radialInnerRadius * 2))
+                } : geometry;
+            cached.Presentation = presentation;
+        }
         var selected = Selection is { } selection && selection.SeriesIndex == sector.Series &&
                        selection.PointIndex == sector.Index;
         context.DrawGeometry(SeriesBrush(sector.Series, sector.Index),
-            selected ? new Pen(Background, SelectionThickness) : null, fill);
+            selected ? _radialSelectionPen ??= new Pen(Background, SelectionThickness) : null, cached.Fill);
         var markRadius = HasRadialHole ? (presentation.Outer + presentation.Inner) / 2 : presentation.Outer * 0.62;
         if (ShowDataLabels && presentation.Sweep * markRadius >= FontSize * 3 && presentation.Outer >= FontSize * 3)
         {
             var mark = RadialPoint(presentation.Center, markRadius, presentation.Start + presentation.Sweep / 2);
-            var text = Text($"{_radialFractions[(sector.Series, sector.Index)]:P0}", Background);
+            var text = cached.Label ??= Text($"{_radialFractions[key]:P0}", Background);
             var label = new Rect(mark.X - text.Width / 2, mark.Y - text.Height / 2, text.Width, text.Height);
             if (SectorContains(presentation, label.TopLeft) && SectorContains(presentation, label.TopRight) &&
                 SectorContains(presentation, label.BottomLeft) && SectorContains(presentation, label.BottomRight) &&
@@ -140,6 +150,12 @@ public partial class ChartBase
                 !IntersectsRadialHole(label, _radialCenter, _radialInnerRadius))
                 context.DrawText(text, label.TopLeft);
         }
+    }
+
+    private void ClearRadialDrawCache()
+    {
+        _radialDrawCache.Clear();
+        _radialSelectionPen = null;
     }
 
     private static bool IntersectsRadialHole(Rect bounds, Point center, double radius)
@@ -239,4 +255,11 @@ public partial class ChartBase
         double Inner,
         double Start,
         double Sweep);
+
+    private sealed class RadialDrawCache
+    {
+        public RadialPresentation Presentation { get; set; }
+        public Geometry? Fill { get; set; }
+        public FormattedText? Label { get; set; }
+    }
 }

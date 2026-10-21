@@ -24,6 +24,15 @@
         <Setter Property="SliceHoverOffset" Value="6" />
         <Setter Property="SliceHoverScale" Value="1.025" />
         <Setter Property="GaugeBandRatio" Value="0.18" />
+        <Style Selector="^.animation-fade">
+            <Setter Property="AnimationStyle" Value="Fade" />
+        </Style>
+        <Style Selector="^.animation-reveal">
+            <Setter Property="AnimationStyle" Value="Reveal" />
+        </Style>
+        <Style Selector="^.animation-none">
+            <Setter Property="AnimationStyle" Value="None" />
+        </Style>
         <Style Selector="^.one-small">
             <Setter Property="FontSize" Value="10" />
             <Setter Property="DefaultChartWidth" Value="320" />
@@ -53,6 +62,18 @@
         BasedOn="{StaticResource {x:Type one:ChartBase}}"
         TargetType="one:LineChart"
         x:Key="{x:Type one:LineChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:HeatmapChart"
+        x:Key="{x:Type one:HeatmapChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:RadarChart"
+        x:Key="{x:Type one:RadarChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:FunnelChart"
+        x:Key="{x:Type one:FunnelChart}" />
     <ControlTheme
         BasedOn="{StaticResource {x:Type one:ChartBase}}"
         TargetType="one:AreaChart"
@@ -141,4 +162,23 @@
         BasedOn="{StaticResource {x:Type one:ChartBase}}"
         TargetType="one:PercentStackedAreaChart"
         x:Key="{x:Type one:PercentStackedAreaChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:BoxPlotChart"
+        x:Key="{x:Type one:BoxPlotChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:CandlestickChart"
+        x:Key="{x:Type one:CandlestickChart}">
+        <Setter Property="UpBrush" Value="{DynamicResource One.Success}" />
+        <Setter Property="DownBrush" Value="{DynamicResource One.Danger}" />
+    </ControlTheme>
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:TreemapChart"
+        x:Key="{x:Type one:TreemapChart}" />
+    <ControlTheme
+        BasedOn="{StaticResource {x:Type one:ChartBase}}"
+        TargetType="one:SunburstChart"
+        x:Key="{x:Type one:SunburstChart}" />
 </ResourceDictionary>

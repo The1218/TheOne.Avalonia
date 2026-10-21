@@ -126,7 +126,12 @@ DialogOptions 为不可变 record；不传时每次创建默认配置，不共�
 public sealed class EditorViewModel : DialogContext
 {
     private string _name = "新资料";
-    public string Name { get => _name; set => SetProperty(ref _name, value); }
+    public string Name
+    {
+        get => _name;
+        set { if (SetProperty(ref _name, value)) OnPropertyChanged(nameof(Summary)); }
+    }
+    public string Summary => $"姓名：{Name}";
     // 在绑定的 SaveCommand / CancelCommand 中调用：
     public void Save() => RequestClose(OneDialogResult.Ok);
     public void Cancel() => RequestClose(OneDialogResult.Cancel);
@@ -134,6 +139,8 @@ public sealed class EditorViewModel : DialogContext
 ```
 
 RequestClose 会发布 CloseRequested 事件，协调器只关闭与此 VM 关联的请求；父页面 await 得到 OneDialogResult。该事件支持后台线程触发，排队中的 VM 也可以主动结束，不会创建其 View 或影响当前对话框。关闭按钮、可选蒙层点击返回 Closed；Escape 返回 Cancel；取消令牌取消 Task；宿主关闭返回 Closed。
+
+`SetProperty` 只在字段值变化时发布属性通知；派生 VM 使用受保护的 `OnPropertyChanged(nameof(Summary))` 通知计算属性或命令条件变化，无需重复声明 PropertyChanged 事件或依赖反射绑定。通知方法不切换线程，绑定状态应在 UI 上下文更新。需要强类型业务结果时保存在 VM 中，仅在 OneDialogResult.Ok 且接口已成功后读取；Cancel / Closed 不应触发保存成功分支。
 
 完成、取消或宿主关闭都会解绑关闭事件，同一个 VM 可顺序复用。为避免同一个关闭事件误关多个窗口，同一个 DialogContext 不允许同时用于多个请求；同时调用返回故障 Task。千条泛型请求验证仅创建当前显示的一个 View，其余只保留请求数据。PreviewHost「消息与对话框 → Dialog」中的自定义表单可切换标题、关闭按钮、蒙层及 Escape 选项，并通过编译绑定的内部保存／取消命令验证返回值。
 

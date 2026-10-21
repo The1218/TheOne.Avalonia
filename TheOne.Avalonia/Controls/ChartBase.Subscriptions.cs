@@ -78,6 +78,7 @@ public abstract partial class ChartBase
         {
             _dataObjects.Add(source, 1);
             source.PropertyChanged += OnDataObjectChanged;
+            OnChartDataObjectSubscribed(source);
         }
     }
 
@@ -89,12 +90,14 @@ public abstract partial class ChartBase
         {
             _dataObjects.Remove(source);
             source.PropertyChanged -= OnDataObjectChanged;
+            OnChartDataObjectUnsubscribed(source);
         }
     }
 
     private void OnDataObjectChanged(object? sender, AvaloniaPropertyChangedEventArgs args)
     {
         if (!_observing || sender is not AvaloniaObject source || !_dataObjects.ContainsKey(source)) return;
+        if (!ShouldProcessChartDataChange(args.Property)) return;
         if (source is ChartSeries && (args.Property == ChartSeries.IsVisibleProperty || args.Property == ChartSeries.YAxisProperty))
             _cartesianData = null;
         if (args.Property == ChartSeries.ItemsSourceProperty && source is ChartSeries series)
@@ -103,7 +106,11 @@ public abstract partial class ChartBase
             DataChanged();
             return;
         }
-        if (source is ChartPoint point && (args.Property == ChartPoint.XProperty || args.Property == ChartPoint.YProperty))
+        if (UsesCustomChartGeometry && source is ChartPoint)
+        {
+            MarkDataUpdate();
+        }
+        else if (source is ChartPoint point && (args.Property == ChartPoint.XProperty || args.Property == ChartPoint.YProperty))
         {
             if (!TryUpdateCartesianPoint(point, args.Property == ChartPoint.YProperty)) MarkDataUpdate();
         }

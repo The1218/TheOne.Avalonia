@@ -110,7 +110,7 @@ Tab follows native focus order. Left / Right and Home / End move focus between a
 
 Containers use native ItemsControl preparation and clearing; only built-in models receive additional property subscriptions. Remove, Replace, Move, Reset and ItemsSource replacement recalculate current/separator state and clear old model subscriptions, command parameters and state. A Control cannot be reused for multiple Headers or separators; use data templates to create separate visuals.
 
-PreviewHost → 导航与布局 → **Breadcrumb** demonstrates ancestor navigation, path restoration, icons, text/icon/hidden separators, disabled items and compiled custom templates. Description components explain the added properties, event and model; the source panel exposes examples.
+PreviewHost → 导航与布局 → **Breadcrumb** demonstrates ancestor navigation, path restoration, icons, text/icon/hidden separators, disabled items and compiled custom templates. Description components directly explain the added properties, event and model with short examples.
 
 Focused validation covers Breadcrumb, its containers/model and direct preview bindings only. Runtime and platform coverage are reported with delivery.
 

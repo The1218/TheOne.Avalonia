@@ -147,13 +147,14 @@ public partial class ChartBase
 
         BuildGeometry(null);
         var inPlot = !IsRadial && !_geometryDirty && _cartesianPlot.Width > 0 && _cartesianPlot.Contains(point);
-        var hit = TooltipMode == ChartTooltipMode.Shared && !IsRadial ? null : HitTestDataPoint(point);
-        var entries = TooltipMode == ChartTooltipMode.Shared && !IsRadial
+        var shared = TooltipMode == ChartTooltipMode.Shared && !IsRadial && !UsesCustomChartGeometry;
+        var hit = shared ? null : HitTestDataPoint(point);
+        var entries = shared
             ? GetSharedDataPoints(point)
             : hit is null
                 ? Array.Empty<ChartSelection>()
                 : Array.AsReadOnly(new[] { hit });
-        if (!inPlot && TooltipMode == ChartTooltipMode.Shared && !IsRadial && HitTestDataPoint(point) is { } edge &&
+        if (!inPlot && shared && HitTestDataPoint(point) is { } edge &&
             _positions.TryGetValue((edge.SeriesIndex, edge.PointIndex), out var anchor))
             entries = GetSharedDataPoints(anchor);
         var generation = ++_interactionGeneration;
@@ -186,7 +187,7 @@ public partial class ChartBase
 
     private string SharedTooltip(IReadOnlyList<ChartSelection> entries)
     {
-        if (TooltipMode == ChartTooltipMode.Single || IsRadial) return Describe(entries[0]);
+        if (TooltipMode == ChartTooltipMode.Single || IsRadial || UsesCustomChartGeometry) return Describe(entries[0]);
         var lines = entries.Take(12).Select(entry => Describe(entry, true)).ToList();
         if (entries.Count > 12) lines.Add($"+{entries.Count - 12} 系列");
         return string.Join(Environment.NewLine, lines);
@@ -231,7 +232,7 @@ public partial class ChartBase
 
     private void DrawPointerOverlay(DrawingContext context)
     {
-        if (_geometryDirty || !IsEffectivelyEnabled || IsAnimating || IsRadial) return;
+        if (_geometryDirty || !IsEffectivelyEnabled || IsAnimating || IsRadial || UsesCustomChartGeometry) return;
         using var clip = context.PushClip(CartesianDataClip);
         var currentHover = _hoverGeometryVersion == _geometryVersion;
         if (currentHover && ShowCrosshair && !IsRadial && CrosshairPosition is { } pointer &&

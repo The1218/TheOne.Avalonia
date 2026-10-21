@@ -212,7 +212,23 @@ public sealed class WorkflowNode : WorkflowObservable
 
 public sealed class WorkflowConnection : WorkflowObservable
 {
+    private readonly HashSet<WorkflowProperty> _observed = [];
     private string _label = "";
+
+    /// <summary>跟踪连线业务字段；字段变化与节点编辑共用文档修订和撤销边界。</summary>
+    public WorkflowConnection()
+    {
+        Properties.CollectionChanged += (_, _) =>
+        {
+            foreach (var property in _observed) property.PropertyChanged -= PropertyChangedInProperty;
+            _observed.Clear();
+            foreach (var property in Properties)
+                if (_observed.Add(property))
+                    property.PropertyChanged += PropertyChangedInProperty;
+            Notify(nameof(Properties));
+        };
+    }
+
     public string Id { get; init; } = Guid.NewGuid().ToString("N");
     public string SourceNodeId { get; init; } = "";
     public string SourcePortId { get; init; } = "";
@@ -223,6 +239,15 @@ public sealed class WorkflowConnection : WorkflowObservable
     {
         get => _label;
         set => Set(ref _label, value ?? "");
+    }
+
+    /// <summary>宿主定义的可持久化字段，例如分支类型、表达式和优先级；不从显示标签推断业务语义。</summary>
+    public ObservableCollection<WorkflowProperty> Properties { get; } = [];
+
+    /// <summary>将字段变化转发给文档，移除字段时解除订阅。</summary>
+    private void PropertyChangedInProperty(object? sender, PropertyChangedEventArgs e)
+    {
+        Notify(nameof(Properties));
     }
 }
 

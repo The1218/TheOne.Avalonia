@@ -20,7 +20,7 @@
                                 SelectedKeys="{CompiledBinding IndependentKeys, Mode=TwoWay}" MaxVisibleTags="1" AutomationProperties.Name="独立选择团队" />
                 <one:Description LabelWidth="110">
                     <one:DescriptionItem Header="额外属性" Content="IsMultiSelect=&quot;True&quot; CheckMode=&quot;Independent&quot; MaxVisibleTags=&quot;1&quot;：父子独立勾选；其余选择折叠为 +N，已选禁用项不能移除。" />
-                    <one:DescriptionItem Header="多选绑定" Content="SelectedKeys=&quot;{CompiledBinding IndependentKeys, Mode=TwoWay}&quot;；SelectedItems 只读返回当前模型，保存配置使用 Key。" />
+                    <one:DescriptionItem Header="多选绑定" Content="SelectedKeys=&quot;{CompiledBinding IndependentKeys, Mode=TwoWay}&quot;；保存配置使用业务 Key。" />
                 </one:Description>
             </StackPanel>
         </one:InfoCard>
@@ -56,7 +56,7 @@
                 <one:TreeSelect Name="LargeSample" IsMultiSelect="True" ItemsSource="{CompiledBinding LargeNodes}" />
                 <one:Description LabelWidth="110">
                     <one:DescriptionItem Header="业务 API" Content="tree.SetExpanded(&quot;large-root&quot;, true); tree.OpenDropDown(); tree.CloseDropDown(); tree.ToggleItem(model); tree.ClearSelection(); tree.RefreshItems();" />
-                    <one:DescriptionItem Header="搜索 / 状态" Content="SearchText 支持绑定；IsReadOnly 允许浏览但锁定编辑；IsDropDownOpen 支持双向绑定。MaxDropDownHeight 限定列表视口。ValidationError 报告重复 Key、循环或重复模型引用。" />
+                    <one:DescriptionItem Header="SearchText / IsReadOnly / IsDropDownOpen" Content="SearchText 支持绑定；IsReadOnly 允许浏览但锁定编辑；IsDropDownOpen 支持双向绑定。MaxDropDownHeight 限定列表视口。" />
                     <one:DescriptionItem Header="键盘" Content="Enter / Space / ↓ 打开；搜索中 ↓ 进入列表；列表 ↑↓ 移动，←→ 折叠/展开，Enter / Space 选择；Esc 关闭返回焦点，Tab 离开。" />
                 </one:Description>
             </StackPanel>

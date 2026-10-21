@@ -9,6 +9,8 @@ namespace TheOne.DesignPreview;
 /// <summary>A bounded, selectable code example using the standalone editor package.</summary>
 public sealed class PreviewCodeBlock : UserControl
 {
+    private readonly PreviewDeferredContent _content;
+    private PreviewCodeEditor? _editor;
     public static readonly StyledProperty<string?> TextProperty =
         AvaloniaProperty.Register<PreviewCodeBlock, string?>(nameof(Text));
 
@@ -17,10 +19,28 @@ public sealed class PreviewCodeBlock : UserControl
 
     public PreviewCodeBlock()
     {
-        Content = Editor;
+        Content = _content = new PreviewDeferredContent(EnsureEditor, 108, keyboardEntry: true);
+        AttachedToVisualTree += (_, _) => Refresh();
+        PropertyChanged += (_, args) =>
+        {
+            if (args.Property == ControlSizing.SizeProperty) Refresh();
+        };
+        Refresh();
+    }
+
+    private PreviewCodeEditor EnsureEditor()
+    {
+        if (_editor is { } existing) return existing;
+        _editor = new PreviewCodeEditor
+        {
+            IsReadOnly = true, WordWrap = true, ShowCopyButton = true, ShowFormatButton = false,
+            ShowStatusBar = false, IsCompletionEnabled = false, IsInlineCompletionEnabled = false,
+            IsDiagnosticsEnabled = false, IsSemanticHighlightingEnabled = false,
+            IsCurrentLineHighlighted = false, MinHeight = 100
+        };
         var resources = new CodeResourceCache(this);
-        ((PreviewCodeEditor)Editor).ColorResources = resources;
-        Editor.Resources.MergedDictionaries.Add(resources);
+        _editor.ColorResources = resources;
+        _editor.Resources.MergedDictionaries.Add(resources);
         ResourcesChanged += (_, args) =>
         {
             resources.Refresh(args);
@@ -28,12 +48,9 @@ public sealed class PreviewCodeBlock : UserControl
             UpdateEditorBackground();
         };
         ActualThemeVariantChanged += (_, _) => UpdateEditorBackground();
-        AttachedToVisualTree += (_, _) => Refresh();
-        PropertyChanged += (_, args) =>
-        {
-            if (args.Property == ControlSizing.SizeProperty) Refresh();
-        };
+        UpdateEditorBackground();
         Refresh();
+        return _editor;
     }
 
     public string? Text
@@ -48,20 +65,14 @@ public sealed class PreviewCodeBlock : UserControl
         set => SetValue(CodeTypeProperty, value);
     }
 
-    public CodeEditor Editor { get; } = new PreviewCodeEditor
-    {
-        IsReadOnly = true, WordWrap = true, ShowCopyButton = true, ShowFormatButton = false,
-        ShowStatusBar = false, IsCompletionEnabled = false, IsInlineCompletionEnabled = false,
-        IsDiagnosticsEnabled = false, IsSemanticHighlightingEnabled = false,
-        IsCurrentLineHighlighted = false, MinHeight = 100
-    };
+    public CodeEditor Editor => EnsureEditor();
 
-    internal int EditorPaletteRefreshes => ((PreviewCodeEditor)Editor).PaletteRefreshes;
+    internal int EditorPaletteRefreshes => _editor?.PaletteRefreshes ?? 0;
 
     private void UpdateEditorBackground()
     {
-        if (this.TryFindResource("One.Surface", ActualThemeVariant, out var value))
-            Editor.SetValue(BackgroundProperty, value);
+        if (_editor is { } editor && this.TryFindResource("One.Surface", ActualThemeVariant, out var value))
+            editor.SetValue(BackgroundProperty, value);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -72,17 +83,19 @@ public sealed class PreviewCodeBlock : UserControl
 
     private void Refresh()
     {
-        if (Editor is null) return;
-        Editor.Text = Text ?? "";
-        Editor.CodeType = CodeType;
         var size = ControlSizing.GetSize(this);
-        Editor.Density = size switch
+        var height = Math.Clamp((Text?.Count(c => c == '\n') + 1 ?? 1) * (size == ControlSize.Large ? 24 : 21) + 62,
+            108, 350);
+        if (_content is not null) _content.EstimatedHeight = height;
+        if (_editor is not { } editor) return;
+        editor.CodeType = CodeType;
+        editor.Text = Text ?? "";
+        editor.Density = size switch
         {
             ControlSize.Small => CodeEditorDensity.Small, ControlSize.Large => CodeEditorDensity.Large,
             _ => CodeEditorDensity.Normal
         };
-        Editor.Height = Math.Clamp((Text?.Count(c => c == '\n') + 1 ?? 1) * (size == ControlSize.Large ? 24 : 21) + 62,
-            108, 350);
+        editor.Height = height;
     }
 
     // The package observes each editor color separately and resets text layouts for every notification.

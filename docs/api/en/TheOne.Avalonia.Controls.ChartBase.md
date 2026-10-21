@@ -13,8 +13,9 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
 | [`AccentBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L297) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Primary-series/accent brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L44) | `System.TimeSpan` | writable; OneWay | `TimeSpan.FromMilliseconds(200)` | Duration of data transitions, also gated by the control animation switch and Motion.Enabled. Validation: `value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
-| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L51) | `double` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L52) | `System.TimeSpan` | writable; OneWay | `TimeSpan.FromMilliseconds(200)` | Duration of data transitions, also gated by the control animation switch and Motion.Enabled. Validation: `value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
+| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | writable; OneWay | `0 / default` | First nonempty presentation ; Subsequent data changes Validation: `value => Enum.IsDefined(value)` Values: `Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Background brush; use DynamicResource for theme-dependent surfaces. |
 | [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | writable; OneWay | `12` | 8 ; 12 ; 16 Validation: `value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
@@ -31,13 +32,13 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | [`GridBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L285) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Plot grid-line brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
 | [`HoveredPoints`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L55) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.ChartSelection>` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 | [`InnerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L207) | `double` | writable; OneWay | `0.62` | Inner-radius ratio for radial charts, controlling the hole without changing sector values/proportions. Validation: `value => double.IsFinite(value) && value >= 0 && value < 1` |
-| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L50) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
-| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L38) | `bool` | writable; OneWay | `true` | Enables chart data transitions; global Motion.Enabled=False still disables them. |
+| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L65) | `bool` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
+| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L46) | `bool` | writable; OneWay | `true` | Enables chart data transitions; global Motion.Enabled=False still disables them. |
 | [`IsLegendInteractive`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L27) | `bool` | writable; OneWay | `true` | `True`; Cartesian series toggling and legend keyboard input |
 | [`IsPanEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L67) | `bool` | writable; OneWay | `false` | Default `False`; enables left-pointer dragging / keyboard pan |
 | [`IsSmooth`](../../../TheOne.Avalonia/Controls/ChartBase.Smoothing.cs#L12) | `bool` | writable; OneWay | `false` | `False`; monotone smoothing for line / ordinary area |
 | [`IsZoomEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L60) | `bool` | writable; OneWay | `false` | Default `False`; enables wheel / keyboard zoom |
-| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | read-only; CLR / n/a | `accessor-defined / state` | Kind enum for the owning field/property/element; see its concrete enum for choices. Values: `Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea` |
+| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | read-only; CLR / n/a | `accessor-defined / state` | Kind enum for the owning field/property/element; see its concrete enum for choices. Values: `Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
 | [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | writable; OneWay | `3.5` | 3 ; 3.5 ; 4.25 Validation: `value => double.IsFinite(value) && value > 0` |
@@ -103,10 +104,10 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | [`void ChartBase.Pan(double horizontal, double vertical)`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L127) | Pan by fractions of the visible spans. Positive deltas move towards larger axis values/category indices. |
 | [`void ChartBase.ResetViewport()`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L143) | Restores full data view |
 | [`bool ChartBase.BringDataPointIntoView(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L150) | Reveal a valid data mark without changing the current zoom. This explicit operation can move both axes. |
-| [`void ChartBase.RefreshData()`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L464) | Refresh a plain IList after modifying its contents. Use observable collections for automatic updates. |
-| [`Point? ChartBase.GetDataPointPosition(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L709) | The center of a visible mark in local coordinates; null for a missing or clipped point. |
-| [`ChartSelection? ChartBase.HitTestDataPoint(Point point)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L719) | Find the data mark under a local-coordinate pointer. |
-| [`override void ChartBase.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L728) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
+| [`void ChartBase.RefreshData()`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L474) | Refresh a plain IList after modifying its contents. Use observable collections for automatic updates. |
+| [`Point? ChartBase.GetDataPointPosition(int seriesIndex, int pointIndex)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L725) | The center of a visible mark in local coordinates; null for a missing or clipped point. |
+| [`ChartSelection? ChartBase.HitTestDataPoint(Point point)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L735) | Find the data mark under a local-coordinate pointer. |
+| [`override void ChartBase.Render(DrawingContext context)`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L745) | Avalonia drawing callback using the supplied DrawingContext; business code normally does not call it directly. |
 
 ## Events
 
@@ -128,8 +129,9 @@ Defaults below are source registration/model initialization values; OneTheme sty
 | [`static readonly StyledProperty<bool> ChartBase.ShowSecondaryAxisProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Advanced.cs#L27) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 | [`static readonly StyledProperty<bool> ChartBase.IsAnimationEnabledProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L13) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 | [`static readonly StyledProperty<TimeSpan> ChartBase.AnimationDurationProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L16) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<ChartBase, bool> ChartBase.IsAnimatingProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L20) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly DirectProperty<ChartBase, double> ChartBase.AnimationProgressProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L23) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<ChartAnimationStyle> ChartBase.AnimationStyleProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L20) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<ChartBase, bool> ChartBase.IsAnimatingProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L24) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly DirectProperty<ChartBase, double> ChartBase.AnimationProgressProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L27) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 | [`static readonly StyledProperty<bool> ChartBase.ShowGaugeNeedleProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L7) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 | [`static readonly StyledProperty<bool> ChartBase.ShowGaugeTicksProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L10) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 | [`static readonly StyledProperty<int> ChartBase.GaugeMajorTickCountProperty`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L13) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
@@ -193,10 +195,15 @@ Defaults below are source registration/model initialization values; OneTheme sty
 
 See [shared theme configuration](../../theme/en/README.md#shared-configuration) for common sizing and motion settings, demonstrated centrally on PreviewHost Home. `one-*` classes are template-owned; pseudoclasses follow real input/state rather than manual assignment.
 
-No additional public appearance classes; configure public properties and the default theme.
+| Class | Selector | Setters/resources |
+| --- | --- | --- |
+| `animation-fade` | [`^.animation-fade`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L27) | ^.animation-fade => AnimationStyle=Fade |
+| `animation-none` | [`^.animation-none`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L33) | ^.animation-none => AnimationStyle=None |
+| `animation-reveal` | [`^.animation-reveal`](../../../TheOne.Avalonia/Themes/Controls/Chart.axaml#L30) | ^.animation-reveal => AnimationStyle=Reveal |
 
 ## Related APIs and built-in models
 
+- [`TheOne.Avalonia.Controls.ChartAnimationStyle`](TheOne.Avalonia.Controls.ChartAnimationStyle.md)
 - [`TheOne.Avalonia.Controls.ChartKind`](TheOne.Avalonia.Controls.ChartKind.md)
 - [`TheOne.Avalonia.Controls.ChartNavigationAxes`](TheOne.Avalonia.Controls.ChartNavigationAxes.md)
 - [`TheOne.Avalonia.Controls.ChartSamplingMode`](TheOne.Avalonia.Controls.ChartSamplingMode.md)

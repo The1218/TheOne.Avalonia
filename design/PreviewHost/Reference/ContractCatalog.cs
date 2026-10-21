@@ -74,8 +74,15 @@ internal static class ContractCatalog
 
     internal static IEnumerable<PropertyContract> ControlProperties(TypeContract owner)
     {
-        return owner.Properties.Where(property => !owner.IsControl || !NativeAppearance.Contains(property.Name));
+        return BindableProperties(owner).Where(property =>
+            (!owner.IsControl || property.Identifier.Length > 0) &&
+            !NativeAppearance.Contains(property.Name));
     }
+
+    internal static IEnumerable<PropertyContract> BindableProperties(TypeContract owner) => owner.Properties.Where(property =>
+        property.Writable && (!property.Static || property.Attached) &&
+        !property.Binding.Contains("init-only", StringComparison.Ordinal) &&
+        (owner.Namespace.StartsWith("TheOne.Avalonia", StringComparison.Ordinal) || property.Identifier.Length > 0));
 
     internal static string MethodName(MemberContract member)
     {

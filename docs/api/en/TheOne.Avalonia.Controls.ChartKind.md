@@ -34,3 +34,10 @@ No additional CLR/attached properties are declared on this type; see its base fo
 | [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L20) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
 | [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L21) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
 | [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L22) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Heatmap = 14`](../../../TheOne.Avalonia/Controls/ChartData.cs#L23) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Radar = 15`](../../../TheOne.Avalonia/Controls/ChartData.cs#L24) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Funnel = 16`](../../../TheOne.Avalonia/Controls/ChartData.cs#L25) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`BoxPlot = 17`](../../../TheOne.Avalonia/Controls/ChartData.cs#L26) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Candlestick = 18`](../../../TheOne.Avalonia/Controls/ChartData.cs#L27) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Treemap = 19`](../../../TheOne.Avalonia/Controls/ChartData.cs#L28) | Enum member and underlying value; persist against the matching version rather than renumbering values. |
+| [`Sunburst = 20`](../../../TheOne.Avalonia/Controls/ChartData.cs#L29) | Enum member and underlying value; persist against the matching version rather than renumbering values. |

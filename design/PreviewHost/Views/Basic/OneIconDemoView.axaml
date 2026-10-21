@@ -86,8 +86,6 @@
                 <one:DescriptionItem Header="Variant" Content="Variant=&quot;Filled&quot;：32 个图标提供实心几何，其余明确回退 Outline；实心几何首次使用时解析并缓存。" />
                 <one:DescriptionItem Header="IconSize" Content="IconSize=&quot;20&quot;；默认随 small / normal / large 使用 16 / 20 / 24 DIP，可显式覆盖。" />
                 <one:DescriptionItem Header="StrokeThickness" Content="StrokeThickness=&quot;1.75&quot;；24 单位设计网格中的线宽，范围 (0, 3]，随图标等比缩放。" />
-                <one:DescriptionItem Header="目录与 Model" Content="OneIconCatalog.All；OneIconCatalog.Get(OneIconKind.Search) 返回 OneIconInfo：Kind / Category / Name / DisplayName / HasFilledVariant。" />
-                <one:DescriptionItem Header="语义与动画" Content="Tabs 为标签条，Role 为身份卡；日期前后带日历；Parallel 为分叉栅栏，Merge 为汇聚箭头。Loading 为静态图标；不内置计时器。纯图标按钮请在宿主设置 AutomationProperties.Name。" />
             </one:Description>
         </one:InfoCard>
     </StackPanel>

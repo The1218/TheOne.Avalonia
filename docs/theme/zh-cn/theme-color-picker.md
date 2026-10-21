@@ -98,7 +98,7 @@ ThemeButton 现在继承 ToggleButton，不显示文本，只显示一个内置�
 
 ## PreviewHost 与验证
 
-PreviewHost 启动默认打开独立一级菜单 Home；顶部 ThemeColorPicker 选择配色，标题栏 ThemeButton 仅切换明暗。Home 代码片段使用 NuGet 包 `TheOne.Avalonia.CodeEditor` 的只读高亮、换行和复制功能。每页底部可展开源码区，切换对应 AXAML、C# 及相关 VM 文件；源码嵌入应用，无需本机仓库路径。源码面板按需加载并使用有界视口。
+PreviewHost 启动默认打开独立一级菜单 Home；顶部 ThemeColorPicker 选择配色，标题栏 ThemeButton 仅切换明暗。Home 及必要的内联代码片段使用 NuGet 包 `TheOne.Avalonia.CodeEditor` 的只读高亮、换行和复制功能。属性、业务 API 的短示例直接位于对应 Description 中；每页底部不再提供源码展开框，也不再嵌入整套演示源码文件。
 
 专项范围为配色选择器、ThemeButton、代码面板及 Home 导航，检查原生键鼠、资源实时更新、明暗／尺寸／窄视口与实际绘制。不会触发其他控件的全量回归。
 

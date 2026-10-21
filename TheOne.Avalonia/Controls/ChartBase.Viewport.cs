@@ -110,7 +110,7 @@ public partial class ChartBase
         var center = anchor ?? new Point(0.5, 0.5);
         if (!double.IsFinite(center.X) || !double.IsFinite(center.Y))
             throw new ArgumentOutOfRangeException(nameof(anchor));
-        if (IsRadial) return;
+        if (!SupportsViewportNavigation) return;
         center = new Point(Math.Clamp(center.X, 0, 1), Math.Clamp(center.Y, 0, 1));
         var old = Viewport;
         var width = NavigationAxes.HasFlag(ChartNavigationAxes.Horizontal)
@@ -128,7 +128,7 @@ public partial class ChartBase
     {
         if (!double.IsFinite(horizontal)) throw new ArgumentOutOfRangeException(nameof(horizontal));
         if (!double.IsFinite(vertical)) throw new ArgumentOutOfRangeException(nameof(vertical));
-        if (IsRadial) return;
+        if (!SupportsViewportNavigation) return;
         var old = Viewport;
         // Clamp the step before multiplication so even extreme finite API arguments remain safe.
         var x = NavigationAxes.HasFlag(ChartNavigationAxes.Horizontal)
@@ -149,7 +149,7 @@ public partial class ChartBase
     /// <summary>Reveal a valid data mark without changing the current zoom. This explicit operation can move both axes.</summary>
     public bool BringDataPointIntoView(int seriesIndex, int pointIndex)
     {
-        if (IsRadial || GetSelection(seriesIndex, pointIndex) is null) return false;
+        if (!SupportsViewportNavigation || GetSelection(seriesIndex, pointIndex) is null) return false;
         BuildGeometry(null);
         if (!_normalizedPositions.TryGetValue((seriesIndex, pointIndex), out var point) || !double.IsFinite(point.X) ||
             !double.IsFinite(point.Y) || point.X < 0 || point.X > 1 || point.Y < 0 || point.Y > 1) return false;
@@ -182,7 +182,7 @@ public partial class ChartBase
 
     private bool BeginPan(PointerPressedEventArgs e)
     {
-        if (!IsPanEnabled || !IsEffectivelyEnabled || IsRadial || NavigationAxes == ChartNavigationAxes.None)
+        if (!IsPanEnabled || !IsEffectivelyEnabled || !SupportsViewportNavigation || NavigationAxes == ChartNavigationAxes.None)
             return false;
         BuildGeometry(null);
         var pointer = e.GetPosition(this);
@@ -247,7 +247,7 @@ public partial class ChartBase
     protected override void OnPointerWheelChanged(PointerWheelEventArgs e)
     {
         base.OnPointerWheelChanged(e);
-        if (!IsZoomEnabled || !IsEffectivelyEnabled || IsRadial || NavigationAxes == ChartNavigationAxes.None ||
+        if (!IsZoomEnabled || !IsEffectivelyEnabled || !SupportsViewportNavigation || NavigationAxes == ChartNavigationAxes.None ||
             !double.IsFinite(e.Delta.Y) || e.Delta.Y == 0) return;
         BuildGeometry(null);
         var point = e.GetPosition(this);
@@ -263,7 +263,7 @@ public partial class ChartBase
 
     private bool HandleNavigationKey(KeyEventArgs e)
     {
-        if (!IsEffectivelyEnabled || IsRadial) return false;
+        if (!IsEffectivelyEnabled || !SupportsViewportNavigation) return false;
         var modifier = (e.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) != 0;
         if (modifier && e.Key is Key.D0 or Key.NumPad0 && (IsZoomEnabled || IsPanEnabled))
         {

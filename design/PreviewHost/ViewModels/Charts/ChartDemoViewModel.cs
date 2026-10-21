@@ -176,6 +176,14 @@ public sealed class ChartDemoViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref field, value);
     } = true;
 
+    public ChartAnimationStyle[] AnimationStyles { get; } = Enum.GetValues<ChartAnimationStyle>();
+
+    public ChartAnimationStyle AnimationStyle
+    {
+        get;
+        set => this.RaiseAndSetIfChanged(ref field, value);
+    }
+
     public GaugeStyle[] GaugeStyles { get; } = Enum.GetValues<GaugeStyle>();
 
     public GaugeStyle GaugeStyle

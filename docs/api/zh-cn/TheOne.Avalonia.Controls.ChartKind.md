@@ -34,3 +34,10 @@
 | [`PercentStackedBar = 11`](../../../TheOne.Avalonia/Controls/ChartData.cs#L20) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
 | [`PercentStackedHorizontalBar = 12`](../../../TheOne.Avalonia/Controls/ChartData.cs#L21) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
 | [`PercentStackedArea = 13`](../../../TheOne.Avalonia/Controls/ChartData.cs#L22) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Heatmap = 14`](../../../TheOne.Avalonia/Controls/ChartData.cs#L23) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Radar = 15`](../../../TheOne.Avalonia/Controls/ChartData.cs#L24) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Funnel = 16`](../../../TheOne.Avalonia/Controls/ChartData.cs#L25) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`BoxPlot = 17`](../../../TheOne.Avalonia/Controls/ChartData.cs#L26) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Candlestick = 18`](../../../TheOne.Avalonia/Controls/ChartData.cs#L27) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Treemap = 19`](../../../TheOne.Avalonia/Controls/ChartData.cs#L28) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |
+| [`Sunburst = 20`](../../../TheOne.Avalonia/Controls/ChartData.cs#L29) | 枚举成员及其底层数值；持久化使用同版本定义，不自行重排数值。 |

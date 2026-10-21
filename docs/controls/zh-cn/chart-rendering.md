@@ -8,21 +8,45 @@
 
 ## 数据更新动画
 
+全部 21 个继承 `ChartBase` 的图表控件统一使用以下动画设置，包括 Heatmap、Radar、Funnel、BoxPlot、Candlestick、Treemap 和 Sunburst。`AnimationStyle` 是经过枚举值校验的 `ChartAnimationStyle` 属性，默认 `Auto`。
+
+| AnimationStyle | 首次非空展示 | 后续数据变化 |
+| --- | --- | --- |
+| `Auto` | 从左向右显露已准备的绘图区 | 兼容的坐标帧插值坐标，结构变化交叉淡化缓存数据层；饼图／环形图过渡角度，仪表过渡数值、弧线与指针；全部专用统计图和层级图淡入已准备的目标绘图区。 |
+| `None` | 立即显示目标帧 | 立即显示目标帧 |
+| `Fade` | 淡入已准备的绘图区 | 淡入已准备的目标绘图区 |
+| `Reveal` | 从左向右显露 | 从左向右显露已准备的目标绘图区 |
+
 ```xml
+<!-- 所在视图通过 x:DataType 声明 Revenue 属性的数据类型。 -->
 <one:LineChart IsSmooth="True"
            SeriesSource="{CompiledBinding Revenue}"
-           IsAnimationEnabled="True" AnimationDuration="0:0:0.2" />
+           AnimationStyle="Reveal" AnimationDuration="0:0:0.2" />
+
+<!-- 也可以通过主题类选择相同的动效。 -->
+<one:LineChart SeriesSource="{CompiledBinding Revenue}"
+           Classes="animation-fade" />
 ```
 
-`IsAnimationEnabled` 默认 `True`，`AnimationDuration` 为 `TimeSpan`，默认 200 ms，可设为零至 10 秒。动画用于已挂载图表的数据更新：坐标图在原始点身份及顺序稳定时过渡数据层坐标，结构变化时交叉淡化已缓存的新旧数据层；饼图／环形图过渡扇区角度，仪表过渡数值、弧线与指针。坐标轴、标题与图例直接显示目标状态。连续更新合并准备，动画不修改模型值、源索引、选择或视口。
+公开动画类为 `animation-fade`、`animation-reveal` 和 `animation-none`。同时添加多个类时，优先级固定为 **animation-none > animation-reveal > animation-fade**，与 `Classes` 中的书写顺序无关。显式设置的局部 `AnimationStyle` 值优先于这些类的 Setter；需要由 Classes 控制时，请去掉局部属性值。不指定动画类时使用默认 `Auto`。
 
-新旧数据层任一超过 6,000 个已准备绘制项时直接显示结果，避免在大数据场景逐帧重建完整数据；单边逻辑尺寸超过 4,096 或面积超过 4,194,304 的图表也跳过动画。径向扇区按原始索引对应角度，新增扇区从零角度长出、移除扇区直接消失；需要跨重排保留业务身份时，由业务层先保持数据顺序。
+`IsAnimationEnabled` 默认 `True`，`AnimationDuration` 为 `TimeSpan`，默认 200 ms，可设为零至 10 秒。首次非空绘图区只播放一次初始动效，卸载后重新挂载不会仅因重建订阅而重播；首次绘制之前的坐标或图例查询只准备目标坐标，不消耗初始动效。笛卡尔图的 `Auto` 数据过渡直接显示目标坐标轴；专用图的 `Auto` 更新和 `Fade` 一样淡入完整目标绘图区（包括坐标轴），`Reveal` 则从左向右裁剪显露已经准备的绘图区。标题与图例保持稳定。连续更新合并准备，不修改模型值、原始索引、抽样、命中、选择或视口。自动数据过渡中，径向扇区按原始索引对应角度，新增扇区从零角度长出、移除扇区直接消失；需要跨重排保留业务身份时，由业务层先保持数据顺序。
 
-关闭 `IsAnimationEnabled`、将时长设为零或通过 `Motion.Enabled=False` 关闭主题动效时，立即显示目标帧；脱离视觉树后停止动画。尺寸、样式、视口和导航变化直接应用。只读 `IsAnimating` / `AnimationProgress` 提供状态，进度通知在 UI 派发中发出，避免绘制过程中同步触发绑定修改。
+动画预算是整张图最多 **6,000 个已准备／绘制项**，不是 6,000 行原始数据，也不是每个系列各自拥有该预算。`Auto` 捕获旧笛卡尔／径向层时也检查其标记数；超出预算直接显示目标帧。单边逻辑尺寸超过 **4,096** 或逻辑面积超过 **4,194,304** 的图表同样跳过动画。抽样可减少实际绘制项，但不代表原始数据准备没有成本。
+
+设置 `AnimationStyle=None`、关闭 `IsAnimationEnabled`、时长为零、`Motion.Enabled=False`、禁用或隐藏图表时，正在执行的动画立即完成到目标帧。脱离视觉树后停止回调并释放临时动画状态，旧过渡排队中的回调不能重新启动动画。动态切换动画样式会先结束当前过渡，下一次数据变化使用新样式。尺寸、主题、样式、视口和导航变化直接应用。只读 `IsAnimating` / `AnimationProgress` 提供状态，进度通知在 UI 派发中发出，避免绘制过程中同步触发绑定修改。
 
 动画期间暂不显示悬停覆盖层。指针／键盘输入或调用 `GetDataPointPosition`、`HitTestDataPoint`、`GetSharedDataPoints` 等几何查询，会先完成到目标帧，再按目标数据处理，确保命中与显示一致；查询本身不改变数据选择。需要逐帧读取数据坐标的业务应关闭更新动画。
 
-更新动效的可选关闭方式参考 [Chart.js 更新图表](https://www.chartjs.org/docs/latest/developers/updates.html)；图表的数据层过渡与稳定导出参考 [ECharts 数据过渡](https://echarts.apache.org/handbook/en/how-to/animation/transition/)。
+动画复用已经准备的绘制数据，不重新建立数据订阅。兼容笛卡尔帧的源点查找、Frame、点数组和标签锚点在每次过渡开始时准备一次，tick 只原位更新坐标；同一进度被重复绘制时复用已经准备的路径。标签保留目标布局并插值已有锚点，不在每个 tick 重算标签避让；Scatter 的文字排版缓存保留当前插值 Frame。饼图／环形图复用最近一次扇区几何和格式化标签，缓存数量受当前扇区数量限制；Fade／Reveal 复用目标几何，动画帧回调也只在每次过渡创建一次。这减少重复准备和分配，不消除可见标记的栅格工作，也不承诺固定帧耗时。PNG 导出始终绘制独立的**目标状态**快照，不受当前动画进度影响。
+
+参考 [ECharts 数据过渡](https://echarts.apache.org/handbook/en/how-to/animation/transition/)。下方历史性能表保留原始日期与测量条件，不代表新增动画样式的测量结果。
+
+## PreviewHost 创建与可见内容
+
+每个图表保留独立页面和带名称的配置变体网格。首个样例立即创建，其他变体、离屏动画区及代码高亮示例仅在预留区域与真实可见视口相交时同步创建。滚动后仍可看到所有示例，不替换为单一选择器，也不删减展示内容。尚未创建时只在测量阶段估算占位，创建后使用内容的实际期望尺寸，不保留强制占位高度；已经创建的内容在滚动与重新挂载时复用。
+
+静态小样例不再为每张图创建完整交互编辑器 ViewModel。每张静态图持有独立的 Series 包装，图例显隐互不影响；动画示例使用单独的点模型。交互编辑器仍在显式展开时创建。首次进入可见区的高亮编辑器仍有实际创建与布局成本，按需创建减少无关的离屏工作，不承诺消除可见内容的渲染成本，也不将工作挪到 Dispatcher 回调中。
 
 ## PNG 图片导出
 
@@ -228,7 +252,7 @@ JSON、前后构建产物、日志与包含同步分配及 p95 的完整对照�
 
 - 未入样的选中点使用基础样本上的不可变单点拼接视图，数量、源索引顺序、同步抽样诊断及选择事件保持不变。绘制端保留基础坐标和源索引，在原始绘制位置插入所选标记，单纯切换选择无需复制基础坐标数组。清空选择恢复同一基础样本；缺口、并列极值、软预算溢出和原始命中桶均不变。
 - 复用未变的标记画刷、绘制操作，以及坐标轴／选中环／焦点边框的四个 Pen 槽。可变 Pen 画刷继续按原生资源规则更新；颜色、透明度、半径、描边、源或映射变化会刷新对应状态。切换已入样点可复用全部标记操作实例，切换额外保留点只替换对应操作。仍按源顺序绘制所有需要的椭圆，保留透明重叠。
-- 坐标／数据标签的 TextLayout 每帧最多缓存 512 项，显式保留文化、字体、字号及文字方向；数据标签度量也复用缓存。淘汰、旧帧不再参与动画、卸载和导出 finally 路径都会 Dispose；当前帧／有效动画源保留缓存，临时插值帧绘制后清理。标题／图例文字仍走原路径。
+- 坐标／数据标签的 TextLayout 每帧最多缓存 512 项，显式保留文化、字体、字号及文字方向；数据标签度量也复用缓存。淘汰、旧帧不再参与动画、卸载和导出 finally 路径都会 Dispose；当前帧、有效动画源及复用的插值帧保留缓存，不再使用的插值帧会被清理。标题／图例文字仍走原路径。
 - 标记缓存容量约每槽 20 字节（坐标及源索引），额外选择状态为常量大小，替代随样本数增长的复制。文字缓存增加有界字形资源及首次排版工作；512 项不是任意超长标签的字节上限。不引入位图缓存，不跳过合法散点，不创建逐点控件。
 
 #### 选择性能记录（2026-10-18）
@@ -299,8 +323,9 @@ Release 构建 0 错误、2 条既有无关可空性警告；**1,004 项 Scatter
 | 属性 | 类型 | 读写／绑定／继承 | 注册或模型初值 | 说明与约束 |
 | --- | --- | --- | --- | --- |
 | [`AccentBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L297) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 主序列／强调色画刷；动态主题使用 One.* 资源，显式局部值优先。 |
-| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L44) | `System.TimeSpan` | 可写; OneWay | `TimeSpan.FromMilliseconds(200)` | 数据过渡的持续时间；是否启用动画还受控件开关和 Motion.Enabled 约束。 校验：`value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
-| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L51) | `double` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`AnimationDuration`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L52) | `System.TimeSpan` | 可写; OneWay | `TimeSpan.FromMilliseconds(200)` | 数据过渡的持续时间；是否启用动画还受控件开关和 Motion.Enabled 约束。 校验：`value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10)` |
+| [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | 可写; OneWay | `0 / default` | 首次非空展示 ; 后续数据变化 校验：`value => Enum.IsDefined(value)` 可选值：`Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
 | [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | 可写; OneWay | `12` | 8 ; 12 ; 16 校验：`value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
@@ -317,13 +342,13 @@ Release 构建 0 错误、2 条既有无关可空性警告；**1,004 项 Scatter
 | [`GridBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L285) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 绘图区网格线画刷；动态主题使用 One.* 资源，显式局部值优先。 |
 | [`HoveredPoints`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L55) | `System.Collections.Generic.IReadOnlyList<TheOne.Avalonia.Controls.ChartSelection>` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 | [`InnerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L207) | `double` | 可写; OneWay | `0.62` | 径向图内半径比例；控制中空区域，保留扇区数值和比例含义。 校验：`value => double.IsFinite(value) && value >= 0 && value < 1` |
-| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L50) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
-| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L38) | `bool` | 可写; OneWay | `true` | 启用该图表的数据过渡；全局 Motion.Enabled=False 时仍关闭动画。 |
+| [`IsAnimating`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L65) | `bool` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
+| [`IsAnimationEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L46) | `bool` | 可写; OneWay | `true` | 启用该图表的数据过渡；全局 Motion.Enabled=False 时仍关闭动画。 |
 | [`IsLegendInteractive`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L27) | `bool` | 可写; OneWay | `true` | `True`，允许坐标图图例切换系列及键盘操作 |
 | [`IsPanEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L67) | `bool` | 可写; OneWay | `false` | 默认 `False`；启用鼠标左键拖动及键盘平移 |
 | [`IsSmooth`](../../../TheOne.Avalonia/Controls/ChartBase.Smoothing.cs#L12) | `bool` | 可写; OneWay | `false` | `False`，折线／普通面积的单调平滑路径 |
 | [`IsZoomEnabled`](../../../TheOne.Avalonia/Controls/ChartBase.Viewport.cs#L60) | `bool` | 可写; OneWay | `false` | 默认 `False`；启用滚轮及键盘缩放 |
-| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | 只读; CLR / n/a | `accessor-defined / state` | 所属字段、属性或元素的种类枚举；具体可选值见该枚举定义。 可选值：`Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea` |
+| [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | 只读; CLR / n/a | `accessor-defined / state` | 所属字段、属性或元素的种类枚举；具体可选值见该枚举定义。 可选值：`Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
 | [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | 可写; OneWay | `3.5` | 3 ; 3.5 ; 4.25 校验：`value => double.IsFinite(value) && value > 0` |
@@ -375,7 +400,7 @@ Release 构建 0 错误、2 条既有无关可空性警告；**1,004 项 Scatter
 
 ### Classes 用法
 
-没有额外公开外观类，使用默认主题及专属属性。
+- `ChartBase`: `Classes="animation-fade"` / `Classes="animation-none"` / `Classes="animation-reveal"`
 
 以上是分别使用的公开类名；悬停、按下、禁用和选中等状态由控件维护，不手工添加模板类。实际外观见 PreviewHost 的标签样例。
 
@@ -414,7 +439,9 @@ Release 构建 0 错误、2 条既有无关可空性警告；**1,004 项 Scatter
 
 | 模型 | 属性／枚举值 |
 | --- | ---: |
-| [`TheOne.Avalonia.Controls.ChartKind`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartKind.md) | 14 |
+| [`TheOne.Avalonia.Controls.ChartAnimationStyle`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartAnimationStyle.md) | 4 |
+| [`TheOne.Avalonia.Controls.ChartHierarchyNode`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartHierarchyNode.md) | 3 |
+| [`TheOne.Avalonia.Controls.ChartKind`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartKind.md) | 21 |
 | [`TheOne.Avalonia.Controls.ChartNavigationAxes`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartNavigationAxes.md) | 4 |
 | [`TheOne.Avalonia.Controls.ChartPoint`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartPoint.md) | 3 |
 | [`TheOne.Avalonia.Controls.ChartSamplingMode`](../../api/zh-cn/TheOne.Avalonia.Controls.ChartSamplingMode.md) | 2 |

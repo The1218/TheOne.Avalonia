@@ -57,7 +57,8 @@ public partial class ChartBase
         for (var index = frames.Count - 1; index >= 0; index--)
         {
             var frame = frames[index];
-            if (ReferenceEquals(frame, _cartesianFrame) || ReferenceEquals(frame, _animationFromCartesian)) continue;
+            if (ReferenceEquals(frame, _cartesianFrame) || ReferenceEquals(frame, _animationFromCartesian) ||
+                ReferenceEquals(frame, _cartesianAnimationPlan?.Frame)) continue;
             ReleaseScatterTexts(frame); frames.RemoveAt(index);
         }
     }

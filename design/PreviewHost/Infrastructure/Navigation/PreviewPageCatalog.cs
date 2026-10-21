@@ -106,7 +106,14 @@ internal static class PreviewPageCatalog
         new(210, "StackedAreaChart", "图表控件"),
         new(211, "PercentStackedBarChart", "图表控件"),
         new(212, "PercentStackedHorizontalBarChart", "图表控件"),
-        new(213, "PercentStackedAreaChart", "图表控件")
+        new(213, "PercentStackedAreaChart", "图表控件"),
+        new(214, "HeatmapChart", "图表控件"),
+        new(215, "RadarChart", "图表控件"),
+        new(216, "FunnelChart", "图表控件"),
+        new(217, "BoxPlotChart", "图表控件"),
+        new(218, "CandlestickChart", "图表控件"),
+        new(219, "TreemapChart", "图表控件"),
+        new(220, "SunburstChart", "图表控件")
     ];
 
     public static IReadOnlyList<PreviewPageDescriptor> Pages { get; } = new[] { Home }.Concat(CombinedPages)
@@ -226,6 +233,13 @@ internal static class PreviewPageCatalog
             211 => new ChartShowcaseView(ChartKind.PercentStackedBar),
             212 => new ChartShowcaseView(ChartKind.PercentStackedHorizontalBar),
             213 => new ChartShowcaseView(ChartKind.PercentStackedArea),
+            214 => new SpecializedChartShowcaseView(ChartKind.Heatmap),
+            215 => new SpecializedChartShowcaseView(ChartKind.Radar),
+            216 => new SpecializedChartShowcaseView(ChartKind.Funnel),
+            217 => new SpecializedChartShowcaseView(ChartKind.BoxPlot),
+            218 => new SpecializedChartShowcaseView(ChartKind.Candlestick),
+            219 => new SpecializedChartShowcaseView(ChartKind.Treemap),
+            220 => new SpecializedChartShowcaseView(ChartKind.Sunburst),
             _ => throw new ArgumentOutOfRangeException(nameof(id))
         };
     }

@@ -17,6 +17,10 @@ public partial class ChartBase
         AvaloniaProperty.Register<ChartBase, TimeSpan>(nameof(AnimationDuration), TimeSpan.FromMilliseconds(200),
             validate: value => value >= TimeSpan.Zero && value <= TimeSpan.FromSeconds(10));
 
+    public static readonly StyledProperty<ChartAnimationStyle> AnimationStyleProperty =
+        AvaloniaProperty.Register<ChartBase, ChartAnimationStyle>(nameof(AnimationStyle),
+            validate: value => Enum.IsDefined(value));
+
     public static readonly DirectProperty<ChartBase, bool> IsAnimatingProperty =
         AvaloniaProperty.RegisterDirect<ChartBase, bool>(nameof(IsAnimating), chart => chart.IsAnimating);
 
@@ -24,10 +28,14 @@ public partial class ChartBase
         AvaloniaProperty.RegisterDirect<ChartBase, double>(nameof(AnimationProgress), chart => chart.AnimationProgress);
 
     private readonly Stopwatch _animationClock = new();
+    private Action<TimeSpan>? _animationFrameCallback;
     private readonly Dictionary<(int Series, int Index), (double Start, double Sweep)> _animationFromAngles = [];
     private bool _animateDataPending, _animationPublicationQueued, _hasPreparedGeometry;
     private RenderTargetBitmap? _animationFromBitmap;
     private CartesianFrame? _animationFromCartesian;
+    private CartesianAnimationPlan? _cartesianAnimationPlan;
+    private ChartAnimationStyle _activeAnimationStyle;
+    private bool _initialAnimationPending, _hasPresentedChart;
     private double _animationFromGauge, _animationToGauge, _preparedGaugeValue;
     private long _animationGeneration;
     private double _animationProgress = 1;
@@ -47,10 +55,24 @@ public partial class ChartBase
         set => SetValue(AnimationDurationProperty, value);
     }
 
+    /// <summary>Selects automatic interpolation, no motion, a fade or a horizontal reveal of the plot.</summary>
+    public ChartAnimationStyle AnimationStyle
+    {
+        get => GetValue(AnimationStyleProperty);
+        set => SetValue(AnimationStyleProperty, value);
+    }
+
     public new bool IsAnimating => _reportedAnimating;
     public double AnimationProgress => _reportedAnimationProgress;
 
     private protected bool IsGaugeValueAnimating { get; private set; }
+
+    private protected virtual bool UsesCustomChartGeometry => false;
+
+    private void PrepareInitialAnimation()
+    {
+        _initialAnimationPending = !_hasPresentedChart;
+    }
 
     private void MarkDataUpdate()
     {
@@ -60,7 +82,8 @@ public partial class ChartBase
 
     private bool CanAnimateData()
     {
-        return _animationSuppression == 0 && !_isExportSnapshot && IsAnimationEnabled && Motion.GetEnabled(this) &&
+        return _animationSuppression == 0 && !_isExportSnapshot && IsAnimationEnabled &&
+               AnimationStyle != ChartAnimationStyle.None && Motion.GetEnabled(this) &&
                IsEffectivelyEnabled && IsVisible &&
                AnimationDuration > TimeSpan.Zero && TopLevel.GetTopLevel(this) is not null && Bounds.Width <= 4096 &&
                Bounds.Height <= 4096 && Bounds.Width * Bounds.Height <= 4_194_304;
@@ -68,8 +91,12 @@ public partial class ChartBase
 
     private AnimationOrigin? CaptureAnimationOrigin()
     {
-        if (!_animateDataPending || !_hasPreparedGeometry || !CanAnimateData()) return null;
+        if (((!_animateDataPending || !_hasPreparedGeometry) && !_initialAnimationPending) || !CanAnimateData()) return null;
         var angles = new Dictionary<(int Series, int Index), (double Start, double Sweep)>();
+        if (_initialAnimationPending)
+            return new AnimationOrigin(null, null, angles, Minimum, true);
+        if (AnimationStyle != ChartAnimationStyle.Auto || UsesCustomChartGeometry)
+            return new AnimationOrigin(null, null, angles, _preparedGaugeValue);
         if (IsRadial)
         {
             if (_radialSectors.Count > 6000) return null;
@@ -102,14 +129,21 @@ public partial class ChartBase
                 : frame, null, angles, 0);
     }
 
-    private void StartDataAnimation(AnimationOrigin? origin)
+    private void StartDataAnimation(AnimationOrigin? origin, bool presentation)
     {
-        var requested = _animateDataPending;
+        var requested = _animateDataPending || _initialAnimationPending;
         _animateDataPending = false;
         FinishDataAnimation(false);
-        var marks = IsRadial ? _radialSectors.Count : _cartesianFrame is { } prepared ? FrameMarks(prepared) : 0;
+        var marks = UsesCustomChartGeometry ? CustomChartAnimationMarkCount :
+            IsRadial ? _radialSectors.Count : _cartesianFrame is { } prepared ? FrameMarks(prepared) : 0;
         if (IsGauge) marks = 1;
-        if (!requested || origin is null || !CanAnimateData() || marks > 6000 || (!IsRadial && _cartesianFrame is null))
+        if (marks > 0 && presentation)
+        {
+            _initialAnimationPending = false;
+            _hasPresentedChart = true;
+        }
+        if ((!_hasPresentedChart && !presentation) || !requested || origin is null || !CanAnimateData() || marks is 0 or > 6000 ||
+            (!IsRadial && !UsesCustomChartGeometry && _cartesianFrame is null))
         {
             origin?.Bitmap?.Dispose();
             PublishAnimationState();
@@ -118,8 +152,12 @@ public partial class ChartBase
 
         _animationFromGauge = origin.Gauge;
         _animationToGauge = Value;
+        _activeAnimationStyle = AnimationStyle == ChartAnimationStyle.Auto && origin.Initial
+            ? ChartAnimationStyle.Reveal
+            : AnimationStyle == ChartAnimationStyle.Auto && UsesCustomChartGeometry
+                ? ChartAnimationStyle.Fade : AnimationStyle;
         foreach (var entry in origin.Angles) _animationFromAngles[entry.Key] = entry.Value;
-        if (!IsRadial && _cartesianFrame is { } target)
+        if (_activeAnimationStyle == ChartAnimationStyle.Auto && !IsRadial && _cartesianFrame is { } target)
         {
             if (origin.Frame is { } from && from.Identity == target.Identity &&
                 from.Categorical == target.Categorical && from.Count == target.Count &&
@@ -145,33 +183,37 @@ public partial class ChartBase
         _animationProgress = 0;
         _animationClock.Restart();
         var generation = ++_animationGeneration;
+        _animationFrameCallback = _ => AdvanceAnimationFrame(generation);
         PublishAnimationState();
         ScheduleAnimationFrame(generation);
     }
 
     private void ScheduleAnimationFrame(long generation)
     {
-        TopLevel.GetTopLevel(this)?.RequestAnimationFrame(_ =>
+        if (IsGaugeValueAnimating && generation == _animationGeneration && _animationFrameCallback is { } callback)
+            TopLevel.GetTopLevel(this)?.RequestAnimationFrame(callback);
+    }
+
+    private void AdvanceAnimationFrame(long generation)
+    {
+        if (!IsGaugeValueAnimating || generation != _animationGeneration) return;
+        if (!CanAnimateData())
         {
-            if (!IsGaugeValueAnimating || generation != _animationGeneration) return;
-            if (!CanAnimateData())
-            {
-                FinishDataAnimation();
-                return;
-            }
+            FinishDataAnimation();
+            return;
+        }
 
-            _animationProgress =
-                Math.Clamp(_animationClock.Elapsed.TotalMilliseconds / AnimationDuration.TotalMilliseconds, 0, 1);
-            if (_animationProgress >= 1)
-            {
-                FinishDataAnimation();
-                return;
-            }
+        _animationProgress =
+            Math.Clamp(_animationClock.Elapsed.TotalMilliseconds / AnimationDuration.TotalMilliseconds, 0, 1);
+        if (_animationProgress >= 1)
+        {
+            FinishDataAnimation();
+            return;
+        }
 
-            InvalidateVisual();
-            PublishAnimationState();
-            if (IsGaugeValueAnimating && generation == _animationGeneration) ScheduleAnimationFrame(generation);
-        });
+        InvalidateVisual();
+        PublishAnimationState();
+        ScheduleAnimationFrame(generation);
     }
 
     private double EasedAnimationProgress()
@@ -200,7 +242,7 @@ public partial class ChartBase
 
     private (double Start, double Sweep) PresentRadialAngles(int series, int index, double start, double sweep)
     {
-        if (!IsGaugeValueAnimating) return (start, sweep);
+        if (!IsGaugeValueAnimating || _activeAnimationStyle != ChartAnimationStyle.Auto) return (start, sweep);
         var from = _animationFromAngles.TryGetValue((series, index), out var previous) ? previous : (start, 0d);
         var progress = EasedAnimationProgress();
         return (Mix(from.Item1, start, progress), Mix(from.Item2, sweep, progress));
@@ -208,12 +250,34 @@ public partial class ChartBase
 
     private protected double PresentGaugeValue(double target)
     {
-        return IsGaugeValueAnimating ? Mix(_animationFromGauge, _animationToGauge, EasedAnimationProgress()) : target;
+        return IsGaugeValueAnimating && _activeAnimationStyle == ChartAnimationStyle.Auto
+            ? Mix(_animationFromGauge, _animationToGauge, EasedAnimationProgress()) : target;
+    }
+
+    private void DrawAnimatedChartPlot(DrawingContext context, Rect plot)
+    {
+        if (!IsGaugeValueAnimating || _activeAnimationStyle == ChartAnimationStyle.Auto)
+        {
+            DrawChartPlot(context, plot);
+            return;
+        }
+
+        var progress = EasedAnimationProgress();
+        if (_activeAnimationStyle == ChartAnimationStyle.Reveal)
+        {
+            using var clip = context.PushClip(new Rect(plot.X, plot.Y, plot.Width * progress, plot.Height));
+            DrawChartPlot(context, plot);
+        }
+        else
+        {
+            using var opacity = context.PushOpacity(progress);
+            DrawChartPlot(context, plot);
+        }
     }
 
     private void DrawAnimatedCartesianData(DrawingContext context, CartesianFrame target)
     {
-        if (!IsGaugeValueAnimating)
+        if (!IsGaugeValueAnimating || _activeAnimationStyle != ChartAnimationStyle.Auto)
         {
             DrawCartesianData(context, target);
             return;
@@ -241,44 +305,11 @@ public partial class ChartBase
 
     private CartesianFrame InterpolateCartesianFrame(CartesianFrame from, CartesianFrame target, double progress)
     {
-        var result =
-            new CartesianFrame(target.Viewport, target.Count, target.Categorical, target.Horizontal, target.Stacked)
-                { Identity = target.Identity };
-        var bars = from.Bars.ToDictionary(bar => (bar.Series, bar.Index));
-        foreach (var bar in target.Bars)
-            result.Bars.Add(bar with
-            {
-                Bounds = bars.TryGetValue((bar.Series, bar.Index), out var previous)
-                    ? MixRect(previous.Bounds, bar.Bounds, progress)
-                    : bar.Bounds
-            });
-        var sources = from.Series.ToDictionary(series => series.Series);
-        foreach (var series in target.Series)
-        {
-            var presented = series with { Segments = [] };
-            sources.TryGetValue(series.Series, out var source);
-            foreach (var segment in series.Segments)
-            {
-                var points = new ChartRenderPoint[segment.Points.Count];
-                for (var n = 0; n < points.Length; n++)
-                {
-                    var point = segment.Points[n];
-                    var origin = FindPreviousPoint(source, point);
-                    points[n] = point with
-                    {
-                        Position = MixPoint(origin.Position, point.Position, progress),
-                        Baseline = MixPoint(origin.Baseline, point.Baseline, progress)
-                    };
-                }
-
-                presented.Segments.Add(new CartesianSegment(points, segment.Smooth));
-            }
-
-            result.Series.Add(presented);
-        }
-
-        PrepareCartesianDataLabels(result);
-        return result;
+        var plan = _cartesianAnimationPlan;
+        if (plan is null || !ReferenceEquals(plan.From, from) || !ReferenceEquals(plan.Target, target))
+            _cartesianAnimationPlan = plan = new CartesianAnimationPlan(from, target);
+        plan.Update(progress);
+        return plan.Frame;
     }
 
     private static ChartRenderPoint FindPreviousPoint(CartesianSeriesFrame? series, ChartRenderPoint target)
@@ -338,7 +369,9 @@ public partial class ChartBase
         IsGaugeValueAnimating = false;
         _animationProgress = 1;
         _animationClock.Stop();
+        _animationFrameCallback = null;
         _animationFromCartesian = null;
+        _cartesianAnimationPlan = null;
         _animationFromAngles.Clear();
         _animationFromBitmap?.Dispose();
         _animationFromBitmap = null;
@@ -375,7 +408,104 @@ public partial class ChartBase
         CartesianFrame? Frame,
         RenderTargetBitmap? Bitmap,
         Dictionary<(int Series, int Index), (double Start, double Sweep)> Angles,
-        double Gauge);
+        double Gauge,
+        bool Initial = false);
+
+    // The sampling result and source-point lookup are fixed for an animation. Only positions change per tick.
+    private sealed class CartesianAnimationPlan
+    {
+        public CartesianFrame From { get; }
+        public CartesianFrame Target { get; }
+        public CartesianFrame Frame { get; }
+        private readonly Rect[] _barOrigins;
+        private readonly List<AnimatedSegment> _segments = [];
+        private readonly Rect[] _labelOrigins;
+        private double _progress = double.NaN;
+
+        public CartesianAnimationPlan(CartesianFrame from, CartesianFrame target)
+        {
+            From = from;
+            Target = target;
+            Frame = new CartesianFrame(target.Viewport, target.Count, target.Categorical, target.Horizontal,
+                target.Stacked) { Identity = target.Identity };
+            var bars = from.Bars.ToDictionary(bar => (bar.Series, bar.Index));
+            _barOrigins = new Rect[target.Bars.Count];
+            for (var n = 0; n < target.Bars.Count; n++)
+            {
+                var bar = target.Bars[n];
+                Frame.Bars.Add(bar);
+                _barOrigins[n] = bars.TryGetValue((bar.Series, bar.Index), out var previous)
+                    ? previous.Bounds : bar.Bounds;
+            }
+
+            var sources = from.Series.ToDictionary(series => series.Series);
+            foreach (var series in target.Series)
+            {
+                var presented = series with { Segments = [] };
+                sources.TryGetValue(series.Series, out var source);
+                foreach (var segment in series.Segments)
+                {
+                    var points = new ChartRenderPoint[segment.Points.Count];
+                    var origins = new ChartRenderPoint[points.Length];
+                    for (var n = 0; n < points.Length; n++) origins[n] = FindPreviousPoint(source, segment.Points[n]);
+                    var rendered = new CartesianSegment(points, segment.Smooth);
+                    presented.Segments.Add(rendered);
+                    _segments.Add(new AnimatedSegment(segment, rendered, points, origins));
+                }
+                Frame.Series.Add(presented);
+            }
+
+            // Keep the target's collision-free label layout and interpolate existing label anchors only.
+            _labelOrigins = new Rect[target.DataLabels.Count];
+            for (var n = 0; n < target.DataLabels.Count; n++)
+            {
+                var label = target.DataLabels[n];
+                Frame.DataLabels.Add(label);
+                Frame.DataLabelBounds[(label.Series, label.Index)] = label.Bounds;
+                _labelOrigins[n] = from.DataLabelBounds.TryGetValue((label.Series, label.Index), out var previous)
+                    ? previous : label.Bounds;
+            }
+        }
+
+        public void Update(double progress)
+        {
+            // Several render passes can observe the same animation tick. Retain their prepared paths and snapshots.
+            if (_progress == progress) return;
+            _progress = progress;
+            for (var n = 0; n < Target.Bars.Count; n++)
+            {
+                var bar = Target.Bars[n];
+                Frame.Bars[n] = bar with { Bounds = MixRect(_barOrigins[n], bar.Bounds, progress) };
+            }
+            foreach (var segment in _segments)
+            {
+                for (var n = 0; n < segment.Points.Length; n++)
+                {
+                    var point = segment.Target.Points[n];
+                    var origin = segment.Origins[n];
+                    segment.Points[n] = point with
+                    {
+                        Position = MixPoint(origin.Position, point.Position, progress),
+                        Baseline = MixPoint(origin.Baseline, point.Baseline, progress)
+                    };
+                }
+                segment.Rendered.LineGeometry = null;
+                segment.Rendered.FillGeometry = null;
+                segment.Rendered.ScatterMarkers = null;
+                segment.Rendered.ScatterOperation = null;
+            }
+            for (var n = 0; n < Target.DataLabels.Count; n++)
+            {
+                var label = Target.DataLabels[n];
+                var bounds = MixRect(_labelOrigins[n], label.Bounds, progress);
+                Frame.DataLabels[n] = label with { Bounds = bounds };
+                Frame.DataLabelBounds[(label.Series, label.Index)] = bounds;
+            }
+        }
+
+        private sealed record AnimatedSegment(CartesianSegment Target, CartesianSegment Rendered,
+            ChartRenderPoint[] Points, ChartRenderPoint[] Origins);
+    }
 
     private readonly struct StableDataFrame : IDisposable
     {

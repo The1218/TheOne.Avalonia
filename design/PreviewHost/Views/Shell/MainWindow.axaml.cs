@@ -33,7 +33,6 @@ public partial class MainWindow : OneWindow
         if (args.PropertyName == nameof(GalleryViewModel.CurrentPage))
         {
             Model.Search = "";
-            Gallery.ResetScroll();
         }
     }
 

@@ -22,6 +22,13 @@ internal static partial class ChartControlFactory
             ChartKind.PercentStackedBar => new PercentStackedBarChart(),
             ChartKind.PercentStackedHorizontalBar => new PercentStackedHorizontalBarChart(),
             ChartKind.PercentStackedArea => new PercentStackedAreaChart(),
+            ChartKind.Heatmap => new HeatmapChart(),
+            ChartKind.Radar => new RadarChart(),
+            ChartKind.Funnel => new FunnelChart(),
+            ChartKind.BoxPlot => new BoxPlotChart(),
+            ChartKind.Candlestick => new CandlestickChart(),
+            ChartKind.Treemap => new TreemapChart(),
+            ChartKind.Sunburst => new SunburstChart(),
             _ => throw new ArgumentOutOfRangeException(nameof(kind))
         };
     }

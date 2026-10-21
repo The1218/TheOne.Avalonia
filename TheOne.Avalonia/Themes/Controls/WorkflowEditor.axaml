@@ -177,6 +177,9 @@
             </ScrollViewer>
         </DockPanel>
     </DataTemplate>
+    <DataTemplate x:DataType="one:WorkflowEditor" x:Key="One.WorkflowEditor.EmptyHeaderTemplate">
+        <Panel />
+    </DataTemplate>
     <DataTemplate x:DataType="one:WorkflowEditor" x:Key="One.WorkflowEditor.HeaderTemplate">
         <Grid ColumnDefinitions="*,Auto,Auto" Margin="12,6">
             <TextBlock
@@ -242,11 +245,15 @@
                             BorderBrush="{DynamicResource One.Line}"
                             BorderThickness="0,0,0,1"
                             DockPanel.Dock="Top"
+                            IsVisible="{CompiledBinding $self.((one:WorkflowEditor)TemplatedParent).HeaderTemplate,
+                                                        Converter={x:Static conv:ObjectConverters.IsNotNull}}"
+                            Name="PART_HeaderBorder"
                             TextElement.FontSize="12"
                             styling:ControlSizing.Size="Small">
                             <ContentPresenter
                                 Content="{TemplateBinding}"
-                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                ContentTemplate="{CompiledBinding $self.((one:WorkflowEditor)TemplatedParent).HeaderTemplate,
+                                                                  TargetNullValue={StaticResource One.WorkflowEditor.EmptyHeaderTemplate}}"
                                 Name="PART_Header" />
                         </Border>
                         <Grid Name="PART_PanelGrid" ColumnDefinitions="195,5,*,5,296">
@@ -373,7 +380,10 @@
                                         ColumnDefinitions="*,Auto"
                                         DockPanel.Dock="Top"
                                         Margin="0,0,0,16">
-                                        <TextBlock FontWeight="SemiBold" Text="节点属性" />
+                                        <Grid>
+                                            <TextBlock Name="PART_NodePropertiesTitle" FontWeight="SemiBold" Text="节点属性" />
+                                            <TextBlock Name="PART_ConnectionPropertiesTitle" FontWeight="SemiBold" Text="连线属性" IsVisible="False" />
+                                        </Grid>
                                         <Button
                                             Classes="workflow-tool"
                                             Command="{CompiledBinding $self.((one:WorkflowEditor)TemplatedParent)?.TogglePropertiesCommand}"
@@ -385,10 +395,16 @@
                                             ToolTip.Tip="关闭属性面板"
                                             Width="18" />
                                     </Grid>
-                                    <ContentPresenter
-                                        Content="{TemplateBinding SelectedNode}"
-                                        ContentTemplate="{TemplateBinding PropertyTemplate}"
-                                        Name="PART_Properties" />
+                                    <Grid>
+                                        <ContentPresenter
+                                            Content="{TemplateBinding SelectedNode}"
+                                            ContentTemplate="{TemplateBinding PropertyTemplate}"
+                                            Name="PART_Properties" />
+                                        <ContentPresenter
+                                            Content="{TemplateBinding SelectedConnection}"
+                                            ContentTemplate="{TemplateBinding ConnectionPropertyTemplate}"
+                                            Name="PART_ConnectionProperties" IsVisible="False" />
+                                    </Grid>
                                 </DockPanel>
                             </Border>
                             <GridSplitter
@@ -667,6 +683,18 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+        <Style Selector="^:connection-properties /template/ ContentPresenter#PART_Properties">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:connection-properties /template/ ContentPresenter#PART_ConnectionProperties">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+        <Style Selector="^:connection-properties /template/ TextBlock#PART_NodePropertiesTitle">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:connection-properties /template/ TextBlock#PART_ConnectionPropertiesTitle">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
         <Style Selector="^.one-small">
             <Setter Property="FontSize" Value="12" />
         </Style>

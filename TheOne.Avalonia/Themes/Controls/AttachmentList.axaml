@@ -1,0 +1,85 @@
+<ResourceDictionary
+    x:CompileBindings="True"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:one="using:TheOne.Avalonia.Controls"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <one:AttachmentStatusConverter x:Key="One.Attachment.Status" />
+    <one:AttachmentUnknownProgressConverter x:Key="One.Attachment.UnknownProgress" />
+    <ControlTheme TargetType="one:AttachmentList" x:Key="{x:Type one:AttachmentList}">
+        <Setter Property="Background" Value="{DynamicResource One.Surface}" />
+        <Setter Property="Foreground" Value="{DynamicResource One.Text}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource One.Line}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding CornerRadius}"
+                    Padding="{TemplateBinding Padding}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="{TemplateBinding Title}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                        <TextBlock Text="{TemplateBinding Description}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+                        <Button Name="PART_Select" Classes="primary" HorizontalAlignment="Left"
+                            Content="{TemplateBinding UploadButtonText}"
+                            IsVisible="{TemplateBinding IsUploadVisible}"
+                            Command="{CompiledBinding $parent[one:AttachmentList].SelectCommand}"
+                            AutomationProperties.Name="选择多个附件" />
+                        <one:LoadingIndicator IsVisible="{TemplateBinding IsSelecting}" HorizontalAlignment="Left" />
+                        <ItemsControl Name="PART_Files" ItemsSource="{TemplateBinding Files}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="one:IAttachmentItem">
+                                    <Border Background="{DynamicResource One.Subtle}" CornerRadius="6" Padding="10" Margin="0,0,0,8">
+                                        <StackPanel Spacing="6">
+                                            <Grid ColumnDefinitions="22,*" ColumnSpacing="8">
+                                                <one:OneIcon Kind="File" Width="18" Height="18" VerticalAlignment="Top" />
+                                                <StackPanel Grid.Column="1" Spacing="3">
+                                                    <TextBlock Text="{CompiledBinding FileName}" TextWrapping="Wrap" FontWeight="SemiBold" />
+                                                    <TextBlock Text="{CompiledBinding SizeText}" Foreground="{DynamicResource One.Muted}" />
+                                                </StackPanel>
+                                            </Grid>
+                                            <one:Tag HorizontalAlignment="Left" Content="{CompiledBinding StatusText}"
+                                                Status="{CompiledBinding Status, Converter={StaticResource One.Attachment.Status}}" />
+                                            <ProgressBar Minimum="0" Maximum="100" Value="{CompiledBinding UploadProgress}"
+                                                IsVisible="{CompiledBinding IsUploading}"
+                                                IsIndeterminate="{CompiledBinding UploadProgress, Converter={StaticResource One.Attachment.UnknownProgress}}" />
+                                            <WrapPanel>
+                                                <one:IconButton Classes="ghost" Content="打开 / 下载"
+                                                    Command="{CompiledBinding $parent[one:AttachmentList].RequestPreviewCommand}"
+                                                    CommandParameter="{CompiledBinding}" Margin="0,0,8,0">
+                                                    <one:IconButton.Icon><one:OneIcon Kind="Download" /></one:IconButton.Icon>
+                                                </one:IconButton>
+                                                <one:IconButton Classes="ghost danger" Content="移除"
+                                                    IsVisible="{CompiledBinding $parent[one:AttachmentList].IsRemoveVisible}"
+                                                    Command="{CompiledBinding $parent[one:AttachmentList].RequestRemoveCommand}"
+                                                    CommandParameter="{CompiledBinding}">
+                                                    <one:IconButton.Icon><one:OneIcon Kind="Delete" /></one:IconButton.Icon>
+                                                </one:IconButton>
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Name="PART_Empty" Text="{TemplateBinding EmptyText}" TextWrapping="Wrap"
+                            Foreground="{DynamicResource One.Muted}"
+                            IsVisible="{CompiledBinding !$parent[one:AttachmentList].HasFiles}" />
+                        <TextBlock Text="{TemplateBinding HintText}" TextWrapping="Wrap" Foreground="{DynamicResource One.Muted}" />
+                        <TextBlock Name="PART_Error" Text="{TemplateBinding ErrorMessage}" TextWrapping="Wrap" Foreground="{DynamicResource One.Danger}" />
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:disabled"><Setter Property="Opacity" Value="0.5" /></Style>
+        <Style Selector="^.one-small">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="12" />
+        </Style>
+        <Style Selector="^.one-large">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="20" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

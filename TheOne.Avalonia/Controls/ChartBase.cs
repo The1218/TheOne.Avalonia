@@ -369,7 +369,10 @@ public abstract partial class ChartBase : Control
     {
         base.OnAttachedToVisualTree(e);
         _observing = true;
+        PrepareInitialAnimation();
         RefreshData();
+        // Attachment refreshes subscriptions even for unchanged data; it is not a new data transition.
+        _animateDataPending = false;
         _pendingSelectionReveal = Selection is not null;
         if (_pendingSelectionReveal && Bounds.Width >= 48 && Bounds.Height >= 48 && Selection is { } selection)
         {
@@ -386,7 +389,9 @@ public abstract partial class ChartBase : Control
             ClearScatterTextFrames();
         }
         _animateDataPending = false;
+        _initialAnimationPending = false;
         FinishDataAnimation();
+        ClearRadialDrawCache();
         CancelPan();
         CancelLegendPress();
         ClearPointerHover();
@@ -419,6 +424,11 @@ public abstract partial class ChartBase : Control
             MarkGeometryDirty();
         }
 
+        if (change.Property == AnimationStyleProperty)
+        {
+            _animateDataPending = false;
+            FinishDataAnimation();
+        }
         if (change.Property == IsAnimationEnabledProperty || change.Property == AnimationDurationProperty ||
             change.Property == Motion.EnabledProperty ||
             change.Property == IsEffectivelyEnabledProperty || change.Property == IsVisibleProperty)
@@ -463,13 +473,14 @@ public abstract partial class ChartBase : Control
     /// <summary>Refresh a plain IList after modifying its contents. Use observable collections for automatic updates.</summary>
     public void RefreshData()
     {
+        OnRefreshChartData();
         ReconcileSubscriptions();
         DataChanged();
     }
 
     private bool IsValid(ChartPoint point)
     {
-        return double.IsFinite(point.X) && double.IsFinite(point.Y) && (!IsRadial || point.Y > 0);
+        return IsValidDataPoint(point);
     }
 
     private ChartSelection? GetSelection(int seriesIndex, int pointIndex)
@@ -477,7 +488,7 @@ public abstract partial class ChartBase : Control
         if (IsGauge || SeriesSource is not { } source || seriesIndex < 0 || seriesIndex >= source.Count) return null;
         var series = source[seriesIndex];
         if (!series.IsVisible || series.ItemsSource is not { } points || pointIndex < 0 || pointIndex >= points.Count ||
-            !IsValid(points[pointIndex])) return null;
+            !IsValidSelectionPoint(seriesIndex, pointIndex, points[pointIndex])) return null;
         if (IsRadial && seriesIndex != FirstVisibleSeries()) return null;
         if (IsStackedAreaCartesian && !HasCanonicalStackX(seriesIndex, pointIndex)) return null;
         return new ChartSelection(seriesIndex, pointIndex, series, points[pointIndex]);
@@ -534,6 +545,8 @@ public abstract partial class ChartBase : Control
 
     private string Describe(ChartSelection selection, bool bounded = false)
     {
+        if (DescribeSpecializedPoint(selection) is { } specializedDescription)
+            return bounded ? BoundedHoverName(specializedDescription) : specializedDescription;
         var secondary = !IsRadial && selection.Series.YAxis == ChartYAxis.Secondary;
         var format = selection.Series.ValueFormat ?? (secondary ? SecondaryValueFormat : ValueFormat);
         var unit = selection.Series.Unit ?? (secondary ? SecondaryUnit : Unit);
@@ -658,7 +671,7 @@ public abstract partial class ChartBase : Control
             {
                 _hasPreparedGeometry = true;
                 _preparedGaugeValue = preparedGaugeValue;
-                StartDataAnimation(origin);
+                StartDataAnimation(origin, context is not null);
             }
             else
             {
@@ -671,7 +684,10 @@ public abstract partial class ChartBase : Control
 
         // Diagnostics can synchronously replace data. Never paint indices prepared for an older source.
         if (_geometryDirty || context is null || plot.Width < 24 || plot.Height < 24) return;
-        DrawChartPlot(context, plot);
+        // Geometry/legend queries prepare target coordinates without counting as a visible first frame.
+        if (_initialAnimationPending && !_hasPresentedChart && (IsGauge || _positions.Count > 0))
+            StartDataAnimation(CaptureAnimationOrigin(), true);
+        DrawAnimatedChartPlot(context, plot);
     }
 
     private void MarkGeometryDirty()
@@ -721,7 +737,8 @@ public abstract partial class ChartBase : Control
         using var stable = new StableDataFrame(this);
         BuildGeometry(null);
         if (_geometryDirty) return null;
-        var hit = IsRadial ? HitTestRadial(point) : HitTestCartesian(point);
+        var hit = UsesCustomChartGeometry ? HitTestSpecializedPoint(point)
+            : IsRadial ? HitTestRadial(point) : HitTestCartesian(point);
         return hit is { } index ? GetSelection(index.Series, index.Index) : null;
     }
 
@@ -746,7 +763,7 @@ public abstract partial class ChartBase : Control
         using var opacity = context.PushOpacity(IsEffectivelyEnabled ? 1 : 0.45);
         DrawText(context, Title ?? "", new Point(ChartPadding, Math.Max(2, ChartPadding - 2)), size: FontSize + 2);
         BuildGeometry(context);
-        if (!IsGauge && (IsRadial ? _positions.Count == 0 : _normalizedPositions.Count == 0))
+        if (!IsGauge && (IsRadial || UsesCustomChartGeometry ? _positions.Count == 0 : _normalizedPositions.Count == 0))
             DrawText(context, EmptyText, new Point(Bounds.Width / 2, Bounds.Height / 2), MutedBrush, centered: true);
         if (ShowLegend && !IsGauge) DrawLegend(context);
         if (!IsGaugeValueAnimating && !_isExportSnapshot) DrawPointerOverlay(context);

@@ -97,7 +97,7 @@ Changing the base class from Button to ToggleButton is an inheritance change. St
 
 ## PreviewHost and verification
 
-PreviewHost opens the standalone top-level Home item by default. The top ThemeColorPicker selects resources; the title-bar ThemeButton switches Light / Dark only. Home snippets use the `TheOne.Avalonia.CodeEditor` NuGet package for read-only highlighting, wrapping, and copying. Expand each page's source panel to switch between its AXAML, C#, and related VM files. Sources are embedded, requiring no local repository path; the panel loads on demand in a bounded viewport.
+PreviewHost opens the standalone top-level Home item by default. The top ThemeColorPicker selects resources; the title-bar ThemeButton switches Light / Dark only. Home and necessary inline snippets use the `TheOne.Avalonia.CodeEditor` NuGet package for read-only highlighting, wrapping and copying. Short property and business-API examples appear directly in their Description entries. Pages no longer have a bottom source expander or embed the complete demo-source inventory.
 
 These scoped checks cover the palette selector, ThemeButton, code panel, and Home navigation, including native input, live resources, Light / Dark, densities, narrow viewports, and actual rendering. They do not run other controls' full regression suites.
 

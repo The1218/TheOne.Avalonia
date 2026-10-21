@@ -254,7 +254,12 @@ internal static class ControlStyleShowcase
             cell.Children.Add(label);
             cell.Children.Add(example.Sample);
             if (example.Note is { } note) cell.Children.Add(Muted(note));
-            cells.Children.Add(new SampleCell(preferredWidth) { Child = cell, Margin = new Thickness(0, 0, 20, 16) });
+            cells.Children.Add(new SampleCell(preferredWidth)
+            {
+                // A theme may enable focus only after the sample enters the visual tree.
+                Child = new PreviewDeferredContent(() => cell, 110, keyboardEntry: example.Sample.IsEnabled),
+                Margin = new Thickness(0, 0, 20, 16)
+            });
         }
 
         var panel = new StackPanel { Spacing = 12 };

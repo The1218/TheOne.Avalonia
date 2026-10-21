@@ -8,6 +8,29 @@
 
 绑定类型推断、泛型集合视图、列头排序按钮及单元格尺寸见 [DataGrid 绑定与排序](datagrid-binding.md)。
 
+## 分页行号
+
+`DataGridRowNumbers` 使用原生行头显示序号，无需自绘表格或反射读取业务字段。页码与 Pagination 同为 `long`，从 1 开始；序号为 `(PageIndex - 1) * PageSize + 行索引 + 1`，表示当前视图中的显示顺序，不能作为记录 ID。
+
+```xml
+<DataGrid ItemsSource="{CompiledBinding Records}" AutoGenerateColumns="False"
+          HeadersVisibility="All"
+          one:DataGridRowNumbers.IsVisible="True"
+          one:DataGridRowNumbers.PageIndex="{CompiledBinding CurrentPage}"
+          one:DataGridRowNumbers.PageSize="{CompiledBinding PageSize}">
+  <!-- 保留原生列、Presenter 和虚拟化。 -->
+</DataGrid>
+```
+
+| 附加属性 | 默认值 | 约束 |
+| --- | --- | --- |
+| `IsVisible` | false | 仅显式开启时接管行头 |
+| `PageIndex` | 1L | 大于等于 1 |
+| `PageSize` | 50 | 大于 0 |
+| `HeaderWidth` | 56d | 有限且大于 0 |
+
+提供对应 Get / Set 方法。翻页、更改页大小、排序和虚拟化复用后刷新已实现行；大页码运算不发生 long 乘法溢出。关闭后解除自身事件、恢复启用前的行头内容、可见性和宽度，保留宿主原有绑定。启用期间行头由此能力独占，不与自定义行头内容同时使用；需要列头时显式设置 `HeadersVisibility="All"`。普通表格不受影响。行类型注册仍遵循 [DataGrid 绑定与排序](datagrid-binding.md#nativeaot)。
+
 ## 使用列筛选
 
 实体属性直接由列的编译绑定自动识别，开启表格筛选即可。消费方在创建表格或集合视图前调用 `DataGridAot.PreserveRowType<StockRecord>()`；显示／编辑绑定继续使用 CompiledBinding。

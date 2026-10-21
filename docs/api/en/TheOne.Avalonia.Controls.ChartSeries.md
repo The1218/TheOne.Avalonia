@@ -6,37 +6,37 @@
 
 One series. Observable collections and point properties update attached charts automatically.
 
-[Source / 声明](../../../TheOne.Avalonia/Controls/ChartData.cs#L73)
+[Source / 声明](../../../TheOne.Avalonia/Controls/ChartData.cs#L80)
 
 Defaults below are source registration/model initialization values; OneTheme styles or local values can override them. Read-only members are computed state, not two-way inputs. Complex objects, templates, commands and collections follow the control's usage contract.
 
 | Property | Type | Access/binding/inheritance | Registration/model default | Meaning and constraints |
 | --- | --- | --- | --- | --- |
-| [`Brush`](../../../TheOne.Avalonia/Controls/ChartData.cs#L114) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Current series/segment brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
-| [`IsVisible`](../../../TheOne.Avalonia/Controls/ChartData.cs#L120) | `bool` | writable; OneWay | `true` | Whether the series participates in rendering and visible-data range calculation. |
-| [`ItemsSource`](../../../TheOne.Avalonia/Controls/ChartData.cs#L108) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.ChartPoint>?` | writable; OneWay | `null` | Bind source models rather than precreated controls; use notified collections for changes and a bounded viewport. |
-| [`Name`](../../../TheOne.Avalonia/Controls/ChartData.cs#L102) | `string` | writable; OneWay | `"Series"` | Name used for presentation/identity; keep it consistent with templates and keys. |
-| [`Unit`](../../../TheOne.Avalonia/Controls/ChartData.cs#L134) | `string?` | writable; OneWay | `null` | Optional tooltip/data-label unit; null inherits the assigned chart axis unit. |
-| [`ValueFormat`](../../../TheOne.Avalonia/Controls/ChartData.cs#L141) | `string?` | writable; OneWay | `null` | Optional raw-value numeric format; null inherits the assigned chart axis format. |
-| [`YAxis`](../../../TheOne.Avalonia/Controls/ChartData.cs#L127) | `TheOne.Avalonia.Controls.ChartYAxis` | writable; OneWay | `0 / default` | The independent value scale used by this series in Cartesian charts. Validation: `value => value is ChartYAxis.Primary or ChartYAxis.Secondary` Values: `Primary`, `Secondary` |
+| [`Brush`](../../../TheOne.Avalonia/Controls/ChartData.cs#L121) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Current series/segment brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
+| [`IsVisible`](../../../TheOne.Avalonia/Controls/ChartData.cs#L127) | `bool` | writable; OneWay | `true` | Whether the series participates in rendering and visible-data range calculation. |
+| [`ItemsSource`](../../../TheOne.Avalonia/Controls/ChartData.cs#L115) | `System.Collections.Generic.IList<TheOne.Avalonia.Controls.ChartPoint>?` | writable; OneWay | `null` | Bind source models rather than precreated controls; use notified collections for changes and a bounded viewport. |
+| [`Name`](../../../TheOne.Avalonia/Controls/ChartData.cs#L109) | `string` | writable; OneWay | `"Series"` | Name used for presentation/identity; keep it consistent with templates and keys. |
+| [`Unit`](../../../TheOne.Avalonia/Controls/ChartData.cs#L141) | `string?` | writable; OneWay | `null` | Optional tooltip/data-label unit; null inherits the assigned chart axis unit. |
+| [`ValueFormat`](../../../TheOne.Avalonia/Controls/ChartData.cs#L148) | `string?` | writable; OneWay | `null` | Optional raw-value numeric format; null inherits the assigned chart axis format. |
+| [`YAxis`](../../../TheOne.Avalonia/Controls/ChartData.cs#L134) | `TheOne.Avalonia.Controls.ChartYAxis` | writable; OneWay | `0 / default` | The independent value scale used by this series in Cartesian charts. Validation: `value => value is ChartYAxis.Primary or ChartYAxis.Secondary` Values: `Primary`, `Secondary` |
 
 ## Methods and constructors
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`ChartSeries.ChartSeries()`](../../../TheOne.Avalonia/Controls/ChartData.cs#L97) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
+| [`ChartSeries.ChartSeries()`](../../../TheOne.Avalonia/Controls/ChartData.cs#L104) | Creates an instance; see the signature for required arguments and optional defaults. Callers retain ownership of shared models/resources. |
 
 ## Public fields
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`static readonly StyledProperty<string> ChartSeries.NameProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L75) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<IList<ChartPoint>?> ChartSeries.ItemsSourceProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L78) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<IBrush?> ChartSeries.BrushProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L81) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<bool> ChartSeries.IsVisibleProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L84) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<ChartYAxis> ChartSeries.YAxisProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L87) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<string?> ChartSeries.UnitProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L91) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
-| [`static readonly StyledProperty<string?> ChartSeries.ValueFormatProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L94) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<string> ChartSeries.NameProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L82) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<IList<ChartPoint>?> ChartSeries.ItemsSourceProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L85) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<IBrush?> ChartSeries.BrushProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L88) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<bool> ChartSeries.IsVisibleProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L91) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<ChartYAxis> ChartSeries.YAxisProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L94) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<string?> ChartSeries.UnitProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L98) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
+| [`static readonly StyledProperty<string?> ChartSeries.ValueFormatProperty`](../../../TheOne.Avalonia/Controls/ChartData.cs#L101) | Public identifier/constant; Property/Event suffixes identify native Avalonia properties/routed events. See their CLR properties/events above. |
 
 ## Related APIs and built-in models
 

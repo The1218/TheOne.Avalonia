@@ -61,6 +61,7 @@
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Pagination.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/WorkflowEditor.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Upload.axaml" />
+                <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/AttachmentList.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/RelationGraph.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/GanttChart.axaml" />
                 <ResourceInclude Source="avares://TheOne.Avalonia/Themes/Controls/Avatar.axaml" />

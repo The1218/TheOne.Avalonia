@@ -27,9 +27,13 @@ public abstract class DialogContext : INotifyPropertyChanged
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        OnPropertyChanged(propertyName);
         return true;
     }
+
+    /// <summary>Notifies bindings when a computed property changes without replacing a backing field.</summary>
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
     internal void Attach(object session, EventHandler<DialogCloseRequestedEventArgs> handler)
     {

@@ -31,6 +31,9 @@ internal static class PreviewPageContentPolicy
     }
 
     internal static StackPanel CreateContent(string name, UserControl original)
+        => CreateContent(name, () => original);
+
+    internal static StackPanel CreateContent(string name, Func<UserControl> original)
     {
         var plan = For(name);
         var content = new StackPanel { Name = "PageContent_" + name, Spacing = 24 };
@@ -38,7 +41,7 @@ internal static class PreviewPageContentPolicy
         if (plan.Mode == PreviewPageContentMode.DefaultTheme) content.Children.Add(NativeThemePreview.Create(name));
         if (plan.Mode == PreviewPageContentMode.ProjectFeature && !plan.ShowOriginalDemo)
             content.Children.Add(NativeThemePreview.CreateProjectFeature(name));
-        if (plan.ShowOriginalDemo) content.Children.Add(original);
+        if (plan.ShowOriginalDemo) content.Children.Add(original());
         return content;
     }
 

@@ -36,7 +36,7 @@
                 </one:Timeline>
                 <one:Description LabelWidth="180">
                     <one:DescriptionItem Header="Status / Dot" Content="&lt;one:TimelineItem Status=&quot;Success&quot; Header=&quot;审核通过&quot; /&gt;&#10;&lt;one:TimelineItem.Dot&gt;&lt;one:OneIcon Kind=&quot;Approval&quot; IconSize=&quot;18&quot; /&gt;&lt;/one:TimelineItem.Dot&gt;&#10;Dot 优先于默认状态圆点；恢复为 null 后显示当前 Status。一个 Control 实例只能属于一个宿主，重复使用图标时用模板。" />
-                    <one:DescriptionItem Header="附加模板" Content="TimelineItem 支持 TimestampTemplate、DotTemplate，及原生 HeaderTemplate / ContentTemplate。模板声明 x:DataType，使用 CompiledBinding。ItemTemplate 接收原始数据项并展示在内容区。无额外命令或业务方法。" />
+                    <one:DescriptionItem Header="TimestampTemplate / DotTemplate" Content="模板声明 x:DataType，使用 CompiledBinding。ItemTemplate 接收原始数据项并展示在内容区。" />
                 </one:Description>
             </StackPanel>
         </one:InfoCard>

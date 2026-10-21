@@ -15,6 +15,7 @@
         </Style>
         <Style Selector=":is(one|ChartBase).demo-chart" x:DataType="local:ChartDemoViewModel">
             <Setter Property="AnimationDuration" Value="{CompiledBinding UpdateAnimationDuration}" />
+            <Setter Property="AnimationStyle" Value="{CompiledBinding AnimationStyle}" />
             <Setter Property="AutomationProperties.Name" Value="交互图表示例" />
             <Setter Property="IsAnimationEnabled" Value="{CompiledBinding AnimateUpdates}" />
             <Setter Property="IsEnabled" Value="{CompiledBinding Enabled}" />
@@ -177,6 +178,11 @@
                 IsChecked="{CompiledBinding AnimateUpdates, Mode=TwoWay}"
                 Margin="0,0,16,8"
                 Name="ChartAnimateUpdates" />
+            <ComboBox
+                AutomationProperties.Name="图表动画样式"
+                ItemsSource="{CompiledBinding AnimationStyles}"
+                SelectedItem="{CompiledBinding AnimationStyle, Mode=TwoWay}"
+                Margin="0,0,16,8" MinWidth="110" />
             <ComboBox
                 AutomationProperties.Name="数据更新动效时长"
                 Margin="0,0,16,8"

@@ -139,7 +139,7 @@
                     TextWrapping="Wrap" />
                 <TextBlock
                     Foreground="{DynamicResource One.Muted}"
-                    Text="以下是 TheOne 的通用附加属性，可设在单个控件、布局容器或窗口上。各控件页只展示自身的额外样式、属性、API 和模型。"
+                    Text="以下通用附加属性可设在控件、容器或窗口上。各页只展示本库新增、支持 Binding / CompiledBinding 的公开可写属性和模型属性，以及必要的业务 API；不列只读运行状态、内部字段或原生属性清单。默认 OneWay 的可写属性也可显式设置 Mode=TwoWay；编译绑定请声明实际 x:DataType。"
                     TextWrapping="Wrap" />
                 <one:Description
                     LabelWidth="210"

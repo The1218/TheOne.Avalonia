@@ -5,28 +5,27 @@ namespace TheOne.DesignPreview;
 
 internal sealed class ControlPreviewPage : UserControl
 {
-    private readonly List<Control> _sourceViews = [];
-    private readonly Lazy<ControlDetailsView> _details;
 
     internal ControlPreviewPage(PreviewPageDescriptor descriptor, UserControl demo)
     {
         Demo = demo;
         var plan = PreviewPageContentPolicy.For(descriptor.Title);
-        if (plan.ShowOriginalDemo) _sourceViews.Add(demo);
         UsesViewport = plan.UsesViewport;
-        _details = new Lazy<ControlDetailsView>(() => new ControlDetailsView(descriptor.Title));
         var supplements = new StackPanel { Spacing = 24 };
         if (UsesViewport && ControlStyleShowcase.Create(descriptor.Title) is { } styles)
             supplements.Children.Add(styles);
         // These pages author property/API/model Descriptions beside their live examples.
-        if (descriptor.Title is not ("NavPage" or "TreeSelect" or "OneIcon" or "Breadcrumb" or "DateTimePicker" or "Timeline")) supplements.Children.Add(Details);
+        if (descriptor.Title is not ("NavPage" or "TreeSelect" or "OneIcon" or "Breadcrumb" or "DateTimePicker" or "Timeline") &&
+            ControlDetailsView.CreateDeferred(descriptor.Title) is { } details)
+            supplements.Children.Add(details);
         foreach (var name in descriptor.Title switch
                  {
                      "Form" => new[] { "FormItem" }, "FlowStep" => new[] { "FlowNode" },
                      "LoadingContainer" => new[] { "LoadingIndicator" },
                      "ColorPicker" => new[] { "ColorView" }, "RefreshContainer" => new[] { "RefreshVisualizer" },
                      "Description" => new[] { "DescriptionItem" }, _ => Array.Empty<string>()
-                 }) supplements.Children.Add(new ControlDetailsView(name));
+                 })
+            if (ControlDetailsView.CreateDeferred(name) is { } extra) supplements.Children.Add(extra);
         // Canvas editors own the remaining viewport; documentation has a separate
         // scroll surface and cannot steal height from or overlap the live editor.
         Content = UsesViewport
@@ -47,15 +46,12 @@ internal sealed class ControlPreviewPage : UserControl
     }
 
     internal UserControl Demo { get; }
-    internal ControlDetailsView Details => _details.Value;
     internal bool UsesViewport { get; }
-    internal IEnumerable<Control> SourceViews => _sourceViews;
 
     private Control Presentation(string name, UserControl demo, Control supplements)
     {
         var page = PreviewPageContentPolicy.CreateContent(name, demo);
-        _sourceViews.AddRange(page.Children.OfType<NativeThemePreview>());
-        page.Children.Add(supplements);
+        if (supplements is Panel { Children.Count: > 0 }) page.Children.Add(supplements);
         return page;
     }
 

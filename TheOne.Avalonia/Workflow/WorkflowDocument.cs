@@ -244,6 +244,17 @@ public sealed partial class WorkflowDocument : WorkflowObservable
         });
     }
 
+    /// <summary>修改本图中指定连线的固定值或引用，保留原字段的撤销记录；不允许编辑其他文档的字段。</summary>
+    public void SetConnectionProperty(WorkflowConnection connection, WorkflowProperty property, string value,
+        WorkflowDataReference? reference = null)
+    {
+        ArgumentNullException.ThrowIfNull(connection);
+        ArgumentNullException.ThrowIfNull(property);
+        if (!ContainsConnection(connection) || !connection.Properties.Contains(property))
+            throw new ArgumentException("The property must belong to a connection in this document.", nameof(property));
+        SetProperty(property, value, reference);
+    }
+
     /// <summary>One undoable multi-selection edit, preserving stable keys and their order.</summary>
     public void SetSelectedKeys(WorkflowProperty property, IEnumerable<string> keys)
     {
@@ -291,12 +302,23 @@ public sealed partial class WorkflowDocument : WorkflowObservable
     public bool TryConnect(string sourceNode, string sourcePort, string targetNode, string targetPort,
         out string? error, bool allowCycles = false)
     {
-        error = CheckConnection(sourceNode, sourcePort, targetNode, targetPort, allowCycles);
-        if (error is not null) return false;
         var edge = new WorkflowConnection
         {
             SourceNodeId = sourceNode, SourcePortId = sourcePort, TargetNodeId = targetNode, TargetPortId = targetPort
         };
+        return TryConnect(edge, out error, allowCycles);
+    }
+
+    /// <summary>Adds a host-created connection in one undoable edit after validating identity and topology.</summary>
+    public bool TryConnect(WorkflowConnection connection, out string? error, bool allowCycles = false)
+    {
+        ArgumentNullException.ThrowIfNull(connection);
+        error = string.IsNullOrWhiteSpace(connection.Id) || Connections.Any(edge => edge.Id == connection.Id)
+            ? "连线身份必须唯一且不能为空"
+            : CheckConnection(connection.SourceNodeId, connection.SourcePortId, connection.TargetNodeId,
+                connection.TargetPortId, allowCycles);
+        if (error is not null) return false;
+        var edge = connection;
         Edit("连接节点", () => Connections.Add(edge), () => Connections.Remove(edge));
         return true;
     }
@@ -379,6 +401,7 @@ public sealed partial class WorkflowDocument : WorkflowObservable
             var input = target?.Ports.FirstOrDefault(p => p.Id == c.TargetPortId);
             if (!edgeIds.Add(c.Id) || string.IsNullOrWhiteSpace(c.Id))
                 issues.Add(new WorkflowValidationIssue("连线 ID 为空或重复", ConnectionId: c.Id));
+            ValidateConnectionProperties(c, target, issues);
             if (source == null || target == null || output == null || input == null)
             {
                 issues.Add(new WorkflowValidationIssue("连线端点不存在", ConnectionId: c.Id));
@@ -402,5 +425,41 @@ public sealed partial class WorkflowDocument : WorkflowObservable
         }
 
         return issues;
+    }
+
+    /// <summary>验证连线字段及其上游引用；业务字段含义仍由宿主验证，不把 Label 当执行表达式。</summary>
+    private void ValidateConnectionProperties(WorkflowConnection connection, WorkflowNode? target,
+        List<WorkflowValidationIssue> issues)
+    {
+        if (connection.Properties.Any(p => string.IsNullOrWhiteSpace(p.Key)) ||
+            connection.Properties.Select(p => p.Key).Distinct().Count() != connection.Properties.Count)
+            issues.Add(new WorkflowValidationIssue("连线字段 Key 为空或重复", ConnectionId: connection.Id));
+        foreach (var property in connection.Properties)
+        {
+            string? error = null;
+            if (string.IsNullOrWhiteSpace(property.DataType) || !Enum.IsDefined(property.Kind))
+                error = "字段类型不合法";
+            else if (property.Reference is { } reference)
+            {
+                if (target is null || !GetReferenceOptions(target, property).Any(o => o.Reference == reference))
+                    error = "引用不存在、类型不兼容或不在上游";
+            }
+            else if (property.Kind == WorkflowValueKind.MultiSelect &&
+                     (property.SelectedKeys.Any(string.IsNullOrWhiteSpace) ||
+                      property.SelectedKeys.Distinct(StringComparer.Ordinal).Count() != property.SelectedKeys.Count))
+                error = "选项 Key 为空或重复";
+            else if (property.IsRequired && (property.Kind == WorkflowValueKind.MultiSelect
+                         ? property.SelectedKeys.Count == 0 : string.IsNullOrWhiteSpace(property.Value)))
+                error = "必填";
+            else if (property.Kind == WorkflowValueKind.Number && property.Value.Length > 0 &&
+                     (!double.TryParse(property.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var number) ||
+                      !double.IsFinite(number)))
+                error = "请输入有限数值";
+            else if (property.Kind == WorkflowValueKind.Boolean && property.Value.Length > 0 &&
+                     !bool.TryParse(property.Value, out _))
+                error = "请输入 true 或 false";
+            if (error is not null)
+                issues.Add(new WorkflowValidationIssue($"{property.Title}：{error}", ConnectionId: connection.Id));
+        }
     }
 }

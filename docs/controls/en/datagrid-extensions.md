@@ -8,6 +8,29 @@ Native DataGrid, column types, virtualized presenters, and keyboard behavior are
 
 See [DataGrid binding and sorting](datagrid-binding.md) for type inference, generic collection views, header sort buttons, and cell sizing.
 
+## Paged row numbers
+
+`DataGridRowNumbers` uses native row headers, without custom drawing or reflection over business fields. Like Pagination, its page index is a 1-based `long`. The displayed number is `(PageIndex - 1) * PageSize + row index + 1`: an ordinal in the current view, never a record ID.
+
+```xml
+<DataGrid ItemsSource="{CompiledBinding Records}" AutoGenerateColumns="False"
+          HeadersVisibility="All"
+          one:DataGridRowNumbers.IsVisible="True"
+          one:DataGridRowNumbers.PageIndex="{CompiledBinding CurrentPage}"
+          one:DataGridRowNumbers.PageSize="{CompiledBinding PageSize}">
+  <!-- Native columns, presenters, and virtualization remain intact. -->
+</DataGrid>
+```
+
+| Attached property | Default | Constraint |
+| --- | --- | --- |
+| `IsVisible` | false | Takes ownership of row headers only when explicitly enabled |
+| `PageIndex` | 1L | At least 1 |
+| `PageSize` | 50 | Positive |
+| `HeaderWidth` | 56d | Finite and positive |
+
+Each property has matching Get / Set methods. Realized rows refresh after paging, page-size changes, sorting, and virtualized reuse. Large page calculations avoid long multiplication overflow. Disabling removes its event handlers and restores the original header contents, visibility, and width while preserving host bindings. This feature exclusively owns row headers while enabled; do not combine it with custom header content. Explicitly set `HeadersVisibility="All"` when column headers are needed. Unconfigured grids remain unaffected. Register row types as described in [DataGrid binding and sorting](datagrid-binding.md#nativeaot).
+
 ## Column filtering
 
 Compiled column bindings identify entity properties automatically. Enable grid filtering and register `DataGridAot.PreserveRowType<StockRecord>()` before creating the grid / collection view. Display and edit bindings continue to use CompiledBinding.
