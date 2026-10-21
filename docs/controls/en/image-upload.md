@@ -29,6 +29,8 @@ The control owns and releases decoded images. The consumer owns accepted `Upload
 
 PreviewHost: **ImageUpload** under extension controls.
 
+The View action uses a dedicated image popup sized from its owner client area, up to 800 × 560 DIP. It omits the generic Flyout padding, 640 × 480 cap and outer scrolling container. The image fits, zooms and pans inside its own viewport rather than through popup scrollbars. Narrow windows retain the title, close and zoom controls. Escape or Close ends viewing without changing the card’s bound file. This host configuration applies only to the ImageUpload viewer; ordinary flyouts retain their bounded scrolling behavior.
+
 <!-- visual-guide:start -->
 ## Appearance and example states
 

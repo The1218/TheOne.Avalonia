@@ -113,7 +113,11 @@ public class ImageUpload : Upload
             if (e.NameScope.Find<Button>("PART_FullScreen") is { } fullScreen) fullScreen.IsVisible = false;
         };
         ControlSizing.SetSize(viewer, ControlSizing.GetSize(this));
-        _previewFlyout = new Flyout { Content = viewer, Placement = PlacementMode.Center };
+        _previewFlyout = new Flyout
+        {
+            Content = viewer, Placement = PlacementMode.Center,
+            FlyoutPresenterClasses = { "one-image-upload-preview" }
+        };
         viewer.CloseRequested += (_, _) => ClosePreview();
         _previewFlyout.ShowAt(this);
     }
