@@ -6,7 +6,7 @@
     <ControlTheme TargetType="one:ChartBase" x:Key="{x:Type one:ChartBase}">
         <Setter Property="Background" Value="{DynamicResource One.Chart.Background}" />
         <Setter Property="Foreground" Value="{DynamicResource One.Chart.Text}" />
-        <Setter Property="MutedBrush" Value="{DynamicResource One.Chart.Text}" />
+        <Setter Property="MutedBrush" Value="{DynamicResource One.Muted}" />
         <Setter Property="GridBrush" Value="{DynamicResource One.Chart.Grid}" />
         <Setter Property="AccentBrush" Value="{DynamicResource One.Chart.Series1}" />
         <Setter Property="SecondaryBrush" Value="{DynamicResource One.Chart.Series2}" />
@@ -14,12 +14,13 @@
         <Setter Property="QuaternaryBrush" Value="{DynamicResource One.Chart.Series4}" />
         <Setter Property="FifthBrush" Value="{DynamicResource One.Chart.Series5}" />
         <Setter Property="SixthBrush" Value="{DynamicResource One.Chart.Series6}" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="ToolTip.ShowDelay" Value="120" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="DefaultChartWidth" Value="400" />
         <Setter Property="DefaultChartHeight" Value="280" />
-        <Setter Property="ChartPadding" Value="12" />
+        <Setter Property="ChartPadding" Value="16" />
         <Setter Property="StrokeThickness" Value="2.5" />
-        <Setter Property="MarkerRadius" Value="3.5" />
+        <Setter Property="MarkerRadius" Value="3" />
         <Setter Property="SelectionThickness" Value="2" />
         <Setter Property="SliceHoverOffset" Value="6" />
         <Setter Property="SliceHoverScale" Value="1.025" />
@@ -34,24 +35,24 @@
             <Setter Property="AnimationStyle" Value="None" />
         </Style>
         <Style Selector="^.one-small">
-            <Setter Property="FontSize" Value="10" />
+            <Setter Property="FontSize" Value="11" />
             <Setter Property="DefaultChartWidth" Value="320" />
             <Setter Property="DefaultChartHeight" Value="224" />
-            <Setter Property="ChartPadding" Value="8" />
+            <Setter Property="ChartPadding" Value="10" />
             <Setter Property="StrokeThickness" Value="2" />
-            <Setter Property="MarkerRadius" Value="3" />
+            <Setter Property="MarkerRadius" Value="2.5" />
             <Setter Property="SelectionThickness" Value="1.5" />
             <Setter Property="SliceHoverOffset" Value="4" />
             <Setter Property="SliceHoverScale" Value="1.02" />
             <Setter Property="GaugeBandRatio" Value="0.14" />
         </Style>
         <Style Selector="^.one-large">
-            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontSize" Value="13" />
             <Setter Property="DefaultChartWidth" Value="480" />
             <Setter Property="DefaultChartHeight" Value="336" />
-            <Setter Property="ChartPadding" Value="16" />
+            <Setter Property="ChartPadding" Value="20" />
             <Setter Property="StrokeThickness" Value="3" />
-            <Setter Property="MarkerRadius" Value="4.25" />
+            <Setter Property="MarkerRadius" Value="3.75" />
             <Setter Property="SelectionThickness" Value="2.5" />
             <Setter Property="SliceHoverOffset" Value="8" />
             <Setter Property="SliceHoverScale" Value="1.03" />

@@ -12,6 +12,9 @@ public partial class ChartBase
 
     private readonly Dictionary<int, int> _legendItemPages = [];
     private readonly List<List<LegendItem>> _legendPages = [];
+    private readonly Dictionary<int, FormattedText> _legendTexts = [];
+    private int _paintedLegendPage = -1;
+    private int? _legendHover;
     private bool _legendDragged;
     private int _legendFocus;
     private bool _legendKeyboard;
@@ -48,8 +51,16 @@ public partial class ChartBase
         }
     }
 
+    private void SetLegendHover(int? target)
+    {
+        if (_legendHover == target) return;
+        _legendHover = target;
+        InvalidateVisual();
+    }
+
     private void BuildLegendLayout()
     {
+        _legendTexts.Clear();
         _legendPages.Clear();
         _legendItemPages.Clear();
         _legendPrevious = _legendNext = null;
@@ -77,9 +88,9 @@ public partial class ChartBase
             return;
         }
 
-        var paged = entries.Sum(entry => entry.Width) > Bounds.Width - 24;
-        var left = paged ? 42 : 12;
-        var right = Bounds.Width - (paged ? 42 : 12);
+        var paged = entries.Sum(entry => entry.Width) > Bounds.Width - ChartPadding * 2;
+        var left = paged ? 42 : ChartPadding;
+        var right = Bounds.Width - (paged ? 42 : ChartPadding);
         if (right <= left)
         {
             _legendPage = 0;
@@ -206,6 +217,7 @@ public partial class ChartBase
             return true;
         _legendPointer = e.Pointer;
         _legendPressed = target;
+        InvalidateVisual();
         _legendPressPosition = e.GetPosition(this);
         _legendDragged = false;
         _legendPressedSeries = series;
@@ -218,7 +230,11 @@ public partial class ChartBase
     {
         if (_legendPointer != e.Pointer) return false;
         var delta = e.GetPosition(this) - _legendPressPosition;
-        if (delta.X * delta.X + delta.Y * delta.Y >= 16) _legendDragged = true;
+        if (!_legendDragged && delta.X * delta.X + delta.Y * delta.Y >= 16)
+        {
+            _legendDragged = true;
+            InvalidateVisual();
+        }
         ClearPointerHover();
         e.Handled = true;
         return true;
@@ -258,6 +274,7 @@ public partial class ChartBase
     {
         var pointer = _legendPointer;
         _legendPointer = null;
+        if (_legendPressed.HasValue) InvalidateVisual();
         _legendPressed = null;
         _legendDragged = false;
         _legendPressedSeries = null;
@@ -321,17 +338,39 @@ public partial class ChartBase
     private void DrawLegend(DrawingContext context)
     {
         if (_geometryDirty || _legendPage >= _legendPages.Count || SeriesSource is not { } source) return;
+        if (_paintedLegendPage != _legendPage)
+        {
+            _legendTexts.Clear();
+            _paintedLegendPage = _legendPage;
+        }
         foreach (var item in _legendPages[_legendPage])
         {
             if (item.Series < 0 || item.Series >= source.Count) continue;
             var visible = IsRadial || source[item.Series].IsVisible;
+            if (!IsRadial && (_legendHover == item.Index || _legendPressed == item.Index && !_legendDragged))
+            {
+                using var tint = context.PushOpacity(_legendPressed == item.Index ? .14 : .08);
+                context.DrawRectangle(Foreground, null, item.Bounds.Deflate(1), 5, 5);
+            }
             var dot = new Point(item.Bounds.Left + 8, item.Bounds.Center.Y);
-            context.DrawEllipse(visible ? SeriesBrush(item.Series, IsRadial ? item.Index : -1) : null,
-                visible ? null : new Pen(MutedBrush, 1.5), dot, 4, 4);
+            var brush = SeriesBrush(item.Series, IsRadial ? item.Index : -1);
+            if (visible && (DrawsLineCartesian || IsAreaCartesian || IsStackedAreaCartesian))
+            {
+                context.DrawLine(new Pen(brush, 2, lineCap: PenLineCap.Round),
+                    dot - new Vector(5, 0), dot + new Vector(5, 0));
+                context.DrawEllipse(brush, null, dot, 2.5, 2.5);
+            }
+            else
+            {
+                context.DrawRectangle(visible ? brush : null, visible ? null : new Pen(MutedBrush),
+                    new Rect(dot.X - 4, dot.Y - 4, 8, 8), 2.5, 2.5);
+            }
             using (context.PushClip(new Rect(item.Bounds.Left + 18, item.Bounds.Top,
                        Math.Max(0, item.Bounds.Width - 24), item.Bounds.Height)))
             {
-                DrawText(context, item.Name, new Point(item.Bounds.Left + 18, item.Bounds.Top + 6), MutedBrush);
+                if (!_legendTexts.TryGetValue(item.Index, out var text))
+                    _legendTexts[item.Index] = text = Text(item.Name, visible ? Foreground : MutedBrush);
+                context.DrawText(text, new Point(item.Bounds.Left + 18, dot.Y - text.Height / 2));
             }
 
             if (IsFocused && _legendKeyboard && item.Index == _legendFocus && !IsRadial)
@@ -339,11 +378,25 @@ public partial class ChartBase
         }
 
         if (_legendPrevious is { } previous)
-            DrawText(context, "‹", new Point(previous.Center.X, previous.Top + 3),
-                _legendPage > 0 ? Foreground : MutedBrush, centered: true);
+            DrawLegendArrow(context, previous, -1, _legendPage > 0);
         if (_legendNext is { } next)
-            DrawText(context, "›", new Point(next.Center.X, next.Top + 3),
-                _legendPage + 1 < _legendPages.Count ? Foreground : MutedBrush, centered: true);
+            DrawLegendArrow(context, next, -2, _legendPage + 1 < _legendPages.Count);
+    }
+
+    private void DrawLegendArrow(DrawingContext context, Rect bounds, int target, bool enabled)
+    {
+        if (enabled && (_legendHover == target || _legendPressed == target && !_legendDragged))
+        {
+            using var tint = context.PushOpacity(_legendPressed == target ? .14 : .08);
+            context.DrawRectangle(Foreground, null, bounds.Deflate(1), 5, 5);
+        }
+        var direction = target == -1 ? -1 : 1;
+        var center = bounds.Center;
+        var tip = center + new Vector(direction * 2, 0);
+        using var opacity = context.PushOpacity(enabled ? 1 : .35);
+        var pen = new Pen(MutedBrush, 1.5, lineCap: PenLineCap.Round);
+        context.DrawLine(pen, center + new Vector(-direction * 2, -4), tip);
+        context.DrawLine(pen, tip, center + new Vector(-direction * 2, 4));
     }
 
     private readonly record struct LegendItem(int Index, int Series, string Name, Rect Bounds);

@@ -4,7 +4,6 @@ using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Diagnostics;
 using Avalonia.Input;
 using Avalonia.Media;
 
@@ -38,7 +37,6 @@ public abstract class HierarchyChartBase : SpecializedChartBase
     private readonly HashSet<SolidColorBrush> _observedLabelBrushes = new(ReferenceEqualityComparer.Instance);
     private LabelContext? _labelContext;
     private bool _automaticLabelBrush;
-    private bool? _snapshotAutomaticLabelBrush;
     private readonly ChartSeries _projection = new() { Name = "Hierarchy" };
     private ChartHierarchyNode? _selectedNode;
     private bool _canDrillUp, _invalidHierarchy, _invalidEdges;
@@ -294,7 +292,7 @@ public abstract class HierarchyChartBase : SpecializedChartBase
         _usedLabelBrushes.Clear();
         var solid = Foreground as ISolidColorBrush;
         var background = Background as ISolidColorBrush;
-        _automaticLabelBrush = _snapshotAutomaticLabelBrush ?? UsesAutomaticLabelBrush();
+        _automaticLabelBrush = UsesAutomaticLabelBrush();
         var context = new LabelContext(FontFamily, FontSize, FlowDirection, Foreground, solid?.Color,
             Foreground?.Opacity ?? 1, ActualThemeVariant, CultureInfo.CurrentCulture,
             _automaticLabelBrush, background?.Color, background?.Opacity ?? 1);
@@ -306,14 +304,6 @@ public abstract class HierarchyChartBase : SpecializedChartBase
         }
         if (_automaticLabelBrush && Background is SolidColorBrush mutableBackground) _usedLabelBrushes.Add(mutableBackground);
         return new LabelPreparation(this);
-    }
-
-    private bool UsesAutomaticLabelBrush()
-    {
-        var diagnostic = this.GetDiagnostic(ForegroundProperty);
-        var explicitForeground = diagnostic.Priority <= BindingPriority.LocalValue || diagnostic.IsOverriddenCurrentValue;
-        var themeForeground = this.TryFindResource("One.Chart.Text", ActualThemeVariant, out var resource) ? resource as IBrush : null;
-        return !explicitForeground && (Foreground is null || ReferenceEquals(Foreground, themeForeground));
     }
 
     private protected FormattedText HierarchyLabel(HierarchyNodeState state, IBrush fill)
@@ -335,16 +325,7 @@ public abstract class HierarchyChartBase : SpecializedChartBase
         if (fill is SolidColorBrush mutableFill) _usedLabelBrushes.Add(mutableFill);
         var key = (solid.Color, solid.Opacity);
         if (_contrastBrushes.TryGetValue(key, out var cached)) return cached;
-        var alpha = solid.Color.A / 255d * solid.Opacity;
-        var backgroundBrush = Background as ISolidColorBrush;
-        var background = backgroundBrush?.Color;
-        if (alpha < 1 && (background is null || background.Value.A < 255 || backgroundBrush!.Opacity < 1))
-            return Foreground ?? Brushes.Black;
-        var red = solid.Color.R / 255d * alpha + (background?.R ?? 0) / 255d * (1 - alpha);
-        var green = solid.Color.G / 255d * alpha + (background?.G ?? 0) / 255d * (1 - alpha);
-        var blue = solid.Color.B / 255d * alpha + (background?.B ?? 0) / 255d * (1 - alpha);
-        var luminance = .2126 * Linear(red) + .7152 * Linear(green) + .0722 * Linear(blue);
-        var brush = luminance > .1791287847 ? Brushes.Black : Brushes.White;
+        var brush = ContrastingLabelBrush(solid);
         if (_contrastBrushes.Count < MaximumCachedNodeLabels) _contrastBrushes[key] = brush;
         return brush;
     }
@@ -368,8 +349,6 @@ public abstract class HierarchyChartBase : SpecializedChartBase
             InvalidateChartGeometry();
     }
 
-    private static double Linear(double value) => value <= .04045 ? value / 12.92 : Math.Pow((value + .055) / 1.055, 2.4);
-
     private void OnNodeDoubleTapped(object? sender, TappedEventArgs args)
     {
         if (HitTestDataPoint(args.GetPosition(this))?.Point is ChartHierarchyNode node && DrillDown(node)) args.Handled = true;
@@ -381,7 +360,6 @@ public abstract class HierarchyChartBase : SpecializedChartBase
         var target = (HierarchyChartBase)snapshot;
         // Export copies effective properties as local values. Preserve the source's paint policy rather
         // than mistaking that implementation detail for an explicit consumer foreground override.
-        target._snapshotAutomaticLabelBrush = _snapshotAutomaticLabelBrush ?? UsesAutomaticLabelBrush();
         var clones = new Dictionary<ChartHierarchyNode, ChartHierarchyNode>(ReferenceEqualityComparer.Instance);
         foreach (var state in _order)
             clones[state.Node] = new ChartHierarchyNode(state.Node.Label,

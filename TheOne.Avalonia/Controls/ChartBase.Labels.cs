@@ -1,10 +1,41 @@
 using Avalonia;
 using Avalonia.Media;
+using Avalonia.Controls;
+using Avalonia.Data;
+using Avalonia.Diagnostics;
 
 namespace TheOne.Avalonia.Controls;
 
 public abstract partial class ChartBase
 {
+    private bool? _exportAutomaticLabelBrush;
+
+    private protected bool UsesAutomaticLabelBrush()
+    {
+        if (_exportAutomaticLabelBrush is { } automatic) return automatic;
+        var diagnostic = this.GetDiagnostic(ForegroundProperty);
+        var explicitForeground = diagnostic.Priority <= BindingPriority.LocalValue || diagnostic.IsOverriddenCurrentValue;
+        var themeForeground = this.TryFindResource("One.Chart.Text", ActualThemeVariant, out var resource) ? resource as IBrush : null;
+        return !explicitForeground && (Foreground is null || ReferenceEquals(Foreground, themeForeground));
+    }
+
+    private protected IBrush ContrastingLabelBrush(IBrush fill)
+    {
+        if (fill is not ISolidColorBrush solid) return Foreground ?? Brushes.Black;
+        var alpha = solid.Color.A / 255d * solid.Opacity;
+        var backgroundBrush = Background as ISolidColorBrush;
+        var background = backgroundBrush?.Color;
+        if (alpha < 1 && (background is null || background.Value.A < 255 || backgroundBrush!.Opacity < 1))
+            return Foreground ?? Brushes.Black;
+        var red = solid.Color.R / 255d * alpha + (background?.R ?? 0) / 255d * (1 - alpha);
+        var green = solid.Color.G / 255d * alpha + (background?.G ?? 0) / 255d * (1 - alpha);
+        var blue = solid.Color.B / 255d * alpha + (background?.B ?? 0) / 255d * (1 - alpha);
+        var luminance = .2126 * Linear(red) + .7152 * Linear(green) + .0722 * Linear(blue);
+        return luminance > .1791287847 ? Brushes.Black : Brushes.White;
+    }
+
+    private static double Linear(double value) => value <= .04045 ? value / 12.92 : Math.Pow((value + .055) / 1.055, 2.4);
+
     private Rect CartesianDataClip => IsCategoricalCartesian
         ? _cartesianPlot
         : _cartesianPlot.Inflate(MarkerRadius + SelectionThickness + 2);
@@ -85,7 +116,7 @@ public abstract partial class ChartBase
         Point Position,
         IBrush? Brush);
 
-    private sealed class LabelOccupancy
+    private protected sealed class LabelOccupancy
     {
         private const double CellSize = 32;
         private readonly Dictionary<(int X, int Y), List<Rect>> _cells = [];

@@ -9,7 +9,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageDescription>TheOne themes and extended controls for Avalonia, with native DataGrid filtering, frozen columns and numeric summaries.</PackageDescription>
-        <PackageReleaseNotes>Integrates OneIcon enum values with icon hosts while preserving custom templates and compiled bindings. Fixes Geometry fallback, custom icon sizing, LoadingContainer disabled foreground and ImageUpload viewer popup scrolling. Includes ImageUpload and illustrated bilingual guides. Coordinated preview.11 release with TheOne.Avalonia.DataGrid. Requires .NET 10 and Avalonia 12.1.4. NuGet upload is manual.</PackageReleaseNotes>
+        <PackageReleaseNotes>Refines ChartBase styling, hover feedback and chart-specific entry motion. Coordinates with TheOne.Avalonia.DataGrid 1.0.0-preview.12. Requires .NET 10 and Avalonia 12.1.4.</PackageReleaseNotes>
         <WarningsAsErrors>$(WarningsAsErrors);NU5104</WarningsAsErrors>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>

@@ -35,7 +35,7 @@ All 21 chart controls derived from `ChartBase` share the same animation settings
 
 | AnimationStyle | First nonempty presentation | Subsequent data changes |
 | --- | --- | --- |
-| `Auto` | Reveal the prepared plot from left to right | Compatible Cartesian frames interpolate coordinates; structural changes crossfade cached data layers. Pie / doughnut interpolate angles and gauges interpolate value, arc and needle. All specialized types, including the statistical and hierarchy charts, fade their prepared target plot. |
+| `Auto` | Lines and areas reveal across fixed axes. Bars grow from the visible baseline, scatter points fade in, pie and doughnut sectors sweep clockwise, and gauges advance from their minimum. Specialized plots fade in. | Compatible Cartesian frames interpolate coordinates; structural changes crossfade cached data layers. Pie / doughnut interpolate angles and gauges interpolate value, arc and needle. All specialized types, including the statistical and hierarchy charts, fade their prepared target plot. |
 | `None` | Immediate target frame | Immediate target frame |
 | `Fade` | Fade in the prepared plot | Fade in the prepared target plot |
 | `Reveal` | Reveal from left to right | Reveal the prepared target plot from left to right |
@@ -310,16 +310,16 @@ Release builds with zero errors and two existing unrelated nullable warnings. **
 | Property | Small | Normal | Large |
 | --- | --- | --- | --- |
 | `DefaultChartWidth` / `DefaultChartHeight` | 320 / 224 | 400 / 280 | 480 / 336 |
-| `FontSize` | 10 | 11 | 12 |
-| `ChartPadding` | 8 | 12 | 16 |
+| `FontSize` | 11 | 12 | 13 |
+| `ChartPadding` | 10 | 16 | 20 |
 | `StrokeThickness` | 2 | 2.5 | 3 |
-| `MarkerRadius` | 3 | 3.5 | 4.25 |
+| `MarkerRadius` | 2.5 | 3 | 3.75 |
 | `SelectionThickness` | 1.5 | 2 | 2.5 |
 | `SliceHoverOffset` | 4 | 6 | 8 |
 | `SliceHoverScale` | 1.02 | 1.025 | 1.03 |
 | `GaugeBandRatio` | 0.14 | 0.18 | 0.22 |
 
-Charts use compact fonts separate from standard forms. Gauge tick fonts are 9 / 10 / 11, center values 20 / 22 / 24. Titles add 2 to the base font; legends use the base. PreviewHost chart-style widths follow size at 240 / 300 / 360 rather than using one fixed width.
+Charts use compact fonts separate from standard forms. Gauge tick fonts are 10 / 11 / 12, with center values up to 22 / 24 / 26. Semibold titles use the base size plus 4 DIP. Legends use the base size. PreviewHost chart-style widths follow size at 240 / 300 / 360 rather than using one fixed width.
 
 Override values per chart. `DefaultChartWidth` / `DefaultChartHeight` are preferred dimensions only; explicit `Width` / `Height` or Grid stretching determines actual size. Even at equal dimensions, density changes internally. Radial charts reserve space for lifted sectors; Cartesian charts recalculate plot area and tick / label capacity from fonts and spacing.
 
@@ -352,14 +352,14 @@ This section lists project-added control-specific properties, public Classes usa
 | [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 | [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | writable; OneWay | `0 / default` | First nonempty presentation ; Subsequent data changes Validation: `value => Enum.IsDefined(value)` Values: `Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Background brush; use DynamicResource for theme-dependent surfaces. |
-| [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | writable; OneWay | `12` | 8 ; 12 ; 16 Validation: `value => double.IsFinite(value) && value >= 0` |
+| [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | writable; OneWay | `12` | 10 ; 16 ; 20 Validation: `value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | read-only; OneWay | `computed / state` | Read-only runtime/derived state, updated by the control/model for display or command conditions; not a two-way input. |
 | [`DefaultChartHeight`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L47) | `double` | writable; OneWay | `280` | 320 / 224 ; 400 / 280 ; 480 / 336 Validation: `value => double.IsFinite(value) && value > 0` |
 | [`DefaultChartWidth`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L40) | `double` | writable; OneWay | `400` | 320 / 224 ; 400 / 280 ; 480 / 336 Validation: `value => double.IsFinite(value) && value > 0` |
 | [`EmptyText`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L255) | `string` | writable; OneWay | `"暂无数据"` | `暂无数据`, the default Chinese no-data text |
 | [`FifthBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L321) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Fifth-series brush; use One.* dynamic resources for themes. Explicit local values take precedence. |
 | [`FontFamily`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L333) | `Avalonia.Media.FontFamily` | writable; OneWay | `inherited registration` | Font family for text rendering; Avalonia handles fallback and actual text metrics. |
-| [`FontSize`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L339) | `double` | writable; OneWay | `inherited registration` | 10 ; 11 ; 12 |
+| [`FontSize`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L339) | `double` | writable; OneWay | `inherited registration` | 11 ; 12 ; 13 |
 | [`Foreground`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L279) | `Avalonia.Media.IBrush?` | writable; OneWay | `inherited registration` | Foreground brush; retain text, status and disabled contrast when overriding. |
 | [`GaugeBandRatio`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L83) | `double` | writable; OneWay | `0.18` | Follows three theme densities; Basic, Progress, Grade, Barometer scale bands by structure; ratio is overridable Validation: `value => double.IsFinite(value) && value > 0 && value <= 0.5` |
 | [`GaugeMajorTickCount`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L34) | `int` | writable; OneWay | `5` | Number of major ticks, including the minimum and maximum. Validation: `value => value >= 2 && value <= 25` |
@@ -376,7 +376,7 @@ This section lists project-added control-specific properties, public Classes usa
 | [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | read-only; CLR / n/a | `accessor-defined / state` | Kind enum for the owning field/property/element; see its concrete enum for choices. Values: `Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | read-only; CLR / n/a | `accessor-defined / state` | Read-only paging state; zero-based page index |
-| [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | writable; OneWay | `3.5` | 3 ; 3.5 ; 4.25 Validation: `value => double.IsFinite(value) && value > 0` |
+| [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | writable; OneWay | `3.5` | 2.5 ; 3 ; 3.75 Validation: `value => double.IsFinite(value) && value > 0` |
 | [`Maximum`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L231) | `double` | writable; OneWay | `100` | Primary value-axis maximum; null uses automatic bounds without changing the underlying data. Validation: `double.IsFinite` |
 | [`Minimum`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L225) | `double` | writable; OneWay | `0 / default` | Primary value-axis minimum; null derives it from data. Explicit ranges must be consistent with the data and Maximum. Validation: `double.IsFinite` |
 | [`MutedBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L291) | `Avalonia.Media.IBrush?` | writable; OneWay | `null` | Muted text/helper-mark brush; use One.* dynamic resources for themes. Explicit local values take precedence. |

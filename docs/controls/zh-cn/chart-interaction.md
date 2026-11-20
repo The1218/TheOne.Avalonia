@@ -53,6 +53,8 @@ Scatter 选择保持同步事件与原始模型身份，复用基础样本、Pen
 
 悬停或选择柱形／条形时，强调整块柱体，不在数据标签上叠加圆点。悬停饼图／环形图时，扇区沿中心方向抬起并略微放大，百分比随扇区移动；`SliceHoverOffset` / `SliceHoverScale` 可调整偏移与缩放，选择状态通过扇区边框表示。折线、面积和散点仍强调原始数据点。此行为参考 [Chart.js 的整柱悬停样式](https://www.chartjs.org/docs/latest/charts/bar.html)与[扇区 hoverOffset](https://www.chartjs.org/docs/latest/charts/doughnut.html)。
 
+悬停高亮和扇区抬起最多用 140 ms 过渡，指针移开后最多用 95 ms 回落。命中结果、提示数据和十字线即时跟随指针。设置 `Motion.Enabled="False"`、`IsAnimationEnabled="False"`、`AnimationStyle="None"` 或将动画时长设为零，悬停反馈会立即到位。超过现有 6,000 个绘制标记动效预算的图表也会直接显示高亮。
+
 默认 Single 模式悬停数据点显示提示，单击选择数据点。图表可通过 Tab 聚焦；Left / Right 移动数据点，Home / End 到首尾有效点，Up / Down 切换坐标图系列，Escape 清除选择。导航直接读取模型，包括尚未命中过的数据点。
 
 ```csharp
@@ -172,14 +174,14 @@ RevenueChart.ResetViewport();
 | [`AnimationProgress`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L66) | `double` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 | [`AnimationStyle`](../../../TheOne.Avalonia/Controls/ChartBase.Animation.cs#L59) | `TheOne.Avalonia.Controls.ChartAnimationStyle` | 可写; OneWay | `0 / default` | 首次非空展示 ; 后续数据变化 校验：`value => Enum.IsDefined(value)` 可选值：`Auto`, `None`, `Fade`, `Reveal` |
 | [`Background`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L273) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 背景画刷；主题相关背景使用 DynamicResource，避免固定颜色破坏明暗切换。 |
-| [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | 可写; OneWay | `12` | 8 ; 12 ; 16 校验：`value => double.IsFinite(value) && value >= 0` |
+| [`ChartPadding`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L53) | `double` | 可写; OneWay | `12` | 10 ; 16 ; 20 校验：`value => double.IsFinite(value) && value >= 0` |
 | [`CrosshairPosition`](../../../TheOne.Avalonia/Controls/ChartBase.Interaction.cs#L54) | `Avalonia.Point?` | 只读; OneWay | `computed / state` | 只读运行状态或派生结果；由对应控件／模型更新，供展示和命令条件读取，不作为双向输入。 |
 | [`DefaultChartHeight`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L47) | `double` | 可写; OneWay | `280` | 320 / 224 ; 400 / 280 ; 480 / 336 校验：`value => double.IsFinite(value) && value > 0` |
 | [`DefaultChartWidth`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L40) | `double` | 可写; OneWay | `400` | 320 / 224 ; 400 / 280 ; 480 / 336 校验：`value => double.IsFinite(value) && value > 0` |
 | [`EmptyText`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L255) | `string` | 可写; OneWay | `"暂无数据"` | `暂无数据` |
 | [`FifthBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L321) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 第五序列画刷；动态主题使用 One.* 资源，显式局部值优先。 |
 | [`FontFamily`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L333) | `Avalonia.Media.FontFamily` | 可写; OneWay | `inherited registration` | 文本绘制使用的字体族；字体回退和实际度量由 Avalonia 文本系统处理。 |
-| [`FontSize`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L339) | `double` | 可写; OneWay | `inherited registration` | 10 ; 11 ; 12 |
+| [`FontSize`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L339) | `double` | 可写; OneWay | `inherited registration` | 11 ; 12 ; 13 |
 | [`Foreground`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L279) | `Avalonia.Media.IBrush?` | 可写; OneWay | `inherited registration` | 前景画刷；自定义时保持正文、状态与禁用对比度。 |
 | [`GaugeBandRatio`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L83) | `double` | 可写; OneWay | `0.18` | 沿用三档主题密度；基础、进度、等级、气压表按结构缩放带宽，可显式调整该比例 校验：`value => double.IsFinite(value) && value > 0 && value <= 0.5` |
 | [`GaugeMajorTickCount`](../../../TheOne.Avalonia/Controls/ChartBase.Gauge.cs#L34) | `int` | 可写; OneWay | `5` | Number of major ticks, including the minimum and maximum. 校验：`value => value >= 2 && value <= 25` |
@@ -196,7 +198,7 @@ RevenueChart.ResetViewport();
 | [`Kind`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L163) | `TheOne.Avalonia.Controls.ChartKind` | 只读; CLR / n/a | `accessor-defined / state` | 所属字段、属性或元素的种类枚举；具体可选值见该枚举定义。 可选值：`Line`, `Area`, `Bar`, `HorizontalBar`, `Scatter`, `Pie`, `Doughnut`, `Gauge`, `StackedBar`, `StackedHorizontalBar`, `StackedArea`, `PercentStackedBar`, `PercentStackedHorizontalBar`, `PercentStackedArea`, `Heatmap`, `Radar`, `Funnel`, `BoxPlot`, `Candlestick`, `Treemap`, `Sunburst` |
 | [`LegendPageCount`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L42) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
 | [`LegendPageIndex`](../../../TheOne.Avalonia/Controls/ChartBase.Legend.cs#L33) | `int` | 只读; CLR / n/a | `accessor-defined / state` | 只读分页状态，页索引从 0 开始 |
-| [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | 可写; OneWay | `3.5` | 3 ; 3.5 ; 4.25 校验：`value => double.IsFinite(value) && value > 0` |
+| [`MarkerRadius`](../../../TheOne.Avalonia/Controls/ChartBase.Sizing.cs#L59) | `double` | 可写; OneWay | `3.5` | 2.5 ; 3 ; 3.75 校验：`value => double.IsFinite(value) && value > 0` |
 | [`Maximum`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L231) | `double` | 可写; OneWay | `100` | 主数值轴上界；空值使用自动范围，不通过裁剪更改数据本身。 校验：`double.IsFinite` |
 | [`Minimum`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L225) | `double` | 可写; OneWay | `0 / default` | 主数值轴下界；空值由数据自动推导，显式范围必须与数据及 Maximum 协调。 校验：`double.IsFinite` |
 | [`MutedBrush`](../../../TheOne.Avalonia/Controls/ChartBase.cs#L291) | `Avalonia.Media.IBrush?` | 可写; OneWay | `null` | 次要文字与辅助标记画刷；动态主题使用 One.* 资源，显式局部值优先。 |

@@ -97,11 +97,12 @@ public partial class ChartBase
         var angles = animate
             ? PresentRadialAngles(sector.Series, sector.Index, sector.Start, sector.Sweep)
             : (sector.Start, sector.Sweep);
-        var raised = IsRaisedSector(sector);
-        var center = raised
-            ? RadialPoint(_radialCenter, SliceHoverOffset, angles.Item1 + angles.Item2 / 2)
+        var amount = !IsGaugeValueAnimating && _hoverMarks.TryGetValue((sector.Series, sector.Index), out var mark)
+            ? mark.Amount : 0;
+        var center = amount > 0
+            ? RadialPoint(_radialCenter, SliceHoverOffset * amount, angles.Item1 + angles.Item2 / 2)
             : _radialCenter;
-        var scale = raised ? SliceHoverScale : 1;
+        var scale = Mix(1, SliceHoverScale, amount);
         return new RadialPresentation(center, _radialOuterRadius * scale, _radialInnerRadius * scale, angles.Item1,
             angles.Item2);
     }
@@ -176,6 +177,10 @@ public partial class ChartBase
             original.X * original.X + original.Y * original.Y < _radialInnerRadius * _radialInnerRadius) return null;
         if (_hover is { } key && _radialSectorLookup.TryGetValue(key, out var raised) && IsRaisedSector(raised) &&
             SectorContains(PresentSector(raised, false), point)) return key;
+        // A pointer can re-enter the exposed edge of a slice while it is settling back.
+        foreach (var (outgoing, mark) in _hoverMarks)
+            if (mark.Target == 0 && mark.Amount > 0 && _radialSectorLookup.TryGetValue(outgoing, out var returning) &&
+                SectorContains(PresentSector(returning, false), point)) return outgoing;
         foreach (var sector in _radialSectors)
         {
             // Keeping the resting sector interactive prevents hover from oscillating at the lifted edge.

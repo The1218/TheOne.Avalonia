@@ -64,7 +64,6 @@ public partial class ChartShowcaseView : UserControl
             chart.SeriesSource = ChartPreviewData.CreateSeries(points,
                 style == 2 && kind is not (ChartKind.Pie or ChartKind.Doughnut));
         chart.Title = StyleTitle(kind, style);
-        chart.IsAnimationEnabled = false;
         chart.ShowCrosshair = true;
         chart.TooltipMode = ChartTooltipMode.Shared;
         chart.IsZoomEnabled = true;

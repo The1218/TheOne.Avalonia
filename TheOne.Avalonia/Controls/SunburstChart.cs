@@ -106,7 +106,12 @@ public sealed class SunburstChart : HierarchyChartBase
         using var clip = context.PushClip(plot);
         foreach (var sector in _sectors) context.DrawGeometry(sector.Brush, null, sector.Geometry);
         foreach (var label in _labels) context.DrawText(label.Text, label.Position);
-        if (Selection is { SeriesIndex: 0 } selected && _lookup.TryGetValue(selected.PointIndex, out var active))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_lookup.TryGetValue(key.Index, out var active))
             context.DrawGeometry(null, _selectionPen, active.Geometry);
     }
 

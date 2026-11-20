@@ -4226,7 +4226,7 @@
       "Values": [
         {
           "Signature": "Auto = 0",
-          "Summary": "Reveal the first frame; interpolate compatible data changes, otherwise crossfade.",
+          "Summary": "Animate entry by chart type. Interpolate compatible updates or fade between data states.",
           "Source": "TheOne.Avalonia/Controls/ChartAnimationStyle.cs:7",
           "ValueType": ""
         },
@@ -4351,7 +4351,7 @@
         {
           "Name": "ChartPadding",
           "Type": "double",
-          "Summary": "8 ;  12 ;  16",
+          "Summary": "10 ;  16 ;  20",
           "Default": "12",
           "Binding": "OneWay",
           "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E= 0",
@@ -4463,7 +4463,7 @@
         {
           "Name": "FontSize",
           "Type": "double",
-          "Summary": "10 ;  11 ;  12",
+          "Summary": "11 ;  12 ;  13",
           "Default": "inherited registration",
           "Binding": "OneWay",
           "Validation": "",
@@ -4757,7 +4757,7 @@
         {
           "Name": "MarkerRadius",
           "Type": "double",
-          "Summary": "3 ;  3.5 ;  4.25",
+          "Summary": "2.5 ;  3 ;  3.75",
           "Default": "3.5",
           "Binding": "OneWay",
           "Validation": "value =\u003E double.IsFinite(value) \u0026\u0026 value \u003E 0",

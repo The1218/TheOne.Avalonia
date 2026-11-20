@@ -10,7 +10,7 @@ A cross-platform theme and control library built on Avalonia's native controls. 
 - QRCode, ReportDesign/ReportPreview, WorkflowEditor, GanttChart and NavPage provide report, workflow and workspace extensions; see the [preview.11 release notes](docs/releases/en/1.0.0-preview.11.md).
 
 
-This release integrates built-in OneIcon values across icon hosts, fixes dynamic Geometry/template sizing and disabled foreground, and corrects ImageUpload viewer scrolling. Includes illustrated bilingual guides. NuGet upload is manual; this source version does not imply feed availability.
+This release refines chart typography and marks, smooths pointer feedback and adds chart-specific entry motion. [Preview.12 release notes](docs/releases/en/1.0.0-preview.12.md)
 
 ## Requirements and versions
 
@@ -19,7 +19,7 @@ This release integrates built-in OneIcon values across icon hosts, fixes dynamic
 | .NET SDK / TargetFramework | .NET 10 / `net10.0` |
 | Avalonia core, Skia, Fluent | 12.1.4 |
 | DataGrid | Based on 12.1.2; package: `TheOne.Avalonia.DataGrid` |
-| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.11 |
+| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.12 |
 | PreviewHost MVVM | ReactiveUI.Avalonia 12.1.4 |
 
 ## Quick start
@@ -35,10 +35,10 @@ dotnet run --project design/PreviewHost
 Install the preview package in your application. The companion DataGrid package is restored automatically:
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.11
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.12
 ```
 
-NuGet packages: [TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.11) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.11). You can also reference the source project; adjust the path for your application:
+NuGet packages: [TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.12) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.12). You can also reference the source project; adjust the path for your application:
 
 ```sh
 dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.csproj

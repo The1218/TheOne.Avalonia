@@ -82,7 +82,12 @@ public sealed class CandlestickChart : StatisticalChartBase
             context.DrawRectangle(glyph.Hollow ? null : glyph.Pen.Brush, glyph.Pen, glyph.Body);
             if (glyph.Label is not null) context.DrawText(glyph.Label, glyph.LabelPosition);
         }
-        if (Selection is { } selected && _lookup.TryGetValue((selected.SeriesIndex, selected.PointIndex), out var active))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_lookup.TryGetValue(key, out var active))
             context.DrawRectangle(null, _selectionPen, active.Bounds);
     }
     private protected override bool ContainsStatisticalGlyph(int series, int index, Point point)

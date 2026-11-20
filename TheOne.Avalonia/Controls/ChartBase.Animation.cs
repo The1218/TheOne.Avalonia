@@ -35,6 +35,8 @@ public partial class ChartBase
     private CartesianFrame? _animationFromCartesian;
     private CartesianAnimationPlan? _cartesianAnimationPlan;
     private ChartAnimationStyle _activeAnimationStyle;
+    private bool _autoEntrance;
+    private long _preparedAnimationMarks;
     private bool _initialAnimationPending, _hasPresentedChart;
     private double _animationFromGauge, _animationToGauge, _preparedGaugeValue;
     private long _animationGeneration;
@@ -80,9 +82,11 @@ public partial class ChartBase
         MarkGeometryDirty();
     }
 
-    private bool CanAnimateData()
+    private bool CanAnimateData() => _animationSuppression == 0 && CanAnimatePresentation();
+
+    private bool CanAnimatePresentation()
     {
-        return _animationSuppression == 0 && !_isExportSnapshot && IsAnimationEnabled &&
+        return !_isExportSnapshot && IsAnimationEnabled &&
                AnimationStyle != ChartAnimationStyle.None && Motion.GetEnabled(this) &&
                IsEffectivelyEnabled && IsVisible &&
                AnimationDuration > TimeSpan.Zero && TopLevel.GetTopLevel(this) is not null && Bounds.Width <= 4096 &&
@@ -137,6 +141,7 @@ public partial class ChartBase
         var marks = UsesCustomChartGeometry ? CustomChartAnimationMarkCount :
             IsRadial ? _radialSectors.Count : _cartesianFrame is { } prepared ? FrameMarks(prepared) : 0;
         if (IsGauge) marks = 1;
+        _preparedAnimationMarks = marks;
         if (marks > 0 && presentation)
         {
             _initialAnimationPending = false;
@@ -152,12 +157,11 @@ public partial class ChartBase
 
         _animationFromGauge = origin.Gauge;
         _animationToGauge = Value;
-        _activeAnimationStyle = AnimationStyle == ChartAnimationStyle.Auto && origin.Initial
-            ? ChartAnimationStyle.Reveal
-            : AnimationStyle == ChartAnimationStyle.Auto && UsesCustomChartGeometry
-                ? ChartAnimationStyle.Fade : AnimationStyle;
+        _autoEntrance = origin.Initial && AnimationStyle == ChartAnimationStyle.Auto;
+        _activeAnimationStyle = AnimationStyle == ChartAnimationStyle.Auto && UsesCustomChartGeometry
+            ? ChartAnimationStyle.Fade : AnimationStyle;
         foreach (var entry in origin.Angles) _animationFromAngles[entry.Key] = entry.Value;
-        if (_activeAnimationStyle == ChartAnimationStyle.Auto && !IsRadial && _cartesianFrame is { } target)
+        if (!_autoEntrance && _activeAnimationStyle == ChartAnimationStyle.Auto && !IsRadial && _cartesianFrame is { } target)
         {
             if (origin.Frame is { } from && from.Identity == target.Identity &&
                 from.Categorical == target.Categorical && from.Count == target.Count &&
@@ -243,8 +247,9 @@ public partial class ChartBase
     private (double Start, double Sweep) PresentRadialAngles(int series, int index, double start, double sweep)
     {
         if (!IsGaugeValueAnimating || _activeAnimationStyle != ChartAnimationStyle.Auto) return (start, sweep);
-        var from = _animationFromAngles.TryGetValue((series, index), out var previous) ? previous : (start, 0d);
         var progress = EasedAnimationProgress();
+        if (_autoEntrance) return (Mix(-Math.PI / 2, start, progress), sweep * progress);
+        var from = _animationFromAngles.TryGetValue((series, index), out var previous) ? previous : (start, 0d);
         return (Mix(from.Item1, start, progress), Mix(from.Item2, sweep, progress));
     }
 
@@ -284,6 +289,22 @@ public partial class ChartBase
         }
 
         var progress = EasedAnimationProgress();
+        if (_autoEntrance)
+        {
+            if (target.Categorical) DrawCartesianData(context, target, progress);
+            else if (IsScatterCartesian)
+            {
+                using var opacity = context.PushOpacity(progress);
+                DrawCartesianData(context, target);
+            }
+            else
+            {
+                var clip = CartesianDataClip;
+                using var reveal = context.PushClip(new Rect(clip.X, clip.Y, clip.Width * progress, clip.Height));
+                DrawCartesianData(context, target);
+            }
+            return;
+        }
         if (_animationFromCartesian is { } previous)
         {
             DrawCartesianData(context, InterpolateCartesianFrame(previous, target, progress));
@@ -368,6 +389,7 @@ public partial class ChartBase
         ++_animationGeneration;
         IsGaugeValueAnimating = false;
         _animationProgress = 1;
+        _autoEntrance = false;
         _animationClock.Stop();
         _animationFrameCallback = null;
         _animationFromCartesian = null;

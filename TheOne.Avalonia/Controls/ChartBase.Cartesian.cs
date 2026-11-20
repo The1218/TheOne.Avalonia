@@ -3,11 +3,16 @@ using System.Runtime.CompilerServices;
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
+using Avalonia.Media.Immutable;
 
 namespace TheOne.Avalonia.Controls;
 
 public partial class ChartBase
 {
+    private static readonly ImmutableLinearGradientBrush AreaFadeMask = new(
+        [new ImmutableGradientStop(0, Colors.Black), new ImmutableGradientStop(1, Colors.Transparent)],
+        .28, endPoint: new RelativePoint(0, 1, RelativeUnit.Relative));
+
     private readonly Dictionary<int, List<(int Series, int Index)>> _barCategories = [];
     private readonly Dictionary<(int Series, int Index), Rect> _bars = [];
     private readonly Dictionary<(int Series, int Index), Point> _normalizedPositions = [];
@@ -32,6 +37,7 @@ public partial class ChartBase
             if (line.Kind == 0 && !ShowGrid) continue;
             var brush = line.Kind == 2 ? MutedBrush : GridBrush ?? MutedBrush;
             var pen = IsScatterCartesian ? ScatterFramePen(frame, line.Kind == 2 ? 1 : 0, brush, 1) : new Pen(brush);
+            using var tone = context.PushOpacity(line.Kind == 0 ? .52 : .85);
             context.DrawLine(pen, line.Start, line.End);
         }
 
@@ -55,30 +61,38 @@ public partial class ChartBase
         }
     }
 
-    private void DrawCartesianData(DrawingContext context, CartesianFrame frame)
+    private void DrawCartesianData(DrawingContext context, CartesianFrame frame, double growth = 1)
     {
         foreach (var bar in frame.Bars)
         {
             var brush = bar.Brush;
-            var radius = frame.Stacked || bar.Zero ? 0 : Math.Min(3, Math.Min(bar.Bounds.Width, bar.Bounds.Height) / 4);
-            context.DrawRectangle(brush, null, bar.Bounds, radius, radius);
+            var bounds = bar.Bounds;
+            if (growth < 1)
+            {
+                var origin = frame.Horizontal
+                    ? new Rect(bar.Origin, bounds.Y, 0, bounds.Height)
+                    : new Rect(bounds.X, bar.Origin, bounds.Width, 0);
+                bounds = MixRect(origin, bounds, growth);
+            }
+            context.DrawRectangle(brush, null, BarShape(frame, bar, bounds));
             if (!ShowDataLabels || bar.Label is null || bar.Zero) continue;
             var text = CartesianText(frame, bar.Label, Background);
-            if (text.Width + 8 <= bar.Bounds.Width && text.Height + 4 <= bar.Bounds.Height)
+            if (text.Width + 8 <= bounds.Width && text.Height + 4 <= bounds.Height)
                 context.DrawText(text,
-                    new Point(bar.Bounds.Center.X - text.Width / 2, bar.Bounds.Center.Y - text.Height / 2));
+                    new Point(bounds.Center.X - text.Width / 2, bounds.Center.Y - text.Height / 2));
         }
 
         foreach (var series in frame.Series)
         {
             if (IsScatterCartesian && TryDrawScatterMarkers(context, series)) continue;
             var brush = series.Brush;
-            var pen = new Pen(brush, StrokeThickness);
+            var pen = new Pen(brush, StrokeThickness, lineCap: PenLineCap.Round, lineJoin: PenLineJoin.Round);
+            var markerPen = new Pen(Background, SelectionThickness * .75);
             foreach (var segment in series.Segments)
             {
                 using (context.PushClip(_cartesianPlot))
                 {
-                    if (series.Area) DrawAreaBand(context, segment, brush, pen);
+                    if (series.Area) DrawAreaBand(context, segment, series, pen);
                     else if (DrawsLineCartesian) DrawLineSegment(context, segment, pen);
                 }
 
@@ -87,7 +101,7 @@ public partial class ChartBase
                 {
                     if (!_cartesianPlot.Contains(point.Position)) continue;
                     if (IsScatterCartesian || (ShowMarkers && point.Index % series.MarkerStep == 0))
-                        context.DrawEllipse(brush, new Pen(Background, SelectionThickness * 0.75), point.Position,
+                        context.DrawEllipse(brush, markerPen, point.Position,
                             MarkerRadius, MarkerRadius);
                 }
             }
@@ -181,6 +195,8 @@ public partial class ChartBase
             var labelStep = Math.Max(1,
                 (int)Math.Ceiling(points.Count * (horizontal ? viewport.Height : viewport.Width) /
                                   Math.Max(1, (horizontal ? plot.Height : plot.Width) / 70)));
+            var origin = horizontal ? Math.Clamp(MapX(range.Ratio(0), plot, viewport), plot.Left, plot.Right)
+                : Math.Clamp(MapY(range.Ratio(0), plot, viewport), plot.Top, plot.Bottom);
             var seriesFrame = new CartesianSeriesFrame(s, area, markerStep, labelStep, SeriesBrush(s), [], []);
             var segment = new List<ChartRenderPoint>();
             bool? previousSign = null;
@@ -260,7 +276,7 @@ public partial class ChartBase
                     if (!_barCategories.TryGetValue(i, out var categoryBars)) _barCategories[i] = categoryBars = [];
                     categoryBars.Add((s, i));
                     frame.BarSlots[(s, i)] = frame.Bars.Count;
-                    frame.Bars.Add(new CartesianBar(s, i, bar, zero,
+                    frame.Bars.Add(new CartesianBar(s, i, bar, zero, point.Y < 0, origin,
                         ShowDataLabels && i % labelStep == 0 ? CartesianDataLabel(s, i) : null, SeriesBrush(s)));
                 }
                 else
@@ -433,7 +449,7 @@ public partial class ChartBase
         context.DrawGeometry(null, pen, segment.LineGeometry);
     }
 
-    private void DrawAreaBand(DrawingContext context, CartesianSegment segment, IBrush brush, Pen pen)
+    private void DrawAreaBand(DrawingContext context, CartesianSegment segment, CartesianSeriesFrame series, Pen pen)
     {
         var points = segment.Points;
         if (points.Count < 2) return;
@@ -452,9 +468,24 @@ public partial class ChartBase
             segment.FillGeometry = fill;
         }
 
-        using (context.PushOpacity(IsStackedAreaCartesian ? 0.28 : 0.16))
+        if (!IsStackedAreaCartesian && series.Brush is IImmutableSolidColorBrush solid)
         {
-            context.DrawGeometry(brush, null, segment.FillGeometry);
+            var color = solid.Color;
+            series.AreaFill ??= new ImmutableLinearGradientBrush(
+                [new ImmutableGradientStop(0, color), new ImmutableGradientStop(1, Color.FromArgb(0, color.R, color.G, color.B))],
+                solid.Opacity * .28, endPoint: new RelativePoint(0, 1, RelativeUnit.Relative));
+            context.DrawGeometry(series.AreaFill, null, segment.FillGeometry);
+        }
+        else if (!IsStackedAreaCartesian && series.Brush is ISolidColorBrush)
+        {
+            // Keep the caller's mutable brush in the scene so in-place color/opacity edits still repaint the fill.
+            using var fade = context.PushOpacityMask(AreaFadeMask, segment.FillGeometry.Bounds);
+            context.DrawGeometry(series.Brush, null, segment.FillGeometry);
+        }
+        else
+        {
+            using var opacity = context.PushOpacity(IsStackedAreaCartesian ? .32 : .16);
+            context.DrawGeometry(series.Brush, null, segment.FillGeometry);
         }
 
         DrawLineSegment(context, segment, pen);
@@ -473,7 +504,7 @@ public partial class ChartBase
                 clip, title));
         }
 
-        var tickCount = Math.Clamp((int)((frame.Horizontal ? plot.Width : plot.Height) / (FontSize + 26)), 2, 5);
+        var tickCount = Math.Clamp((int)((frame.Horizontal ? plot.Width : plot.Height) / (FontSize + 18)), 2, 5);
         for (var axis = 0; axis < 2; axis++)
         {
             if (!valid[axis] || (axis == 1 && !secondaryShown)) continue;
@@ -684,11 +715,22 @@ public partial class ChartBase
 
     private readonly record struct StackValue(double Base, double Top);
 
+    private static RoundedRect BarShape(CartesianFrame frame, CartesianBar bar, Rect bounds)
+    {
+        if (frame.Stacked || bar.Zero) return new RoundedRect(bounds);
+        var end = Math.Min(4, Math.Min(bounds.Width, bounds.Height) / 2);
+        if (frame.Horizontal)
+            return bar.Negative ? new RoundedRect(bounds, end, 0, 0, end) : new RoundedRect(bounds, 0, end, end, 0);
+        return bar.Negative ? new RoundedRect(bounds, 0, 0, end, end) : new RoundedRect(bounds, end, end, 0, 0);
+    }
+
     private readonly record struct CartesianBar(
         int Series,
         int Index,
         Rect Bounds,
         bool Zero,
+        bool Negative,
+        double Origin,
         string? Label,
         IBrush Brush);
 
@@ -718,6 +760,7 @@ public partial class ChartBase
         Dictionary<int, string> Labels,
         List<CartesianSegment> Segments)
     {
+        public ImmutableLinearGradientBrush? AreaFill { get; set; }
         public ScatterMarkerPaint? ScatterPaint { get; set; }
     }
 

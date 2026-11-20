@@ -94,7 +94,12 @@ public sealed class TreemapChart : HierarchyChartBase
         using var clip = context.PushClip(plot);
         foreach (var tile in _tiles) context.DrawRectangle(tile.Brush, null, tile.Bounds);
         foreach (var label in _labels) context.DrawText(label.Text, label.Position);
-        if (Selection is { SeriesIndex: 0 } selected && _bounds.TryGetValue(selected.PointIndex, out var bounds))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_bounds.TryGetValue(key.Index, out var bounds))
             context.DrawRectangle(null, _selectionPen, bounds.Deflate(Math.Min(SelectionThickness / 2, Math.Min(bounds.Width, bounds.Height) / 4)));
     }
 

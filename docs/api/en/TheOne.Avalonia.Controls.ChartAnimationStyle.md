@@ -22,7 +22,7 @@ No additional CLR/attached properties are declared on this type; see its base fo
 
 | Complete signature/value | Contract |
 | --- | --- |
-| [`Auto = 0`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L7) | Reveal the first frame; interpolate compatible data changes, otherwise crossfade. |
+| [`Auto = 0`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L7) | Animate entry by chart type. Interpolate compatible updates or fade between data states. |
 | [`None = 1`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L9) | Present the complete target frame immediately. |
 | [`Fade = 2`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L11) | Fade in the prepared target plot while keeping its geometry cached. |
 | [`Reveal = 3`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L13) | Reveal the prepared target plot from left to right. |

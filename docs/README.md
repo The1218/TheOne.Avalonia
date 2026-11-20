@@ -13,13 +13,13 @@
 | Build a breadcrumb navigation path | [Breadcrumb](controls/en/breadcrumb.md) | [面包屑](controls/zh-cn/breadcrumb.md) |
 | Select a combined date and time | [DateTimePicker](controls/en/datetime-picker.md) | [日期时间选择](controls/zh-cn/datetime-picker.md) |
 | Display an event history | [Timeline](controls/en/timeline.md) | [时间线](controls/zh-cn/timeline.md) |
-| Review release changes, upgrade notes and verification limits | [Preview.11 release notes](releases/en/1.0.0-preview.11.md) | [Preview.11 发行说明](releases/zh-cn/1.0.0-preview.11.md) |
+| Review release changes, upgrade notes and verification limits | [Preview.12 release notes](releases/en/1.0.0-preview.12.md) | [Preview.12 发行说明](releases/zh-cn/1.0.0-preview.12.md) |
 
 The integration guide contains a portable coding-agent brief. It does not depend on a maintainer's local `AGENTS.md`, skills, absolute paths, or old build outputs. Start with the target project's own instructions, then read only the control documents relevant to the migration.
 
 接入指南包含可复制给 Codex 的任务说明，不依赖维护者本机的 `AGENTS.md`、Skill、绝对路径或历史构建产物。先遵守目标项目自己的约定，再按待迁移功能读取对应文档。
 
-Baseline / 文档基线：TheOne.Avalonia + TheOne.Avalonia.DataGrid **1.0.0-preview.11**, **.NET 10**, **Avalonia 12.1.4**. Package versions, upstream DataGrid version and assembly identities are separate; see the integration guide. Package availability is determined by the NuGet feed, not this source version. / 是否已可安装以 NuGet 源中的实际发布状态为准。
+Baseline / 文档基线：TheOne.Avalonia + TheOne.Avalonia.DataGrid **1.0.0-preview.12**, **.NET 10**, **Avalonia 12.1.4**. Package versions, upstream DataGrid version and assembly identities are separate; see the integration guide. Package availability is determined by the NuGet feed, not this source version. / 是否已可安装以 NuGet 源中的实际发布状态为准。
 
 The source contract and per-control previews follow the checked-out source; preview.11 is the release baseline for these updates. Each control page shows labeled Classes examples, project-specific properties, actual business actions and related models. Property and action descriptions include short code examples; raw style selectors, constructor/accessor lists and identifiers stay in the separate source contract. Shared sizing and motion settings are centralized on Home. Only Button, Input and Select share comparison pages. Complete demos retain their original data and layout; canvas editors keep their full viewport with reference content in a separate tab. See [reference maintenance](../tools/ControlReferenceGenerator/README.md) for regeneration and drift checks.
 

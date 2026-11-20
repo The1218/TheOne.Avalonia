@@ -120,6 +120,7 @@ public sealed class HeatmapChart : SpecializedChartBase
         var palette = BuildPalette(vmin < 0 && vmax > 0);
         var rectangles = new List<Rect>?[palette.Length];
         var paintOrder = new List<PaintCell>(count);
+        var automaticLabels = ShowDataLabels && UsesAutomaticLabelBrush();
         var dataLabels = ShowDataLabels && count <= 5000 ? new Dictionary<int, CellLabel>() : null;
         var coordinates = new HashSet<(double X, double Y)>();
         var xIntervals = new Dictionary<double, (double Start, double End)>();
@@ -154,7 +155,7 @@ public sealed class HeatmapChart : SpecializedChartBase
                 AddHit(new CellHit(seriesIndex, index, bounds));
                 if (dataLabels is not null)
                 {
-                    var label = Text(FormatChartValue(series, cell.Value));
+                    var label = Text(FormatChartValue(series, cell.Value), automaticLabels ? ContrastingLabelBrush(palette[color]) : Foreground);
                     if (label.Width + 4 <= bounds.Width && label.Height + 2 <= bounds.Height)
                         dataLabels[paintOrder.Count - 1] = new CellLabel(label, bounds.Center - new Vector(label.Width / 2, label.Height / 2));
                 }
@@ -269,7 +270,12 @@ public sealed class HeatmapChart : SpecializedChartBase
             if (cell.Label is { } label) context.DrawText(label.Text, label.Position);
         }
         foreach (var label in _labels) context.DrawText(label.Text, label.Position);
-        if (Selection is { } selected && _cells.TryGetValue((selected.SeriesIndex, selected.PointIndex), out var bounds))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_cells.TryGetValue(key, out var bounds))
             context.DrawRectangle(null, _selectionPen, bounds);
     }
 

@@ -74,7 +74,6 @@ internal sealed class SpecializedChartShowcaseView : UserControl
             Control CreateVariant()
             {
             var variant = CreateSample(kind);
-            variant.IsAnimationEnabled = false;
             variant.Title = variantIndex == 0 ? "标签与选择" : "配置变体";
             variant.ShowDataLabels = variantIndex == 0;
             if (variantIndex == 0) variant.SelectedIndex = 1;

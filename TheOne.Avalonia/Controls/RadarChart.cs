@@ -162,6 +162,10 @@ public sealed class RadarChart : SpecializedChartBase
                 path.EndFigure(true);
             }
         }
+        var valuesToPlace = new List<RadarLabel>();
+        var occupied = new LabelOccupancy();
+        foreach (var axisLabel in _labels)
+            occupied.Add(new Rect(axisLabel.Position, new Size(axisLabel.Text.Width, axisLabel.Text.Height)).Inflate(2));
         for (var seriesIndex = 0; seriesIndex < source.Count; seriesIndex++)
         {
             var series = source[seriesIndex];
@@ -192,7 +196,9 @@ public sealed class RadarChart : SpecializedChartBase
                 if (ShowDataLabels)
                 {
                     var label = Text(FormatChartValue(series, value), brush);
-                    _labels.Add(new RadarLabel(label, position + new Vector(4, -label.Height - 2)));
+                    occupied.Add(new Rect(position.X - MarkerRadius, position.Y - MarkerRadius,
+                        MarkerRadius * 2, MarkerRadius * 2));
+                    valuesToPlace.Add(new RadarLabel(label, position));
                 }
             }
             var geometry = new StreamGeometry();
@@ -218,11 +224,34 @@ public sealed class RadarChart : SpecializedChartBase
             }
             _shapes.Add(new RadarShape(geometry, brush, new Pen(brush, StrokeThickness), complete));
         }
+        foreach (var (text, mark) in valuesToPlace)
+        {
+            var gap = MarkerRadius + 3;
+            var size = new Size(text.Width, text.Height);
+            Point[] anchors =
+            [
+                new(mark.X + gap, mark.Y - text.Height - 1), new(mark.X - gap - text.Width, mark.Y - text.Height - 1),
+                new(mark.X + gap, mark.Y + 1), new(mark.X - gap - text.Width, mark.Y + 1),
+                new(mark.X - text.Width / 2, mark.Y - gap - text.Height), new(mark.X - text.Width / 2, mark.Y + gap)
+            ];
+            foreach (var anchor in anchors)
+            {
+                var bounds = new Rect(anchor, size);
+                if (!plot.Contains(bounds) || occupied.Intersects(bounds)) continue;
+                _labels.Add(new RadarLabel(text, anchor));
+                occupied.Add(bounds.Inflate(2));
+                break;
+            }
+        }
     }
 
     private protected override void DrawChartPlot(DrawingContext context, Rect plot)
     {
-        if (ShowGrid && _grid is not null) context.DrawGeometry(null, _gridPen, _grid);
+        if (ShowGrid && _grid is not null)
+        {
+            using var opacity = context.PushOpacity(.6);
+            context.DrawGeometry(null, _gridPen, _grid);
+        }
         foreach (var shape in _shapes)
         {
             if (shape.IsClosed && FillOpacity > 0)
@@ -236,7 +265,12 @@ public sealed class RadarChart : SpecializedChartBase
             foreach (var marker in _markers.Values)
                 context.DrawEllipse(marker.Brush, null, marker.Position, MarkerRadius, MarkerRadius);
         foreach (var label in _labels) context.DrawText(label.Text, label.Position);
-        if (Selection is { } selected && _markers.TryGetValue((selected.SeriesIndex, selected.PointIndex), out var active))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_markers.TryGetValue(key, out var active))
             context.DrawEllipse(null, _selectionPen, active.Position, MarkerRadius + SelectionThickness, MarkerRadius + SelectionThickness);
     }
 

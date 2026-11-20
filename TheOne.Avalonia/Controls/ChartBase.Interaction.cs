@@ -139,12 +139,14 @@ public partial class ChartBase
         var previousCrosshair = _crosshairPosition;
         var previousHover = _hover;
         var previousVersion = _hoverGeometryVersion;
-        if (!IsEffectivelyEnabled || _legendKeyboard || HitLegendTarget(point) is not null)
+        var legendTarget = IsEffectivelyEnabled && !_legendKeyboard ? HitLegendTarget(point) : null;
+        if (!IsEffectivelyEnabled || _legendKeyboard || legendTarget is not null)
         {
-            ClearPointerHover();
+            ClearPointerHover(fade: true, legendTarget);
             return;
         }
 
+        SetLegendHover(null);
         BuildGeometry(null);
         var inPlot = !IsRadial && !_geometryDirty && _cartesianPlot.Width > 0 && _cartesianPlot.Contains(point);
         var shared = TooltipMode == ChartTooltipMode.Shared && !IsRadial && !UsesCustomChartGeometry;
@@ -161,22 +163,20 @@ public partial class ChartBase
         var version = _geometryVersion;
         SetAndRaise(CrosshairPositionProperty, ref _crosshairPosition, ShowCrosshair && inPlot ? point : null);
         if (generation != _interactionGeneration || version != _geometryVersion || _geometryDirty) return;
-        var unchanged = IsScatterCartesian ? SameScatterHover(entries, _hoveredPoints)
-            : entries.Count == _hoveredPoints.Count && entries.Select((entry, i) =>
-                entry.SeriesIndex == _hoveredPoints[i].SeriesIndex && entry.PointIndex == _hoveredPoints[i].PointIndex &&
-                ReferenceEquals(entry.Point, _hoveredPoints[i].Point)).All(value => value);
+        var unchanged = SameHover(entries, _hoveredPoints);
         if (!unchanged) SetAndRaise(HoveredPointsProperty, ref _hoveredPoints, entries);
         if (generation != _interactionGeneration || version != _geometryVersion || _geometryDirty) return;
         _hoverGeometryVersion = version;
         _hover = entries.Count == 0 ? null : (entries[0].SeriesIndex, entries[0].PointIndex);
+        if (!unchanged || previousVersion != version) SetHoverMarks(entries);
         ToolTip.SetTip(this, entries.Count == 0 ? null : SharedTooltip(entries));
-        // A native pointer re-evaluation need not submit all Scatter markers again when its overlay is unchanged.
+        // A native pointer re-evaluation need not repaint a stationary overlay.
         // The tooltip is still refreshed, including formats/culture or silently edited values.
-        if (!IsScatterCartesian || !unchanged || previousCrosshair != _crosshairPosition || previousHover != _hover ||
+        if (!unchanged || previousCrosshair != _crosshairPosition || previousHover != _hover ||
             previousVersion != version) InvalidateVisual();
     }
 
-    private static bool SameScatterHover(IReadOnlyList<ChartSelection> current, IReadOnlyList<ChartSelection> previous)
+    private static bool SameHover(IReadOnlyList<ChartSelection> current, IReadOnlyList<ChartSelection> previous)
     {
         if (current.Count != previous.Count) return false;
         for (var i = 0; i < current.Count; i++)
@@ -202,9 +202,10 @@ public partial class ChartBase
         return name[..end].Replace('\r', ' ').Replace('\n', ' ') + "…";
     }
 
-    private void ClearPointerHover()
+    private void ClearPointerHover(bool fade = false, int? legendTarget = null)
     {
-        var redraw = !IsScatterCartesian || _hover is not null || _crosshairPosition is not null || _hoveredPoints.Count != 0;
+        SetLegendHover(legendTarget);
+        var redraw = _hoverMarks.Count != 0 || _hover is not null || _crosshairPosition is not null || _hoveredPoints.Count != 0;
         var generation = ++_interactionGeneration;
         _hoverGeometryVersion = -1;
         if (!redraw && ToolTip.GetTip(this) is null) return;
@@ -216,11 +217,13 @@ public partial class ChartBase
             Dispatcher.UIThread.Post(() =>
             {
                 _hoverClearPosted = false;
-                if (_interactionGeneration == _hoverClearGeneration) ClearPointerHover();
+                if (_interactionGeneration == _hoverClearGeneration) ClearPointerHover(fade);
             });
             return;
         }
 
+        if (!fade) _hoverMarks.Clear();
+        else if (_hover is not null) SetHoverMarks(Array.Empty<ChartSelection>());
         _hover = null;
         ToolTip.SetTip(this, null);
         SetAndRaise(CrosshairPositionProperty, ref _crosshairPosition, null);
@@ -232,50 +235,45 @@ public partial class ChartBase
 
     private void DrawPointerOverlay(DrawingContext context)
     {
-        if (_geometryDirty || !IsEffectivelyEnabled || IsAnimating || IsRadial || UsesCustomChartGeometry) return;
-        using var clip = context.PushClip(CartesianDataClip);
-        var currentHover = _hoverGeometryVersion == _geometryVersion;
-        if (currentHover && ShowCrosshair && !IsRadial && CrosshairPosition is { } pointer &&
-            _cartesianPlot.Contains(pointer))
+        if (_geometryDirty || !IsEffectivelyEnabled || IsAnimating || IsRadial) return;
+        using var clip = context.PushClip(UsesCustomChartGeometry ? PlotBounds() : CartesianDataClip);
+        if (!UsesCustomChartGeometry && _hoverGeometryVersion == _geometryVersion &&
+            ShowCrosshair && CrosshairPosition is { } pointer && _cartesianPlot.Contains(pointer))
         {
-            var halo = new Pen(Background, 3);
-            var pen = new Pen(MutedBrush ?? Foreground);
-            var top = new Point(pointer.X, _cartesianPlot.Top);
-            var bottom = new Point(pointer.X, _cartesianPlot.Bottom);
-            var left = new Point(_cartesianPlot.Left, pointer.Y);
-            var right = new Point(_cartesianPlot.Right, pointer.Y);
-            context.DrawLine(halo, top, bottom);
-            context.DrawLine(halo, left, right);
-            context.DrawLine(pen, top, bottom);
-            context.DrawLine(pen, left, right);
+            using var opacity = context.PushOpacity(.6);
+            var pen = new Pen(MutedBrush ?? Foreground, 1, DashStyle.Dash);
+            context.DrawLine(pen, new Point(pointer.X, _cartesianPlot.Top), new Point(pointer.X, _cartesianPlot.Bottom));
+            context.DrawLine(pen, new Point(_cartesianPlot.Left, pointer.Y), new Point(_cartesianPlot.Right, pointer.Y));
         }
 
-        if (currentHover && _hoveredPoints.Count > 0)
-            // Bound the visual overlay as well as the tooltip; the query still returns all originals.
-            foreach (var entry in _hoveredPoints.Take(12))
-                DrawDataHighlight(context, (entry.SeriesIndex, entry.PointIndex));
-        else if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex));
+        if (_hover is null && !UsesCustomChartGeometry && Selection is { } selected)
+            DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+        foreach (var (key, mark) in _hoverMarks)
+        {
+            if (mark.Amount <= 0) continue;
+            using var opacity = context.PushOpacity(mark.Amount);
+            DrawDataHighlight(context, key, mark.Amount);
+        }
     }
 
-    private void DrawDataHighlight(DrawingContext context, (int Series, int Index) key)
+    private protected virtual void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
     {
-        if (_cartesianFrame?.Categorical == true)
+        if (_cartesianFrame is { Categorical: true } frame && frame.BarSlots.TryGetValue(key, out var slot))
         {
-            if (!_bars.TryGetValue(key, out var bar) || bar.Width <= 0 || bar.Height <= 0) return;
-            var inset = Math.Min(SelectionThickness / 2, Math.Min(bar.Width, bar.Height) / 4);
-            var bounds = bar.Deflate(inset);
-            var radius = _cartesianFrame.Stacked ? 0 : Math.Min(3, Math.Min(bounds.Width, bounds.Height) / 4);
-            context.DrawRectangle(null, new Pen(Background, SelectionThickness + 2), bounds, radius, radius);
-            context.DrawRectangle(null, new Pen(Foreground, SelectionThickness), bounds, radius, radius);
-            return;
+            var bar = frame.Bars[slot];
+            var inset = Math.Min(SelectionThickness / 2, Math.Min(bar.Bounds.Width, bar.Bounds.Height) / 4);
+            var shape = BarShape(frame, bar, bar.Bounds.Deflate(inset));
+            using (context.PushOpacity(.14))
+                context.DrawRectangle(Background, null, shape);
+            context.DrawRectangle(null, new Pen(Background, SelectionThickness), shape);
         }
-
-        if (_positions.TryGetValue(key, out var point))
+        else if (_positions.TryGetValue(key, out var point))
         {
-            var radius = MarkerRadius + SelectionThickness;
-            var pen = IsScatterCartesian && _cartesianFrame is { } frame
-                ? ScatterFramePen(frame, 2, Foreground, SelectionThickness) : new Pen(Foreground, SelectionThickness);
-            context.DrawEllipse(null, pen, point, radius, radius);
+            var brush = SeriesBrush(key.Series);
+            var radius = MarkerRadius + amount;
+            using (context.PushOpacity(.2))
+                context.DrawEllipse(brush, null, point, radius + SelectionThickness * 2, radius + SelectionThickness * 2);
+            context.DrawEllipse(brush, new Pen(Background, SelectionThickness), point, radius, radius);
         }
     }
 }

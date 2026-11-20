@@ -390,6 +390,9 @@ public abstract partial class ChartBase : Control
         }
         _animateDataPending = false;
         _initialAnimationPending = false;
+        _hoverFrameGeneration++;
+        _hoverFrame = null;
+        _hoverFramePending = false;
         FinishDataAnimation();
         ClearRadialDrawCache();
         CancelPan();
@@ -405,6 +408,9 @@ public abstract partial class ChartBase : Control
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
         base.OnPropertyChanged(change);
+        if (change.Property == ForegroundProperty || change.Property == FlowDirectionProperty ||
+            change.Property == FontFamilyProperty || change.Property == FontSizeProperty || change.Property == TitleProperty)
+            _titleLayout = null;
         if (change.Property == ValueProperty && IsGauge)
         {
             MarkDataUpdate();
@@ -619,9 +625,28 @@ public abstract partial class ChartBase : Control
         context.DrawText(text, centered ? position - new Vector(text.Width / 2, 0) : position);
     }
 
+    private FormattedText? _titleLayout;
+    private double _titleWidth;
+
+    private FormattedText? GetTitleLayout()
+    {
+        var width = Bounds.Width - ChartPadding * 2;
+        if (string.IsNullOrEmpty(Title) || width < 1) return null;
+        if (_titleLayout is null || _titleWidth != width)
+        {
+            _titleWidth = width;
+            _titleLayout = new FormattedText(Title, CultureInfo.CurrentCulture, FlowDirection,
+                new Typeface(FontFamily, weight: FontWeight.SemiBold), FontSize + 4, Foreground ?? Brushes.Black)
+            {
+                MaxTextWidth = width, MaxLineCount = 1, Trimming = TextTrimming.CharacterEllipsis
+            };
+        }
+        return _titleLayout;
+    }
+
     private Rect PlotBounds()
     {
-        var titleHeight = string.IsNullOrEmpty(Title) ? ChartPadding : FontSize + ChartPadding + 16;
+        var titleHeight = GetTitleLayout() is { } title ? ChartPadding + title.Height + 10 : ChartPadding;
         var legendHeight = ShowLegend && !IsGauge ? FontSize + ChartPadding + 10 : ChartPadding;
         return new Rect(ChartPadding, titleHeight, Math.Max(0, Bounds.Width - ChartPadding * 2),
             Math.Max(0, Bounds.Height - titleHeight - legendHeight));
@@ -692,6 +717,7 @@ public abstract partial class ChartBase : Control
 
     private void MarkGeometryDirty()
     {
+        _hoverMarks.Clear();
         _geometryVersion++;
         _geometryDirty = true;
         InvalidateVisual();
@@ -761,7 +787,7 @@ public abstract partial class ChartBase : Control
         using var clip = context.PushClip(new Rect(Bounds.Size));
         if (!_skipExportBackground) context.DrawRectangle(Background, null, new Rect(Bounds.Size));
         using var opacity = context.PushOpacity(IsEffectivelyEnabled ? 1 : 0.45);
-        DrawText(context, Title ?? "", new Point(ChartPadding, Math.Max(2, ChartPadding - 2)), size: FontSize + 2);
+        if (GetTitleLayout() is { } title) context.DrawText(title, new Point(ChartPadding, ChartPadding));
         BuildGeometry(context);
         if (!IsGauge && (IsRadial || UsesCustomChartGeometry ? _positions.Count == 0 : _normalizedPositions.Count == 0))
             DrawText(context, EmptyText, new Point(Bounds.Width / 2, Bounds.Height / 2), MutedBrush, centered: true);
@@ -788,7 +814,7 @@ public abstract partial class ChartBase : Control
     {
         base.OnPointerExited(e);
         CancelLegendPress();
-        ClearPointerHover();
+        ClearPointerHover(fade: true);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)

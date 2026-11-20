@@ -47,6 +47,7 @@ public partial class ChartBase
         var pixels = ValidateExportSize(logical, dpi);
         var snapshot = CreateExportSnapshot();
         snapshot._isExportSnapshot = true;
+        snapshot._exportAutomaticLabelBrush = UsesAutomaticLabelBrush();
         snapshot._skipExportBackground = transparentBackground;
         snapshot._legendPage = _legendPage;
         foreach (var property in ExportProperties) snapshot.SetValue(property, GetValue(property));

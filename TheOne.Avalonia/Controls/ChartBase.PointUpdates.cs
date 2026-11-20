@@ -67,7 +67,7 @@ public partial class ChartBase
                 var middle = range.Ratio(values.Base / 2 + values.Top / 2);
                 var normal = frame.Horizontal ? new Point(middle, previous.Y) : new Point(previous.X, middle);
                 var label = old.Label is null ? null : CartesianDataLabel(key.Series, key.Index);
-                bars.Add((slot, old with { Bounds = bounds, Label = label }, normal));
+                bars.Add((slot, old with { Bounds = bounds, Negative = model.Y < 0, Label = label }, normal));
             }
             else
             {

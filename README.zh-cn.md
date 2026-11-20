@@ -10,7 +10,7 @@
 - QRCode、ReportDesign/ReportPreview、WorkflowEditor、GanttChart 和 NavPage 提供报表、工作流及工作区扩展，参见 [preview.11 发行说明](docs/releases/zh-cn/1.0.0-preview.11.md)。
 
 
-本次统一图标宿主的 OneIcon 接入，修复 Geometry／模板动态切换时的尺寸与禁用前景，并修正 ImageUpload 查看弹层的滚动条问题；包含双语图文指南。NuGet 包需要维护者手动上传，当前源码版本不表示包已上架。
+本版调整图表的文字层级和图形样式，改善悬停反馈，并为不同图形设计了入场动效。[Preview.12 发行说明](docs/releases/zh-cn/1.0.0-preview.12.md)
 
 ## 环境与版本
 
@@ -19,7 +19,7 @@
 | .NET SDK / TargetFramework | .NET 10 / `net10.0` |
 | Avalonia 核心、Skia、Fluent | 12.1.4 |
 | DataGrid | 基于 12.1.2，包名 `TheOne.Avalonia.DataGrid` |
-| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.11 |
+| TheOne.Avalonia / TheOne.Avalonia.DataGrid | 1.0.0-preview.12 |
 | PreviewHost MVVM | ReactiveUI.Avalonia 12.1.4 |
 
 ## 快速开始
@@ -35,10 +35,10 @@ dotnet run --project design/PreviewHost
 在消费项目中安装预览包，配套 DataGrid 包会自动还原：
 
 ```sh
-dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.11
+dotnet add path/to/YourApp.csproj package TheOne.Avalonia --version 1.0.0-preview.12
 ```
 
-远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.11) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.11)。也可引用源码（路径按项目位置调整）：
+远程包：[TheOne.Avalonia](https://www.nuget.org/packages/TheOne.Avalonia/1.0.0-preview.12) · [TheOne.Avalonia.DataGrid](https://www.nuget.org/packages/TheOne.Avalonia.DataGrid/1.0.0-preview.12)。也可引用源码（路径按项目位置调整）：
 
 ```sh
 dotnet add path/to/YourApp.csproj reference TheOne.Avalonia/TheOne.Avalonia.csproj

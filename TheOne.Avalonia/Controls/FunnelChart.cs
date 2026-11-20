@@ -52,6 +52,7 @@ public sealed class FunnelChart : SpecializedChartBase
         _plotBounds = plot;
         _selectionPen = new Pen(Foreground ?? GetChartBrush(0), SelectionThickness);
         if (SeriesSource is not { } source || plot.Width <= 0 || plot.Height <= 0) return;
+        var automaticLabels = ShowDataLabels && UsesAutomaticLabelBrush();
         var visible = 0;
         foreach (var series in source)
             if (series.IsVisible && series.ItemsSource is { Count: > 0 }) visible++;
@@ -116,7 +117,8 @@ public sealed class FunnelChart : SpecializedChartBase
                 RegisterMark(seriesIndex, entry.Index, bounds.Center, bounds);
                 if (ShowDataLabels)
                 {
-                    var label = Text($"{entry.Point.Label ?? FormatValue(entry.Point.X)} · {FormatChartValue(series, entry.Point.Y)}");
+                    var label = Text($"{entry.Point.Label ?? FormatValue(entry.Point.X)} · {FormatChartValue(series, entry.Point.Y)}",
+                        automaticLabels ? ContrastingLabelBrush(stage.Brush) : Foreground);
                     var middleWidth = (topWidth + bottomWidth) / 2;
                     if (label.Width + 8 <= middleWidth && label.Height + 2 <= height)
                         _labels.Add(new FunnelLabel(label, bounds.Center - new Vector(label.Width / 2, label.Height / 2)));
@@ -130,7 +132,12 @@ public sealed class FunnelChart : SpecializedChartBase
         using var clip = context.PushClip(plot);
         foreach (var stage in _stages) context.DrawGeometry(stage.Brush, null, stage.Geometry);
         foreach (var label in _labels) context.DrawText(label.Text, label.Position);
-        if (Selection is { } selected && _stageLookup.TryGetValue((selected.SeriesIndex, selected.PointIndex), out var active))
+        if (Selection is { } selected) DrawDataHighlight(context, (selected.SeriesIndex, selected.PointIndex), 1);
+    }
+
+    private protected override void DrawDataHighlight(DrawingContext context, (int Series, int Index) key, double amount)
+    {
+        if (_stageLookup.TryGetValue(key, out var active))
             context.DrawGeometry(null, _selectionPen, active.Geometry);
     }
 

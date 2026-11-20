@@ -60,17 +60,17 @@
             <SolidColorBrush Color="{StaticResource One.CardTabBorderColor}" x:Key="One.CardTabBorder" />
             <Color x:Key="One.CardTabHoverColor">#D6D7D7</Color>
             <SolidColorBrush Color="{StaticResource One.CardTabHoverColor}" x:Key="One.CardTabHover" />
-            <Color x:Key="One.Chart.Series1Color">#187576</Color>
+            <Color x:Key="One.Chart.Series1Color">#087E78</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series1Color}" x:Key="One.Chart.Series1" />
-            <Color x:Key="One.Chart.Series2Color">#1B6575</Color>
+            <Color x:Key="One.Chart.Series2Color">#4865BF</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series2Color}" x:Key="One.Chart.Series2" />
-            <Color x:Key="One.Chart.Series3Color">#836B1A</Color>
+            <Color x:Key="One.Chart.Series3Color">#AA6618</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series3Color}" x:Key="One.Chart.Series3" />
-            <Color x:Key="One.Chart.Series4Color">#74387F</Color>
+            <Color x:Key="One.Chart.Series4Color">#895BAC</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series4Color}" x:Key="One.Chart.Series4" />
-            <Color x:Key="One.Chart.Series5Color">#7E3D46</Color>
+            <Color x:Key="One.Chart.Series5Color">#B75065</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series5Color}" x:Key="One.Chart.Series5" />
-            <Color x:Key="One.Chart.Series6Color">#187648</Color>
+            <Color x:Key="One.Chart.Series6Color">#588130</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series6Color}" x:Key="One.Chart.Series6" />
 
             <Color x:Key="One.Gradient.Brand.StartColor">#006061</Color>
@@ -224,17 +224,17 @@
             <SolidColorBrush Color="{StaticResource One.CardTabBorderColor}" x:Key="One.CardTabBorder" />
             <Color x:Key="One.CardTabHoverColor">#3F4141</Color>
             <SolidColorBrush Color="{StaticResource One.CardTabHoverColor}" x:Key="One.CardTabHover" />
-            <Color x:Key="One.Chart.Series1Color">#6FCECF</Color>
+            <Color x:Key="One.Chart.Series1Color">#56D5C2</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series1Color}" x:Key="One.Chart.Series1" />
-            <Color x:Key="One.Chart.Series2Color">#91CBDD</Color>
+            <Color x:Key="One.Chart.Series2Color">#9BACFF</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series2Color}" x:Key="One.Chart.Series2" />
-            <Color x:Key="One.Chart.Series3Color">#DAC473</Color>
+            <Color x:Key="One.Chart.Series3Color">#EDBF70</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series3Color}" x:Key="One.Chart.Series3" />
-            <Color x:Key="One.Chart.Series4Color">#CB91D8</Color>
+            <Color x:Key="One.Chart.Series4Color">#C8A1EF</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series4Color}" x:Key="One.Chart.Series4" />
-            <Color x:Key="One.Chart.Series5Color">#D5969F</Color>
+            <Color x:Key="One.Chart.Series5Color">#F29CAA</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series5Color}" x:Key="One.Chart.Series5" />
-            <Color x:Key="One.Chart.Series6Color">#6FCFA1</Color>
+            <Color x:Key="One.Chart.Series6Color">#ACD586</Color>
             <SolidColorBrush Color="{StaticResource One.Chart.Series6Color}" x:Key="One.Chart.Series6" />
 
             <Color x:Key="One.Gradient.Brand.StartColor">#63D9DE</Color>

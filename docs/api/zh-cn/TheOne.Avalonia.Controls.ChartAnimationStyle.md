@@ -22,7 +22,7 @@ Controls the presentation of chart data changes without changing target data or 
 
 | 完整签名／值 | 说明 |
 | --- | --- |
-| [`Auto = 0`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L7) | Reveal the first frame; interpolate compatible data changes, otherwise crossfade. |
+| [`Auto = 0`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L7) | 按图表类型播放入场动画。数据更新时，在兼容帧之间插值，或使用淡入淡出。 |
 | [`None = 1`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L9) | Present the complete target frame immediately. |
 | [`Fade = 2`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L11) | Fade in the prepared target plot while keeping its geometry cached. |
 | [`Reveal = 3`](../../../TheOne.Avalonia/Controls/ChartAnimationStyle.cs#L13) | Reveal the prepared target plot from left to right. |
